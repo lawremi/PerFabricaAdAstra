@@ -1,4 +1,3 @@
-#+TITLE: Per Fabrica Ad Astra
 * Introduction
   /Per Fabrica Ad Astra/ (through crafting, to the stars) is an
   extension (mod) of the game Minecraft. Broadly, it aims to enrich
@@ -24,15 +23,15 @@
 
 * Features
 ** /Geologica/
-   * Adds 23 new types of rock to the game.
-   * Adds furnace recipes for converting the rocks back to stone.
-   * Registers the rock and stone to the Forge ore dictionary as
-     "cobbleStone" and "solidStone".
-   * Converts all recipes involving rock and stone to use the new ore
-     dictionary keys.
-   * Provides a configuration file for the Custom Ore Generation mod
-     (installed separately) that replaces vanilla stone with the new
-     rocks, according to realistic (Earth-like) geology.
+ - Adds 23 new types of rock to the game.
+ - Adds furnace recipes for converting the rocks back to stone.
+ - Registers the rock and stone to the Forge ore dictionary as
+   "cobbleStone" and "solidStone".
+ - Converts all recipes involving rock and stone to use the new ore
+   dictionary keys.
+ - Provides a configuration file for the Custom Ore Generation mod
+   (installed separately) that replaces vanilla stone with the new
+   rocks, according to realistic (Earth-like) geology.
 
 * Details
 ** /Geologica/
@@ -88,9 +87,9 @@
 
 * Roadmap
 ** /Geologica/
-   * Add bricks for every type of rock.
-   * Add mineral deposits; will spawn according to rock layers.
-   * Add ExtraBiomesXL support.
+   - Add bricks for every type of rock.
+   - Add mineral deposits; will spawn according to rock layers.
+   - Add ExtraBiomesXL support.
      
 ** /Chemica/
    Chemistry in Minecraft! Will provide uses for /Geologica/ minerals.
