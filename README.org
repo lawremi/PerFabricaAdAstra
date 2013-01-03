@@ -1,0 +1,97 @@
+#+TITLE: Per Fabrica Ad Astra
+* Introduction
+  /Per Fabrica Ad Astra/ (through crafting, to the stars) is an
+  extension (mod) of the game Minecraft. Broadly, it aims to enrich
+  the science and engineering content of the game. The overarching
+  goal is to instill love and knowledge of both disciplines in the
+  heart and mind of the player. Since reality is often stranger and
+  more interesting than fiction, many of the ideas are directly
+  inspired by nature and actual science. Of course, gameplay takes
+  precedence over realism, because if no one plays, no one learns.
+
+  /Per Fabrica Ad Astra/ plans to be a collection of independent yet
+  tightly integrated modules, each corresponding to a Forge
+  mod. Players and server administrators may choose which to enable
+  through configuration. Currently, there is only one mod:
+  /Geologica/. It adds realistic and interesting geology to
+  Minecraft, with the goal of enhancing the mining
+  experience. /Geologica/ defines 23 new types of rock and relies on
+  the Custom Ore Generator mod to place them in the world. They
+  replace all vanilla stone. Soon, we will add mineral
+  deposits, including metal ores and industrial minerals. These will
+  spawn according to the rock formations, which will allow for more
+  strategic mining.
+
+* Features
+** /Geologica/
+   * Adds 23 new types of rock to the game.
+   * Adds furnace recipes for converting the rocks back to stone.
+   * Registers the rock and stone to the Forge ore dictionary as
+     "cobbleStone" and "solidStone".
+   * Converts all recipes involving rock and stone to use the new ore
+     dictionary keys.
+   * Provides a configuration file for the Custom Ore Generation mod
+     (installed separately) that replaces vanilla stone with the new
+     rocks, according to realistic (Earth-like) geology.
+
+* Details
+** /Geologica/
+*** Rocks
+    The rock types are listed in the table below. There are four
+    different strength levels: weak, medium, strong and very
+    strong. Each strength level corresponds to a pickaxe harvest
+    level, such that a wooden pickaxe is only capable of harvesting
+    weak and medium stone, a stone pickaxe is required for harvesting
+    strong stone, and iron is necessary for very strong stone.
+
+    Shattering a weak stone yields some other substance, such as dirt
+    or gravel, depending on the composition/origin of the rock. This
+    often makes it more difficult to obtain stone tools early in the
+    game, so wooden tools receive more emphasis. This models the fact
+    that many types of stone, usually sedimentary, are not well suited
+    for building. Medium and strong stone will yield particular types
+    of cobblestone upon harvesting. These can be smelted back to solid
+    stone. Very strong stone is harvested as intact stone.
+
+    Through the provided configuration for the Custom Ore Generator,
+    each rock layer is placed according to Earth-like patterns,
+    described in the third column. There are three main geological
+    regions, defined by the biomes: oceanic (ocean and island),
+    volcanic (extreme hills) and continental (every other biome).
+
+    | Rock         | Hard  | Occurs                                           | Yields |
+    |--------------+-------+--------------------------------------------------+--------|
+    | Granite      | hard  | Below continental sedimentary, volcanic andesite | cobble |
+    | Diorite      | vhard | Below granite (near continental bedrock)         | stone  |
+    | Gabbro       | vhard | Below volcanic diorite, ocean basalt             | stone  |
+    | Peridotite   | vhard | Rare spawn, near bedrock                         | stone  |
+    | Rhyolite     | hard  | Volcanic top layer                               | cobble |
+    | Andesite     | hard  | Below rhyolite                                   | cobble |
+    | Basalt       | hard  | Below oceanic limestone                          | cobble |
+    | Mudstone     | soft  | Bulk of continental sedimentary layer            | dirt   |
+    | Claystone    | soft  | Spawns within mudstone                           | clay   |
+    | Conglomerate | soft  | Spawns within mudstone                           | gravel |
+    | Breccia      | soft  | Spawns within mudstone                           | gravel |
+    | Limestone    | med   | Spawns within mudstone, also hills, ocean top    | cobble |
+    | Slate        | med   | Bottom continental sedimentary                   | cobble |
+    | Schist       | med   | Spawns upper granite                             | cobble |
+    | Gneiss       | hard  | Spawns mid/lower granite                         | cobble |
+    | Greenschist  | hard  | Spawns in gabbro, basalt                         | cobble |
+    | Pegmatite    | hard  | Veins in diorite, lower granite                  | cobble |
+    | Serpentinite | med   | Veins in gabbro, lower diorite/basalt            | cobble |
+    | Hornfels     | vhard | Spawns upper granite, lower sedimentary          | stone  |
+    | Marble       | hard  | Spawns upper granite, lower sedimentary          | cobble |
+    | Quartzite    | vhard | Spawns upper granite, lower sedimentary          | stone  |
+    | Skarn        | med   | Like above, but twice as rare                    | cobble |
+    | Carbonatite  | soft  | TODO                                             | gravel |
+    
+
+* Roadmap
+** /Geologica/
+   * Add bricks for every type of rock.
+   * Add mineral deposits; will spawn according to rock layers.
+   * Add ExtraBiomesXL support.
+     
+** /Chemica/
+   Chemistry in Minecraft! Will provide uses for /Geologica/ minerals.
+   
