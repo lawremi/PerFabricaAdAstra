@@ -1,11 +1,9 @@
 package org.pfaa.geologica;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import net.minecraft.src.Material;
+import net.minecraft.block.material.Material;
 
 public enum GeoSubstance {
 	

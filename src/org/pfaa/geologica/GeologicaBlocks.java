@@ -1,13 +1,10 @@
 package org.pfaa.geologica;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.CreativeTabs;
+import net.minecraft.block.Block;
 
 import org.pfaa.ConfigIDProvider;
-import org.pfaa.IDProvider;
 import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.block.CobblestoneBlock;
-import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.StoneBlock;
 
 public class GeologicaBlocks {

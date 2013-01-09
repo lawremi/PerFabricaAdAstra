@@ -1,14 +1,14 @@
 package org.pfaa.geologica.item;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 
 import org.pfaa.geologica.GeoSubstance;
 import org.pfaa.geologica.block.GeoBlock;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class GeoBlockItem extends ItemBlock {
 

@@ -2,9 +2,9 @@ package org.pfaa.geologica.block;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 
 import org.pfaa.geologica.GeoSubstance;
 import org.pfaa.geologica.GeoSubstance.Strength;

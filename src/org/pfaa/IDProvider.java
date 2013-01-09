@@ -1,6 +1,5 @@
 package org.pfaa;
 
-import net.minecraft.src.Block;
 
 /* So this gives out (default) IDs automatically. One might worry about 
  * introducing sequential coupling here, but the fact is that Configuration dynamically 

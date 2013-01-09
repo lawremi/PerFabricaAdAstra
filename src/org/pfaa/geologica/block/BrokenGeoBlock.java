@@ -1,13 +1,9 @@
 package org.pfaa.geologica.block;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.block.material.Material;
 
-import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeologicaTextures;
 import org.pfaa.geologica.GeoSubstance.Strength;
-
-import net.minecraft.src.Material;
+import org.pfaa.geologica.GeologicaTextures;
 
 public class BrokenGeoBlock extends GeoBlock {
 

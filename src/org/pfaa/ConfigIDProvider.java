@@ -1,18 +1,8 @@
 package org.pfaa;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
-import net.minecraft.src.Block;
 import net.minecraftforge.common.Configuration;
 
 import org.pfaa.geologica.Geologica;
-
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.LoaderException;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ConfigIDProvider implements IDProvider {
 

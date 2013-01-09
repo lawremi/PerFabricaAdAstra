@@ -3,8 +3,8 @@ package org.pfaa;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemBlock;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;

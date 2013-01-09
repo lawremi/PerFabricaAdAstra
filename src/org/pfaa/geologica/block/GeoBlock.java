@@ -3,8 +3,8 @@ package org.pfaa.geologica.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Material;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.geologica.GeoSubstance;

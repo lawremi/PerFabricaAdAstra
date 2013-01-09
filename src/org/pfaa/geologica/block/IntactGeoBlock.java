@@ -1,11 +1,9 @@
 package org.pfaa.geologica.block;
 
-import net.minecraft.src.Material;
+import net.minecraft.block.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.pfaa.geologica.GeoSubstance;
 import org.pfaa.geologica.GeoSubstance.Strength;
-import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaTextures;
 
 public class IntactGeoBlock extends GeoBlock {
