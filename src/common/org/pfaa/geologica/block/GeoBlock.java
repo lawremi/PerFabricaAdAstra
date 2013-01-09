@@ -56,7 +56,7 @@ public abstract class GeoBlock extends CompositeBlock {
 
 	@Override
 	public String getBlockNameForMeta(int meta) {
-		return this.getBlockName() + "." + getSubstance(meta).getName();
+		return this.getBlockName() + "." + getSubstance(meta).getLowerName();
 	}
 
 	@Override

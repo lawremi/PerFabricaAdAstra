@@ -32,7 +32,7 @@ public class GeoBlockItem extends ItemBlock {
 	@Override
 	public String getItemNameIS(ItemStack itemStack) {
 		return super.getItemName() + "." + 
-				getSubstanceForDamage(itemStack.getItemDamage()).getName();
+				getSubstanceForDamage(itemStack.getItemDamage()).getLowerName();
 	}
 
 	private GeoSubstance getSubstanceForDamage(int damage) {
