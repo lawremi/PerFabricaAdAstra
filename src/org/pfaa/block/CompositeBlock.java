@@ -7,10 +7,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-public class CompositeBlock extends Block {
+public abstract class CompositeBlock extends Block implements CompositeBlockAccessors {
 
-	public static final int META_WIDTH = 16;
-	
 	public CompositeBlock(int id, int textureIndex, Material material) {
 		super(id, textureIndex, material);
 	}
@@ -29,6 +27,9 @@ public class CompositeBlock extends Block {
 		return blockIndexInTexture + damageDropped(meta);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pfaa.block.ICompositeBlock#getSubBlocks(int, net.minecraft.creativetab.CreativeTabs, java.util.List)
+	 */
 	@Override
 	public void getSubBlocks(int id, CreativeTabs creativeTabs, List list)
     {
@@ -38,11 +39,9 @@ public class CompositeBlock extends Block {
         }
     }
 	
-	public String getBlockNameForMeta(int meta) {
-		return this.getBlockName();
-	}
+	public abstract int getMetaCount();
 	
-	public int getMetaCount() {
-		return META_WIDTH;
+	public float getBlockResistance() {
+		return this.blockResistance;
 	}
 }

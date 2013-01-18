@@ -1,19 +1,21 @@
 package org.pfaa.geologica;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.RecipeUtils;
 import org.pfaa.Registrant;
 import org.pfaa.RegistrationUtils;
-import org.pfaa.geologica.item.GeoBlockItem;
+import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.block.SlabBlock;
+import org.pfaa.geologica.block.StairsBlock;
+import org.pfaa.geologica.item.SlabItem;
+import org.pfaa.item.CompositeBlockItem;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -37,29 +39,17 @@ public class CommonRegistrant implements Registrant {
 	}
 
 	private void registerBlocks() {
-		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, GeoBlockItem.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, CompositeBlockAccessors.class, CompositeBlockItem.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, SlabBlock.class, SlabItem.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, StairsBlock.class, ItemBlock.class);
 	}
 
 	@Override
 	public void register() {
 		registerOres();
-		registerSmeltingRecipes();
+		GeologicaRecipes.register();
 	}
 	
-	private void registerSmeltingRecipes() {
-		registerSmeltingRecipesForMultiblock(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_STONE);
-		registerSmeltingRecipesForMultiblock(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_STONE);
-	}
-
-	private void registerSmeltingRecipesForMultiblock(Block input, Block output) {
-		List<ItemStack> subStacks = new ArrayList<ItemStack>();
-		input.getSubBlocks(input.blockID, null, subStacks);
-		for(int meta = 0; meta < subStacks.size(); meta++) {
-			ItemStack outputStack = new ItemStack(output, 1, meta);
-			FurnaceRecipes.smelting().addSmelting(input.blockID, meta, outputStack, 0);
-		}
-	}
-
 	private void registerOres() {
 		OreDictionary.registerOre("cobbleStone", new ItemStack(GeologicaBlocks.MEDIUM_COBBLESTONE, 1, -1));
 		OreDictionary.registerOre("cobbleStone", new ItemStack(GeologicaBlocks.STRONG_COBBLESTONE, 1, -1));
@@ -77,7 +67,15 @@ public class CommonRegistrant implements Registrant {
 		Map<ItemStack, String> replacements = new HashMap<ItemStack, String>();
 		replacements.put(new ItemStack(Block.cobblestone, 1, -1), "cobbleStone");
 		replacements.put(new ItemStack(Block.stone), "solidStone");
-		RecipeUtils.createOreRecipes(replacements);
+		replacements.put(new ItemStack(Block.stoneBrick), "brickStone");
+		ItemStack[] exclusions = new ItemStack[] {
+			new ItemStack(Block.stoneBrick),
+			new ItemStack(Block.stairsStoneBrickSmooth),
+			new ItemStack(Block.stoneSingleSlab),
+			new ItemStack(Block.stairCompactCobblestone),
+			new ItemStack(Block.cobblestoneWall)
+		};
+		RecipeUtils.createOreRecipes(replacements, exclusions);
 	}
 
 }

@@ -1,20 +1,22 @@
 package org.pfaa.geologica.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.GeoSubstance.SubstanceType;
 import org.pfaa.geologica.GeologicaTextures;
+import org.pfaa.geologica.GeoSubstance.Strength;
 
-public class BrokenGeoBlock extends GeoBlock {
+public class BrickBlock extends GeoBlock {
 
-	public BrokenGeoBlock(int id, Strength strength, SubstanceType substanceType, Material material) {
-		super(id, strength, substanceType, material);
+	public BrickBlock(int id, Strength strength) {
+		super(id, strength, SubstanceType.ROCK, Material.rock);
 	}
 
 	@Override
-	public String getTextureFile() {
-		return GeologicaTextures.BROKEN;
+	public String getTextureFile()
+	{
+		return GeologicaTextures.BRICK;
 	}
 
 	@Override
@@ -22,16 +24,16 @@ public class BrokenGeoBlock extends GeoBlock {
 		float resistance = 0;
 		switch(strength) {
 		case WEAK:
-			resistance = 5.0F;
-			break;
-		case MEDIUM:
-			resistance = 10.0F;
-			break;
-		case STRONG:
 			resistance = 15.0F;
 			break;
+		case MEDIUM:
+			resistance = 25.0F;
+			break;
+		case STRONG:
+			resistance = 35.0F;
+			break;
 		case VERY_STRONG:
-			resistance = 20.0F;
+			resistance = 45.0F;
 			break;
 		default:
 		}
@@ -43,16 +45,16 @@ public class BrokenGeoBlock extends GeoBlock {
 		float hardness = 0;
 		switch(strength) {
 		case WEAK:
-			hardness = 1.0F;
+			hardness = 1.5F;
 			break;
 		case MEDIUM:
-			hardness = 2.0F;
-			break;
-		case STRONG:
 			hardness = 2.5F;
 			break;
+		case STRONG:
+			hardness = 3.5F;
+			break;
 		case VERY_STRONG:
-			hardness = 3.0F;
+			hardness = 4.5F;
 			break;
 		default:
 		}

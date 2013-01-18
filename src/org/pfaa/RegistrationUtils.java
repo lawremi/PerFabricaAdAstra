@@ -12,12 +12,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RegistrationUtils {
 
-	public static void registerDeclaredBlocks(Class catalogClass, Class<? extends ItemBlock> itemClass) {
+	public static void registerDeclaredBlocks(Class catalogClass, Class blockClass, Class<? extends ItemBlock> itemClass) {
 		Field[] fields = catalogClass.getFields();
 		for (Field field : fields) {
 			try {
 				Object value = field.get(null);
-				if (value instanceof Block) {
+				if (value instanceof Block && blockClass.isAssignableFrom(value.getClass())) {
 					registerBlock((Block)value, itemClass);
 				}
 			} catch (Exception e) {
@@ -27,7 +27,7 @@ public class RegistrationUtils {
 		}
 	}
 	private static void registerBlock(Block block, Class<? extends ItemBlock> itemClass) {
-		GameRegistry.registerBlock(block, itemClass);
+		GameRegistry.registerBlock(block, itemClass, null);
 	}
 		
 	public static void registerDeclaredTextures(Class catalogClass) {

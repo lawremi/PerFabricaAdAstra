@@ -5,55 +5,79 @@ import java.util.List;
 
 import net.minecraft.block.material.Material;
 
+import org.pfaa.chemica.Chemical;
+
 public enum GeoSubstance {
 	
-	BRECCIA(Material.rock, Strength.WEAK, Material.rock),
-	CARBONATITE(Material.rock, Strength.WEAK, Material.rock),
-	CLAYSTONE(Material.rock, Strength.WEAK, Material.clay),
-	CONGLOMERATE(Material.rock, Strength.WEAK, Material.rock),
-	MUDSTONE(Material.rock, Strength.WEAK, Material.ground),
+	BRECCIA(Strength.WEAK, SubstanceType.ROCK),
+	CARBONATITE(Strength.WEAK, SubstanceType.ROCK),
+	CLAYSTONE(Strength.WEAK, SubstanceType.ORE), // like sandstone
+	CONGLOMERATE(Strength.WEAK, SubstanceType.ROCK),
+	MUDSTONE(Strength.WEAK, SubstanceType.ROCK),
 	
-	LIMESTONE(Material.rock, Strength.MEDIUM),
-	SCHIST(Material.rock, Strength.MEDIUM),
-	SERPENTINITE(Material.rock, Strength.MEDIUM),
-	SLATE(Material.rock, Strength.MEDIUM),
-	SKARN(Material.rock, Strength.MEDIUM),
+	LIMESTONE(Strength.MEDIUM, SubstanceType.ROCK),
+	SCHIST(Strength.MEDIUM, SubstanceType.ROCK),
+	SERPENTINITE(Strength.MEDIUM, SubstanceType.ROCK),
+	SLATE(Strength.MEDIUM, SubstanceType.ROCK),
+	SKARN(Strength.MEDIUM, SubstanceType.ROCK),
 	
-	ANDESITE(Material.rock, Strength.STRONG),
-	BASALT(Material.rock, Strength.STRONG),
-	GNEISS(Material.rock, Strength.STRONG),
-	GRANITE(Material.rock, Strength.STRONG),
-	GREENSCHIST(Material.rock, Strength.STRONG),
-	MARBLE(Material.rock, Strength.STRONG),
-	PEGMATITE(Material.rock, Strength.STRONG),
-	RHYOLITE(Material.rock, Strength.STRONG),
+	ANDESITE(Strength.STRONG, SubstanceType.ROCK),
+	BASALT(Strength.STRONG, SubstanceType.ROCK),
+	GNEISS(Strength.STRONG, SubstanceType.ROCK),
+	GRANITE(Strength.STRONG, SubstanceType.ROCK),
+	GREENSCHIST(Strength.STRONG, SubstanceType.ROCK),
+	MARBLE(Strength.STRONG, SubstanceType.ROCK),
+	PEGMATITE(Strength.STRONG, SubstanceType.ROCK),
+	RHYOLITE(Strength.STRONG, SubstanceType.ROCK),
 	
-	DIORITE(Material.rock, Strength.VERY_STRONG),
-	GABBRO(Material.rock, Strength.VERY_STRONG),
-	HORNFELS(Material.rock, Strength.VERY_STRONG),
-	PERIDOTITE(Material.rock, Strength.VERY_STRONG),
-	QUARTZITE(Material.rock, Strength.VERY_STRONG);
+	DIORITE(Strength.VERY_STRONG, SubstanceType.ROCK),
+	GABBRO(Strength.VERY_STRONG, SubstanceType.ROCK),
+	HORNFELS(Strength.VERY_STRONG, SubstanceType.ROCK),
+	PERIDOTITE(Strength.VERY_STRONG, SubstanceType.ROCK),
+	QUARTZITE(Strength.VERY_STRONG, SubstanceType.ROCK),
+	
+	MAGNETITE(Strength.STRONG);
 
-	public enum Strength { WEAK, MEDIUM, STRONG, VERY_STRONG };
+	public enum Strength { 
+		WEAK, MEDIUM, STRONG, VERY_STRONG;
+		
+		public String getCamelName() {
+			if (this == VERY_STRONG)
+				return "veryStrong";
+			else return name().toLowerCase();
+		}
+	}
 
+	public enum SubstanceType {
+		ROCK, ORE, MINERAL
+	}
+	
 	private Strength strength;
 	private Material material;
-	private Material parentMaterial;
+	private SubstanceType substanceType;
 	
-	GeoSubstance(Material material, Strength strength, Material parentMaterial) {
+	GeoSubstance(Strength strength, SubstanceType substanceType, Material material) {
 		this.strength = strength;
 		this.material = material;
-		this.parentMaterial = parentMaterial;
+		this.substanceType = substanceType;
 	}
 	
-	GeoSubstance(Material material, Strength strength) {
-		this(material, strength, null);
+	GeoSubstance(Strength strength, SubstanceType substanceType) {
+		this(strength, substanceType, Material.rock);
 	}
-
+	
+	GeoSubstance(Strength strength) {
+		this(strength, SubstanceType.ORE);
+	}
+	
 	public int getId() {
 		return ordinal();
 	}
 	
+	public SubstanceType getSubstanceType() {
+		return substanceType;
+	}
+
 	public Strength getStrength() {
 		return strength;
 	}
@@ -62,10 +86,6 @@ public enum GeoSubstance {
 		return material;
 	}
 
-	public Material getParentMaterial() {
-		return parentMaterial;
-	}
-	
 	public String getLowerName() {
 		return name().toLowerCase();
 	}
@@ -74,10 +94,10 @@ public enum GeoSubstance {
 		return values()[id];
 	}
 	
-	public static List<GeoSubstance> getForMaterialAndStrength(Material material, Strength strength) {
+	public static List<GeoSubstance> lookup(Strength strength, SubstanceType substanceType, Material material) {
 		List<GeoSubstance> substancesToReturn = new ArrayList<GeoSubstance>();
 		for (GeoSubstance substance : values()) {
-			if (substance.material == material && substance.strength == strength)
+			if (substance.material == material && substance.strength == strength && substance.substanceType == substanceType)
 				substancesToReturn.add(substance);
 		}
 		return substancesToReturn;

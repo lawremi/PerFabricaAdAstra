@@ -18,7 +18,7 @@ import cpw.mods.fml.common.FMLLog;
 
 public class RecipeUtils {
 	
-	public static void createOreRecipes(Map<ItemStack, String> replacements) {
+	public static void createOreRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
         ItemStack[] replaceStacks = replacements.keySet().toArray(new ItemStack[0]);
 
         List recipes = CraftingManager.getInstance().getRecipeList();
@@ -32,20 +32,27 @@ public class RecipeUtils {
             {
                 ShapedRecipes recipe = (ShapedRecipes)obj;
                 
-                if(recipeHasIngredient(true, recipe.recipeItems, replaceStacks))
+                ItemStack output = recipe.getRecipeOutput();
+                if (output != null && hasItem(false, exclusions, output))
                 {
-                	FMLLog.info("Found recipe for %s", recipe.getRecipeOutput().getItemName());
-                    
+                	FMLLog.info("excluded recipe: %s", output.getItemName());
+                    continue;
+                }
+                if(hasItem(true, recipe.recipeItems, replaceStacks))
+                {
                 	recipesToRemove.add(recipe);
                     recipesToAdd.add(createOreRecipe(recipe, replacements));
-                }
+                } else FMLLog.info("lacks ingredient: %s", output.getItemName());
             }
             else if(obj instanceof ShapelessRecipes)
             {
                 ShapelessRecipes recipe = (ShapelessRecipes)obj;
                 ItemStack output = recipe.getRecipeOutput();
-                
-                if(recipeHasIngredient(true, (ItemStack[])recipe.recipeItems.toArray(new ItemStack[0]), replaceStacks))
+                if (output != null && hasItem(false, exclusions, output))
+                {
+                    continue;
+                }
+                if(hasItem(true, (ItemStack[])recipe.recipeItems.toArray(new ItemStack[0]), replaceStacks))
                 {
                     recipesToRemove.add((IRecipe)obj);
                     IRecipe newRecipe = createOreRecipe(recipe, replacements);
@@ -59,7 +66,7 @@ public class RecipeUtils {
 	}
 
 	
-	private static boolean recipeHasIngredient(boolean strict, ItemStack[] recipe, ItemStack... ingredients)
+	private static boolean hasItem(boolean strict, ItemStack[] recipe, ItemStack... ingredients)
 	{
 		for (ItemStack recipeIngredient : recipe)
 		{
