@@ -8,6 +8,7 @@ public class GeologicaTextures extends RegistrationUtils {
 	public static final String INTACT = TEXTURE_DIR + "/intact.png";
 	public static final String BROKEN = TEXTURE_DIR + "/broken.png";
 	public static final String BRICK = TEXTURE_DIR + "/brick.png";
+	public static final String LOOSE = TEXTURE_DIR + "/loose.png";
 	
 	public static void register() {
 		registerDeclaredTextures(GeologicaTextures.class);

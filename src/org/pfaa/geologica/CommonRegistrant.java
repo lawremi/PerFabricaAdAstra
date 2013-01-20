@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.RecipeUtils;
@@ -14,9 +15,11 @@ import org.pfaa.RegistrationUtils;
 import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
+import org.pfaa.geologica.entity.item.CustomEntityFallingSand;
 import org.pfaa.geologica.item.SlabItem;
 import org.pfaa.item.CompositeBlockItem;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonRegistrant implements Registrant {
@@ -26,7 +29,12 @@ public class CommonRegistrant implements Registrant {
 	@Override
 	public void preregister() {
 		registerBlocks();
+		registerEntities();
 		registerLocalizations();
+	}
+
+	private void registerEntities() {
+		EntityRegistry.registerModEntity(CustomEntityFallingSand.class, "customFallingSand", 1, Geologica.instance, 160, 20, false);
 	}
 
 	private void registerLocalizations() {
