@@ -11,7 +11,7 @@ public enum GeoSubstance {
 	
 	BRECCIA(Strength.WEAK, SubstanceType.ROCK),
 	CARBONATITE(Strength.WEAK, SubstanceType.ROCK),
-	CLAYSTONE(Strength.WEAK, SubstanceType.ORE), // like sandstone
+	CLAYSTONE(Strength.WEAK, SubstanceType.ROCK), // like sandstone
 	CONGLOMERATE(Strength.WEAK, SubstanceType.ROCK),
 	MUDSTONE(Strength.WEAK, SubstanceType.ROCK),
 	
