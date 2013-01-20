@@ -273,7 +273,7 @@
           <CloudPreset name = 'PresetLimestoneHills' block = "MediumStone:0"
                        inherits = 'PresetSedimentaryContinental'>
             <Setting name = 'CloudHeight' avg = '90'/>
-            <Setting name = 'CloudThickness' avg = '10'/>
+            <Setting name = 'CloudThickness' avg = '15'/>
             <Replaces block = 'WeakStone:4'/>
         </CloudPreset>
         
@@ -374,8 +374,7 @@
 
           <CloudPreset name = 'PresetGreenschistVolcanic'
                        block = "StrongStone:4"
-                     inherits = 'PresetStratumVolcanic'
-                     drawWireframe='true' wireframeColor = '0xFF22FF22'>
+                     inherits = 'PresetStratumVolcanic'>
             <Setting name = 'DistributionFrequency' avg = '0.02'/>
             <Setting name = 'CloudHeight' avg = '10' range = '5'/>
             <Setting name = 'CloudThickness' avg = '3' range = '1'/>
@@ -418,8 +417,7 @@
         
         <ConfigSection> <!-- Pegmatite -->
           <VeinsPreset name = 'PresetPegmatite' block = 'StrongStone:6'
-                       inherits = 'PresetRockVeins'
-                       drawWireframe='true'>
+                       inherits = 'PresetRockVeins'>
             <Setting name = 'MotherlodeFrequency' avg = '0.01'/>
             <Setting name = 'MotherlodeHeight' avg = '10' range = '10'/>
             <Replaces block = 'StrongStone:2'/>
@@ -445,16 +443,16 @@
       
       <ConfigSection> <!-- Distributions -->
         
-        <OptionChoice name='GeologicaGenDefault' default='true'>
+        <OptionChoice name='GeologicaGenRocks' default='true'>
           <Description>
-            Generate Geologica distributions in the default pattern.
+            Generate Geologica rock distributions in the default pattern.
           </Description>
           <DisplayName>Default Geologica generation</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
         
-        <IfCondition condition=':= ?GeologicaGenDefault &amp;
+        <IfCondition condition=':= ?GeologicaGenRocks &amp;
                                 (dimension.id = 0) &amp;
                                 (dimension.generator = "RandomLevelSource")'>
           
@@ -504,6 +502,89 @@
       </ConfigSection>
       
     </ConfigSection> <!-- Rocks -->
+
+    <ConfigSection> <!-- Standard ores/minerals -->
+
+      <ConfigSection> <!-- Coal -->
+        <CloudPreset name = 'PresetCoalBeds' block = "oreCoal"
+                     inherits = 'PresetStrategicCloud'>
+          <DrawWireframe>true</DrawWireframe>
+          <WireframeColor>0x6010A010</WireframeColor> 
+          <Setting name='DistributionFrequency'
+                 avg=':= 2 * coalFreq * if(age,age.coalClouds,1) * _default_'/>
+          <Setting name='CloudRadius' avg=':= 1.2 * coalSize * _default_'
+                   range=':= 1.2 * coalSize * _default_'/>
+          <Setting name='CloudThickness'
+                   avg=':= 0.2 * coalSize * _default_'
+                   range=':= 0.3 * coalSize * _default_'/>
+          <Setting name='OreDensity' avg='0.3'/>
+          <Setting name='OreVolumeNoiseCutoff' avg='0.3'/>
+          <Setting name='CloudHeight' avg=':= dimension.groundLevel'
+                   range='20' type='uniform'/>
+          <Biome name='Forest'/>
+          <Biome name='ForestHills'/>
+          <Biome name='Desert'/>
+          <Biome name='DesertHills'/>
+          <Biome name='Plains'/>
+          <Biome name='Swampland' weight='2'/>
+          <Biome name='Jungle'/>
+          <Biome name='JungleHills'/>
+          <Biome name='River'/>
+          <Biome name='FrozenRiver'/>
+          <Biome name='Ice\s*Plains'/>
+          <Biome name='Ice\s*Mountains'/>
+          <Biome name='Taiga'/>
+          <Biome name='TaigaHills'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+        </CloudPreset>
+
+        <VeinsPreset name='PresetCoalBedHintVeins' block='oreCoal'
+                     inherits='PresetHintVeins'>
+          <DrawWireframe>true</DrawWireframe>
+          <WireframeColor>0x60A01010</WireframeColor> 
+          <Setting name='MotherlodeFrequency' avg=':= 1.2 * _default_'
+                   range=':= _default_'/> 
+          <Setting name='MotherlodeRangeLimit' avg=':= coalSize * _default_'
+                   range=':= coalSize * _default_'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+        </VeinsPreset>
+                    
+      </ConfigSection>
+
+      <ConfigSection> <!-- Iron -->
+        
+      </ConfigSection>
+      
+      <ConfigSection> <!-- Distributions -->
+      
+        <OptionChoice name='GeologicaGenStandardOres' default='true'>
+          <Description>
+            Generate Geologica distributions of standard/vanilla ores
+          </Description>
+          <DisplayName>Default Geologica generation</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        
+        <IfCondition condition=':= ?GeologicaGenStandardOres &amp;
+                                (dimension.id = 0) &amp;
+                                (dimension.generator = "RandomLevelSource")'>
+          <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
+            <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
+          </Cloud>
+        </IfCondition>
+        
+      </ConfigSection>
+      
+    </ConfigSection> <!-- ores/minerals -->
     
   </ConfigSection>
 
