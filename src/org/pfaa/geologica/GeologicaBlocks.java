@@ -11,7 +11,7 @@ import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.block.BrickBlock;
 import org.pfaa.geologica.block.CobblestoneBlock;
 import org.pfaa.geologica.block.GeoBlock;
-import org.pfaa.geologica.block.GeoBlockAccessors;
+import org.pfaa.geologica.block.RubbleBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.StoneBlock;
@@ -21,10 +21,10 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;
 
 public class GeologicaBlocks {
-	public static final GeoBlockAccessors WEAK_STONE = createStoneBlock(Strength.WEAK);
-	public static final GeoBlockAccessors MEDIUM_STONE = createStoneBlock(Strength.MEDIUM);
-	public static final GeoBlockAccessors STRONG_STONE = createStoneBlock(Strength.STRONG);
-	public static final GeoBlockAccessors VERY_STRONG_STONE = createStoneBlock(Strength.VERY_STRONG);
+	public static final GeoBlock WEAK_STONE = createStoneBlock(Strength.WEAK);
+	public static final GeoBlock MEDIUM_STONE = createStoneBlock(Strength.MEDIUM);
+	public static final GeoBlock STRONG_STONE = createStoneBlock(Strength.STRONG);
+	public static final GeoBlock VERY_STRONG_STONE = createStoneBlock(Strength.VERY_STRONG);
 	
 	public static final GeoBlock MEDIUM_COBBLESTONE = createCobbleBlock(Strength.MEDIUM);
 	public static final GeoBlock STRONG_COBBLESTONE = createCobbleBlock(Strength.STRONG);
@@ -55,10 +55,11 @@ public class GeologicaBlocks {
 	public static final StairsBlock LIMESTONE_BRICK_STAIRS = createStairsBlock(MEDIUM_BRICK, GeoSubstance.LIMESTONE);
 	public static final StairsBlock GRANITE_BRICK_STAIRS = createStairsBlock(STRONG_BRICK, GeoSubstance.GRANITE);
 	public static final StairsBlock MARBLE_BRICK_STAIRS = createStairsBlock(STRONG_BRICK, GeoSubstance.MARBLE);
-	
 	//public static final StairsBlock[] stairsBlocks = createStairsBlocks();
 	
-	private static GeoBlockAccessors createStoneBlock(Strength strength) {
+	public static final GeoBlock WEAK_STONE_RUBBLE = createRubbleBlock(Strength.WEAK);
+	
+	private static GeoBlock createStoneBlock(Strength strength) {
 		return createGeoBlock(StoneBlock.class, strength);
 	}
 	private static GeoBlock createCobbleBlock(Strength strength) {
@@ -79,7 +80,8 @@ public class GeologicaBlocks {
 		block.setBlockName(name);
 		return block;
 	}
-	/*
+	
+	/*]
 	private static StairsBlock[] createStairsBlocks() {
 		List<StairsBlock> blocks = new ArrayList<StairsBlock>();
 		blocks.addAll(createStairsBlocksForGeoBlock(MEDIUM_COBBLESTONE));
@@ -102,13 +104,16 @@ public class GeologicaBlocks {
 		return blocks;
 	}
 	*/
-	
 	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoSubstance substance) {
 		String name = modelBlock.getBlockName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
 		int id = ConfigIDProvider.getInstance().nextBlockID(name);
 		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMetaForSubstance(substance));
 		block.setBlockName(name);
 		return block;
+	}
+	
+	private static GeoBlock createRubbleBlock(Strength strength) {
+		return createGeoBlock(RubbleBlock.class, strength);
 	}
 	
 	private static String nameForBlockClass(Class<? extends Block> blockClass) {
@@ -130,10 +135,10 @@ public class GeologicaBlocks {
 		return block;
 	}
 	
-	private static Block createDerivedBlock(Class<? extends Block> blockClass, CompositeBlock modelBlock) {
-		Block block = null;
+	private static <T extends Block> T createDerivedBlock(Class<T> blockClass, CompositeBlock modelBlock) {
+		T block = null;
 		try {
-			Constructor<? extends Block> constructor = blockClass.getConstructor(int.class, CompositeBlock.class);
+			Constructor<T> constructor = blockClass.getConstructor(int.class, CompositeBlock.class);
 			String name = modelBlock.getBlockName().replaceFirst("tile\\.", "") + nameForBlockClass(blockClass);
 			int id = ConfigIDProvider.getInstance().nextBlockID(name);
 			block = constructor.newInstance(id, modelBlock);
