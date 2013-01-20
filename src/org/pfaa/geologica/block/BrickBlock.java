@@ -20,7 +20,7 @@ public class BrickBlock extends GeoBlock {
 	}
 
 	@Override
-	protected float getResistanceForStrength(Strength strength) {
+	protected float determineResistance(Strength strength) {
 		float resistance = 0;
 		switch(strength) {
 		case WEAK:
@@ -41,7 +41,7 @@ public class BrickBlock extends GeoBlock {
 	}
 
 	@Override
-	protected float getHardnessForStrength(Strength strength) {
+	protected float determineHardness(Strength strength) {
 		float hardness = 0;
 		switch(strength) {
 		case WEAK:

@@ -63,7 +63,7 @@ public class IntactGeoBlock extends GeoBlock {
 		GeoSubstance substance = getSubstance(meta);
 		switch(substance.getStrength()) {
 		case WEAK:
-			dropped = Block.gravel.blockID;
+			dropped = GeologicaBlocks.WEAK_STONE_RUBBLE.blockID;
 			break;
 		case MEDIUM:
 			dropped = GeologicaBlocks.MEDIUM_COBBLESTONE.blockID;
@@ -104,7 +104,7 @@ public class IntactGeoBlock extends GeoBlock {
 		return GeologicaTextures.INTACT;
 	}
 	
-	protected float getResistanceForStrength(Strength strength) {
+	protected float determineResistance(Strength strength) {
 		float resistance = 0;
 		switch(strength) {
 		case WEAK:
@@ -124,7 +124,7 @@ public class IntactGeoBlock extends GeoBlock {
 		return resistance;
 	}
 
-	protected float getHardnessForStrength(Strength strength) {
+	protected float determineHardness(Strength strength) {
 		float hardness = 0;
 		switch(strength) {
 		case WEAK:

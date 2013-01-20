@@ -22,10 +22,10 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		this.substanceType = substanceType;
 		setCreativeTab(CreativeTabs.tabBlock);
 		setStrength(strength);
-		setStepSound(stepSoundForMaterial(material));
+		setStepSound(determineStepSound(material));
 	}
 	
-	private StepSound stepSoundForMaterial(Material material) {
+	protected StepSound determineStepSound(Material material) {
 		StepSound sound = null;
 		if (material == Material.rock) {
 			sound = soundStoneFootstep;
@@ -35,15 +35,14 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return sound;
 	}
 	
-	private GeoBlockAccessors setStrength(Strength strength) {
+	private void setStrength(Strength strength) {
 		setSubstances(GeoSubstance.lookup(strength, substanceType, blockMaterial));
-		setHardness(getHardnessForStrength(strength));
-		setResistance(getResistanceForStrength(strength));
-		return this;
+		setHardness(determineHardness(strength));
+		setResistance(determineResistance(strength));
 	}
 	
-	protected abstract float getResistanceForStrength(Strength strength);
-	protected abstract float getHardnessForStrength(Strength strength);
+	protected abstract float determineResistance(Strength strength);
+	protected abstract float determineHardness(Strength strength);
 
 	private void setSubstances(List<GeoSubstance> substances) {
 		if (substances.size() > 16 || substances.size() < 1)
@@ -72,8 +71,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#getMetaForSubstance(org.pfaa.geologica.GeoSubstance)
 	 */
 	@Override
-	public int getMetaForSubstance(GeoSubstance rock) {
-		return substances.indexOf(rock);
+	public int getMetaForSubstance(GeoSubstance substance) {
+		return substances.indexOf(substance);
 	}
 	
 	@Override
