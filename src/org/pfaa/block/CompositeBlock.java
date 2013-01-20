@@ -42,6 +42,6 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	public abstract int getMetaCount();
 	
 	public float getBlockResistance() {
-		return this.blockResistance;
+		return this.blockResistance / 3.0F;
 	}
 }
