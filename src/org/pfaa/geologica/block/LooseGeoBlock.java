@@ -7,16 +7,17 @@ import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityFallingSand;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.geologica.GeoSubstance.Strength;
-import org.pfaa.geologica.GeoSubstance.SubstanceType;
+import org.pfaa.geologica.GeoSubstance.Composition;
 import org.pfaa.geologica.GeologicaTextures;
 import org.pfaa.geologica.entity.item.CustomEntityFallingSand;
 
 public class LooseGeoBlock extends GeoBlock {
 
-	public LooseGeoBlock(int id, Strength strength, SubstanceType substanceType, Material material) {
-		super(id, strength, substanceType, material);
+	public LooseGeoBlock(int id, Strength strength, Composition composition, Material material) {
+		super(id, strength, composition, material);
 	}
 
 	@Override
@@ -86,24 +87,15 @@ public class LooseGeoBlock extends GeoBlock {
     }
     
 	@Override
-	protected float determineResistance(Strength strength) {
-		float resistance = 0;
-		switch(strength) {
-		case WEAK:
-			resistance = 1.0F;
-			break;
-		case MEDIUM:
-			resistance = 1.3F;
-			break;
-		case STRONG:
-			resistance = 1.6F;
-			break;
-		case VERY_STRONG:
-			resistance = 2.0F;
-			break;
-		default:
-		}
-		return resistance;
+	protected StepSound determineStepSound() {
+		if (blockMaterial == Material.rock)
+			return soundGravelFootstep;
+		else return super.determineStepSound();
+	}
+	
+	@Override
+	protected void setHarvestLevels(Strength strength) {
+		MinecraftForge.setBlockHarvestLevel(this, "shovel", 0);
 	}
 
 	@Override
@@ -127,10 +119,4 @@ public class LooseGeoBlock extends GeoBlock {
 		return hardness;
 	}
 
-	@Override
-	protected StepSound determineStepSound(Material material) {
-		if (material == Material.rock)
-			return soundGravelFootstep;
-		else return super.determineStepSound(material);
-	}
 }
