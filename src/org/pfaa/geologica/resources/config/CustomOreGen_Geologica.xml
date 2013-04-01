@@ -14,24 +14,31 @@
   <ConfigSection>
 
     <ConfigSection>
+
+      <Substitute name='CountOceanChunks' block='StrongStone:1'
+                  minHeight='63' maxHeight='63'>
+        <Replaces block='.*'/>
+        <Biome name='Ocean'/>
+        <Biome name='FrozenOcean'/>
+      </Substitute>
       
-      <CloudPreset name = 'PresetStratum'>
+      <CloudPreset name='PresetStratum'>
         <Description>
           Solid clouds that form layers of rock and minerals. Individual
           layer generators are expected to modify the CloudHeight and
           CouldThickness settings.
         </Description>
-        <Setting name = 'DistributionFrequency' avg = '1.0'/>
-        <Setting name = 'CloudRadius' avg = '16' range = '0' type = 'normal'/>
-        <Setting name = 'CloudThickness' range = '3' type = 'normal'/>
-        <Setting name = 'CloudHeight' range = '2' type = 'uniform'/>
-        <Setting name = 'OreDensity' avg = '1.0'/>
-        <Setting name = 'OreVolumeNoiseCutoff' avg = '0'/>
-        <Replaces block = 'stone'/>
+        <Setting name='DistributionFrequency' avg='1.0'/>
+        <Setting name='CloudRadius' avg='16' range='0' type='normal'/>
+        <Setting name='CloudThickness' range='3' type='normal'/>
+        <Setting name='CloudHeight' range='2' type='uniform'/>
+        <Setting name='OreDensity' avg='1.0'/>
+        <Setting name='OreVolumeNoiseCutoff' avg='0'/>
+        <Replaces block='stone'/>
       </CloudPreset>
       
-      <CloudPreset name = 'PresetStratumContinental'
-                   inherits = 'PresetStratum'>
+      <CloudPreset name='PresetStratumContinental'
+                   inherits='PresetStratum'>
         <Description>
           The continental crust is fundamentally different from the
           oceanic crust, and from volcanic regions. It is formed via
@@ -40,25 +47,25 @@
           rock (granite). Also, there is more substantial accumulation
           of sediment, relative to the ocean.
         </Description>
-        <Biome name = 'Forest'/>
-        <Biome name = 'ForestHills'/>
-        <Biome name = 'Desert'/>
-        <Biome name = 'DesertHills'/>
-        <Biome name = 'Plains'/>
-        <Biome name = 'Swampland'/>
-        <Biome name = 'Jungle'/>
-        <Biome name = 'JungleHills'/>
-        <Biome name = 'River'/>
-        <Biome name = 'FrozenRiver'/>
-        <Biome name = 'Ice\s*Plains'/>
-        <Biome name = 'Ice\s*Mountains'/>
-        <Biome name = 'Taiga'/>
-        <Biome name = 'TaigaHills'/>
-        <Biome name = 'Beach'/>
+        <Biome name='Forest'/>
+        <Biome name='ForestHills'/>
+        <Biome name='Desert'/>
+        <Biome name='DesertHills'/>
+        <Biome name='Plains'/>
+        <Biome name='Swampland'/>
+        <Biome name='Jungle'/>
+        <Biome name='JungleHills'/>
+        <Biome name='River'/>
+        <Biome name='FrozenRiver'/>
+        <Biome name='Ice\s*Plains'/>
+        <Biome name='Ice\s*Mountains'/>
+        <Biome name='Taiga'/>
+        <Biome name='TaigaHills'/>
+        <Biome name='Beach'/>
       </CloudPreset>
     </ConfigSection>
     
-    <CloudPreset name = 'PresetStratumOceanic' inherits = 'PresetStratum'>
+    <CloudPreset name='PresetStratumOceanic' inherits='PresetStratum'>
       <Description>
         The ocean crust is formed from partial melting of peridotite
         from the mantel. This results in gabbro intrusions and
@@ -71,7 +78,7 @@
       <Biome name='MushroomIslandShore'/>
     </CloudPreset>
     
-    <CloudPreset name = 'PresetStratumVolcanic' inherits = 'PresetStratum'>
+    <CloudPreset name='PresetStratumVolcanic' inherits='PresetStratum'>
       <Description>
         Numerous igneous intrusions will be found beneath
         volcanoes. These volcanoes are assumed to be formed in
@@ -81,16 +88,16 @@
       <Biome name='Extreme\s*Hills'/>
       <Biome name='Extreme\s*Hills\s*Edge'/>    
     </CloudPreset>
-    
+
     <ConfigSection>
       
-      <VeinsPreset name = 'PresetRockVeins'>
+      <VeinsPreset name='PresetRockVeins'>
         <Description>
           Thick veins of rock, usually formed through hydrothermal processes.
         </Description>
-        <Setting name = 'MotherlodeRangeLimit' avg = '8' range = '5'/>
-        <Setting name = 'MotherlodeSize' avg = '4'/>
-        <Setting name = 'SegmentRadius' avg = '3' range = '2' type='normal'/>
+        <Setting name='MotherlodeRangeLimit' avg='8' range='5'/>
+        <Setting name='MotherlodeSize' avg='4'/>
+        <Setting name='SegmentRadius' avg='3' range='2' type='normal'/>
       </VeinsPreset>
       
     </ConfigSection>
@@ -112,92 +119,82 @@
       
         <ConfigSection> <!-- Diorite -->
           
-          <CloudPreset name = 'PresetDioriteContinental'
-                       block = 'VeryStrongStone:0'
-                     inherits = 'PresetStratumContinental'>
-            <Setting name = 'CloudThickness' avg = '10' range = '1'/>
-            <Setting name = 'CloudHeight' avg = '10'/>
+          <CloudPreset name='PresetDioriteContinental'
+                       block='VeryStrongStone:0'
+                     inherits='PresetStratumContinental'>
+            <Setting name='CloudThickness' avg='10' range='1'/>
+            <Setting name='CloudHeight' avg='10'/>
           </CloudPreset>
           
-          <CloudPreset name = 'PresetDioriteVolcanic'
-                       block = 'VeryStrongStone:0'
-                       inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'CloudThickness' avg = '20'/>
-            <Setting name = 'CloudHeight' avg = '30'/>
+          <CloudPreset name='PresetDioriteVolcanic'
+                       block='VeryStrongStone:0'
+                       inherits='PresetStratumVolcanic'>
+            <Setting name='CloudThickness' avg='15'/>
+            <Setting name='CloudHeight' avg='25'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Gabbro -->
           
-          <CloudPreset name = 'PresetGabbroVolcanic' block = 'VeryStrongStone:1'
-                       inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'CloudThickness' avg = '10' range = '1'/>
-            <Setting name = 'CloudHeight' avg = '5'/>
+          <CloudPreset name='PresetGabbroVolcanic' block='VeryStrongStone:1'
+                       inherits='PresetStratumVolcanic'>
+            <Setting name='CloudThickness' avg='10' range='1'/>
+            <Setting name='CloudHeight' avg='5'/>
           </CloudPreset>
           
-          <CloudPreset name = 'PresetGabbroOceanic' block = 'VeryStrongStone:1'
-                       inherits = 'PresetStratumOceanic'>
-            <Setting name = 'CloudThickness' avg = '15' range = '1'/>
-            <Setting name = 'CloudHeight' avg = '5'/>
+          <CloudPreset name='PresetGabbroOceanic' block='VeryStrongStone:1'
+                       inherits='PresetStratumOceanic'>
+            <Setting name='CloudThickness' avg='15' range='1'/>
+            <Setting name='CloudHeight' avg='5'/>
           </CloudPreset>
-          
-          <CloudPreset name = 'PresetGabbroContinental'
-                       block = 'VeryStrongStone:1'
-                       inherits = 'PresetStratumContinental'>
-            <Setting name = 'CloudThickness' avg = '10' range = '1'/>
-            <Setting name = 'CloudHeight' avg = '5'/>
-            <Setting name = 'DistributionFrequency' avg = "0.005"/>
+
+          <!--
+          <CloudPreset name='PresetGabbroContinental'
+                       block='VeryStrongStone:1'
+                       inherits='PresetStratumContinental'>
+            <Setting name='CloudThickness' avg='10' range='1'/>
+            <Setting name='CloudHeight' avg='5'/>
+            <Setting name='DistributionFrequency' avg='0.005'/>
           </CloudPreset>
+          -->
           
         </ConfigSection>
         
         <ConfigSection> <!-- Granite -->
-          <CloudPreset name = 'PresetGraniteContinental' block = 'StrongStone:3'
-                       inherits = 'PresetStratumContinental'>
-            <Setting name = 'CloudThickness' avg = '20'/>
-            <Setting name = 'CloudHeight' avg = '25'/>
+          <CloudPreset name='PresetGraniteContinental' block='StrongStone:3'
+                       inherits='PresetStratumContinental'>
+            <Setting name='CloudThickness' avg='20'/>
+            <Setting name='CloudHeight' avg='25'/>
           </CloudPreset>
 
-          <CloudPreset name = 'PresetGraniteVolcanic' block = 'StrongStone:3'
-                       inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'CloudThickness' avg = '25'/>
-            <Setting name = 'CloudHeight' avg = '50'/>
+          <CloudPreset name='PresetGraniteVolcanic' block='StrongStone:3'
+                       inherits='PresetStratumVolcanic'>
+            <Setting name='CloudThickness' avg='25'/>
+            <Setting name='CloudHeight' avg='50'/>
           </CloudPreset>
         </ConfigSection>
-        
-        <ConfigSection> <!-- Peridotite -->
-          <CloudPreset name = 'PresetPeridotite' block = 'VeryStrongStone:3'
-                       inherits = 'PresetStratum'
-                       drawWireframe='true' wireframeColor = '0xFFFF2222'>
-            <Setting name = 'CloudThickness' avg = '10' range = '1'/>
-            <Setting name = 'CloudHeight' avg = '5'/>
-            <Setting name = 'DistributionFrequency' avg = "0.001"/>
-            <Replaces block = 'VeryStrongStone:0'/>
-            <Replaces block = 'VeryStrongStone:1'/>
-          </CloudPreset>
-        </ConfigSection>
-        
+                
         <ConfigSection> <!-- Andesite -->
-          <CloudPreset name = 'PresetAndesite' block = 'StrongStone:0'
-                       inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'CloudThickness' avg = '10'/>
-            <Setting name = 'CloudHeight' avg = '80'/>
+          <CloudPreset name='PresetAndesite' block='StrongStone:0'
+                       inherits='PresetStratumVolcanic'>
+            <Setting name='CloudThickness' avg='10'/>
+            <Setting name='CloudHeight' avg='80'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Basalt -->
-          <CloudPreset name = 'PresetBasalt' block = 'StrongStone:1'
-                       inherits = 'PresetStratumOceanic'>
-            <Setting name = 'CloudThickness' avg = '15'/>
-            <Setting name = 'CloudHeight' avg = '25'/>
+          <CloudPreset name='PresetBasalt' block='StrongStone:1'
+                       inherits='PresetStratumOceanic'>
+            <Setting name='CloudThickness' avg='15'/>
+            <Setting name='CloudHeight' avg='20'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Rhyolite -->
-          <CloudPreset name = 'PresetRhyolite' block = 'StrongStone:7'
-                       inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'CloudThickness' avg = '25'/>
-            <Setting name = 'CloudHeight' avg = '110'/>
+          <CloudPreset name='PresetRhyolite' block='StrongStone:7'
+                       inherits='PresetStratumVolcanic'>
+            <Setting name='CloudThickness' avg='25'/>
+            <Setting name='CloudHeight' avg='110'/>
           </CloudPreset>
         </ConfigSection>
         
@@ -212,81 +209,76 @@
           except the volcanic zones.
         </Description>
         
-        <CloudPreset name = 'PresetSedimentaryContinental'
-                     inherits = 'PresetStratumContinental'>
+        <CloudPreset name='PresetSedimentaryContinental'
+                     inherits='PresetStratumContinental'>
         </CloudPreset>
         
-        <CloudPreset name = 'PresetSedimentaryContinentalMinor'
-                     inherits = 'PresetSedimentaryContinental'>
-          <Setting name = 'CloudThickness' avg = '4' range = '2'/>
-          <Setting name = 'CloudHeight' avg = ':= dimension.groundLevel'
-                   range = '20'/>
-          <Replaces block = "WeakStone:4"/>
-          <Replaces block = "StrongStone:3"/>
-          <Replaces block = 'stone'/>
+        <CloudPreset name='PresetSedimentaryContinentalMinor'
+                     inherits='PresetSedimentaryContinental'>
+          <Setting name='CloudThickness' avg='4' range='2'/>
+          <Setting name='CloudHeight' avg=':=75/64 * dimension.groundLevel'
+                   range='30'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='stone'/>
         </CloudPreset>
         
-        <CloudPreset name = 'PresetSedimentaryOceanic'
-                     inherits = 'PresetStratum'>
-          <Setting name = 'CloudThickness' avg = '15'/>
-          <Setting name = 'CloudHeight' avg = '50'/>
-          <Biome name = 'Ocean'/>
-          <Biome name = 'FrozenOcean'/>
+        <CloudPreset name='PresetSedimentaryOceanic'
+                     inherits='PresetStratum'>
+          <Setting name='CloudThickness' avg='15'/>
+          <Setting name='CloudHeight' avg='45'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Replaces block='stone'/>
+          <Replaces block='dirt'/>
         </CloudPreset>
         
         <ConfigSection> <!-- Breccia -->
-          <CloudPreset name = 'PresetBreccia' block = "WeakStone:0"
-                       inherits = 'PresetSedimentaryContinentalMinor'>
-            <Setting name = 'DistributionFrequency' avg = "0.10"/>
+          <CloudPreset name='PresetBreccia' block='WeakStone:0'
+                       inherits='PresetSedimentaryContinentalMinor'>
+            <Setting name='DistributionFrequency' avg='0.20'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Claystone -->
-          <CloudPreset name = 'PresetClaystone' block = "WeakStone:2"
-                       inherits = 'PresetSedimentaryContinentalMinor'>
-            <Setting name = 'DistributionFrequency' avg = "0.10"/>
+          <CloudPreset name='PresetClaystone' block='WeakStone:2'
+                       inherits='PresetSedimentaryContinentalMinor'>
+            <Setting name='DistributionFrequency' avg='0.20'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Conglomerate -->
-          <CloudPreset name = 'PresetConglomerate' block = "WeakStone:3"
-                       inherits = 'PresetSedimentaryContinentalMinor'>
-            <Setting name = 'DistributionFrequency' avg = "0.10"/>
+          <CloudPreset name='PresetConglomerate' block='WeakStone:3'
+                       inherits='PresetSedimentaryContinentalMinor'>
+            <Setting name='DistributionFrequency' avg='0.20'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Mudstone, must come first! -->
-          <CloudPreset name = 'PresetMudstone' block = "WeakStone:4"
-                       inherits = 'PresetSedimentaryContinental'>
-            <Setting name = 'CloudThickness' avg = '30'/>
-            <Setting name = 'CloudHeight' avg = ':= dimension.groundLevel'/>
+          <CloudPreset name='PresetMudstone' block='WeakStone:4'
+                       inherits='PresetSedimentaryContinental'>
+            <Setting name='CloudThickness' avg='40'/>
+            <Setting name='CloudHeight' avg=':= 75/64 * dimension.groundLevel'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Limestone -->
           
-          <CloudPreset name = 'PresetLimestoneLower' block = "MediumStone:0"
-                       inherits = 'PresetSedimentaryContinentalMinor'>
-            <Setting name = 'DistributionFrequency' avg = "0.30"/>
+          <CloudPreset name='PresetLimestoneLower' block='MediumStone:0'
+                       inherits='PresetSedimentaryContinentalMinor'>
+            <Setting name='DistributionFrequency' avg='0.20'/>
           </CloudPreset>
           
-          <CloudPreset name = 'PresetLimestoneHills' block = "MediumStone:0"
-                       inherits = 'PresetSedimentaryContinental'>
-            <Setting name = 'CloudHeight' avg = '90'/>
-            <Setting name = 'CloudThickness' avg = '15'/>
-            <Replaces block = 'WeakStone:4'/>
-        </CloudPreset>
-        
-        <CloudPreset name = 'PresetLimestoneOceanic' block = "MediumStone:0"
-                     inherits = 'PresetSedimentaryOceanic'>
-        </CloudPreset>
-        
+          <CloudPreset name='PresetLimestoneOceanic' block='MediumStone:0'
+                       inherits='PresetSedimentaryOceanic'>
+          </CloudPreset>
+          
         </ConfigSection>
         
         <ConfigSection> <!-- Sandstone -->
-          <CloudPreset name = 'PresetSandstone' block = "Sandstone"
-                       inherits = 'PresetSedimentaryContinentalMinor'>
-            <Setting name = 'DistributionFrequency' avg = "0.20"/>
+          <CloudPreset name='PresetSandstone' block='Sandstone'
+                       inherits='PresetSedimentaryContinentalMinor'>
+            <Setting name='DistributionFrequency' avg='0.40'/>
           </CloudPreset>
         </ConfigSection>
         
@@ -304,139 +296,144 @@
           hydrothermal activity.
         </Description>
         
-        <CloudPreset name = 'PresetMetamorphicContinental'
-                     inherits = 'PresetStratumContinental'>
-          <Setting name = 'DistributionFrequency' avg = '0.02'/>
-          <Setting name = 'CloudHeight' avg = '40' range = '5'/>
-          <Setting name = 'CloudThickness' avg = '3' range = '1'/>
-          <Replaces block = "WeakStone:4"/>
-          <Replaces block = "StrongStone:3"/>
+        <CloudPreset name='PresetMetamorphicContinental'
+                     inherits='PresetStratumContinental'>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+          <Setting name='CloudHeight' avg='40' range='5'/>
+          <Setting name='CloudThickness' avg='3' range='1'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='stone'/>
+          <Replaces block='VeryStrongStone:0'/>
         </CloudPreset>
         
-        <CloudPreset name = 'PresetMetamorphicVolcanic'
-                     inherits = 'PresetStratumVolcanic'>
-          <Setting name = 'DistributionFrequency' avg = '0.2'/>
-          <Setting name = 'CloudThickness' avg = '4' range = '2'/>
-          <Replaces block = "VeryStrongStone:0"/>
-          <Replaces block = "StrongStone:0"/>
-          <Replaces block = "StrongStone:3"/>
+        <CloudPreset name='PresetMetamorphicVolcanic'
+                     inherits='PresetStratumVolcanic'>
+          <Setting name='DistributionFrequency' avg='0.2'/>
+          <Setting name='CloudThickness' avg='4' range='2'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <Replaces block='StrongStone:0'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='stone'/>
         </CloudPreset>
         
-        <CloudPreset name = 'PresetMetamorphicOceanic'
-                     inherits = 'PresetStratumOceanic'>
-          <Setting name = 'DistributionFrequency' avg = '0.1'/>
-          <Setting name = 'CloudThickness' avg = '3' range = '2'/>
-          <Replaces block = "VeryStrongStone:1"/>
-          <Replaces block = "StrongStone:1"/>
+        <CloudPreset name='PresetMetamorphicOceanic'
+                     inherits='PresetStratumOceanic'>
+          <Setting name='DistributionFrequency' avg='0.1'/>
+          <Setting name='CloudThickness' avg='3' range='2'/>
+          <Replaces block='VeryStrongStone:1'/>
+          <Replaces block='StrongStone:1'/>
+          <Replaces block='stone'/>
         </CloudPreset>
         
         <ConfigSection> <!-- Slate -->
-          <CloudPreset name = 'PresetSlate' block = "MediumStone:3"
-                       inherits = 'PresetMetamorphicContinental'>
-            <Setting name = 'DistributionFrequency' avg = '0.2'/>
+          <CloudPreset name='PresetSlate' block='MediumStone:3'
+                       inherits='PresetMetamorphicContinental'>
+            <Setting name='DistributionFrequency' avg='0.2'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Schist -->
-          <CloudPreset name = 'PresetSchist' block = "MediumStone:1"
-                       inherits = 'PresetMetamorphicContinental'>
-            <Setting name = 'CloudHeight' avg = '30' range = '10'/>
-            <Setting name = 'DistributionFrequency' avg = '0.1'/>
+          <CloudPreset name='PresetSchist' block='MediumStone:1'
+                       inherits='PresetMetamorphicContinental'>
+            <Setting name='CloudHeight' avg='30' range='10'/>
+            <Setting name='DistributionFrequency' avg='0.1'/>
           </CloudPreset>
-          <CloudPreset name = 'PresetSchistVolcanic' block = "MediumStone:1"
-                       inherits = 'PresetMetamorphicVolcanic'>
-            <Setting name = 'CloudHeight' avg = '60' range = '20'/>
+          <CloudPreset name='PresetSchistVolcanic' block='MediumStone:1'
+                       inherits='PresetMetamorphicVolcanic'>
+            <Setting name='CloudHeight' avg='60' range='20'/>
           </CloudPreset>
-          <CloudPreset name = 'PresetSchistOceanic' block = "MediumStone:1"
-                       inherits = 'PresetMetamorphicOceanic'>
-            <Setting name = 'CloudHeight' avg = '15' range = '10'/>
+          <CloudPreset name='PresetSchistOceanic' block='MediumStone:1'
+                       inherits='PresetMetamorphicOceanic'>
+            <Setting name='CloudHeight' avg='15' range='10'/>
           </CloudPreset>
         </ConfigSection>
-        
-        <ConfigSection> <!-- Gneiss -->
-          <CloudPreset name = 'PresetGneiss' block = "StrongStone:2"
-                       inherits = 'PresetMetamorphicContinental'>
-            <Setting name = 'CloudHeight' avg = '20' range = '10'/>
-            <Setting name = 'DistributionFrequency' avg = '0.05'/>
+
+        <ConfigSection> <!-- Skarn -->
+          <CloudPreset name='PresetSkarn'
+                       inherits='PresetMetamorphicContinental'>
+            <Replaces block='stone'/>
+            <Replaces block='WeakStone:4'/>
+            <Replaces block='StrongStone:3'/>
+            <Replaces block='MediumStone:0'/>
+            <Replaces block='StrongStone:1'/>
+            <Setting name='DistributionFrequency' avg='0.01'/>
+            <OreBlock block='MediumStone:4' weight='0.85'/>
+            <OreBlock block='MediumStone:0' weight='0.05'/>
+            <OreBlock block='VeryStrongStone:2' weight='0.05'/>
+            <OreBlock block='StrongStone:5' weight='0.05'/>
           </CloudPreset>
-          <CloudPreset name = 'PresetGneissVolcanic' block = "StrongStone:2"
-                       inherits = 'PresetMetamorphicVolcanic'>
-            <Setting name = 'CloudHeight' avg = '25' range = '20'/>
+          <CloudPreset name='PresetSkarnOceanic'
+                       inherits='PresetSkarn'>
+            <Setting name='CloudHeight' avg=':= 35/64 * dimension.groundLevel'
+                         range=':= 3/64 * dimension.groundLevel'/>
+            <Setting name='DistributionFrequency' avg='0.01'/>
+          </CloudPreset>
+        </ConfigSection>
+
+        <ConfigSection> <!-- Gneiss -->
+          <CloudPreset name='PresetGneiss' block='StrongStone:2'
+                       inherits='PresetMetamorphicContinental'>
+            <Setting name='CloudHeight' avg='20' range='10'/>
+            <Setting name='DistributionFrequency' avg='0.05'/>
+          </CloudPreset>
+          <CloudPreset name='PresetGneissVolcanic' block='StrongStone:2'
+                       inherits='PresetMetamorphicVolcanic'>
+            <Setting name='CloudHeight' avg='25' range='20'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Greenschist -->
           
-          <CloudPreset name = 'PresetGreenschistContinental'
-                       block = "StrongStone:4" inherits = 'PresetSchist'>
-            <Setting name = 'DistributionFrequency' avg = '0.001'/>
+          <CloudPreset name='PresetGreenschistContinental'
+                       block='StrongStone:4' inherits='PresetSchist'>
+            <Setting name='DistributionFrequency' avg='0.001'/>
           </CloudPreset>
 
-          <CloudPreset name = 'PresetGreenschistVolcanic'
-                       block = "StrongStone:4"
-                     inherits = 'PresetStratumVolcanic'>
-            <Setting name = 'DistributionFrequency' avg = '0.02'/>
-            <Setting name = 'CloudHeight' avg = '10' range = '5'/>
-            <Setting name = 'CloudThickness' avg = '3' range = '1'/>
-            <Replaces block = 'VeryStrongStone:1'/>
+          <CloudPreset name='PresetGreenschistVolcanic'
+                       block='StrongStone:4'
+                     inherits='PresetStratumVolcanic'>
+            <Setting name='DistributionFrequency' avg='0.02'/>
+            <Setting name='CloudHeight' avg='10' range='5'/>
+            <Setting name='CloudThickness' avg='3' range='1'/>
+            <Replaces block='VeryStrongStone:1'/>
           </CloudPreset>
 
-          <CloudPreset name = 'PresetGreenschistOceanic' block = "StrongStone:4"
-                       inherits = 'PresetStratumOceanic'>
-            <Setting name = 'DistributionFrequency' avg = '0.05'/>
-            <Setting name = 'CloudHeight' avg = '15' range = '10'/>
-            <Setting name = 'CloudThickness' avg = '3' range = '1'/>
-            <Replaces block = 'VeryStrongStone:1'/>
-            <Replaces block = 'StrongStone:1'/>
+          <CloudPreset name='PresetGreenschistOceanic' block='StrongStone:4'
+                       inherits='PresetStratumOceanic'>
+            <Setting name='DistributionFrequency' avg='0.05'/>
+            <Setting name='CloudHeight' avg='15' range='10'/>
+            <Setting name='CloudThickness' avg='3' range='1'/>
+            <Replaces block='VeryStrongStone:1'/>
+            <Replaces block='StrongStone:1'/>
+            <Replaces block='stone'/>
           </CloudPreset>
           
         </ConfigSection>
         
         <ConfigSection> <!-- Marble -->
-          <CloudPreset name = 'PresetMarble' block = "StrongStone:4"
-                       inherits = 'PresetMetamorphicContinental'/>
+          <CloudPreset name='PresetMarble'
+                       inherits='PresetMetamorphicContinental'>
+            <OreBlock block='MediumStone:4' weight='0.05'/>
+            <OreBlock block='MediumStone:0' weight='0.05'/>
+            <OreBlock block='VeryStrongStone:2' weight='0.05'/>
+            <OreBlock block='StrongStone:5' weight='0.85'/>
+          </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Hornfels -->
-          <CloudPreset name = 'PresetHornfels' block = "VeryStrongStone:2"
-                       inherits = 'PresetMetamorphicContinental'/>
-        </ConfigSection>
-        
-        <ConfigSection> <!-- Skarn -->
-          <CloudPreset name = 'PresetSkarn' block = "MediumStone:4"
-                       inherits = 'PresetMetamorphicContinental'>
-            <Replaces block = 'MediumStone:0'/>
-            <Setting name = 'DistributionFrequency' avg = '0.01'/>
+          <CloudPreset name='PresetHornfels'
+                       inherits='PresetMetamorphicContinental'>
+            <OreBlock block='MediumStone:4' weight='0.05'/>
+            <OreBlock block='MediumStone:0' weight='0.05'/>
+            <OreBlock block='VeryStrongStone:2' weight='0.85'/>
+            <OreBlock block='StrongStone:5' weight='0.05'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Quartzite -->
-          <CloudPreset name = 'PresetQuartzite' block = "VeryStrongStone:4"
-                       inherits = 'PresetMetamorphicContinental'/>
-        </ConfigSection>
-        
-        <ConfigSection> <!-- Pegmatite -->
-          <VeinsPreset name = 'PresetPegmatite' block = 'StrongStone:6'
-                       inherits = 'PresetRockVeins'>
-            <Setting name = 'MotherlodeFrequency' avg = '0.01'/>
-            <Setting name = 'MotherlodeHeight' avg = '10' range = '10'/>
-            <Replaces block = 'StrongStone:2'/>
-            <Replaces block = 'StrongStone:3'/>
-            <Replaces block = 'StrongStone:4'/>
-            <Replaces block = 'VeryStrongStone:0'/>
-          </VeinsPreset>
-        </ConfigSection>
-        
-        <ConfigSection> <!-- Serpentinite -->
-          <VeinsPreset name = 'PresetSerpentinite' block = 'MediumStone:2'
-                       inherits = 'PresetRockVeins'
-                       drawWireframe='true' wireframeColor = '0xFF222222'>
-            <Setting name = 'MotherlodeFrequency' avg = '0.01'/>
-            <Setting name = 'MotherlodeHeight' avg = '10' range = '10'/>
-            <Replaces block = 'StrongStone:1'/>
-            <Replaces block = 'VeryStrongStone:0'/>
-            <Replaces block = 'VeryStrongStone:1'/>
-          </VeinsPreset>
+          <CloudPreset name='PresetQuartzite' block='VeryStrongStone:4'
+                       inherits='PresetMetamorphicContinental'/>
         </ConfigSection>
         
       </ConfigSection>
@@ -452,9 +449,9 @@
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
         
-        <IfCondition condition=':= ?GeologicaGenRocks &amp;
-                                (dimension.id = 0) &amp;
-                                (dimension.generator = "RandomLevelSource")'>
+        <IfCondition condition=":=?GeologicaGenRocks &amp;
+                                (dimension.id=0) &amp;
+                                (dimension.generator='RandomLevelSource')">
           
           <Cloud name='DioriteContinental' inherits='PresetDioriteContinental'/>
           <Cloud name='GraniteContinental' inherits='PresetGraniteContinental'/>
@@ -464,7 +461,6 @@
           <Cloud name='Claystone' inherits='PresetClaystone'/>
           <Cloud name='Conglomerate' inherits='PresetConglomerate'/>
           <Cloud name='Limestone' inherits='PresetLimestoneLower'/>
-          <Cloud name='LimestoneHills' inherits='PresetLimestoneHills'/>
           <Cloud name='Sandstone' inherits='PresetSandstone'/>
           
           <Cloud name='Slate' inherits='PresetSlate'/>
@@ -486,83 +482,229 @@
                  inherits='PresetGreenschistVolcanic'/>
           <Cloud name='SchistVolcanic' inherits='PresetSchistVolcanic'/>
           <Cloud name='GneissVolcanic' inherits='PresetGneissVolcanic'/>
-          
+          <!-- OCEAN
           <Cloud name='GabbroOceanic' inherits='PresetGabbroOceanic'/>
           <Cloud name='Basalt' inherits='PresetBasalt'/>
           <Cloud name='LimestoneOceanic' inherits='PresetLimestoneOceanic'/>
           <Cloud name='GreenschistOceanic' inherits='PresetGreenschistOceanic'/>
           <Cloud name='SchistOceanic' inherits='PresetSchistOceanic'/>
-          
-          <Veins name='Pegmatite' inherits='PresetPegmatite'/>
-          <Veins name='Serpentinite' inherits='PresetSerpentinite'/>
-          <Cloud name='Peridotite' inherits='PresetPeridotite'/>
-          
+          <Cloud name='SkarnOceanic' inherits='PresetSkarnOceanic'/>
+          -->
         </IfCondition>
         
       </ConfigSection>
       
-    </ConfigSection> <!-- Rocks -->
+    </ConfigSection> <!-- /Rocks -->
 
+    <ConfigSection> <!-- Common ore presets -->
+
+      <VeinsPreset name='PresetLayeredVeinsLite'
+                   inherits='PresetLayeredVeins'>
+        <Setting name='OreDensity' avg=':= 0.4 * _default_' range='0.2'/>
+        <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                 range=':= 0.5 * _default_'/>
+        <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
+      </VeinsPreset>
+
+      <VeinsPreset name='PresetLayeredVeinsContinental'
+                   inherits='PresetLayeredVeinsLite'>
+        <Biome name='Forest'/>
+        <Biome name='ForestHills'/>
+        <Biome name='Desert'/>
+        <Biome name='DesertHills'/>
+        <Biome name='Plains'/>
+        <Biome name='Swampland'/>
+        <Biome name='Jungle'/>
+        <Biome name='JungleHills'/>
+        <Biome name='River'/>
+        <Biome name='FrozenRiver'/>
+        <Biome name='Ice\s*Plains'/>
+        <Biome name='Ice\s*Mountains'/>
+        <Biome name='Taiga'/>
+        <Biome name='TaigaHills'/>
+        <Biome name='Beach'/>        
+      </VeinsPreset>
+
+      <VeinsPreset name='PresetLayeredVeinsVolcanic'
+                   inherits='PresetLayeredVeinsLite'>
+        <Biome name='Extreme\s*Hills'/>
+        <Biome name='Extreme\s*Hills\s*Edge'/>    
+      </VeinsPreset>
+
+      <VeinsPreset name='PresetLayeredVeinsOceanic'
+                   inherits='PresetLayeredVeinsLite'>
+        <Biome name='Ocean'/>
+        <Biome name='FrozenOcean'/>
+        <Biome name='MushroomIsland'/>
+        <Biome name='MushroomIslandShore'/>
+      </VeinsPreset>
+      
+      <VeinsPreset name='PresetSphaleriteGalena'
+                   inherits='PresetLayeredVeinsLite'>
+        <OreBlock block='MediumOreRock:8' weight='0.65'/>
+        <OreBlock block='WeakOreRock:2' weight='0.35'/>
+      </VeinsPreset>
+      
+    </ConfigSection>
+    
     <ConfigSection> <!-- Standard ores/minerals -->
 
+      <CloudPreset name='PresetSedStrategicCloud'
+                   inherits='PresetStrategicCloud'>
+        <Setting name='CloudThickness' avg=':=0.5 * _default_'
+                 range=':=0.5 * _default_'/>
+        <Setting name='CloudHeight' avg=':=55/64 * dimension.groundLevel'
+                 range=':=10/64 * dimension.groundLevel' type='normal'/>
+        <Setting name='OreVolumeNoiseCutoff' avg=':=0.6 * _default_'/>
+        <Replaces block='WeakStone:0'/>
+        <Replaces block='WeakStone:2'/>
+        <Replaces block='WeakStone:3'/>
+        <Replaces block='WeakStone:4'/>
+        <Replaces block='Sandstone'/>
+        <Replaces block='MediumStone:0'/>
+      </CloudPreset>
+
+      <CloudPreset name='PresetMetaStrategicCloud'
+                   inherits='PresetStrategicCloud'>
+        <Setting name='CloudThickness' avg=':=0.5 * _default_'
+                 range=':=0.5 * _default_'/>
+        <Setting name='CloudHeight' avg=':=55/64 * dimension.groundLevel'
+                 range=':=10/64 * dimension.groundLevel' type='normal'/>
+        <Setting name='OreVolumeNoiseCutoff' avg=':=0.6 * _default_'/>
+        <Replaces block='WeakStone:0'/>
+        <Replaces block='WeakStone:2'/>
+        <Replaces block='WeakStone:3'/>
+        <Replaces block='WeakStone:4'/>
+        <Replaces block='Sandstone'/>
+        <Replaces block='MediumStone:0'/>
+      </CloudPreset>
+
+      <VeinsPreset name='PresetHintVeinsSed'
+                   inherits='PresetHintVeins'>
+        <Setting name='MotherlodeHeight'
+                 avg=':=55/64 * dimension.groundLevel'/>
+        <Replaces block='WeakStone:0'/>
+        <Replaces block='WeakStone:2'/>
+        <Replaces block='WeakStone:3'/>
+        <Replaces block='WeakStone:4'/>
+        <Replaces block='MediumStone:0'/>
+        <Replaces block='Sandstone'/>
+      </VeinsPreset>
+
       <ConfigSection> <!-- Coal -->
-        <CloudPreset name = 'PresetCoalBeds' block = "oreCoal"
-                     inherits = 'PresetStrategicCloud'>
-          <DrawWireframe>true</DrawWireframe>
-          <WireframeColor>0x6010A010</WireframeColor> 
+        <CloudPreset name='PresetCoalBeds' block='oreCoal'
+                     inherits='PresetSedStrategicCloud'
+                     drawWireframe='false'>
           <Setting name='DistributionFrequency'
-                 avg=':= 2 * coalFreq * if(age,age.coalClouds,1) * _default_'/>
-          <Setting name='CloudRadius' avg=':= 1.2 * coalSize * _default_'
-                   range=':= 1.2 * coalSize * _default_'/>
+                 avg=':=20 * coalFreq * if(age,age.coalClouds,1) * _default_'/>
+          <Setting name='CloudRadius' avg=':=1.4 * coalSize * _default_'
+                   range=':=1.4 * coalSize * _default_'/>
           <Setting name='CloudThickness'
-                   avg=':= 0.2 * coalSize * _default_'
-                   range=':= 0.3 * coalSize * _default_'/>
-          <Setting name='OreDensity' avg='0.3'/>
-          <Setting name='OreVolumeNoiseCutoff' avg='0.3'/>
-          <Setting name='CloudHeight' avg=':= dimension.groundLevel'
-                   range='20' type='uniform'/>
-          <Biome name='Forest'/>
-          <Biome name='ForestHills'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
-          <Biome name='Plains'/>
-          <Biome name='Swampland' weight='2'/>
-          <Biome name='Jungle'/>
-          <Biome name='JungleHills'/>
-          <Biome name='River'/>
-          <Biome name='FrozenRiver'/>
-          <Biome name='Ice\s*Plains'/>
-          <Biome name='Ice\s*Mountains'/>
-          <Biome name='Taiga'/>
-          <Biome name='TaigaHills'/>
-          <Replaces block='WeakStone:0'/>
-          <Replaces block='WeakStone:2'/>
-          <Replaces block='WeakStone:3'/>
-          <Replaces block='WeakStone:4'/>
-          <Replaces block='Sandstone'/>
+                   avg=':=coalSize * _default_'
+                   range=':=coalSize * _default_'/>
+          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Biome name='Forest' weight='0.5'/>
+          <Biome name='ForestHills' weight='0.5'/>
+          <Biome name='Desert' weight='0.5'/>
+          <Biome name='DesertHills' weight='0.5'/>
+          <Biome name='Plains' weight='0.5'/>
+          <Biome name='Jungle' weight='0.5'/>
+          <Biome name='JungleHills' weight='0.5'/>
+          <Biome name='River' weight='0.5'/>
+          <Biome name='FrozenRiver' weight='0.5'/>
+          <Biome name='Ice\s*Plains' weight='0.5'/>
+          <Biome name='Ice\s*Mountains' weight='0.5'/>
+          <Biome name='Taiga' weight='0.5'/>
+          <Biome name='TaigaHills' weight='0.5'/>
+          <Biome name='Swampland'/>
         </CloudPreset>
 
         <VeinsPreset name='PresetCoalBedHintVeins' block='oreCoal'
-                     inherits='PresetHintVeins'>
-          <DrawWireframe>true</DrawWireframe>
-          <WireframeColor>0x60A01010</WireframeColor> 
-          <Setting name='MotherlodeFrequency' avg=':= 1.2 * _default_'
-                   range=':= _default_'/> 
-          <Setting name='MotherlodeRangeLimit' avg=':= coalSize * _default_'
-                   range=':= coalSize * _default_'/>
-          <Replaces block='WeakStone:0'/>
-          <Replaces block='WeakStone:2'/>
-          <Replaces block='WeakStone:3'/>
-          <Replaces block='WeakStone:4'/>
-          <Replaces block='Sandstone'/>
+                     inherits='PresetHintVeinsSed'>
+          <Setting name='MotherlodeFrequency' avg=':=1.2 * _default_'
+                   range=':=_default_'/> 
+          <Setting name='MotherlodeRangeLimit' avg=':=coalSize * _default_'
+                   range=':=coalSize * _default_'/>
         </VeinsPreset>
                     
       </ConfigSection>
 
-      <ConfigSection> <!-- Iron -->
+      <ConfigSection> <!-- Banded Iron Formations -->
+        <CloudPreset name='PresetBandedIron' block='StrongOreRock:0'
+                     inherits='PresetSedStrategicCloud'
+                     drawWireframe='false'>
+          <WireframeColor>0xFF221100</WireframeColor> 
+          <Setting name='DistributionFrequency'
+                 avg=':= 20 * ironFreq * if(age,age.ironClouds,1) * _default_'/>
+          <Setting name='CloudRadius' avg=':=ironSize * _default_'
+                   range=':=ironSize * _default_'/>
+          <Setting name='CloudThickness'
+                   avg=':=ironSize * _default_'
+                   range=':=ironSize * _default_'/>
+          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Biome name='Forest.*' weight='0.5'/>
+          <Biome name='Desert.*' weight='0.5'/>
+          <Biome name='Plains' weight='0.5'/>
+          <Biome name='Swampland' weight='0.5'/>
+          <Biome name='Jungle.*' weight='0.5'/>
+          <Biome name='River' weight='0.5'/>
+          <Biome name='FrozenRiver'/>
+          <Biome name='Ice.*'/>
+          <Biome name='Taiga.*'/>
+        </CloudPreset>
+        <CloudPreset name='PresetBandedIronOceanic'
+                     inherits='PresetBandedIron'
+                     drawWireframe='false'>
+          <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='normal'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='StrongStone:1'/>
+        </CloudPreset>
+        
+        <VeinsPreset name='PresetBandedIronHintVeins' block='StrongOreRock:0'
+                     inherits='PresetHintVeinsSed'>
+          <Setting name='MotherlodeFrequency' avg=':=_default_'
+                   range=':=_default_'/> 
+          <Setting name='MotherlodeRangeLimit' avg=':=ironSize * _default_'
+                   range=':=ironSize * _default_'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetBandedIronHintVeinsOceanic'
+                     inherits='PresetBandedIronHintVeins'>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='StrongStone:1'/>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </VeinsPreset>
+        
+        <VeinsPreset name='PresetSubBIFBreccia'
+                     inherits='PresetRockVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <Setting name='MotherlodeFrequency' avg='0.2'/>
+          <Setting name='MotherlodeHeight' avg='35' range='2'/>
+          <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                   range=':= 0.5 * _default_'/> 
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+          <OreBlock block='WeakStone:0' weight='0.88'/>
+          <OreBlock block='MediumOreRock:2' weight='0.10'/>
+          <OreBlock block='oreGold' weight='0.02'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSubBIFBrecciaOceanic'
+                     inherits='PresetSubBIFBreccia'>
+          <Replaces block='StrongStone:1'/>
+          <Replaces block='WeakStone:4'/>
+          <Setting name='MotherlodeHeight' avg=':=30/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel'/>
+        </VeinsPreset>
         
       </ConfigSection>
-      
+            
       <ConfigSection> <!-- Distributions -->
       
         <OptionChoice name='GeologicaGenStandardOres' default='true'>
@@ -574,18 +716,1372 @@
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
         
-        <IfCondition condition=':= ?GeologicaGenStandardOres &amp;
-                                (dimension.id = 0) &amp;
-                                (dimension.generator = "RandomLevelSource")'>
+        <IfCondition condition=":=?GeologicaGenStandardOres &amp;
+                                (dimension.id=0) &amp;
+                                (dimension.generator='RandomLevelSource')">
+          
           <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
             <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
           </Cloud>
+          
+          <Cloud name='BandedIron' inherits='PresetBandedIron'>
+            <Veins name='BandedIronHintVeins'
+                   inherits='PresetBandedIronHintVeins'/>
+            <Veins name='SubBIFBreccia'
+                   inherits='PresetSubBIFBreccia'/>
+          </Cloud>
+          <!-- OCEAN
+          <Cloud name='BandedIronOceanic' inherits='PresetBandedIronOceanic'>
+            <Veins name='BandedIronHintVeinsOceanic'
+                   inherits='PresetBandedIronHintVeinsOceanic'/>
+            <Veins name='SubBIFBrecciaOceanic'
+                   inherits='PresetSubBIFBrecciaOceanic'/>
+          </Cloud>
+          -->
         </IfCondition>
+
+      </ConfigSection>
+      
+    </ConfigSection> <!-- standard ores/minerals -->
+
+
+    <ConfigSection> <!-- Mineral sand -->
+
+      <ConfigSection>
+        <StandardGenPreset name='PresetOreSand'>
+          <Setting name='Size' avg='120' range='40'/>
+          <Setting name='Frequency' avg='0.03' range='0'/>
+          <Setting name='Height' avg=':=60/64 * dimension.groundLevel'
+                   range='1'/>
+          <Replaces block='sand'/>
+          <Replaces block='dirt'/>
+        </StandardGenPreset>
+        <StandardGenPreset name='PresetBasalticSand'
+                           inherits='PresetOreSand'
+                           block='WeakOreSand:0'>
+          <Biome name='Beach'/>
+        </StandardGenPreset>
+        <StandardGenPreset name='PresetGarnetSand'
+                           inherits='PresetOreSand'
+                           block='WeakOreSand:1'>
+          <Setting name='Frequency' avg=':=3 * _default_'/>
+          <Biome name='Beach'/>
+          <Biome name='Ice\s*Mountains' weight='0.3'/>
+        </StandardGenPreset>
+        <StandardGenPreset name='PresetGraniticSand'
+                           inherits='PresetOreSand'
+                           block='WeakOreSand:2'>
+          <Biome name='River'/>
+          <Biome name='FrozenRiver'/>
+          <Biome name='Beach' weight='0.5'/>
+          <Biome name='Ice\s*Mountains' weight='0.3'/>
+        </StandardGenPreset>
+        <StandardGenPreset name='PresetQuartzSand'
+                           inherits='PresetOreSand'
+                           block='WeakOreSand:3'
+                           drawWireframe='true'>
+          <Setting name='Frequency' avg=':=0.3 * _default_'/>
+          <Biome name='Desert'/>
+          <Biome name='DesertHills'/>
+        </StandardGenPreset>
+        <StandardGenPreset name='PresetVolcanicAsh'
+                           inherits='PresetOreSand'
+                           block='WeakOreSand:4'>
+           <Setting name='Height' avg=':=65/64 * dimension.groundLevel'
+                    range='1'/>
+           <Biome name='Extreme\s*Hills'/>
+           <Biome name='Extreme\s*Hills\s*Edge'/>    
+        </StandardGenPreset>
+      </ConfigSection>
+
+      <ConfigSection>
+        <StandardGen name='BasalticSand' inherits='PresetBasalticSand'
+                     drawWireframe='false' wireframeColor='0xFFFF2222'/>
+        <StandardGen name='GarnetSand' inherits='PresetGarnetSand'
+                     drawWireframe='false' wireframeColor='0xFF222222'/>
+        <StandardGen name='GraniticSand' inherits='PresetGraniticSand'
+                     drawWireframe='false' wireframeColor='0xFFFFFF22'/>
+        <StandardGen name='QuartzSand' inherits='PresetQuartzSand'
+                     drawWireframe='false' wireframeColor='0xFFFF9922'/>
+        <StandardGen name='VolcanicAsh' inherits='PresetVolcanicAsh'
+                     drawWireframe='false' wireframeColor='0xFF999922'/>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Serpentine and other intrusive veins -->
+
+      <ConfigSection>
+        <VeinsPreset name='PresetIntrusiveVeins'
+                     inherits='PresetRockVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00AA00'>
+          <Setting name='MotherlodeFrequency' avg='0.02'/>
+          <Setting name='MotherlodeHeight' avg='30' range='30'/>
+          <Biome name='Forest.*' weight='0.5'/>
+          <Biome name='Desert.*' weight='0.5'/>
+          <Biome name='Plains' weight='0.5'/>
+          <Biome name='Swampland' weight='0.5'/>
+          <Biome name='Jungle.*' weight='0.5'/>
+          <Biome name='.*River' weight='0.5'/>
+          <Biome name='Ice.*' weight='0.5'/>
+          <Biome name='Taiga.*' weight='0.5'/>
+          <Biome name='Beach' weight='0.5'/>
+          <!-- OCEAN
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Biome name='MushroomIsland'/>
+          <Biome name='MushroomIslandShore'/>
+          -->
+          <Biome name='Extreme\s*Hills'/>
+          <Biome name='Extreme\s*Hills\s*Edge'/>
+          <Replaces block='.*Stone.*'/>
+        </VeinsPreset>
+        
+        <VeinsPreset name='PresetSerpentinite'
+                     inherits='PresetIntrusiveVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00AA00'>
+          <OreBlock block='MediumStone:2' weight='0.915'/>
+          <OreBlock block='MediumOreRock:5' weight='0.01'/>
+          <OreBlock block='StrongOreRock:2' weight='0.01'/>
+          <OreBlock block='VeryStrongStone:3' weight='0.05'/>
+          <OreBlock block='MediumOreRock:6' weight='0.005'/>
+          <OreBlock block='WeakOreRock:7' weight='0.01'/>
+        </VeinsPreset>
+
+        <VeinsPreset name='PresetDioriteVeins'
+                     inherits='PresetIntrusiveVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFF222222'
+                     block='VeryStrongStone:0'/>
+        
+        <VeinsPreset name='PresetGabbroVeins'
+                     inherits='PresetIntrusiveVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFFAA5555'
+                     block='VeryStrongStone:1'/>
+        
+      </ConfigSection>
+
+      <ConfigSection>
+        <Veins name='Serpentinite' inherits='PresetSerpentinite'/>
+        <Veins name='DioriteVeins' inherits='PresetDioriteVeins'/>
+        <Veins name='GabbroVeins' inherits='PresetGabbroVeins'/>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Lateritic Soils -->
+
+      <ConfigSection>
+        
+        <CloudPreset name='PresetLaterite' block='WeakClay:0'
+                     inherits='PresetStratum'
+                     drawWireframe='false'>
+          <WireframeColor>0xFFFF1100</WireframeColor>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+          <Setting name='CloudThickness' avg='4' range='2'/>
+          <Setting name='CloudHeight' avg=':=60/64 * dimension.groundLevel'
+                   range='5'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='Sandstone'/>
+          <Replaces block='dirt'/>
+          <Biome name='Swampland' weight='0.5'/>
+          <Biome name='Jungle'/>
+          <Biome name='JungleHills'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetLateriteBauxite'
+                     inherits='PresetLaterite'>
+          <WireframeColor>0xFFFF11FF</WireframeColor>
+          <Setting name='DistributionFrequency' avg='0.04'/>
+          <OreBlock block='WeakClay:0' weight='0.5'/>
+          <OreBlock block='WeakOreClay:0' weight='0.5'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetLateriteLimonite'
+                     inherits='PresetLaterite'>
+          <WireframeColor>0xFF1111FF</WireframeColor>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+          <OreBlock block='WeakClay:0' weight='0.70'/>
+          <OreBlock block='WeakOreClay:3' weight='0.15'/>
+          <OreBlock block='WeakOreClay:4' weight='0.15'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetSerpentiniteUnderLimonite'
+                     inherits='PresetStratum'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00AA00'>
+          <Setting name='DistributionFrequency' avg='2.0'/>
+          <Setting name='CloudHeight' avg='53' range='2'/>
+          <Setting name='CloudThickness' avg='3' range='1'/>
+          <Setting name='ParentRangeLimit' avg='5' range='2'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <OreBlock block='MediumStone:2' weight='0.75'/>
+          <OreBlock block='MediumOreRock:3' weight='0.25'/>
+        </CloudPreset>
+        
+      </ConfigSection>
+
+      <ConfigSection>
+        <Cloud name='Laterite' inherits='PresetLaterite'/>
+        <Cloud name='LateriteBauxite' inherits='PresetLateriteBauxite'/>
+        <Cloud name='LateriteLimonite' inherits='PresetLateriteLimonite'>
+          <Cloud name='SerpentiniteUnderLimonite'
+                 inherits='PresetSerpentiniteUnderLimonite'/>
+        </Cloud>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    
+    <ConfigSection> <!-- Veins in diorite/gabbro -->
+      <ConfigSection>
+        
+        <VeinsPreset name='PresetDioriteVeinsContinental'
+                     inherits='PresetLayeredVeinsContinental'>
+          <Setting name='DistributionFrequency' avg='0.01'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 10/64 * dimension.groundLevel'
+                   range=':= 3/64 * dimension.groundLevel'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <Replaces block='VeryStrongStone:1'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetIlmeniteDioriteContinental'
+                     inherits='PresetDioriteVeinsContinental'
+                     block='StrongOreRock:4'
+                     drawWireframe='false' wireframeColor='0xFF1111FF'>
+        </VeinsPreset>
+        <VeinsPreset name='PresetChromiteDioriteContinental'
+                     inherits='PresetDioriteVeinsContinental'
+                     block='StrongOreRock:2'
+                     drawWireframe='false' wireframeColor='0xFFFFFF11'>
+        </VeinsPreset>
+        <VeinsPreset name='PresetVermiculiteDioriteContinental'
+                     inherits='PresetDioriteVeinsContinental'
+                     block='WeakOreClay:5'
+                     drawWireframe='false' wireframeColor='0xFFFF1111'>
+        </VeinsPreset>
+
+        
+        <VeinsPreset name='PresetDioriteVeinsOther'
+                     inherits='PresetLayeredVeins'>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 20/64 * dimension.groundLevel'
+                   range=':= 20/64 * dimension.groundLevel'
+                   type='normal'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <Replaces block='VeryStrongStone:1'/>
+          <Replaces block='StrongStone:1'/>
+          <!-- OCEAN
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Biome name='MushroomIsland'/>
+          <Biome name='MushroomIslandShore'/>
+          -->
+          <Biome name='Extreme\s*Hills'/>
+          <Biome name='Extreme\s*Hills\s*Edge'/>    
+        </VeinsPreset>
+        <VeinsPreset name='PresetIlmeniteDioriteOther'
+                     inherits='PresetDioriteVeinsOther'
+                     block='StrongOreRock:4'
+                     drawWireframe='false' wireframeColor='0xFF1111FF'>
+        </VeinsPreset>
+        <VeinsPreset name='PresetChromiteDioriteOther'
+                     inherits='PresetDioriteVeinsOther'
+                     block='StrongOreRock:2'
+                     drawWireframe='false' wireframeColor='0xFFFFFF11'>
+        </VeinsPreset>
+
+      </ConfigSection>
+
+      <ConfigSection>
+        <Veins name='IlmeniteDioriteContinental'
+               inherits='PresetIlmeniteDioriteContinental'/>
+        <Veins name='ChromiteDioriteContinental'
+               inherits='PresetChromiteDioriteContinental'/>
+        <Veins name='VermiculiteDioriteContinental'
+               inherits='PresetVermiculiteDioriteContinental'/>
+        <Veins name='IlmeniteDioriteOther'
+               inherits='PresetIlmeniteDioriteOther'/>
+        <Veins name='ChromiteDioriteOther'
+               inherits='PresetChromiteDioriteOther'/>
+      </ConfigSection>
+    </ConfigSection>
+
+    <ConfigSection> <!-- Layered Intrusions -->
+
+      <ConfigSection> <!-- Strata -->
+        
+        <CloudPreset name='PresetLayeredIntrusion'
+                     inherits='PresetStratum'>
+          <Setting name='CloudThickness' avg='5' range='0'/>
+          <Setting name='CloudRadius' avg='32' range='5'/>
+          <Setting name='CloudHeight' range='0'/>
+          <Setting name='ParentRangeLimit' avg='3' range='2'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <Replaces block='VeryStrongStone:1'/>
+          <Replaces block='VeryStrongStone:3'/>
+          <Replaces block='StrongStone:3'/>
+          <WireframeColor>0xFFFFFF00</WireframeColor>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetPeridotiteIntrusion'
+                     block='VeryStrongStone:3'
+                     inherits='PresetLayeredIntrusion'
+                     drawWireframe='false'>
+          <Setting name='CloudHeight' avg='10' range='0'/>
+          <Setting name='DistributionFrequency' avg='0.01'/>
+          <Biome name='Forest.*' weight='0.5'/>
+          <Biome name='Desert.*' weight='0.5'/>
+          <Biome name='Plains' weight='0.5'/>
+          <Biome name='Swampland' weight='0.5'/>
+          <Biome name='Jungle.*' weight='0.5'/>
+          <Biome name='.*River' weight='0.5'/>
+          <Biome name='Ice.*' weight='0.5'/>
+          <Biome name='Taiga.*' weight='0.5'/>
+          <Biome name='Beach' weight='0.5'/>
+          <Biome name='Extreme\s*Hills'/>
+          <Biome name='Extreme\s*Hills\s*Edge'/>
+          <!-- OCEAN (comment out stuff above)
+          <Biome name='.*' weight='0.5'/>
+          <Biome name='Extreme\s*Hills' weight='0.5'/>
+          <Biome name='Extreme\s*Hills\s*Edge' weight='0.5'/>
+          -->
+        </CloudPreset>
+        
+        <CloudPreset name='PresetGabbroIntrusion' block='VeryStrongStone:1'
+                     inherits='PresetLayeredIntrusion'>
+          <Setting name='CloudHeight' avg='20' range='0'/>
+          <Setting name='DistributionFrequency' avg='20' range='0'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetDioriteIntrusion' block='VeryStrongStone:0'
+                     inherits='PresetLayeredIntrusion'>
+          <Setting name='CloudHeight' avg='30' range='0'/>
+          <Setting name='DistributionFrequency' avg='20' range='0'/>
+        </CloudPreset>
+        
+      </ConfigSection>
+
+      <ConfigSection> <!-- Ores -->
+
+        <CloudPreset name='PresetLayeredIntrusionOre'
+                     inherits='PresetStrategicCloud'>
+          <Setting name='ParentRangeLimit' avg='16' range='2'/>
+          <Setting name='DistributionFrequency' avg=':= 0.25'/>
+          <Setting name='CloudThickness' avg=':= 0.25 * _default_'
+                   range=':= 0.25 * _default_'/>
+          <Setting name='CloudRadius' avg='16' range='3'/>
+          <Setting name='OreDensity' avg=':=2 * _default_'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetPeridotiteLayer'
+                     inherits='PresetLayeredIntrusionOre'>
+          <Setting name='CloudHeight'
+                   avg=':= 10/64 * dimension.groundLevel'
+                   range=':= 5/64 * dimension.groundLevel'
+                   type='uniform'/>
+          <Replaces block='VeryStrongStone:1'/>
+          <Replaces block='VeryStrongStone:3'/>
+        </CloudPreset>
+
+        <VeinsPreset name='PresetPeridotiteSerpentinite'
+                     inherits='PresetSerpentinite'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00FF00'>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 10/64 * dimension.groundLevel'
+                   range=':= 2/64 * dimension.groundLevel'/>
+          <Setting name='ParentRangeLimit' avg='16' range='8'/>
+          <Setting name='DistributionFrequency' avg=':= 20.0 * _default_'/>
+        </VeinsPreset>
+        
+        <CloudPreset name='PresetMagnetitePeridotite'
+                     inherits='PresetPeridotiteLayer'
+                     block='StrongOreRock:10'
+                     drawWireframe='false' wireframeColor='0xFFAAFFFF'>
+          <Setting name='DistributionFrequency'
+                   avg=':= ironFreq * _default_'/>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetMagnesitePeridotite'
+                     inherits='PresetPeridotiteLayer'
+                     drawWireframe='false'
+                     wireframeColor='0xFF11FFFF'
+                     block='MediumOreRock:5'>
+        </CloudPreset>
+
+        <CloudPreset name='PresetPentlanditePeridotite'
+                     inherits='PresetPeridotiteLayer'
+                     block='MediumOreRock:6'
+                     drawWireframe='false'
+                     wireframeColor='0xFF11FFFF'>
+          <Setting name='OreDensity' avg=':=0.5 * _default_'/>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetDioriteLayer'
+                     inherits='PresetLayeredIntrusionOre'>
+          <Setting name='CloudHeight'
+                   avg=':= 30/64 * dimension.groundLevel'
+                   range=':= 10/64 * dimension.groundLevel'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <Replaces block='VeryStrongStone:1'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetIlmeniteDioriteLayer'
+                     inherits='PresetDioriteLayer'
+                     block='StrongOreRock:4'
+                     drawWireframe='false' wireframeColor='0xFF1111FF'>
+        </CloudPreset>
+
+        <CloudPreset name='PresetChromiteDioriteLayer'
+                     inherits='PresetDioriteLayer'
+                     block='StrongOreRock:2'
+                     drawWireframe='false' wireframeColor='0xFFFF1111'>
+        </CloudPreset>
+
+        <CloudPreset name='PresetVermiculiteDiorite'
+                     inherits='PresetDioriteLayer'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFFFF'
+                     block='WeakOreClay:5'>
+          <Setting name='CloudHeight' range=':= 0.5 * _default_'/>
+        </CloudPreset>
+
+      </ConfigSection>
+      
+      <ConfigSection>
+        <Cloud name='PeridoditeIntrusion' inherits='PresetPeridotiteIntrusion'>
+          <Cloud name='GabbroIntrusion'
+                 inherits='PresetGabbroIntrusion'/>
+          <Cloud name='DioriteIntrusion'
+                   inherits='PresetDioriteIntrusion'/>
+          <Cloud name='MagnetitePeridotite'
+                 inherits='PresetMagnetitePeridotite'/>
+          <Cloud name='MagnesitePeridotite'
+                 inherits='PresetMagnesitePeridotite'/>
+          <Cloud name='PentlanditePeridotite'
+                 inherits='PresetPentlanditePeridotite'/>
+          <Veins name='PeridotiteSerpentinite'
+                 inherits='PresetPeridotiteSerpentinite'/>
+          <Cloud name='IlmeniteDioriteLayer'
+                 inherits='PresetIlmeniteDioriteLayer'/>
+          <Cloud name='ChromiteDioriteLayer'
+                 inherits='PresetChromiteDioriteLayer'/>
+          <Cloud name='VermiculiteDiorite'
+                 inherits='PresetVermiculiteDiorite'/>
+        </Cloud>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Marine Evaporites -->
+      <ConfigSection>
+        <CloudPreset name='PresetEvaporiteStratum'
+                     inherits='PresetStratum'
+                     drawWireframe='false'>
+          <Setting name='CloudHeight' range='0'/>
+          <Setting name='CloudThickness' range='0'/>
+          <Setting name='ParentRangeLimit' avg='3' range='2'/>
+          <Setting name='DistributionFrequency' avg='20' range='0'/>
+          <Biome name='Desert'/>
+          <Biome name='DesertHills'/>
+          <Biome name='Plains'/>
+          <Biome name='Ice\s*Plains'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='dirt'/>
+          <WireframeColor>0xFF11FF00</WireframeColor>
+        </CloudPreset>
+        <CloudPreset name='PresetEvaporiteLimestone'
+                     block='MediumStone:0'
+                     inherits='PresetEvaporiteStratum'>
+          <Setting name='DistributionFrequency' avg='0.01'/>
+          <Setting name='CloudHeight' avg='55' range='0'/>
+          <Setting name='CloudThickness' avg='3'/>
+        </CloudPreset>
+        <CloudPreset name='PresetEvaporiteGypsum' block='WeakOreRock:10'
+                     inherits='PresetEvaporiteStratum'>
+          <Setting name='CloudHeight' avg='58' range='0'/>
+          <Setting name='CloudThickness' avg='2' range='0'/>
+        </CloudPreset>
+        <CloudPreset name='PresetEvaporiteRockSalt' block='WeakOreRock:4'
+                     inherits='PresetEvaporiteStratum'>
+          <Setting name='CloudHeight' avg='60' range='0'/>
+          <Setting name='CloudThickness' avg='1' range='0'/>
+        </CloudPreset>
+      </ConfigSection>
+
+      <ConfigSection>
+        <Cloud name='EvaporiteLimestone' inherits='PresetEvaporiteLimestone'>
+          <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
+          <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
+        </Cloud>
+      </ConfigSection>
+
+    </ConfigSection>
+
+    <ConfigSection> <!-- Volcagenic Massive Sulfide -->
+
+      <ConfigSection>
+        
+        <CloudPreset name='PresetVMSRhyolite'
+                     inherits='PresetStratum'
+                     drawWireframe='false'
+                     block='StrongStone:7'>
+          <Setting name='CloudThickness' avg='10' range='2'/>
+          <Setting name='CloudRadius' avg='32' range='5'/>
+          <Setting name='CloudHeight' avg=':= 35/64 * dimension.groundLevel'
+                   range=':= 5/64 * dimension.groundLevel'/>
+          <Setting name='DistributionFrequency' avg='0.004'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='StrongStone:0'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='stone'/>
+          <Replaces block='water'/>
+          <WireframeColor>0xFFFFFF00</WireframeColor>
+          <Biome name='Ice\s*Mountains' weight='0.5'/>
+          <!-- OCEAN
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          -->
+        </CloudPreset>
+
+        <VeinsPreset name='PresetVMSRhyoliteHintVeins'
+                     inherits='PresetHintVeins'
+                     block='StrongStone:7'>
+          <Setting name='MotherlodeHeight'
+                   avg=':=35/64 * dimension.groundLevel'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='StrongStone:0'/>
+          <Replaces block='WeakStone:0'/>
+          <Replaces block='WeakStone:2'/>
+          <Replaces block='WeakStone:3'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='Sandstone'/>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='stone'/>
+        </VeinsPreset>
+
+        <VeinsPreset name='PresetVMSChalcopyrite'
+                     inherits='PresetLayeredVeinsLite'
+                     block='MediumOreRock:2'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <Setting name='DistributionFrequency' avg='1.0'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 30/64 * dimension.groundLevel'
+                   range=':= 2/64 * dimension.groundLevel'/>
+          <Replaces block='StrongStone:7'/>
+        </VeinsPreset>
+
+        <VeinsPreset name='PresetVMSSphaleriteGalena'
+                     inherits='PresetSphaleriteGalena'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0000'>
+          <Setting name='DistributionFrequency' avg='1.0'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 40/64 * dimension.groundLevel'
+                   range=':= 2/64 * dimension.groundLevel'/>
+          <Replaces block='StrongStone:7'/>
+        </VeinsPreset>
+
+        <VeinsPreset name='PresetVMSGold'
+                     inherits='PresetLayeredVeinsLite'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0000'
+                     block='oreGold'>
+          <!-- Adapted from COG GoldVeins -->
+          <Setting name='MotherlodeFrequency'
+                   avg=':= 0.15 * goldFreq * if(age,age.goldVeins,1)'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 42/64 * dimension.groundLevel'
+                   range=':= 1/64 * dimension.groundLevel'/>
+          <Replaces block='StrongStone:7'/>
+          <Setting name='MotherlodeSize' avg=':= 0.8 * goldSize * _default_'
+                   range=':= 0.5 * goldSize * _default_'/>
+          <Setting name='BranchHeightLimit' avg='10'/>  
+          <Setting name='BranchFrequency' avg=':= 0.85 * _default_'/> 
+          <Setting name='BranchLength' avg=':= 0.75 * _default_'
+                   range=':= 0.66 * _default_'/>
+          <Setting name='SegmentRadius'
+                   avg=':= 0.7 * goldSize * _default_'
+                   range=':= 0.5 * goldSize * _default_'/>
+          <Setting name='SegmentAngle' avg='0.6' range='0.40' /> 
+        </VeinsPreset>
+        
+      </ConfigSection>
+
+      <ConfigSection>
+        <Cloud name='VMSRhyolite'
+               inherits='PresetVMSRhyolite'>
+          <Veins name='VMSSphaleriteGalena'
+                 inherits='PresetVMSSphaleriteGalena'/>
+          <Veins name='VMSChalcopyrite' inherits='PresetVMSChalcopyrite'/>
+          <Veins name='VMSGold' inherits='PresetVMSGold'/>
+        </Cloud>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- SEDEX deposits -->
+      
+      <ConfigSection>
+        <CloudPreset name='PresetSEDEX'
+                     inherits='PresetSedStrategicCloud'>
+          <Biome name='Forest'/>
+          <Biome name='ForestHills'/>
+          <Biome name='Desert'/>
+          <Biome name='DesertHills'/>
+          <Biome name='Plains'/>
+          <Biome name='Swampland'/>
+          <Biome name='Jungle'/>
+          <Biome name='JungleHills'/>
+          <Biome name='River'/>
+          <Biome name='FrozenRiver'/>
+          <Biome name='Ice\s*Plains'/>
+          <Biome name='Ice\s*Mountains'/>
+          <Biome name='Taiga'/>
+          <Biome name='TaigaHills'/>
+          <Biome name='Beach'/>
+          <Biome name='MushroomIsland'/>
+          <Biome name='MushroomIslandShore'/>
+          <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
+          <Setting name='OreDensity' avg=':=1.5 * _default_'/>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetSEDEXSphaleriteGalena'
+                     inherits='PresetSEDEX'
+                     drawWireframe='false'
+                     wireframeColor='0xFF3300FF'>
+          <OreBlock block='WeakOreRock:2' weight='0.35'/>
+          <OreBlock block='MediumOreRock:8' weight='0.65'/>
+          <Setting name='DistributionFrequency' avg=':= 3 * _default_'/>
+          <Setting name='OreDensity' avg=':= 1.5 * _default_'/>
+        </CloudPreset>
+        <CloudPreset name='PresetSEDEXSphaleriteGalenaOceanic'
+                     inherits='PresetSEDEXSphaleriteGalena'>
+          <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </CloudPreset>
+        <VeinsPreset name='PresetSEDEXSphaleriteGalenaHintVeins'
+                     inherits='PresetHintVeinsSed'>
+          <OreBlock block='WeakOreRock:2' weight='0.35'/>
+          <OreBlock block='MediumOreRock:8' weight='0.65'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSEDEXSphaleriteGalenaHintVeinsOceanic'
+                     inherits='PresetSEDEXSphaleriteGalenaHintVeins'>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </VeinsPreset>
+
+        <CloudPreset name='PresetSEDEXScheelite'
+                     inherits='PresetSEDEX'
+                     block='MediumOreRock:7'
+                     drawWireframe='false'
+                     wireframeColor='0xFF33FF55'>
+          <Setting name='OreDensity' avg=':=0.5 * _default_'/>
+        </CloudPreset>
+        <CloudPreset name='PresetSEDEXScheeliteOceanic'
+                     inherits='PresetSEDEXScheelite'>
+          <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel'
+                   type='uniform'/>
+          <Setting name='OreDensity' avg=':=0.5 * _default_'/>
+        </CloudPreset>
+        <VeinsPreset name='PresetSEDEXScheeliteHintVeins'
+                     inherits='PresetHintVeinsSed' block='MediumOreRock:7'/>
+        <VeinsPreset name='PresetSEDEXScheeliteHintVeinsOceanic'
+                     inherits='PresetSEDEXScheeliteHintVeins'>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </VeinsPreset>
+        
+        <CloudPreset name='PresetSEDEXChalcopyrite'
+                     inherits='PresetSEDEX'
+                     block='MediumOreRock:2'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+        </CloudPreset>
+        <CloudPreset name='PresetSEDEXChalcopyriteOceanic'
+                     inherits='PresetSEDEXChalcopyrite'>
+          <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </CloudPreset>
+        <VeinsPreset name='PresetSEDEXChalcopyriteHintVeins'
+                     inherits='PresetHintVeinsSed'
+                     block='MediumOreRock:2'/>
+        <VeinsPreset name='PresetSEDEXChalcopyriteHintVeinsOceanic'
+                     inherits='PresetSEDEXChalcopyriteHintVeins'>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=5/64 * dimension.groundLevel' type='uniform'/>
+        </VeinsPreset>
+      </ConfigSection>
+
+      <ConfigSection>
+        <Cloud name='SEDEXSphaleriteGalena'
+               inherits='PresetSEDEXSphaleriteGalena'>
+          <Veins name='SEDEXSphaleriteGalenaHintVeins'
+                 inherits='PresetSEDEXSphaleriteGalenaHintVeins'/>
+        </Cloud>
+        <Cloud name='SEDEXScheelite' inherits='PresetSEDEXScheelite'>
+          <Veins name='SEDEXScheeliteHintVeins'
+                 inherits='PresetSEDEXScheeliteHintVeins'/>
+        </Cloud>
+        <Cloud name='SEDEXChalcopyrite'
+               inherits='PresetSEDEXChalcopyrite'>
+          <Veins name='SEDEXChalcopyriteHintVeins'
+                 inherits='PresetSEDEXChalcopyriteHintVeins'/>
+        </Cloud>
+        <!-- OCEAN
+        <Cloud name='SEDEXSphaleriteGalenaOceanic'
+               inherits='PresetSEDEXSphaleriteGalenaOceanic'>
+          <Veins name='SEDEXSphaleriteGalenaHintVeinsOceanic'
+                 inherits='PresetSEDEXSphaleriteGalenaHintVeinsOceanic'/>
+        </Cloud>
+        <Cloud name='SEDEXScheeliteOceanic'
+               inherits='PresetSEDEXScheeliteOceanic'>
+          <Veins name='SEDEXScheeliteHintVeinsOceanic'
+                 inherits='PresetSEDEXScheeliteHintVeinsOceanic'/>
+        </Cloud>
+        <Cloud name='SEDEXChalcopyriteOceanic'
+               inherits='PresetSEDEXChalcopyriteOceanic'>
+          <Veins name='SEDEXChalcopyriteHintVeinsOceanic'
+                 inherits='PresetSEDEXChalcopyriteHintVeinsOceanic'/>
+        </Cloud>
+        -->
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Porphyry deposits -->
+      <ConfigSection>
+        <VeinsPreset name='PresetPorphyry'
+                     inherits='PresetRockVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <Setting name='MotherlodeFrequency' avg='0.004'/>
+          <Setting name='MotherlodeHeight' avg='10' range='10'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='VeryStrongStone:0'/>
+          <OreBlock block='WeakStone:0' weight='0.7'/>
+          <OreBlock block='MediumOreRock:2' weight='0.20'/>
+          <OreBlock block='WeakOreRock:3' weight='0.10'/>
+        </VeinsPreset>
+      </ConfigSection>
+      <ConfigSection>
+        <Veins name='Porphyry' inherits='PresetPorphyry'/>
+      </ConfigSection>
+    </ConfigSection>
+
+    <ConfigSection> <!-- Veins in Granite -->
+      <ConfigSection>
+        <VeinsPreset name='PresetGraniteVeinsContinental'
+                     inherits='PresetLayeredVeinsContinental'>
+          <Setting name='DistributionFrequency' avg='0.008'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 30/64 * dimension.groundLevel'
+                   range=':= 10/64 * dimension.groundLevel'/>
+          <Setting name='BranchLength' avg=':= 2 * _default_'
+                   range=':= 2 * _default_'/>
+          <Setting name='MotherlodeSize' avg=':= 2 * _default_'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='StrongStone:2'/>
+          <Replaces block='MediumStone:1'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteChalcopyriteContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <OreBlock block='MediumOreRock:2' weight='0.89'/>
+          <OreBlock block='oreGold' weight='0.10'/>
+          <OreBlock block='StrongOreRock:9' weight='0.01'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteMagnetiteContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFF221100'
+                     block='StrongOreRock:5'/>
+        <VeinsPreset name='PresetGraniteStibniteContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'
+                     block='WeakOreRock:5'>
+        </VeinsPreset>
+        
+        <VeinsPreset name='PresetGraniteVeinsVolcanic'
+                     inherits='PresetLayeredVeinsVolcanic'>
+          <Setting name='DistributionFrequency' avg='0.01'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 55/64 * dimension.groundLevel'
+                   range=':= 15/64 * dimension.groundLevel'/>
+          <Setting name='BranchLength' avg=':= 2 * _default_'
+                   range=':= 2 * _default_'/>
+          <Setting name='MotherlodeSize' avg=':= 2 * _default_'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='StrongStone:2'/>
+          <Replaces block='MediumStone:1'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteChalcopyriteVolcanic'
+                     inherits='PresetGraniteVeinsVolcanic'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <OreBlock block='MediumOreRock:2' weight='0.89'/>
+          <OreBlock block='oreGold' weight='0.10'/>
+          <OreBlock block='StrongOreRock:9' weight='0.01'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteMagnetiteVolcanic'
+                     inherits='PresetGraniteVeinsVolcanic'
+                     drawWireframe='false'
+                     wireframeColor='0xFF221100'
+                     block='StrongOreRock:5'/>
+        <VeinsPreset name='PresetGraniteStibniteVolcanic'
+                     inherits='PresetGraniteVeinsVolcanic'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'
+                     block='WeakOreRock:5'>
+        </VeinsPreset>
+        
+        <ConfigSection> <!-- Pegmatite -->
+          <VeinsPreset name='PresetPegmatite'
+                       inherits='PresetRockVeins'
+                       drawWireframe='false'
+                       wireframeColor='0xFFFF0055'>
+            <Setting name='MotherlodeFrequency' avg='0.006'/>
+            <Replaces block='StrongStone:2'/>
+            <Replaces block='StrongStone:3'/>
+            <Replaces block='StrongStone:4'/>
+            <Replaces block='VeryStrongStone:0'/>
+            <Replaces block='VeryStrongStone:1'/>
+            <OreBlock block='StrongStone:6' weight='0.628'/>
+            <OreBlock block='WeakOreRock:12' weight='0.05'/> 
+            <OreBlock block='MediumOreRock:12' weight='0.05'/> 
+            <OreBlock block='MediumOreRock:5' weight='0.10'/> 
+            <OreBlock block='MediumOreRock:9' weight='0.02'/>
+            <OreBlock block='MediumOreRock:7' weight='0.02'/>
+            <OreBlock block='MediumOreRock:4' weight='0.07'/>
+            <OreBlock block='StrongOreRock:8' weight='0.02'/>
+            <OreBlock block='StrongOreRock:6' weight='0.002'/>
+            <OreBlock block='MediumOreRock:1' weight='0.03'/>
+          </VeinsPreset>
+          <VeinsPreset name='PresetPegmatiteVolcanic'
+                       inherits='PresetPegmatite'
+                       drawWireframe='false'
+                       wireframeColor='0xFFFF0055'>
+            <Setting name='MotherlodeFrequency' avg=':= 2 * _default_'/>
+            <Setting name='MotherlodeHeight'
+                     avg=':= 50/64 * dimension.groundLevel'
+                     range=':= 20/64 * dimension.groundLevel'
+                     type='normal'/>
+            <Biome name='Extreme\s*Hills'/>
+            <Biome name='Extreme\s*Hills\s*Edge'/>
+          </VeinsPreset>
+          <VeinsPreset name='PresetPegmatiteContinental'
+                       inherits='PresetPegmatite'
+                       drawWireframe='false'
+                       wireframeColor='0xFFFF0055'>
+            <Setting name='MotherlodeHeight' avg='20' range='10'/>
+            <Biome name='.*Forest.*'/>
+            <Biome name='.*Desert.*'/>
+            <Biome name='.*Plains.*'/>
+            <Biome name='.*Swamp.*'/>
+            <Biome name='.*Jungle.*'/>
+            <Biome name='.*River'/>
+            <Biome name='.*Taiga.*'/>
+            <Biome name='Ice\s*Mountains'/>
+          </VeinsPreset>
+          <VeinsPreset name='PresetCarbonatite'
+                       inherits='PresetRockVeins'
+                       drawWireframe='false'
+                       wireframeColor='0xFF0000FF'>
+            <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                     range=':= 0.5 * _default_'/> 
+            <Setting name='ParentRangeLimit' avg='10' range='2'/>
+            <Setting name='MotherlodeFrequency' avg='1.0'/>
+            <Setting name='MotherlodeHeight' avg='40' range='10'/>
+            <Setting name='SegmentRadius' avg='1.5' range='0.5' type='normal'/>
+            <OreBlock block='WeakStone:1' weight='0.81'/>
+            <OreBlock block='MediumOreRock:1' weight='0.05'/> <!-- RE -->
+            <OreBlock block='WeakOreClay:5' weight='0.04'/> <!-- verm -->
+            <OreBlock block='MediumOreRock:2' weight='0.025'/> <!-- chalco -->
+            <OreBlock block='StrongOreRock:10' weight='0.025'/> <!-- FeVa -->
+            <OreBlock block='StrongOreRock:9' weight='0.025'/> <!-- U -->
+            <OreBlock block='StrongOreRock:4' weight='0.025'/> <!-- Ti -->
+            <!-- add barite (0.025), apatite (0.05), fluorite (0.025) -->
+            <Replaces block='StrongStone:2'/>
+            <Replaces block='StrongStone:3'/>
+            <Replaces block='StrongStone:4'/>
+            <Replaces block='VeryStrongStone:0'/>
+            <Replaces block='VeryStrongStone:1'/>
+            <Biome name='Extreme\s*Hills'/>
+            <Biome name='Extreme\s*Hills\s*Edge'/>
+          </VeinsPreset>
+        </ConfigSection>
+        
+      </ConfigSection>
+      <ConfigSection>
+        <Veins name='GraniteChalcopyriteContinental'
+               inherits='PresetGraniteChalcopyriteContinental'/>
+        <Veins name='GraniteMagnetiteContinental'
+               inherits='PresetGraniteMagnetiteContinental'/>
+        <Veins name='GraniteStibniteContinental'
+               inherits='PresetGraniteStibniteContinental'/>
+        <Veins name='PegmatiteContinental'
+               inherits='PresetPegmatiteContinental'/>
+        <Veins name='GraniteChalcopyriteVolcanic'
+               inherits='PresetGraniteChalcopyriteVolcanic'/>
+        <Veins name='GraniteMagnetiteVolcanic'
+               inherits='PresetGraniteMagnetiteVolcanic'/>
+        <Veins name='GraniteStibniteVolcanic'
+               inherits='PresetGraniteStibniteVolcanic'/>
+        <Veins name='PegmatiteVolcanic'
+               inherits='PresetPegmatiteVolcanic'>
+          <Veins name='Carbonatite' inherits='PresetCarbonatite'/>
+        </Veins>
+      </ConfigSection>
+    </ConfigSection>
+
+    <ConfigSection> <!-- Veins in Basalt -->
+      <ConfigSection>
+        <VeinsPreset name='PresetBasaltVeins'
+                     inherits='PresetLayeredVeins'>
+          <Setting name='DistributionFrequency' avg='0.005'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 25/64 * dimension.groundLevel'
+                   range=':= 10/64 * dimension.groundLevel'/>
+          <Setting name='BranchLength' avg=':= 2 * _default_'
+                   range=':= 2 * _default_'/>
+          <Replaces block='StrongStone:1'/>
+          <Biome name='Ocean'/>
+          <Biome name='FrozenOcean'/>
+          <Biome name='MushroomIsland'/>
+          <Biome name='MushroomIslandShore'/>
+        </VeinsPreset>
+        
+        <VeinsPreset name='PresetCinnabar'
+                     inherits='PresetBasaltVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'
+                     block='WeakOreRock:1'/>
+      </ConfigSection>
+      <ConfigSection>
+        <Veins name='Cinnabar' inherits='PresetCinnabar'/>
+      </ConfigSection>
+    </ConfigSection>
+      
+    <ConfigSection> <!-- carbonates  -->
+
+      <ConfigSection>
+        <ConfigSection> <!-- dolomite -->
+          <CloudPreset name='PresetDolomite'
+                       inherits='PresetSedimentaryContinentalMinor'
+                       drawWireframe='false'
+                       wireframeColor='0xFF00FF55'>
+            <Setting name='DistributionFrequency' avg='0.01'/>
+            <Setting name='CloudHeight'
+                     avg=':= 55/64 * dimension.groundLevel'
+                     range=':= 2/64 * dimension.groundLevel'/>
+            <Replaces block='WeakStone:0'/>
+            <Replaces block='WeakStone:2'/>
+            <Replaces block='WeakStone:3'/>
+            <Replaces block='WeakStone:4'/>
+            <Replaces block='Sandstone'/>
+            <Replaces block='MediumStone:0'/>
+            <OreBlock block='MediumStone:0' weight='0.3'/>
+            <OreBlock block='MediumOreRock:11' weight='0.7'/>
+          </CloudPreset>
+          <CloudPreset name='PresetDolomiteOceanic'
+                       inherits='PresetSedimentaryOceanic'
+                       drawWireframe='false'
+                       wireframeColor='0xFF00FF55'>
+            <Setting name='DistributionFrequency' avg='0.01'/>
+            <OreBlock block='MediumStone:0' weight='0.3'/>
+            <OreBlock block='MediumOreRock:11' weight='0.7'/>
+            <Biome name='Ocean'/>
+            <Biome name='FrozenOcean'/>
+          </CloudPreset>
+          <VeinsPreset name='PresetMagnesiteDolomite'
+                       inherits='PresetLayeredVeinsLite'
+                       drawWireframe='false'
+                       wireframeColor='0xFF11FF00'>
+            <OreBlock block='MediumOreRock:5'/>
+            <Replaces block='WeakStone:0'/>
+            <Replaces block='WeakStone:2'/>
+            <Replaces block='WeakStone:3'/>
+            <Replaces block='WeakStone:4'/>
+            <Replaces block='Sandstone'/>
+            <Replaces block='MediumStone:0'/>
+            <Replaces block='MediumOreRock:11'/>
+            <Setting name='MotherlodeHeight'
+                     avg=':= 55/64 * dimension.groundLevel'
+                     range=':= 2/64 * dimension.groundLevel'/>
+            <Setting name='MotherlodeRangeLimit' avg='4' range='2'/>
+            <Setting name='MotherlodeFrequency'
+                     avg=':= 15.0 * oreFreq' range='0'/>
+            <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                     range=':= 0.5 * _default_'/>
+          </VeinsPreset>
+        </ConfigSection>
+
+        <ConfigSection>
+          <CloudPreset name='PresetCarbonateDeposit'
+                       inherits='PresetLimestoneLower'>
+            <Setting name='DistributionFrequency' avg='0.003'/>
+            <Setting name='CloudThickness' avg='6'/>
+            <Setting name='CloudHeight'
+                     avg=':= 55/64 * dimension.groundLevel'
+                     range=':= 2/64 * dimension.groundLevel'/>
+          </CloudPreset>
+          <VeinsPreset name='PresetCarbonateSphaleriteGalena'
+                       inherits='PresetSphaleriteGalena'
+                       drawWireframe='false'
+                       wireframeColor='0xFFFF00FF'>
+            <Setting name='DistributionFrequency' avg=':= 1.0 * oreFreq'/>
+            <Setting name='MotherlodeHeight'
+                     avg=':= 55/64 * dimension.groundLevel'
+                     range=':= 2/64 * dimension.groundLevel'/>
+            <Setting name='ParentRangeLimit' avg='3' range='2' type='normal'/>
+            <Replaces block='MediumStone:0'/>
+          </VeinsPreset>
+          <VeinsPreset name='PresetCarbonateSphaleriteGalenaOceanic'
+                       inherits='PresetCarbonateSphaleriteGalena'
+                       drawWireframe='false'
+                       wireframeColor='0xFFFF00FF'>
+            <Setting name='DistributionFrequency' avg=':= 0.005'/>
+            <Setting name='MotherlodeHeight'
+                     avg=':= 40/64 * dimension.groundLevel'/>
+            <Biome name='Ocean'/>
+            <Biome name='FrozenOcean'/>
+          </VeinsPreset>
+        </ConfigSection>
+      </ConfigSection>
+      
+      <ConfigSection>
+        <Cloud name='Dolomite' inherits='PresetDolomite'>
+          <Veins name='MagnesiteDolomite' inherits='PresetMagnesiteDolomite'/>
+        </Cloud>
+        <!-- OCEAN
+        <Cloud name='DolomiteOceanic'
+               inherits='PresetDolomiteOceanic'>
+          <Veins name='MagnesiteDolomiteOceanic'
+                 inherits='PresetMagnesiteDolomite'/>
+        </Cloud>
+        -->
+        <Cloud name='CarbonateDeposit'
+               inherits='PresetCarbonateDeposit'>
+          <Veins name='CarbonateSphaleriteGalena'
+                 inherits='PresetCarbonateSphaleriteGalena'/>
+        </Cloud>
+        <!-- OCEAN
+        <Veins name='CarbonateSphaleriteGalenaOceanic'
+               inherits='PresetCarbonateSphaleriteGalenaOceanic'/>
+        -->
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Skarns -->
+      <ConfigSection>
+        <CloudPreset name='PresetSkarnDeposit' inherits='PresetSkarn'
+                     drawWireframe='false' wireframeColor='0xFF88FF55'>
+          <Biome name='.*' weight='1'/>
+          <Biome name='Extreme\s*Hills' weight='-1'/>
+          <Biome name='Extreme\s*Hills\s*Edge' weight='-1'/>
+          <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
+          <Setting name='CloudThickness' avg=':= 2 * _default_'/>
+          <Setting name='CloudHeight' range=':= 2/64 * dimension.groundLevel'/>
+        </CloudPreset>
+        <VeinsPreset name='PresetSkarnVeins'
+                     inherits='PresetLayeredVeinsLite'
+                     drawWireframe='false'>
+          <Replaces block='MediumStone:0'/>
+          <Replaces block='WeakStone:4'/>
+          <Replaces block='MediumStone:4'/>
+          <Replaces block='StrongStone:1'/>
+          <Replaces block='StrongStone:3'/>
+          <Replaces block='StrongStone:5'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 40/64 * dimension.groundLevel'
+                   range=':= 3/64 * dimension.groundLevel'/>
+          <Setting name='MotherlodeRangeLimit' avg='4' range='2'/>
+          <Setting name='MotherlodeFrequency' avg=':= 5.0 * oreFreq'/>
+          <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                   range=':= 0.5 * _default_'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSkarnMagnesite'
+                     inherits='PresetSkarnVeins'
+                     wireframeColor='0xFF11FF00'>
+          <OreBlock block='MediumOreRock:5' weight='0.70'/>
+          <OreBlock block='WeakOreClay:5' weight='0.30'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSkarnSphaleriteGalena'
+                     inherits='PresetSkarnVeins'
+                     wireframeColor='0xFFFFFF00'>
+          <OreBlock block='MediumOreRock:8' weight='0.65'/>
+          <OreBlock block='WeakOreRock:2' weight='0.35'/>
+          <Setting name='MotherlodeFrequency' avg=':= 3 * _default_'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSkarnChalcopyrite'
+                     inherits='PresetSkarnVeins'
+                     wireframeColor='0xFFFFFF00'
+                     drawWireframe='false'>
+          <OreBlock block='MediumOreRock:2' weight='0.5'/>
+          <OreBlock block='MediumOreRock:13' weight='0.5'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetSkarnMagnetite'
+                     inherits='PresetSkarnVeins'
+                     wireframeColor='0xFFFF0055'
+                     block='StrongOreRock:5'/>
+      </ConfigSection>
+
+      <ConfigSection>
+        <Cloud name='SkarnDeposit' inherits='PresetSkarnDeposit'>
+          <Veins name='SkarnMagnesite' inherits='PresetSkarnMagnesite'/>
+          <Veins name='SkarnSphaleriteGalena'
+                 inherits='PresetSkarnSphaleriteGalena'/>
+          <Veins name='SkarnChalcopyrite'
+                 inherits='PresetSkarnChalcopyrite'/>
+          <Veins name='SkarnMagnetite'
+                 inherits='PresetSkarnMagnetite'/>
+        </Cloud>
+      </ConfigSection>
+      
+    </ConfigSection>
+
+    <ConfigSection> <!-- Uranium -->
+      <ConfigSection>
+        <CloudPreset name='PresetUraniumUnconformitySandstone'
+                     inherits='PresetSandstone'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFF00'>
+          <Setting name='DistributionFrequency' avg='0.005'/>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='CloudHeight'
+                   avg=':= 45/64 * dimension.groundLevel'
+                   range=':= 0/64 * dimension.groundLevel'/>
+        </CloudPreset>
+        <CloudPreset name='PresetUraniumUnconformitySlate'
+                     inherits='PresetSlate'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00FF00'>
+          <Setting name='DistributionFrequency' avg='1'/>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='ParentRangeLimit' avg='8' range='2'/>
+          <Setting name='CloudHeight'
+                   avg=':= 40/64 * dimension.groundLevel'
+                   range=':= 0/64 * dimension.groundLevel'/>
+        </CloudPreset>
+        <CloudPreset name='PresetUraniumUnconformity'
+                     inherits='PresetStrategicCloud'
+                     block='StrongOreRock:9'
+                     drawWireframe='false'
+                     wireframeColor='0xFF0000FF'>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='ParentRangeLimit' avg='8' range='2'/>
+          <Setting name='DistributionFrequency' avg=':= 1'/>
+          <Setting name='CloudThickness' avg=':= 0.25 * _default_'
+                   range=':= 0.25 * _default_'/>
+          <Setting name='CloudRadius' avg='8' range='3'/>
+          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Setting name='CloudHeight'
+                   avg=':= 42/64 * dimension.groundLevel'
+                   range=':= 2/64 * dimension.groundLevel'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetUraniumSandstone'
+                     inherits='PresetSandstone'
+                     drawWireframe='false'
+                     wireframeColor='0xFF555500'>
+          <Setting name='DistributionFrequency' avg='0.005'/>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='CloudHeight'
+                   avg=':= 50/64 * dimension.groundLevel'
+                   range=':= 5/64 * dimension.groundLevel'/>
+          <OreBlock block='sandstone' weight='0.95'/>
+          <OreBlock block='StrongOreRock:9' weight='0.05'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetUraniumConglomerate'
+                     inherits='PresetConglomerate'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFFFF'>
+          <Setting name='DistributionFrequency' avg='0.003'/>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='CloudRadius' avg=':= 1.3 * _default_'
+                   range=':= 1.3 * _default_'/>
+          <Setting name='CloudHeight'
+                   avg=':= 50/64 * dimension.groundLevel'
+                   range=':= 5/64 * dimension.groundLevel'/>
+          <OreBlock block='WeakStone:3' weight='0.98'/>
+          <OreBlock block='StrongOreRock:9' weight='0.02'/>
+        </CloudPreset>
+        
+        <VeinsPreset name='PresetUraniumVeins'
+                     inherits='PresetLayeredVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFFF00FFF'
+                     block='StrongOreRock:9'>
+          <Setting name='DistributionFrequency' avg='0.003'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 40/64 * dimension.groundLevel'
+                   range=':= 10/64 * dimension.groundLevel'/>
+          <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                   range=':= 0.5 * _default_'/>
+          <Replaces block='.*Stone.*'/>
+        </VeinsPreset>
         
       </ConfigSection>
       
-    </ConfigSection> <!-- ores/minerals -->
-    
-  </ConfigSection>
+      <ConfigSection>
+        <Cloud name='UraniumUnconformitySandstone'
+               inherits='PresetUraniumUnconformitySandstone'>
+          <Cloud name='UraniumUnconformitySlate'
+               inherits='PresetUraniumUnconformitySlate'/>
+          <Cloud name='UraniumUnconformity'
+                 inherits='PresetUraniumUnconformity'/>
+        </Cloud>
+        <Cloud name='UraniumSandstone'
+               inherits='PresetUraniumSandstone'/>
+        <Cloud name='UraniumConglomerate'
+               inherits='PresetUraniumConglomerate'/>
+        <Veins name='UraniumVeins' inherits='PresetUraniumVeins'/>
+      </ConfigSection>
+      
+    </ConfigSection>
 
+    <ConfigSection>
+      <ConfigSection>
+        <VeinsPreset name='PresetAlunite'
+                     inherits='PresetLayeredVeinsVolcanic'
+                     block='MediumOreRock:10'>
+          <DistributionFrequency avg='0.1'/>
+          <Setting name='MotherlodeHeight' avg='95' range='5'
+                   type='uniform'/>
+          <Replaces block='StrongStone:7'/>
+          <Replaces block='StrongStone:0'/>
+        </VeinsPreset>
+      </ConfigSection>
+      <ConfigSection>
+        <VeinsPreset name='Alunite' inherits='PresetAlunite'/>
+      </ConfigSection>
+    </ConfigSection>
+    
+    <ConfigSection>
+      <ConfigSection>
+        <CloudPreset name='PresetDiatomite' block='WeakOreRock:6'
+                     inherits='PresetSedStrategicCloud'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFFFFFF'>
+          <Setting name='DistributionFrequency'
+                   avg=':= 10 * _default_'/>
+          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Biome name='Extreme\s*Hills'/>
+          <Biome name='Extreme\s*Hills\s*Edge'/>
+          <Biome name='Desert'/>
+          <Biome name='DesertHills'/>
+        </CloudPreset>
+      </ConfigSection>
+      <ConfigSection>
+        <Cloud name='Diatomite' inherits='PresetDiatomite'/>
+      </ConfigSection>
+    </ConfigSection>
+
+    <ConfigSection> <!-- Graphite -->
+      <ConfigSection>
+        <CloudPreset name='PresetGraphiteCloud'
+                     inherits='PresetStratumContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFF000000'>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='CloudHeight' avg='45' range='5'/>
+          <Setting name='DistributionFrequency' avg='0.003'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetSchistGraphiteCloud'
+                     inherits='PresetGraphiteCloud'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF5555'>
+          <OreBlock block='WeakOreRock:9' weight='0.20'/>
+          <OreBlock block='MediumStone:1' weight='0.80'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetGneissGraphiteCloud'
+                     inherits='PresetGraphiteCloud'
+                     drawWireframe='false'
+                     wireframeColor='0xFF222222'>
+          <OreBlock block='WeakOreRock:9' weight='0.20'/>
+          <OreBlock block='StrongStone:2' weight='0.80'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetQuartziteGraphiteCloud'
+                     inherits='PresetGraphiteCloud'
+                     drawWireframe='false'
+                     wireframeColor='0xFFAAAA00'>
+          <OreBlock block='WeakOreRock:9' weight='0.20'/>
+          <OreBlock block='StrongStone:2' weight='0.80'/>
+        </CloudPreset>
+
+        <CloudPreset name='PresetGraphiteBeds'
+                     inherits='PresetCoalBeds'
+                     drawWireframe='false'>
+          <Setting name='DistributionFrequency' avg=':=0.1 * _default_'/>
+          <Setting name='CloudHeight' avg='50' range='5'/>
+          <OreBlock block='WeakOreRock:9' weight='0.70'/>
+          <OreBlock block='oreCoal' weight='0.30'/>
+        </CloudPreset>
+        
+        <VeinsPreset name='PresetGraphiteVeins'
+                     inherits='PresetLayeredVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFF000000'
+                     block='WeakOreRock:9'>
+          <Replaces block='.*Stone.*'/>
+          <Setting name='DistributionFrequency' avg='0.003'/>
+          <Setting name='MotherlodeHeight' avg='45' range='5'/>
+        </VeinsPreset>
+        
+      </ConfigSection>
+      <ConfigSection>
+        <Cloud name='SchistGraphiteCloud'
+               inherits='PresetSchistGraphiteCloud'/>
+        <Cloud name='GneissGraphiteCloud'
+               inherits='PresetGneissGraphiteCloud'/>
+        <Cloud name='QuartziteGraphiteCloud'
+               inherits='PresetQuartziteGraphiteCloud'/>
+        <Cloud name='GraphiteBeds'
+               inherits='PresetGraphiteBeds'/>
+        <Veins name='GraphiteVeins' inherits='PresetGraphiteVeins'/>
+      </ConfigSection>
+    </ConfigSection>
+
+  </ConfigSection>
+  
 </IfModInstalled>
