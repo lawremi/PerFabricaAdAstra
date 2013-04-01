@@ -1,0 +1,2689 @@
+#+TITLE: Per Fabrica ad Astra: Through craft, to the stars
+* Goal
+  Add more realistic and educational aspects to the Minecraft
+  experience. We want to teach science (geology, physics, chemistry,
+  biology, ...), math, statistics and engineering (algorithms).
+
+* Premise
+** Extraction and Chemistry
+   The basic idea is to add many realistic raw materials to the world
+   and then allow the player to mine them and perform chemistry with
+   them to make useful things, including with machines and items from
+   other mods.
+   
+** Star travel
+   A relatively advanced player will be capable of building a
+   spaceship, in order to seek out resources on other planets. All
+   items must be discarded prior to launch, due to weight
+   limitations. The player first must colonize the moon. Colonization
+   would initially involve programming of robots to perform most
+   tasks. A progressively larger network/system of domes would be
+   constructed, with a livable atmosphere. Eventually, an
+   interplanetary ship would be constructed in low gravity. Then there
+   is a choice to go towards the sun (Venus, then Mercury) or away
+   (towards Mars). Once on Mars (or Venus) the player must colonize and
+   harvest enough food to make the next jump. From Mars, the player
+   travels to Ganymede (or back to Earth). From Ganymede, the player must
+   build a smaller ship to visit other moons of Jupiter. Or refuel the
+   interplanetary ship and fly to Titan. The player may visit other
+   notable moons of Saturn. Eventually, the player has colonized all
+   planets and notable moons and obtained a resource unique to each. By
+   combining those resources, the player may build an interstellar ship
+   and begins traveling to known exoplanets or psuedo-randomly
+   generated moons. We might also require the user to construct special
+   sensor stations on every planet in order to triangulate the position
+   of the exoplanet. As an alternative to travel, the player may decide
+   to settle down and terraform.
+
+* Gameplay
+** Star travel
+*** Goals
+    On any planet, the goals are:
+    * To survive
+    * To build a spaceship and fuel for traveling onward
+    * To terraform the world for long term settlement
+
+**** Traveling onward
+     This goal solves the end-game problem, where the player has
+     solved all challenges. The player is given the opportunity to
+     leave the conquered world behind, and to start a-new. However,
+     there is some continuity: the player is allowed to stock the ship
+     with supplies, and subsamples of that inventory appear as supply
+     modules strewn about the new world.
+
+**** Terraforming
+     It is not clear how we will model this, or how it would benefit
+     the robot player. It would be cool though to have NPC colonies
+     appear as the conditions were improved.
+     
+*** Robotic player
+    The idea is to initially model the player as a cyborg. This puts
+    less constraints on the player in hostile environments. It also
+    opens up interesting possibilities for modular player
+    abilities. The robot should be humanoid, for simplicity. We still
+    want to model the environment, because one goal is to bring NPCs
+    (non-cyborgs) to the world.
+
+**** Component-based abilities
+     The player abilities will be based on a component system, which
+     replaces the armor system. Instead of having a helmet, breast
+     plate, etc, the robotic explorer will have the following component
+     slots. There is a basic, built-in component of each type that
+     never wears down. The others have a limited life-span.
+
+     It turns out that IC2 already has the battery backpack and solar
+     helmet, which behave pretty much as we imagined. The gravitation
+     suite addon even extends the batpack to support flight. And
+     electric armor is essentially a shield. Really, our only
+     contribution will be fuel cells as battery alternatives, plus
+     different levels of batteries and solar cells.
+
+     This is also related to the mecha-armor of Factorization.
+
+***** Solar panels
+      There will be different levels of solar panels, with increasing
+      efficiency and cost. Solar panels yield electrical power, at a
+      rate depending on the type of panel and the amount of light. When
+      the energy is not being used (i.e., when the player is not moving
+      or working), the energy is deposited into the battery.
+      
+***** Battery
+      Better batteries: more storage, slower discharge.
+      
+***** Fuel cell
+      This provides power in addition to the solar panels and is
+      necessary for powering heavy duties, like drilling/digging. The
+      energy output will depend on the type of fuel. Excess energy is
+      deposited into the battery.
+
+      Question: could the fuel cell and battery fill the same slot?
+      Batteries should be capable of powering heavy machinery (at
+      least the type of machinery a humanoid robot would operate). An
+      alternative would be to support only batteries, and fuel cells
+      would charge the batteries. It makes sense to generalize: a fuel
+      cell and battery are both energy sources; the difference is that
+      the battery requires electricity for recharging, whereas a fuel
+      cell simply needs to be refilled with fuel.
+
+***** Auxiliary system
+      There will be one auxiliary that will consume
+      power. Possibilities:
+      * Balloon/dirigible
+      * Shield (combat, lava diving)
+      
+**** Respiration
+     The cyborg has a built-in air tank that automatically recharges
+     when in breathable atmosphere. The tanks will store much more air
+     than a single lung's worth, so the constraint is more similar to
+     hunger than swimming. The player can carry additional air tanks,
+     along with food.
+         
+**** Environmental Modeling
+***** Atmosphere
+      Important atmospheric properties are:
+       * Temperature (depends on day/night)
+       * Pressure
+       * Composition
+
+       Possible to do this by having special breathable air blocks that
+       change properties when they become adjacent to cold or raw
+       atmosphere. This may be too complicated though. Easier to
+       use force-fields (via MFFS) and then detect when a player is
+       outside of a force-field. Non-cyborgs have a limited amount of
+       time before death. This depends on the three properties above,
+       but comes out to around 30 seconds maybe for Mars.
+
+       If there are missing life support systems within the
+       force-field, the atmosphere will slowly deteriorate (over the
+       course of say, one day) and then things start dying. The HUD can
+       show the current temperature and composition status (green,
+       yellow red; not exact values) for the current dome.
+       
+***** Radiation
+      Planets with thin atmospheres and magnetospheres will not be able
+      to block the light from the sun. Depending on the type of star and
+      distance, this could mean lethal doses of radiation. Effects of
+      this radiation would be long-term, however, so it is tough to
+      model. Perhaps it would affect the growth of plants.
+
+**** Life Support
+     Machines, mechanical or biological, will be capable of
+     conditioning the air. These include:
+     * Heater/Cooler (increases/decreases temperature, pressure)
+     * Oxygen generation (electrolysis, biomass)
+
+     Both types of oxygen generation require water. The ship will come
+     with a finite water source. The occupant will produce water as
+     water vapor (exhalation) and as waste (urine, feces). The life
+     support system must recover that. Otherwise, it needs to be
+     provided externally.
+
+     The obvious advantage of a farm is the consumption of CO2 and the
+     production of food, thanks to photosynthesis. The light could come
+     from the star, or artificial lighting.
+
+     So, in summary, there are three machines:
+     * Heater[Factorization]/cooler
+     * Greenhouse: <= free CO2, <= H2O, => O2, => food
+     * Water reclaimer [TE Aq Accumulator]: <= free H2O, => captured H2O
+
+     And the "world" inside the habitat converts O2 to CO2 and generates
+     free H2O (waste, water vapor).
+
+     Note that we will avoid detailed modeling of this process. if a
+     machine breaks, bad things happen. The number of plants needed in
+     a greenhouse depends on the population. The better the
+     conditions, the more colonists, the more human resources. Note
+     that water could be obtained from indigenous sources. This is why
+     a heater/cooler is needed: it requires the user to maintain a
+     power source.
+
+     Eventually we might add an alternative to the greenhouse:
+     * Oxygen generator [IC2 electrolyzer]: <= H2O, => O2
+     * CO2 scrubber: <= free CO2, => captured CO2
+     
+*** Progression
+    An important gameplay mechanic is progression through tiers of
+    technology/development. Some mods model this using history: how one
+    idea led to the next over time. Since we are focused on the
+    present, historical progression is not relevant. Instead, we might
+    follow the technical complexity gradient: one technology depends on
+    having another. The robot is stranded on another world with limited
+    supplies, and the lofty goals of either leaving the planet or
+    terraforming it.
+
+*** Initiation
+    How does one become the robot? This could happen through a long
+    string of technological developments, based e.g. on IC2, or we
+    could enable early entry.
+
+* Concepts
+** Science
+*** Physics
+    Most of the physics concepts will enter through chemistry. Some of
+    the key concepts would be:
+    * Mechanics
+    * Thermodynamics
+    * Light
+    * Electricity and magnetism
+    Overall, these concepts seem too low-level to easily introduce
+    directly.
+
+*** Chemistry
+    This seems like the right level, and is most directly applicable
+    when it comes to mining and crafting things from mined
+    material. This would extend from inorganic to organic chemistry,
+    and even on to some simple biochemistry.
+    
+**** Reactions
+     Mined materials will be modeled as chemical compounds, and those
+     can then be converted into other compounds using reaction chambers.
+     Initially, technology will only allow the simplest of chambers,
+     such as cauldrons and stills. Eventually, there are BuildCraft
+     machines. Different chambers will carry out different types of
+     reactions. Reaction rates will depend on the free energy. This of
+     course depends on the temperature and pressure.
+
+**** Knowledge
+     How to model chemical knowledge? How does the player "learn" that
+     a particuar reaction is possible? The periodic table represents
+     the fundamental knowledge of chemistry, and it is also discrete,
+     so conveniently breaks down into units of achievement. For every
+     mineral or other compound, the player performs a number of simple
+     assays and eventually discovers an element. Once all elements in
+     a particular compound are known, the chemical formula and other
+     information (depending on the general level of
+     technology/knowledge) are revealed. This information includes
+     some subset of the recipes including that compound, as long as
+     the technology exists to achieve the recipe, and all compounds in
+     the reaction are known.
+
+     Elements are discovered by solving a puzzle that is roughly
+     inspired by how the element was discovered according to
+     history. The book of the elements will convey hints.
+
+     The Book of Elements slowly reveals those secrets. It is created
+     by sending a book into a 1x1 portabe and having it reappear as the
+     Book of Elements. This is to simulate a trip to the future.
+     
+*** Biology
+    High-level biological concepts like plant growth, ecology, etc,
+    are already modeled in the game. Perhaps those models could be
+    improved. The low-level concepts like molecular biology would be
+    too complex to model outside of simple e.g. bacterial
+    systems. Genetics is a real possibility. The bees and
+    tree-breeding of Forestry are a good example.
+
+** Engineering
+   Most of Minecraft could be construed as civil engineering. Some
+   disciplines that might need more attention:
+
+*** Mechanical
+    Would require much better physical modeling. This would be tough.
+
+*** Aerospace
+    Like mechnical, requires more physical modeling.
+
+*** Chemical
+    This comes about naturally by constructing the machines necessary
+    to carry out chemistry (see that section).
+
+*** Electrical
+    Already exists to some extent with red stone cicuits. Good enough.
+
+*** Computer Science
+    The key direction would be robotics. ComputerCraft already offers
+    that, and we should integrate with it.
+    
+* Blocks
+** Rocks
+   Generating terrain with multiple rock types, instead of simply
+   stone, would make mining much more interesting. Not only would it
+   add variety (and thus more creativity in construction), it would
+   also help the player find ores, since ores would be specific to
+   certain rock types. This idea is from TFC, but it also reflects
+   the reality. COG might allow us to generate the rocks, in addition
+   to the ores. It looks like the substitution pattern would work,
+   but it would need a height restriction. Also, we would need
+   restrictions on relative height (percentage of altitude).
+
+   There are three types of rock: igneous, sedimentary and
+   metamorphic. The igneous rocks are either intrusive (magma) and
+   extrusive (lava). A second axis is the silicate content, which
+   decreases with felsic, intermediate, mafic and
+   ultramafic. Sedimentary rocks are either clastic or
+   (bio)chemical. The metamorphic rocks can be formed by a number of
+   different processes: hydrothermal, contact, barrovian,
+   blueschist, and eclogite. The last two are probably too deep for
+   us to care about. Unless otherwise indicated, rocks are
+   generated as layers. So far, we have 21 rock types. It would be
+   good to reduce this to 16, just for simplicity. We will need two
+   block IDs anyway, in order to model soft vs. hard rock.
+
+    | Rock         | Class      | Hard  | Occurs                              | Use                                  |
+    |--------------+------------+-------+-------------------------------------+--------------------------------------|
+    | Granite      | In/Felsic  | hard  | Very common, below sed on land      | building                             |
+    | Diorite      | In/Inter   | vhard | Below granite                       | tools, carving                       |
+    | Gabbro       | In/Mafic   | vhard | Below basalt/diorite (mtns, ocean)  | sulfide ores                         |
+    | Peridotite   | In/UMafic  | vhard | Rarely under gabbro                 | sulfide ores                         |
+    | *Syenite     | In/alka    | hard  | rare granite mtns vein              |                                      |
+    | Carbonatite  | In/alka    | soft  | with syenite                        | RE, Nb, Ta                           |
+    | *Aplite      | In/quartz  | hard  | granite, < diorite/gabbro vein      |                                      |
+    | Rhyolite     | Ex/Felsic  | hard  | Mountains, top                      | NH4Cl crystal drop (0.01)            |
+    | Andesite     | Ex/Inter   | hard  | Mountains, below rhyolite           | NH4Cl crystal drop                   |
+    | Basalt       | Ex/Mafic   | hard  | Top ocean, islands                  | NH4Cl crystal drop                   |
+    | *Komatiite   | Ex/UMafic  | -     | Too deep                            | sulfide ores                         |
+    | Mudstone     | Sed        | soft  | Ocean, beach, river, glaciers       |                                      |
+    | *Siltstone   | Sed        | soft  | "                                   |                                      |
+    | Claystone    | Sed        | soft  | "                                   |                                      |
+    | Conglomerate | Sed        | soft  | "                                   |                                      |
+    | Breccia      | Mixture    | soft  | Like above, plus b/w rock layers    |                                      |
+    | Limestone    | Sed        | med   | Hills                               | CaCO3, smelt => CaO + CO2, white dye |
+    | Slate        | MM/barro   | med   | Under mud/clay/siltstone            |                                      |
+    | Schist       | MM/barro   | med   | Under slate, sometimes igneous      |                                      |
+    | Gneiss       | MM/barro   | hard  | Under schist, sometimes igneous     |                                      |
+    | Greenschist  | MM/barro   | hard  | Mafic-associated schist             |                                      |
+    | Pegmatite    | MM/hydro   | hard  | Veins, granite, plains              | RE, Li, Be, Cs, etc                  |
+    | Serpentinite | MM/hydro   | med   | Veins, umafic, no soil, ocean floor | Ni laterite, talc, asbestos          |
+    | Hornfels     | MM/contact | vhard | b/w granite and lime/dolo           |                                      |
+    | Skarn        | MM/contact | med   | b/w granite and lime/dolo, hornfels | Cu, Pb, Zn, Fe, Sn, Au, etc          |
+    | Marble       | MM/contact | hard  | b/w granite and lime/dolo           | Centrifuge for CaCO3                 |
+    | Quartzite    | MM/contact | vhard | sandstone                           |                                      |
+    | *Amphibolite |            |       |                                     |                                      |
+    
+   We could drop pegmatite and serpentinite, because they are already
+   so enriched for minerals. Tough call. They do serve a purpose:
+   indicating that ores are nearby.
+
+   Placement of the rocks during world generation will be
+   complex. Lets focus first on the bottom layer, which will consist
+   of rock formed by cooling magma, i.e., igneous intrusive
+   rock. These intrusions form dikes as the magma rises, and sills
+   where the magma is deposited. The differentiation occurs by two
+   major processes: fractional crystallization (multiple layers
+   crystallizing from molten rock) and partial melting (where only
+   some of the minerals melt, rise due to lower density, and
+   recrystallize). This follows the order of ultra-mafic, mafic,
+   intermediate, felsic, from bottom to top. We consider only
+   partial melting, for simplicity.
+
+   When the magma breaches the surface, we then have extrusive rocks
+   with different crystallization (much more rapid cooling) but the
+   same chemical compositions. The type of rock that emerges depends
+   on how much the rock has cooled, and whether water is present.
+   
+   Land masses are formed by plate convergence, which occurs at the
+   interface of land and ocean. The oceans then are undergoing plate
+   divergence. Under the ocean, ultra mafic rocks (peridotite)
+   partially melt and rise quickly due to the divergence, and hit the
+   ocean as mafic melts, forming basalt. The melts that fail to reach
+   the surface form the intrusive mafic gabbro. In the case of plate
+   convergence, mountains and volcanoes are formed. Since water from
+   the ocean is brought down into the subduction zone, the melting
+   points of the rocks are lowered and thus more silicate-rich melts
+   (intermediate and felsic) emerge from partial melting. So volcanic
+   islands in the ocean are largely basaltic, while the volcanoes
+   above subduction zones yield rocks like rhyolite and (from mixing
+   of the rhyolitic and mafic magma) andesite. The more water, the
+   more silicate content, and the more violent the eruption.
+
+   With that in mind, the oceans are clear: peridotite (too low to
+   include), gabbro, basalt and sediments (mudrock).  The vast
+   majority of the land mass is formed from silicate-rich magma that
+   cools before it reaches the surface. This is largely
+   granite. Above subduction zones, granite is pushed up into
+   mountains, above some diorite, then gabbro.  In areas outside of
+   the mountains and oceans, the world will only reach down into
+   diorite. We ignore komatiite, because its intrusions happened long
+   ago and has largely metamorphed. We will assume that the extreme
+   hills are a volcanic mountain range, and the ice mountains are
+   a result of sedimentary and metamorphic rock being uplifted
+   (crumpled) by subduction forces.
+
+   The generation of the rock layers depends on the biome. The table
+   below attempts to specify the rock combinations for each
+   biome. For simplicity, we group all types of mudrock (claystone,
+   conglomerate, etc) into a single rock. Metamorphic rocks will be
+   listed separately, as their formation will be randomized and
+   replace specific rocks.
+   
+   The layers are numbered from top (1) to bottom. The final layer
+   should be about half the size of the others.
+   
+    | Rock        | F | FH | D | DH   | P | S | J | JH | EH | R | O | M    | MS  | IP | IM   | T | TH | B |
+    |-------------+---+----+---+------+---+---+---+----+----+---+---+------+-----+----+------+---+----+---|
+    | Limestone   | - | +1 | - | -    | - | - | - | +1 |  - | - | - | -    | -   | -  | +1   | - | +1 | - |
+    | Sedimetary  | 1 | 1  | 1 | 1    | 1 | 1 | 1 | 1  |  - | 1 | 1 | -    | -   | 1  | +2/1 | 1 | 1  | 1 |
+    | Granite     | 2 | 2  | 2 | 2    | 2 | 2 | 2 | 2  |  1 | 2 | - | -    | -   | 2  | 2    | 2 | 2  | 2 |
+    | Diorite     | 3 | 3  | 3 | 3    | 3 | 3 | 3 | 3  |  2 | 3 | - | -    | -   | 3  | 3    | 3 | 3  | 3 |
+    | Gabbro      | - | -  | - | -    | - | - | - | -  |  3 | - | 3 | 3    | 3   | -  | -    | - | -  | - |
+    | Rhyolite    | - | -  | - | -    | - | - | - | -  | +2 | - | - | -    | -   | -  | -    | - | -  | - |
+    | Andesite    | - | -  | - | -    | - | - | - | -  | +1 | - | - | 1    | -   | -  | -    | - | -  | - |
+    | Basalt      | - | -  | - | -    | - | - | - | -  |  - | - | 2 | +1/2 | 1/2 | -  | -    | - | -  | - |
+
+   In the table we list sedimentary as a general class including
+   mudstone, claystone, siltstone, sandstone and limestone. A layer
+   of mudrock will typically consist of a mixture of layers from
+   these rocks. Claystone and siltstone are two ends of the mudstone
+   spectrum. There is currently no "silt" in the game, and it would
+   probably not add much, so we might have siltstone just drop dirt,
+   or just get rid of it altogether. Then we have claystone=>clay,
+   and conglomerate/breccia=>gravel when harvested. Clay is
+   somewhat of a limiting resource in minecraft, so we should limit
+   claystone distribution. The beach and desert will be largely
+   sandstone. The ocean bottom will be limestone, and limestone could
+   also dominate hill biomes. Outside of the hills, lets say 65%
+   mudstone, 10% sandstone, 10% conglomerate/breccia, 10% limestone,
+   and 5% claystone.
+
+   Breccia should replace much of the gravel at depth.
+
+   What about mudstone? It consists of a mixture of silt and
+   clay. It could drop a mixture of clay and sand, or should that
+   require further processing? Perhaps claystone, conglomerate,
+   mudstone, etc all yield a type of "debris" that could be
+   processed? The debris would be similar to gravel, but distinct
+   from it. Or it could be a type of gravel, but then what of the
+   existing gravel? Either way, the debris would act much like
+   gravel/sand. Maybe just coarser than gravel. Then, we have the
+   following grinding recipes:
+   * Mudstone: sand + clay dust
+   * Conglomerate: sand + gravel
+   * Breccia: 2 gravel
+   * Claystone: 2 clay dust, each hydrates to 4 clays
+   * Carbonatite: 4? fertilizer
+   
+   Now for metamorphosis.
+
+   Mudrock will convert to slate, and slate, along with igneous
+   rocks, can follow the sequence to schist and gneiss. This is most
+   likely to happen in the ice mountain biome, and to a lesser extent
+   the hill biomes, since more pressure will be put on the
+   rock. Slate replaces the top half of the sedimentary layer, schist
+   replaces the top third of the igneous (granite) layer, and gneiss
+   replaces the next third down. Rocks can exist without rocks
+   earlier in the sequence, but having an earlier rock doubles the
+   chance of having a later one.
+
+   With regard to contact metamorphism, hornfel and marble will
+   sometimes replace the mudstone between the limestone hills and the
+   underlying granite. The sandstone under the desert hills will
+   sometimes become quartzite.
+
+   Serpentinite will occur anywhere an ultra-mafic intrusion might
+   have occurred. We will say that this is in the bottom (diorite)
+   layer, except maybe in the extreme hills and ocean, where
+   serpentinite is common throughout the crust. If it contacts soil,
+   the soil needs to be converted to lateritic soil, which does not
+   support growth. Pegmatites occur in granite and gneiss. Both of
+   these will be large, thick veins that contain many ores.
+     
+** Metal Ore Minerals
+   
+   | Mineral       | Metals             | State    | Hard    |  Prod |  Fe:x | Symbol | Occurs                                  | Roast | Slag         | Blast | Centrifuge | Alt Use       |
+   |---------------+--------------------+----------+---------+-------+-------+--------+-----------------------------------------+-------+--------------+-------+------------+---------------|
+   | Magnetite*    | Fe                 | oxide    | strong  |  1600 |       | shaft  | BIF, placer, LI                         |       |              | --    |            | magnets       |
+   | Hematite*     | Fe                 | oxide    | strong  |     * |       |        | BIF                                     |       |              | --    |            | red dye       |
+   | Limonite*     | Fe(Ni/Co)          | hydrox   | (clay)  |     * |       | jungle | jungle/swamp clay                       | --    |              |       |            | brown dye     |
+   | Rock salt     | Na(K)              | salt     | weak    |    26 |   3:1 | desert | evaporite                               |       |              |       |            |               |
+   | Chalcopyrite* | Cu(Mo/Co/Ag/Au/Pt) | sulfide  | medium  |     - |       | shaft  | VMS, SEDEX, porphyry                    |       |              | --    |            |               |
+   | Sphalerite    | Zn(Cd)             | sulfide  | medium  |     - |       | shaft  | co-chalco, limestone                    |       |              | --    |            |               |
+   | Galena*       | Pb(Ag)             | sulfide  | weak    |     - |       |        | co-chalco, limestone                    | --    |              | --    |            | wireless comm |
+   | Lepidolite    | Li(+Cs/Rb)         | phyllo   | medium  |  0.05 |  36:1 |        | pegmatite                               | --    | --           | --    |            |               |
+   | -Spodumene    | Li                 | silicate | strong  |  0.20 |  12:1 |        |                                         |       |              |       |            |               |
+   | Dolomite      | Mg                 | carbo    | medium  |   271 |   3:2 |        | Clay-like, ocean and desert             | --    |              | --    |            |               |
+   | Magnesite     | Mg                 | carbo    | medium  |    18 |   3:1 |        | peridotite, serp, skarn, dolomite       |       |              |       |            |               |
+   | Rutile        | Ti                 | oxide    | (sand)  |   0.6 |       |        | granitic mineral sand                   |       |              |       |            |               |
+   | Ilmenite      | Ti(Fe)             | oxide    | strong  |     5 |   6:1 |        | upper LI, sand                          | --    |              | --    |            |               |
+   | Pentlandite   | Ni(Fe)             | sulfide  | medium  |       |       |        | lower LI, Kambalda                      |       |              | --    |            |               |
+   | Garnierite    | Ni                 | hydrox   | medium  |       |       |        | serp                                    |       |              | --    |            |               |
+   | -Cassiterite* | Sn                 | oxide    | strong  |     - |       |        | placer, granitic veins                  |       |              | --    |            |               |
+   | [Wolframite]  | W                  | oxide    | medium  |     - |       |        | pegmatite                               |       |              |       |            |               |
+   | Scheelite*    | W                  | oxide    | medium  |     - |       |        | SEDEX/pegmatite                         |       |              |       |            |               |
+   | Cinnabar*     | Hg                 | sulfide  | weak    | 0.002 | 100:1 |        | veins ocean basalt, volcanic            |       |              |       |            | red dye       |
+   | Bauxite*      | Al                 | hydrox   | (clay)  |   190 |       |        | lateritic deposits                      | Al2O3 |              |       |            |               |
+   | Chromite      | FeCr               | oxide    | strong  |    10 |   4:1 |        | serp, upper LI                          | --    | +Al/Si=>FeCr | --    |            |               |
+   | Zircon        | Zr                 | silicate | (sand)  |     1 |       |        | granitic mineral sands                  |       |              |       |            |               |
+   | Stibnite      | Sb                 | sulfide  | weak    |     - |       |        | co-galena in hydro                      | SbO3  | +Fe=> 1.5 Sb | Sb    |            |               |
+   | Monazite*     | Ce/La/Nd/Pr/Sm/U   | phosph   | (sand)  | 0.007 |       |        | granitic mineral sands                  |       |              |       |            |               |
+   | Uraninite     | U                  | oxide    | strong  |       |       |        | grind conglom/peg, veins granite/sed    |       |              |       |            |               |
+   | -Borax        | B                  | oxide    | weak    |     3 |       |        | lake evaporites                         |       |              |       |            |               |
+   | -Pyrolusite   | Mn                 | oxide    | strong  |       |       |        | hydro, co-Fe                            |       |              | --    |            | violet glass  |
+   | [Pollucite]   | Cs(Rb)             | silicate | strong  |       |       |        | pegmatite                               |       |              |       |            |               |
+   | Bastnasite    | Ce(+La/Y)          | fluorite | medium  |       |       |        | pegmatite, carbonatite, bauxite         |       |              |       |            |               |
+   | Tantalite     | Ta(Nb)             | oxide    | strong  |     - |       |        | carbonatite                             |       |              |       | Nb         |               |
+   | Molybdenite   | Mo                 | sulfide  | weak    |   0.2 |  12:1 |        | porphyry                                |       | 1% Re        |       |            |               |
+   | -Barite       | Ba                 | sulfate  | medium  |     7 |       |        | BIF, Pb/Zn limestone veins, carbonatite |       |              |       |            |               |
+   | -Beryl        | Be                 |          | vstrong |       |       |        | w/ scheelite                            |       |              |       |            |               |
+   | **Celestine   | Sr                 | sulfate  | medium  |       |       |        | w/ gypsum                               |       |              |       |            |               |
+   | [Xenotime]    | Y/RE               | phosph   |         |       |       |        | (sand), pegmatite                       |       |              |       |            |               |
+
+   To fit in celestine, we will need to drop something like
+   wolframite.
+   
+   In terms of gameplay, there is a limit to the number of ores. The
+   player might constantly encounter ores and have difficulty sorting
+   them. Solutions would include having ores occur rarely, or
+   deriving metals as the by-product of processing other ores. Both
+   support technology tiers, as advanced machines could be required
+   to process the more advanced metals. Currently, that is modeled by
+   the type of pickaxe. The first has the advantage of making
+   discovery more challenging, while the processing approach could
+   encourage automation, because large amounts of ore will need to be
+   processed. It also requires the player to make a decision about
+   how an ore should be processed. Thus, it adds strategy. Ore
+   discovery could also be made more stategic by making deposits
+   depend on the rock type or having deposits co-occur (better dig
+   into that iron because it might have manganese). Some mixture of
+   the two is probably best, and certain metals could be obtained by
+   both approaches.
+   
+   By changing the ore distributions to such an extent, gameplay is
+   greatly affected. For example, a quarry is unlikely to be a
+   profitable or at least interesting investment, since it might only
+   gather one or two types of ore. The fun is in the digging. Thus,
+   perhaps all generation should occur in a Mystcraft age. There could
+   be a symbol for each type of ore, and one for adding the new
+   rocks. Modifiers would also be supported, but they would add
+   instability. Obtaining each symbol would involve some
+   challenge. Many could be found in mineshaft chests, temples or
+   villages (possibly specific villages from Millenaire?). Need to
+   wait for COG to support the new Mystcraft API.
+   
+   TE has the induction smelter which allows for complex smelting
+   (two inputs, and a primary/secondary output). The Factorization
+   mod has a complex and interesting smelting process, which involves
+   the Slag Furnace, with two outputs. The main problem is that there
+   is no way to convert energy between FZ and BC/IC2.
+    
+   See this as a way to prioritize:
+   http://www.theodoregray.com/periodictable/Elements/PopularInCollections/index.html
+
+   Getting balance from production levels is complicated. The ore
+   production levels are confounded with the purity of the ore, while
+   the metal production may represent only a minor application of the
+   ore. We are interested in *potential* metal production and want to
+   assume that each ore block contains the same amount of metal,
+   across all metal elements. Another assumption: each ore block is
+   the same weight; i.e., they have different densities. We then
+   normalize everything to iron for convenience.
+   
+** Other Minerals
+   
+   | Mineral        | Occurs                                | Hard        | Prod | Use                              | Formula |
+   |----------------+---------------------------------------+-------------+------+----------------------------------+---------|
+   | -Alunite       | veins in rhyolite                     | medium      | past | alum                             |         |
+   | -Chrysotile    | serpentinite                          | weak        |    2 | asbestos (fireproofing)          |         |
+   | Dolomite       | clay pattern, ocean and desert        | medium      |    - |                                  |         |
+   | -[Malachite]   | limestone w/ copper ores              | medium      | past | copper ore, green dye            |         |
+   | Gypsum         | evaporite, limestone                  | weak        |  140 |                                  | CaSO4   |
+   | Garnet         | beach/river sand                      | weak (sand) |      | blast cobble to smooth           |         |
+   | -Glauconite    | green sand in ocean/beach             | weak        |      | grinding (romans), fertilizer    |         |
+   | *Corundum      | schist,gneiss,marble,pegmatite        | very strong |      | rubies and emeralds              |         |
+   | -Diatomite     | sed EH/desert                         | weak        |  1.5 |                                  |         |
+   | Flourite       | bp of galena/sphalerite/quartz        | medium      |      |                                  |         |
+   | -Graphite      | schist,gneiss (strata)                | weak        |    1 |                                  |         |
+   | -Kyanite       | schist,gneiss,quartzite,pegmatite     | medium      |  0.4 |                                  |         |
+   | -Soapstone     | serpitinite,carbonates(lower)         | weak        |    7 |                                  |         |
+   | Olivine        | grind peridotite                      | -           |      |                                  |         |
+   | Perlite        | embedded in veins of obsidian         | strong      | 0.15 |                                  |         |
+   | -Apatite       | marble,pegmatite*                     | strong      |      |                                  |         |
+   | -Pumice        | volcanic (globular)                   | strong      |   12 |                                  |         |
+   | -Soda ash      | lake evaporite                        | weak        |   36 |                                  |         |
+   | -Mirabilite    | marine evaporite                      | weak        |      |                                  | Na2SO4  |
+   | -Wollastonite  | limestone, dolo, skarn (w/ sandstone) | medium      |  0.5 | ceramics,paint,plastics          | CaSiO3  |
+   | -Zeolite       | lake-shaped deposits near volcanoes   | medium      |      | adsorption, others               |         |
+   | Feldspar       | process pegmatite                     | -           |   20 |                                  |         |
+   | Quartz         | process pegmatite                     |             |      |                                  |         |
+   | Muscovite/Mica | in pegmatite, process pegmatite       | weak        |  0.3 | fireproof, insulation, lubricant |         |
+   
+   
+   This gives a total of 16 weak, 16 medium and 14 strong
+   minerals. And one very strong (corundum), but we might model that
+   as chance-dropped gems, instead of as a separate
+   block. Technically, Beryl is very strong, although we have it set
+   as strong for now.
+
+   Graphite deposits:
+   * Clouds in schist, quartzite, gneiss; in lower sedimentary range.
+   * Much rarer clouds in marble.
+   * Metamorphized coal deposits.
+   * Veins in schist, quartzite, gneiss, marble.
+     
+** Sands
+   Here are some sand types we could model:
+    
+   | Type         | Occurrence    | Use                        |
+   |--------------+---------------+----------------------------|
+   | Mineral sand | beach/river   | placer deposit (see above) |
+   | Garnet       | beach         | abrasive                   |
+   | Volcanic ash | extreme hills | abrasive                   |
+   | Quartz       | desert        | abrasive, quartz           |
+   | -Cassiterite | beach/river   | tin                        |
+
+
+   Currently, we have different types of mineral sands. These need to
+   be separated into minerals like rutile, zircon, magnetite,
+   etc. This is usually done with electrostatic separation. About 70%
+   of the sand is "trash", consisting of quartz (30%), magnetite
+   (25%), garnet (20%), chromite (15%) and kyanite (10%). The more
+   valuable minerals in the remaining 30% are: ilmenite (50%), zircon
+   (30%), rutile (15%), monazite (5%). Total mineral sand production
+   is 4.8 million tonnes / yr, or about 6:1 with Fe. Basaltic sands
+   will have more ilmenite, while granitic will have less. There is a
+   chance drop of diamond from basaltic sands.
+
+** Clays
+
+   | Type                  | Occurrence                       | Prod | Use                                               |
+   |-----------------------+----------------------------------+------+---------------------------------------------------|
+   | -Bentonite            | EH                               |    9 | absorbent, waterproof                             |
+   | -Kaolinite            | Jungle                           |   37 | many                                              |
+   | -Fuller's earth       |                                  |      |                                                   |
+   | Laterite              | Jungle                           |      | easy bricks                                       |
+   | Yellow/Brown Limonite | Laterite                         |      | Fe ore, dye                                       |
+   | Bauxite               | Laterite                         |      | Al ore                                            |
+   | Vermiculite           | carbonatite, skarn, w/phlogopite |  0.5 | furnace, fireproof, fertilizer, cement, absorbent |
+   
+** Hot springs
+   Some percentage of the water source blocks near bedrock will be
+   converted to hot springs, which are infinite steam
+   sources. Buildcraft (or some other mod) has apparently already
+   added springs (infinitely pumpable water sources); just need hot ones.
+
+** Brines
+   Brines are a source of many minerals. We could add these as
+   liquid source blocks in sets that form little lakes/wells. The
+   wasteland water could be considered brine.
+
+   Types:
+   * Owens Lake :: Borax, NaCl, Na2SO4
+   * Midland :: Br, CaCl2, I, MgCl2, KCl, NaCl
+   * Searles Lake :: Borax, LiCl, Li2CO3, Mg(OH)2, KCl, NaBr,
+                     Na2CO3, NaCl, NaF, Na2PO4, Na2SO4
+   * Silver Peak :: Li2CO3, KCl
+   
+   Do we really want these four, somewhat arbitrary, types? Probably
+   not. Just take the union. Chemical processing will separate.
+
+   List of chemicals/minerals:
+   * Borax
+   * *NaCl* (halite)
+   * NaBr
+   * NaF
+   * Na2CO3 (soda ash)
+   * Na2SO4 (salt cake, mirabilite when hydrous)
+   * Na3PO4
+   * *LiCl*
+   * Li2CO3 (also from spodumene)
+   * *KCl* (sylvite)
+   * *MgCl2*
+   * Mg(OH)2
+   * CaCl2
+   * *Bromine*
+   * *Iodine*
+     
+   Only the ones in *bold* are commericially extracted.
+   
+** Sea water
+   There are many minerals in sea water. But how to model those? We
+   cannot replace the blocks, because that would break other mods. One
+   could attempt to trace pipes back to the sea, but it would be
+   brittle. Imagine an aqueous accumulator that is accumulating sea
+   water; no other machines, like the liquid transposer, know that it
+   is brine. There is a liquids API in forge now, so in theory things
+   could be abstracted, but there is no way to create a new "subclass"
+   of water. It is either water or brine. So maybe we just need to
+   create brine wells/springs. Otherwise, the processing would need to
+   be very slow, because water is so plentiful. Ensure that source
+   blocks are not transportable by bucket. Or just use the water
+   sources in the ExtraBiomes wasteland. Here is an idea: require that
+   the initial processing (could be some filter or something) must
+   occur in the ocean biome. This more or less achieves the desired
+   effect.
+
+** Concrete
+   Minecraft needs concrete. One of the cool things about concrete
+   is that one can pour it into molds and generate many objects of the
+   same shape. The player could construct a shape out of microblocks,
+   hook it up to a pipe (via some adjacent machine) and pump concrete
+   into it. The machine will then, after some time, yield an item of
+   the desired shape, consuming some amount of concrete. 
+   
+* Items
+** Chemicals
+*** General
+    We could model chemicals at a number of different levels of
+    detail. For example, we could record every property, or simply
+    consider the name. Optimal is somewhere in between.
+
+    Some obvious properties:
+    * Formula (name would be in translations)
+    * Color (black, blue, green, ...)
+    * Phase at room temperature (and standard pressure)
+    * Hazards: health (0-4), flammability (0-4), reactivity (0-4),
+      special (reacts with water, asphyxiant, oxidizer)
+    
+    One could imagine adding more properties that might lead to
+    automatic recipe generation, but this is not worth it.
+    
+*** Metals
+    
+    | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                |
+    |------------+-----------+---------------------+-------+-------+----------+--------------------------------------|
+    | Lithium    | GT        | brine, ore          | 0.035 |  22:1 | 2:1 clay |                                      |
+    | Sodium     | GT        | brine, ore          |       |   3:1 | 1:1 clay |                                      |
+    | Potassium  | GT        | brine, ore          |       |   3:1 | 5:1 sp   |                                      |
+    | Magnesium  | GT        | brine, ore          |   0.6 |  10:1 | 8:1 obs  |                                      |
+    | Calcium    | GT        | limestone           |       |       | 1:1 bone |                                      |
+    | Titanium   | GT        | ore                 |       |       |          |                                      |
+    | Vanadium   |           | magnetite in gabbro |  0.05 |  20:1 |          | V2O5 catalyst                        |
+    | FeCr       | GT        | ore                 |     7 |   5:1 |          |                                      |
+    | Molybdenum |           | ore                 |  0.25 |  11:1 |          |                                      |
+    | Tungsten   | GT        | ore                 |   0.1 |  12:1 |          |                                      |
+    | Manganese  | M2/GT     | ore                 |       |       |          | black dye                            |
+    | Cobalt     |           | Cu/Ni               |  0.06 |  18:1 |          |                                      |
+    | Nickel     | GT        | ore, Mn ocean       |     2 |   7:1 |          | NiMH batties, green glass            |
+    | Copper     | BC/IC2    | ore                 |    12 |   3:1 | 2:1      | Many                                 |
+    | Silver     | RP2/TE/FZ | Cu/Ni/Zn/Au/Pb      | 0.015 |  24:1 |          | catalyst                             |
+    | Zinc       | M2        | ore                 |    12 |   3:1 |          |                                      |
+    | Cadmium    |           | Zn                  |  0.01 |  24:1 |          |                                      |
+    | Mercury    | GT        | ore                 |       |       |          |                                      |
+    | Aluminum   | GT/Xy     | ore                 |       |       |          |                                      |
+    | Silicon    | (GT)      | IS:sand+carbon      |       |       |          | Circuits (refined), SiH4 fuel        |
+    | Tin        | BC/IC2    | ore                 |   0.2 |  12:1 | 3:1      | Many                                 |
+    | Lead       | TE        | ore, Cu/Zn/Ag       |   3.5 |   6:1 | 6:1      | radiation, batteries, early wireless |
+    | Boron      |           | ore                 |       |       |          |                                      |
+    | Bismuth    |           | ore, Pb ore         |       |       |          |                                      |
+    | Tellurium  |           | Cu/Ni               |  5e-5 | 192:1 |          | +Cd solars                           |
+    | Platinoid  | GT        | Ni/Cu/Cr/Co         |  2e-4 |  96:1 |          | catalyst                             |
+    | Zirconium  |           | ore                 |       |       |          |                                      |
+    | Cesium     |           | ore                 |  2e-5 |       |          |                                      |
+    | Neodymium  |           | electro: Monazite   |       |       |          |                                      |
+    | Uranium    | IC2       | ore                 |       |       |          |                                      |
+    | Niobium    |           | ore                 | 0.001 |  48:1 |          |                                      |
+    | Tantalum   |           | ore                 | 0.001 |  48:1 |          |                                      |
+    | Arsenic    |           | Cu                  |       |       |          |                                      |
+    | Antimony   |           | ore                 |  0.14 |  12:1 |          | SbO3: flame retardants; LA batteries |
+    | Germanium  |           | Zn                  |       |       |          |                                      |
+
+*** Non-metal elements
+    
+    | Element | Source                                   | Prod | Use               |
+    |---------+------------------------------------------+------+-------------------|
+    | H2      | steam over coke (-CO2), H2O electrolysis |      |                   |
+    | O2      | H2O electrolysis                         |      |                   |
+    | N2      | cryogenic fractionation of atmosphere    |      |                   |
+    | S       | processing gypsum, oil by-product (H2S)  |      | fertilizer, H2SO4 |
+    | P       | apatite                                  |      |                   |
+    | I       | brines                                   | 0.03 |                   |
+    | F       | flourite (CaF2)                          |      |                   |
+    | Cl      | electrolysis of NaCl, etc                |      |                   |
+    | Br      | brines                                   |      |                   |
+    | He      | natural gas                              |      |                   |
+    | Ar      | cryogenic fractionation of atmosphere    |      |                   |
+    | Ne      | cryogenic fractionation of atmosphere    |      |                   |
+
+*** Alloys
+    Metals can be combined in a huge number of ways. Here are the
+    available alloys:
+    
+    | Alloy            | Metals       | Production | Use       |
+    |------------------+--------------+------------+-----------|
+    | Stainless steel  | 6Fe+2FeCr+Mn | blast      | many      |
+    | Galvanized steel | Fe+Zn        |            |           |
+    |                  | Mg+Al        |            |           |
+    |                  | Ca+Pb        |            | batteries |
+    |                  | Sb+Pb        |            | batteries |
+    | Brass            | Cu+Zn        |            |           |
+    |                  | Te+Fe/Cu/Pb  |            |           |
+
+    Properties of steel alloys:
+    * Machinability: MnS, Bi, Pb, Se, Te
+    * Corrosion resistance: Cr, Cu, Ni
+    * Toughness: B, Cr, Mn, Mo, Ni, Cu, Si, V, W, Ti, Nb
+    * Temperature tolerance: W, V
+    
+    Other alloyants: Al, Co, Ce, Sn, Zn, Zr
+    
+    We could model steel alloys by allowing up to 3 non-iron ingots
+    to be included in the smelting. Those non-iron ingots could be
+    all of the same material, or different materials.
+    In addition, there could be "super alloys".
+
+    How to model the different properties? One easy way is higher
+    yield recipes. But what about differentiating the properties?
+
+    Types of steel alloys:
+    
+    | Alloyants   | Properties                              | Use                                    |
+    |-------------+-----------------------------------------+----------------------------------------|
+    | Mn          | hardened, abrasion (MnS: machinability) | grinders, crushers, tracks             |
+    | Ni          | strengthened, low temperature           | storage tanks, turbines, screws, bolts |
+    | 2Ni+1Cr     | toughened, corrosion resistant          | "  "  "                                |
+    | Mo          | toughened                               | easy to roll, aircraft parts           |
+    | 3Cr+1Mo     | toughened, corrosion resistant          | "  "  "                                |
+    | 3Ni+2Cr+1Mo | more toughened, corrosion resistant     |                                        |
+    | 4Ni+Mo      | more toughened                          |                                        |
+    | Cr          | corrosion resistant                     |                                        |
+    | 3Cr+1V      | toughened, corrosion resistant          | shafts of cars, locomotives, aircraft  |
+    | 2W+1Cr      | HT hardness, corrosion resistant        | cutting tools                          |
+    | Mo+Cr+V     | HT hardness, corrosion resistant        | high temp applications: shafts         |
+    | 2Si+1Mn     | more toughened                          | springs, punches, chisels              |
+
+    Stainless steel (Cr, Ni, C, Mn, Si, P, S, N):
+
+*** Hazards
+    There are many fun possibilities when it comes to hazards. These
+    rely on some model for chemical spills. Does this happen when a
+    pipe or machine breaks (presumably due to some initial hazard?).
+    
+**** Health
+     Damages player without other environmental effects.
+     * Level >1, starts to hurt if ingested (increasing damage with level).
+     * Level >2, hurts if held in inventory (open container) or touched
+     * Level 3: damage similar to cave spider poison
+     * Level 4: like burning in lava (must drink milk to stop)
+     
+**** Flammability
+     Will ignite when in contact with a flame, depending on
+     temperature. Temperatures for each level:
+     * Level 1: > 200 C
+     * Level 2: > 100 C
+     * Level 3: > 23 C, flammable outside of ice biomes
+     * Level 4: < 23 C, always flammable
+     
+     At ordinary temperature, the difference between L3 and L4 is a
+     matter of degree. If player catches on fire with flammable items
+     in inventory, the items will burn up, damaging the player. For
+     L3 and L4, using flint and steel will ignite items in inventory.
+     
+**** Reactivity
+     Will explode, depending on temperature/force:
+     * Level 1: explodes if heated > 200 C
+     * Level 2: explodes if heated > 100 C
+     * Level 3: explodes if near any heating or another explosion 
+     * Level 4: explodes whenever thrown (or anything from L3)
+       
+**** Special
+     * Water reactive: obviously blows up when contacts water!
+     * Asphyxiant: when exposed, count down as if underwater, then pain
+     * Oxidizer: fuels existing fires
+       
+*** Chemicals from other mods
+    Some chemicals are obtained from other mods:
+
+    | Mod           | Chemicals                                                                    |
+    |---------------+------------------------------------------------------------------------------|
+    | Factorization | H2SO4                                                                        |
+    | Gregtech      | Be, Ca, CaCO3, C, Cl, D, H2, He, Th, W, U, Si, Na, Na2(SO4)2, CH4, K, N2, Pu |
+    |               |                                                                              |
+
+** Tools
+** Batteries
+   In increasing order of cost and energy density:
+   * Lead acid
+   * NiMH
+   * Lithium iron phosphate
+     
+** Plastics
+   Plastics could serve as alternative to metal in many items. Would
+   be produced from petroleum processing.
+   
+* Chemical Processing
+** Unit Operations
+   These are the physical units of chemical engineering. Basically
+   these are types of mixing, separation and reacting.
+
+*** Fluid Flow
+**** Transport
+***** Fittings and valves
+      Fittings connect pipes, as well as measure and regulate flow
+      through pipes. Buildcraft should provide enough here.
+      The table below outlines this. We have excluded trivial
+      connections between pipes. 
+
+      | Type         | BC                   | Notes                    |
+      |--------------+----------------------+--------------------------|
+      | Cross/Tee    | Iron pipe            | 3>1 output, with cycling |
+      | On/Off valve | Iron/Wooden pipe     | redstone signal          |
+      | Check        | Iron pipe            |                          |
+      | Regulating   | Gates                |                          |
+      
+***** Pipes
+      BC has us covered here. One issue is temperature. Might
+      temperature (difference from ambient) degrade over time, much
+      like electricity? Then there are different types of insulation.
+      
+***** Pumps
+      BC has a pump.
+      
+***** Compressers
+      We can use BC pipes to move gases as a fluid, but we need the
+      equivalent of a pump, except for gas. It would collect gas from
+      the atmosphere. If nearby a machine that emits gas freely (like
+      a furnace) it will collect the gas and output to a pipe.
+      
+**** Filtration
+     The idea here is to separate solid phase from liquid phase. Other
+     ways to achieve this: decantation, cyclonic separation and
+     centrifugation. The behavior depends on the filter media. BTW has
+     a filter that is based on the same concept but will simply
+     exclude items from its inventory. The ideal filter would have a
+     slot for the media and then two outputs: one liquid, one solid.
+     
+**** Fluidization
+     The inverse of filtration: turning a solid into a liquid by
+     infusing it with water or gas. Just a type of mixing.
+
+*** Heat transfer
+    Heat (energy) transfer from one substance to
+    another. Applications:
+    * Heat exchanger: efficient transfer between fluids
+    * Thermal energy storage: e.g. insulated water tanks (could store
+      Railcraft steam in a tank)
+    * Electricity generation: thermopile (RP2)
+
+    Most interesting for processing (i.e., distillation) is the heat
+    exchanger, which could either a condenser (cooling) or
+    evaporator/boiler (heating). Railcraft already has a great boiler
+    system that we could leverage. Need a condenser.
+
+*** Mass transfer (separation)
+    Moving chemicals from one solution/phase to another. Forms the
+    basis of fluid filtration. See section on separation.
+
+*** Mechanical
+    Mostly working with solids.
+    
+**** Solid transportation
+     Trust BC/AE here.
+    
+**** Crushing, pulverizing
+     Many machines already perform this for ore processing. Examples:
+     * IC2 macerator (1 output)
+     * TE pulverizer (2 outputs)
+     * GT industrial grinder (4 outputs)
+     
+**** Screening/sieving
+     Presumably this is how the pulverizer and grinder separate
+     materials. 
+     
+** Unit Processes
+   These are types of chemical (rather than physical)
+   processes. These are somewhat orthogonal to machines. But we list
+   them to make sure we support these types of chemistry:
+   * redox: ore reduction in furnace, electrolysis
+   * (de)hydrogenation
+   * hydrolysis
+   * (de)hydration
+   * (de)halogenation
+   * (de)nitrification
+   * (de)sulfonation
+   * (de)alkylation
+   * esterification
+   * polymerization
+   * polycondensation
+   * catalysis
+
+** Separation
+   There are different methods of separating/purifying compounds:
+   * Filtration: depending on filter media
+   * Decantation/Settling: tanks that over time would separate solid
+     and liquid
+   * Distillation: leverage heat transfer processes to partially
+     evaporate, then condense. The Forestry still and the brewing
+     stand are close, but neither of them would work. Probably best
+     to model this as a combination of heat transfer components.
+   * Precipitation: would happen in chemical reactor, but then the
+     solid phase needs to be separated.
+   * Crystallization: uses a special solvent to cause one fraction to
+     crystallize; as in Factorization's crystallizer. 
+   * Centrifugation: based on differences in density, basically an
+     accelerated version of settling.  The GT industrial centrifuge is
+     the only real existing option.
+   * Sieves: difference in particle size. We can imagine that the TE
+     pulverizer and GT grinder work this way.
+   * Extraction:
+     * Leaching: Dissolve some fraction of a solid; simple if water,
+       could use the Forestry carpenter, and then boil.
+     * Liquid-liquid: Relies on solubility differences b/w solvents;
+       this would typically involve mixing another solvent into a
+       mixture and then letting it settle. Representing multi-solvent
+       mixtures may be complicated. Another issue is that the two
+       solvents will likely be water and a non-polar organic solvent;
+       organic chemistry is complicated.
+   * Adsorption: sticking to a surface, as in cyclonic separation;
+     may be too similar to filtration
+   * Magnetic: could work for magnetite, otherwise...
+    
+   The easiest to get working would be centrifugation, sieves and
+   maybe fractional melting. Leaching would be a special case for
+   making e.g. potash. Could also create a still if we need one.
+
+   How to model this? We could track actual phase transition
+   temperatures, densities, particle size, etc. But that would be
+   crazy. A more abstract model: a list of chemicals that compose a
+   particular ore/mixture, possibly with percentages. The number of
+   separated chemicals will depend on the number of outputs for a
+   machine. Are the outputs always pure (simplest) or could they also
+   be mixtures themselves? This would present opportunities for chain
+   processing. Are some only separatable by certain techniques?
+
+*** Distillation
+    Components of a distillery:
+    * Heater/boiler (e.g., steam powered)
+    * Distillation column, consisting of multiple blocks
+    
+    At each level of the distillation tower, gas may be extracted and
+    condensed. The higher the tower, the finer the separation. The
+    boiler sits next to the base of the tower. The "bottoms" liquid
+    can be extracted from the bottom of the tower. Optionally, a
+    vacuum can be attached to the top, for when the temperature has
+    an upper limit (petroleum refining). In theory, the heat gained
+    by the condensers could be transferred to the boiler, i.e, they
+    would take in water and emit steam, which would flow to the
+    boiler, although the boiler would need additional steam.
+    
+*** Gravity-based separation
+    This relies on materials having different specific gravities.
+
+    Types:
+    * Centrifuge :: Spins an object so that its contents separate by
+                    density through centrifugal force. This requires
+                    a lot of energy. This already exists in GT.
+    * Spiral :: Spiral sluice relies on gravity to accelerate
+                materials down the incline, with the denser materials
+                tending toward the middle. No energy required.
+    * Settling :: A multiblock settling tank could take a mixture at
+                  the top and yield one or more solids (one from each
+                  of the bottom blocks) depending on the relative 
+                  densities. The more blocks, the more liquid that
+                  can be processed. This is simpler and cheaper than
+                  spiral separation, but proceeds much more slowly.
+    * Cyclonic :: A cyclone of fluid (liquid or gas) is established,
+                  denser particles hit the wall and fall
+                  out. Liquid/solid separators are called
+                  hydroclones. These require liquid under pressure and
+                  thus some energy.
+    * Shaking Tables :: Shake it, denser particles fall to bottom. No
+                        need for liquid here. Requires some energy,
+                        pretty slow.
+    * Jig Beds :: Fluidized bed with pulsing water instead of
+                  shaking. Works faster than shaking tables but
+                  material will need to be dried.
+    
+    Centrifuge recipes:
+     | Input       | Output                   |
+     |-------------+--------------------------|
+     | Monazite Cl | CeCl:50 LaCl:25 NdCl: 15 |
+     |             |                          |
+
+*** Leaching
+    Some substances are obtained through water leaching and then
+    boiling off the water. The leaching machine will take one solid
+    and one liquid input, and yield a liquid, fairly slowly.
+
+   | Input    | Output            |
+   |----------+-------------------|
+   | charcoal | pearl ash (K2CO3) |
+   |          |                   |
+    
+*** Froth Flotation
+    Desired ore is derivatized (via a collector) to become more
+    hydrophobic. It is mixed into a water bath, and air bubbles rise
+    through the bath, capturing the hydrophobic ore
+    constituents. This is mostly used for sulfide ores.
+
+    The machine would accept air (from a compressor) and the ore
+    slurry (from mixer with collector).
+
+    Important collectors:
+    * (K/S)EX (K/Na ethyl xanthate): Cu, Ni, Ag, Au extraction
+    
+    Using froth flotation should double ore output. Should be
+    possible to recover the collector.
+    
+*** Drying
+    This means removing water from an aqueous solution to yield a
+    purer liquid from the solute. The fluid is passed over/through
+    some matrix that reacts with the water, removing it from solution.
+
+*** Electrostatic
+    Charge-based separation. Useful for small particles like mineral
+    sands. Requires some energy to maintain the electric field. No
+    slurry required.
+
+*** Magnetic
+    Uses a magnetic field instead of an electric field. Requires some
+    energy for the electromagnet.
+    
+** Reactions
+   A chemical reactor performs some combination of these functions:
+   * mixing
+   * separating
+   * heating
+   * cooling
+   * pressurizing
+
+   A key question is whether these tasks are performed by separate
+   machines or one monolithic reactor. The most fun would be separate
+   machines.
+
+   See next sections for further discussion.
+
+   Within this reaction chamber, the following reactions could happen:
+    
+    | Reactant A       | Reactant B        | Catalyst        | Product A        | Product B           | Machine        |
+    |------------------+-------------------+-----------------+------------------+---------------------+----------------|
+    | MgCl2 (sea)      | Ca(OH)2 (s)       |                 | Mg(OH)2 (s)      | CaCl2 (aq)          | mixer          |
+    | Mg(OH)2 (s)      | HCl (aq)          |                 | MgCl2 (conc)     |                     |                |
+    | MgCl2 (conc)     | e-                |                 | Mg (l)           | Cl2 (g)             | electrolyzer   |
+    | Li ore dust      | H2SO4 (aq)        |                 | Li2SO4 (aq)      |                     |                |
+    | Li2SO4 (aq)      | Na2CO3 (s)        |                 | Li2CO3 (s)       | Na2SO4 (aq)         | heated mixer   |
+    | Li2CO3 (s)       | 2HCl (aq)         |                 | LiCl (aq)        | CO2 (g)             | mixer          |
+    | 2LiCl (l)        | e-                |                 | 2Li (s)          | Cl2 (g)             | molten electro |
+    | 2NaCl* (aq)      | CaO (s) + CO2 (g) | NH3             | Na2CO3 (s)       | CaCl2 (aq)          | mixer          |
+    | SO2* (g)         |                   | V2O5            | SO3 (g)          |                     | mixer          |
+    | SO3 (g)          | H2O (g)           |                 | H2SO4 (l)        |                     |                |
+    | compost/coal     |                   |                 | NH3 (l)          |                     | still          |
+    | 2NH4Cl (s)       | CaO (s)           |                 | 2NH3 (l)         | CaCl2 (s) + H2O (g) | still          |
+    | 3H2 (g)          | N2 (g, atmos)     | magnetite       | 2NH3 (l)         |                     |                |
+    | 2H2O (l)         | e-                |                 | 2H2 (g)          | O2 (g)              | electrolyzer   |
+    | CH4 (g)          | 2H2O (steam)      |                 | 4H2 (g)          | CO2 (g)             |                |
+    | FeVO3* (s)       | NaCl/Na2CO3 (s)   |                 | NaVO3 (s)        |                     | furnace        |
+    | NaVO3 (aq)       | H2SO4 (aq)        |                 | V2O5 (aq)        |                     |                |
+    | V2O5 (aq)        | 5Ca (s)           |                 | 2V (s)           | 5CaO                |                |
+    | CaCO3* (s)       | HCl (aq)          |                 | CaCl2 (aq)       | CO2 (g)             | mixer          |
+    | CaCl2 (l)        | e-                |                 | Ca (s)           | Cl2 (g)             | molten electro |
+    | 2NaCl (aq)       | e-                |                 | H2 (g)           | Cl2 (g) + NaOH (aq) | electrolyzer   |
+    | Cl2 (g)          | H2(g)             | glowstone       | 2HCl (g)         |                     | mixer          |
+    | NaCl (s)         | H2SO4 (aq)        |                 | HCl (g)          | NaHSO4 (aq)         | mixer          |
+    | 2NaCl (s)        | H2SO4 (aq)        |                 | 2HCl (g)         | NaSO4 (aq)          | heated mixer   |
+    | 2NaCl (l)        | e-                |                 | 2Na (s)          | Cl2 (g)             | molten electro |
+    | Na (s)           | KCl* (l)          |                 | NaCl (s)         | K (s)               | furnace        |
+    | TiO2 (s)         | Cl2 (g)           |                 | TiCl4 (g)        |                     | furnace        |
+    | TiCl4 (g)        | 2Mg/4Na (s)       |                 | Ti (s)           | 2MgCl2/4NaCl (s)    | furnace        |
+    | 8H2S (g)         | 4O2 (g, atmos)    | Al2O3/TiO2 (2x) | S8 (s)           | 8H2O                | furnace        |
+    | K2CO3 (s)        | 2HCl (aq)         |                 | 2KCl (s)         | H2O (+ CO2 atmos)   | mixer          |
+    | 2KCl (aq)        | e-                |                 | 2KOH (aq)        | Cl2 (g)             | electrolyzer   |
+    | 2KOH (aq)        | CO2 (g)           |                 | K2CO3 (aq)       | H2O (l)             |                |
+    | Al2O3 (s)        | e-                | cryolite        | Al (s)           |                     | molten electro |
+    | Al2O3 (s)        | 6Na/K             |                 | 2Al (s)          | 3Na2O/K2O           | furnace        |
+    | Monazite dust    | NaOH              |                 | Monazite OH      | Na3PO4              | mixer          |
+    | Monazite OH      | HCl               |                 | Monazite Cl      | ThOH                | mixer          |
+    | ethanol (l)      | NaOH (s)          |                 | Na Ethoxide (aq) | H2O (l)             | mixer          |
+    | 2 ethanol (l)    | 2Na (s)           |                 | 2Na Ethoxide (l) | H2 (g)              | manual         |
+    | 2 methane (g)    | sulfur:8 (s)      | alumina         | 2CS2 (l)         | 4H2S (g)            | hot mixer      |
+    | Na ethoxide (aq) | CS2 (l)           |                 | SEX              |                     |                |
+    |                  |                   |                 |                  |                     |                |
+   
+** Mixing
+   Need a machine to mix solids, liquids and gases. Technically, this
+   is a challenge, because it would require modeling mixtures of
+   fluids. In theory, we could have a mixture liquid using
+   damage. This would support up to ~16000 chemicals in binary
+   mixtures. For arbitrary mixtures during processing, binary is
+   probably sufficient. Ores will be more complex, but those can be
+   modeled individually.
+
+   Types of mixers we would want:
+   * combining two fluids or gases
+   * dissolving a solid or absorbing a gas into a solution
+   * combining a solid and fluid to a slurry
+   * mixing two solid dusts
+
+   All of these take two inputs and emit one output, or two outputs
+   when there is a solid/liquid plus a gas. The difference really are
+   three types of input: two fluids, two solids or a fluid and a
+   solid.  These correspond to liquid agitators, dust blenders and
+   fluidizing beds, respectively.
+   
+** Temperature
+   Fluids will need to be heated and cooled. If a reaction occurring
+   in a mixture releases or requires heat, then cooling or heating
+   must be applied to the reaction chamber. One type of heater would
+   be a simple electric heater, but heat transfer devices would be
+   more efficient. Steam/water could be piped into the heat
+   transfer device, and they would emerge in a cooled or heated form
+   (steam would become water, water steam). Heat exchangers are
+   typically made from stainless steel, as well as Cu/Ni and Ti.
+
+   Does the reaction mixing chamber itself require temperature
+   control? In real life, this is the case, but how to model it? The
+   device already has 3/4 material connections, plus power. This would
+   be two more connections. May be workable. The simple electric
+   heating chamber is also an option. Or a separate block.
+
+   In fact, heating/cooling of fluids outside of the chamber may
+   present technical complications: each "temperature" of each liquid
+   would need to be registered. Or maybe we could analyze the network
+   to determine what the temperature should be? That *might* work
+   since the temperature is not an inherent property of the substance
+   (like its composition). To store a chemical at a temperature, a
+   heated/insulated tank is necessary. Wait for use cases.
+
+** Pressure
+   If the player can control temperature, then the pressure could be
+   controlled independently through the amount of reactants and the
+   volume of the chamber. If we assume that the volume is fixed
+   (reasonable) then it comes down to the amount. The reactants need
+   some sort of buffering both for convenience and to attain the
+   correct stoichiometry. Perhaps we could have the amount depend on
+   the input pipe. Ultimately, this may be too complicated;
+   temperature should be enough to make the game interesting.
+   
+** Electrolysis
+   Electrolysis will reduce just about anything. If we know the
+   chemical formula of the substance, we can easily calculate the
+   product of redox reactions. IC2 has an electrolyzer for making
+   energy cells, or something. GT has a much more interesting
+   one. But we probably need a smelting electrolyzer to deal with
+   e.g. bauxite processing.
+
+   A more complicated form is electrorefining. This requires
+   dissolving the metal in H2SO4 and performing electrolysis. The
+   anodes would be need to be transferred to a grinder for recovery of
+   the metals. This means that electrodes need to be continually
+   manufactured and replaced; perhaps every 10 buckets of
+   electrolyte. Partial yields from grinding partially mature
+   electrodes should be allowed. A number of minor outputs are
+   possible from grinding the dust.
+
+** Smelting
+   Types of smelting:
+   * Roasting/calcining: conversion of sulfide and carbonate ores to
+     oxides. This occurs at low temperature; any furnace is capable.
+   * Reduction: conversion of oxide to elemental metal. Requires
+     reducing agent like coal or sand.
+     
+   Furnaces and smelting is central to Minecraft, so we do not want
+   to change that dramatically; however, we could add more
+   sophisticated smelting options, with higher yield.
+
+   Possible reduction progression (ingot:ore/dust):
+   * Vanilla furnace and other simple furnaces (1:1) 
+   * Induction smelter (2:1 + slag), requires coal/sand
+   * Industrial blast furnace *Fe only* (3:1 + 2 slag), requires coke,
+     limestone flux and air input; oil, tar, natural gas can be added
+     to the coke for additional energy and speed (4:1). GT has since
+     added something with this name. Maybe blast smelter?
+   
+   Possible roasting progression:
+   * Vanilla furnace and other simple furnaces (1:1)
+   * Fluidized bed roaster: twice as fast (2:1), requires air to be
+     pumped into the chamber
+   
+** Ore processing
+   More complex chemistry happens when extracting metals from
+   ore. Preprocessing of mineral ores involves these unit operations:
+   * Comminution :: Simply grinding/pulverizing
+   * Sizing :: Selecting the particles by size; could be simple
+               screens or could rely on different settling velocities
+               (things like cyclones and trommels). We can probably
+               ignore this step.
+   * Concentration :: Concentrating the ore is more complicated, and
+                      there are many methods (see separation section):
+     * Gravity/density-based
+     * Chemical, e.g. froth-flotation
+     * Electrostatic
+     * Magnetic
+   * Dewatering :: If a slurry is formed during separation, the water
+                   needs to be removed. Perhaps by filtering,
+                   sedimentation, or drying (requires more energy).
+   
+   The rest of this section describes how each specific ore can be
+   processed into economic materials.
+   
+*** Magnetite
+**** Vanadium
+     Although vanadium is present in several ore minerals, it is
+     typically isolated from magnetite and ilmenite ore, and some times
+     carnotite (uranium) ore. It can also be extracted from flue dust
+     of heavy oil, phosphate ore slag and bauxite. Here we focus only
+     on extraction from magnetite.
+     
+     Vanadium is typically isolated from slag formed during conversion
+     of the pig iron to steel. The Railcraft blast furnace does not
+     output any slag. Rather than reimplementing the blast furnace, we
+     could use the slag produced during magnetite ore smelting in the
+     induction smelter (magnetite ore/2*dust + sand => 2*iron +
+     magnetite slag). That slag is then resmelted with sodium
+     carbonate/chloride/sulfate, or lime to produce dirty NaVO3
+     dust. This is leached with water and ammonium vanadates are
+     precipitated with ammonia. The ammonia is decanted and the
+     precipitate is roasted to V2O5. To get elemental vanadium, we need
+     to smelt V2O5 with CaCl2 or aluminum dust. Thus, the overall
+     process is smelt, leach/precipitate/decant, roast and smelt. The
+     roasting and smelting is already possible. Could maybe use the
+     carpenter for the leaching, but we need a machine with liquid
+     output. A fluid reactor would mix the NaVO3 (aq) and ammonia,
+     resulting in an aqueous mixture ammonia and and solid vanadate. A
+     liquid/solid separator yields the vanadate powder for roasting.
+ 
+*** Limonite
+**** Iron
+     Basic smelting.
+     
+**** Nickel
+     High temperature (250 C) leaching of ore with sulfuric acid
+     precipitates the iron as hematite. The Ni can then be
+     precipitated as a sulfide with H2S gas treatment, and then
+     reduced via electrolysis or H2 gas. There is Co mixed with the
+     Ni, and it can be extracted by adding Cl2 or ozone to oxidize the
+     Co to Co(OH)3, which is insoluble in acid. Say about 20 buckets
+     of Ni extract for one Co ingot.
+     
+*** Chalcopyrite 
+**** Copper
+     Smelt, optionally with froth flotation to double
+     output. Induction smelting with sand/coal will again double
+     output and yield chalcopyrite slag. Either of these yields an
+     oxide. The oxide can be again smelted, or electrorefined.
+
+**** Cobalt
+     The copper oxide is dissolved in sulfuric acid, and the cobalt is
+     CoSO4. The copper is electrolyzed, and NaOH is added to the spent
+     electrolyte to precipitate Co(OH)2, which is electrolyzed to
+     Co. Lets say 20 buckets of spent electrolyte are required for
+     one Co ingot.
+
+**** Molybdenum
+     After froth flotation, perform another flotation with NaHS
+     added, which keeps copper from frothing, thus separating the
+     molybdenite, which is processed as normal.
+     
+**** Minor: Silver, Gold and Platinum
+     Electrorefining of copper oxide.
+
+**** Antimony
+*** Pentlandite
+**** Nickel
+     Typical sulfide ore extraction.
+ 
+**** Cobalt
+     The same as with chalcopyrite.
+     
+*** Sphalerite
+**** Zinc
+     As with all sulfide ores.
+     
+**** Cadmium
+     Crude zinc oxide (after initial roasting) is seeded with zinc dust
+     to precipitate CdSO4. Presumably this can be electrolyzed to Cd?
+     
+*** Galena
+**** Lead
+     Like any other sulfide ore.
+     
+**** Silver
+     TE pulverizer already yields silver dust from lead ore.
+**** Antimony
+
+*** Spodumene
+**** Lithium carbonate
+     Treat with H2SO4, roast, leach with water and precipitate with Na2CO3.
+     
+*** Lepidolite
+**** Lithium
+     See Li ore dust reaction.
+     
+**** Caesium
+     Need to figure this out.
+     
+*** Dolomite
+**** Magnesium
+     Ground dolomite is roasted in the presence of ground
+     FeSi to produce a mixture of CO2 and Mg gas, as well as CaSiO3
+     (wollastonite) mixed with iron dust. Distillation tower separates
+     and condenses the Mg. 
+
+     FeSi results from induction smelting sand and iron (maybe an iron
+     nugget, because the ingot recipe already exists).
+     
+**** Calcium
+     
+*** Rock salt
+**** NaCl
+     Just grind it up.
+     
+**** KCl
+     Dissolved in brine and heated, so that the KCl and NaCl are
+     enriched in a solution. Heat transfer pipe cools the solution,
+     and the steam can be used for the heating of the brine. The
+     cooling causes the KCl to precipitate. This is separated through
+     e.g. centrifugation (settling will not work, because the NaCl
+     will precipitate). The left over solution can serve as the brine
+     in the initial step.
+     
+*** Limestone/Marble
+**** Calcite (GT)
+     Grind to yield CaCO3, plus a 5% chance of CaMg(CO3)2 (dolomite).
+     
+**** Calcium
+     Electrolysis of CaO (roast product of CaCO3) or aluminothermic
+     reaction, which involves the reduction of CaO with Al, under
+     high temperatures. These temperatures are typically attained by
+     surrounding the CaO/Al charge with a mixture of Mg and BaO2.
+
+     Something like:
+     3CaO + 2Al => Al2O3 (slag) + 3Ca
+
+     Could allow crafting of an aluminothermic charge (Al+Mg+BaO2).
+     It would be placed in a fired clay crucible and ignited with
+     flint and steel. There will be flames; nearby things could burn.
+
+     BaO2 comes from oxidizing BaO (roasting or O2 absorbtion), and
+     BaO results from heating BaCO3 with carbon. BaCO3 is formed by
+     heating (60-70 C) BaS (barite) with NaCO3 (soda ash). Or heated
+     CO2 absorbtion. The absorbtion would need to happen in a mixer,
+     while the other recipes could be handled by the induction smelter.
+     
+*** Skarn
+**** Calcium
+     
+*** Uraninite
+
+**** Uranium
+     This would be a lot trickier, because it requires liquid/liquid
+     extraction using organic solvents (specifically 2.5% amine, 2.5%
+     isodecanol and 95% kerosene). We will need such solvents for
+     processing any uranium, however. IC2 simply yields pure uranium
+     when mined. How boring!
+     
+     Kerosene comes from oil refining, but the tertiary amine that
+     reacts with uranium would be complicated to synthesize. For
+     simplicity, let us aim for only ethyl or methyl amines. Those
+     can be synthesized from ethanol/methanol and ammonia using a
+     zeolite catalyst.
+
+**** Vanadate
+     After treating ore with the tertiary amine, mix with the sodium
+     carbonate and follow the steps for magnetite.
+     
+**** Thorium
+**** Yttrium
+**** Technetium
+     
+*** Chromite
+**** Ferrochromium
+     Smelt with coal at high temperature (2800 C); lots of energy. As
+     a reference, iron is smelted around 2000 C.
+
+*** Magnesite
+**** Magnesium
+     Calcined to MgO (magnesia), which is then smelted with Si in
+     induction furnace to produce Mg (s) and SiO2 (sand). Could be
+     combined into one step.
+     
+*** Rutile
+**** Refining
+     Rutile is TiO2. It is refined by mixing in a fluidized bed at
+     900C with Cl2 to make TiCl4 (caution: exothermic), fractionally
+     distilling it and then oxidizing TiCl4 back to TiO2 in a pure O2
+     flame (caution: exothermic, the Cl2 gas can be recovered).
+     
+**** Titanium
+     See the reactions for TiO2.
+     
+*** Ilmenite
+**** Titanium
+     Convert to TiO2 (rutile), then follow the listed reactions. TiO2
+     is produced by treating ilmenite with sulfuric acid, which
+     separates the iron as FeSO4. The FeSO4 is crystallized and
+     filtered out. This requires a settling out the liquid FeSO4 and
+     then cooling it to a solid. The solid phase in the settling tank
+     is washed to obtain TiSO4. That is hydrolyzed (boiled) to hydrous
+     TiO2, which needs to be roasted to pure TiO2.
+     
+*** Garnierite
+**** Nickel
+     Simply smelt it. In an induction furnace, include a sulfur
+     source, like gypsum, for flux.
+     
+*** TODO Cassiterite
+**** Tin
+
+**** Niobium/Tantalum
+     
+*** Wolframite
+    Gravity concentration.
+    
+**** Tungsten
+     WO3 is reduced at 800C with H2 (producing steam). Getting to WO3
+     is more complicated. Mix ore with aqueous soda ash, add ammonia
+     to form ammonium para tungstate (APT), which precipitates (after
+     boiling off the water) and is calcined to WO3.
+
+**** WC (tungsten carbide)
+     Induction smelt tungsten ore with coke.
+     
+*** Scheelite
+    Concentrated by froth flotation.
+
+**** Tungsten
+     The same as wolframite.
+     
+*** Cinnabar
+    
+**** Mercury
+     http://mysite.du.edu/~jcalvert/phys/mercury.htm#Prod
+     Looks like it is found only in fine-grained massive forms, so
+     very little metal will be obtained per ore. The ore is roasted,
+     and mercury is distilled from the vapors.
+     
+*** Bauxite
+**** Aluminium
+    Dissolved in NaOH at 150-200 C to yield aluminate. The red mud is
+    filtered out, and Al(OH)3 is precipitated. That is heated to
+    become Al2O3 and melted at 1000 C. Cryolite is added as a flux,
+    and then electrolysis yields Al (s). The GT electrolyzer requires
+    a lot of energy to process bauxite dust. We could have Al2O3
+    increase yield significantly. But that would not incorporate the
+    notion of the cryolite.
+
+    Cryolite is Na3AlF6, which can be synthesized as:
+    6 NaOH + Al2O3 + 12 HF → 2 Na3AlF6 + 9 H2O
+
+    The HF is made like this (CaF2 is fluorite):
+    CaF2 + H2SO4 → 2 HF + CaSO4
+    HF is also a by-product of making phosphoric acid from apatite.
+
+    Note that the cryolite is not consumed in the process.
+
+    This will require some special machine, a smelter/electrolyzer,
+    that requires less energy than using straight electrolysis.
+    
+*** Zircon
+    Separated from sand using spiral separators. The rutile and
+    ilmenite are removed by magnets.
+    
+**** Zirconium
+     Same process as for rutile=>titanium.
+     
+*** Stibnite
+     
+**** Antimony
+     Much like other sulfide ores. Enriched with froth flotation,
+     roasted to oxide, then reduced in an induction smelter with
+     coke. Or directly induction smelted with Fe, producing Sb and
+     FeS slag.
+     
+*** TODO Borax
+*** TODO Pyrolusite
+*** Pollucite
+**** Caesium
+     Caesium is highly reactive, with both water and air. Seems like
+     this is mostly produced during Li production, but here are some
+     options:
+     
+***** Acid digestion
+      Add Hcl to eventually yield CsCl (evaporate water). Analogous
+      reactions happen with HBr and HF.
+      
+      Or add sulfuric acid => caesium alum, induction smelt with coke
+      and leach with water to yield Cs2SO4 (aq). This could be used
+      for caesium formate production.
+
+      CsCl is reduced at 700-800C with Ca or Ba in induction smelter. 
+      
+***** Alkaline decomposition
+      Induction smelt with mixture of CaCO3 and CaCl2, leach with
+      water to yield CsCl. 
+      
+***** Direct reduction
+      Induction smelted with Na, K or Ca metal (expensive, maybe
+      consumes twice the metal).
+
+***** Electrolysis
+      Elecrolyze CsCN. How to get this?
+
+***** Thermal decomposition
+      Cook CsN3 at 400C. Seems complicated. Should increase
+      yield. Relevant reactions:
+      
+      2 CsSO4 + Ba(N3)2 → 2 CsN3 + Ba(SO4)2
+      2 NaN3 + BaX → 2 NaX + Ba(N3)2
+      2 NaNH2 + N2O → NaN3 + NaOH + NH3
+      2 Na + 2 NH3 → 2 NaNH2 + H2
+    
+**** Rubidium
+     The caesium alum can be fractionally crystallized to yield tiny
+     amounts of rubidium.
+      
+*** Bastnasite
+**** Cerium
+     Treated with H2SO4 to make water soluble sulfates. NaOH is added
+     and thorium hydroxide precipitates. Ammonium oxalate precipitates
+     rare earths as oxalates. They are heated to oxides and dissolved
+     in HNO3, leaving behind insoluble cerium salts. Those can be
+     induction smelted with Ca or melted and electrolyzed.
+
+     Oxalic acid:
+       NH4OH + oxalic acid -> ammonium oxalate
+       glucose + HNO3 (or air) --V2O5--> oxalic acid
+
+     Nitric acid:
+      * Large scale at 500K, pressurized air for O2: 
+        4 NH3 (g) + 7 O2 (g) → 4 NO2 (g) + 6 H2O (g) [platinum/Rh catalyst]
+        4 NO2 (g) + 2 H2O (l) → 4 HNO3 (aq)
+      * Small scale:
+        2 NaNO3 (s) + H2SO4 (aq) → 2 HNO3 (aq) + Na2SO4 (s)
+        
+*** Tantalite
+    Gravity separation.
+    
+**** Tantulum/Niobium
+     Treated with HF to yield complex fluorides. Those are separated
+     by liquid extraction, with water/cyclohexanone as the
+     solvents. Both niobium and tantalum are extracted. The tantalum
+     (or niobium) fluoride is precipitated by addition of KF, and the
+     result is reduced with molten Na.
+
+     Cyclohexanone results from oxidizing cyclohexane in air with Co
+     catalyst. Cyclohexane results from reducing benzene. This means
+     mixing gaseous benzene and H2 with a Pt or Raney Ni catalyst
+     under high temperature. Cyclohexane is then condensed.
+
+     Benzene results from oil refining. 
+     
+*** Molybdenite
+**** Molybdenum
+     Like any sulfide, it is roasted to an oxide at 700C. It can then
+     distilled (sublimated at 1100C) or dissolved in ammonia. To get
+     molybdenum metal, reduce with H2 gas.
+     
+**** Ferromolybdenum for steel
+     Aluminothermic reaction w/ the purified oxide and iron.
+     
+**** Rhenium
+     If the gas during roasting is captured, it can be condensed,
+     leached with water and treated with NH4Cl to precipitate
+     ammonium perrhenate. It can be reduced with hot H2 gas.
+     
+*** Malachite
+**** Copper
+     Smelt it.
+*** Glauconite
+**** Fertilizer
+     Smelt, and leach with HCl to make KCl.
+     
+*** Alunite
+**** Alum
+     Calcined at low heat, leached with water, evaporated.
+     
+**** Potassium
+     Roasted at 1000C to produce K2SO4 and Al2O2. The K2SO4 is water
+     soluble and can be leached off, filtered and the water is
+     evaporated.
+     
+**** Aluminum
+     Alumina is the filtrate after roasting and water leaching.
+         
+*** Flourite
+**** HF
+     Dissolve in H2SO4.
+
+**** Cryolite
+     See Bauxite section.
+     
+*** Graphite
+**** TODO Graphene
+     
+** Oil refining
+   This is the most complex chemical process. Many materials will be
+   derived from petroleum.
+
+*** Unit Operations
+
+**** Atmospheric distillation
+**** Catalytic reforming
+     Reforms the heavy and sometimes light naphta streams into more
+     complex, higher octane hydrocarbons. There are four reactions:
+     * Dehydrogenation :: changes naphtenes to aromatics like toluene
+     * Isomerization :: creates isoparaffins from paraffins
+     * Aromatization :: creates aromatics from paraffins
+     * Hydrocracking :: breaks paraffins into shorter paraffins
+
+     The liquid naphta is mixed with H2, the mixture is heated to
+     vaporize the naphta and they enter the reactor with the
+     platinum/rhenium catalyst. The result is cooled to condense the
+     hydrocarbons. This process must be preceeded by desulfurization.
+
+     Aromatics can be separated by extraction with diethyl glycol or
+     sulfolane. Distillation separates compounds like benzene.
+
+     Diethyl glycol comes from reacting ethylene with air (or O2 is
+     faster) w/ Ag catalyst to produce ethylene oxide. Ethylene
+     oxide is useful for all sorts of things. It is converted into
+     ethyl glycols by mixing with water at 200C. Distillation
+     separates mono/di/tri-ethyl glycols.
+
+     Sulfolane results from reacting butadiene with SO2 and reacting
+     the resulting sulfolene with H2 (g) w/ Pt or Raney nickel
+     catalyst.  Raney nickel is an Ni/Al alloy, activated by Zn or Cr.
+     
+**** Steam cracking
+     This breaks naphtas into smaller hydrocarbons. Naphtas are mixed
+     with steam and heated to 850C, then cooled. Light naphta
+     generates ethylene (and propylene/butadiene), while heavier
+     naphtas generate benzene (and toluene/xylene). Distillation
+     separates the components.
+     
+*** Streams
+**** Light naphta
+**** Heavy naphta
+*** Recovered waste products
+**** Vanadate
+     Coke from oil refineries contains vanadium. The coke is leached
+     using sulfuric acid and then ammonium vanadates are precipated,
+     as from magnetite.
+     
+* Worldgen
+** Ore deposits
+   By default, all ores will be modeled as veins. PFAA will not
+   actually generate any ores. Instead, we will provide a COG config.
+
+   First, internal deposits. Magmatic processes separate ores either
+   along a temperature gradient or through solubility
+   differences. The latter generates metal sulfides.  Hydrothermal
+   action also typically generates sulfides, since sulfur is able to
+   carry the metal in the aqueous phase. 
+
+   The surficial deposits generally consist of oxides. These need to
+   be processed very similarly to sulfides. Do we distinguish between
+   oxides and sulfides? It would present interesting
+   chemistry. Sulfides are a source of PGEs, especially with Ni, Cu,
+   Cr and Co. Perhaps more importantly, the SO2 produced by smelting
+   can be reclaimed as sulfuric acid. The obvious disadvantage would
+   be the need for additional block IDs. It also opens the door to
+   modeling specific minerals.  The advantage would be that minerals
+   could be used for other purposes. Mostly, these relate to coloring
+   and other decorative aspects. Nothing wrong with that.
+
+   Some specific types of ore deposits:
+   
+   | Deposit                    | Occurs                               | Ores                                                    | Minerals                                                    |
+   |----------------------------+--------------------------------------+---------------------------------------------------------+-------------------------------------------------------------|
+   | Banded Iron Formation      | Sed                                  | Fe                                                      |                                                             |
+   | Volcagenic Massive Sulfide | Ocean, ice mountains                 | Cu Zn Pb Au Ag (bp: Co Sn Ba S Se Mn Cd In Bi Te Ga Ge) |                                                             |
+   | Sedimentary Exhalative     | Sed                                  | Pb Zn Ba (less: Ag Cu Au Bi W)                          |                                                             |
+   | Porphyry                   | Breccia veins in diorite             | Cu (rare:  Mo, Ag, Au)                                  |                                                             |
+   | Layered intrusions         | Peridotite, gabbro, diorite          | Cr Ni PGE Ti Vn                                         |                                                             |
+   | Kambalda                   | Serpentine                           | Ni                                                      |                                                             |
+   | Placer                     | Rivers: gravel, sand                 | Fe(mag) Sn RE Cr granite:Ti(ru)/Zr basalt:Ti(il)        | Au drop, granitic: W drop, basaltic: diamond, sapphire drop |
+   | Pegmatite                  | Plains: granite                      | W-rich, Li-rich: Li Cs Nb Ta (Be)                       | aquamarine tourmaline topaz fluorite apatite corundum       |
+   | Serpentinite               | Anywhere, more common deep, EH/Ocean | Ni, chlorite, magnesite, chrysotile                     |                                                             |
+   | Carbonatite                | Mountains: granite                   | Fe(mag) Th Ba Cu U Ti RE                                | apatite, verm, fluorite                                     |
+   | Evaporite                  | Plains, desert                       |                                                         |                                                             |
+   | Iron Oxide Copper Gold     | Breccia veins under BIF in granite   | Cu, Au                                                  |                                                             |
+   | Conglomerate Au/U          | Veins in bowl of conglomerate        | Au, U                                                   |                                                             |
+   | Granitic Cu/Au (Sn/W)      | Veins in granite                     | Cu Au (less: Sn/W)                                      |                                                             |
+   | Carbonate Zn/Pb            | Limestone                            | Zn Pb                                                   |                                                             |
+   | Greenstone                 | Greenschist                          | Cu+Au Zn/Pb                                             |                                                             |
+
+   Placer deposits could be modeled by shoveling a black sand, with a
+   gold nugget as a rare drop. Pulverizing generates 1 magnetite
+   dust, with a 10% chance of gold nugget. Use of a magnet
+   (factorization) would also separate magnetite.
+
+   Banded Iron Formations consist of a single, banded
+   block. Pulverizing yields 2 hematite dust, with 20% chance of
+   magnetite dust. The hematite can be hydrated to red dye, or
+   smelted to iron, like magnetite.
+
+   Laterite soils are a type of clay, except cooking is not necessary
+   to produce bricks. They can be simply crafted into bricks. It is
+   found only within jungles. Within the laterite, there will be
+   child veins of bauxite (25%), and iron ore (75%). The lateritic
+   iron ore is of two types: yellow and brown (ochres).  When
+   pulverized, they yield the corresponding dust, plus a 5% chance of
+   nickel ore dust. The dusts can be smelted to iron, or hydrated to
+   brown or yellow dye. Smelting is a one-step process for the blast
+   furnace, while for other furnaces the ore is first smelted to
+   hematite, which is smelted to iron.
+
+   Marine evaporite deposits will consist of limestone, under gypsum,
+   under rock salt. Grinding limestone yields calcite + some chance of
+   dolomite. Grinding gypsum yields the mineral itself + 20% native
+   sulfur. Grinding rock salt yields halite + 50% sylvite. Perhaps
+   grinding sylvite could yield MgCl2, say 20% of the time. Borax and
+   soda ash occur in lake evaporites (desert-hills only).
+
+   The VMS deposits occur through feslic volcanic activity in
+   mid-ocean rifts and continental back-arcs (ice mountains). The
+   morphology is globular, with chalcopyrite at the bottom and
+   sphalerite/galena towards the top. Gold at the top.
+
+   There is some desire to balance the distribution of ores between
+   biomes, so we outline them here by biome:
+   
+   | Biome         | Rocks                                        |
+   |---------------+----------------------------------------------|
+   | Continental   | sedimentary, granite, diorite                |
+   | Extreme Hills | rhyolite, andesite, granite, diorite, gabbro |
+   | Oceanic       | limestone, basalt, gabbro                    |
+
+   | Biome          | Ores                                        |
+   |----------------+---------------------------------------------|
+   | Continental    | dolomite, coal, BIF, LI, SEDEX              |
+   | Extreme Hills  | volcanic ash, 2*LI, carbonatite             |
+   | (Frozen) Ocean | 2*dolomite, 2*VMS, LI, 2*SEDEX, 2*BIF       |
+   
+   These are all considered continental:
+   | (Ice) Plains    | evaporite, 2*iron                 |
+   | Beach           | basaltic/granitic/garnet sand     |
+   | (Frozen) Rivers | granitic sand                     |
+   | Desert (Hills)  | quartz sand, evaporite            |
+   | Swamp           | 2*coal, laterite                  |
+   | Jungle (Hills)  | laterite                          |
+   | Ice Mountains   | VMS, 2*iron, granitic/garnet sand |
+   | Taiga (Hills)   | 2*iron                            |
+   | Forest (Hills)  | conglomerate bowls                |
+   
+** Extra planets and moons
+   Eventually, we want to include all planets (including exoplanets)
+   and moons (including psuedo-randomaly generated ones). 
+
+*** Mars
+**** Physical properties
+     * Mass: 0.107 Me
+     * Gravity: 0.376 g
+     * Temperature: -143/-63/35
+     * Pressure: 6 mb (Humans require: 61.8 mb)
+     * Atmosphere: 95% CO2, 3% N2, 2% Ar
+     * Crust thickness: 50km (Earth: 40km)
+     * Light intensity: 44% of Earth
+
+**** Crust composition
+     There is a thin layer of dust (regolith). The red color is caused
+     by iron oxide, mostly in the form of magnetite (TFC), and hematite
+     (TFC) + goethite (TFC). The magnetite causes the dust to be
+     magnetic. The bulk of the dust consists of pulverized plagioclase
+     feldspar (say, labradorite), zeolite, and to a lesser extent
+     pyroxine and olivine. There is an enrichment for sulfur and
+     chlorine. The dust is only millimeters thick, so we might be able
+     to model the dust like "snow" and have dust storms.
+
+     Beneath the dust is finely broken up basalt, enriched with sulfur
+     and chlorine. These deposits are not concentrated enough to mine,
+     but it may be that plants could grow in the soil, with some
+     nitrate fertilizer, perhaps, and a greenhouse to control the
+     temperature and pressure and filter out the radiation.
+     More about soil: http://chapters.marssociety.org/winnipeg/soil.html
+
+     The primary type of rock near the surface is basalt (TFC),
+     followed by andesite (TFC), which is more common in the northern
+     hemisphere. In the lower layers of the crust, andesite dominates,
+     intermixed with other igneous rocks like dacite (TFC) and granite (TFC).
+
+     In fluvial landforms (where water was present), near the surface,
+     one can find hematite (TFC), kaolinite (TFC), kieserite, jarosite
+     (uninteresting), opal (TFC) and gypsum (TFC). Sandstone is also
+     present. Maybe limestone (TFC). Also, the Columbia Hills (in Gusev
+     Crater) have minerals formed in the presence of water:
+     http://en.wikipedia.org/wiki/Columbia_Hills_%28Mars%29
+       
+**** Mineable resources
+     Ores:
+     * Magma action: Ni-Cu-platinoid clusters, Ti, Fe, Cr
+     * Hyrdothermal action: Cu, Zn, Pb, Se, Sb, Cd, As, Ag, Au, Te
+     * Soil deposits: basaltic soil might contain chromite (CrO2),
+       magnetite (Fe3O8), ilmenite (TiFeO3)
+     * Fluvial deposits: Mg + SO4 (kieserite), Ca + SO4 (gypsum),
+       hematite blueberries
+     * Pegmatite deposits near granite: Li
+     
+     By platinoid, we mean the elements Pt, Pd, Os, Ir, Ru, Rh (very
+     rare). These could be produced as a by-product of processing Ni/Cu,
+     or even from nuclear reactors. Mostly used for catalysts
+     (especially Pd).
+
+     Ores produced by magma action will commonly occur near the surface
+     in the volcanic regions. Otherwise, one needs to dig really
+     deep. The hydrothermally concentrated ores will be present
+     throughout at moderate depths, and at low depths in impact craters
+     and volcanic regions. Soil is uniform throughout, except in the
+     fluvial deposits, which have their own surface composition and are
+     found in the valleys of the southern hills and impact craters.
+     
+     Water ice will be a minable resource on Mars (and other cold
+     planets). This will be found as ice in the polar regions (perhaps
+     covered by a layer of dry ice) and also under the surface. The
+     northern lowlands and basins will have ice near the surface, while
+     one will need to dig deeper in the southern highlands. Volcanic
+     regions are unlikely to have any ice, perhaps a little liquid
+     water.
+
+     Also important are geothermal energy sources. This "heat"
+     could be modeled similar to lava (as a flow) and some machine
+     could be attached to such a heatflow to capture it.
+     
+**** "Geomes"
+     The two hemispheres of Mars are quite different:
+     * Northern hemisphere (lower, younger, smoother, 32km crust thickness)
+     * Southern hemisphere (higher, older, craters, 58km crust thickness)
+     The Northern hemisphere accounts for 1/3 of the surface area. 
+
+     Straddling both is the Tharsis volcanic bulge, which are extremely
+     tall volcanoes, with sharp ravines running outward. 7-10 km above
+     the surroundings. May account for 25% of the total surface area.
+
+     There are several large, ancient impact basins, surrounded by low
+     volcanoes. Deepest point at 8km below "sea level". Full of
+     sedimentary material. Possibly 10% of surface. 
+
+     There are large ice caps on both poles. 10%?
+
+     Huge canyons (Valles Marineris), 4000km long, 10km deep. There are
+     similar, huge outflow channels, with lots of sediment.
+
+     In summary, we might have the following biomes:
+     * Plains (25%) [ocean] [plains]
+     * Southern hills (25%) [ocean] [desert hills] [+basins] [+canyons]
+     * Volcanic bulge (25%) [minor: hills] [extreme hills] [+canyons]
+     * Ice caps (10%) [minor: plains, hills] [ice plains]
+     * Impact basins (10%) [generated]
+     * Canyons (5%) [generated] [ravine] 
+  
+     To really communicate the scale of these features, compared to
+     Earth and all of its weathering and balanced igneous activity, we
+     would probably need to increase the height of the world
+     4-5X. Without insane hacking of the code, the true upper limit is
+     to increase terrain generation up to 256 (2X). We will defer this
+     until we get functioning biomes.
+
+**** Portal
+     To be most realistic, we would want the player to construct a
+     space ship and lauch to Mars. The amount of resources required for
+     such a trip would be generally prohibitive. Therefore, we can rely
+     on inspiration from rituals related to Mars/Ares. Ideas:
+     * Kill a puppy at night (reflects the sacrifice of puppies). Do we
+       want this to be on an altar? Like a 1x3 stone surface, with
+       torches. Or any stone?
+
+**** Terraforming
+
+*** Venus
+*** Mercury
+*** Asteroids
+**** 4 Vesta??
+     Sure, it is tiny, but it is also fairly well characterized.
+*** Jupiter's moons
+**** Ganymede
+**** Io
+**** Europa
+**** Callisto
+*** Saturn's moons
+**** Titan
+**** Enceladus
+*** Uranus's moons
+    None worth it
+*** Neptune's moons
+**** Triton
+*** Pluto, other KBOs
+*** Exoplanets
+
+** Exoplanet Generation
+   The main challenge will be creating semi-realistic exoplanets, with
+   interesting, playable and challenging combinations of resources and
+   conditions.
+   
+*** High-level Considerations
+    Let us begin with purely physical considerations. A planet will have
+    a certain:
+    * gravity,
+    * temperature (orbital zone, albedo, greenhouse effect of atmosphere),
+    * weather, like rain (presence/type of atmosphere)
+    * length of day (spin rate; could be tidally locked),
+    * atmosphere composition (mass, temperature, crust composition),
+    * crust composition (raw material, orbital zone, volcanism, water),
+    * potential for alien life (temperature, atmosphere, surface liquids)
+    
+    Here are some simple relationships:
+    * Mass depends on radius and density.
+    * Orbital zone depends on the type/size of the star, and the
+      distance from the star.
+    * Albedo depends on the atmosphere and surface; we might just work
+      off of the Kepler assumptions.
+    * Volcanism depends on the density of the planet.
+
+    We know these values from Kepler:
+    * mass
+    * gravity
+    * orbital zone
+    * temperature (need to somehow adjust for atmosphere)
+    The other things are more complicated.
+
+*** Crust composition
+    Planets are formed from material left over from star formation, so
+    the composition of the raw material will be similar to that of the
+    star. Since the material must be solid to accrete into a planet, the
+    composition also depends on the the orbital zone. There are three
+    basic types of material:
+    * Metals (Fe, Ni)
+    * Silicates (Si)
+    * Ices (C, N, O, S)
+
+    We have measurements for C, O, Si, S, Fe, and Ni. Notably, we are
+    missing N, so we will need to assume the solar fraction for
+    that. All other minor elements not mentioned here will be assumed
+    present at solar fractions.
+
+**** Metals
+    The metals will be complexed to form:
+    * sulfides like FeS (assume 3/4 of S is consumed), 
+    * then oxides like FeO, and finally (probably just ignore)
+    * carbides (when C dominates O, i.e., where it is very hot).
+    
+    This is really just important for calculating the amount of
+    remaining oxygen.
+
+**** Silicates
+    For the silicates, Si will mostly form compounds with Mg, and to a
+    much lesser extent with Ca, Al, Na and Ti (in decreasing
+    order). These include MgSiO3 and Mg2SiO4. Let us just assume that
+    oxygen is consumed at 3X the rate of silicon.
+
+**** Volatiles
+    The remaining volatiles will condense in the form of clathrates
+    (gas trapped in water crystals), hydrates and pure
+    condensates. This depends on two variables: the temperature of the
+    disk and whether the environment is oxidizing or reducing. 
+
+    First, for low temperature, in an oxidizing setting, we have:
+    * water
+    * carbon monoxide (CO)
+    * carbon dioxide (CO2)
+    * methanol (CH3OH)
+    * methane (CH4)
+    * nitrogen (N2)
+    * ammonia (NH3)
+    * hydrogen sulfide (H2S)
+    * phosphine (PH3)
+
+    Assume these ratios:
+    * CO/CO2/CH3OH/CH4: 70/10/2/1
+    * N2/NH3: 10/1
+    * H2S/S: 1/2
+
+    In the reducing environment, carbon is only found in methane, and
+    we flip the N2/NH3 ratio.
+
+    Oxidation is only possible for C/O < 4/5. Just below the boundary,
+    the oxygen is consumed by oxidation, and there is none left for
+    water. Reducing conditions occur for any C/O value, so low C/O
+    values will be high in water, and even high C/O values will have
+    some water.
+
+    At warmer temperatures, solids are converted to gases. CO and N2
+    will be the first to convert as temperature increases. It seems
+    reasonable to assume that planets initially form in the cold, and
+    then as the disk clears up, the temperature increases and the most
+    volatile compounds reenter the gas phase. However, this is
+    complicated: 
+    http://phys.org/news/2012-07-earth.html
+    
+*** Atmospheric composition
+    A planet will capture a tenuous atmosphere prior to formation
+    (mostly H and He), but this is likely to change according to
+    complex, geophysical processes that are beyond our ability to
+    model. Sorry. For interest in the case of Earth, see:
+    http://www.ncbi.nlm.nih.gov/pmc/articles/PMC31109/
+
+    We can say, however, that a planet must have a sufficient mass to
+    retain an atmosphere. This is due to gravity, and the extent of the
+    magnetosphere. So far, we have not found any exoplanets that small,
+    but we can model the thickness of the atmosphere by the mass. 
+
+    It comes down to plate tectonics, major impact events, and complex
+    systems. We will assume outgassing is the major player, because
+    other events like comet impacts probably are not generally
+    significant. Roughly, the bigger the planet, the more geological
+    activity and the more outgassing. Usually, the outgassed material
+    will be water vapor, nitrogen or carbon-based. In colder regimes,
+    ammonia or hydrogen sulfide are possible. Once released, the
+    compounds are oxidized by photoreactions (and other things). This
+    means that a carbon-based degassing will eventually end up as CO2,
+    H2S as SO2, PH3 as PO3, and NH3 as N2. The temperature does not
+    necessarily be high enough to maintain the compounds in the gas
+    phase, as long as their is replenishment (from life or
+    volcanism). The oxidation of methane would lead to heavy
+    hydrocarbons that would form seas.
+
+    Once the gases are established, we can model the temperature by the
+    amount of greenhouse gases. The more greenhouse gases, the higher
+    the temperature (above the Kepler lower limit) and pressure. That
+    will help determine the liquid phase elements on the surface, and
+    establish a geochemistry. If we determine that biochemistry is
+    possible, this will lead to production of other gases.
+
+*** Types of Geochemistry
+    In the below, we assume life is carbon-based. We might go after
+    silicon-based life later.
+
+**** Water
+     This is like the Earth. Requires liquid water on the
+     surface. Water cycle produces water vapor in the atmosphere. And
+     life would produce oxygen. For simplicity, we assume a planet has
+     a single geochemistry.
+
+**** Carbon
+     So-called diamond planets. Requires a very low oxygen content, so
+     that metals and silicate form carbides. Any oxygen gets tied up
+     into CO. Lots of methane, which could form hydrocarbons that rains
+     down to produce tar lakes. Life would breathe CO2 (a major
+     component of the atmosphere, with CO), and breathe out O2 (minor
+     component). Where does all that oxygen come from? Probably
+     deposited by impact events, in the same way that Earth got carbon.
+
+**** Sulfur
+     Would have sulfuric acid (H2SO4) instead of water. There would be
+     trace sulfuric acid vapor in the atmosphere, and life would
+     produce O2. Animals would breathe as on Earth. N2 would be the
+     other major component. Why would H2SO4 be favored over water?
+     There would need to be a lot more sulfur. Would also tend to be
+     hotter (around 88 C).
+
+**** Methane
+     Would be very cold, around -179 C, so that methane could serve as
+     an alternative to water. Life would produce O2 and N2 from trace
+     amounts of NO (oxidized from the dominant N2).
+
+**** Phosphorous
+     Based on phosphoric acid (H3PO4) instead of water. Atmosphere will
+     contain a lot of PO3. The animals would breathe that and exhale
+     PH3 and CO2. Would need to be really hot (171 C). And probably a
+     lot of initial PH3.
+
+**** Ammonia
+     Very cold (-115 C), so any water is frozen and NH3 replaces
+     it. Life would produce N2 and O2 from NH3 and CO2. Animals would
+     breathe the O2 and exhale CO2, like on Earth.
+
+**** Iron
+     Nothing but an iron core. These are probably
+     uninteresting. Exclude them?
+
+*** Putting it all together
+    Here is an algorithm:
+    * Choose an exoplanet with a known mass, radius, distance from sun,
+      gravity, and temperature. We assume its star has a known chemical
+      composition.
+    * Determine a spin rate for length of day. How?
+    * Determine the stone/mineral/ore/metal compositions from observed
+      Fe, Ni, and Si = Mg amounts, assuming other metals are like Earth.
+    * For the volatile C, N, O, S, P, determine amount of volatiles.
+      * First decide redox state: C/O > 0.8, reducing, otherwise 50/50.
+      * For oxidizing, oxidate C according to ratios.
+      * The rest of O becomes water.
+    * Estimate the temperature in the protoplanetary disk to determine
+      which volatiles were stable enough to condense. For simplicity,
+      we assume the planet temperature is the same as its
+      embryonic temperature.
+    * Simulate outgassing, establish an atmosphere.
+    * Simulate any greenhouse effect, increase temperature accordingly.
+    * Establish a geochemistry. To keep things interesting, this should
+      also include a biochemistry.
+    * Regenerate the atmosphere, based on the chemistry.
+
+*** Simple classification
+    Because we need to ensure playability, it is not feasible to simply
+    randomly assign all of the parameters indepedently. Instead, we
+    should have classes of planets (sort of like biomes, although
+    planets should have multiple biomes). Within a class, there is a
+    small amount of variability.
+
+    The broadest classification would be something like:
+    * Gas giant
+    * Ice giant (really a gas giant with supercritical water/methane)
+    * Terrestrial (rocky)
+
+    Gas giants would be a tough environment, since it would not be
+    possbile to survive on the core, if any. In theory, things could be
+    made placeable on gas blocks, while the player would still move
+    through them. It would be totally trippy though.
+
+    If we chemically classify terrestrial planets, we have:
+    * Silicate planets (like Earth and Minecraft), most common (~96%) in galaxy
+    * Carbonate planets (diamonds)
+    * Iron planets (one big core)
+    * Chlorine (rarest)
+    * Ammonia
+    * Phosphorous
+    * Methane (like Titan)
+    * Sulfur
+    * Water (like Earth)
+    * Ocean
+
+    Since the biogeochemistries other than silicate/water are extremely
+    rare, we should probably stick to the familiar, especially given our
+    educational motivation. 
+
+    The physical classifications are perhaps more relevant:
+    * Lava (protoplanets, close orbiting), making up almost 50% of exoplanets
+    * Crater (due to lack of atmosphere)
+    * Bare rocks (lifeless)
+    * Desert
+    * Ice
+    * Ocean
+    * Forest
+    * Civilized
+
+    But who really wants to play on planets that are entirely desert, or
+    ocean, or lava, or lifeless? Well, there would still be:
+    * Interesting crust composition for mining, with possible
+      subterranean life. Depending on the planet radius and silicate
+      content, the crust can be quite deep.
+    * The technical challenges of constructing, configuring and managing
+      the colony structure and the robots.
+    * The terraforming challenge.
+
+    The surface could be made more interesting by having supply pods
+    scattered all over the planet that were dropped during the crash.
+     
+* Modules
+  It seems like these ideas are too numerous to pack into a single,
+  monolithic mod. Instead, we could have separate modules:
+  * Geologica: rocks and minerals (ores), generated by MOG,
+    biome-based regolith and atmospheric composition.
+  * Chemica: Provides chemical recipes and machinery, using the
+    materials provided by geologica.
+  * Fabrica: High-level crafting as a result of chemistry.
+  
+* Similar mods
+** AstroCraft [1.2.5]
+   MineCraft floating around in outer space. Gather iron from
+   satellites to build tools and fight aliens.
+
+** Solar System Mod [1.2.5]
+   Implements all planets in the solar system,
+   semi-realisically. Probably the best one out there, and may
+   actually be updated for 1.3.2.
+
+** Night Sky + Space Mod [1.2.5]
+   Similar to Solar System Craft. Adds some goofy planets. Revives the
+   dead Moon and Mars mods.
+
+** SpaceCraft [1.2.5]
+   Revives the Moon mod. Interesting poll on forum: people want
+   realistic planets, not unrealistic ones.
+
+** TerraFirmaCraft
+   This makes survival mode more realistic and challenging. It adds a
+   huge number of ores, stones, minerals, metals, gems, and
+   trees. These can be very useful for teaching geology and (on some
+   planets) biology. We would like to present a similar challenge
+   level; however, it is unclear whether such a low level of
+   technology (starting with bare hands) would be both interesting and
+   an effective means of education. Right now, we are just learning
+   from its code, especially with regard to the world
+   generation. Handling multiple rock types is a pain.
+
+** Underground Biomes
+   This is probably the most similar to geologica: adds 8 types of
+   igneous, metamorphic and sedimentary rock, with ores spawning only
+   in certain rock types. New types of cobblestone, half slabs,
+   etc. Sort of has a different goal though. It wants to make the
+   underground more interesting, including underground villages, etc,
+   while we just want to add more substances to the game.
+
+** Gasses in Minecraft
+   Adds gas sources, transport and processing. About 5-10 gasses are
+   supported; apparently there is an API for adding
+   more. Unfortunately, does not seem to integrate with BC.
+   
+** GasCraft
+   Not as mature as "Gasses in Minecraft" but integrates with BC.
+   
+* Mod Integration
+** BuildCraft
+   * Machines should interface with BC pipes and energy
+   * Will probably add a new type of pipe: insulated, tracks temp.
+   
+** IndustrialCraft
+   Will add recipes for all of its machines, and electrolysis will
+   use its electricity.
+   
+   Useful IC2 addons:
+   * Greg's tech: more expensive solars, lots of chemical cells that
+     result from centrifuging dust, many end game items
+   * MFFS: useful for shielding colonies, farms...
+   * Rocket Science [1.2.5]: rocket ship, radar, etc; would be
+     awesome if this came back... author is very ambitious
+
+** Forestry
+   Automated farming and bee breeding, and more.
+   Addons:
+   * ExtraBees
+   * ThaumicBees: magical bees!
+     
+** RailCraft
+   Rail systems will be an important mode of transporting resources
+   and robots.
+
+** Thermal Expansion
+   This provides a number of buildcraft-powered machines, many of
+   convert and combine items, with by-products. The by-products may
+   be a useful dynamic. We plan to make heavy use of the pulverizer
+   and induction smelter by adding recipes.
+   
+** ComputerCraft
+   Important for use of computers, which any spaceship will have.
+
+** Thaumcraft
+   We should add magical aspects to every item.
+   
+** Custom Ore Generation
+   Enables full customization of ore deposit generation, including
+   the pattern, size, depth, biome, etc of the deposits. By default,
+   ore deposits form long, twisting veins that lead to a
+   "motherlode". This is more fun/playable than e.g. the TFC
+   generation. But one interesting idea from TFC is that certain ores
+   only generate in certain types of rock. This generator should
+   support that constraint, but first one needs multiple rock types.  
+
+** ExtraBiomesXL
+   Will generate rocks/ores in all of its biomes. Hopefully this
+   integrates with Forgotten Nature, which would add many trees and
+   crops.
+
+** Millenaire
+   Possible basis for alien villages on other planets. May help us
+   add a chemist's lab, where chemicals can be taken and traded.
+   
+** RedPower 2 [no api]
+   Packed with features involving redstone and more.
+   * Wires
+   * Circuits
+   * Some ores
+   * Lots of machines
+   * Volcanos
+   * Its own computer, with an emulated chip and operating system
+     (WOW)
+
+     May be a bit too much and overlaps a lot with other mods.
+   
+** MineChem
+   Sort of a scientific mix of EE3 Thaumcraft. Substances are broken
+   down into chemicals (as revealed by a microscope), and those
+   chemicals can be broken down into their elements. By recombining
+   elements and then combining those compounds, substances are
+   (re)created. Even has BuildCraft and ComputerCraft turtle
+   integration. Models are cool, and the overall concept is as well,
+   but the equivalent exchange mechanic bothers me. Its a lot cooler
+   though than EE itself.
+
+   Presumably we could define our chemicals within this
+   system. Probably better to do our own thing for now.
+
+* Other resources
+** Forge tutorials
+   * Wuppy29:
+     http://wuppy29.blogspot.nl/2012/08/forge-modding-132.html
+     
+* Software Design
+** Chemicals
+   Clearly, we need an object that represents a chemical. Should this
+   be the GeoSubstance? A GeoSubstance is essentially an object that
+   represents a block/item*meta/damage combination. Each GeoBlock is
+   formed from a material*strength combination, which corresponds to a
+   particular hardness and resistance, as well as a item drop
+   strategy. We use inheritance to define both of those aspects. With
+   regard to the item dropping, this is in-line with the rest of
+   Minecraft, although we could use association, instead. There are no
+   obvious benefits though. The strength mapping depends on
+   intact/broken, and that also influences the item drops. It could be
+   defined by some factory, but that introduces yet another
+   component. The nice thing is that we have avoided using special
+   subclasses for each set of sub/metablocks; that is now
+   parameterized by dynamic lookup of substances given a material and
+   strength. It is only necessary to declare a substance, and most
+   things work as expected.
+
+   For defining substances, we have used a material parameter, instead
+   of inheritance, for defining the type of substance. This may have
+   been a mistake, since inheritance is natural in some cases, like
+   how a mineral is also a chemical. If we changed to inheritance, the
+   GeoBlock would be passed a GeoSubstance subclass, instead of a
+   Material object. We are sort of subverting the Material objects
+   currently, so that might be a worthy change.
+
+   The problem: whether a substance is a chemical is an orthogonal
+   concept to the material type. Some rocks can be chemicals. Really
+   the only differences between a mineral and some other chemical are
+   (a) it is a solid and (b) it is naturally occurring. The phase of
+   the chemical at standard temperature is obviously a parameter of
+   the chemical that would be defined by association. So maybe
+   whether a substance is naturally occurring should be a parameter?
+   Even substances of the "rock" material cannot be assumed to be
+   natural; for example, concrete and bricks are very rock-like,
+   despite being synthetic.
+
+   Or we say that a GeoSubstance is always something naturally
+   occuring. There are rocks and minerals. The minerals have a
+   reference to a chemical. The chemicals would be stored in a
+   separate database. Hopefully this will not present any
+   complications. 
+   
+** Block Construction
+   When creating a GeoBlock from a material, we need to decide who
+   implements the construction. Currently, this is a mix between a
+   static factory method in GeologicaBlocks, and the subclass
+   constructors. Somehow, we should either put most everything inside
+   the constructors or put everything in some sort of factory.
+
+   Here are the steps:
+   * (factory) ID allocation/assignment, name
+   * (constructor) material, creative tab, step sound 
+   * (constructor) meta blocks
+   * (constructor) hardness and resistance
+
+   Is this a natural split? The ID allocation should happen
+   up-front. The name then obviously needs to be set by the factory
+   (probably via setter). The material is tied to the subclass
+   (inheritance is used only to define the items dropped). If we know
+   the material, then we know the step sound. The creative tab is
+   always known to be a block.
+
+   The hardness/resistance are tied to the strength, and the meta
+   blocks are tied to the material and strength.  By putting the meta
+   blocks, hardness/resistance and material into the same, low-level
+   constructor, we ensure that all the values are consistent in terms
+   of the strength. But we could make the block completely agnostic of
+   strength: it would just take the given meta blocks and
+   hardness/resistance, etc. If we then passed the texture file as a
+   parameter, we could get rid of the intact/broken subclasses. But
+   making the blocks agnostic of strength would be tricky, since they
+   are given GeoSubstance objects, which have a strength. Is there a
+   reason to demand such flexibility? Do we really need multiple
+   strategies for finding meta blocks given a strength?
+
+** GeoSubstance as an Enum
+   The GeoSubstance would be convenient as an enum, as long as we do
+   not expect substances to come from some other source. The
+   convenience comes from both the syntax and automatic registration
+   (via reflection). Other mods could add substances, for example. If
+   that happened, there would need to be a configuration system to
+   prevent ID conflicts. Why would they want to add new substances?
+   Probably to take advantage of the chemical modeling. Since IDs are
+   only necessary for meta/damage values, we could introduce an
+   independent object, maybe Chemical, that would simply define a
+   set of chemical properties. It is not yet clear whether we will
+   have a sophisticated chemical model or if we will just add recipes
+   for particular chemicals. If the latter, there may be no benefit
+   to adding new substances. They would just be an internal utility
+   for book-keeping of the meta blocks and items. Since those
+   substances do not have any behaviors, it probably will not be
+   necessary to extend them. They are simple tuples of data.
+
+** Substances and blocks, etc
+   We want to represent substances in the world. For now, let us
+   limit the discussion to geological substances: rocks and
+   minerals. A substance can assume many forms. In the world, it is
+   as an intact block. If the block is broken, it yields a broken
+   form. The granularity of the broken form depends on the intact
+   strength. So weak stone becomes gravel, strong stone becomes
+   cobblestone and very strong stone remains intact. 
+
+   An intact block for a substance is more or less defined by the
+   following properties:
+   * Material/stepSound (from material)
+   * Hardness/resistance (from strength)
+   * Drop strategy (subclass)
+   
+   Currently, we use the substance material to do two things: derive
+   the material of the block and select substances for a particular
+   drop strategy (block subclass). This is a problem, because both
+   rocks and minerals can be of the "rock" material, but minerals have
+   a different drop strategy. And direct-drop substances could be
+   rocks, sands, or maybe even dirt or clay. This substance/material
+   type could be a parameter of the substance, or we could imply it by
+   keeping the substances in separate lists. Separate lists would
+   probably mean separate enums, all of which implement some
+   GeoSubstance interface. The separate enums could each have unique
+   qualities. For example, a mineral could reference a chemical. If we
+   did not go the separate list/enum route, every substance would have
+   a chemical field, with non-minerals using a null value. The pain of
+   separate enums is that we would need to reimplement substance for
+   each type. The implementation is not complicated, but it is extra
+   effort. Anyway, it is clear that the material and harvest strategy
+   are two different parameters.
+
+   So if wanted to parameterize the drop/harvest strategy, what are
+   the possibilities?
+   * a single, broken block (stone)
+   * multiple pieces (coal, redstone, clay)
+   * self drop (ores, sandstone)
+   
+   Claystone could follow the sandstone example, which essentially
+   exists in a broken/cobble state. Then a machine like a pulverizer
+   could convert claystone to clay (as it does sandstone to sand). So
+   at this point, we will support the single-broken (stone) and
+   self-drop strategies (minerals).
+
+   There are then three parameters:
+   * Strength: weak, medium, strong, very strong
+   * Harvest: self (default), broken, pieces
+   * Material: rock (default), sand
+     
+   The next debate is whether to add parameters for e.g. the chemical
+   which would be yielded upon pulverizing or smelting a mineral. One
+   issue is that it might become untenable to specify recipes through
+   substance properties. There are so many machines, with so many
+   recipes. Might be simplest to consider the recipes orthogonal. One
+   might try to make the case that we need chemicals in order to add
+   the chemical formula to e.g. a tooltip, or something. But this is
+   not so important.
+
+   We could translate the harvest style to a "type" of substance:
+   * Rock: broken (cobblestone)
+   * Ore: self
+   * Crystal: pieces
+   This makes a lot of sense. Rocks and ores should be a single
+   block; no reason to have individual pieces. And ore does not
+   matter whether it is broken or intact. Crystals though are easily
+   obtained during mining. There is some question as to whether these
+   represent all types of geological substances. If we wanted to
+   support an arbitrary set, we would probably want to use
+   polymorphism instead of a parameter.
+   
+** Textures
+   If we use the substance IDs as indexes into the sprite maps, we
+   will need a separate map for every manifestation of the
+   substance. There will be several manifestations: intact (rocks and
+   minerals in native form, metal ingots), broken (cobblestone,
+   pulverized minerals, metal nuggets), and processed (bricks for
+   stone, blocks of metal). As long as we are limited to these three,
+   it makes sense to use a separate file for each. May need a fourth
+   for arbitrary textures.
+   
+http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=8&ved=0CFYQFjAH&url=http%3A%2F%2Fwww.minecraftforum.net%2Ftopic%2F1553655-forge-sand-like-block-using-wrong-texture-when-falling%2F&ei=ABH6UPnnKI202AWp0IE4&usg=AFQjCNGBbPqJEq7IuJDDVr2V_SI9fasGjQ&bvm=bv.41248874,d.b2I&cad=rja
+* Tasks
+** TODO Add more minerals
+   * uraninite
+   * borax
+   * pyrolusite,
+   * alunite,
+   * malachite
+   * glauconite
+   * diatomite
+   * graphite, kyanite, muscovite
+   * soapstone
+   * apatite
+   * pumice
+   * soda ash
+   * mirabilite
+   * wollastonite
+   * zeolite
+   * mineral sand deposits to hill biomes
+
+** TODO Consider mineral balance (by production)
+** TODO Fix rock tool recipes
+** TODO Register ores in dictionary
+** TODO Add basic grinding, smelting recipes
+** TODO Figure out Thaumcraft aspects for minerals
+* Stats
+
+| ID       | Name            |     Count | Per Chunk | Target | Notes        |
+|----------+-----------------+-----------+-----------+--------+--------------|
+| (222:0)  | Bauxite         |    241959 |      7.08 |      5 |              |
+| (222:3)  | Brown Limonite  |     32799 |      0.96 |   0.75 |              |
+| (222:4)  | Yellow Limonite |     33092 |      0.97 |   0.75 |              |
+| (222:5)  | Vermiculite     |     37681 |      1.10 |      3 |              |
+| (223:0)  | Laterite        |    649914 |     19.02 |     12 |              |
+| (224:0)  | Banded Iron     |   1352015 |     39.56 |     30 |              |
+| (224:2)  | Chromite        |    219487 |      6.42 |      7 |              |
+| (224:4)  | Ilmenite        |     77559 |      2.27 |      2 | also in sand |
+| (224:5)  | Magnetite       |     39950 |      1.17 |    1.5 |              |
+| (224:6)  | Pollucite       |      2904 |      0.08 |   0.05 |              |
+| (224:8)  | Tantalite       |     29156 |      0.85 |   0.75 |              |
+| (224:9)  | Pitchblende     |     61179 |      1.79 |    1.5 |              |
+| (224:10) | Ferrovanadium   |     39067 |      1.14 |    1.5 |              |
+| (225:1)  | Bastnasite      |     47114 |      1.38 |    1.5 |              |
+| (225:2)  | Copper          |    303014 |      8.87 |     10 | x1.2         |
+| (225:3)  | Garnierite      |     25109 |      0.73 |    0.5 |              |
+| (225:4)  | Lepidolite      |    101667 |      2.97 |    2.5 |              |
+| (225:5)  | Magnesite       |    378544 |     11.08 |     10 |              |
+| (225:6)  | Pentlandite     |    167417 |      4.90 |      2 | /2           |
+| (225:7)  | Scheelite       |     85035 |      2.49 |      2 |              |
+| (225:8)  | Sphalerite      |    320597 |      9.38 |     10 |              |
+| (225:9)  | Wolframite      |     28987 |      0.85 |    0.5 |              |
+| (225:11) | Dolomite        |    583061 |     17.06 |     15 |              |
+| (225:12) | Kyanite         |    101900 |      2.98 |      2 |              |
+| (226:1)  | Cinnabar        |           |      0.00 |        |              |
+| (226:2)  | Galena          |    173403 |      5.07 |      5 |              |
+| (226:3)  | Molybdenite     |     63044 |      1.84 |   1.75 | also chalco  |
+| (226:4)  | Rock Salt       |     94655 |      2.77 |      2 |              |
+| (226:5)  | Stibnite        |     36539 |      1.07 |    1.5 | bp Cu/Pb     |
+| (226:10) | Gypsum          |    269614 |      7.89 |      6 |              |
+| (226:12) | Mica            |     72837 |      2.13 |      2 |              |
+| (227:0)  | Basaltic Sand   |     14377 |      0.42 |    0.5 |              |
+| (227:1)  | Garnet Sand     |     43735 |      1.28 |    1.5 |              |
+| (227:2)  | Granitic Sand   |    100208 |      2.93 |    2.5 |              |
+| (227:3)  | Quartz Sand     |     27364 |      0.80 |    0.5 |              |
+| (227:4)  | Volcanic Ash    |     57582 |      1.68 |    1.7 |              |
+| (252:0)  | Limestone       | 106388530 |   3113.05 |    250 | /10          |
+| (252:1)  | Schist          |   8824584 |    258.22 |    150 | too much?    |
+| (252:2)  | Serpentinite    |   1115192 |     32.63 |        |              |
+| (252:3)  | Slate           |   2555321 |     74.77 |        |              |
+| (252:4)  | Skarn           |   1032380 |     30.21 |        |              |
+| (253:0)  | Andesite        |   1074924 |     31.45 |        |              |
+| (253:1)  | Basalt          |    467244 |     13.67 |        |              |
+| (253:2)  | Gneiss          |   5143875 |    150.52 |        |              |
+| (253:3)  | Granite         | 127206587 |   3722.21 |        |              |
+| (253:4)  | Greenschist     |    163098 |      4.77 |        |              |
+| (253:5)  | Marble          |   1100146 |     32.19 |        |              |
+| (253:6)  | Pegmatite       |    884976 |     25.90 |        |              |
+| (253:7)  | Rhyolite        |    294846 |      8.63 |        |              |
+| (254:0)  | Diorite         |   5888766 |    172.31 |        |              |
+| (254:1)  | Gabbro          |   8339424 |    244.02 |        |              |
+| (254:2)  | Hornfels        |   3169962 |     92.76 |        |              |
+| (254:3)  | Peridotite      |  13949406 |    408.18 |        | why so much? |
+| (254:4)  | Quartzite       |   1065521 |     31.18 |        |              |
+| (255:0)  | Breccia         |   6691198 |    195.79 |        |              |
+| (255:1)  | Carbonatite     |     52653 |      1.54 |        |              |
+| (255:2)  | Claystone       |   5754246 |    168.38 |        |              |
+| (255:3)  | Conglomerate    |   5700032 |    166.79 |        |              |
+| (255:4)  | Mudstone        |  76833533 |   2248.24 |        |              |
+  #+TBLFM: $4=$3/34175; %.2f     
+
+
+  222:0)   Future Block!                : 
+(222:3)   Future Block!                 :  
+(222:4)   Future Block!                 :  
+(222:5)   Future Block!                 :  
+(223:0)   Future Block!                 :  
+(224:0)   Future Block!                 :  
+(224:2)   Future Block!                 :  
+(224:4)   Future Block!                 :  
+(224:5)   Future Block!                 :  
+(224:6)   Future Block!                 :  
+(224:8)   Future Block!                 :  
+(224:9)   Future Block!                 :  
+(224:10)  Future Block!                 :  
+(225:1)   Future Block!                 :  
+(225:2)   Future Block!                 :  
+(225:3)   Future Block!                 :  
+(225:4)   Future Block!                 :  
+(225:5)   Future Block!                 :  
+(225:6)   Future Block!                 :  
+(225:7)   Future Block!                 :  
+(225:8)   Future Block!                 :  
+(225:9)   Future Block!                 :  
+(225:11)  Future Block!                 :  
+(225:12)  Future Block!                 :  
+(226:2)   Future Block!                 :  
+(226:3)   Future Block!                 :  
+(226:4)   Future Block!                 :  
+(226:5)   Future Block!                 :  
+(226:10)  Future Block!                 :  
+(226:12)  Future Block!                 :  
+(227:0)   Future Block!                 :  
+(227:1)   Future Block!                 :  
+(227:2)   Future Block!                 :  
+(227:3)   Future Block!                 :  
+(227:4)   Future Block!                 :  
+(252:0)   Future Block!                 :  
+(252:1)   Future Block!                 :  
+(252:2)   Future Block!                 :  
+(252:3)   Future Block!                 :  
+(252:4)   Future Block!                 :  
+(253:0)   Future Block!                 :  
+(253:1)   Future Block!                 :  
+(253:2)   Future Block!                 :  
+(253:3)   Future Block!                 :  
+(253:4)   Future Block!                 :  
+(253:5)   Future Block!                 :  
+(253:6)   Future Block!                 :  
+(253:7)   Future Block!                 :  
+(254:0)   Future Block!                 :  
+(254:1)   Future Block!                 :  
+(254:2)   Future Block!                 :  
+(254:3)   Future Block!                 :  
+(254:4)   Future Block!                 :  
+(255:0)   Future Block!                 :  
+(255:1)   Future Block!                 :  
+(255:2)   Future Block!                 :  
+(255:3)   Future Block!                 :  
+(255:4)   Future Block!                 :  
