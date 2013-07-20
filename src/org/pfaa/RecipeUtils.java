@@ -35,14 +35,14 @@ public class RecipeUtils {
                 ItemStack output = recipe.getRecipeOutput();
                 if (output != null && hasItem(false, exclusions, output))
                 {
-                	FMLLog.info("excluded recipe: %s", output.getItemName());
+                	//FMLLog.info("excluded recipe: %s", output.getItemName());
                     continue;
                 }
                 if(hasItem(true, recipe.recipeItems, replaceStacks))
                 {
                 	recipesToRemove.add(recipe);
                     recipesToAdd.add(createOreRecipe(recipe, replacements));
-                } else FMLLog.info("lacks ingredient: %s", output.getItemName());
+                } //else FMLLog.info("lacks ingredient: %s", output.getItemName());
             }
             else if(obj instanceof ShapelessRecipes)
             {

@@ -13,13 +13,8 @@ public class BrokenGeoBlock extends GeoBlock {
 	}
 
 	@Override
-	public String getTextureFile() {
-		return GeologicaTextures.BROKEN;
-	}
-
-	@Override
-	protected float determineHardness(Strength strength) {
-		return super.determineHardness(strength) * 2 / 3;
+	protected float determineHardness() {
+		return super.determineHardness() * 2 / 3;
 	}
 
 }

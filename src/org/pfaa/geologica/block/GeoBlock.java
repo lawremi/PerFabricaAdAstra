@@ -1,28 +1,36 @@
 package org.pfaa.geologica.block;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.GeoSubstance.Composition;
+import org.pfaa.geologica.GeoSubstance.Strength;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
 	private List<GeoSubstance> substances = new ArrayList<GeoSubstance>();
 	
+	private Strength strength;
+	private Composition composition;
+	
 	public GeoBlock(int id, Strength strength, Composition composition, Material material) {
-		super(id, 0, material);
+		super(id, material);
+		this.strength = strength;
+		this.composition = composition;
 		setCreativeTab(CreativeTabs.tabBlock);
-		setSubstances(GeoSubstance.lookup(strength, composition, blockMaterial));
-		setHardness(determineHardness(strength));
-		setHarvestLevels(strength);
+		setSubstances();
+		setHardness(determineHardness());
+		setHarvestLevels();
 		setStepSound(determineStepSound());
 	}
 	
@@ -38,18 +46,18 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return sound;
 	}
 	
-	protected float determineHardness(Strength strength) {
+	protected float determineHardness() {
 		float hardness = 0;
 		if (blockMaterial == Material.rock)
-			hardness = determineRockHardness(strength);
+			hardness = determineRockHardness();
 		else if (blockMaterial == Material.clay)
-			hardness = determineClayHardness(strength);
+			hardness = determineClayHardness();
 		else if (blockMaterial == Material.sand)
-			hardness = determineSandHardness(strength);
+			hardness = determineSandHardness();
 		return hardness;
 	}
  
-	private float determineRockHardness(Strength strength) {
+	private float determineRockHardness() {
 		float hardness = 0;
 		switch(strength) {
 		case WEAK:
@@ -69,16 +77,16 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return hardness;
 	}
 
-	private float determineClayHardness(Strength strength) {
+	private float determineClayHardness() {
 		return 0.7F;
 	}
 
-	private float determineSandHardness(Strength strength) {
+	private float determineSandHardness() {
 		return 0.6F;
 	}
 
-	protected void setHarvestLevels(Strength strength) {
-		MinecraftForge.setBlockHarvestLevel(this, getToolForMaterial(), getHarvestLevelForStrength(strength));
+	protected void setHarvestLevels() {
+		MinecraftForge.setBlockHarvestLevel(this, getToolForMaterial(), getHarvestLevel(strength));
 	}
 
 	private String getToolForMaterial() {
@@ -87,7 +95,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		else return "shovel";
 	}
 
-	private int getHarvestLevelForStrength(Strength strength) {
+	private int getHarvestLevel(Strength strength) {
 		int level = 0;
 		switch(strength) {
 		case WEAK:
@@ -105,11 +113,16 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return level;
 	}
 
-	private void setSubstances(List<GeoSubstance> substances) {
+	private void setSubstances() {
+		List<GeoSubstance> substances = GeoSubstance.lookup(strength, composition, blockMaterial);
 		if (substances.size() > 16 || substances.size() < 1)
 			throw new IllegalArgumentException("GeoBlock only supports 1-16 substances");
 		this.substances.clear();
 		this.substances.addAll(substances);
+	}
+	
+	public List<GeoSubstance> getSubstances() {
+		return Collections.unmodifiableList(substances);
 	}
 
 	/* (non-Javadoc)
@@ -128,11 +141,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return substances.contains(substance);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.pfaa.geologica.block.GeoBlockAccessors#getMetaForSubstance(org.pfaa.geologica.GeoSubstance)
-	 */
 	@Override
-	public int getMetaForSubstance(GeoSubstance substance) {
+	public int getMeta(GeoSubstance substance) {
 		return substances.indexOf(substance);
 	}
 	
@@ -142,13 +152,29 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	@Override
-	public int getBlockTextureFromSideAndMetadata(int side, int meta) {
-		return this.blockIndexInTexture + getSubstance(meta).getId();
+	public String getBlockNameSuffix(int meta) {
+		return getSubstance(meta).getLowerName();
+	}
+
+	public ItemStack getItemStack(GeoSubstance substance) {
+		return new ItemStack(this, 1, getMeta(substance));
+	}
+
+	public Strength getStrength() {
+		return strength;
+	}
+
+	public Composition getComposition() {
+		return composition;
+	}
+
+	public Material getMaterial() {
+		return blockMaterial;
 	}
 
 	@Override
-	public String getBlockNameSuffixForMeta(int meta) {
-		return getSubstance(meta).getLowerName();
+	public String getModId() {
+		return "geologica";
 	}
 
 }

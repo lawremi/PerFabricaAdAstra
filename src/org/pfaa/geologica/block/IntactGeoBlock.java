@@ -21,7 +21,7 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
     public int quantityDroppedWithBonus(int par1, Random par2Random)
     {
-        if (par1 > 0 && getSubstance(0).getComposition() == Composition.MINERAL)
+        if (par1 > 0 && getSubstance(0).getComposition() == Composition.PURE)
         {
             int var3 = par2Random.nextInt(par1 + 2) - 1;
 
@@ -42,9 +42,9 @@ public class IntactGeoBlock extends GeoBlock {
 	public int idDropped(int meta, Random random, int par3) {
 		int dropped = super.idDropped(meta, random, par3);
 		GeoSubstance substance = getSubstance(meta);
-		if (substance.getComposition() == Composition.ROCK && blockMaterial == Material.rock) {
+		if (substance.getComposition() == Composition.AGGREGATE && blockMaterial == Material.rock) {
 			dropped = dropRock(meta);
-		} else if (substance.getComposition() == Composition.MINERAL) {
+		} else if (substance.getComposition() == Composition.PURE) {
 			// TODO: create a mineral/chemical item
 		}
 		return dropped;
@@ -72,12 +72,6 @@ public class IntactGeoBlock extends GeoBlock {
 		return dropped;
 	}
 
-	@Override
-	public String getTextureFile()
-	{
-		return GeologicaTextures.INTACT;
-	}
-		
 	@Override
 	protected boolean canSilkHarvest() {
 		return true;

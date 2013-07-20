@@ -3,6 +3,7 @@ package org.pfaa.item;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 
 import org.pfaa.block.CompositeBlockAccessors;
 
@@ -17,10 +18,9 @@ public class CompositeBlockItem extends ItemBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getIconFromDamage(int damage) {
+	public Icon getIconFromDamage(int damage) {
 		Block block = Block.blocksList[this.getBlockID()];
-		return block.getBlockTextureFromSideAndMetadata(0, getMetadata(damage));
+		return block.getIcon(0, getMetadata(damage));
 	}
 
 	// FIXME: turns out meta and damage need to be the same (see RenderBlocks.renderBlockAsItem)
@@ -30,8 +30,8 @@ public class CompositeBlockItem extends ItemBlock {
 	}
 
 	@Override
-	public String getItemNameIS(ItemStack itemStack) {
+	public String getUnlocalizedName(ItemStack itemStack) {
 		CompositeBlockAccessors block = (CompositeBlockAccessors)Block.blocksList[this.getBlockID()];
-		return super.getItemName() + "." + block.getBlockNameSuffixForMeta(itemStack.getItemDamage());
+		return super.getUnlocalizedName() + "." + block.getBlockNameSuffix(itemStack.getItemDamage());
 	}
 }

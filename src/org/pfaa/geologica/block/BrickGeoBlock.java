@@ -14,14 +14,8 @@ public class BrickGeoBlock extends GeoBlock {
 	}
 
 	@Override
-	public String getTextureFile()
-	{
-		return GeologicaTextures.BRICK;
-	}
-	
-	@Override
-	protected float determineHardness(Strength strength) {
-		float hardness = super.determineHardness(strength);
+	protected float determineHardness() {
+		float hardness = super.determineHardness();
 		if (blockMaterial == Material.clay)
 			hardness = hardness * 3.0F; 
 		return hardness;

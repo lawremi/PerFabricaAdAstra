@@ -9,10 +9,8 @@ import net.minecraft.entity.item.EntityFallingSand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeologicaTextures;
-import org.pfaa.geologica.entity.item.CustomEntityFallingSand;
+import org.pfaa.geologica.GeoSubstance.Strength;
 
 public class LooseGeoBlock extends GeoBlock {
 
@@ -21,24 +19,19 @@ public class LooseGeoBlock extends GeoBlock {
 	}
 
 	@Override
-	public String getTextureFile() {
-		return GeologicaTextures.LOOSE;
-	}
-	
-	@Override
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
     {
-        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate());
+        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(null));
     }
 
 	@Override
     public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
     {
-        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate());
+        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(null));
     }
 
 	@Override
-    public int tickRate()
+    public int tickRate(World par1World)
     {
         return 5;
     }
@@ -65,13 +58,13 @@ public class LooseGeoBlock extends GeoBlock {
             {
                 if (!par1World.isRemote)
                 {
-                    EntityFallingSand var9 = new CustomEntityFallingSand(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), this.blockID, par1World.getBlockMetadata(par2, par3, par4));
+                    EntityFallingSand var9 = new EntityFallingSand(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), this.blockID, par1World.getBlockMetadata(par2, par3, par4));
                     par1World.spawnEntityInWorld(var9);
                 }
             }
             else
             {
-                par1World.setBlockWithNotify(par2, par3, par4, 0);
+                par1World.setBlockToAir(par2, par3, par4);
 
                 while (BlockSand.canFallBelow(par1World, par2, par3 - 1, par4) && par3 > 0)
                 {
@@ -80,7 +73,7 @@ public class LooseGeoBlock extends GeoBlock {
 
                 if (par3 > 0)
                 {
-                    par1World.setBlockWithNotify(par2, par3, par4, this.blockID);
+                    par1World.setBlock(par2, par3, par4, this.blockID);
                 }
             }
         }
@@ -94,14 +87,14 @@ public class LooseGeoBlock extends GeoBlock {
 	}
 	
 	@Override
-	protected void setHarvestLevels(Strength strength) {
+	protected void setHarvestLevels() {
 		MinecraftForge.setBlockHarvestLevel(this, "shovel", 0);
 	}
 
 	@Override
-	protected float determineHardness(Strength strength) {
+	protected float determineHardness() {
 		float hardness = 0;
-		switch(strength) {
+		switch(getStrength()) {
 		case WEAK:
 			hardness = 0.6F;
 			break;

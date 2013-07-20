@@ -2,9 +2,11 @@ package org.pfaa.geologica.block;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
@@ -12,7 +14,7 @@ import org.pfaa.block.CompositeBlockAccessors;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class WallBlock extends BlockWall implements CompositeBlockAccessors {
+public class WallBlock extends BlockWall implements CompositeBlockAccessors, ProxyBlock {
 
 	private final CompositeBlock modelBlock;
 	
@@ -22,13 +24,9 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors {
 	}
 
 	@Override
-	public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		return modelBlock.getBlockTextureFromSideAndMetadata(par1, par2);
-	}
-
-	@Override
-	public String getTextureFile() {
-		return modelBlock == null ? null : modelBlock.getTextureFile();
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return modelBlock.getIcon(side, meta);
 	}
 
 	@Override
@@ -51,8 +49,13 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors {
 	}
 
 	@Override
-	public String getBlockNameSuffixForMeta(int meta) {
-		return modelBlock.getBlockNameSuffixForMeta(meta);
+	public String getBlockNameSuffix(int meta) {
+		return modelBlock.getBlockNameSuffix(meta);
+	}
+
+	@Override
+	public Block getModelBlock() {
+		return modelBlock;
 	}
 
 }

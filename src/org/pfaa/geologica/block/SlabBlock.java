@@ -3,23 +3,26 @@ package org.pfaa.geologica.block;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockStep;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
+import org.pfaa.RegistrationUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SlabBlock extends BlockStep {
+public class SlabBlock extends BlockStep implements CompositeBlockAccessors, ProxyBlock {
 
 	private CompositeBlock modelBlock;
 	private SlabBlock otherSlab;
 	private boolean isDoubleSlab;
+	private Icon[] icons;
 	
 	public SlabBlock(int id, CompositeBlock modelBlock, SlabBlock singleSlab) {
 		super(id, singleSlab != null);
@@ -36,13 +39,9 @@ public class SlabBlock extends BlockStep {
 	}
 
 	@Override
-	public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		return modelBlock.getBlockTextureFromSideAndMetadata(par1, par2 & 7);
-	}
-
-	@Override
-	public String getTextureFile() {
-		return modelBlock == null ? null : modelBlock.getTextureFile();
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return modelBlock.getIcon(side, meta);
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class SlabBlock extends BlockStep {
 
 	@Override
 	public String getFullSlabName(int meta) {
-		return super.getBlockName() + "." + modelBlock.getBlockNameSuffixForMeta(meta);
+		return super.getUnlocalizedName() + "." + modelBlock.getBlockNameSuffix(meta);
 	}
 
 	@Override
@@ -95,5 +94,14 @@ public class SlabBlock extends BlockStep {
 	public SlabBlock getDoubleSlab() {
 		return isDoubleSlab() ? this : otherSlab;
 	}
-	
+
+	public CompositeBlock getModelBlock() {
+		return modelBlock;
+	}
+
+	@Override
+	public String getBlockNameSuffix(int meta) {
+		return modelBlock.getBlockNameSuffix(meta);
+	}
+
 }

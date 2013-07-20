@@ -9,6 +9,6 @@ public interface GeoBlockAccessors extends CompositeBlockAccessors {
 
 	public abstract boolean containsSubstance(GeoSubstance substance);
 
-	public abstract int getMetaForSubstance(GeoSubstance rock);
+	public abstract int getMeta(GeoSubstance rock);
 
 }

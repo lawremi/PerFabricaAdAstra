@@ -1,10 +1,11 @@
 package org.pfaa.geologica;
 
+import net.minecraftforge.common.Configuration;
+
 import org.pfaa.Registrant;
 
-import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -14,7 +15,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod(modid = "PFAAGeologica", name = "Geologica", version = "0.0.1")
+@Mod(modid = "PFAAGeologica", 
+	 name = "Geologica", 
+	 version = "@VERSION@",
+	 acceptedMinecraftVersions = "@MCVERSION@")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class Geologica {
 
@@ -35,24 +39,24 @@ public class Geologica {
 		return configuration;
 	}
 	
-	@PreInit
+	@EventHandler
 	public void preload(FMLPreInitializationEvent event)
 	{
 		configuration = new Configuration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
 	}
 	
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
 		registrant.register();
 	}
 	
-	@PostInit
+	@EventHandler
 	public void postload(FMLPostInitializationEvent event) {
 		registrant.postregister();
 		configuration.save();
 	}
 	
-	public static final String RESOURCE_DIR = "/org/pfaa/geologica/resources";
+	public static final String RESOURCE_DIR = "/assets/geologica";
 }

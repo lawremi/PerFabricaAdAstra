@@ -1,9 +1,12 @@
 package org.pfaa.geologica.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.util.Icon;
 
-public class StairsBlock extends BlockStairs {
+public class StairsBlock extends BlockStairs implements ProxyBlock {
 
 	private final Block modelBlock;
 	private final int modelBlockMeta;
@@ -15,8 +18,9 @@ public class StairsBlock extends BlockStairs {
 	}
 
 	@Override
-	public String getTextureFile() {
-		return modelBlock == null ? null : modelBlock.getTextureFile();
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return modelBlock.getIcon(side, modelBlockMeta);
 	}
 
 	public Block getModelBlock() {
