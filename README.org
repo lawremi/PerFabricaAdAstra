@@ -11,27 +11,34 @@
   /Per Fabrica Ad Astra/ plans to be a collection of independent yet
   tightly integrated modules, each corresponding to a Forge
   mod. Players and server administrators may choose which to enable
-  through configuration. Currently, there is only one mod:
-  /Geologica/. It adds realistic and interesting geology to
-  Minecraft, with the goal of enhancing the mining
-  experience. /Geologica/ defines 23 new types of rock and relies on
-  the Custom Ore Generator mod to place them in the world. They
-  replace all vanilla stone. Soon, we will add mineral
-  deposits, including metal ores and industrial minerals. These will
-  spawn according to the rock formations, which will allow for more
-  strategic mining.
+  through configuration. Currently, there is only one working mod:
+  /Geologica/. It adds realistic and interesting geology to Minecraft,
+  with the goal of enhancing the mining experience. /Geologica/
+  defines new types of rocks and minerals and relies on the Custom Ore
+  Generator mod to place them in the world. Vanilla stone is
+  completely replaced by the new types of rocks.  Mineral deposits,
+  including metal ores and industrial minerals spawn in
+  psuedo-realistic veins and clouds, accoding to the type of rock.
+
+  Unfortunately, it is not yet possible to do anything with the
+  minerals. That is the point of chemistry and thus the /Chemica/ mod
+  that is only just beginning to take shape.
 
 * Features
 ** /Geologica/
- - Adds 23 new types of rock to the game.
+ - Adds 23 types of rock to the game.
+ - Adds 29 types of metal ores in rock form.
+ - Adds 18 types of industrial minerals in rock form.
+ - Adds 6 types of sand ores.
+ - Adds 7 types of clay ores.
  - Adds furnace recipes for converting the rocks back to stone.
- - Registers the rock and stone to the Forge ore dictionary as
-   "cobbleStone" and "solidStone".
+ - Registers the rock and stone to the Forge ore dictionary under
+   conventional names, like "blockCobble" and "blockStone".
  - Converts all recipes involving rock and stone to use the new ore
    dictionary keys.
  - Provides a configuration file for the Custom Ore Generation mod
    (installed separately) that replaces vanilla stone with the new
-   rocks, according to realistic (Earth-like) geology.
+   rocks and ores, according to realistic (Earth-like) geology.
 
 * Details
 ** /Geologica/
@@ -43,13 +50,13 @@
     weak and medium stone, a stone pickaxe is required for harvesting
     strong stone, and iron is necessary for very strong stone.
 
-    Shattering a weak stone yields some other substance, such as dirt
-    or gravel, depending on the composition/origin of the rock. This
-    often makes it more difficult to obtain stone tools early in the
-    game, so wooden tools receive more emphasis. This models the fact
-    that many types of stone, usually sedimentary, are not well suited
-    for building. Medium and strong stone will yield particular types
-    of cobblestone upon harvesting. These can be smelted back to solid
+    Shattering a weak stone yields rubble, which behaves much like
+    gravel (except does not yield flint). This often makes it more
+    difficult to obtain stone tools early in the game, so wooden tools
+    receive more emphasis. This models the fact that many types of
+    stone, usually sedimentary, are not well suited for
+    building. Medium and strong stone will yield particular types of
+    cobblestone upon harvesting. These can be smelted back to solid
     stone. Very strong stone is harvested as intact stone.
 
     Through the provided configuration for the Custom Ore Generator,
@@ -58,38 +65,119 @@
     regions, defined by the biomes: oceanic (ocean and island),
     volcanic (extreme hills) and continental (every other biome).
 
-    | Rock         | Hard  | Occurs                                           | Yields |
-    |--------------+-------+--------------------------------------------------+--------|
-    | Granite      | hard  | Below continental sedimentary, volcanic andesite | cobble |
-    | Diorite      | vhard | Below granite (near continental bedrock)         | stone  |
-    | Gabbro       | vhard | Below volcanic diorite, ocean basalt             | stone  |
-    | Peridotite   | vhard | Rare spawn, near bedrock                         | stone  |
-    | Rhyolite     | hard  | Volcanic top layer                               | cobble |
-    | Andesite     | hard  | Below rhyolite                                   | cobble |
-    | Basalt       | hard  | Below oceanic limestone                          | cobble |
-    | Mudstone     | soft  | Bulk of continental sedimentary layer            | dirt   |
-    | Claystone    | soft  | Spawns within mudstone                           | clay   |
-    | Conglomerate | soft  | Spawns within mudstone                           | gravel |
-    | Breccia      | soft  | Spawns within mudstone                           | gravel |
-    | Limestone    | med   | Spawns within mudstone, also hills, ocean top    | cobble |
-    | Slate        | med   | Bottom continental sedimentary                   | cobble |
-    | Schist       | med   | Spawns upper granite                             | cobble |
-    | Gneiss       | hard  | Spawns mid/lower granite                         | cobble |
-    | Greenschist  | hard  | Spawns in gabbro, basalt                         | cobble |
-    | Pegmatite    | hard  | Veins in diorite, lower granite                  | cobble |
-    | Serpentinite | med   | Veins in gabbro, lower diorite/basalt            | cobble |
-    | Hornfels     | vhard | Spawns upper granite, lower sedimentary          | stone  |
-    | Marble       | hard  | Spawns upper granite, lower sedimentary          | cobble |
-    | Quartzite    | vhard | Spawns upper granite, lower sedimentary          | stone  |
-    | Skarn        | med   | Like above, but twice as rare                    | cobble |
-    | Carbonatite  | soft  | TODO                                             | gravel |
-    
+    | Rock         | Hard  | Occurs                                            | Yields |
+    |--------------+-------+---------------------------------------------------+--------|
+    | Granite      | hard  | Below continental sedimentary, volcanic andesite  | cobble |
+    | Diorite      | vhard | Below granite (near continental bedrock)          | stone  |
+    | Gabbro       | vhard | Below volcanic diorite, ocean basalt              | stone  |
+    | Peridotite   | vhard | Rare spawn, near bedrock                          | stone  |
+    | Rhyolite     | hard  | Volcanic top layer                                | cobble |
+    | Andesite     | hard  | Below rhyolite                                    | cobble |
+    | Basalt       | hard  | Below oceanic limestone                           | cobble |
+    | Mudstone     | soft  | Bulk of continental sedimentary layer             | rubble |
+    | Claystone    | soft  | Spawns within mudstone                            | rubble |
+    | Conglomerate | soft  | Spawns within mudstone                            | rubble |
+    | Breccia      | soft  | Spawns within mudstone                            | rubble |
+    | Limestone    | med   | Spawns within mudstone, also hills, ocean top     | cobble |
+    | Slate        | med   | Bottom continental sedimentary                    | cobble |
+    | Schist       | med   | Spawns upper granite                              | cobble |
+    | Gneiss       | hard  | Spawns mid/lower granite                          | cobble |
+    | Greenschist  | hard  | Spawns in gabbro, basalt                          | cobble |
+    | Pegmatite    | hard  | Veins in diorite, lower granite                   | cobble |
+    | Serpentinite | med   | Veins in gabbro, lower diorite/basalt             | cobble |
+    | Hornfels     | vhard | Spawns upper granite, lower sedimentary           | stone  |
+    | Marble       | hard  | Spawns upper granite, lower sedimentary           | cobble |
+    | Quartzite    | vhard | Spawns upper granite, lower sedimentary           | stone  |
+    | Skarn        | med   | Like above, but twice as rare                     | cobble |
+    | Carbonatite  | soft  | Short, thin veins from some pegmatite motherlodes | rubble |
 
+*** Rock Ores
+    
+    | Mineral       | Metal | State    | Hard    | Occurs                                  |
+    |---------------+-------+----------+---------+-----------------------------------------|
+    | Magnetite     | Fe    | oxide    | strong  | granitic veins, LI            |
+    | Hematite      | Fe    | oxide    | strong  | BIF                                     |
+    | Rock salt     | Na    | salt     | weak    | evaporite                               |
+    | Chalcopyrite  | Cu    | sulfide  | medium  | VMS, SEDEX, porphyry                    |
+    | Sphalerite    | Zn    | sulfide  | medium  | co-chalco, limestone                    |
+    | Galena        | Pb    | sulfide  | weak    | co-chalco, limestone                    |
+    | Lepidolite    | Li    | phyllo   | medium  | pegmatite                               |
+    | Spodumene     | Li    | silicate | strong  |                                         |
+    | Dolomite      | Mg    | carbo    | medium  | Clay-like, ocean and desert             |
+    | Magnesite     | Mg    | carbo    | medium  | peridotite, serp, skarn, dolomite       |
+    | Ilmenite      | Ti    | oxide    | strong  | upper LI, sand                          |
+    | Pentlandite   | Ni    | sulfide  | medium  | lower LI, Kambalda                      |
+    | Garnierite    | Ni    | hydrox   | medium  | serp                                    |
+    | Cassiterite   | Sn    | oxide    | strong  | placer, granitic veins                  |
+    | Wolframite    | W     | oxide    | medium  | pegmatite                               |
+    | Scheelite     | W     | oxide    | medium  | SEDEX/pegmatite                         |
+    | Cinnabar      | Hg    | sulfide  | weak    | veins ocean basalt, volcanic            |
+    | Chromite      | FeCr  | oxide    | strong  | serp, upper LI                          |
+    | Stibnite      | Sb    | sulfide  | weak    | co-galena in hydro                      |
+    | Uraninite     | U     | oxide    | strong  | grind conglom/peg, veins granite/sed    |
+    | Borax         | B     | oxide    | weak    | lake evaporites                         |
+    | Pyrolusite    | Mn    | oxide    | strong  | hydro, co-Fe                            |
+    | Pollucite     | Cs    | silicate | strong  | pegmatite                               |
+    | Bastnasite    | Ce    | fluorite | medium  | pegmatite, carbonatite, bauxite         |
+    | Tantalite     | Ta    | oxide    | strong  | carbonatite                             |
+    | Molybdenite   | Mo    | sulfide  | weak    | porphyry                                |
+    | Barite        | Ba    | sulfate  | medium  | BIF, Pb/Zn limestone veins, carbonatite |
+    | Beryl         | Be    |          | vstrong | w/ scheelite                            |
+    | Celestine     | Sr    | sulfate  | medium  | w/ gypsum                               |
+
+    The Occurs column is largely out dated. Someone needs to go read
+    the 2300 line COG config file to figure out what really
+    happens. Same goes for the other types of ores.
+    
+*** Rock industrial minerals
+   | Mineral        | Hard        | Occurs                                |
+   |----------------+-------------+---------------------------------------|
+   | Alunite        | medium      | veins in rhyolite                     |
+   | Chrysotile     | weak        | serpentinite                          |
+   | Dolomite       | medium      | clay pattern, ocean and desert        |
+   | Malachite      | medium      | limestone w/ copper ores              |
+   | Gypsum         | weak        | evaporite, limestone                  |
+   | Glauconite     | weak        | green sand in ocean/beach             |
+   | Diatomite      | weak        | sed EH/desert                         |
+   | Graphite       | weak        | schist,gneiss (strata)                |
+   | Kyanite        | medium      | schist,gneiss,quartzite,pegmatite     |
+   | Soapstone      | weak        | serpitinite,carbonates(lower)         |
+   | Perlite        | strong      | embedded in veins of obsidian         |
+   | Apatite        | strong      | marble,pegmatite*                     |
+   | Pumice         | strong      | volcanic (globular)                   |
+   | Soda ash       | weak        | lake evaporite                        |
+   | Mirabilite     | weak        | marine evaporite                      |
+   | Wollastonite   | medium      | limestone, dolo, skarn (w/ sandstone) |
+   | Zeolite        | medium      | lake-shaped deposits near volcanoes   |
+   | Muscovite/Mica | weak        | in pegmatite, process pegmatite       |
+
+
+*** Sand ores
+    | Type             | Occurrence    |
+    |------------------+---------------|
+    | Granitic mineral | beach/river   |
+    | Basaltic mineral | beach         |
+    | Garnet           | beach         |
+    | Volcanic ash     | extreme hills |
+    | Quartz           | desert        |
+    | Cassiterite      | beach/river   |
+    
+    
+*** Clay ores
+   | Type                  | Occurrence         |
+   |-----------------------+--------------------|
+   | Bentonite             | EH                 |
+   | Kaolinite             | Jungle             |
+   | Fuller's earth        |                    |
+   | Laterite              | Jungle             |
+   | Yellow/Brown Limonite | Laterite           |
+   | Bauxite               | Laterite           |
+   | Vermiculite           | carbonatite, skarn |
+
+   
 * Roadmap
 ** /Geologica/
-   - Add bricks for every type of rock.
-   - Add mineral deposits; will spawn according to rock layers.
-   - Add ExtraBiomesXL support.
+   - Add Biome Dictionary support (once COG does).
      
 ** /Chemica/
    Chemistry in Minecraft! Will provide uses for /Geologica/ minerals.
