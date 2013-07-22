@@ -91,7 +91,7 @@
     | Skarn        | med   | Like above, but twice as rare                     | cobble |
     | Carbonatite  | soft  | Short, thin veins from some pegmatite motherlodes | rubble |
 
-*** Rock Ores
+*** Rock metal ores
     
     | Mineral       | Metal | State    | Hard    | Occurs                                  |
     |---------------+-------+----------+---------+-----------------------------------------|
