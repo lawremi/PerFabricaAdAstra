@@ -86,7 +86,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	protected void setHarvestLevels() {
-		MinecraftForge.setBlockHarvestLevel(this, getToolForMaterial(), getHarvestLevel(strength));
+		MinecraftForge.setBlockHarvestLevel(this, getToolForMaterial(), getHarvestLevel());
 	}
 
 	private String getToolForMaterial() {
@@ -95,15 +95,19 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		else return "shovel";
 	}
 
-	private int getHarvestLevel(Strength strength) {
+	private int getHarvestLevel() {
 		int level = 0;
 		switch(strength) {
 		case WEAK:
-		case MEDIUM:
 			level = 0;
+			break;
+		case MEDIUM:
+			level = 1;
 			break;
 		case STRONG:
 			level = 1;
+			if (composition != Composition.AGGREGATE)
+				level++;
 			break;
 		case VERY_STRONG:
 			level = 2;
