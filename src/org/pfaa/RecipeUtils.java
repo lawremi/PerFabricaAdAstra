@@ -2,15 +2,18 @@ package org.pfaa;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.src.ModLoader;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -40,6 +43,7 @@ public class RecipeUtils {
                 }
                 if(hasItem(true, recipe.recipeItems, replaceStacks))
                 {
+                	//FMLLog.info("translated shaped recipe: %s", output.getItemName());
                 	recipesToRemove.add(recipe);
                     recipesToAdd.add(createOreRecipe(recipe, replacements));
                 } //else FMLLog.info("lacks ingredient: %s", output.getItemName());
@@ -65,6 +69,18 @@ public class RecipeUtils {
         recipes.addAll(recipesToAdd);
 	}
 
+	public static IRecipe createOreRecipe(ItemStack output, Object[] input, int width, int height) {
+		ShapedOreRecipe recipe = new ShapedOreRecipe(output, 'x', Block.anvil);
+		Class klass = recipe.getClass();
+		try {
+			ModLoader.setPrivateValue(klass, recipe, "input", input);
+			ModLoader.setPrivateValue(klass, recipe, "width", width);
+			ModLoader.setPrivateValue(klass, recipe, "height", height);
+		} catch (Exception e) {
+			FMLLog.log(Level.SEVERE, e, "Exception thrown during ore recipe creation");
+		}
+		return recipe;
+	}
 	
 	private static boolean hasItem(boolean strict, ItemStack[] recipe, ItemStack... ingredients)
 	{
@@ -81,11 +97,11 @@ public class RecipeUtils {
 		return false;
 	}
 	
-	private static IRecipe invokeReplacingConstructor(Class<? extends IRecipe> klass, Object recipe, Map<ItemStack, String> replacements) {
-		IRecipe replacedRecipe = null;
+	private static <T extends IRecipe> T invokeReplacingConstructor(Class<T> klass, IRecipe recipe, Map<ItemStack, String> replacements) {
+		T replacedRecipe = null;
 		
 		try {
-			Constructor<? extends IRecipe> constructor = klass.getDeclaredConstructor(recipe.getClass(), Map.class);
+			Constructor<T> constructor = klass.getDeclaredConstructor(recipe.getClass(), Map.class);
 			constructor.setAccessible(true);
 			replacedRecipe = constructor.newInstance(recipe, replacements);
 		} catch(Exception e) {
