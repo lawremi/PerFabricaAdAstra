@@ -27,11 +27,14 @@
 * Features
 ** /Geologica/
  - Adds 23 types of rock to the game.
- - Adds 29 types of metal ores in rock form.
- - Adds 18 types of industrial minerals in rock form.
+ - Adds 29 types of metal ores in stone form.
+ - Adds 18 types of industrial minerals in stone form.
  - Adds 6 types of sand ores.
- - Adds 7 types of clay ores.
- - Adds furnace recipes for converting the rocks back to stone.
+ - Adds 8 types of clay ores.
+ - Adds furnace recipes for converting the cobble back to stone.
+ - Adds cobble, brick, cobble/brick slabs, and cobble walls for each
+   type of rock.
+ - Adds cobble/brick stairs for limestone, granite and marble.
  - Registers the rock and stone to the Forge ore dictionary under
    conventional names, like "blockCobble" and "blockStone".
  - Converts all recipes involving rock and stone to use the new ore
