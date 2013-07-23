@@ -15,6 +15,7 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 		super(id, block, meta);
 		this.modelBlock = block;
 		this.modelBlockMeta = meta;
+		this.setLightOpacity(0);
 	}
 
 	@Override
