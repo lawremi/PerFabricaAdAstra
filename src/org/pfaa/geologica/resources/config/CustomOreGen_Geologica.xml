@@ -21,6 +21,82 @@
         <Replaces block='dirt'/>
       </Substitute>
     </ConfigSection>
+
+    <ConfigSection> <!-- Biome Sets -->
+      <BiomeSet name='shieldVolcano'>
+        <Biome name='Volcano'/> <!-- BOP -->
+      </BiomeSet>
+
+      <BiomeSet name='stratovolcano'>
+        <Biome name='Extreme\s*Hills'/>
+        <Biome name='Extreme\s*Hills\s*Edge'/>
+      </BiomeSet>
+
+      <BiomeSet name='caldera'>
+        <Biome name='Deadlands'/> <!-- BOP -->
+        <Biome name='Hot Springs'/> <!-- BOP -->
+      </BiomeSet>
+      
+      <BiomeSet name='volcanic'>
+        <BiomeSet inherits='shieldVolcano'/>
+        <BiomeSet inherits='stratovolcano'/>
+        <BiomeSet inherits='caldera'/>
+      </BiomeSet>
+
+      <BiomeSet name='dome'>
+        <Biome name='glacier'/> <!-- BOP -->
+      </BiomeSet>
+
+      <BiomeSet name='folded'>
+        <Biome name='alps'/> <!-- BOP -->
+        <Biome name='highlands'/> <!-- BOP -->
+        <Biome name='ice mountains'/>
+      </BiomeSet>
+
+      <BiomeSet name='plateau'>
+        <Biome name='lush desert'/> <!-- BOP -->
+        <Biome name='mesa'/> <!-- BOP -->
+      </BiomeSet>
+      
+      <BiomeSet name='river'>
+        <Biome name='.*River'/>
+      </BiomeSet>
+      
+      <BiomeSet name='ocean'>
+        <BiomeType name='water'/>
+        <BiomeSet inherits='river' weight='-1'/>
+      </BiomeSet>
+
+      <BiomeSet name='island'>
+        <BiomeType name='mushroom'/>
+      </BiomeSet>
+      
+      <BiomeSet name='oceanic'>
+        <BiomeSet inherits='ocean'/>
+        <BiomeSet inherits='island'/>
+      </BiomeSet>
+      
+      <BiomeSet name='continental'>
+        <BiomeType name='.*'/>
+        <BiomeSet inherits='oceanic' weight='-1'/>
+        <BiomeSet inherits='volcanic' weight='-1'/>
+      </BiomeSet>
+
+      <BiomeSet name='inland' inherits='continental'>
+        <BiomeType name='beach' weight='-1'/>
+      </BiomeSet>
+
+      <BiomeSet name='frozen-continental'>
+        <BiomeType name='frozen'/>
+        <BiomeSet inherits='ocean' weight='-1'/>
+      </BiomeSet>
+
+      <BiomeSet name='plains'>
+        <BiomeType name='plains'/>
+        <Biome name='Ice\s*Plains'/> <!-- currently listed as frozen -->
+      </BiomeSet>
+      
+    </ConfigSection>
     
     <ConfigSection>
 
@@ -39,8 +115,8 @@
       <CloudPreset name='PresetStratum'>
         <Description>
           Solid clouds that form layers of rock and minerals. Individual
-          layer generators are expected to modify the CloudHeight and
-          CouldThickness settings.
+          layer generators are expected to modify the CloudHeight,
+          CouldThickness and DistributionFrequency settings.
         </Description>
         <Setting name='DistributionFrequency' avg='1.0'/>
         <Setting name='CloudRadius' avg='16' range='0' type='normal'/>
@@ -61,83 +137,44 @@
           rock (granite). Also, there is more substantial accumulation
           of sediment, relative to the ocean.
         </Description>
-        <Biome name='Forest'/>
-        <Biome name='ForestHills'/>
-        <Biome name='Desert'/>
-        <Biome name='DesertHills'/>
-        <Biome name='Plains'/>
-        <Biome name='Swampland'/>
-        <Biome name='Jungle'/>
-        <Biome name='JungleHills'/>
-        <Biome name='River'/>
-        <Biome name='FrozenRiver'/>
-        <Biome name='Ice\s*Plains'/>
-        <Biome name='Ice\s*Mountains'/>
-        <Biome name='Taiga'/>
-        <Biome name='TaigaHills'/>
-        <Biome name='Beach'/>
+        <BiomeSet inherits='continental'/>
       </SubstitutePreset>
       
       <CloudPreset name='PresetStratumContinental'
                    inherits='PresetStratum'>
-        <Biome name='Forest'/>
-        <Biome name='ForestHills'/>
-        <Biome name='Desert'/>
-        <Biome name='DesertHills'/>
-        <Biome name='Plains'/>
-        <Biome name='Swampland'/>
-        <Biome name='Jungle'/>
-        <Biome name='JungleHills'/>
-        <Biome name='River'/>
-        <Biome name='FrozenRiver'/>
-        <Biome name='Ice\s*Plains'/>
-        <Biome name='Ice\s*Mountains'/>
-        <Biome name='Taiga'/>
-        <Biome name='TaigaHills'/>
-        <Biome name='Beach'/>
+        <BiomeSet inherits='continental'/>
       </CloudPreset>
-    </ConfigSection>
-
-    <SubstitutePreset name='PresetPrimaryStratumOceanic'
-                      inherits='PresetPrimaryStratum'>
-      <Description>
-        The ocean crust is formed from partial melting of peridotite
-        from the mantel. This results in gabbro intrusions and
-        extrusions in the form of basalt. Islands are formed from
-        accumulation of basalt.
-      </Description>
-      <Biome name='Ocean'/>
-      <Biome name='FrozenOcean'/>
-      <Biome name='MushroomIsland'/>
-      <Biome name='MushroomIslandShore'/>        
-    </SubstitutePreset>
       
-    <CloudPreset name='PresetStratumOceanic' inherits='PresetStratum'>
-      <Biome name='Ocean'/>
-      <Biome name='FrozenOcean'/>
-      <Biome name='MushroomIsland'/>
-      <Biome name='MushroomIslandShore'/>
-    </CloudPreset>
-
-    <SubstitutePreset name='PresetPrimaryStratumVolcanic'
-                      inherits='PresetPrimaryStratum'>
-      <Description>
-        Numerous igneous intrusions will be found beneath
-        volcanoes. These volcanoes are assumed to be formed in
-        subduction zones, so they will be layered with felsic
-        extrusions, like rhyolite and andesite.
-      </Description>
-      <Biome name='Extreme\s*Hills'/>
-      <Biome name='Extreme\s*Hills\s*Edge'/>    
-    </SubstitutePreset>
-    
-    <CloudPreset name='PresetStratumVolcanic' inherits='PresetStratum'>
-      <Biome name='Extreme\s*Hills'/>
-      <Biome name='Extreme\s*Hills\s*Edge'/>    
-    </CloudPreset>
-
-    <ConfigSection>
+      <SubstitutePreset name='PresetPrimaryStratumOceanic'
+                        inherits='PresetPrimaryStratum'>
+        <Description>
+          The ocean crust is formed from partial melting of peridotite
+          from the mantel. This results in gabbro intrusions and
+          extrusions in the form of basalt. Islands are formed from
+          accumulation of basalt.
+        </Description>
+        <BiomeSet inherits='oceanic'/>
+      </SubstitutePreset>
       
+      <CloudPreset name='PresetStratumOceanic' inherits='PresetStratum'>
+        <BiomeSet inherits='oceanic'/>
+      </CloudPreset>
+      
+      <SubstitutePreset name='PresetPrimaryStratumVolcanic'
+                        inherits='PresetPrimaryStratum'>
+        <Description>
+          Numerous igneous intrusions will be found beneath
+          volcanoes. These volcanoes are assumed to be formed in
+          subduction zones, so they will be layered with felsic
+          extrusions, like rhyolite and andesite.
+        </Description>
+        <BiomeSet inherits='stratovolcano'/>
+      </SubstitutePreset>
+      
+      <CloudPreset name='PresetStratumVolcanic' inherits='PresetStratum'>
+        <BiomeSet inherits='stratovolcano'/>
+      </CloudPreset>
+     
       <VeinsPreset name='PresetRockVeins'>
         <Description>
           Thick veins of rock, usually formed through hydrothermal processes.
@@ -259,8 +296,7 @@
                      inherits='PresetStratum'>
           <Setting name='CloudThickness' avg='15'/>
           <Setting name='CloudHeight' avg='45'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
         </CloudPreset>
@@ -620,35 +656,17 @@
 
       <VeinsPreset name='PresetLayeredVeinsContinental'
                    inherits='PresetLayeredVeinsLite'>
-        <Biome name='Forest'/>
-        <Biome name='ForestHills'/>
-        <Biome name='Desert'/>
-        <Biome name='DesertHills'/>
-        <Biome name='Plains'/>
-        <Biome name='Swampland'/>
-        <Biome name='Jungle'/>
-        <Biome name='JungleHills'/>
-        <Biome name='River'/>
-        <Biome name='FrozenRiver'/>
-        <Biome name='Ice\s*Plains'/>
-        <Biome name='Ice\s*Mountains'/>
-        <Biome name='Taiga'/>
-        <Biome name='TaigaHills'/>
-        <Biome name='Beach'/>        
+        <BiomeSet inherits='continental'/>
       </VeinsPreset>
 
       <VeinsPreset name='PresetLayeredVeinsVolcanic'
                    inherits='PresetLayeredVeinsLite'>
-        <Biome name='Extreme\s*Hills'/>
-        <Biome name='Extreme\s*Hills\s*Edge'/>    
+        <BiomeSet inherits='stratovolcano'/>
       </VeinsPreset>
 
       <VeinsPreset name='PresetLayeredVeinsOceanic'
                    inherits='PresetLayeredVeinsLite'>
-        <Biome name='Ocean'/>
-        <Biome name='FrozenOcean'/>
-        <Biome name='MushroomIsland'/>
-        <Biome name='MushroomIslandShore'/>
+        <BiomeSet inherits='oceanic'/>
       </VeinsPreset>
       
       <VeinsPreset name='PresetSphaleriteGalena'
@@ -674,19 +692,14 @@
         <Replaces block='WeakStone:4'/>
         <Replaces block='Sandstone'/>
         <Replaces block='MediumStone:0'/>
-        <Biome name='.*' weight='1'/>
-        <Biome name='Ocean' weight='-1'/>
-        <Biome name='FrozenOcean' weight='-1'/>
-        <Biome name='Extreme\s*Hills' weight='-1'/>
-        <Biome name='Extreme\s*Hills\s*Edge' weight='-1'/>
+        <BiomeSet inherits='continental'/>
       </CloudPreset>
 
       <CloudPreset name='PresetSedStrategicCloudOceanic'
                    inherits='PresetSedStrategicCloud'>
         <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                  range=':=5/64 * dimension.groundLevel' type='normal'/>
-        <Biome name='Ocean'/>
-        <Biome name='FrozenOcean'/>
+        <BiomeSet inherits='ocean'/>
       </CloudPreset>
 
       <CloudPreset name='PresetMetaStrategicCloud'
@@ -723,20 +736,8 @@
                    avg=':=coalSize * _default_'
                    range=':=coalSize * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
-          <Biome name='Forest' weight='0.5'/>
-          <Biome name='ForestHills' weight='0.5'/>
-          <Biome name='Desert' weight='0.5'/>
-          <Biome name='DesertHills' weight='0.5'/>
-          <Biome name='Plains' weight='0.5'/>
-          <Biome name='Jungle' weight='0.5'/>
-          <Biome name='JungleHills' weight='0.5'/>
-          <Biome name='River' weight='0.5'/>
-          <Biome name='FrozenRiver' weight='0.5'/>
-          <Biome name='Ice\s*Plains' weight='0.5'/>
-          <Biome name='Ice\s*Mountains' weight='0.5'/>
-          <Biome name='Taiga' weight='0.5'/>
-          <Biome name='TaigaHills' weight='0.5'/>
-          <Biome name='Swampland'/>
+          <BiomeSet inherits='inland' weight='0.5'/>
+          <BiomeType name='swamp' weight='0.5'/>
         </CloudPreset>
 
         <VeinsPreset name='PresetCoalBedHintVeins' block='oreCoal'
@@ -763,23 +764,16 @@
                    range=':=ironSize * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
           <OreBlock block='StrongOreRock:0' weight='1.0'/>
-          <Biome name='Forest.*' weight='0.5'/>
-          <Biome name='Desert.*' weight='0.5'/>
-          <Biome name='Plains' weight='0.5'/>
-          <Biome name='Swampland' weight='0.5'/>
-          <Biome name='Jungle.*' weight='0.5'/>
-          <Biome name='River' weight='0.5'/>
-          <Biome name='FrozenRiver'/>
-          <Biome name='Ice.*'/>
-          <Biome name='Taiga.*'/>
+          <BiomeSet inherits='inland' weight='0.5'/>
+          <BiomeSet inherits='frozen-continental' weight='0.5'/>
         </CloudPreset>
+        
         <CloudPreset name='PresetBandedIronOceanic'
                      inherits='PresetBandedIron'
                      drawWireframe='false'>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='normal'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Replaces block='MediumStone:0'/>
           <Replaces block='StrongStone:1'/>
         </CloudPreset>
@@ -870,7 +864,7 @@
 
       <ConfigSection>
         <StandardGenPreset name='PresetOreSand'>
-          <Setting name='Size' avg='120' range='40'/>
+          <Setting name='Size' avg='32' range='40'/>
           <Setting name='Frequency' avg='0.03' range='0'/>
           <Setting name='Height' avg=':=60/64 * dimension.groundLevel'
                    range='1'/>
@@ -880,38 +874,35 @@
         <StandardGenPreset name='PresetBasalticSand'
                            inherits='PresetOreSand'
                            block='WeakOreSand:0'>
-          <Biome name='Beach'/>
+          <BiomeType name='Beach'/>
         </StandardGenPreset>
         <StandardGenPreset name='PresetCassiteriteSand'
                            inherits='PresetOreSand'
                            block='WeakOreSand:1'>
-          <Biome name='River'/>
-          <Biome name='FrozenRiver'/>
-          <Biome name='Beach' weight='0.5'/>
-          <Biome name='Ice\s*Mountains' weight='0.3'/>
+          <BiomeSet inherits='river'/>
+          <BiomeType name='beach' weight='0.5'/>
+          <BiomeSet inherits='folded' weight='0.3'/>
         </StandardGenPreset>
         <StandardGenPreset name='PresetGarnetSand'
                            inherits='PresetOreSand'
                            block='WeakOreSand:2'>
           <Setting name='Frequency' avg=':=2.5 * _default_'/>
-          <Biome name='Beach'/>
-          <Biome name='Ice\s*Mountains' weight='0.3'/>
+          <BiomeType name='Beach'/>
+          <BiomeSet inherits='folded' weight='0.3'/>
         </StandardGenPreset>
         <StandardGenPreset name='PresetGraniticSand'
                            inherits='PresetOreSand'
                            block='WeakOreSand:3'>
-          <Biome name='River'/>
-          <Biome name='FrozenRiver'/>
-          <Biome name='Beach' weight='0.5'/>
-          <Biome name='Ice\s*Mountains' weight='0.3'/>
+          <BiomeSet inherits='river'/>
+          <BiomeType name='beach' weight='0.5'/>
+          <BiomeSet inherits='folded' weight='0.3'/>
         </StandardGenPreset>
         <StandardGenPreset name='PresetQuartzSand'
                            inherits='PresetOreSand'
                            block='WeakOreSand:4'
                            drawWireframe='false'>
           <Setting name='Frequency' avg=':=0.3 * _default_'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
+          <BiomeType name='desert'/>
         </StandardGenPreset>
         <StandardGenPreset name='PresetVolcanicAsh'
                            inherits='PresetOreSand'
@@ -921,8 +912,7 @@
            <Setting name='Frequency' avg=':=0.5 * _default_'/>
            <Setting name='Size' avg=':= 0.5 * _default_'
                     range=':= 0.5 * _default_'/>
-           <Biome name='Extreme\s*Hills'/>
-           <Biome name='Extreme\s*Hills\s*Edge'/>
+           <BiomeSet inherits='volcanic'/>
            <Replaces block='.*Stone.*'/>
            <Replaces block='dirt'/>
            <Replaces block='sand'/>
@@ -955,23 +945,9 @@
                      wireframeColor='0xFF00AA00'>
           <Setting name='MotherlodeFrequency' avg='0.02'/>
           <Setting name='MotherlodeHeight' avg='30' range='30'/>
-          <Biome name='Forest.*' weight='0.5'/>
-          <Biome name='Desert.*' weight='0.5'/>
-          <Biome name='Plains' weight='0.5'/>
-          <Biome name='Swampland' weight='0.5'/>
-          <Biome name='Jungle.*' weight='0.5'/>
-          <Biome name='.*River' weight='0.5'/>
-          <Biome name='Ice.*' weight='0.5'/>
-          <Biome name='Taiga.*' weight='0.5'/>
-          <Biome name='Beach' weight='0.5'/>
-          <!-- OCEAN
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
-          <Biome name='MushroomIsland'/>
-          <Biome name='MushroomIslandShore'/>
-          -->
-          <Biome name='Extreme\s*Hills'/>
-          <Biome name='Extreme\s*Hills\s*Edge'/>
+          <BiomeSet inherits='continental' weight='0.5'/>
+          <BiomeSet inherits='oceanic'/>
+          <BiomeSet inherits='volcanic'/>
           <Replaces block='.*Stone.*'/>
         </VeinsPreset>
         
@@ -1010,14 +986,11 @@
       
     </ConfigSection>
 
-    <ConfigSection> <!-- Lateritic Soils -->
+    <ConfigSection> <!-- Laterite, limonite -->
 
       <ConfigSection>
-        
-        <CloudPreset name='PresetLaterite' block='WeakClay:0'
-                     inherits='PresetStratum'
-                     drawWireframe='false'>
-          <WireframeColor>0xFFFF1100</WireframeColor>
+
+        <CloudPreset name='PresetRichSoil' inherits='PresetStratum'>
           <Setting name='DistributionFrequency' avg='0.01'/>
           <Setting name='CloudThickness' avg='4' range='2'/>
           <Setting name='CloudHeight' avg=':=55/64 * dimension.groundLevel'
@@ -1029,9 +1002,13 @@
           <Replaces block='MediumStone:0'/>
           <Replaces block='Sandstone'/>
           <Replaces block='dirt'/>
-          <Biome name='Swampland' weight='0.5'/>
-          <Biome name='Jungle'/>
-          <Biome name='JungleHills'/>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetLaterite' block='WeakClay:0'
+                     inherits='PresetRichSoil'
+                     drawWireframe='false'>
+          <WireframeColor>0xFFFF1100</WireframeColor>
+          <Biome name='.*' minTemperature='1.2' minRainfall='0.9'/>
         </CloudPreset>
 
         <CloudPreset name='PresetLateriteBauxite'
@@ -1047,6 +1024,28 @@
           <WireframeColor>0xFF1111FF</WireframeColor>
           <Setting name='DistributionFrequency' avg='0.01'/>
           <OreBlock block='WeakClay:0' weight='0.70'/>
+          <OreBlock block='WeakOreClay:4' weight='0.15'/>
+          <OreBlock block='WeakOreClay:5' weight='0.15'/>
+        </CloudPreset>
+
+        <!-- FIXME: do we want to add peat? (instead of dirt)
+             Peat would be generated in:
+             - any swamp
+             - fen and moor from BOP, which *should* be swamps => FIXME!
+        -->
+        <!-- NOTE: we are not actually generating this 'peat'
+             distribution, just the bog limonite derivative! -->
+        <CloudPreset name='PresetPeat' block='dirt'
+                     inherits='PresetRichSoil'
+                     drawWireframe='false'>
+          <WireframeColor>0xFFFF1100</WireframeColor>
+          <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
+          <BiomeType name='swamp'/>
+        </CloudPreset>
+        
+        <CloudPreset name='PresetBogLimonite' inherits='PresetPeat'>
+          <WireframeColor>0xFF1111FF</WireframeColor>
+          <OreBlock block='dirt' weight='0.70'/>
           <OreBlock block='WeakOreClay:4' weight='0.15'/>
           <OreBlock block='WeakOreClay:5' weight='0.15'/>
         </CloudPreset>
@@ -1076,6 +1075,7 @@
           <Cloud name='SerpentiniteUnderLimonite'
                  inherits='PresetSerpentiniteUnderLimonite'/>
         </Cloud>
+        <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
       </ConfigSection>
       
     </ConfigSection>
@@ -1108,7 +1108,6 @@
                      block='WeakOreClay:6'
                      drawWireframe='false' wireframeColor='0xFFFF1111'>
         </VeinsPreset>
-
         
         <VeinsPreset name='PresetDioriteVeinsOther'
                      inherits='PresetLayeredVeins'>
@@ -1120,14 +1119,8 @@
           <Replaces block='VeryStrongStone:0'/>
           <Replaces block='VeryStrongStone:1'/>
           <Replaces block='StrongStone:1'/>
-          <!-- OCEAN
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
-          <Biome name='MushroomIsland'/>
-          <Biome name='MushroomIslandShore'/>
-          -->
-          <Biome name='Extreme\s*Hills'/>
-          <Biome name='Extreme\s*Hills\s*Edge'/>    
+          <BiomeSet inherits='oceanic'/>
+          <BiomeSet inherits='volcanic'/>
         </VeinsPreset>
         <VeinsPreset name='PresetIlmeniteDioriteOther'
                      inherits='PresetDioriteVeinsOther'
@@ -1186,22 +1179,8 @@
                      drawWireframe='false'>
           <Setting name='CloudHeight' avg='10' range='0'/>
           <Setting name='DistributionFrequency' avg='0.01'/>
-          <Biome name='Forest.*' weight='0.5'/>
-          <Biome name='Desert.*' weight='0.5'/>
-          <Biome name='Plains' weight='0.5'/>
-          <Biome name='Swampland' weight='0.5'/>
-          <Biome name='Jungle.*' weight='0.5'/>
-          <Biome name='.*River' weight='0.5'/>
-          <Biome name='Ice.*' weight='0.5'/>
-          <Biome name='Taiga.*' weight='0.5'/>
-          <Biome name='Beach' weight='0.5'/>
-          <Biome name='Extreme\s*Hills'/>
-          <Biome name='Extreme\s*Hills\s*Edge'/>
-          <!-- OCEAN (comment out stuff above)
           <Biome name='.*' weight='0.5'/>
-          <Biome name='Extreme\s*Hills' weight='0.5'/>
-          <Biome name='Extreme\s*Hills\s*Edge' weight='0.5'/>
-          -->
+          <BiomeSet inherits='volcanic' weight='0.5'/>
         </CloudPreset>
         
         <CloudPreset name='PresetGabbroIntrusion' block='VeryStrongStone:1'
@@ -1338,10 +1317,8 @@
           <Setting name='CloudThickness' range='0'/>
           <Setting name='ParentRangeLimit' avg='3' range='2'/>
           <Setting name='DistributionFrequency' avg='20' range='0'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
-          <Biome name='Plains'/>
-          <Biome name='Ice\s*Plains'/>
+          <BiomeType name='desert'/>
+          <BiomeSet inherits='plains'/>
           <Replaces block='WeakStone:0'/>
           <Replaces block='WeakStone:2'/>
           <Replaces block='WeakStone:3'/>
@@ -1376,8 +1353,7 @@
           <Setting name='DistributionFrequency' avg='0.013'/>
           <Setting name='CloudHeight' avg='60' range='0'/>
           <Setting name='CloudThickness' avg='3' range='0'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
+          <BiomeType name='desert'/>
           <OreBlock block='WeakOreRock:15' weight='0.70'/>
           <OreBlock block='WeakOreRock:12' weight='0.15'/>
           <OreBlock block='WeakOreRock:0' weight='0.15'/>
@@ -1421,11 +1397,8 @@
           <Replaces block='stone'/>
           <Replaces block='water'/>
           <WireframeColor>0xFFFFFF00</WireframeColor>
-          <Biome name='Ice\s*Mountains' weight='0.5'/>
-          <!-- OCEAN
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
-          -->
+          <BiomeSet inherits='folded' weight='0.5'/>
+          <BiomeSet inherits='ocean'/>
         </CloudPreset>
 
         <VeinsPreset name='PresetVMSRhyoliteHintVeins'
@@ -1510,23 +1483,8 @@
       <ConfigSection>
         <CloudPreset name='PresetSEDEX'
                      inherits='PresetSedStrategicCloud'>
-          <Biome name='Forest'/>
-          <Biome name='ForestHills'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
-          <Biome name='Plains'/>
-          <Biome name='Swampland'/>
-          <Biome name='Jungle'/>
-          <Biome name='JungleHills'/>
-          <Biome name='River'/>
-          <Biome name='FrozenRiver'/>
-          <Biome name='Ice\s*Plains'/>
-          <Biome name='Ice\s*Mountains'/>
-          <Biome name='Taiga'/>
-          <Biome name='TaigaHills'/>
-          <Biome name='Beach'/>
-          <Biome name='MushroomIsland'/>
-          <Biome name='MushroomIslandShore'/>
+          <BiomeSet inherits='continental'/>
+          <BiomeSet inherits='island'/>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
           <Setting name='OreDensity' avg=':=1.5 * _default_'/>
         </CloudPreset>
@@ -1543,8 +1501,7 @@
         <CloudPreset name='PresetSEDEXSphaleriteGalenaOceanic'
                      inherits='PresetSEDEXSphaleriteGalena'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='uniform'/>
         </CloudPreset>
@@ -1569,8 +1526,7 @@
         <CloudPreset name='PresetSEDEXScheeliteOceanic'
                      inherits='PresetSEDEXScheelite'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel'
                    type='uniform'/>
@@ -1593,8 +1549,7 @@
         <CloudPreset name='PresetSEDEXChalcopyriteOceanic'
                      inherits='PresetSEDEXChalcopyrite'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='uniform'/>
         </CloudPreset>
@@ -1775,21 +1730,14 @@
                      avg=':= 50/64 * dimension.groundLevel'
                      range=':= 20/64 * dimension.groundLevel'
                      type='normal'/>
-            <Biome name='Extreme\s*Hills'/>
-            <Biome name='Extreme\s*Hills\s*Edge'/>
+            <BiomeSet inherits='stratovolcano'/>
+            <BiomeSet inherits='dome'/>
           </VeinsPreset>
           <VeinsPreset name='PresetPegmatiteContinental'
                        inherits='PresetPegmatite'
                        wireframeColor='0xFFFF0055'>
             <Setting name='MotherlodeHeight' avg='20' range='10'/>
-            <Biome name='.*Forest.*'/>
-            <Biome name='.*Desert.*'/>
-            <Biome name='.*Plains.*'/>
-            <Biome name='.*Swamp.*'/>
-            <Biome name='.*Jungle.*'/>
-            <Biome name='.*River'/>
-            <Biome name='.*Taiga.*'/>
-            <Biome name='Ice\s*Mountains'/>
+            <BiomeSet inherits='inland'/>
           </VeinsPreset>
           <VeinsPreset name='PresetCarbonatite'
                        inherits='PresetRockVeins'
@@ -1815,8 +1763,8 @@
             <Replaces block='StrongStone:4'/>
             <Replaces block='VeryStrongStone:0'/>
             <Replaces block='VeryStrongStone:1'/>
-            <Biome name='Extreme\s*Hills'/>
-            <Biome name='Extreme\s*Hills\s*Edge'/>
+            <BiomeSet inherits='stratovolcano'/>
+            <BiomeSet inherits='dome'/>
           </VeinsPreset>
         </ConfigSection>
         
@@ -1858,10 +1806,7 @@
           <Setting name='BranchLength' avg=':= 2 * _default_'
                    range=':= 2 * _default_'/>
           <Replaces block='StrongStone:1'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
-          <Biome name='MushroomIsland'/>
-          <Biome name='MushroomIslandShore'/>
+          <BiomeSet inherits='oceanic'/>
         </VeinsPreset>
         
         <VeinsPreset name='PresetCinnabar'
@@ -1903,8 +1848,7 @@
             <Setting name='DistributionFrequency' avg='0.01'/>
             <OreBlock block='MediumStone:0' weight='0.3'/>
             <OreBlock block='MediumOreRock:12' weight='0.7'/>
-            <Biome name='Ocean'/>
-            <Biome name='FrozenOcean'/>
+            <BiomeSet inherits='ocean'/>
           </CloudPreset>
           <VeinsPreset name='PresetLayeredVeinsDolomite'>
             <Replaces block='WeakStone:0'/>
@@ -1973,8 +1917,7 @@
             <Setting name='DistributionFrequency' avg=':= 0.005'/>
             <Setting name='MotherlodeHeight'
                      avg=':= 40/64 * dimension.groundLevel'/>
-            <Biome name='Ocean'/>
-            <Biome name='FrozenOcean'/>
+            <BiomeSet inherits='ocean'/>
             <OreBlock block='MediumOreRock:8' weight='0.60'/>
             <OreBlock block='WeakOreRock:2' weight='0.20'/>
             <OreBlock block='MediumOreRock:0' weight='0.20'/>
@@ -2013,10 +1956,10 @@
     <ConfigSection> <!-- Skarns -->
       <ConfigSection>
         <CloudPreset name='PresetSkarnDeposit' inherits='PresetSkarn'
-                     drawWireframe='false' wireframeColor='0xFF88FF55'>
+                     drawWireframe='false'
+                     wireframeColor='0xFF88FF55'>
           <Biome name='.*' weight='1'/>
-          <Biome name='Extreme\s*Hills' weight='-1'/>
-          <Biome name='Extreme\s*Hills\s*Edge' weight='-1'/>
+          <BiomeSet inherits='volcanic' weight='-1'/>
           <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
           <Setting name='CloudThickness' avg=':= 2 * _default_'/>
           <Setting name='CloudHeight' range=':= 2/64 * dimension.groundLevel'/>
@@ -2196,7 +2139,7 @@
                      drawWireframe='false'>
           <Setting name='DistributionFrequency' avg=':=10 * _default_'/>
           <Setting name='OreDensity' avg=':= 3 * _default_'/>
-          <Biome name='Swampland'/>
+          <BiomeType name='swamp'/>
         </CloudPreset>
         <CloudPreset name='PresetPyrolusiteOceanic' block='WeakOreRock:4'
                      inherits='PresetSedStrategicCloudOceanic'
@@ -2206,10 +2149,8 @@
       
       <ConfigSection>
         <Cloud name='Pyrolusite' inherits='PresetPyrolusite'/>
-        <!-- OCEAN
         <Cloud name='PyrolusiteOceanic'
                inherits='PresetPyrolusiteOceanic'/>
-        -->
       </ConfigSection>
     </ConfigSection>
 
@@ -2227,15 +2168,12 @@
           <Setting name='CloudHeight'
                    avg=':= 45/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
         <Cloud name='Barite' inherits='PresetBarite'/>
-        <!-- OCEAN
         <Cloud name='BariteOceanic' inherits='PresetBariteOceanic'/>
-        -->
       </ConfigSection>
     </ConfigSection>
     
@@ -2258,10 +2196,8 @@
           <Setting name='DistributionFrequency'
                    avg=':= 5 * _default_'/>
           <Setting name='OreDensity' avg=':=1.5 * _default_'/>
-          <Biome name='Extreme\s*Hills'/>
-          <Biome name='Extreme\s*Hills\s*Edge'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
+          <BiomeSet inherits='volcanic'/>
+          <BiomeType name='desert'/>
         </CloudPreset>
         <VeinsPreset name='PresetPerliteVeins'
                      inherits='PresetLayeredVeinsVolcanic'
@@ -2279,10 +2215,7 @@
                      block='StrongOreRock:11'>
           <Setting name='DistributionFrequency' avg=':=5 * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
-          <!-- OCEAN (remove this after testing) -->
           <Biome name='.*' weight='1'/>
-          <Biome name='Ocean' weight='-1'/>
-          <Biome name='FrozenOcean' weight='-1'/>
         </CloudPreset>
         <StandardGenPreset name='PresetPumice'
                            inherits='PresetVolcanicAsh'
@@ -2299,8 +2232,7 @@
           <Setting name='OreDensity' avg=':= 1.5 * _default_'/>
           <Setting name='CloudHeight' avg=':=65/64 * dimension.groundLevel'
                    range=':=10/64 * dimension.groundLevel'/>
-          <Biome name='Extreme\s*Hills'/>
-          <Biome name='Extreme\s*Hills\s*Edge'/>
+          <BiomeSet inherits='volcanic'/>
         </CloudPreset>
         <CloudPreset name='PresetGlauconite'
                      inherits='PresetSedStrategicCloud'
@@ -2310,8 +2242,7 @@
           <Setting name='CloudHeight'
                    avg=':= 48/64 * dimension.groundLevel'
                    range=':= 0.25 * _default_'/>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+          <BiomeSet inherits='ocean'/>
           <Replaces block='sand'/>
           <Replaces block='dirt'/>
           <Replaces block='.*Stone.*'/>
@@ -2410,8 +2341,7 @@
                      wireframeColor='0xFFFF00FF'>
           <Setting name='DistributionFrequency' avg=':= 6 * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
-          <Biome name='Desert'/>
-          <Biome name='DesertHills'/>
+          <BiomeType name='desert'/>
         </CloudPreset>
         <CloudPreset name='PresetKaolinite'
                      inherits='PresetSedStrategicCloud'
@@ -2420,8 +2350,7 @@
                      wireframeColor='0xFF0000FF'>
           <Setting name='DistributionFrequency' avg=':= 12 * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
-          <Biome name='Jungle'/>
-          <Biome name='JungleHills'/>
+          <Biome name='.*' minTemperature='1.2' minRainfall='0.9'/>
         </CloudPreset>
       </ConfigSection>
       
