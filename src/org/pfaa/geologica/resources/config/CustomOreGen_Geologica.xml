@@ -209,6 +209,10 @@
                             block='StrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
                             minHeight='15' maxHeight='34'/>
+          <SubstitutePreset name='PresetBasaltIsland'
+                            block='StrongStone:1'
+                            inherits='PresetPrimaryStratumOceanic'
+                            minHeight='52' maxHeight='80'/>
         </ConfigSection>
         
         <ConfigSection> <!-- Rhyolite -->
@@ -245,9 +249,8 @@
 
         <SubstitutePreset name='PresetPrimarySedimentaryOceanic'
                      inherits='PresetPrimaryStratum'
-                     minHeight='37' maxHeight='60'>
-          <Biome name='Ocean'/>
-          <Biome name='FrozenOcean'/>
+                     minHeight='37' maxHeight='49'>
+          <BiomeSet inherits='ocean'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
         </SubstitutePreset>
@@ -516,6 +519,13 @@
           <OreBlock block='MediumStone:0' weight='0.5'/>
         </SubstitutePreset>
 
+        <SubstitutePreset name='PresetLimestoneBasaltIsland'
+                          inherits='PresetPrimaryStratumOceanic'
+                          minHeight='50' maxHeight='51'>
+          <OreBlock block='StrongStone:1' weight='0.5'/>
+          <OreBlock block='MediumStone:0' weight='0.5'/>
+        </SubstitutePreset>
+
         <SubstitutePreset name='PresetGraniteMudstone'
                           inherits='PresetPrimaryStratumContinental'
                           minHeight='45' maxHeight='46'>
@@ -585,6 +595,9 @@
           <Substitute name='LimestoneOceanic' inherits='PresetLimestoneOceanic'/>
           <Substitute name='GabbroBasalt' inherits='PresetGabbroBasalt'/>
           <Substitute name='BasaltLimestone' inherits='PresetBasaltLimestone'/>
+          <Substitute name='LimestoneBasaltIsland'
+                      inherits='PresetLimestoneBasaltIsland'/>
+          <Substitute name='BasaltIsland' inherits='PresetBasaltIsland'/>
           <Cloud name='GreenschistOceanic' inherits='PresetGreenschistOceanic'/>
           <Cloud name='SchistOceanic' inherits='PresetSchistOceanic'/>
           <Cloud name='SkarnOceanic' inherits='PresetSkarnOceanic'/>
