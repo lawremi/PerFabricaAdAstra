@@ -933,14 +933,12 @@
             <Veins name='SubBIFBreccia'
                    inherits='PresetSubBIFBreccia'/>
           </Cloud>
-          <!-- OCEAN
           <Cloud name='BandedIronOceanic' inherits='PresetBandedIronOceanic'>
             <Veins name='BandedIronHintVeinsOceanic'
                    inherits='PresetBandedIronHintVeinsOceanic'/>
             <Veins name='SubBIFBrecciaOceanic'
                    inherits='PresetSubBIFBrecciaOceanic'/>
           </Cloud>
-          -->
         </IfCondition>
 
       </ConfigSection>
@@ -1669,7 +1667,6 @@
           <Veins name='SEDEXChalcopyriteHintVeins'
                  inherits='PresetSEDEXChalcopyriteHintVeins'/>
         </Cloud>
-        <!-- OCEAN
         <Cloud name='SEDEXSphaleriteGalenaOceanic'
                inherits='PresetSEDEXSphaleriteGalenaOceanic'>
           <Veins name='SEDEXSphaleriteGalenaHintVeinsOceanic'
@@ -1685,7 +1682,6 @@
           <Veins name='SEDEXChalcopyriteHintVeinsOceanic'
                  inherits='PresetSEDEXChalcopyriteHintVeinsOceanic'/>
         </Cloud>
-        -->
       </ConfigSection>
       
     </ConfigSection>
@@ -2024,22 +2020,18 @@
           <Veins name='WollastoniteDolomite'
                  inherits='PresetWollastoniteDolomite'/>
         </Cloud>
-        <!-- OCEAN
         <Cloud name='DolomiteOceanic'
                inherits='PresetDolomiteOceanic'>
           <Veins name='MagnesiteDolomiteOceanic'
                  inherits='PresetMagnesiteDolomite'/>
         </Cloud>
-        -->
         <Cloud name='CarbonateDeposit'
                inherits='PresetCarbonateDeposit'>
           <Veins name='CarbonateSphaleriteGalena'
                  inherits='PresetCarbonateSphaleriteGalena'/>
         </Cloud>
-        <!-- OCEAN
         <Veins name='CarbonateSphaleriteGalenaOceanic'
                inherits='PresetCarbonateSphaleriteGalenaOceanic'/>
-        -->
       </ConfigSection>
       
     </ConfigSection>
