@@ -1937,7 +1937,8 @@
             <OreBlock block='MediumOreRock:12' weight='0.7'/>
             <BiomeSet inherits='ocean'/>
           </CloudPreset>
-          <VeinsPreset name='PresetLayeredVeinsDolomite'>
+          <VeinsPreset name='PresetLayeredVeinsDolomite'
+                       inherits='PresetLayeredVeinsLite'>
             <Replaces block='WeakStone:0'/>
             <Replaces block='WeakStone:2'/>
             <Replaces block='WeakStone:3'/>
@@ -1946,28 +1947,28 @@
             <Replaces block='MediumStone:0'/>
             <Replaces block='MediumOreRock:12'/>
             <Setting name='MotherlodeRangeLimit' avg='4' range='2'/>
-            <Setting name='BranchLength' avg=':= 0.5 * _default_'
-                     range=':= 0.5 * _default_'/>
             <Setting name='MotherlodeHeight'
                    avg=':= 55/64 * dimension.groundLevel'
                    range=':= 2/64 * dimension.groundLevel'/>
             <Setting name='MotherlodeFrequency'
                      avg=':= 15.0 * oreFreq' range='0'/>
+            <Setting name='BranchLength' avg=':= 0.5 * _default_'
+                   range=':= 0.5 * _default_'/>
           </VeinsPreset>
           <VeinsPreset name='PresetMagnesiteDolomite'
                        inherits='PresetLayeredVeinsDolomite'
-                       drawWireframe='true'
+                       drawWireframe='false'
                        wireframeColor='0xFFAA6666'
                        block='MediumOreRock:5'/>
           <VeinsPreset name='PresetSoapstoneDolomite'
                        inherits='PresetLayeredVeinsDolomite'
-                       drawWireframe='true'
+                       drawWireframe='false'
                        wireframeColor='0xFF002200'
                        block='WeakOreRock:14'>
           </VeinsPreset>
           <VeinsPreset name='PresetWollastoniteDolomite'
                        inherits='PresetLayeredVeinsDolomite'
-                       drawWireframe='true'
+                       drawWireframe='false'
                        wireframeColor='0xFFAAAAAA'
                        block='MediumOreRock:14'>
             <Setting name='MotherlodeFrequency' avg=':= 0.5 * _default_'/>
