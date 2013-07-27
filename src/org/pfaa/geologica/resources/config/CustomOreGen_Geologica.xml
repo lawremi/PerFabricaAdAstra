@@ -33,14 +33,17 @@
       </BiomeSet>
 
       <BiomeSet name='caldera'>
-        <Biome name='Deadlands'/> <!-- BOP -->
         <Biome name='Hot Springs'/> <!-- BOP -->
+      </BiomeSet>
+
+      <BiomeSet name='felsic'>
+        <BiomeSet inherits='stratovolcano'/>
+        <BiomeSet inherits='caldera'/>
       </BiomeSet>
       
       <BiomeSet name='volcanic'>
+        <BiomeSet inherits='felsic'/>
         <BiomeSet inherits='shieldVolcano'/>
-        <BiomeSet inherits='stratovolcano'/>
-        <BiomeSet inherits='caldera'/>
       </BiomeSet>
 
       <BiomeSet name='dome'>
@@ -138,6 +141,7 @@
           of sediment, relative to the ocean.
         </Description>
         <BiomeSet inherits='continental'/>
+        <BiomeSet inherits='folded' weight='-1'/>
       </SubstitutePreset>
       
       <CloudPreset name='PresetStratumContinental'
@@ -154,10 +158,12 @@
           accumulation of basalt.
         </Description>
         <BiomeSet inherits='oceanic'/>
+        <BiomeSet inherits='folded'/>
       </SubstitutePreset>
       
       <CloudPreset name='PresetStratumOceanic' inherits='PresetStratum'>
         <BiomeSet inherits='oceanic'/>
+        <BiomeSet inherits='folded'/>
       </CloudPreset>
       
       <SubstitutePreset name='PresetPrimaryStratumVolcanic'
@@ -168,11 +174,11 @@
           subduction zones, so they will be layered with felsic
           extrusions, like rhyolite and andesite.
         </Description>
-        <BiomeSet inherits='stratovolcano'/>
+        <BiomeSet inherits='felsic'/>
       </SubstitutePreset>
       
       <CloudPreset name='PresetStratumVolcanic' inherits='PresetStratum'>
-        <BiomeSet inherits='stratovolcano'/>
+        <BiomeSet inherits='felsic'/>
       </CloudPreset>
      
       <VeinsPreset name='PresetRockVeins'>
@@ -232,6 +238,14 @@
                             block='StrongStone:3'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='41' maxHeight='73'/>
+          <SubstitutePreset name='PresetGraniteDome'
+                            block='StrongStone:3'
+                            inherits='PresetPrimaryStratum'
+                            minHeight='77' maxHeight='130'>
+            <BiomeSet inherits='dome'/>
+            <Replaces block='stone'/>
+            <Replaces block='dirt'/>
+          </SubstitutePreset>
         </ConfigSection>
 
         <ConfigSection> <!-- Andesite -->
@@ -249,7 +263,9 @@
           <SubstitutePreset name='PresetBasaltIsland'
                             block='StrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
-                            minHeight='52' maxHeight='80'/>
+                            minHeight='52' maxHeight='80'>
+            <BiomeSet inherits='oceanic'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Rhyolite -->
@@ -257,6 +273,12 @@
                             block='StrongStone:7'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='92'/>
+          <SubstitutePreset name='PresetRhyoliteCaldera'
+                            block='StrongStone:7'
+                            inherits='PresetPrimaryStratum'
+                            minHeight='47' maxHeight='90'>
+            <BiomeSet inherits='caldera'/>
+          </SubstitutePreset>
         </ConfigSection>
         
       </ConfigSection>
@@ -272,7 +294,15 @@
         
         <CloudPreset name='PresetSedimentaryContinental'
                      inherits='PresetStratumContinental'>
+          <BiomeSet inherits='continental'/>
+          <BiomeSet inherits='folded'/>
         </CloudPreset>
+
+        <SubstitutePreset name='PresetPrimarySedimentaryContinental'
+                          inherits='PresetPrimaryStratumContinental'>
+          <BiomeSet inherits='continental'/>
+          <BiomeSet inherits='folded'/>
+        </SubstitutePreset>
         
         <CloudPreset name='PresetSedimentaryContinentalMinor'
                      inherits='PresetSedimentaryContinental'>
@@ -280,14 +310,15 @@
           <Setting name='CloudHeight' avg=':= 75/64 * dimension.groundLevel'
                    range='30'/>
           <Replaces block='WeakStone:4'/>
+          <Replaces block='MediumStone:0'/>
           <Replaces block='StrongStone:3'/>
-          <Replaces block='stone'/>
         </CloudPreset>
 
         <SubstitutePreset name='PresetPrimarySedimentaryOceanic'
                      inherits='PresetPrimaryStratum'
                      minHeight='37' maxHeight='49'>
           <BiomeSet inherits='ocean'/>
+          <BiomeSet inherits='folded'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
         </SubstitutePreset>
@@ -297,6 +328,7 @@
           <Setting name='CloudThickness' avg='15'/>
           <Setting name='CloudHeight' avg='45'/>
           <BiomeSet inherits='ocean'/>
+          <BiomeSet inherits='folded'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
         </CloudPreset>
@@ -324,8 +356,8 @@
         
         <ConfigSection> <!-- Mudstone -->
           <SubstitutePreset name='PresetMudstone' block='WeakStone:4'
-                       inherits='PresetPrimaryStratumContinental'
-                       minHeight='47' maxHeight='115'/>
+                       inherits='PresetPrimarySedimentaryContinental'
+                       minHeight='47' maxHeight='74'/>
         </ConfigSection>
         
         <ConfigSection> <!-- Limestone -->
@@ -336,7 +368,12 @@
           </CloudPreset>
           
           <SubstitutePreset name='PresetLimestoneOceanic' block='MediumStone:0'
-                       inherits='PresetPrimarySedimentaryOceanic'>
+                            inherits='PresetPrimarySedimentaryOceanic'>
+          </SubstitutePreset>
+
+          <SubstitutePreset name='PresetLimestoneHills' block='MediumStone:0'
+                            inherits='PresetPrimarySedimentaryContinental'
+                            minHeight='77' maxHeight='89'>
           </SubstitutePreset>
           
         </ConfigSection>
@@ -369,7 +406,6 @@
           <Setting name='CloudThickness' avg='3' range='1'/>
           <Replaces block='WeakStone:4'/>
           <Replaces block='StrongStone:3'/>
-          <Replaces block='stone'/>
           <Replaces block='VeryStrongStone:0'/>
         </CloudPreset>
         
@@ -380,7 +416,6 @@
           <Replaces block='VeryStrongStone:0'/>
           <Replaces block='StrongStone:0'/>
           <Replaces block='StrongStone:3'/>
-          <Replaces block='stone'/>
         </CloudPreset>
         
         <CloudPreset name='PresetMetamorphicOceanic'
@@ -389,7 +424,6 @@
           <Setting name='CloudThickness' avg='3' range='2'/>
           <Replaces block='VeryStrongStone:1'/>
           <Replaces block='StrongStone:1'/>
-          <Replaces block='stone'/>
         </CloudPreset>
         
         <ConfigSection> <!-- Slate -->
@@ -418,7 +452,6 @@
         <ConfigSection> <!-- Skarn -->
           <CloudPreset name='PresetSkarn'
                        inherits='PresetMetamorphicContinental'>
-            <Replaces block='stone'/>
             <Replaces block='WeakStone:4'/>
             <Replaces block='StrongStone:3'/>
             <Replaces block='MediumStone:0'/>
@@ -447,6 +480,10 @@
                        inherits='PresetMetamorphicVolcanic'>
             <Setting name='CloudHeight' avg='25' range='20'/>
           </CloudPreset>
+          <SubstitutePreset name='PresetGneissTops' block='StrongStone:2'
+                            inherits='PresetPrimaryStratumContinental'
+                            minHeight='92' maxHeight='130'>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Greenschist -->
@@ -472,7 +509,6 @@
             <Setting name='CloudThickness' avg='3' range='1'/>
             <Replaces block='VeryStrongStone:1'/>
             <Replaces block='StrongStone:1'/>
-            <Replaces block='stone'/>
           </CloudPreset>
           
         </ConfigSection>
@@ -560,6 +596,7 @@
                           minHeight='50' maxHeight='51'>
           <OreBlock block='StrongStone:1' weight='0.5'/>
           <OreBlock block='MediumStone:0' weight='0.5'/>
+          <BiomeSet inherits='oceanic'/>
         </SubstitutePreset>
 
         <SubstitutePreset name='PresetGraniteMudstone'
@@ -567,6 +604,44 @@
                           minHeight='45' maxHeight='46'>
           <OreBlock block='StrongStone:3' weight='0.5'/>
           <OreBlock block='WeakStone:4' weight='0.5'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetGraniteRhyolite'
+                          inherits='PresetPrimaryStratum'
+                          minHeight='45' maxHeight='46'>
+          <OreBlock block='StrongStone:3' weight='0.5'/>
+          <OreBlock block='StrongStone:7' weight='0.5'/>
+          <BiomeSet inherits='caldera'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetLimestoneMudstone'
+                          inherits='PresetPrimaryStratum'
+                          minHeight='45' maxHeight='46'>
+          <OreBlock block='WeakStone:4' weight='0.5'/>
+          <OreBlock block='MediumStone:0' weight='0.5'/>
+          <BiomeSet inherits='folded'/>
+        </SubstitutePreset>
+        
+        <SubstitutePreset name='PresetMudstoneLimestone'
+                          inherits='PresetPrimarySedimentaryContinental'
+                          minHeight='75' maxHeight='76'>
+          <OreBlock block='WeakStone:4' weight='0.5'/>
+          <OreBlock block='MediumStone:0' weight='0.5'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetMudstoneGranite'
+                          inherits='PresetPrimaryStratum'
+                          minHeight='75' maxHeight='76'>
+          <OreBlock block='WeakStone:4' weight='0.5'/>
+          <OreBlock block='StrongStone:3' weight='0.5'/>
+          <BiomeSet inherits='dome'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetLimestoneGneiss'
+                          inherits='PresetPrimarySedimentaryContinental'
+                          minHeight='90' maxHeight='91'>
+          <OreBlock block='StrongStone:2' weight='0.5'/>
+          <OreBlock block='MediumStone:0' weight='0.5'/>
         </SubstitutePreset>
 
       </ConfigSection>
@@ -595,6 +670,13 @@
           <Substitute name='GraniteMudstone'
                       inherits='PresetGraniteMudstone'/>
           <Substitute name='Mudstone' inherits='PresetMudstone'/>
+          <Substitute name='GraniteDome' inherits='PresetGraniteDome'/>
+          <Substitute name='MudstoneGranite' inherits='PresetMudstoneGranite'/>
+          <Substitute name='MudstoneLimestone'
+                      inherits='PresetMudstoneLimestone'/>
+          <Substitute name='LimestoneHills' inherits='PresetLimestoneHills'/>
+          <Substitute name='LimestoneGneiss' inherits='PresetLimestoneGneiss'/>
+          <Substitute name='GneissTops' inherits='PresetGneissTops'/>
           <Cloud name='Breccia' inherits='PresetBreccia'/>
           <Cloud name='Claystone' inherits='PresetClaystone'/>
           <Cloud name='Conglomerate' inherits='PresetConglomerate'/>
@@ -613,6 +695,8 @@
           
           <Substitute name='GabbroVolcanic' inherits='PresetGabbroVolcanic'/>
           <Substitute name='DioriteVolcanic' inherits='PresetDioriteVolcanic'/>
+          <Substitute name='GraniteRhyolite' inherits='PresetGraniteRhyolite'/>
+          <Substitute name='RhyoliteCaldera' inherits='PresetRhyoliteCaldera'/>
           <Substitute name='GraniteVolcanic' inherits='PresetGraniteVolcanic'/>
           <Substitute name='Andesite' inherits='PresetAndesite'/>
           <Substitute name='Rhyolite' inherits='PresetRhyolite'/>
@@ -627,10 +711,12 @@
           <Cloud name='GneissVolcanic' inherits='PresetGneissVolcanic'/>
 
           <Substitute name='GabbroOceanic' inherits='PresetGabbroOceanic'/>
-          <Substitute name='Basalt' inherits='PresetBasalt'/>
-          <Substitute name='LimestoneOceanic' inherits='PresetLimestoneOceanic'/>
           <Substitute name='GabbroBasalt' inherits='PresetGabbroBasalt'/>
+          <Substitute name='Basalt' inherits='PresetBasalt'/>
           <Substitute name='BasaltLimestone' inherits='PresetBasaltLimestone'/>
+          <Substitute name='LimestoneMudstone'
+                      inherits='PresetLimestoneMudstone'/>
+          <Substitute name='LimestoneOceanic' inherits='PresetLimestoneOceanic'/>
           <Substitute name='LimestoneBasaltIsland'
                       inherits='PresetLimestoneBasaltIsland'/>
           <Substitute name='BasaltIsland' inherits='PresetBasaltIsland'/>
@@ -657,16 +743,18 @@
       <VeinsPreset name='PresetLayeredVeinsContinental'
                    inherits='PresetLayeredVeinsLite'>
         <BiomeSet inherits='continental'/>
+        <BiomeSet inherits='folded' weight='-1'/>
       </VeinsPreset>
 
       <VeinsPreset name='PresetLayeredVeinsVolcanic'
                    inherits='PresetLayeredVeinsLite'>
-        <BiomeSet inherits='stratovolcano'/>
+        <BiomeSet inherits='felsic'/>
       </VeinsPreset>
 
       <VeinsPreset name='PresetLayeredVeinsOceanic'
                    inherits='PresetLayeredVeinsLite'>
         <BiomeSet inherits='oceanic'/>
+        <BiomeSet inherits='folded'/>
       </VeinsPreset>
       
       <VeinsPreset name='PresetSphaleriteGalena'
@@ -913,6 +1001,7 @@
            <Setting name='Size' avg=':= 0.5 * _default_'
                     range=':= 0.5 * _default_'/>
            <BiomeSet inherits='volcanic'/>
+           <Biome name='badlands' weight='0.5'/> <!-- BOP -->
            <Replaces block='.*Stone.*'/>
            <Replaces block='dirt'/>
            <Replaces block='sand'/>
@@ -1319,6 +1408,7 @@
           <Setting name='DistributionFrequency' avg='20' range='0'/>
           <BiomeType name='desert'/>
           <BiomeSet inherits='plains'/>
+          <Biome name='wasteland'/> <!-- BOP -->
           <Replaces block='WeakStone:0'/>
           <Replaces block='WeakStone:2'/>
           <Replaces block='WeakStone:3'/>
@@ -1354,6 +1444,7 @@
           <Setting name='CloudHeight' avg='60' range='0'/>
           <Setting name='CloudThickness' avg='3' range='0'/>
           <BiomeType name='desert'/>
+          <Biome name='wasteland'/> <!-- BOP -->
           <OreBlock block='WeakOreRock:15' weight='0.70'/>
           <OreBlock block='WeakOreRock:12' weight='0.15'/>
           <OreBlock block='WeakOreRock:0' weight='0.15'/>
@@ -1730,7 +1821,7 @@
                      avg=':= 50/64 * dimension.groundLevel'
                      range=':= 20/64 * dimension.groundLevel'
                      type='normal'/>
-            <BiomeSet inherits='stratovolcano'/>
+            <BiomeSet inherits='felsic'/>
             <BiomeSet inherits='dome'/>
           </VeinsPreset>
           <VeinsPreset name='PresetPegmatiteContinental'
@@ -1763,7 +1854,7 @@
             <Replaces block='StrongStone:4'/>
             <Replaces block='VeryStrongStone:0'/>
             <Replaces block='VeryStrongStone:1'/>
-            <BiomeSet inherits='stratovolcano'/>
+            <BiomeSet inherits='felsic'/>
             <BiomeSet inherits='dome'/>
           </VeinsPreset>
         </ConfigSection>
