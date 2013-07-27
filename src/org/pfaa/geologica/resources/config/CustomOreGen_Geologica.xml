@@ -1040,7 +1040,7 @@
         
         <VeinsPreset name='PresetSerpentinite'
                      inherits='PresetIntrusiveVeins'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      wireframeColor='0xFF00AA00'>
           <OreBlock block='MediumStone:2' weight='0.816'/>
           <OreBlock block='MediumOreRock:5' weight='0.01'/>
@@ -2284,7 +2284,7 @@
         </CloudPreset>
         <VeinsPreset name='PresetPerliteVeins'
                      inherits='PresetLayeredVeinsVolcanic'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      wireframeColor='0xFF000000'>
           <Replaces block='.*Stone.*'/>
           <OreBlock block='StrongOreRock:13' weight='0.75'/>
@@ -2309,7 +2309,7 @@
         </StandardGenPreset>
         <CloudPreset name='PresetZeolite'
                      inherits='PresetMetaStrategicCloud'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      block='MediumOreRock:15'>
           <Setting name='DistributionFrequency' avg=':=5 * _default_'/>
           <Setting name='OreDensity' avg=':= 1.5 * _default_'/>
