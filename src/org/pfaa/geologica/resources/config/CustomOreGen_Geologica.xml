@@ -950,7 +950,7 @@
 
       <ConfigSection>
         <StandardGenPreset name='PresetOreSand'>
-          <Setting name='Size' avg='32' range='40'/>
+          <Setting name='Size' avg='32' range='16'/>
           <Setting name='Frequency' avg='0.03' range='0'/>
           <Setting name='Height' avg=':=60/64 * dimension.groundLevel'
                    range='1'/>
