@@ -324,13 +324,12 @@
         </SubstitutePreset>
         
         <CloudPreset name='PresetSedimentaryOceanic'
-                     inherits='PresetStratum'>
-          <Setting name='CloudThickness' avg='15'/>
+                     inherits='PresetStratumOceanic'>
+          <Setting name='CloudThickness' avg='5'/>
           <Setting name='CloudHeight' avg='45'/>
-          <BiomeSet inherits='ocean'/>
-          <BiomeSet inherits='folded'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
+          <Replaces block='MediumStone:0'/>
         </CloudPreset>
         
         <ConfigSection> <!-- Breccia -->
@@ -345,6 +344,10 @@
                        inherits='PresetSedimentaryContinentalMinor'>
             <Setting name='DistributionFrequency' avg='0.20'/>
           </CloudPreset>
+          <CloudPreset name='PresetClaystoneOceanic' block='WeakStone:2'
+                       inherits='PresetSedimentaryOceanic'>
+            <Setting name='DistributionFrequency' avg='0.02'/>
+          </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Conglomerate -->
@@ -358,6 +361,10 @@
           <SubstitutePreset name='PresetMudstone' block='WeakStone:4'
                        inherits='PresetPrimarySedimentaryContinental'
                        minHeight='47' maxHeight='74'/>
+          <CloudPreset name='PresetMudstoneOceanic' block='WeakStone:4'
+                       inherits='PresetSedimentaryOceanic'>
+            <Setting name='DistributionFrequency' avg='0.10'/>
+          </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Limestone -->
@@ -382,6 +389,10 @@
           <CloudPreset name='PresetSandstone' block='Sandstone'
                        inherits='PresetSedimentaryContinentalMinor'>
             <Setting name='DistributionFrequency' avg='0.40'/>
+          </CloudPreset>
+          <CloudPreset name='PresetSandstoneOceanic' block='Sandstone'
+                       inherits='PresetSedimentaryOceanic'>
+            <Setting name='DistributionFrequency' avg='0.04'/>
           </CloudPreset>
         </ConfigSection>
         
@@ -716,10 +727,14 @@
           <Substitute name='BasaltLimestone' inherits='PresetBasaltLimestone'/>
           <Substitute name='LimestoneMudstone'
                       inherits='PresetLimestoneMudstone'/>
-          <Substitute name='LimestoneOceanic' inherits='PresetLimestoneOceanic'/>
+          <Substitute name='LimestoneOceanic'
+                      inherits='PresetLimestoneOceanic'/>
           <Substitute name='LimestoneBasaltIsland'
                       inherits='PresetLimestoneBasaltIsland'/>
           <Substitute name='BasaltIsland' inherits='PresetBasaltIsland'/>
+          <Cloud name='MudstoneOceanic' inherits='PresetMudstoneOceanic'/>
+          <Cloud name='ClaystoneOceanic' inherits='PresetClaystoneOceanic'/>
+          <Cloud name='SandstoneOceanic' inherits='PresetSandstoneOceanic'/>
           <Cloud name='GreenschistOceanic' inherits='PresetGreenschistOceanic'/>
           <Cloud name='SchistOceanic' inherits='PresetSchistOceanic'/>
           <Cloud name='SkarnOceanic' inherits='PresetSkarnOceanic'/>
@@ -835,7 +850,21 @@
           <Setting name='MotherlodeRangeLimit' avg=':=coalSize * _default_'
                    range=':=coalSize * _default_'/>
         </VeinsPreset>
-                    
+
+        <CloudPreset name='PresetCoalBedsOceanic' inherits='PresetCoalBeds'
+                     drawWireframe='false'>
+          <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
+                 range=':=5/64 * dimension.groundLevel' type='normal'/>
+          <BiomeSet inherits='ocean' weight='0.5'/>
+        </CloudPreset>
+
+        <VeinsPreset name='PresetCoalBedHintVeinsOceanic'
+                     inherits='PresetCoalBedHintVeins'>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                 range=':=5/64 * dimension.groundLevel' type='normal'/>
+          <BiomeSet inherits='ocean' weight='0.5'/>
+        </VeinsPreset>
+        
       </ConfigSection>
 
       <ConfigSection> <!-- Banded Iron Formations -->
@@ -925,6 +954,11 @@
           
           <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
             <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
+          </Cloud>
+
+          <Cloud name='CoalBedsOceanic' inherits='PresetCoalBedsOceanic'>
+            <Veins name='CoalBedHintVeinsOceanic'
+                   inherits='PresetCoalBedHintVeinsOceanic'/>
           </Cloud>
           
           <Cloud name='BandedIron' inherits='PresetBandedIron'>
