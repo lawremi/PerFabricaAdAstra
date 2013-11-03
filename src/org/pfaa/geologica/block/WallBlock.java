@@ -7,14 +7,28 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.GeologicaBlocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class WallBlock extends BlockWall implements CompositeBlockAccessors, ProxyBlock {
+
+	@Override
+	public boolean canConnectWallTo(IBlockAccess par1iBlockAccess, int par2,
+			int par3, int par4) {
+		int l = par1iBlockAccess.getBlockId(par2, par3, par4);
+		if (l == GeologicaBlocks.MEDIUM_STONE_BRICK_WALL.blockID ||
+			l == GeologicaBlocks.STRONG_STONE_BRICK_WALL.blockID || 
+			l == GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL.blockID) {
+			return true;
+		}
+		return super.canConnectWallTo(par1iBlockAccess, par2, par3, par4);
+	}
 
 	private final CompositeBlock modelBlock;
 	
