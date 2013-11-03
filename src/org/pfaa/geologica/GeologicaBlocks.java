@@ -58,6 +58,10 @@ public class GeologicaBlocks {
 	public static final Block STRONG_COBBLE_WALL = createWallBlock(STRONG_COBBLESTONE);
 	public static final Block VERY_STRONG_COBBLE_WALL = createWallBlock(VERY_STRONG_COBBLESTONE);
 	
+	public static final Block MEDIUM_STONE_BRICK_WALL = createWallBlock(MEDIUM_STONE_BRICK);
+	public static final Block STRONG_STONE_BRICK_WALL = createWallBlock(STRONG_STONE_BRICK);
+	public static final Block VERY_STRONG_STONE_BRICK_WALL = createWallBlock(VERY_STRONG_STONE_BRICK);
+	
 	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLESTONE, GeoSubstance.LIMESTONE);
 	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.GRANITE);
 	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.MARBLE);
