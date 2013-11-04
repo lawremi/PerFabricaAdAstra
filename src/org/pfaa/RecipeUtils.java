@@ -2,7 +2,6 @@ package org.pfaa;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -13,11 +12,11 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class RecipeUtils {
 	
@@ -38,12 +37,12 @@ public class RecipeUtils {
                 ItemStack output = recipe.getRecipeOutput();
                 if (output != null && hasItem(false, exclusions, output))
                 {
-                	//FMLLog.info("excluded recipe: %s", output.getItemName());
+                	FMLLog.info("excluded recipe: %s", output.getUnlocalizedName());
                     continue;
                 }
                 if(hasItem(true, recipe.recipeItems, replaceStacks))
                 {
-                	//FMLLog.info("translated shaped recipe: %s", output.getItemName());
+                	FMLLog.info("translated shaped recipe: %s", output.getUnlocalizedName());
                 	recipesToRemove.add(recipe);
                     recipesToAdd.add(createOreRecipe(recipe, replacements));
                 } //else FMLLog.info("lacks ingredient: %s", output.getItemName());
@@ -73,9 +72,10 @@ public class RecipeUtils {
 		ShapedOreRecipe recipe = new ShapedOreRecipe(output, 'x', Block.anvil);
 		Class klass = recipe.getClass();
 		try {
-			ModLoader.setPrivateValue(klass, recipe, "input", input);
-			ModLoader.setPrivateValue(klass, recipe, "width", width);
-			ModLoader.setPrivateValue(klass, recipe, "height", height);
+			ObfuscationReflectionHelper.setPrivateValue(klass, recipe, input, "input");
+			/* field names repeated to dispatch to correct overload */
+			ObfuscationReflectionHelper.setPrivateValue(klass, recipe, width, "width", "width");
+			ObfuscationReflectionHelper.setPrivateValue(klass, recipe, height, "height", "height");
 		} catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, "Exception thrown during ore recipe creation");
 		}

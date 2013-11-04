@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -35,6 +33,7 @@ import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.IC2Integration;
+import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.integration.TEIntegration;
 import org.pfaa.geologica.processing.CrudeMaterials;
 import org.pfaa.geologica.processing.SmeltingTemperature;
@@ -42,6 +41,8 @@ import org.pfaa.geologica.processing.SmeltingTemperature;
 import com.google.common.base.CaseFormat;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeRegistration {
@@ -59,6 +60,8 @@ public class RecipeRegistration {
 		addStoneToolRecipes(GeologicaBlocks.MEDIUM_COBBLESTONE, 0.50F);
 		addStoneToolRecipes(GeologicaBlocks.STRONG_COBBLESTONE, 0F);
 		addStoneToolRecipes(GeologicaBlocks.VERY_STRONG_COBBLESTONE, 0F);
+		if (Loader.isModLoaded("TConstruct"))
+			TCIntegration.addStoneMaterials();
 	}
 
 	private static void addStoneToolRecipes(GeoBlock block, float damage) {
@@ -78,22 +81,30 @@ public class RecipeRegistration {
 			ItemStack output = recipe.getRecipeOutput();
 			if (output != null && output.getItem() == tool) {
 				ShapedOreRecipe shapedRecipe = (ShapedOreRecipe)recipe;
-				Object[] ingredients = shapedRecipe.getInput().clone();
+				Object[] origIngredients = shapedRecipe.getInput();
+				Object[] ingredients = origIngredients.clone();
 				for (int i = 0; i < ingredients.length; i++) {
-					if (ingredients[i] instanceof ItemStack && 
-							cobblestone.isItemEqual((ItemStack)ingredients[i])) 
+					if (ingredients[i] instanceof List) 
 					{
-						ingredients[i] = material;
+						for (ItemStack ingredient : (List<ItemStack>)ingredients[i]) {
+							if (ingredient.itemID == cobblestone.itemID) {
+								ingredients[i] = material;
+								origIngredients[i] = cobblestone;
+							}
+						}
+					} else if (ingredients[i] instanceof ItemStack) {
+						if (((ItemStack)ingredients[i]).itemID == cobblestone.itemID) {
+							ingredients[i] = material;
+						}
 					}
 				}
-				int width = ModLoader.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "width");
-				int height = ModLoader.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "height");
+				int width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "width");
+				int height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "height");
 				recipes.add(RecipeUtils.createOreRecipe(damaged, ingredients, width, height));
 				break;
 			}
 		}
 	}
-		
 
 	private static void registerOres() {
 		oreDictifyGeoBlocks();
@@ -112,6 +123,10 @@ public class RecipeRegistration {
 		addSlabRecipe(GeologicaBlocks.VERY_STRONG_STONE_BRICK, GeologicaBlocks.VERY_STRONG_STONE_BRICK_SLAB);
 		addWallRecipe(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_COBBLE_WALL);
 		addWallRecipe(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_COBBLE_WALL);
+		addWallRecipe(GeologicaBlocks.VERY_STRONG_COBBLESTONE, GeologicaBlocks.VERY_STRONG_COBBLE_WALL);
+		addWallRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK, GeologicaBlocks.MEDIUM_STONE_BRICK_WALL);
+		addWallRecipe(GeologicaBlocks.STRONG_STONE_BRICK, GeologicaBlocks.STRONG_STONE_BRICK_WALL);
+		addWallRecipe(GeologicaBlocks.VERY_STRONG_STONE_BRICK, GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL);
 		addBrickRecipe(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_STONE_BRICK);
 		addBrickRecipe(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_STONE_BRICK);
 		addBrickRecipe(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_STONE_BRICK);
@@ -240,11 +255,31 @@ public class RecipeRegistration {
 
 	private static void oreDictifyOre(GeoBlock block, GeoSubstance substance) {
 		String postfix = substance.getOreDictKey();
-		if (postfix == null) {
-			postfix = substance.getLowerName();
+		if (postfix != null) {
+			oreDictifyOre(postfix, block.getItemStack(substance));
 		}
+		oreDictifyOre(substance.getLowerName(), block.getItemStack(substance));
+	}
+	
+	private static void oreDictifyOre(String postfix, ItemStack itemStack) {
 		String key = "ore" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
-		OreDictionary.registerOre(key, block.getItemStack(substance));
+		OreDictionary.registerOre(key, itemStack);
+		ItemStack smeltingOutput = getSmeltingOutput(key);
+		if (smeltingOutput != null) {
+			FurnaceRecipes.smelting().addSmelting(itemStack.itemID, itemStack.getItemDamage(), smeltingOutput, 0);
+		}		
+	}
+
+
+	private static ItemStack getSmeltingOutput(String key) {
+		List<ItemStack> ores = OreDictionary.getOres(key);
+		for (ItemStack ore : ores) {
+			ItemStack output = FurnaceRecipes.smelting().getSmeltingResult(ore);
+			if (output != null) {
+				return output;
+			}
+		}
+		return null;
 	}
 
 	private static String getAggregateOreDictKey(GeoBlock block) {
@@ -253,7 +288,7 @@ public class RecipeRegistration {
 		} else if (block.getMaterial() == Material.sand) {
 			return "sand";
 		} else if (block instanceof BrokenGeoBlock) {
-			return "cobble";
+			return "cobblestone";
 		} else if (block instanceof BrickGeoBlock) {
 			return "stoneBrick";
 		} else if (block instanceof LooseGeoBlock) {
@@ -276,8 +311,10 @@ public class RecipeRegistration {
 	}
 
 	private static void oreDictifyAggregate(GeoBlock block) {
-		String key = "block" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, getAggregateOreDictKey(block));
+		String key = getAggregateOreDictKey(block);
 		OreDictionary.registerOre(key, new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
+		if (block instanceof BrickGeoBlock) // for recipes that accept any type of stone brick (mossy, etc)
+			OreDictionary.registerOre("stoneBricks", new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
 	}
 	
 	private static GeoBlock getCobbleBlock(Strength strength) {
