@@ -15,14 +15,17 @@
   /Geologica/. It adds realistic and interesting geology to Minecraft,
   with the goal of enhancing the mining experience. /Geologica/
   defines new types of rocks and minerals and relies on the Custom Ore
-  Generator mod to place them in the world. Vanilla stone is
-  completely replaced by the new types of rocks.  Mineral deposits,
-  including metal ores and industrial minerals spawn in
-  psuedo-realistic veins and clouds, accoding to the type of rock.
+  Generator mod (which we also maintain) to place them in the
+  world. Vanilla stone is completely replaced by the new types of
+  rocks.  Mineral deposits, including metal ores and industrial
+  minerals spawn in psuedo-realistic veins and clouds, accoding to the
+  type of rock.
 
-  Unfortunately, it is not yet possible to do anything with the
+  Unfortunately, it is not yet possible to very much with the
   minerals. That is the point of chemistry and thus the /Chemica/ mod
-  that is only just beginning to take shape.
+  that is only just beginning to take shape. However, we use the
+  Forge ore dictionary so that some common minerals can be processed
+  via other mods.
 
 * Features
 ** /Geologica/
@@ -36,7 +39,7 @@
    type of rock.
  - Adds cobble/brick stairs for limestone, granite and marble.
  - Registers the rock and stone to the Forge ore dictionary under
-   conventional names, like "blockCobble" and "blockStone".
+   conventional names, like "cobblestone" and "stone".
  - Converts all recipes involving rock and stone to use the new ore
    dictionary keys.
  - Provides a configuration file for the Custom Ore Generation mod
@@ -154,7 +157,6 @@
    | Zeolite        | medium      | lake-shaped deposits near volcanoes   |
    | Muscovite/Mica | weak        | in pegmatite, process pegmatite       |
 
-
 *** Sand ores
     | Type             | Occurrence    |
     |------------------+---------------|
@@ -164,7 +166,6 @@
     | Volcanic ash     | extreme hills |
     | Quartz           | desert        |
     | Cassiterite      | beach/river   |
-    
     
 *** Clay ores
    | Type                  | Occurrence         |
