@@ -98,9 +98,7 @@ public class RecipeRegistration {
 						}
 					}
 				}
-				int width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "width");
-				int height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "height");
-				recipes.add(RecipeUtils.createOreRecipe(damaged, ingredients, width, height));
+				recipes.add(RecipeUtils.recreateOreRecipe(shapedRecipe, damaged, ingredients));
 				break;
 			}
 		}
