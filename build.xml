@@ -118,13 +118,14 @@
   </target>
 
   <target name="clean-src">
-    <delete verbose="false">
+    <delete verbose="false" includeEmptyDirs="true" quiet="true">
       <fileset dir="${mcpsrc.dir}/minecraft">
         <present present="both" targetdir="${src.dir}" />
       </fileset>
       <fileset dir="${mcpsrc.dir}/minecraft">
         <present present="both" targetdir="${api.dir}" />
       </fileset>
+      <fileset dir="${mcp.dir}/reobf/minecraft"/>
     </delete>
   </target>
   <target name="copy-src" depends="clean-src,initialize-version">
@@ -182,14 +183,22 @@
       <fileset dir="${mcp.dir}/reobf/minecraft">
         <exclude name='**/ic2/**'/>
         <exclude name='**/tconstruct/**'/>
+        <exclude name="**/net/**"/>
+        <exclude name="**/cpw/**"/>
       </fileset>
     </copy>
     
     <!-- Copy resources -->
     <copy todir="${classes.dir}">
-      <fileset dir="${resources.dir}">
-        <exclude name="build.xml"/>
-      </fileset>
+      <fileset dir="${resources.dir}"/>
+    </copy>
+
+    <copy todir="${classes.dir}">
+      <fileset file="mcmod.info"/>
+      <filterset>
+        <filter token="VERSION" value="${project.complete.version}" />
+        <filter token="MCVERSION" value="[${mc.version}]" />
+      </filterset>
     </copy>
     
     <!-- Reset src dir to post-forge-install state -->
