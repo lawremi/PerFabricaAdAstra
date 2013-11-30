@@ -11,10 +11,25 @@
     
 ***************************************************************************-->
 
+<!-- ATG Adaptations
+  - Rework stone heights
+    Mudstone: 47-74 => 47-89 (current: 47-74)
+    Limestone: 77-89 => 92-130 (current: 77-110)
+    Sandstone: 133-170 (current: 113-150)
+    Quartzite/Gneiss: 173-255 (current: 153-255)
+-->
+
 <IfModInstalled name='PFAAGeologica'>
   
   <ConfigSection>
 
+    <OptionDisplayGroup name='groupGeologica' displayName='Geologica'
+                        displayState='shown'> 
+      <Description> 
+        Distribution options for Geologica rocks and ores.
+      </Description>
+    </OptionDisplayGroup>
+    
     <ConfigSection>
       <Substitute name='DirtSubstitute' block='stone' minHeight = '0'
                   maxHeight=':= 55/64 * dimension.groundLevel'>
@@ -25,6 +40,7 @@
     <ConfigSection> <!-- Biome Sets -->
       <BiomeSet name='shieldVolcano'>
         <Biome name='Volcano'/> <!-- BOP -->
+        <Biome name='Deadlands'/> <!-- BOP -->
       </BiomeSet>
 
       <BiomeSet name='stratovolcano'>
@@ -53,6 +69,7 @@
       <BiomeSet name='folded'>
         <Biome name='alps'/> <!-- BOP -->
         <Biome name='highlands'/> <!-- BOP -->
+        <Biome name='crag'/> <!-- BOP -->
         <Biome name='ice mountains'/>
       </BiomeSet>
 
@@ -80,7 +97,7 @@
       </BiomeSet>
       
       <BiomeSet name='continental'>
-        <BiomeType name='.*'/>
+        <Biome name='.*'/>
         <BiomeSet inherits='oceanic' weight='-1'/>
         <BiomeSet inherits='volcanic' weight='-1'/>
       </BiomeSet>
@@ -189,7 +206,19 @@
         <Setting name='MotherlodeSize' avg='4'/>
         <Setting name='SegmentRadius' avg='3' range='2' type='normal'/>
       </VeinsPreset>
-      
+
+      <VeinsPreset name='PresetIntrusiveVeins'
+                     inherits='PresetRockVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFF00AA00'>
+          <Setting name='MotherlodeFrequency' avg='0.02'/>
+          <Setting name='MotherlodeHeight' avg='30' range='30'/>
+          <BiomeSet inherits='continental' weight='0.5'/>
+          <BiomeSet inherits='oceanic'/>
+          <BiomeSet inherits='volcanic'/>
+          <Replaces block='.*Stone.*'/>
+        </VeinsPreset>
+        
     </ConfigSection>
     
     <ConfigSection> <!-- Rocks -->
@@ -216,6 +245,11 @@
                             block='VeryStrongStone:0'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='15' maxHeight='38'/>
+          <VeinsPreset name='PresetDioriteVeins'
+                     inherits='PresetIntrusiveVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFF222222'
+                     block='VeryStrongStone:0'/>
         </ConfigSection>
 
         <ConfigSection> <!-- Gabbro -->
@@ -227,6 +261,11 @@
                             block='VeryStrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
                             minHeight='0' maxHeight='12'/>
+          <VeinsPreset name='PresetGabbroVeins'
+                     inherits='PresetIntrusiveVeins'
+                     drawWireframe='false'
+                     wireframeColor='0xFFAA5555'
+                     block='VeryStrongStone:1'/>
         </ConfigSection>
         
         <ConfigSection> <!-- Granite -->
@@ -260,6 +299,12 @@
                             block='StrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
                             minHeight='15' maxHeight='34'/>
+          <SubstitutePreset name='PresetBasaltShieldVolcano'
+                            block='StrongStone:1'
+                            inherits='PresetPrimaryStratumContinental'
+                            minHeight='40' maxHeight='100'>
+            <BiomeSet inherits='shieldVolcano'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetBasaltIsland'
                             block='StrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
@@ -359,8 +404,11 @@
         
         <ConfigSection> <!-- Mudstone -->
           <SubstitutePreset name='PresetMudstone' block='WeakStone:4'
-                       inherits='PresetPrimarySedimentaryContinental'
-                       minHeight='47' maxHeight='74'/>
+             inherits='PresetPrimarySedimentaryContinental'
+             minHeight='47' maxHeight='74'/>
+          <!--
+              maxHeight=":= if(dimension.generator='ATGLevelSource', 89, 74)"
+          -->
           <CloudPreset name='PresetMudstoneOceanic' block='WeakStone:4'
                        inherits='PresetSedimentaryOceanic'>
             <Setting name='DistributionFrequency' avg='0.10'/>
@@ -380,7 +428,7 @@
 
           <SubstitutePreset name='PresetLimestoneHills' block='MediumStone:0'
                             inherits='PresetPrimarySedimentaryContinental'
-                            minHeight='77' maxHeight='89'>
+                            minHeight='77' maxHeight='110'>
           </SubstitutePreset>
           
         </ConfigSection>
@@ -394,6 +442,10 @@
                        inherits='PresetSedimentaryOceanic'>
             <Setting name='DistributionFrequency' avg='0.04'/>
           </CloudPreset>
+          <SubstitutePreset name='PresetSandstoneHills' block='Sandstone'
+                            inherits='PresetPrimarySedimentaryContinental'
+                            minHeight='113' maxHeight='150'>
+          </SubstitutePreset>
         </ConfigSection>
         
       </ConfigSection>  
@@ -492,8 +544,9 @@
             <Setting name='CloudHeight' avg='25' range='20'/>
           </CloudPreset>
           <SubstitutePreset name='PresetGneissTops' block='StrongStone:2'
-                            inherits='PresetPrimaryStratumContinental'
-                            minHeight='92' maxHeight='130'>
+                            inherits='PresetPrimarySedimentaryContinental'
+                            minHeight='153' maxHeight='255'>
+            <Biome name='alps'/>
           </SubstitutePreset>
         </ConfigSection>
         
@@ -547,6 +600,9 @@
         <ConfigSection> <!-- Quartzite -->
           <CloudPreset name='PresetQuartzite' block='VeryStrongStone:4'
                        inherits='PresetMetamorphicContinental'/>
+          <SubstitutePreset name='PresetQuartziteTops' block='VeryStrongStone:4'
+                            inherits='PresetPrimarySedimentaryContinental'
+                            minHeight='153' maxHeight='255'/>
         </ConfigSection>
         
       </ConfigSection>
@@ -648,29 +704,45 @@
           <BiomeSet inherits='dome'/>
         </SubstitutePreset>
 
-        <SubstitutePreset name='PresetLimestoneGneiss'
+        <SubstitutePreset name='PresetLimestoneSandstone'
                           inherits='PresetPrimarySedimentaryContinental'
-                          minHeight='90' maxHeight='91'>
-          <OreBlock block='StrongStone:2' weight='0.5'/>
+                          minHeight='111' maxHeight='112'>
+          <OreBlock block='sandstone' weight='0.5'/>
           <OreBlock block='MediumStone:0' weight='0.5'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetSandstoneGneiss'
+                          inherits='PresetPrimarySedimentaryContinental'
+                          minHeight='151' maxHeight='152'>
+          <OreBlock block='sandstone' weight='0.5'/>
+          <OreBlock block='StrongStone:2' weight='0.5'/>
+          <Biome name='alps'/>
+        </SubstitutePreset>
+
+        <SubstitutePreset name='PresetSandstoneQuartzite'
+                          inherits='PresetPrimarySedimentaryContinental'
+                          minHeight='151' maxHeight='152'>
+          <OreBlock block='sandstone' weight='0.5'/>
+          <OreBlock block='VeryStrongStone:4' weight='0.5'/>
         </SubstitutePreset>
 
       </ConfigSection>
 
       <ConfigSection> <!-- Distributions -->
         
-        <OptionChoice name='GeologicaGenRocks' default='true'>
+        <OptionChoice name='GeologicaGenRocks' default='true'
+                      displayState='shown' displayGroup='groupGeologica'>
           <Description>
             Generate Geologica rock distributions in the default pattern.
           </Description>
-          <DisplayName>Default Geologica generation</DisplayName>
+          <DisplayName>Geologica rocks</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
         
         <IfCondition condition=":=?GeologicaGenRocks &amp;
-                                (dimension.id=0) &amp;
-                                (dimension.generator='RandomLevelSource')">
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
           
           <Substitute name='DioriteContinental'
                       inherits='PresetDioriteContinental'/>
@@ -678,6 +750,8 @@
                       inherits='PresetGraniteContinental'/>
           <Substitute name='DioriteGraniteContinental'
                       inherits='PresetDioriteGraniteContinental'/>
+          <Substitute name='BasaltShieldVolcano'
+                      inherits='PresetBasaltShieldVolcano'/>
           <Substitute name='GraniteMudstone'
                       inherits='PresetGraniteMudstone'/>
           <Substitute name='Mudstone' inherits='PresetMudstone'/>
@@ -686,8 +760,14 @@
           <Substitute name='MudstoneLimestone'
                       inherits='PresetMudstoneLimestone'/>
           <Substitute name='LimestoneHills' inherits='PresetLimestoneHills'/>
-          <Substitute name='LimestoneGneiss' inherits='PresetLimestoneGneiss'/>
+          <Substitute name='LimestoneSandstone'
+                      inherits='PresetLimestoneSandstone'/>
+          <Substitute name='SandstoneHills' inherits='PresetSandstoneHills'/>
+          <Substitute name='SandstoneGneiss' inherits='PresetSandstoneGneiss'/>
           <Substitute name='GneissTops' inherits='PresetGneissTops'/>
+          <Substitute name='SandstoneQuartzite'
+                      inherits='PresetSandstoneQuartzite'/>
+          <Substitute name='QuartziteTops' inherits='PresetQuartziteTops'/>
           <Cloud name='Breccia' inherits='PresetBreccia'/>
           <Cloud name='Claystone' inherits='PresetClaystone'/>
           <Cloud name='Conglomerate' inherits='PresetConglomerate'/>
@@ -738,7 +818,9 @@
           <Cloud name='GreenschistOceanic' inherits='PresetGreenschistOceanic'/>
           <Cloud name='SchistOceanic' inherits='PresetSchistOceanic'/>
           <Cloud name='SkarnOceanic' inherits='PresetSkarnOceanic'/>
-          
+
+          <Veins name='DioriteVeins' inherits='PresetDioriteVeins'/>
+          <Veins name='GabbroVeins' inherits='PresetGabbroVeins'/>
         </IfCondition>
         
       </ConfigSection>
@@ -796,6 +878,7 @@
         <Replaces block='Sandstone'/>
         <Replaces block='MediumStone:0'/>
         <BiomeSet inherits='continental'/>
+        <BiomeSet inherits='folded'/>
       </CloudPreset>
 
       <CloudPreset name='PresetSedStrategicCloudOceanic'
@@ -882,6 +965,7 @@
           <Setting name='OreDensity' avg=':=3 * _default_'/>
           <OreBlock block='StrongOreRock:0' weight='1.0'/>
           <BiomeSet inherits='inland' weight='0.5'/>
+          <BiomeSet inherits='folded' weight='0.5'/>
           <BiomeSet inherits='frozen-continental' weight='0.5'/>
         </CloudPreset>
         
@@ -939,18 +1023,19 @@
             
       <ConfigSection> <!-- Distributions -->
       
-        <OptionChoice name='GeologicaGenStandardOres' default='true'>
+        <OptionChoice name='GeologicaGenStandardOres' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
           <Description>
-            Generate Geologica distributions of standard/vanilla ores
+            Generate Geologica distributions of coal and iron ores
           </Description>
-          <DisplayName>Default Geologica generation</DisplayName>
+          <DisplayName>Coal and iron ores</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
         
         <IfCondition condition=":=?GeologicaGenStandardOres &amp;
-                                (dimension.id=0) &amp;
-                                (dimension.generator='RandomLevelSource')">
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
           
           <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
             <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
@@ -983,76 +1068,130 @@
     <ConfigSection> <!-- Mineral sand -->
 
       <ConfigSection>
-        <StandardGenPreset name='PresetOreSand'>
-          <Setting name='Size' avg='32' range='16'/>
-          <Setting name='Frequency' avg='0.03' range='0'/>
-          <Setting name='Height' avg=':=60/64 * dimension.groundLevel'
-                   range='1'/>
-          <Replaces block='sand'/>
-          <Replaces block='dirt'/>
-        </StandardGenPreset>
-        <StandardGenPreset name='PresetBasalticSand'
-                           inherits='PresetOreSand'
+        <CloudPreset name='PresetPlacer' inherits='PresetStratum'>
+          <Setting name='CloudThickness' avg='1' range='0'/>
+          <Setting name='DistributionFrequency' avg='0.04' range='0'/>
+          <Setting name='CloudHeight' avg='62' range='1' type='uniform'/>
+          <Replaces block='grass'/>
+          <Replaces block='.*sand'/>
+          <!-- <Replaces block='.*dirt'/> -->
+          <Replaces block='gravel'/>
+        </CloudPreset>
+        <CloudPreset name='PresetBeachPlacer' inherits='PresetPlacer'>
+          <BiomeType name='beach' weight='0.5'/>
+          <Setting name='CloudRadius' avg='5' range='2' type='normal'/>
+        </CloudPreset>
+        <CloudPreset name='PresetAlluvialPlacer' inherits='PresetPlacer'>
+          <Biome name='river'/>
+          <Setting name='CloudThickness' avg='1' range='0'/>
+          <Setting name='DistributionFrequency' avg=':= 2 * _default_'
+                   range='0'/>
+          <Setting name='CloudRadius' avg='8' range='2' type='normal'/>
+        </CloudPreset>
+        <CloudPreset name='PresetBasalticSandBeach'
+                           inherits='PresetBeachPlacer'
                            block='WeakOreSand:0'>
-          <BiomeType name='Beach'/>
-        </StandardGenPreset>
-        <StandardGenPreset name='PresetCassiteriteSand'
-                           inherits='PresetOreSand'
+        </CloudPreset>
+        <CloudPreset name='PresetCassiteriteSandBeach'
+                           inherits='PresetBeachPlacer'
                            block='WeakOreSand:1'>
-          <BiomeSet inherits='river'/>
-          <BiomeType name='beach' weight='0.5'/>
-          <BiomeSet inherits='folded' weight='0.3'/>
-        </StandardGenPreset>
-        <StandardGenPreset name='PresetGarnetSand'
-                           inherits='PresetOreSand'
+        </CloudPreset>
+        <CloudPreset name='PresetGarnetSandBeach'
+                           inherits='PresetBeachPlacer'
                            block='WeakOreSand:2'>
-          <Setting name='Frequency' avg=':=2.5 * _default_'/>
-          <BiomeType name='Beach'/>
-          <BiomeSet inherits='folded' weight='0.3'/>
-        </StandardGenPreset>
-        <StandardGenPreset name='PresetGraniticSand'
-                           inherits='PresetOreSand'
+        </CloudPreset>
+        <CloudPreset name='PresetGraniticSandBeach'
+                           inherits='PresetBeachPlacer'
                            block='WeakOreSand:3'>
-          <BiomeSet inherits='river'/>
-          <BiomeType name='beach' weight='0.5'/>
-          <BiomeSet inherits='folded' weight='0.3'/>
-        </StandardGenPreset>
-        <StandardGenPreset name='PresetQuartzSand'
-                           inherits='PresetOreSand'
+        </CloudPreset>
+        <CloudPreset name='PresetCassiteriteSandAlluvial'
+                           inherits='PresetAlluvialPlacer'
+                           block='WeakOreSand:1'>
+        </CloudPreset>
+        <CloudPreset name='PresetGarnetSandAlluvial'
+                           inherits='PresetAlluvialPlacer'
+                           block='WeakOreSand:2'>
+        </CloudPreset>
+        <CloudPreset name='PresetGraniticSandAlluvial'
+                           inherits='PresetAlluvialPlacer'
+                           block='WeakOreSand:3'>
+        </CloudPreset>
+        <CloudPreset name='PresetQuartzSand'
+                           inherits='PresetPlacer'
                            block='WeakOreSand:4'
                            drawWireframe='false'>
-          <Setting name='Frequency' avg=':=0.3 * _default_'/>
+          <Setting name='DistributionFrequency' avg=':=_default_'/>
+          <Setting name='CloudRadius' avg='5' range='2' type='normal'/>
           <BiomeType name='desert'/>
-        </StandardGenPreset>
+          <Setting name='CloudHeight' avg='65' range='2' type='uniform'/>
+        </CloudPreset>
         <StandardGenPreset name='PresetVolcanicAsh'
-                           inherits='PresetOreSand'
-                           block='WeakOreSand:5'>
-           <Setting name='Height' avg=':=65/64 * dimension.groundLevel'
-                    range='1'/>
-           <Setting name='Frequency' avg=':=0.5 * _default_'/>
-           <Setting name='Size' avg=':= 0.5 * _default_'
-                    range=':= 0.5 * _default_'/>
-           <BiomeSet inherits='volcanic'/>
-           <Biome name='badlands' weight='0.5'/> <!-- BOP -->
-           <Replaces block='.*Stone.*'/>
-           <Replaces block='dirt'/>
-           <Replaces block='sand'/>
+                           block='WeakOreSand:5'
+                           maxHeight='75'>
+          <Setting name='Size' avg='16' range='8'/>
+          <Setting name='Frequency' avg='0.03' range='0'/>
+          <Setting name='Height' avg=':=65/64 * dimension.groundLevel'
+                   range='1'/>
+          <BiomeSet inherits='volcanic'/>
+          <Biome name='badlands' weight='0.5'/> <!-- BOP -->
+          <Replaces block='.*Stone.*'/>
+          <Replaces block='dirt'/>
+          <Replaces block='sand'/>
         </StandardGenPreset>
       </ConfigSection>
 
       <ConfigSection>
-        <StandardGen name='BasalticSand' inherits='PresetBasalticSand'
-                     drawWireframe='false' wireframeColor='0xFFFF2222'/>
-        <StandardGen name='CassiteriteSand' inherits='PresetCassiteriteSand'
-                     drawWireframe='false' wireframeColor='0xFFFF2222'/>
-        <StandardGen name='GarnetSand' inherits='PresetGarnetSand'
-                     drawWireframe='false' wireframeColor='0xFF222222'/>
-        <StandardGen name='GraniticSand' inherits='PresetGraniticSand'
-                     drawWireframe='false' wireframeColor='0xFFFFFF22'/>
-        <StandardGen name='QuartzSand' inherits='PresetQuartzSand'
-                     drawWireframe='false' wireframeColor='0xFFFF9922'/>
-        <StandardGen name='VolcanicAsh' inherits='PresetVolcanicAsh'
-                     drawWireframe='false' wireframeColor='0xFF999922'/>
+
+        <OptionChoice name='GeologicaGenSandOres' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica placer deposits (iron, tin,
+            garnet). This is recommended if you disable vanilla iron.
+          </Description>
+          <DisplayName>Placer deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        
+        <IfCondition condition=":=?GeologicaGenSandOres &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+        
+          <Cloud name='BasalticSandBeach' inherits='PresetBasalticSandBeach'
+                 drawWireframe='true' wireframeColor='0xFFFF2222'/>
+          <Cloud name='CassiteriteSandBeach' inherits='PresetCassiteriteSandBeach'
+                 drawWireframe='true' wireframeColor='0xFFFF2222'/>
+          <Cloud name='GarnetSandBeach' inherits='PresetGarnetSandBeach'
+                 drawWireframe='true' wireframeColor='0xFF222222'/>
+          <Cloud name='GraniticSandBeach' inherits='PresetGraniticSandBeach'
+                 drawWireframe='true' wireframeColor='0xFFFFFF22'/>
+          <Cloud name='CassiteriteSandAlluvial'
+                 inherits='PresetCassiteriteSandAlluvial'
+                 drawWireframe='true' wireframeColor='0xFFFF2222'/>
+          <Cloud name='GarnetSandAlluvial' inherits='PresetGarnetSandAlluvial'
+                 drawWireframe='true' wireframeColor='0xFF222222'/>
+          <Cloud name='GraniticSandAlluvial' inherits='PresetGraniticSandAlluvial'
+                 drawWireframe='true' wireframeColor='0xFFFFFF22'/>
+          <Cloud name='QuartzSand' inherits='PresetQuartzSand'
+                 drawWireframe='true' wireframeColor='0xFFFF9922'/>
+        </IfCondition>
+        <OptionChoice name='GeologicaGenVolcanic' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica volcanic ore deposits including
+            alunite, perlite, pumice and zeolite.
+          </Description>
+          <DisplayName>Volcanic deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenVolcanic &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <StandardGen name='VolcanicAsh' inherits='PresetVolcanicAsh'
+                       drawWireframe='true'
+                       wireframeColor='0xFF999922'/>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -1060,17 +1199,6 @@
     <ConfigSection> <!-- Serpentine and other intrusive veins -->
 
       <ConfigSection>
-        <VeinsPreset name='PresetIntrusiveVeins'
-                     inherits='PresetRockVeins'
-                     drawWireframe='false'
-                     wireframeColor='0xFF00AA00'>
-          <Setting name='MotherlodeFrequency' avg='0.02'/>
-          <Setting name='MotherlodeHeight' avg='30' range='30'/>
-          <BiomeSet inherits='continental' weight='0.5'/>
-          <BiomeSet inherits='oceanic'/>
-          <BiomeSet inherits='volcanic'/>
-          <Replaces block='.*Stone.*'/>
-        </VeinsPreset>
         
         <VeinsPreset name='PresetSerpentinite'
                      inherits='PresetIntrusiveVeins'
@@ -1084,25 +1212,26 @@
           <OreBlock block='WeakOreRock:14' weight='0.10'/>
           <OreBlock block='WeakOreRock:7' weight='0.009'/>
         </VeinsPreset>
-
-        <VeinsPreset name='PresetDioriteVeins'
-                     inherits='PresetIntrusiveVeins'
-                     drawWireframe='false'
-                     wireframeColor='0xFF222222'
-                     block='VeryStrongStone:0'/>
-        
-        <VeinsPreset name='PresetGabbroVeins'
-                     inherits='PresetIntrusiveVeins'
-                     drawWireframe='false'
-                     wireframeColor='0xFFAA5555'
-                     block='VeryStrongStone:1'/>
         
       </ConfigSection>
 
       <ConfigSection>
-        <Veins name='Serpentinite' inherits='PresetSerpentinite'/>
-        <Veins name='DioriteVeins' inherits='PresetDioriteVeins'/>
-        <Veins name='GabbroVeins' inherits='PresetGabbroVeins'/>
+        <OptionChoice name='GeologicaGenSerpVeins' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica serpentinite veins that are rich in
+            soapstone, magnesite, chromite and chrysotile.
+          </Description>
+          <DisplayName>Ore-rich serpentinite veins</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        
+        <IfCondition condition=":=?GeologicaGenSerpVeins &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='Serpentinite' inherits='PresetSerpentinite'/>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -1113,8 +1242,9 @@
 
         <CloudPreset name='PresetRichSoil' inherits='PresetStratum'>
           <Setting name='DistributionFrequency' avg='0.01'/>
-          <Setting name='CloudThickness' avg='4' range='2'/>
-          <Setting name='CloudHeight' avg=':=55/64 * dimension.groundLevel'
+          <Setting name='CloudThickness' avg='4' range='1'/>
+          <Setting name='CloudHeight'
+                   avg=':= 55/64 * dimension.groundLevel'
                    range='5'/>
           <Replaces block='WeakStone:0'/>
           <Replaces block='WeakStone:2'/>
@@ -1158,7 +1288,7 @@
              distribution, just the bog limonite derivative! -->
         <CloudPreset name='PresetPeat' block='dirt'
                      inherits='PresetRichSoil'
-                     drawWireframe='false'>
+                     drawWireframe='true'>
           <WireframeColor>0xFFFF1100</WireframeColor>
           <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
           <BiomeType name='swamp'/>
@@ -1190,17 +1320,41 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Cloud name='Laterite' inherits='PresetLaterite'/>
-        <Cloud name='LateriteBauxite' inherits='PresetLateriteBauxite'/>
-        <Cloud name='LateriteLimonite' inherits='PresetLateriteLimonite'>
-          <Cloud name='SerpentiniteUnderLimonite'
+        <OptionChoice name='GeologicaGenLaterites' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica ore deposits in bogs and tropical
+            lateritic soils (bauxite, limonite, garnierite).
+          </Description>
+          <DisplayName>Bog/lateritic ores</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenLaterites &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='Laterite' inherits='PresetLaterite'/>
+          <Cloud name='LateriteBauxite' inherits='PresetLateriteBauxite'/>
+          <Cloud name='LateriteLimonite' inherits='PresetLateriteLimonite'>
+            <Cloud name='SerpentiniteUnderLimonite'
                  inherits='PresetSerpentiniteUnderLimonite'/>
-        </Cloud>
-        <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
+          </Cloud>
+          <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
 
+    <OptionChoice name='GeologicaGenIgVeins' default='false'
+                  displayState='shown' displayGroup='groupGeologica'>
+      <Description>
+        Generate Geologica ore veins in igneous rock (ilmenite,
+        chromite, vermiculite, magnetite, chalcopyrite, ...) 
+      </Description>
+      <DisplayName>Ore veins in igneous rock</DisplayName>
+      <Choice value='true' displayValue='On'/>
+      <Choice value='false' displayValue='Off'/>
+    </OptionChoice>
     
     <ConfigSection> <!-- Veins in diorite/gabbro -->
       <ConfigSection>
@@ -1246,7 +1400,7 @@
         <VeinsPreset name='PresetIlmeniteDioriteOther'
                      inherits='PresetDioriteVeinsOther'
                      block='StrongOreRock:4'
-                     drawWireframe='false' wireframeColor='0xFF1111FF'>
+                     drawWireframe='false' wireframeColor='0xFF11FFFF'>
         </VeinsPreset>
         <VeinsPreset name='PresetChromiteDioriteOther'
                      inherits='PresetDioriteVeinsOther'
@@ -1262,18 +1416,22 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Veins name='IlmeniteDioriteContinental'
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='IlmeniteDioriteContinental'
                inherits='PresetIlmeniteDioriteContinental'/>
-        <Veins name='ChromiteDioriteContinental'
-               inherits='PresetChromiteDioriteContinental'/>
-        <Veins name='VermiculiteDioriteContinental'
-               inherits='PresetVermiculiteDioriteContinental'/>
-        <Veins name='IlmeniteDioriteOther'
-               inherits='PresetIlmeniteDioriteOther'/>
-        <Veins name='ChromiteDioriteOther'
-               inherits='PresetChromiteDioriteOther'/>
-        <Veins name='VermiculiteDioriteOther'
-               inherits='PresetVermiculiteDioriteOther'/>
+          <Veins name='ChromiteDioriteContinental'
+                 inherits='PresetChromiteDioriteContinental'/>
+          <Veins name='VermiculiteDioriteContinental'
+                 inherits='PresetVermiculiteDioriteContinental'/>
+          <Veins name='IlmeniteDioriteOther'
+                 inherits='PresetIlmeniteDioriteOther'/>
+          <Veins name='ChromiteDioriteOther'
+                 inherits='PresetChromiteDioriteOther'/>
+          <Veins name='VermiculiteDioriteOther'
+                 inherits='PresetVermiculiteDioriteOther'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
 
@@ -1405,26 +1563,43 @@
       </ConfigSection>
       
       <ConfigSection>
-        <Cloud name='PeridoditeIntrusion' inherits='PresetPeridotiteIntrusion'>
-          <Cloud name='GabbroIntrusion'
-                 inherits='PresetGabbroIntrusion'/>
-          <Cloud name='DioriteIntrusion'
+        <OptionChoice name='GeologicaGenIgIntrusion' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica igneous intrusions where mafic rock has
+            penetrated the upper reaches of the crust. Contain large
+            deposits of magnetite, magnesite, pentlandite, ilmenite,
+            chromite and vermiculite.
+          </Description>
+          <DisplayName>Igneous intrusions</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        
+        <IfCondition condition=":=?GeologicaGenIgIntrusion &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='PeridoditeIntrusion' inherits='PresetPeridotiteIntrusion'>
+            <Cloud name='GabbroIntrusion'
+                   inherits='PresetGabbroIntrusion'/>
+            <Cloud name='DioriteIntrusion'
                    inherits='PresetDioriteIntrusion'/>
-          <Cloud name='MagnetitePeridotite'
-                 inherits='PresetMagnetitePeridotite'/>
-          <Cloud name='MagnesitePeridotite'
-                 inherits='PresetMagnesitePeridotite'/>
-          <Cloud name='PentlanditePeridotite'
-                 inherits='PresetPentlanditePeridotite'/>
-          <Veins name='PeridotiteSerpentinite'
-                 inherits='PresetPeridotiteSerpentinite'/>
-          <Cloud name='IlmeniteDioriteLayer'
-                 inherits='PresetIlmeniteDioriteLayer'/>
-          <Cloud name='ChromiteDioriteLayer'
-                 inherits='PresetChromiteDioriteLayer'/>
-          <Cloud name='VermiculiteDiorite'
-                 inherits='PresetVermiculiteDiorite'/>
-        </Cloud>
+            <Cloud name='MagnetitePeridotite'
+                   inherits='PresetMagnetitePeridotite'/>
+            <Cloud name='MagnesitePeridotite'
+                   inherits='PresetMagnesitePeridotite'/>
+            <Cloud name='PentlanditePeridotite'
+                   inherits='PresetPentlanditePeridotite'/>
+            <Veins name='PeridotiteSerpentinite'
+                   inherits='PresetPeridotiteSerpentinite'/>
+            <Cloud name='IlmeniteDioriteLayer'
+                   inherits='PresetIlmeniteDioriteLayer'/>
+            <Cloud name='ChromiteDioriteLayer'
+                   inherits='PresetChromiteDioriteLayer'/>
+            <Cloud name='VermiculiteDiorite'
+                   inherits='PresetVermiculiteDiorite'/>
+          </Cloud>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -1484,14 +1659,28 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Cloud name='EvaporiteLimestone' inherits='PresetEvaporiteLimestone'>
-          <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
-          <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
-        </Cloud>
-        <Cloud name='LakeEvaporite' inherits='PresetLakeEvaporite'>
-          <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
-          <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
-        </Cloud>
+        <OptionChoice name='GeologicaGenEvaporite' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica marine evaporite deposits rich in
+            gypsum and rock salt.
+          </Description>
+          <DisplayName>Evaporite deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenEvaporite &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='EvaporiteLimestone' inherits='PresetEvaporiteLimestone'>
+            <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
+            <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
+          </Cloud>
+          <Cloud name='LakeEvaporite' inherits='PresetLakeEvaporite'>
+            <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
+            <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
+          </Cloud>
+        </IfCondition>
       </ConfigSection>
 
     </ConfigSection>
@@ -1590,13 +1779,28 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Cloud name='VMSRhyolite'
-               inherits='PresetVMSRhyolite'>
-          <Veins name='VMSSphaleriteGalena'
-                 inherits='PresetVMSSphaleriteGalena'/>
-          <Veins name='VMSChalcopyrite' inherits='PresetVMSChalcopyrite'/>
-          <Veins name='VMSGold' inherits='PresetVMSGold'/>
-        </Cloud>
+        <OptionChoice name='GeologicaGenVMS' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica Volcagenic Massive Sulfide deposits,
+            rich in sulfide ores like sphalerite, galena, and
+            chalcopyrite.
+          </Description>
+          <DisplayName>VMS deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenVMS &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='VMSRhyolite'
+                 inherits='PresetVMSRhyolite'>
+            <Veins name='VMSSphaleriteGalena'
+                   inherits='PresetVMSSphaleriteGalena'/>
+            <Veins name='VMSChalcopyrite' inherits='PresetVMSChalcopyrite'/>
+            <Veins name='VMSGold' inherits='PresetVMSGold'/>
+          </Cloud>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -1687,35 +1891,49 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Cloud name='SEDEXSphaleriteGalena'
-               inherits='PresetSEDEXSphaleriteGalena'>
-          <Veins name='SEDEXSphaleriteGalenaHintVeins'
-                 inherits='PresetSEDEXSphaleriteGalenaHintVeins'/>
-        </Cloud>
-        <Cloud name='SEDEXScheelite' inherits='PresetSEDEXScheelite'>
-          <Veins name='SEDEXScheeliteHintVeins'
-                 inherits='PresetSEDEXScheeliteHintVeins'/>
-        </Cloud>
-        <Cloud name='SEDEXChalcopyrite'
-               inherits='PresetSEDEXChalcopyrite'>
-          <Veins name='SEDEXChalcopyriteHintVeins'
-                 inherits='PresetSEDEXChalcopyriteHintVeins'/>
-        </Cloud>
-        <Cloud name='SEDEXSphaleriteGalenaOceanic'
-               inherits='PresetSEDEXSphaleriteGalenaOceanic'>
-          <Veins name='SEDEXSphaleriteGalenaHintVeinsOceanic'
-                 inherits='PresetSEDEXSphaleriteGalenaHintVeinsOceanic'/>
-        </Cloud>
-        <Cloud name='SEDEXScheeliteOceanic'
-               inherits='PresetSEDEXScheeliteOceanic'>
-          <Veins name='SEDEXScheeliteHintVeinsOceanic'
-                 inherits='PresetSEDEXScheeliteHintVeinsOceanic'/>
-        </Cloud>
-        <Cloud name='SEDEXChalcopyriteOceanic'
-               inherits='PresetSEDEXChalcopyriteOceanic'>
-          <Veins name='SEDEXChalcopyriteHintVeinsOceanic'
-                 inherits='PresetSEDEXChalcopyriteHintVeinsOceanic'/>
-        </Cloud>
+        <OptionChoice name='GeologicaGenSEDEX' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate SEDimentary EXhalative deposits rich in
+            sphalerite, galena, scheelite, and chalcopyrite.
+          </Description>
+          <DisplayName>SEDEX deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenVMS &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='SEDEXSphaleriteGalena'
+                 inherits='PresetSEDEXSphaleriteGalena'>
+            <Veins name='SEDEXSphaleriteGalenaHintVeins'
+                   inherits='PresetSEDEXSphaleriteGalenaHintVeins'/>
+          </Cloud>
+          <Cloud name='SEDEXScheelite' inherits='PresetSEDEXScheelite'>
+            <Veins name='SEDEXScheeliteHintVeins'
+                   inherits='PresetSEDEXScheeliteHintVeins'/>
+          </Cloud>
+          <Cloud name='SEDEXChalcopyrite'
+                 inherits='PresetSEDEXChalcopyrite'>
+            <Veins name='SEDEXChalcopyriteHintVeins'
+                   inherits='PresetSEDEXChalcopyriteHintVeins'/>
+          </Cloud>
+          <Cloud name='SEDEXSphaleriteGalenaOceanic'
+                 inherits='PresetSEDEXSphaleriteGalenaOceanic'>
+            <Veins name='SEDEXSphaleriteGalenaHintVeinsOceanic'
+                   inherits='PresetSEDEXSphaleriteGalenaHintVeinsOceanic'/>
+          </Cloud>
+          <Cloud name='SEDEXScheeliteOceanic'
+                 inherits='PresetSEDEXScheeliteOceanic'>
+            <Veins name='SEDEXScheeliteHintVeinsOceanic'
+                   inherits='PresetSEDEXScheeliteHintVeinsOceanic'/>
+          </Cloud>
+          <Cloud name='SEDEXChalcopyriteOceanic'
+                 inherits='PresetSEDEXChalcopyriteOceanic'>
+            <Veins name='SEDEXChalcopyriteHintVeinsOceanic'
+                   inherits='PresetSEDEXChalcopyriteHintVeinsOceanic'/>
+          </Cloud>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -1736,7 +1954,11 @@
         </VeinsPreset>
       </ConfigSection>
       <ConfigSection>
-        <Veins name='Porphyry' inherits='PresetPorphyry'/>
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='Porphyry' inherits='PresetPorphyry'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
 
@@ -1891,28 +2113,46 @@
         
       </ConfigSection>
       <ConfigSection>
-        <Veins name='GraniteChalcopyriteContinental'
-               inherits='PresetGraniteChalcopyriteContinental'/>
-        <Veins name='GraniteMagnetiteContinental'
-               inherits='PresetGraniteMagnetiteContinental'/>
-        <Veins name='GraniteStibniteContinental'
-               inherits='PresetGraniteStibniteContinental'/>
-        <Veins name='GraniteCassiteriteContinental'
-               inherits='PresetGraniteCassiteriteContinental'/>
-        <Veins name='PegmatiteContinental'
-               inherits='PresetPegmatiteContinental'/>
-        <Veins name='GraniteChalcopyriteVolcanic'
-               inherits='PresetGraniteChalcopyriteVolcanic'/>
-        <Veins name='GraniteMagnetiteVolcanic'
-               inherits='PresetGraniteMagnetiteVolcanic'/>
-        <Veins name='GraniteStibniteVolcanic'
-               inherits='PresetGraniteStibniteVolcanic'/>
-        <Veins name='GraniteCassiteriteVolcanic'
-               inherits='PresetGraniteCassiteriteVolcanic'/>
-        <Veins name='PegmatiteVolcanic'
-               inherits='PresetPegmatiteVolcanic'>
-          <Veins name='Carbonatite' inherits='PresetCarbonatite'/>
-        </Veins>
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='GraniteChalcopyriteContinental'
+                 inherits='PresetGraniteChalcopyriteContinental'/>
+          <Veins name='GraniteMagnetiteContinental'
+                 inherits='PresetGraniteMagnetiteContinental'/>
+          <Veins name='GraniteStibniteContinental'
+                 inherits='PresetGraniteStibniteContinental'/>
+          <Veins name='GraniteCassiteriteContinental'
+                 inherits='PresetGraniteCassiteriteContinental'/>
+          <Veins name='GraniteChalcopyriteVolcanic'
+                 inherits='PresetGraniteChalcopyriteVolcanic'/>
+          <Veins name='GraniteMagnetiteVolcanic'
+                 inherits='PresetGraniteMagnetiteVolcanic'/>
+          <Veins name='GraniteStibniteVolcanic'
+                 inherits='PresetGraniteStibniteVolcanic'/>
+          <Veins name='GraniteCassiteriteVolcanic'
+                 inherits='PresetGraniteCassiteriteVolcanic'/>
+        </IfCondition>
+        <OptionChoice name='GeologicaGenPegmatite' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica pegmatite veins with a rich assortment
+            of minerals.
+          </Description>
+          <DisplayName>Ore-rich pegmatite veins</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenPegmatite &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='PegmatiteContinental'
+                 inherits='PresetPegmatiteContinental'/>
+          <Veins name='PegmatiteVolcanic'
+                 inherits='PresetPegmatiteVolcanic'>
+            <Veins name='Carbonatite' inherits='PresetCarbonatite'/>
+          </Veins>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
 
@@ -1937,7 +2177,11 @@
                      block='WeakOreRock:1'/>
       </ConfigSection>
       <ConfigSection>
-        <Veins name='Cinnabar' inherits='PresetCinnabar'/>
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='Cinnabar' inherits='PresetCinnabar'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
       
@@ -2048,25 +2292,39 @@
       </ConfigSection>
       
       <ConfigSection>
-        <Cloud name='Dolomite' inherits='PresetDolomite'>
-          <Veins name='MagnesiteDolomite' inherits='PresetMagnesiteDolomite'/>
-          <Veins name='SoapstoneDolomite'
-                 inherits='PresetSoapstoneDolomite'/>
-          <Veins name='WollastoniteDolomite'
-                 inherits='PresetWollastoniteDolomite'/>
-        </Cloud>
-        <Cloud name='DolomiteOceanic'
-               inherits='PresetDolomiteOceanic'>
-          <Veins name='MagnesiteDolomiteOceanic'
-                 inherits='PresetMagnesiteDolomite'/>
-        </Cloud>
-        <Cloud name='CarbonateDeposit'
-               inherits='PresetCarbonateDeposit'>
-          <Veins name='CarbonateSphaleriteGalena'
-                 inherits='PresetCarbonateSphaleriteGalena'/>
-        </Cloud>
-        <Veins name='CarbonateSphaleriteGalenaOceanic'
-               inherits='PresetCarbonateSphaleriteGalenaOceanic'/>
+        <OptionChoice name='GeologicaGenCarbonate' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica carbonate deposits with minerals like
+            magnesite, soapstone, wollastonite, sphalerite and galena.
+          </Description>
+          <DisplayName>Carbonate ore deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenCarbonate &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='Dolomite' inherits='PresetDolomite'>
+            <Veins name='MagnesiteDolomite' inherits='PresetMagnesiteDolomite'/>
+            <Veins name='SoapstoneDolomite'
+                   inherits='PresetSoapstoneDolomite'/>
+            <Veins name='WollastoniteDolomite'
+                   inherits='PresetWollastoniteDolomite'/>
+          </Cloud>
+          <Cloud name='DolomiteOceanic'
+                 inherits='PresetDolomiteOceanic'>
+            <Veins name='MagnesiteDolomiteOceanic'
+                   inherits='PresetMagnesiteDolomite'/>
+          </Cloud>
+          <Cloud name='CarbonateDeposit'
+                 inherits='PresetCarbonateDeposit'>
+            <Veins name='CarbonateSphaleriteGalena'
+                   inherits='PresetCarbonateSphaleriteGalena'/>
+          </Cloud>
+          <Veins name='CarbonateSphaleriteGalenaOceanic'
+                 inherits='PresetCarbonateSphaleriteGalenaOceanic'/>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -2134,17 +2392,21 @@
       </ConfigSection>
 
       <ConfigSection>
-        <Cloud name='SkarnDeposit' inherits='PresetSkarnDeposit'>
-          <Veins name='SkarnMagnesite' inherits='PresetSkarnMagnesite'/>
-          <Veins name='SkarnSphaleriteGalena'
-                 inherits='PresetSkarnSphaleriteGalena'/>
-          <Veins name='SkarnChalcopyrite'
-                 inherits='PresetSkarnChalcopyrite'/>
-          <Veins name='SkarnMagnetite'
-                 inherits='PresetSkarnMagnetite'/>
-          <Veins name='SkarnWollastonite'
-                 inherits='PresetSkarnWollastonite'/>
-        </Cloud>
+        <IfCondition condition=":=?GeologicaGenCarbonate &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='SkarnDeposit' inherits='PresetSkarnDeposit'>
+            <Veins name='SkarnMagnesite' inherits='PresetSkarnMagnesite'/>
+            <Veins name='SkarnSphaleriteGalena'
+                   inherits='PresetSkarnSphaleriteGalena'/>
+            <Veins name='SkarnChalcopyrite'
+                   inherits='PresetSkarnChalcopyrite'/>
+            <Veins name='SkarnMagnetite'
+                   inherits='PresetSkarnMagnetite'/>
+            <Veins name='SkarnWollastonite'
+                   inherits='PresetSkarnWollastonite'/>
+          </Cloud>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -2234,18 +2496,31 @@
       </ConfigSection>
       
       <ConfigSection>
-        <Cloud name='UraniumUnconformitySandstone'
-               inherits='PresetUraniumUnconformitySandstone'>
-          <Cloud name='UraniumUnconformitySlate'
-               inherits='PresetUraniumUnconformitySlate'/>
-          <Cloud name='UraniumUnconformity'
-                 inherits='PresetUraniumUnconformity'/>
-        </Cloud>
-        <Cloud name='UraniumSandstone'
-               inherits='PresetUraniumSandstone'/>
-        <Cloud name='UraniumConglomerate'
-               inherits='PresetUraniumConglomerate'/>
-        <Veins name='UraniumVeins' inherits='PresetUraniumVeins'/>
+        <OptionChoice name='GeologicaGenUranium' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica uraninite deposits in various patterns.
+          </Description>
+          <DisplayName>Uraninite</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenUranium &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='UraniumUnconformitySandstone'
+                 inherits='PresetUraniumUnconformitySandstone'>
+            <Cloud name='UraniumUnconformitySlate'
+                   inherits='PresetUraniumUnconformitySlate'/>
+            <Cloud name='UraniumUnconformity'
+                   inherits='PresetUraniumUnconformity'/>
+          </Cloud>
+          <Cloud name='UraniumSandstone'
+                 inherits='PresetUraniumSandstone'/>
+          <Cloud name='UraniumConglomerate'
+                 inherits='PresetUraniumConglomerate'/>
+          <Veins name='UraniumVeins' inherits='PresetUraniumVeins'/>
+        </IfCondition>
       </ConfigSection>
       
     </ConfigSection>
@@ -2266,9 +2541,13 @@
       </ConfigSection>
       
       <ConfigSection>
-        <Cloud name='Pyrolusite' inherits='PresetPyrolusite'/>
-        <Cloud name='PyrolusiteOceanic'
-               inherits='PresetPyrolusiteOceanic'/>
+        <IfCondition condition=":=?GeologicaGenLaterites &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='Pyrolusite' inherits='PresetPyrolusite'/>
+          <Cloud name='PyrolusiteOceanic'
+                 inherits='PresetPyrolusiteOceanic'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
 
@@ -2290,8 +2569,21 @@
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
-        <Cloud name='Barite' inherits='PresetBarite'/>
-        <Cloud name='BariteOceanic' inherits='PresetBariteOceanic'/>
+        <OptionChoice name='GeologicaGenBarite' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica barite deposits.
+          </Description>
+          <DisplayName>Barite</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenBarite &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='Barite' inherits='PresetBarite'/>
+          <Cloud name='BariteOceanic' inherits='PresetBariteOceanic'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
     
@@ -2369,13 +2661,43 @@
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
-        <Veins name='Alunite' inherits='PresetAlunite'/>
-        <Cloud name='Diatomite' inherits='PresetDiatomite'/>
-        <Veins name='PerliteVeins' inherits='PresetPerliteVeins'/>
-        <Cloud name='ApatiteBeds' inherits='PresetApatiteBeds'/>
-        <StandardGen name='Pumice' inherits='PresetPumice'/>
-        <Cloud name='Zeolite' inherits='PresetZeolite'/>
-        <Cloud name='Glauconite' inherits='PresetGlauconite'/>
+        <IfCondition condition=":=?GeologicaGenVolcanic &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Veins name='Alunite' inherits='PresetAlunite'/>
+          <Veins name='PerliteVeins' inherits='PresetPerliteVeins'/>
+          <StandardGen name='Pumice' inherits='PresetPumice'/>
+          <Cloud name='Zeolite' inherits='PresetZeolite'/>
+        </IfCondition>
+        <OptionChoice name='GeologicaGenMarine' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica marine-related deposits.
+          </Description>
+          <DisplayName>Marine-related deposits</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenMarine &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='Glauconite' inherits='PresetGlauconite'/>
+          <Cloud name='Diatomite' inherits='PresetDiatomite'/>
+        </IfCondition>
+        <OptionChoice name='GeologicaGenApatite' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica apatite deposits.
+          </Description>
+          <DisplayName>Apatite</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenApatite &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='ApatiteBeds' inherits='PresetApatiteBeds'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
    
@@ -2432,15 +2754,28 @@
         
       </ConfigSection>
       <ConfigSection>
-        <Cloud name='SchistGraphiteCloud'
-               inherits='PresetSchistGraphiteCloud'/>
-        <Cloud name='GneissGraphiteCloud'
-               inherits='PresetGneissGraphiteCloud'/>
-        <Cloud name='QuartziteGraphiteCloud'
-               inherits='PresetQuartziteGraphiteCloud'/>
-        <Cloud name='GraphiteBeds'
-               inherits='PresetGraphiteBeds'/>
-        <Veins name='GraphiteVeins' inherits='PresetGraphiteVeins'/>
+        <OptionChoice name='GeologicaGenGraphite' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica graphite deposits in various patterns.
+          </Description>
+          <DisplayName>Graphite</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenGraphite &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <Cloud name='SchistGraphiteCloud'
+                 inherits='PresetSchistGraphiteCloud'/>
+          <Cloud name='GneissGraphiteCloud'
+                 inherits='PresetGneissGraphiteCloud'/>
+          <Cloud name='QuartziteGraphiteCloud'
+                 inherits='PresetQuartziteGraphiteCloud'/>
+          <Cloud name='GraphiteBeds'
+                 inherits='PresetGraphiteBeds'/>
+          <Veins name='GraphiteVeins' inherits='PresetGraphiteVeins'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
 
@@ -2473,9 +2808,23 @@
       </ConfigSection>
       
       <ConfigSection>
-        <StandardGen name='Bentonite' inherits='PresetBentonite'/>
-        <Cloud name='FullersEarth' inherits='PresetFullersEarth'/>
-        <Cloud name='Kaolinite' inherits='PresetKaolinite'/>
+        <OptionChoice name='GeologicaGenClay' default='false'
+                      displayState='shown' displayGroup='groupGeologica'>
+          <Description>
+            Generate Geologica mineral clay deposits, including
+            bentonite, Fuller's earth and kaolinite.
+          </Description>
+          <DisplayName>Mineral clays</DisplayName>
+          <Choice value='true' displayValue='On'/>
+          <Choice value='false' displayValue='Off'/>
+        </OptionChoice>
+        <IfCondition condition=":=?GeologicaGenClay &amp;
+                                (dimension.generator = 'RandomLevelSource' |
+                                dimension.generator = 'ATGLevelSource')">
+          <StandardGen name='Bentonite' inherits='PresetBentonite'/>
+          <Cloud name='FullersEarth' inherits='PresetFullersEarth'/>
+          <Cloud name='Kaolinite' inherits='PresetKaolinite'/>
+        </IfCondition>
       </ConfigSection>
     </ConfigSection>
   </ConfigSection>
