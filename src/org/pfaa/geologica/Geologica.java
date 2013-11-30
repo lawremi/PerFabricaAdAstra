@@ -53,6 +53,7 @@ public class Geologica {
 	{
 		configuration = new Configuration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
+		configuration.save();
 	}
 	
 	@EventHandler
@@ -64,7 +65,6 @@ public class Geologica {
 	@EventHandler
 	public void postload(FMLPostInitializationEvent event) {
 		registrant.postregister();
-		configuration.save();
 		exportCOGConfig();
 	}
 	
