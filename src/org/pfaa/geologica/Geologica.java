@@ -1,9 +1,20 @@
 package org.pfaa.geologica;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import net.minecraftforge.common.Configuration;
 
 import org.pfaa.Registrant;
 
+import com.google.common.io.ByteStreams;
+
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -54,7 +65,29 @@ public class Geologica {
 	public void postload(FMLPostInitializationEvent event) {
 		registrant.postregister();
 		configuration.save();
+		exportCOGConfig();
 	}
 	
+	private void exportCOGConfig() {
+		String filename = "CustomOreGen_Geologica.xml";
+		String destPath = Loader.instance().getConfigDir() + File.separator + "CustomOreGen" + 
+	                  File.separator + "modules" + File.separator + "mods" + File.separator + filename;
+		String resource = "/config/" + filename;
+		File destFile = new File(destPath);
+		destFile.getParentFile().mkdirs();
+		try {
+			OutputStream out = new FileOutputStream(destFile);
+			InputStream in = this.getClass().getResourceAsStream(resource);
+			ByteStreams.copy(in, out);
+			out.flush(); out.close();
+			in.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("Could not find '" + destPath + "':" + e);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to export resource '" + resource + "':" + e);
+		}
+		new File(destPath);
+	}
+
 	public static final String RESOURCE_DIR = "/assets/geologica";
 }
