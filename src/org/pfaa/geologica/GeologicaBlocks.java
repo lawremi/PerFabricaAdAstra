@@ -117,7 +117,7 @@ public class GeologicaBlocks {
 			try {
 				blocks.add((Block)field.get(null));
 			} catch (Exception e) {
-				FMLLog.log(Level.SEVERE, e, "Failed to obtain list of GeoBlocks");
+				Geologica.log.severe("Failed to get block from field '" + field.getName() + "'");
 				throw new LoaderException(e);
 			}
 		}
@@ -157,7 +157,7 @@ public class GeologicaBlocks {
 			block = constructor.newInstance(id, strength, composition, material);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, "Failed to construct GeoBlock: " + name);
+			Geologica.log.severe("Failed to construct GeoBlock: " + name);
 			throw new LoaderException(e);
 		}
 		return block;
@@ -165,14 +165,14 @@ public class GeologicaBlocks {
 	
 	private static <T extends Block> T createDerivedBlock(Class<T> blockClass, CompositeBlock modelBlock) {
 		T block = null;
+		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + nameForBlockClass(blockClass);
 		try {
 			Constructor<T> constructor = blockClass.getConstructor(int.class, CompositeBlock.class);
-			String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + nameForBlockClass(blockClass);
 			int id = ConfigIDProvider.getInstance().nextBlockID(name);
 			block = constructor.newInstance(id, modelBlock);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, "Failed to construct derived block");
+			Geologica.log.severe("Failed to construct derived block: " + name);
 			throw new LoaderException(e);
 		}
 		return block;

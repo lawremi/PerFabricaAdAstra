@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
 
@@ -42,6 +43,8 @@ public class Geologica {
 			    serverSide = "org.pfaa.geologica.CommonRegistrant")
 	public static Registrant registrant;
 	
+	public static Logger log;
+	
 	private Configuration configuration;
 	
 	public Configuration getConfiguration() {
@@ -51,6 +54,8 @@ public class Geologica {
 	@EventHandler
 	public void preload(FMLPreInitializationEvent event)
 	{
+		log = event.getModLog();
+		log.setParent(FMLLog.getLogger());
 		configuration = new Configuration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
 		configuration.save();
@@ -72,9 +77,9 @@ public class Geologica {
 		String filename = "CustomOreGen_Geologica.xml";
 		String destPath = Loader.instance().getConfigDir() + File.separator + "CustomOreGen" + 
 	                  File.separator + "modules" + File.separator + "mods" + File.separator + filename;
-		String resource = "/config/" + filename;
 		File destFile = new File(destPath);
 		destFile.getParentFile().mkdirs();
+		String resource = "/config/" + filename;
 		try {
 			OutputStream out = new FileOutputStream(destFile);
 			InputStream in = this.getClass().getResourceAsStream(resource);
@@ -86,7 +91,6 @@ public class Geologica {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to export resource '" + resource + "':" + e);
 		}
-		new File(destPath);
 	}
 
 	public static final String RESOURCE_DIR = "/assets/geologica";

@@ -10,6 +10,7 @@ import net.minecraft.util.Icon;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.Geologica;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;
@@ -28,7 +29,7 @@ public class RegistrationUtils {
 					registerBlock((Block)value, itemClass);
 				}
 			} catch (Exception e) {
-				FMLLog.log(Level.SEVERE, e, "Caught an exception during block registration");
+				Geologica.log.severe("Failed to register field '" + field.getName() + "' as block");
 				throw new LoaderException(e);
 			}
 		}

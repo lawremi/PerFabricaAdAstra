@@ -11,12 +11,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipesArmorDyes;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import org.pfaa.geologica.Geologica;
+
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
@@ -41,8 +43,12 @@ public class RecipeUtils {
         	
         	Object[] ingredients = getIngredients(recipe);
         	if(hasItem(true, ingredients, replaceStacks)) {
-        		recipesToRemove.add(recipe);
-                recipesToAdd.add(createOreRecipe(recipe, replacements));
+        		try {
+        			recipesToAdd.add(createOreRecipe(recipe, replacements));
+					recipesToRemove.add(recipe);
+				} catch (Exception e) {
+					Geologica.log.warning("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
+				}
         	}
         }
 
@@ -88,34 +94,24 @@ public class RecipeUtils {
 		return hasItem(strict, recipe.toArray(new ItemStack[0]), ingredients);
 	}
 	
-	private static <T extends IRecipe> T createOreRecipe(Class<T> klass, IRecipe recipe, Map<ItemStack, String> replacements) {
-		T replacedRecipe = null;
-		
-		try {
-			Constructor<T> constructor = klass.getDeclaredConstructor(recipe.getClass(), Map.class);
-			constructor.setAccessible(true);
-			replacedRecipe = constructor.newInstance(recipe, replacements);
-		} catch(Exception e) {
-			FMLLog.log(Level.SEVERE, e, "Exception thrown during ore recipe creation");
-		}
+	private static <T extends IRecipe> T createOreRecipe(Class<T> klass, IRecipe recipe, Map<ItemStack, String> replacements) throws Exception {
+		Constructor<T> constructor = klass.getDeclaredConstructor(recipe.getClass(), Map.class);
+		constructor.setAccessible(true);
+		T replacedRecipe = constructor.newInstance(recipe, replacements);
 		return replacedRecipe;
 	}
 	
-	private static IRecipe createOreRecipe(IRecipe recipe, Map<ItemStack, String> replacements) {
+	private static IRecipe createOreRecipe(IRecipe recipe, Map<ItemStack, String> replacements) throws Exception {
 		if (recipe instanceof ShapedRecipes) {
-			FMLLog.info("creating shaped recipe");
 			return createOreRecipe(ShapedOreRecipe.class, recipe, replacements);
 		}
 		else if (recipe instanceof ShapelessRecipes) {
-			FMLLog.info("creating shapeless recipe");
 			return createOreRecipe(ShapelessOreRecipe.class, recipe, replacements);
 		}
 		else if (recipe instanceof ShapedOreRecipe) {
-			FMLLog.info("REcreating shaped recipe");
 			return recreateOreRecipe((ShapedOreRecipe)recipe, replacements);
 		}
 		else if (recipe instanceof ShapelessOreRecipe) {
-			FMLLog.info("REcreating shapeless recipe");
 			return recreateOreRecipe((ShapelessOreRecipe)recipe, replacements);
 		}
 		throw new IllegalArgumentException("Unknown recipe type");
@@ -135,16 +131,17 @@ public class RecipeUtils {
 	
 	public static IRecipe recreateOreRecipe(ShapedOreRecipe template, ItemStack output, Object[] input) {
 		int width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, template, "width");
-                int height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, template, "height");
+		int height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, template, "height");
+        for (int i = 0; i < input.length; i++) {
+        	if (input[i] instanceof String) {
+        		input[i] = OreDictionary.getOres((String) input[i]);
+        	}
+        }
 		ShapedOreRecipe recipe = new ShapedOreRecipe(output, 'x', Block.anvil);
-		try {
-			ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, input, "input");
-			/* field names repeated to dispatch to correct overload */
-			ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, width, "width", "width");
-			ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, height, "height", "height");
-		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, "Exception thrown during ore recipe creation");
-		}
+		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, input, "input");
+		/* field names repeated to dispatch to correct overload */
+		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, width, "width", "width");
+		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, height, "height", "height");
 		return recipe;
 	}
 	
@@ -156,7 +153,7 @@ public class RecipeUtils {
 	            {
 	                if(OreDictionary.itemMatches(replace.getKey(), ingredient, true))
 	                {
-	                    ingredients[i] = OreDictionary.getOres(replace.getValue());
+	                    ingredients[i] = replace.getValue();
 	                    break;
 	                }
 	            }
