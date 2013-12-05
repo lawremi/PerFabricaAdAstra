@@ -434,15 +434,15 @@
         </ConfigSection>
         
         <ConfigSection> <!-- Sandstone -->
-          <CloudPreset name='PresetSandstone' block='Sandstone'
+          <CloudPreset name='PresetSandstone' block='24'
                        inherits='PresetSedimentaryContinentalMinor'>
             <Setting name='DistributionFrequency' avg='0.40'/>
           </CloudPreset>
-          <CloudPreset name='PresetSandstoneOceanic' block='Sandstone'
+          <CloudPreset name='PresetSandstoneOceanic' block='24'
                        inherits='PresetSedimentaryOceanic'>
             <Setting name='DistributionFrequency' avg='0.04'/>
           </CloudPreset>
-          <SubstitutePreset name='PresetSandstoneHills' block='Sandstone'
+          <SubstitutePreset name='PresetSandstoneHills' block='24'
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='113' maxHeight='150'>
           </SubstitutePreset>
@@ -707,14 +707,14 @@
         <SubstitutePreset name='PresetLimestoneSandstone'
                           inherits='PresetPrimarySedimentaryContinental'
                           minHeight='111' maxHeight='112'>
-          <OreBlock block='sandstone' weight='0.5'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.5'/>
           <OreBlock block='MediumStone:0' weight='0.5'/>
         </SubstitutePreset>
 
         <SubstitutePreset name='PresetSandstoneGneiss'
                           inherits='PresetPrimarySedimentaryContinental'
                           minHeight='151' maxHeight='152'>
-          <OreBlock block='sandstone' weight='0.5'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.5'/>
           <OreBlock block='StrongStone:2' weight='0.5'/>
           <Biome name='alps'/>
         </SubstitutePreset>
@@ -722,7 +722,7 @@
         <SubstitutePreset name='PresetSandstoneQuartzite'
                           inherits='PresetPrimarySedimentaryContinental'
                           minHeight='151' maxHeight='152'>
-          <OreBlock block='sandstone' weight='0.5'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.5'/>
           <OreBlock block='VeryStrongStone:4' weight='0.5'/>
         </SubstitutePreset>
 
@@ -2386,7 +2386,7 @@
                      inherits='PresetSkarnVeins'
                      wireframeColor='0xFFFFFFFF'
                      drawWireframe='false'>
-          <OreBlock block='sandstone' weight='0.25'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.25'/>
           <OreBlock block='MediumOreRock:14' weight='0.75'/>
         </VeinsPreset>
       </ConfigSection>
@@ -2460,7 +2460,7 @@
           <Setting name='CloudHeight'
                    avg=':= 50/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'/>
-          <OreBlock block='sandstone' weight='0.95'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.95'/>
           <OreBlock block='StrongOreRock:9' weight='0.05'/>
         </CloudPreset>
 
@@ -2657,7 +2657,7 @@
           <Replaces block='dirt'/>
           <Replaces block='.*Stone.*'/>
           <OreBlock block='WeakOreRock:9' weight='0.8'/>
-          <OreBlock block='sandstone' weight='0.2'/>
+          <!-- sandstone --> <OreBlock block='24' weight='0.2'/>
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
