@@ -1695,7 +1695,7 @@
                      block='StrongStone:7'>
           <Setting name='CloudThickness' avg='10' range='2'/>
           <Setting name='CloudRadius' avg='32' range='5'/>
-          <Setting name='CloudHeight' avg=':= 35/64 * dimension.groundLevel'
+          <Setting name='CloudHeight' avg=':= 25/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'/>
           <Setting name='DistributionFrequency' avg='0.004'/>
           <Replaces block='StrongStone:3'/>
@@ -1707,7 +1707,8 @@
           <Replaces block='Sandstone'/>
           <Replaces block='MediumStone:0'/>
           <Replaces block='stone'/>
-          <Replaces block='water'/>
+          <Replaces block='dirt'/>
+          <Replaces block='sand'/>
           <WireframeColor>0xFFFFFF00</WireframeColor>
           <BiomeSet inherits='folded' weight='0.5'/>
           <BiomeSet inherits='ocean'/>
