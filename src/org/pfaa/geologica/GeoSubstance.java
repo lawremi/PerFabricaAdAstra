@@ -79,7 +79,7 @@ public enum GeoSubstance {
 	
 	BANDED_IRON("iron", Strength.STRONG),
 	BERYL(Strength.STRONG),
-	CASSITERITE(Strength.STRONG),
+	CASSITERITE("tin", Strength.STRONG),
 	CHROMITE("chromium", Strength.STRONG),
 	ILMENITE(Strength.STRONG),
 	MAGNETITE("iron", Strength.STRONG),
