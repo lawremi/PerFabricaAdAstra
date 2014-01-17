@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -40,9 +41,7 @@ import org.pfaa.geologica.processing.SmeltingTemperature;
 
 import com.google.common.base.CaseFormat;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeRegistration {
@@ -79,7 +78,7 @@ public class RecipeRegistration {
 		List<IRecipe> recipes = (List<IRecipe>)CraftingManager.getInstance().getRecipeList();
 		for (IRecipe recipe : recipes) {
 			ItemStack output = recipe.getRecipeOutput();
-			if (output != null && output.getItem() == tool) {
+			if (output != null && output.getItem() == tool && recipe instanceof ShapedOreRecipe) {
 				ShapedOreRecipe shapedRecipe = (ShapedOreRecipe)recipe;
 				Object[] origIngredients = shapedRecipe.getInput();
 				Object[] ingredients = origIngredients.clone();
