@@ -270,38 +270,38 @@
         <Replaces block='stone'/>
         <IfCondition condition=":=?GeologicaOverride">
           <IfCondition condition=":=?GeologicaGenCoal">
-            <Replaces block='oreCoal'/>
+            <ReplacesOre block='oreCoal'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenIron">
-            <Replaces block='oreIron'/>
+            <ReplacesOre block='oreIron'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenCopper">
-            <ReplacesOre block='copper'/>
+            <ReplacesOre block='oreCopper'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenTin">
-            <ReplacesOre block='tin'/>
+            <ReplacesOre block='oreTin'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenAluminum">
-            <ReplacesOre block='bauxite'/>
+            <ReplacesOre block='oreBauxite'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenMercury">
-            <ReplacesOre block='cinnabar'/>
+            <ReplacesOre block='oreCinnabar'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenLeadZinc">
-            <ReplacesOre block='lead'/>
-            <ReplacesOre block='zinc'/>
+            <ReplacesOre block='oreLead'/>
+            <ReplacesOre block='oreZinc'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenNickel">
-            <ReplacesOre block='nickel'/>
+            <ReplacesOre block='oreNickel'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenSalt">
-            <ReplacesOre block='salt'/>
+            <ReplacesOre block='oreSalt'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenUranium">
-            <ReplacesOre block='uranium'/>
+            <ReplacesOre block='oreUranium'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenApatite">
-            <ReplacesOre block='apatite'/>
+            <ReplacesOre block='oreApatite'/>
           </IfCondition>
         </IfCondition>
       </SubstitutePreset>
