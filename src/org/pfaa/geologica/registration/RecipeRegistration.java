@@ -193,26 +193,27 @@ public class RecipeRegistration {
 	}
 
 	private static void addSlabRecipe(CompositeBlock input, Block output) {
-		addCraftingRecipesByMeta(input, output, "###");
+		addCraftingRecipesByMeta(input, output, 6, "###");
 	}
 	private static void addWallRecipe(CompositeBlock input, Block output) {
-		addCraftingRecipesByMeta(input, output, "###", "###");
+		addCraftingRecipesByMeta(input, output, 6, "###", "###");
 	}
 	private static void addBrickRecipe(CompositeBlock input, Block output) {
-		addCraftingRecipesByMeta(input, output, "##", "##");
+		addCraftingRecipesByMeta(input, output, 4, "##", "##");
 	}
 	
-	private static void addCraftingRecipesByMeta(CompositeBlock input, Block output, String... shape) {
+	private static void addCraftingRecipesByMeta(CompositeBlock input, Block output, int outputSize, String... shape) {
 		for(int meta = 0; meta < input.getMetaCount(); meta++) {
-			ItemStack outputStack = new ItemStack(output, 1, meta);
+			ItemStack outputStack = new ItemStack(output, outputSize, meta);
 			ItemStack inputStack = new ItemStack(input, 1, meta);
 			GameRegistry.addRecipe(outputStack, shape, shape[0].charAt(0), inputStack);
 		}
 	}
 
 	private static void addStairsRecipe(StairsBlock output) {
-		ItemStack outputStack = new ItemStack(output, 1, output.getModelBlockMeta());
-		GameRegistry.addRecipe(outputStack, "#  ", "## ", "###", '#', output.getModelBlock());
+		ItemStack outputStack = new ItemStack(output, 4, output.getModelBlockMeta());
+		ItemStack inputStack = new ItemStack(output.getModelBlock(), 1, output.getModelBlockMeta());
+		GameRegistry.addRecipe(outputStack, "#  ", "## ", "###", '#', inputStack);
 	}
 	
 	private static void addSmeltingRecipesByMeta(CompositeBlock input, Block output, SmeltingTemperature temperature) {
