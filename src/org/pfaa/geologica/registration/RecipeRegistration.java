@@ -258,8 +258,9 @@ public class RecipeRegistration {
 		String postfix = substance.getOreDictKey();
 		if (postfix != null) {
 			oreDictifyOre(postfix, block.getItemStack(substance));
+		} else {
+			oreDictifyOre(substance.getLowerName(), block.getItemStack(substance));
 		}
-		oreDictifyOre(substance.getLowerName(), block.getItemStack(substance));
 	}
 	
 	private static void oreDictifyOre(String postfix, ItemStack itemStack) {
