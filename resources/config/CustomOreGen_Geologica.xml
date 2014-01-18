@@ -2842,7 +2842,7 @@
                      wireframeColor='0xFF000000'>
           <Replaces block='.*Stone.*'/>
           <OreBlock block='StrongOreRock:13' weight='0.75'/>
-          <OreBlock block='obsidian' weight='0.25'/>
+          <OreBlock block='49' weight='0.25'/> <!-- obsidian -->
           <Setting name='DistributionFrequency' avg='0.02'/>
           <Setting name='MotherlodeHeight' avg='15' range='10'/>
         </VeinsPreset>
