@@ -431,6 +431,12 @@
                             block='VeryStrongStone:1'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='0' maxHeight='12'/>
+          <SubstitutePreset name='PresetGabbroShieldVolcano'
+                            block='VeryStrongStone:1'
+                            inherits='PresetPrimaryStratumContinental'
+                            minHeight='0' maxHeight='37'>
+            <BiomeSet inherits='shieldVolcano'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetGabbroOceanic'
                             block='VeryStrongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
@@ -822,6 +828,14 @@
           <OreBlock block='StrongStone:1' weight='0.5'/>
           <OreBlock block='VeryStrongStone:1' weight='0.5'/>
         </SubstitutePreset>
+
+        <SubstitutePreset name='PresetGabbroBasaltShieldVolcano'
+                          inherits='PresetPrimaryStratumContinental'
+                          minHeight='38' maxHeight='39'>
+          <OreBlock block='StrongStone:1' weight='0.5'/>
+          <OreBlock block='VeryStrongStone:1' weight='0.5'/>
+          <BiomeSet inherits='shieldVolcano'/>
+        </SubstitutePreset>
         
         <SubstitutePreset name='PresetBasaltLimestone'
                           inherits='PresetPrimaryStratumOceanic'
@@ -922,6 +936,10 @@
                       inherits='PresetGraniteContinental'/>
           <Substitute name='DioriteGraniteContinental'
                       inherits='PresetDioriteGraniteContinental'/>
+          <Substitute name='GabbroShieldVolcano'
+                      inherits='PresetGabbroShieldVolcano'/>
+          <Substitute name='GabbroBasaltShieldVolcano'
+                      inherits='PresetGabbroBasaltShieldVolcano'/>
           <Substitute name='BasaltShieldVolcano'
                       inherits='PresetBasaltShieldVolcano'/>
           <Substitute name='GraniteMudstone'
