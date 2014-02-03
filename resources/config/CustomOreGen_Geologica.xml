@@ -1494,7 +1494,7 @@
              distribution, just the bog limonite derivative! -->
         <CloudPreset name='PresetPeat' block='dirt'
                      inherits='PresetRichSoil'
-                     drawWireframe='true'>
+                     drawWireframe='false'>
           <WireframeColor>0xFFFF1100</WireframeColor>
           <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
           <BiomeType name='swamp'/>
