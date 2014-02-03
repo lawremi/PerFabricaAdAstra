@@ -1935,7 +1935,7 @@
                      inherits='PresetHintVeins'
                      block='StrongStone:7'>
           <Setting name='MotherlodeHeight'
-                   avg=':=35/64 * dimension.groundLevel'/>
+                   avg=':=25/64 * dimension.groundLevel'/>
           <Replaces block='StrongStone:3'/>
           <Replaces block='StrongStone:0'/>
           <Replaces block='WeakStone:0'/>
@@ -1954,7 +1954,7 @@
                      wireframeColor='0xFFFFFF00'>
           <Setting name='DistributionFrequency' avg='1.0'/>
           <Setting name='MotherlodeHeight'
-                   avg=':= 30/64 * dimension.groundLevel'
+                   avg=':= 15/64 * dimension.groundLevel'
                    range=':= 2/64 * dimension.groundLevel'/>
           <Replaces block='StrongStone:7'/>
         </VeinsPreset>
@@ -1965,7 +1965,7 @@
                      wireframeColor='0xFFFF0000'>
           <Setting name='DistributionFrequency' avg='1.0'/>
           <Setting name='MotherlodeHeight'
-                   avg=':= 40/64 * dimension.groundLevel'
+                   avg=':= 25/64 * dimension.groundLevel'
                    range=':= 2/64 * dimension.groundLevel'/>
           <Replaces block='StrongStone:7'/>
         </VeinsPreset>
@@ -1979,7 +1979,7 @@
           <Setting name='MotherlodeFrequency'
                    avg=':= 0.15 * goldFreq * if(age,age.goldVeins,1)'/>
           <Setting name='MotherlodeHeight'
-                   avg=':= 42/64 * dimension.groundLevel'
+                   avg=':= 27/64 * dimension.groundLevel'
                    range=':= 1/64 * dimension.groundLevel'/>
           <Replaces block='StrongStone:7'/>
           <Setting name='MotherlodeSize' avg=':= 0.8 * goldSize * _default_'
