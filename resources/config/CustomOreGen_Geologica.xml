@@ -1327,12 +1327,13 @@
                            block='WeakOreSand:5'
                            maxHeight='75'>
           <Setting name='Size' avg='16' range='8'/>
-          <Setting name='Frequency' avg='0.03' range='0'/>
-          <Setting name='Height' avg=':=65/64 * dimension.groundLevel'
-                   range='1'/>
+          <Setting name='Frequency' avg='0.2' range='0'/>
+          <Setting name='Height' avg=':=70/64 * dimension.groundLevel'
+                   range='20'/>
           <BiomeSet inherits='volcanic'/>
           <Biome name='badlands' weight='0.5'/> <!-- BOP -->
-          <Replaces block='.*Stone.*'/>
+          <Replaces block='StrongStone:0'/>
+          <Replaces block='StrongStone:7'/>
           <Replaces block='dirt'/>
           <Replaces block='sand'/>
         </StandardGenPreset>
@@ -2876,8 +2877,6 @@
         <StandardGenPreset name='PresetPumice'
                            inherits='PresetVolcanicAsh'
                            block='StrongOreRock:14'>
-          <Setting name='Height' avg=':=70/64 * dimension.groundLevel'
-                   range='20'/>
           <Setting name='Frequency' avg=':=3 * _default_' range='0'/>
         </StandardGenPreset>
         <CloudPreset name='PresetZeolite'
