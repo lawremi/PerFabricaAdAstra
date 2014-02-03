@@ -38,7 +38,7 @@
     </OptionDisplayGroup>
     
     <ConfigSection>
-      <Substitute name='DirtSubstitute' block='stone' minHeight = '0'
+      <Substitute name='DirtSubstitute' block='1' minHeight = '0'
                   maxHeight=':= 40/64 * dimension.groundLevel'>
         <Replaces block='dirt'/>
       </Substitute>
