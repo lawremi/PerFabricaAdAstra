@@ -2514,7 +2514,7 @@
             <Setting name='MotherlodeHeight'
                      avg=':= 55/64 * dimension.groundLevel'
                      range=':= 2/64 * dimension.groundLevel'/>
-            <Setting name='ParentRangeLimit' avg='3' range='2' type='normal'/>
+            <Setting name='ParentRangeLimit' avg='4' range='2'/>
             <Replaces block='MediumStone:0'/>
             <OreBlock block='MediumOreRock:8' weight='0.60'/>
             <OreBlock block='WeakOreRock:2' weight='0.20'/>
