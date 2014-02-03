@@ -1922,6 +1922,7 @@
           <Replaces block='WeakStone:4'/>
           <Replaces block='Sandstone'/>
           <Replaces block='MediumStone:0'/>
+          <Replaces block='StrongStone:1'/>
           <Replaces block='stone'/>
           <Replaces block='dirt'/>
           <Replaces block='sand'/>
