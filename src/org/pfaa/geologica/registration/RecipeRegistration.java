@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,6 +22,7 @@ import org.pfaa.chemica.model.Chemicals;
 import org.pfaa.geologica.GeoSubstance;
 import org.pfaa.geologica.GeoSubstance.Composition;
 import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.BrickGeoBlock;
@@ -256,11 +256,10 @@ public class RecipeRegistration {
 
 	private static void oreDictifyOre(GeoBlock block, GeoSubstance substance) {
 		String postfix = substance.getOreDictKey();
-		if (postfix != null) {
-			oreDictifyOre(postfix, block.getItemStack(substance));
-		} else {
-			oreDictifyOre(substance.getLowerName(), block.getItemStack(substance));
+		if (postfix == null ||Geologica.isTechnical()) {
+			postfix = substance.getLowerName();
 		}
+		oreDictifyOre(postfix, block.getItemStack(substance));
 	}
 	
 	private static void oreDictifyOre(String postfix, ItemStack itemStack) {
