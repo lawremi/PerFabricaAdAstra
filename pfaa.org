@@ -243,7 +243,7 @@
      history. The book of the elements will convey hints.
 
      The Book of Elements slowly reveals those secrets. It is created
-     by sending a book into a 1x1 portabe and having it reappear as the
+     by sending a book into a 1x1 portal and having it reappear as the
      Book of Elements. This is to simulate a trip to the future.
      
 *** Biology
@@ -253,7 +253,7 @@
     too complex to model outside of simple e.g. bacterial
     systems. Genetics is a real possibility. The bees and
     tree-breeding of Forestry are a good example.
-
+    
 ** Engineering
    Most of Minecraft could be construed as civil engineering. Some
    disciplines that might need more attention:
@@ -352,6 +352,243 @@
     * Fuel
     * Tanning (dog or pigeon)
     * Cement for adobe bricks
+
+*** Genetics ideas
+    There is a need to genetically engineer crops. This is way more
+    realistic and relevant than bee and tree breeding.
+
+    Here is a phylogenetic resource:
+    http://botanistinthekitchen.wordpress.com/the-plant-food-tree-of-life/phylogenetic-tree-view/
+
+    List of crops:
+    http://en.wikipedia.org/wiki/List_of_domesticated_plants
+
+    Wild relatives (where to find them):
+    http://en.wikipedia.org/wiki/Crop_wild_relative
+    http://en.wikipedia.org/wiki/Center_of_origin
+    
+    The main idea is to follow a phylogenetic tree. The
+    player obtains some basic crops (maybe the vanilla ones, or foods
+    found in the wild) in the world. There are two main ways of
+    determining phylogenetic relationships: ultrastructure (comparing
+    structure with electron microscope) and molecular sequence
+    comparison. We focus on the latter for now.
+
+    Somehow the player analyzes the genome of two crops and then
+    enters a mini-game dimension which involves aligning two
+    sequences, where the bases are blocks. An alignment tool (with
+    durability) held by the player shifts blocks around. Obviously,
+    the more closely related the species, the easier it is to align
+    them. Depending on the quality of the alignment, the common
+    ancestor is more or less well known. The better known, the more
+    options for evolving that ancestor to other species, and the
+    easier it is to find its ancestor. Species might evolve in two
+    ways: cross-breeding and mutations. Cross-breeding is something
+    like Forestry. Mutation is a mini-game dimension where the goal
+    is to change a DNA sequence to a target protein. One block per
+    amino acid, with the target sequence on top of the source. Each
+    block would be visually partitioned into the three bases. The
+    player uses a mutagenesis tool (light, chemical, etc) to convert
+    the bases. Each mutation costs some amount of resources, either
+    through direct consumption or tool durability. Transitions should
+    be cheaper than transversions. One has to figure out the cheapest
+    path, given the genetic code.
+
+    It may be that the molecular manipulations are too complex.
+    Instead, we could start with something bee-driven in the way of
+    Forestry trees. In fact, we could adopt the Forestry mechanism
+    entirely. It is reasonably derived from Mendelian
+    inheritance. Hybrids between related species will represent the
+    common ancestor, and mutations can form to one of the other
+    descendents. The less related the two species, the less likely
+    for them to breed.
+
+    This design requires that we have a sufficient diversity of wild
+    edible plants. These could be wild forms of the crops (which in
+    the real world are highly localized) and/or the set of widespread
+    wild edible plants. Or we just take the vanilla set. If we take
+    the wild crop path (along the lines of PHC bushes), then there is
+    really no need for breeding, unless some wild crops are
+    omitted. Then we have the question of which to omit, and the
+    the wild crops would need to be very rare for the sake of
+    realism. Tracking down rare crops might not be much fun,
+    although people do it for bees. The alternative, generating
+    realistic edible plants, is more interesting: it introduces
+    unconventional (at least for this part of the world) foods and
+    makes the world richer. Call it ForageCraft or WildCraft.
+
+    Here is a list of what might be found in the wild:
+
+    | Plant               | Phylogenetics                | Mod           | Biome                            | Value | Use                                 | Notes                      |
+    |---------------------+------------------------------+---------------+----------------------------------+-------+-------------------------------------+----------------------------|
+    | Berries             |                              | Nat,PHC,BOP   | Temperate                        |     2 | Eat fruit                           |                            |
+    | Mushrooms           |                              | Vanilla       | -                                |     - | Eat whole                           |                            |
+    | Dandelions          | asterid/asterales            | Vanilla       | -                                |     1 | Eat; white juice as glue            |                            |
+    | Acacia tree         | rosid/fabaceae               | BOP,Forestry  | -                                |     1 | Eat leaves                          |                            |
+    | Agave               | monocot/asparagales          |               | Desert                           |     1 | Eat, string                         | BOP has inedible bromeliad |
+    | Alfalfa             |                              |               |                                  |       |                                     |                            |
+    | Almond tree         | rosid/rosaceae/prunus        | ET            | Tropics, desert, evergreen scrub |     3 | Eat nuts                            |                            |
+    | Amaranth  (Pigweed) | caryophyllales/amaranthaceae |               | Widespread                       |     1 | Eat leaves, seeds                   | Weed                       |
+    | Arctic willow       | rosid/malpighiales           |               | Tundra                           |     1 | Eat raw shoots                      |                            |
+    | Arrowroot           | monocot/zingiberales         |               | Tropical                         |     3 | Boil roots                          |                            |
+    | Asparagus           |                              | PHC           | Temperate                        |     2 | Boil stems                          |                            |
+    | Bael                |                              |               | Hills and plains, forests        |     2 | Eat fruit                           |                            |
+    | Bamboo              |                              | BOP,PHC       | Moist, tropical                  |     2 | Eat shoots                          |                            |
+    | Banana              |                              | PHC,ET        | Tropics                          |     3 | Eat fruit                           |                            |
+    | Baobab tree         |                              | Forestry      | Savanna                          |     2 | Eat roots, fruit, string            | Forestry has no fruit      |
+    | /Batoko plum/       |                              |               | Rainforest                       |     2 | Eat fruit (best as jam)             |                            |
+    | Bearberry           |                              |               | Arctic                           |     2 | Eat fruit                           | Similar: cloud berry       |
+    | Beech               |                              | ET            | Forest                           |     3 | Eat nuts                            |                            |
+    | Bignay tree         | rosid/malpighiales           |               | Rainforest                       |     2 | Eat fruit                           |                            |
+    | Breadfruit tree     | rosid/rosaceae/moraceae      |               | Tropics, forest                  |     2 | Cook fruit; sap is glue, pulp paper |                            |
+    | Burdock             |                              |               | Temperate                        |     2 | Boil roots                          |                            |
+    | Canna (lily)        | monocot/zingiberales         |               | Tropical                         |     2 | Eat roots; string, seeds purple dye |                            |
+    | Cashew tree         | rosid/sapindales/...         |               | Tropical                         |     3 | Eat nuts                            |                            |
+    | Cattails            | monocot/poales               | BOP           | -                                |     2 | Eat shoots; weaving                 |                            |
+    | Cactus fruit        | caryophyllales/cactaceae     | PHC           | Desert                           |     2 | Eat fruit                           |                            |
+    | Chestnut tree       | rosid/fagales                | Forestry      | Forest                           |     3 | Roast nuts                          | Forestry not edible        |
+    | Chicory             |                              |               | Plains                           |     1 | Eat                                 |                            |
+    | Chickweed           |                              |               | Temperate fields                 |     1 | Eat leaves                          |                            |
+    | Chufa               |                              |               | Moist sandy                      |     2 | Eat; oil from tuber                 |                            |
+    | Clover              |                              | BOP           | -                                |     1 | Boil to eat                         |                            |
+    | Coconut             |                              |               | Beach                            |     3 | Eat; string                         |                            |
+    | Crowberry           |                              |               | Tundra                           |     2 | Eat fruit                           |                            |
+    | Date Palm           |                              |               | Desert                           |     1 | Eat fruit; weaving                  |                            |
+    | Daylily             |                              |               | Tropic, temperate                |     2 | Eat roots                           |                            |
+    | Desert parsley      |                              |               | Desert                           |     1 | Eat roots                           |                            |
+    | Elderberry tree     |                              | ET            | Swamps                           |     2 | Eat fruit                           |                            |
+    | Fireweed            |                              |               | Temperate plains, arctic         |     1 | Eat all                             |                            |
+    | Fishtail Palm       |                              |               | Warm/moist mountains             |     3 | Eat juice from top                  |                            |
+    | Ginseng             | asterid/apiales              |               | Forest (hills)                   |     0 | No food value, but medicinal buffs? |                            |
+    | Hawthorn bush       |                              |               | Temperate                        |     2 | Eat fruit (apple)                   |                            |
+    | Hazelnut tree       |                              | ET            | Temperate, outside forests       |     3 | Eat nuts                            |                            |
+    | Horseradish tree    |                              |               | Tropical forests                 |     1 | Eat leaves, roast seeds             |                            |
+    | Iceland moss        |                              |               | Arctic                           |     1 | Eat whole                           |                            |
+    | Indian potato       |                              |               | Temperate                        |     3 | Better cooked                       | A wild potato?             |
+    | Jerusalem artichoke |                              |               | Temperate                        |     2 | Eat roots                           | Looks like sunflower       |
+    | Jewelweed           |                              |               | Mountain woods                   |     2 | Eat stems                           |                            |
+    | Juniper             |                              |               | Dry temperate                    |     1 | Eat berries                         |                            |
+    | Kudzu vines         |                              |               | Tropical forests                 |     2 | Every part                          | Many uses, ways to eat     |
+    | Kumquat             |                              | ET            | Tropical forests                 |     2 | Eat fruit                           |                            |
+    | Lotus               |                              |               | River                            |     3 | Cook roots                          |                            |
+    | Malanga             |                              |               | Tropical plains                  |     3 | Cook roots                          |                            |
+    | Mango tree          |                              | PHC           | Moist tropics                    |     3 | Eat fruit                           |                            |
+    | Manioc              |                              |               | Tropical                         |     3 | Cook roots                          |                            |
+    | Marsh marigold      |                              |               | Swamp, arctic                    |     1 | Cook it                             |                            |
+    | Maypop vine         | rosid/malpighiales           |               | River bank, thicket, pasture     |     2 | Eat fruit                           |                            |
+    | Mulberry tree       |                              |               | Forest; string                   |     2 | Eat fruit                           |                            |
+    | Nettle              |                              |               | Moist temperate                  |     3 | Eat shoots, leaves                  | Damage, unless cooked      |
+    | Nipa Palm           |                              |               | Mangrove                         |     3 | Eat fruit on top; sugar-rich sap    |                            |
+    | Oak                 |                              | vanilla       | -                                |     0 | Acorn (from ET) flour, bark tanning |                            |
+    | Olive               | asterid/lamiales             | ET            | Dry coastal                      |     1 | Eat fruit; oil                      |                            |
+    | Orach               |                              |               | Beach                            |     1 | Eat entire plant                    |                            |
+    | Papaya              |                              | PHC           | Rainforest                       |     3 | Eat fruit                           |                            |
+    | Persimmon           |                              | PHC           | Forest                           |     3 | Eat fruit                           |                            |
+    | Pine                |                              | BOP           | -                                |     1 | Eat various parts; sap as glue      |                            |
+    | Plantain            |                              | ET            | -                                |     2 | Eat fruit                           |                            |
+    | Reed                |                              | BOP           | Swamp                            |     1 | Eat anything                        |                            |
+    | Rose Apple          |                              |               | Tropical forests                 |   2-3 | Eat like an apple, but tropical!    |                            |
+    | Saskatoon berry     |                              |               | Low altitude mountain terrain    |     2 | Eat fruit                           |                            |
+    | Sea Orach           |                              |               | Tropical scrub, steppe, desert   |     1 | Eat leaves                          |                            |
+    | (Wild) Sorghum      |                              |               | Plains                           |     - | Use as wheat substitute             |                            |
+    | Sterculia tree      |                              |               | Tropical forest                  |     2 | Eat seed pods                       |                            |
+    | Stonecrop           |                              |               | Temperate                        |     1 | Eat leaves                          |                            |
+    | Sugarcane           |                              | Vanilla       | -                                |     1 | Eat raw                             |                            |
+    | Sunflower           |                              | Vanilla       | -                                |     1 | Eat seeds                           |                            |
+    | Sweetsop tree       |                              |               | Tropical forest                  |     2 | Eat fruit                           |                            |
+    | Tamarind tree       |                              |               | Drier tropics                    |     2 | Eat fruit                           |                            |
+    | Taro                |                              |               | Tropical fields                  |     3 | Cook roots                          |                            |
+    | Ti                  |                              |               | Tropical forest                  |     3 | Cook roots; rope, weaving           |                            |
+    | Tropical almond     |                              |               | Tropical forest, beach           |     3 | Eat seeds                           |                            |
+    | Walnut              |                              | Forestry, PHC | Forest                           |     3 | Eat nuts                            |                            |
+    | Water chestnut      |                              |               | River                            |     2 | Eat fruit                           |                            |
+    | Water lilly         |                              | Vanilla       | Rivers/swamps                    |     2 | Eat all, fruit                      |                            |
+    | Water plantain      |                              |               | Rivers                           |     3 | Cook roots                          |                            |
+    | Wild apple          |                              | Vanilla       | -                                |   2-3 | Fruit                               |                            |
+    | Wild caper          |                              |               | Dry scrub, desert                |     2 | Eat fruit                           |                            |
+    | Wild carrot         |                              | BOP           | -                                |     ? | Eat tuber                           |                            |
+    | Wild desert gourd   |                              |               | Desert                           |     2 | Eat seeds from gourd                |                            |
+    | Wild sorrel         |                              |               | Fields                           |     1 | Eat leaves                          |                            |
+    | Wild fig            |                              | PHC           | Tropical forest                  |     2 | Eat fruit                           |                            |
+    | Wild gourd          |                              |               | Rainforest                       |     2 | Boil fruit                          |                            |
+    | Wild grape          |                              |               | Forest                           |     2 | Eat fruit                           |                            |
+    | Wild mint           | asterid/lamiales             |               |                                  |       |                                     |                            |
+    | Wild onion/garlic   |                              | PHC           | Plains                           |     2 | Eat bulbs                           | Also, ginger               |
+    | Wild pistachio      |                              |               | Desert, scrub, evergreen forests |     3 | Cook nuts                           |                            |
+    | Wild rice           |                              | PHC           | Tropical                         |     2 | Eat rice                            |                            |
+    | Wild rose           |                              | Vanilla       | -                                |     1 | Eat flower                          |                            |
+    | Winged Bean         |                              |               | Tropical plains                  |     2 | Eat beans (2), tuber (4)            |                            |
+    | Yam                 |                              |               | Tropical, coniferous forests     |     3 | Boil root                           |                            |
+    | Yam bean            |                              |               | Tropical                         |     3 | Eat tuber, better boiled            |                            |
+
+    Hunger key:
+    1 :: Refills 0.5 shank
+    2 :: Refills 1.5 shanks
+    3 :: Refills 3 shanks (like bread)
+    4 :: Refills 4 shanks, high saturation (like steak)
+    
+    These are wild plants; not cultivatable. Trees do not yield
+    saplings, plants do not yield seeds, but they can be replanted
+    directly. Breeding is the only means of reproduction and can lead
+    to cultivation, through mutation. The breeding needs to integrate
+    with existing tree breeding in Forestry and Extra Trees. The
+    mutation (speciation) probabilities depend on phylogenetic tree. 
+
+    Mod integration: if a mod like ET is loaded, we should use the
+    blocks from that mod. We *could* require certain mods, but it
+    would be nice to be functional independently. Obviously, breeding
+    will depend on Forestry.
+    
+    Currently about 80 plants. Proposals for simplification:
+    * Have one palm tree (+coconut); BOP already has them
+    * Have one type of wild herb (mint?), instead of all herbs.
+
+    These already exist wild from PHC (? are questionable):
+    * Berries (and BOP, Natura, etc)
+    * Bamboo shoots
+    * Cactus fruit
+    * Grapes
+    * ?Kiwi
+    * ?Rhubarb
+    * ?Rutabaga
+    * Seaweed
+    * Spice leaves
+    * Sunflower
+    * White mushrooms
+            
+*** Balanced diet
+    If we have lots of plants, then we have lots of food. To make
+    things more interesting, we should encourage balanced diets. Use
+    something like the food pyramid.
+    
+    * Grains: 25%
+    * Vegetables: 25%
+    * Fruits: 20% 
+    * Protein: 15%
+    * Dairy: 15%
+    * Sweets: temporary buff, long term detriment
+    
+    Balanced diets give buffs, imbalanced have negative effects.
+    
+*** Adapting existing mods
+    PHC provides many interesting crops, and Forestry brings fun
+    automation and breeding. Possible improvements:
+    * PHC juices should be Forge fluids
+    * PHC needs to be integrated with Forestry farms and machines
+      * Farms
+      * Squeezer
+      * Fermenter
+      * Breeding mechanism
+    * PHC needs to be integrated with Thaumcraft essences
+    * PHC bushes and seed spawning should be biome-dependent
+    * PHC crops should have biome-specific growth rates (hunger overhaul)
+    * PHC crops should show up in village fields
+    * PHC tools should have durability
+    * PHC drinks should require a glass bottle
+
+    Some of the recipe tweaks (durability, glass bottle), can be
+    achieved with MineTweaker.
+    http://minetweaker.powerofbytes.com/wiki
     
 * Blocks
 ** Rocks
@@ -564,6 +801,25 @@
     modeling lava temperature would be too much. So, for interesting
     gameplay, we say stronger rocks take more to melt.
     
+*** Stone variants
+    How do we handle variants of stone? These include:
+    * Moss stone (moss form of cobblestone)
+    * Mossy stone brick
+    * Chiseled stone brick
+    * Cracked stone brick
+    
+    Till now, we have considered these as special items found in the
+    world (strongholds, temples, etc). Not as building materials. But
+    what happens when:
+    * Forestry moisterizer generates mossy stone/brick
+    * Gregtech hammer cracks stone brick
+    * Gregtech file chisels stone brick
+      
+    For now, it seems we could add recipes targeting the vanilla
+    variants. Adding custom chiseled or mossy stone would probably
+    not be very attractive in general. And craked stone brick? In
+    general, these seem to have limited utility.
+    
 ** Metal Ore Minerals
    
    | Mineral       | Metals             | State    | Hard    |  Prod |  Fe:x | Symbol | Occurs                                  | Roast | Slag         | Blast | Centrifuge | Alt Use       |
@@ -631,11 +887,9 @@
    villages (possibly specific villages from Millenaire?). Need to
    wait for COG to support the new Mystcraft API.
    
-   TE has the induction smelter which allows for complex smelting
-   (two inputs, and a primary/secondary output). The Factorization
-   mod has a complex and interesting smelting process, which involves
-   the Slag Furnace, with two outputs. The main problem is that there
-   is no way to convert energy between FZ and BC/IC2.
+   TE has the induction smelter which allows for complex smelting (two
+   inputs, and a primary/secondary output), and EIO has something
+   similar. The Foundry mod will likely have interesting options.
     
    See this as a way to prioritize:
    http://www.theodoregray.com/periodictable/Elements/PopularInCollections/index.html
@@ -648,7 +902,7 @@
    across all metal elements. Another assumption: each ore block is
    the same weight; i.e., they have different densities. We then
    normalize everything to iron for convenience.
-   
+
 ** Other Minerals
    
    | Mineral        | Occurs                                | Hard        | Prod | Use                                          | Formula |
@@ -700,13 +954,16 @@
    Currently, we have different types of mineral sands. These need to
    be separated into minerals like rutile, zircon, magnetite,
    etc. This is usually done with electrostatic separation. About 70%
-   of the sand is "trash", consisting of quartz (30%), magnetite
-   (25%), garnet (20%), chromite (15%) and kyanite (10%). The more
-   valuable minerals in the remaining 30% are: ilmenite (50%), zircon
-   (30%), rutile (15%), monazite (5%). Total mineral sand production
-   is 4.8 million tonnes / yr, or about 6:1 with Fe. Basaltic sands
-   will have more ilmenite, while granitic will have less. There is a
-   chance drop of diamond from basaltic sands.
+   of the sand is "trash". For granitic sands, this means quartz (50%)
+   magnetite (35%), kyanite (15%); for basaltic: garnet (40%),
+   magnetite (35%), chromite (15%) and quartz (10%). The more valuable
+   minerals in the remaining 30% are: ilmenite (50%), zircon (30%),
+   rutile (15%), monazite (5%). Total mineral sand production is 4.8
+   million tonnes / yr, or about 6:1 with Fe. Basaltic sands will have
+   more ilmenite, while granitic will have less (and thus more zircon,
+   rutile and monazite). Maybe ilmenite (30%), zircon (40%), rutile
+   (20%), monazite (10%).  There is a chance drop of diamond from
+   basaltic sands.
 
 ** Clays
 
@@ -804,68 +1061,160 @@
    the desired shape, consuming some amount of concrete. 
 * Items
 ** Chemicals
-*** Overview
+*** Properties
     We could model chemicals at a number of different levels of
     detail. For example, we could record every property, or simply
     consider the name. Optimal is somewhere in between.
 
-    Some obvious per-chemical properties:
+    Some obvious properties:
     * Formula (name would be in translations)
-    * Melting point, and perhaps heat of fusion
-    * Antoine coefficients, heat of vaporization: vapor pressure, distillation
-    * Ore dictionary alias
-
-    Some properties that depend on the state:
     * Color (black, blue, green, ...)
-    * Density (for separation)
-    * Enthalpy of formation: for calculating enthalpy of reactions
-    * Molar entropy: for calculating free energy change
+    * Phase at room temperature (and standard pressure)
     * Hazards: health (0-4), flammability (0-4), reactivity (0-4),
       special (reacts with water, asphyxiant, oxidizer)
-            
-    Properties useful for dissolution/precipitation reactions:
-    * Enthalpy of solution (dH of solution reaction)
-    * Enthalpy of fusion (for predicting solubility by T)
-     
+    
+    One could imagine adding more properties that might lead to
+    automatic recipe generation, but this is not worth it.
+
+    Somehow, I refuse to take the above advice. The elegance of
+    algorithmic recipe generation based on fundamental properties is
+    somehow irresistible to me!
+
+    Things we want to automate:
+    * Phase transitions: have machines that melt and freeze
+      substances, as well as heat exchangers that e.g. use steam/water
+      transition to add/substract heat to reactors, boilers, etc.
+      Requires: critical temperatures, heat capacity integrated from
+      standard temperature to critical temperature, enthalpy of
+      fusion/vaporization (calculated from dS), need Antoine
+      coefficients to compute boiling temperature by pressure, in
+      theory we could also figure out the dHf for the non-standard
+      states using the standard Hf and the heat capacity information.
+    * Enthalpy of reactions: whether a reactor will need cooling,
+      heating, etc. Requires: enthalpy of formation, sometimes
+      enthalpy of solution? Enthalpy of formation could be calculated
+      from the elements if we had the formation reactions, but those
+      are not useful otherwise,
+    * Free energy of reaction: whether a reaction can proceed at a
+      given temperature, important for smelting. Requires: enthalpy of
+      formation, entropy.
+    * Solubility: for mixing, what dissolves in water? This relates
+      to the dynamic equilibrium, i.e., kinetics, so we might need
+      the direct solubility value, but maybe only a rough one, like
+      insoluble, sparingly soluble, soluble. And maybe solubility
+      will be according to the temperature of the liquid, which we
+      roughly define as cold, standard, hot.
+    * Density: for gravity-based separation, known for gasses
+      (assuming ideal) if we know the molar mass,
+    * Default oxidation state: for predicting oxide from thermal
+      decomposition of metal carbonates, sulfates, nitrates, etc.
+      
+    Summary of information needed for solid/liquid/gas/aqueous?:
+    * Critical temperatures (relatively easy to find),
+    * Shomate (or other function) parameters for heat capacity (tough
+      to find, NIST), or perhaps an average value when not available,
+      note that Shomate parameters additionally provide the entropy
+      and (through some solving) the critical temperatures,
+    * Antoine coefficients (tough to find, NIST),
+    * Enthalpy of formation (not easy),
+    * Standard molar entropy (not easy),
+    * Rough solubility in different solvents (cold/standard/hot) (easy),
+    * Density (easy),
+    * Viscosity (easy for typical liquids, molten we assume lava-like),
+    * Magnetic susceptibility (probably on an adhoc basis),
+    * Atomic weight (elements only, easy),
+    * Default oxidation state (elements only, easy),
+    * Color (easy),
+    * Hazard (easy)
+    
+    The problem is that many of these properties are
+    unknown/unpublished, even for well-known chemicals. If the
+    enthalpy of formation and/or standard molar entropy are missing,
+    then we depend on the temperature/energy being specified at the
+    reaction level, or there are simply no reactions (for that
+    phase). Calculating the phase change enthalpies becomes more
+    problematic though. We could always simply not support conversion
+    of the material to that phase, but that seems restrictive.
+
+    Assume we only have solid-phase properties. We could, with some
+    effort, get the heat of fusion from the solubility, and from that
+    derive the entropy, and the enthalpy (at that temperature). In
+    fact, we could even assume that the lines in the ellingham diagram
+    are linear, despite phase changes (only gas makes a big
+    difference). But even with that, we do not know the heat capacity
+    of the liquid, so how to heat it?
+
+    The basic problem is that we are designing an extension to a
+    sandbox game and yet there is a point at which the player will
+    move beyond what is well understood by Science (mostly due to a
+    lack of interest). At that point, we need to either *restrict* or
+    *extrapolate*.
+
+    For example, these guys extrapolate the thermodynamics of NiO
+    https://www.msm.cam.ac.uk/teaching/partIB/courseC/BH.pdf.
+    They guess the entropy (which would give us the enthalpy of
+    fusion) and enthalpy of formation.
+
+    An approach to estimating the enthalpies of fusion from solubility:
+    http://www.umsl.edu/~chickosj/JSCPUBS/mottpce.pdf
+    Might only apply to organics, but who cares?
+    
+    A bigger problem is the heat capacity: it has a complex
+    dependency on temperature; i.e., there is no single
+    value. Without that, it really does not matter whether we know
+    the heats of phase transitions. We have to rely on the Shomate
+    Equation, from the NIST webbook. Should we pre-integrate the
+    Shomate equation to the transition point? This seems too
+    limited. For example, we need to know how to heat substances to
+    arbitrary temperatures, for thermal decomposition, arbitrary
+    reactions, etc. If we knew the full parameter set, we could
+    directly simulate the thermodynamic system. Unfortunately, most
+    chemicals/phases do not have a set of Shomate parameters.
+
+    One possibility is deriving our own. We have resources with Cp
+    values for a range of temperatures, as well as standard enthalpies
+    of formation and molar entropies. That might work, for the
+    standard phase, at least.
+    
 *** Metals
     
-    | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                |
-    |------------+-----------+---------------------+-------+-------+----------+--------------------------------------|
-    | Lithium    | GT        | brine, ore          | 0.035 |  22:1 | 2:1 clay |                                      |
-    | Sodium     | GT        | brine, ore          |       |   3:1 | 1:1 clay |                                      |
-    | Potassium  | GT        | brine, ore          |       |   3:1 | 5:1 sp   |                                      |
-    | Magnesium  | GT        | brine, ore          |   0.6 |  10:1 | 8:1 obs  |                                      |
-    | Calcium    | GT        | limestone           |       |       | 1:1 bone |                                      |
-    | Titanium   | GT        | ore                 |       |       |          |                                      |
-    | Vanadium   |           | magnetite in gabbro |  0.05 |  20:1 |          | V2O5 catalyst                        |
-    | FeCr       | GT        | ore                 |     7 |   5:1 |          |                                      |
-    | Molybdenum |           | ore                 |  0.25 |  11:1 |          |                                      |
-    | Tungsten   | GT        | ore                 |   0.1 |  12:1 |          |                                      |
-    | Manganese  | M2/GT     | ore                 |       |       |          | black dye                            |
-    | Cobalt     |           | Cu/Ni               |  0.06 |  18:1 |          |                                      |
-    | Nickel     | GT        | ore, Mn ocean       |     2 |   7:1 |          | NiMH batties, green glass            |
-    | Copper     | BC/IC2    | ore                 |    12 |   3:1 | 2:1      | Many                                 |
-    | Silver     | RP2/TE/FZ | Cu/Ni/Zn/Au/Pb      | 0.015 |  24:1 |          | catalyst                             |
-    | Zinc       | M2        | ore                 |    12 |   3:1 |          |                                      |
-    | Cadmium    |           | Zn                  |  0.01 |  24:1 |          |                                      |
-    | Mercury    | GT        | ore                 |       |       |          |                                      |
-    | Aluminum   | GT/Xy     | ore                 |       |       |          |                                      |
-    | Silicon    | (GT)      | IS:sand+carbon      |       |       |          | Circuits (refined), SiH4 fuel        |
-    | Tin        | BC/IC2    | ore                 |   0.2 |  12:1 | 3:1      | Many                                 |
-    | Lead       | TE        | ore, Cu/Zn/Ag       |   3.5 |   6:1 | 6:1      | radiation, batteries, early wireless |
-    | Boron      |           | ore                 |       |       |          |                                      |
-    | Bismuth    |           | ore, Pb ore         |       |       |          |                                      |
-    | Tellurium  |           | Cu/Ni               |  5e-5 | 192:1 |          | +Cd solars                           |
-    | Platinoid  | GT        | Ni/Cu/Cr/Co         |  2e-4 |  96:1 |          | catalyst                             |
-    | Zirconium  |           | ore                 |       |       |          |                                      |
-    | Cesium     |           | ore                 |  2e-5 |       |          |                                      |
-    | Neodymium  |           | electro: Monazite   |       |       |          |                                      |
-    | Uranium    | IC2       | ore                 |       |       |          |                                      |
-    | Niobium    |           | ore                 | 0.001 |  48:1 |          |                                      |
-    | Tantalum   |           | ore                 | 0.001 |  48:1 |          |                                      |
-    | Arsenic    |           | Cu                  |       |       |          |                                      |
-    | Antimony   |           | ore                 |  0.14 |  12:1 |          | SbO3: flame retardants; LA batteries |
-    | Germanium  |           | Zn                  |       |       |          |                                      |
+    | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                | Current uses                            | Issues                     |
+    |------------+-----------+---------------------+-------+-------+----------+--------------------------------------+-----------------------------------------+----------------------------------|
+    | Lithium    | GT        | brine, ore          | 0.035 |  22:1 | 2:1 clay |                                      |                                         |                                  |
+    | Sodium     | GT        | brine, ore          |       |   3:1 | 1:1 clay |                                      |                                         |                                  |
+    | Potassium  | GT        | brine, ore          |       |   3:1 | 5:1 sp   |                                      |                                         |                                  |
+    | Magnesium  | GT        | brine, ore          |   0.6 |  10:1 | 8:1 obs  |                                      |                                         |                                  |
+    | Calcium    | GT        | limestone           |       |       | 1:1 bone |                                      |                                         |                                  |
+    | Titanium   | GT        | ore                 |       |       |          |                                      |                                         |                                  |
+    | Vanadium   |           | magnetite in gabbro |  0.05 |  20:1 |          | V2O5 catalyst                        |                                         |                                  |
+    | FeCr       | GT        | ore                 |     7 |   5:1 |          |                                      |                                         |                                  |
+    | Molybdenum |           | ore                 |  0.25 |  11:1 |          |                                      |                                         |                                  |
+    | Tungsten   | GT        | ore                 |   0.1 |  12:1 |          |                                      |                                         |                                  |
+    | Manganese  | M2/GT     | ore                 |       |       |          | black dye                            |                                         |                                  |
+    | Cobalt     |           | Cu/Ni               |  0.06 |  18:1 |          |                                      |                                         |                                  |
+    | Nickel     | GT        | ore, Mn ocean       |     2 |   7:1 |          | NiMH batties, green glass            |                                         |                                  |
+    | Copper     | BC/IC2    | ore                 |    12 |   3:1 | 2:1      | Many                                 |                                         |                                  |
+    | Silver     | RP2/TE/FZ | Cu/Ni/Zn/Au/Pb      | 0.015 |  24:1 |          | catalyst                             |                                         |                                  |
+    | Zinc       | M2        | ore                 |    12 |   3:1 |          |                                      | GT: Sub for Sn in adv alloy             | Need more uses to equate with Sn |
+    | Cadmium    |           | Zn                  |  0.01 |  24:1 |          |                                      |                                         |                                  |
+    | Mercury    | GT        | ore                 |       |       |          |                                      |                                         |                                  |
+    | Aluminum   | GT/Xy     | ore                 |       |       |          |                                      |                                         |                                  |
+    | Silicon    | (GT)      | IS:sand+carbon      |       |       |          | Circuits (refined), SiH4 fuel        |                                         |                                  |
+    | Tin        | BC/IC2    | ore                 |   0.2 |  12:1 | 3:1      | Many                                 |                                         |                                  |
+    | Lead       | TE        | ore, Cu/Zn/Ag       |   3.5 |   6:1 | 6:1      | radiation, batteries, early wireless | IC2: reactors; GT: soldering, batteries |                                  |
+    | Boron      |           | ore                 |       |       |          |                                      |                                         |                                  |
+    | Bismuth    |           | ore, Pb ore         |       |       |          |                                      |                                         |                                  |
+    | Tellurium  |           | Cu/Ni               |  5e-5 | 192:1 |          | +Cd solars                           |                                         |                                  |
+    | Platinoid  | GT        | Ni/Cu/Cr/Co         |  2e-4 |  96:1 |          | catalyst                             |                                         |                                  |
+    | Zirconium  |           | ore                 |       |       |          |                                      |                                         |                                  |
+    | Cesium     |           | ore                 |  2e-5 |       |          |                                      |                                         |                                  |
+    | Neodymium  |           | electro: Monazite   |       |       |          |                                      |                                         |                                  |
+    | Uranium    | IC2       | ore                 |       |       |          |                                      |                                         |                                  |
+    | Niobium    |           | ore                 | 0.001 |  48:1 |          |                                      |                                         |                                  |
+    | Tantalum   |           | ore                 | 0.001 |  48:1 |          |                                      |                                         |                                  |
+    | Arsenic    |           | Cu                  |       |       |          |                                      |                                         |                                  |
+    | Antimony   |           | ore                 |  0.14 |  12:1 |          | SbO3: flame retardants; LA batteries |                                         |                                  |
+    | Germanium  |           | Zn                  |       |       |          |                                      |                                         |                                  |
 
 *** Non-metal elements
     
@@ -970,6 +1319,26 @@
      * Asphyxiant: when exposed, count down as if underwater, then pain
      * Oxidizer: fuels existing fires
        
+*** Solutions
+    A solution consists of a solvent and a solute, which is present in
+    some concentration. Modeling the full continuous range of
+    concentrations would be too complicated. Instead, we have two:
+    dilute (0.1M) and concentrated (10M). The solubility of the
+    solvent determines wheter a particular concentration is
+    feasible. We therefore really only need three levels of
+    solubility: very soluble (can form concentrated solutions),
+    soluble (can form dilute solutions), and insoluble (does not form
+    solutions).
+
+    Just for reference, from Sigma Aldrich (units in mL/g):
+    | Very Soluble          | Less than 1         |
+    | Freely Soluble        | 1 to 10             |
+    | Soluble               | 10 to 30            |
+    | Sparingly Soluble     | 30 to 100           |
+    | Slightly Soluble      | 100 to 1000         |
+    | Very Slightly Soluble | 1000 to 10,000      |
+    | Practically Insoluble | Greater than 10,000 |
+
 *** Chemicals from other mods
     Some chemicals are obtained from other mods:
 
@@ -1028,12 +1397,7 @@
       is the fan from GasCraft.
       
 **** Filtration
-     The idea here is to separate solid phase from liquid phase. Other
-     ways to achieve this: decantation, cyclonic separation and
-     centrifugation. The behavior depends on the filter media. BTW has
-     a filter that is based on the same concept but will simply
-     exclude items from its inventory. The ideal filter would have a
-     slot for the media and then two outputs: one liquid, one solid.
+     The idea here is to separate solid phase from liquid phase.
      
 **** Fluidization
      The inverse of filtration: turning a solid into a liquid by
@@ -1091,7 +1455,8 @@
 
 ** Separation
    There are different methods of separating/purifying compounds:
-   * Filtration: depending on filter media
+   * Filtration: depending on filter media, the solid/liquid
+     equivalent of solvent extraction
    * Decantation/Settling: tanks that over time would separate solid
      and liquid
    * Distillation: leverage heat transfer processes to partially
@@ -1108,8 +1473,9 @@
    * Sieves: difference in particle size. We can imagine that the TE
      pulverizer and GT grinder work this way.
    * Extraction:
-     * Leaching: Dissolve some fraction of a solid; simple if water,
-       could use the Forestry carpenter, and then boil.
+     * Leaching: Dissolve some fraction of a solid (usually via a
+       reaction); simple if water, could use the Forestry carpenter,
+       and then boil.
      * Liquid-liquid: Relies on solubility differences b/w solvents;
        this would typically involve mixing another solvent into a
        mixture and then letting it settle. Representing multi-solvent
@@ -1129,12 +1495,6 @@
    be mixtures themselves? This would present opportunities for chain
    processing. Are some only separatable by certain techniques?
 
-   Actually, modeling things by their transition temperatures,
-   densities and solubility (which solvents) may not be so
-   bad. Otherwise, we will need to encode multiple, largely redundant
-   recipes in different contexts. We would draw the line at
-   electrostatic/magnetic properties, chemical affinities, etc.
-   
 *** Distillation
     Components of a distillery:
     * Heater/boiler (e.g., steam powered)
@@ -1217,12 +1577,18 @@
 
 *** Electrostatic
     Charge-based separation. Useful for small particles like mineral
-    sands. Requires some energy to maintain the electric field. No
-    slurry required.
+    sands (rutile and ilmenite are conductive, the rest are
+    not). Also, cassiterite. Requires some energy to maintain the
+    electric field. No slurry required.
 
+    See:
+    http://www.iluka.com/docs/mining-and-processing/mineral-separation.pdf
+    
 *** Magnetic
     Uses a magnetic field instead of an electric field. Requires some
-    energy for the electromagnet.
+    energy for the electromagnet. Useful for magnetite ores. Advanced,
+    high-powered separators can separate ores containing iron (like
+    ilmenite).
     
 ** Reactions
    A chemical reactor performs some combination of these functions:
@@ -1508,7 +1874,36 @@
 
    The reaction chamber would need some temperature limit. If the
    temperature exceeds the limit, bad things happen.
+
    
+*** Heat Capacity
+    We will mostly get this from the Shomate equation (Cp is
+    temperature dependent), but here is a simple table for common
+    substances (J/gK):
+    
+    | Cellulose      |           1.34 |
+    | Clay           |           0.94 |
+    | Coal           |   1.09 to 1.55 |
+    | Concrete       |           0.65 |
+    | Diamond        |           0.61 |
+    | Fireclay brick | 1.25 (1500° C) |
+    | Glass (pyrex)  |            0.8 |
+    | Limestone      |           0.91 |
+    | Rubber         |           1.74 |
+    | Sand           |            0.8 |
+    | Silk           |           1.38 |
+    | Steel          |           0.50 |
+    | Wood           |     1.9 to 2.7 |
+    | Wool           |           1.36 |
+
+    More:
+    http://www.engineeringtoolbox.com/specific-heat-solids-d_154.html
+
+    See here for CaCO3 (function of T):
+    http://www.eng-tips.com/viewthread.cfm?qid=61961
+
+    Ice: 146.3+(7.253*T)
+    
 ** Pressure
    Modeling pressure means modeling the atmosphere inside the
    reactor. There is some atmosphere inside the chamber. When the
@@ -1559,8 +1954,23 @@
      
    Furnaces and smelting is central to Minecraft, so we do not want
    to change that dramatically; however, we could add more
-   sophisticated smelting options, with higher yield.
+   sophisticated smelting options, with higher yield. Also, it is
+   worth exploring the Foundry mod, as it supports the realistic
+   notion that metals are typically liquids after smelting.
 
+   Some types of furnaces:
+   * Electric arc: passes an electric current through the material,
+     reaching temperatures of about 2000K, mostly for steel making.
+   * Blast furnace: reduces metal, usually iron, by blasting air up
+     through the furnace; with a pre-heated blast, can reach
+     temperatures up to 2500K.
+   * Induction furnace: induces current in metal using an electomagnet
+     magnet; used for melting metals.
+   * Bath smelting: blows O2-enriched air into a bath of slag at the
+     bottom; useful for smelting sulfide ores.
+   * Flash smelting: sulfide ore is mixed with O2, ignited, sulfur is
+     produced as a solid, rather than SO2.
+   
    Possible reduction progression (ingot:ore/dust):
    * Vanilla furnace and other simple furnaces (1:1)
    * Induction smelter (1:1 + slag), requires coal/sand, lower energy
@@ -1570,9 +1980,63 @@
      has since added something with this name. Maybe blast smelter?
    
    Possible roasting progression:
-   * Vanilla furnace and other simple furnaces
-   * Fluidized bed roaster: twice as fast (half the energy), requires
-     compressed air.
+   * Vanilla furnace and other simple furnaces (1:1)
+   * Fluidized bed roaster: twice as fast (2:1), requires air to be
+     pumped into the chamber
+   
+   Chemical/thermodynamic considerations of smelting:
+   * After roasting/calcining, any sulfide, carbonate, or hydroxide
+     ores have been converted to oxides.
+   * A reducing agent is necessary, because the temperature required
+     to achieve thermodynamic feasibility would be impractically high
+     for many metal oxides, even with positive entropy change of O2
+     gas production.
+   * Carbon is the typical reducing agent, because its oxidation to
+     CO2 is favorable, especially at high temperatures; by combining
+     the metal-producing reduction step and CO2-producing oxidation
+     step, the overall process becomes favorable.
+   * There is one complication: some metals react with carbon to form
+     carbides. This includes Cr, Al, ...
+   * This can be solved by using metals with less favorable reduction
+     potential, i.e., metals that want to be oxidized more. An
+     example is oxidizing Al to reduce the oxide of Cr. Note that
+     while this favorability holds true for a large range of
+     temperatures, there is a high activation energy that requires
+     some initial ignition. See the notes on the aluminothermic
+     reaction -- we need a charge in a crucible, not a smelter.
+   * By registering carbide reactions, we can avoid adding smelting
+     recipes for them.
+   * But for Al, we need to rely on electrolysis, and that is tricky.
+   * Otherwise, we will use thermodynamic considerations to determine
+     the smelting temperature, and could even allow reducing agents
+     other than carbon in a principled way.
+
+   Reactivity could give us:
+   * Rough decomposition temperature of hydroxides, carbonates and nitrates
+   * Reduction potential (electrolysis vs. smelting)
+   * Reactivity with water, acids
+   * Single displacement reactions
+   Some of that could be derived from thermodynamics, but the
+   reactivity also includes some notion of kinetics.
+
+   Possible breakdown:
+   * Low :: Ge Sb Bi Cu Hg Ag Mo As Pt W Au
+   * Medium :: Mn Nb V Zn Cr Ta U Fe Cd Co Ni Sn Pb (H)
+   * High :: Li Ba Sr Ca Mg Be Al Ti (C)
+   * Very High :: Cs Rb K Na
+   But for some things, like reduction and single displacement, we
+   need an actual ordering.
+
+   Decomposition temperature by reactivity for each type of compound:
+   | Compound   | Low | Medium | High           | Very High |
+   |------------+-----+--------+----------------+-----------|
+   | Carbonates | Low | Low    | Med/High/VHigh | NA        |
+   | Sulfates   |     |        |                |           |
+   | Nitrates   |     |        |                |           |
+   | Hydroxides | Low | Low    |                | NA        |
+   
+   See this for thermal decomposition:
+   http://www.docbrown.info/page07/sblockb.htm#11.
 
   Smelting energy depends on the necessary temperature.
   
@@ -1637,16 +2101,22 @@
 **** Iron
      Basic smelting, 1250 C.
      
-**** Nickel
+**** Nickel: yellow limonite only
      High temperature (250 C) leaching of ore with sulfuric acid
-     precipitates the iron as hematite. The Ni can then be
-     precipitated as a sulfide with H2S gas treatment, and then
-     reduced via electrolysis or H2 gas. There is Co mixed with the
-     Ni, and it can be extracted by adding Cl2 or ozone to oxidize the
-     Co to Co(OH)3, which is insoluble in acid. Say about 20 buckets
-     of Ni extract for one Co ingot.
+     precipitates the iron as hematite. The NiSO4 can then be
+     precipitated as a sulfide with H2S gas treatment (100 C). At this
+     point, the sulfide could be roasted and smelted like pentlandite
+     to yield Ni. If cobalt is desired, the sulfides need to be
+     redissolved as sulfates by treatment with pure O2 at high
+     temperature. Solvent extraction with Cyanex 272 separates the
+     cobalt in the organic phase. The sulfates can then be reduced via
+     electrolysis or H2 gas.
+
+     Another idea is to reduce the metal sulfides and add Cl2 or ozone
+     to oxidize the Co to Co(OH)3, which is insoluble in acid. Say
+     about 20 buckets of Ni extract for one Co ingot.
      
-*** Chalcopyrite
+*** Chalcopyrite 
 **** Copper
      Optionally use froth flotation to double the dust. Induction
      smelting one dust with coal dust will yield 2x copper oxide. The
@@ -1703,7 +2173,7 @@
 **** Lithium
      See Li ore dust reaction.
      
-**** Caesium
+**** TODO Caesium
      Need to figure this out.
      
 *** Dolomite
@@ -1805,12 +2275,12 @@
 *** Ilmenite
 **** Titanium
      Convert to TiO2 (rutile), then follow the listed reactions. TiO2
-     is produced by treating ilmenite with sulfuric acid, which
-     separates the iron as FeSO4. The FeSO4 is crystallized and
-     filtered out. This requires a settling out the liquid FeSO4 and
-     then cooling it to a solid. The solid phase in the settling tank
-     is washed to obtain TiSO4. That is hydrolyzed (boiled) to hydrous
-     TiO2, which needs to be roasted to pure TiO2.
+     is produced by treating ilmenite with sulfuric acid at 100C (Ea
+     64 kJ/mol), which separates the iron as FeSO4. The FeSO4 is
+     crystallized and filtered out. This requires a settling out the
+     liquid FeSO4 and then cooling it to a solid. The solid phase in
+     the settling tank is washed to obtain TiOSO4. That is hydrolyzed
+     (boiled) to hydrous TiO2, which needs to be roasted to pure TiO2.
      
 *** Garnierite
 **** Nickel
@@ -1864,6 +2334,9 @@
     6 NaOH + Al2O3 + 12 HF → 2 Na3AlF6 + 9 H2O
 
     Note that the cryolite is not consumed in the process.
+
+    This will require some special machine, a smelter/electrolyzer,
+    that requires less energy than using straight electrolysis.
     
 *** Zircon
     Separated from sand using spiral separators. The rutile and
@@ -1873,6 +2346,7 @@
      Same process as for rutile=>titanium.
      
 *** Stibnite
+     
 **** Antimony
      Much like other sulfide ores. Enriched with froth flotation,
      roasted to oxide, then reduced in an induction smelter with
@@ -1880,39 +2354,7 @@
      FeS slag.
      
 *** TODO Borax
-*** Beryl
-**** Beryllium Hydroxide: Be(OH)2
-     Two methods: 
-     * Sintering :: At 770C: 
-       2 Be3Al2(SiO3)6 + 3 Na2SiF6 = 6 NaBeF3 + 2 Al2O3 + 15 SiO2
-       The NaBeF3 is dissolved in water, and Be(OH)2 precipitates
-       after addition of NaOH.
-     * Melting :: Melt pulverized ore at 1650 C (super hot!), cool,
-                  reheat to 250-300 C in sulfuric acid. Mixture
-                  contains BeSO4 and Al2(SO4)3. Treatment
-                  with NH3 (aq) leaves Be(OH)2. 
-                    
-     To make Na2SiF6, agitate mixture of H2SiF6 with NaOH or
-     Na2CO3. H2SiF6 is a by-product of HF production from fluorite
-     (silicon impurities), and a by-product of H3PO4 from
-     apatite. Na2SiF6 is good for water fluoridation.
-
-**** Beryllium
-     Two paths:
-     * Fluoride :: 2NH4HF2 (aq) + Be(OH)2 (s) => (NH4)2BeF4 (aq)
-                   Heat product to 1000 C to make BeF2, which is
-                   smelted at 1300 C with Mg to form Be metal.
-     * Chloride :: Heat Be(OH)2 to form BeO, which becomes BeCl2 when
-                   mixed with carbon and chloride (?). Electrolysis
-                   yields Be metal.
-       
-     To make NH4HF2 (with heat):
-     H2SiF6 + 3 NH3 + 2 H2O → SiO2 + 3 NH4HF2
-     
-*** Pyrolusite
-**** Manganese
-     Induction smelt with Na, Al, Mg. Or electrolyze.
-     
+*** TODO Pyrolusite
 *** Pollucite
 **** Caesium
      Caesium is highly reactive, with both water and air. Seems like
@@ -1972,6 +2414,11 @@
       * Small scale:
         2 NaNO3 (s) + H2SO4 (aq) → 2 HNO3 (aq) + Na2SO4 (s)
         
+      NaNO3 is produced from NH3, perhaps via HNO3 (air with platinum
+      catalyst, 700-850 C). 2HNO3 + soda ash => 2NaNO3 + H2O + CO2.
+      There are other ways, like via NH4NO3. Should also be
+      obtainable from RC saltpeter (various nitrate salts).
+      
 *** Tantalite
     Gravity separation.
     
@@ -2074,13 +2521,20 @@
 
      For K, simply add KCl (2 NP fertlizer + 1 KCl -> 3 NPK).
      
-** Oil refining
+** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
    derived from petroleum.
 
    Here is a good book: "Petroleum refining in nontechnical language".
    Available from the Palo Alto library.
 
+   
+*** Resources
+    Oil can be found in liquid deposits, or as a solid in
+    shale. Shale also contains pockets of natural gas. The GasCraft
+    generates shale oil and gas, and Buildcraft generates oil,
+    although in weird fountains.
+    
 *** Unit Operations
 **** Atmospheric distillation
 **** Desulfonation
@@ -2140,6 +2594,87 @@
      using sulfuric acid and then ammonium vanadates are precipated,
      as from magnetite.
      
+* Manufacturing
+** Processes
+   Basic processes:
+   * Casting/molding: shaping a material as liquid, then solidifying.
+     - Perhaps the only mod that casts molten metal is Tinker's Construct.
+     - Perhaps no mods attempt to model plastics.
+   * Forming: reshaping of solid metals, plastics, without losing material.
+   * Machining: cutting a material into a specific shape.
+   * Joining: connecting two objects.
+
+*** Casting
+    Types:
+    * Centrifugal :: For making cylindrical shapes, like pipes and
+                     buckets. Materials: iron, steel, glass, aluminum,
+                     copper, nickel.
+    * Continuous :: Produces billets, blooms and slabs for easier
+                    rolling. This usually happens at the time of
+                    smelting. Metals: steel, aluminum, copper.
+    * Die :: Forcing molten metal into a cast. Metals: Zn, Cu, Al, Mg,
+             Pb, pewter, Sn. Produces large quantity of small castings.
+    * Investment :: For most intricate casts; traditionally based on
+                    beeswax, now foam. Expensive. Metals: Fe, Al
+                    alloys, steel, Ni alloys.
+    * Sand :: Sand casts are the most common. Actually a mixture of
+              sand, clay and refactory materials.
+    * Permanent mold :: Mold made from metal.
+    * Shell mold :: Like sand casting, but mold is a shell formed with
+                    sand mixed with resin. Since mold is expendable,
+                    more complex shapes can be cast.
+    * Spray :: Semi-liquid metal is sprayed onto a substrate.
+      
+    We could have smelting machines that output molten metal prior to
+    casting. The metal could be piped to a particular casting unit,
+    such as a continuous caster to produce billets that are cheaper
+    to form in e.g. a rolling machine. With the exception of
+    centrifugal casting, the different casting methods are mostly
+    distinguished by the type of mold. Thus, we could have one
+    primary casting machine that accepts different types of
+    molds. The type of mold required depends on the product.
+    
+*** Molding
+    * Powder metallurgy :: Metals shaped as powder, then heated to
+         bind. This could be a heater using metal dusts as input
+    * Plastics :: 
+
+*** Forming
+    * Forging :: Applying localized pressure to draw out, shorten,
+                 squeeze, etc, a metal. Like the GT Forge Hammer.
+    * Rolling :: Squeezes metal between two rollers to make plates and
+                 rods. Provided by RC.
+    * Extrusion :: Pushing/pulling a substance into a mold.
+    * Pressing :: Pressing a pattern onto a material.
+    * Shearing :: Cutting stock into smaller pieces.
+    
+    The RC rolling machine and GT forge hammer may be sufficient.
+    
+*** Machining
+    * Milling :: Rotary cutter, workpiece advanced at angle to tool
+                 to remove material.
+    * Turning :: Workpiece is turned against linear cutter. The
+                 Gregtech lathe is one example.
+    
+    It seems the simple GT lathe is sufficient. There is also a
+    potential manual equivalency in forge multipart and its diamond saw.
+    
+*** Joining
+    
+** Products
+
+* Research
+** Chemical Compounds
+   The player could research the properties of chemical compounds in a
+   realistic manner. Lab equipment and instruments would be crafted
+   and applied to some compound. The lessons learned would be recorded
+   in a lab notebook, which has limited durability (becomes filled
+   with notes). Once all properties are known, the compound may be
+   used in industrial processes (put into production). The trick is to
+   research efficiently, without wasting notebooks and other
+   resources. All knowledge ends up in a searchable chemical reference
+   book.
+   
 * Worldgen
 ** Ore deposits
    By default, all ores will be modeled as veins. PFAA will not
@@ -2241,7 +2776,40 @@
    | Ice Mountains   | VMS, 2*iron, granitic/garnet sand |
    | Taiga (Hills)   | 2*iron                            |
    | Forest (Hills)  | conglomerate bowls                |
-   
+
+*** Special consideration: Biomes o' Plenty
+    Most BOP biomes will be caught by the biome dictionary
+    matching. There are some that are special though:
+    * Alps :: Collision of European and African plates, was once an
+              ocean between. The tallest reaches are metamorphic,
+              i.e., gneiss (primarily), schist, greenschist, etc,
+              while the rest tends to be sedimentary, consisting of
+              greywacke (a sandstone that is like a fine-grained
+              breccia), limestone (primarily) and mudstone. Beneath
+              the alps one finds the gabbro/basalt that underlied the
+              ancient sea, as well as some granitic
+              intrusions. Perhaps we could model all folded mountains
+              as being mudstone, then limestone and then gneiss at the
+              peak, in other words, start with the ocean but instead
+              of the basalt islands, switch to continental.
+    * Wasteland :: Evaporite deposits.
+    * Badlands :: Formations largely sedimentary, inter-mixed ash.
+    * Volcano :: Basalt instead of sediment.
+    * Hot Springs :: Rhyolite near the surface, instead of
+                     sed. Intermixed with volcanic ash, pumice, etc.
+    * Outback :: Primarily sandstone.
+    * Highlands :: Modeled as the Scottish Highlands, we would have
+                   (green)schist/slate on top, with lower regions
+                   consisting of sandstone (primarily) and
+                   conglomerate. Serpentinite veins throughout.
+    * Glacier :: Could model as Yosemite, with granite domes.
+    
+    BOP bugs:
+    * Chapparal is not plains but rather hills. 
+    * Are the tropical and plain rainforest mixed up in temp/rain?
+    * Mountain has its min/max height set twice?
+    * Why are fen and moor not typed as a swamp?
+    
 ** Extra planets and moons
    Eventually, we want to include all planets (including exoplanets)
    and moons (including psuedo-randomaly generated ones). 
@@ -2653,31 +3221,6 @@
   * Fabrica: High-level crafting as a result of chemistry.
   
 * Similar mods
-** Underground Biomes
-   This is probably the most similar to geologica: adds 8 types each
-   of igneous, metamorphic and sedimentary rock, with ores spawning
-   only in certain rock types. New types of cobblestone, half slabs,
-   etc. This will be merged into EBXL (version 4). Once EBXL4 is
-   released, we could rely on it for stone generation, although
-   we would want to suppport other biome mods, as well. Then,
-   Geologica would only add ores, which is more natural.
-   
-** GasCraft
-   Not as mature or chemistry-focused as "Gasses in Minecraft" but
-   integrates with BC. Has 6 types of gas (natural gas, propellent,
-   hydrogen, smoke, weaponized gas, neurotoxin) which dissipate in the
-   atmosphere. Gases may be stored in vials.  Some machines:
-   * Chimney: stackable gas buffer (with optional top release)
-   * Fan: sucks up gas into pipes or chimneys
-   * Vent: release gas from pipes
-
-** Gasses in Minecraft
-   Adds gas sources, transport and processing. About 5-10 gasses are
-   supported; apparently there is an API for adding
-   more. Unfortunately, does not seem to integrate with BC.
-
-   Gasses: H2, O2, CO2, CO, neurotoxin, CH4, N2, NH3, CN4.
-   And a bunch of machines, many of which are questionable.
 ** AstroCraft [1.2.5]
    MineCraft floating around in outer space. Gather iron from
    satellites to build tools and fight aliens.
@@ -2705,26 +3248,117 @@
    an effective means of education. Right now, we are just learning
    from its code, especially with regard to the world
    generation. Handling multiple rock types is a pain.
+
+** Underground Biomes
+   This is probably the most similar to geologica: adds 8 types of
+   igneous, metamorphic and sedimentary rock, with ores spawning only
+   in certain rock types. New types of cobblestone, half slabs,
+   etc. Sort of has a different goal though. It wants to make the
+   underground more interesting, including underground villages, etc,
+   while we just want to add more substances to the game.
+
+** Gasses in Minecraft
+   Adds gas sources, transport and processing. About 5-10 gasses are
+   supported; apparently there is an API for adding
+   more. Unfortunately, does not seem to integrate with BC.
+   
+** GasCraft
+   Not as mature as "Gasses in Minecraft" but integrates with BC.
+   
+** FrogCraft
+   IC2/GT addon that adds industrial chemistry. More similar than
+   MineChem, but we want to be more principled/comprehensive and
+   independent of GT.
    
 * Mod Integration
+
+** Gregtech
+   
+*** Colors
+    | Ore         | color |
+    |-------------+-------|
+    | BORAX       | white |
+    | MOLYBDENITE |       |
+    * 
+    * PYROLUSITE
+    * ROCK_SALT("salt", Strength.WEAK),
+    * STIBNITE("antimony", Strength.WEAK),
+    BARITE("barium", Strength.MEDIUM),
+	BASTNASITE(Strength.MEDIUM),
+	CHALCOPYRITE("copper", Strength.MEDIUM),
+	GARNIERITE("nickel", Strength.MEDIUM),
+	LEPIDOLITE(Strength.MEDIUM),
+	MAGNESITE("magnesium", Strength.MEDIUM),
+	PENTLANDITE("nickel", Strength.MEDIUM),
+	SCHEELITE("tungstate", Strength.MEDIUM),
+	SPHALERITE("zinc", Strength.MEDIUM),
+	WOLFRAMITE("tungstate", Strength.MEDIUM),
+	
+	BANDED_IRON("iron", Strength.STRONG),
+	BERYL(Strength.STRONG),
+	CASSITERITE("tin", Strength.STRONG),
+	CHROMITE("chromium", Strength.STRONG),
+	ILMENITE(Strength.STRONG),
+	MAGNETITE("iron", Strength.STRONG),
+	POLLUCITE(Strength.STRONG),
+	SPODUMENE(Strength.STRONG),
+	TANTALITE(Strength.STRONG),
+	URANINITE(Strength.STRONG),
+	VANADIUM_MAGNETITE(Strength.STRONG),
+	
+	CHRYSOTILE("asbestos", Strength.WEAK),
+	DIATOMITE(Strength.WEAK),
+	GLAUCONITE(Strength.WEAK),
+	GRAPHITE(Strength.WEAK),
+	GYPSUM(Strength.WEAK),
+	MIRABILITE(Strength.WEAK),
+	MICA(Strength.WEAK),
+	SOAPSTONE("talc", Strength.WEAK),
+	TRONA(Strength.WEAK),
+	
+	ALUNITE(Strength.MEDIUM),
+	CELESTINE("strontium", Strength.MEDIUM),
+	DOLOMITE(Strength.MEDIUM),
+	MALACHITE("copper", Strength.MEDIUM),
+	WOLLASTONITE(Strength.MEDIUM),
+	ZEOLITE(Strength.MEDIUM),
+	
+	APATITE(Strength.STRONG),
+	KYANITE(Strength.STRONG),
+	PERLITE(Strength.STRONG),
+	PUMICE(Strength.STRONG);
+        
 ** Custom Ore Generation
    * Generates all of the rocks and minerals
-     
+
+** Engineer's Toolbox
+   Modular machine construction, based around a generic framework
+   called a "socket". A socket has item, fluid and energy storage, as
+   well as redstone channels and latches. All six sides of a socket
+   can have an attached module. A module might handle anything,
+   including item/fluid/energy input/output, redstone logic, ore
+   processing, etc. While at first glance it seems strange that a
+   furnace, grinder and centrifuge can be combined into one block,
+   realize that there are constraints: to get items to/from the
+   inventory, sides must be occupied. For more complex machines, the
+   module would only interface with a multi-block structure.
+
+   This might simplify our machine implementation: we just need to
+   create modules. GasCraft is already based on sockets.
+   
+** GasCraft
+   Should integrate with its gasses and machines.
+   
 ** BuildCraft
-   * Machines should interface with BC pipes and energy
-   * Will probably add a new type of pipe: insulated, tracks temp.
+   Generates oil, but Geologica could/should easily do
+   this. Otherwise, seems largely redundant with other mods, except
+   for maybe the pump, floodgate and filler.
    
 ** IndustrialCraft
-*** Macerator
-    Grinds one item per 625 EU (250 MJ). Thus, should only capable of
-    grinding weak and medium blocks.
-    
 ** Forestry
    * Add rocks and ores to the relevant backpacks
      
 ** RailCraft
-   
-
 ** Thermal Expansion
 *** Pulverizer
     Mapping from strength to MJ cost:
@@ -2735,12 +3369,26 @@
     | Medium      | 300 |
     | Strong      | 450 |
     | Very Strong | 675 |
-
+** Foundry
+   Smelting with liquid metals... kind of like TC.
+   
 ** ExtraBiomesXL/BOP/etc
    Will generate rocks/ores in all of its biomes. Hopefully this
    integrates with Forgotten Nature, which would add many trees and
    crops.
+   
+** EnderIO
+   Provides TE-like facilities for energy storage, item/liquid/power
+   transfer, etc.
 
+   Machines:
+   * Ore Smelter :: 3 inputs (one more than Induction Smelter), one output.
+   * SAG Mill :: Grinder with 4 outputs
+   
+** Waila
+   While we will endeavor to have blocks that rely on rendering rather
+   than GUIs, clarity will be limited. Thus, Waila tooltips may help.
+   
 ** Millenaire
    Possible basis for alien villages on other planets. May help us
    add a chemist's lab, where chemicals can be taken and traded.
@@ -2767,95 +3415,267 @@
    Presumably we could define our chemicals within this
    system. Probably better to do our own thing for now.
 
+** FrogCraft
+   IC2 addon very similar in goals to chemica (industrial
+   chemistry). Should probably support some of its
+   machines/items. For example, it has a chemical reactor.
+   
+** Thaumcraft [1.5.2]
+   We should add magical aspects to every item.
+   
 * Other resources
 ** Forge tutorials
    * Wuppy29:
      http://wuppy29.blogspot.nl/2012/08/forge-modding-132.html
      
+** Books
+*** Chemistry
+**** General reference
+     
+**** Inorganic
+     
+**** Organic
+     * Advanced Practical Organic Chemistry (lab work)
+     * Industrial Organic Chemicals
+     * http://www.organic-chemistry.org/
+       http://www.djvu-pdf.com/direct_download.php?job=m08f2cka&fn=Chemistry+of+the+elements+-+Greenwood+%26+Earnshaw.pdf
+     
 * Software Design
 ** Chemicals
-   Clearly, we need an object that represents a chemical. Should this
-   be the GeoSubstance? A GeoSubstance is essentially an object that
-   represents a block/item*meta/damage combination. Each GeoBlock is
-   formed from a material*strength combination, which corresponds to a
-   particular hardness and resistance, as well as a item drop
-   strategy. We use inheritance to define both of those aspects. With
-   regard to the item dropping, this is in-line with the rest of
-   Minecraft, although we could use association, instead. There are no
-   obvious benefits though. The strength mapping depends on
-   intact/broken, and that also influences the item drops. It could be
-   defined by some factory, but that introduces yet another
-   component. The nice thing is that we have avoided using special
-   subclasses for each set of sub/metablocks; that is now
-   parameterized by dynamic lookup of substances given a material and
-   strength. It is only necessary to declare a substance, and most
-   things work as expected.
+*** Definition
+    A GeoMaterial represents something naturally occuring that is
+    often extracted for industrial uses. Anyway, a
+    GeoMaterial has a specified material and strength, which
+    corresponds to a particular hardness and resistance, upon
+    manifestation of the substance as a GeoBlock.
 
-   For defining substances, we have used a material parameter, instead
-   of inheritance, for defining the type of substance. This may have
-   been a mistake, since inheritance is natural in some cases, like
-   how a mineral is also a chemical. If we changed to inheritance, the
-   GeoBlock would be passed a GeoSubstance subclass, instead of a
-   Material object. We are sort of subverting the Material objects
-   currently, so that might be a worthy change.
+    GeoMaterials are currently aggregates and ores. The aggregates and
+    have no formalized composition, because it is complex and
+    variable. The ores are also technically aggregates; however, they
+    are primarily composed of one material, i.e., sphalerite ore
+    consists of zinc sulfide, plus impurities. We can therefore claim
+    that sphalerite corresponds to /crude/ zinc sulfide. So while not
+    all GeoMaterials have a one-to-one relationship with a crude
+    material, the ores do. We would include non-stoichiometric
+    compounds in the crude category, so even pure olivine is a crude
+    material.
 
-   The problem: whether a substance is a chemical is an orthogonal
-   concept to the material type. Some rocks can be chemicals. Really
-   the only differences between a mineral and some other chemical are
-   (a) it is a solid and (b) it is naturally occurring. The phase of
-   the chemical at standard temperature is obviously a parameter of
-   the chemical that would be defined by association. So maybe
-   whether a substance is naturally occurring should be a parameter?
-   Even substances of the "rock" material cannot be assumed to be
-   natural; for example, concrete and bricks are very rock-like,
-   despite being synthetic.
+    A true chemical would be produced through purification of a crude
+    material. For example, zinc sulfide would result from extensive
+    processing of sphalerite. While the crude material is obviously
+    not equivalent to the pure substance, they are essentially the
+    same at some level of abstraction. Thus, there could be a link
+    from GeoMaterial to crude material, and from crude material to
+    pure chemical.
 
-   Or we say that a GeoSubstance is always something naturally
-   occuring. There are rocks and minerals. The minerals have a
-   reference to a chemical. The chemicals would be stored in a
-   separate database. Hopefully this will not present any
-   complications.
+    Pure chemicals have better defined properties, in particular
+    thermodynamic properties. But even chemicals will not have
+    available values for all of the states. So we need
+    missing/default values. This means that every process will need
+    to handle missing values and do something by default, or nothing.
 
-   Is there a point to having a reference to the chemical? While it is
-   true that an ore is primarily of some substance, it is most
-   certainly *not* equivalent to that substance: additional processing
-   is necessary. Sometimes there is functional equivalency, such as
-   iron ore and iron oxide: both can be smelted to iron. At least in
-   that case though, the equivalency would be defined by the ore
-   dictionary. But it would *not* be possible to use the iron ore in a
-   chemical reactor as if it were pure iron oxide. That could be
-   avoided by defining the reactions in terms of the actual chemical,
-   instead of 'oreIron'. Also, for more advanced processing, like
-   froth flotation of sulfide ores, pure input would not be sensible,
-   because waste would be produced. That recipe would need to be in
-   terms of the ore. And what about when we need a chemical reaction
-   that processes a complex ore, such as dissolving bauxite in NaOH,
-   with red mud as a by-product? Is bauxite then a chemical, even
-   though it is somewhat vaguely defined? We have three choices:
-   1. invent the various parameters for the reaction
-   2. simplify the process, at least for the ores
-   3. use a different machine (not the reactor)
+    Obviously chemicals are either elements or compounds. It would
+    be easy to determine whether a compound is a sulfide, oxide, etc,
+    which are so common in ores. Once we get to organic chemistry, we
+    will probably have to resort to adhoc approaches.
 
-   For everything to behave mostly the same in the game, we will need
-   to choose #1, picking parameters. There is then two ways to decide
-   on the parameters. See section below on Reactions. If all
-   participants are chemicals, we should be able to predict the
-   parameters automatically. If any of the participants are crude
-   substances, then the parameters need to be explicitly specified.
+*** Phase
+    A chemical can exist in any phase: solid, liquid, or gas (we ignore
+    the others for now). A chemical /species/ is some physical
+    manifestation of the chemical in a particular process. It has a
+    definite phase. It is manifested in the game as an ItemStack
+    (solid) or FluidStack (liquid/gas). There can be multiple types of
+    Item/Fluid for a given chemical. For example, zinc could be a dust
+    or an ingot; those would be two different items.
+
+    Most of the properties of a chemical depend on its phase. An
+    Item/Fluid will know its phase and provide an accessor for the
+    correct properties.
+    
+*** Formulas
+    The atomic stoichiometry is specified by a formula. Depending on
+    the type of compound, formulae are written in different ways,
+    usually to expose some aspect of their structure. We care about
+    some of these aspects. For example, for salts, we want to know the
+    cation and anion. For organic molecules, we want to know, e.g. the
+    length of the carbon backbone and any (simple) functional
+    groups. A Formula object, perhaps derived separately for salts and
+    organic molecules, could represent such things. Every chemical
+    would have a formula. That formula would refer to the atoms or
+    groups of atoms that compose the compound. At the leaves are
+    AtomicSymbols corresponding to elements, as well as some special
+    cases like electrons and photons.
+
+    How does this work?  Take an example "Na2SO4". This formula
+    consists of 2 components: "Na2" and "SO4". Each of those are
+    obviously formulae. "Na2" specifies the atomic symbol "Na" and a
+    stoichiometry of 2. "SO4" is a molecule that could exist
+    separately as an ion. The formula "SO4" refers to child formulae
+    "S" and "O4", which are analogous to "Na2".
+
+    What about the elements? Elements are chemicals, and they
+    correspond directly to the atomic symbols used in the
+    formulas. Elements present at least two problems:
+    1. How to define their formula?
+    2. The Chemical element and the atomic symbol have the same name,
+       which means we cannot import-static into Chemicals for
+       convenient syntax. We cannot use straight Chemicals to define a
+       formula, because a formula is constructed from formula
+       Parts. Unless we explicitly did C._(1). But it is undesirable
+       for any Chemical to become a Part (only elements make sense).
+    
+    Solutions to #1:
+    1. Do not define an explicit formula; instead just take the name
+       of the enum value, and match it to an AtomicSymbol. A =null=
+       Formula could be interpreted this way.
+    2. Like #1, but do away with AtomicSymbol and introduce a circular
+       reference to the Chemical. Also solves problem #2, but would be
+       nice to limit formula parts to atomic symbols.
+    
+    Solutions to #2:
+    1. If we are not allowed to qualify atomic symbols by e.g. "AS"
+       or "E", then we need to change the name of the Chemical,
+       e.g. "Al" to "Aluminum" or "_Al". That is lame.
+    2. Define the elements in a separate enumeration. Also lame.
+    3. Merge AtomicSymbol and the Chemical elements, i.e., get rid of
+       AtomicSymbol and introduce a new enumeration implementing
+       Chemical that defines the elements. Removes that redundancy. It
+       also solves Problem #1 by introducing a reference cycle (but a
+       cleaner one than any old Chemical). Would have to do ._(1) to
+       convert an Element into a Part, or introduce a PartFactory that
+       provides a Part (basically the factory would be something
+       coercible to a Part). Main downside: another enumeration of
+       Chemicals means another set of items, but maybe just the dust?
+    
+    For convenience, chemicals are listed in a enumeration. This means
+    they have a name, and the formula is natural for their name. This
+    raises a question: do we derive the formula from the name? Parsing
+    might not be too bad, but how to infer salt, vs. something else?
+    It starts to smell like a heuristic. Not deriving the formula from
+    the name means redundancy; more chances to make an error. The
+    problem is that we are dealing with two languages: Java and
+    chemistry. We have to /embed/ the chemical language in Java; using
+    a Java symbol for a formula does not leverage the Java
+    compiler. And for complex cases, it is insufficient; we would need
+    to write things another way. So let us just construct formulae in
+    a systematic way, and then assign to a Java symbol.
+    
+    
+    We could use some syntactic sugar for declaring
+    formulas. For Fe2O3, this might be:
+    #+begin_src java
+      salt(Fe._(2), O._(3))
+      salt(Li._(2), mol(S, O._(4)))
+    #+end_src
+    And then a reaction:
+    #+begin_src java
+    LiSO4.plus(NaCO3).yields(LiCO3).plus(Na2SO4)
+    #+end_src
+    With stoichiometry:
+    #+begin_src java
+    Li2CO3.plus(2, HCl).yields(2, LiCl).plus(CO2).plus(H2O)
+    #+end_src
+    With phases:
+    #+begin_src java
+    term(Li2CO3, s).plus(2, HCl, aq).yields(2, LiCl, s).plus(CO2).plus(H2O)
+    #+end_src
+
+    When we specify "aq" as the state, what does it mean? What we are
+    really saying is that we have liquid water with dissolved
+    HCl. And in fact it is somewhat under-specified. We want to model
+    solutions as either dilute or concentrated. So we want something
+    like:
+    #+begin_src java
+    Li2CO3.plus(2, dilute(HCl)).yields(2, LiCl).plus(CO2).plus(H2O)
+    #+end_src
+    The =dilute= (or =concentrated=) methods will return a new
+    chemical in the liquid state. That is a lot cleaner than
+    borrowing the (aq) convenience from hand-written formulae.
+
+    Adjust a formula. Let us consider the use case of replacing "S"
+    with "O" when roasting a sulfide. We want to do something like:
+    #+begin_src java
+    formula.replace(S, O);
+    #+end_src
+    Which is just shorthand for:
+    #+begin_src java
+    formula.replace(S._(1), O._(1));
+    #+end_src
+    But it seems like we want the formula to be immutable, i.e., the
+    =replace= method should return a modified copy. Creating an
+    immutable object in Java is tricky, especially with inheritance.
+    
+*** Fluids
+    We will have a fluid for every gas and every liquid. There is no
+    limit on the number of fluids, and we can use item damage for
+    liquid containers (just need two items, one filled, one
+    empty). The problem is the fluid blocks. To have these chemicals
+    in the world, we will probably need to rely on NBT tags. This
+    means that we can only have a limited number of such blocks in the
+    world. Since we are not generating these in the world, this should
+    be OK. It would be neat to have liquid and gas blocks for
+    every chemical, with pumps and fans moving them around. Not just
+    in pipes. NBT here we come on that one.
+    
+** Processing of crude materials
    
-   How to model a substance? The most fundamental aspect is the
-   chemical formula. Most parameters, however, depend on the
-   phase. Does a substance have a phase, i.e., do we have separate
-   substance objects for each phase? Or is there a single substance
-   object, with multiple phase sub-objects? It seems simpler to have
-   one object, with the current phase as a parameter. At the
-   item-level, we will need separate items for each phase. The item
-   damage would indicate the base substance. The item would know how
-   to map its damage to a substance in the right phase.
+   Here are some simple rules for ore processing:
+   * Grinding an ore yields a dust of a crude material.
+   * Smelting the ore block or the result of grinding
+     the ore block should yield the same product, like an ingot.
+   * Sulfide ores are roasted to oxides.
+   * Hydroxides and carbonates are calcined to oxides.
+   * Smelting reduces oxides to the metal.
 
-   For the crudes, we might only have a name, color and state. And
-   maybe also a density and hazard. It is the thermodynamic stuff
-   that is hard to find (and unlikely to lead to realistic behavior).
+   Let's review an example: generalized sulfide ore roasting. The
+   recipe registration mechanism (think of it as a recipe compiler)
+   loops over the pure materials. When it finds a sulfide, it knows
+   that roasting (smelting) it will convert the sulfide to an
+   oxide. It finds the corresponding oxide (replaces the S with O in
+   the formula and looks up the corresponding chemical) and registers
+   the recipe. The recipe should apply to both the sulfide chemical
+   and the ore/mineral. That could use the ore dictionary or a more
+   formal relationship between the ore and the chemical. If there is a
+   vent attached to the furnace, it will detect (hopefully) when a
+   sulfide ore is smelted and emit SO2.
+
+   Another example: processing of limonite into iron. Limonite is an
+   ore that consists of a mixture of iron hydroxides. Assume it is
+   mostly goethite, FeO(OH). Then, we need to calculate a calcining
+   temperature. There is no exact value, due to impurities, different
+   levels of hydration, etc, so we could specify a rough temperature,
+   similar to the rock hardness. If the calculations are rough,
+   perhaps we could derive the temperatures from a rough notion of the
+   "reactivity" of the metal. Or we could just use
+   thermodynamics. This is a bit tricky at low temperatures, where
+   thermodynamics predicts a temperature below the boiling point of
+   water, so it needs adjustment.
+
+   A complication: Ni can be incorporated into goethite (substituting
+   for iron). This is true of many minerals, i.e., while a mineral is
+   not really a mixture, there is non-stoichiometry. The question is
+   whether to consider laterites as goethite (instead of limonite)
+   and model goethite as a crude, non-stoichiometric substance, i.e.,
+   not a mixture. The alternative is to say that limonite is a
+   mixture of FeO(OH) and NiO. Another alternative: say that limonite
+   is primarily (an ore of) FeO(OH), but have a recipe/reaction that
+   extracts NiSO4 after treatment with H2SO4 at a specified
+   temperature. We need that reaction anyway, so that sounds reasonable.
+
+   Is an ore a mixture? Of course, it's a special mixture with one
+   component being the "concentrate", but how to differentiate it from
+   plain old rocks and soil, i.e., aggregates? Have an Aggregate
+   interface, and a SimpleAggregate implementation. Those would
+   correspond to Ore and SimpleOre.
+
+   Or what about simply having separate enumerations? One for rocks,
+   one for ores. GeoBlock could still operate over both of them (they
+   would both implement GeoMaterial). Downside: need to reimplement
+   everything. So we either reimplement GeoMaterial or implement the
+   Ore/Aggregate classes. The main objection to having multiple enums
+   is that it seems arbitrary to separate ores and rocks -- where
+   does the laterite clay go? The composition is a natural parameter
+   of the material.
    
 ** Reactions
    A reaction is a type of recipe with reactants and products with
@@ -2927,12 +3747,12 @@
    hardness/resistance, etc. If we then passed the texture file as a
    parameter, we could get rid of the intact/broken subclasses. But
    making the blocks agnostic of strength would be tricky, since they
-   are given GeoSubstance objects, which have a strength. Is there a
+   are given GeoMaterial objects, which have a strength. Is there a
    reason to demand such flexibility? Do we really need multiple
    strategies for finding meta blocks given a strength?
 
-** GeoSubstance as an Enum
-   The GeoSubstance would be convenient as an enum, as long as we do
+** GeoMaterial as an Enum
+   The GeoMaterial would be convenient as an enum, as long as we do
    not expect substances to come from some other source. The
    convenience comes from both the syntax and automatic registration
    (via reflection). Other mods could add substances, for example. If
@@ -2973,7 +3793,7 @@
    type could be a parameter of the substance, or we could imply it by
    keeping the substances in separate lists. Separate lists would
    probably mean separate enums, all of which implement some
-   GeoSubstance interface. The separate enums could each have unique
+   GeoMaterial interface. The separate enums could each have unique
    qualities. For example, a mineral could reference a chemical. If we
    did not go the separate list/enum route, every substance would have
    a chemical field, with non-minerals using a null value. The pain of
@@ -3006,9 +3826,7 @@
    recipes. Might be simplest to consider the recipes orthogonal. One
    might try to make the case that we need chemicals in order to add
    the chemical formula to e.g. a tooltip, or something. But this is
-   not so important. The chemical would only be used to create an ore
-   dictionary entry. All smelting recipes, etc, would be defined in
-   terms of the ore dictionary.
+   not so important.
 
    We could translate the harvest style to a "type" of substance:
    * Rock: broken (cobblestone)
@@ -3032,110 +3850,192 @@
    it makes sense to use a separate file for each. May need a fourth
    for arbitrary textures.
    
-http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=8&ved=0CFYQFjAH&url=http%3A%2F%2Fwww.minecraftforum.net%2Ftopic%2F1553655-forge-sand-like-block-using-wrong-texture-when-falling%2F&ei=ABH6UPnnKI202AWp0IE4&usg=AFQjCNGBbPqJEq7IuJDDVr2V_SI9fasGjQ&bvm=bv.41248874,d.b2I&cad=rja
+** Processes
+   Once we have a material, we need to do something with it. That
+   something is a process. A process turns one material, in a specific
+   state, into one or more other materials, in a specific state. The
+   set of processes can be modeled as a bipartite graph, with a set of
+   nodes representing the materials (in some particular state) and a
+   set of nodes representing the processes. Edges, at least from a
+   process to a material, can be weighted. The material nodes are
+   very close to being actual blocks and items, because they are in
+   some state, like a dust or ore block. The question becomes whether
+   it is worth abstracting the process graph or if low-level
+   representation as recipes is sufficient.
 
-** Tutorials/docs
-   * Multiblock structures:
-     http://minalien.com/tutorial-multi-block-structures-in-minecraft/
+   We are currently representing processes as recipes, and it has
+   become apparent that some abtraction might be useful, even if not
+   at the level of the process graph. For example, a GeoMaterial has
+   some composition, and and grinding will always output its primary
+   componen as a dust. Both the dust and the original ore block can
+   perhaps be smelted to a metal ingot. The point is that there is
+   some equivalency through composition. This equivalency is very
+   much related to the purpose of the ore dictionary. The ore
+   dictionary is a fairly rudimentary abstraction, but it works, and
+   is something we need anyway.
    
 * Tasks
 ** DONE Add more minerals
+   - State "DONE"       from "TODO"       [2013-07-22 Mon 17:06]
+   * uraninite
+   * borax
+   * pyrolusite,
+   * alunite,
+   * malachite
+   * glauconite
+   * diatomite
+   * graphite, kyanite, muscovite
+   * soapstone
+   * apatite
+   * pumice
+   * soda ash
+   * mirabilite
+   * wollastonite
+   * zeolite
+   * mineral sand deposits to hill biomes
+
 ** DONE Consider mineral balance (by production)
+   - State "DONE"       from "TODO"       [2013-07-22 Mon 17:07]
+** DONE Fix rock tool recipes
+   - State "DONE"       from "TODO"       [2013-07-22 Mon 17:07]
 ** DONE Register ores in dictionary
-   - State "DONE"       from "TODO"       [2013-05-20 Mon 20:30]
-** TODO Fix rock tool recipes
-** TODO Add energy-bound smelting for rocks
-** TODO Add basic ore grinding, smelting, melting recipes
-** TODO Replace all gold ore with native drop block
+   - State "DONE"       from "TODO"       [2013-07-22 Mon 17:07]
+** DONE Add rock grinding, smelting recipes
+   - State "DONE"       from "TODO"       [2013-07-22 Mon 17:07]
+   
+** DONE Use substitute instead of cloud for primary strata
+   - State "DONE"       from "TODO"       [2013-07-23 Tue 05:19]
+** DONE Abstract biome restrictions (support BOP)
+   - State "DONE"       from "TODO"       [2014-02-02 Sun 19:10]
+** TODO Clays should break into piles upon harvesting
+** TODO Add grinding recipes for ores
+** TODO Add clay breaking crafting recipes
+** TODO Define Mystcraft symbol for each deposit
 ** TODO Figure out Thaumcraft aspects for minerals
+** TODO Compatibility with GT
+   http://forum.industrial-craft.net/index.php?page=PMView&pmID=17212&s=dedc43669a7d9e2e9149907f08ddc2d6bf5cb819#pm17212
    
 * Stats
 
-| ID       | Name            |     Count | Per Chunk | Target | Notes      |
-|----------+-----------------+-----------+-----------+--------+------------|
-| (222:0)  | Bauxite         |    162127 |      5.93 |      5 | =          |
-| (222:1)  | Bentonite       |     61668 |      2.25 |    2.5 | =          |
-| (222:2)  | Fuller's Earth  |     35884 |      1.31 |    1.5 | =          |
-| (222:3)  | Kaolinite       |    104384 |      3.82 |    3.5 | =          |
-| (222:4)  | Brown Limonite  |     19408 |      0.71 |   0.75 | =          |
-| (222:5)  | Yellow Limonite |     19447 |      0.71 |   0.75 | =          |
-| (222:6)  | Vermiculite     |     71945 |      2.63 |      3 | =          |
-| (223:0)  | Laterite        |    355134 |     12.98 |     12 | =          |
-| (224:0)  | Banded Iron     |    888985 |     32.50 |     30 | =          |
-| (224:1)  | Beryl           |     26375 |      0.96 |      1 | =          |
-| (224:2)  | Cassiterite     |     45481 |      1.66 |    1.5 | =          |
-| (224:3)  | Chromite        |    135727 |      4.96 |      7 | LI low     |
-| (224:4)  | Ilmenite        |     68415 |      2.50 |      2 | =          |
-| (224:5)  | Magnetite       |     40054 |      1.46 |    1.5 | =          |
-| (224:6)  | Pollucite       |      1099 |      0.04 |   0.05 | =          |
-| (224:7)  | Spodumene       |     73568 |      2.69 |      3 | =          |
-| (224:8)  | Tantalite       |     20853 |      0.76 |   0.75 | =          |
-| (224:9)  | Uraninite       |     49933 |      1.83 |    1.5 | =          |
-| (224:10) | Vanadium        |     27578 |      1.01 |    1.5 | LI low     |
-| (224:11) | Apatite         |    467529 |     17.09 |     15 | =          |
-| (224:12) | Kyanite         |     52701 |      1.93 |      2 | =          |
-| (224:13) | Perlite         |      5312 |      0.19 |   0.25 | =          |
-| (224:14) | Pumice          |     38873 |      1.42 |      2 | =          |
-| (225:0)  | Barite          |    182290 |      6.66 |      6 | =          |
-| (225:1)  | Bastnasite      |     35548 |      1.30 |    1.5 | =          |
-| (225:2)  | Chalcopyrite    |    258854 |      9.46 |     10 | =          |
-| (225:3)  | Garnierite      |     23212 |      0.85 |    0.5 | -          |
-| (225:4)  | Lepidolite      |     26063 |      0.95 |      1 | =          |
-| (225:5)  | Magnesite       |    282314 |     10.32 |     10 | =          |
-| (225:6)  | Pentlandite     |     52147 |      1.91 |      2 | =          |
-| (225:7)  | Scheelite       |     63618 |      2.33 |      2 | =          |
-| (225:8)  | Sphalerite      |    233346 |      8.53 |     10 | =          |
-| (225:9)  | Wolframite      |     10621 |      0.39 |    0.5 | =          |
-| (225:10) | Alunite         |      3694 |      0.14 |    0.1 | =          |
-| (225:11) | Celestine       |     10700 |      0.39 |    0.5 | =          |
-| (225:12) | Dolomite        |    424976 |     15.53 |     15 | =          |
-| (225:13) | Malachite       |      7336 |      0.27 |   0.25 | =          |
-| (225:14) | Wollastonite    |     59841 |      2.19 |      2 | =          |
-| (225:15) | Zeolite         |     16511 |      0.60 |    0.5 | =          |
-| (226:0)  | Borax           |      6935 |      0.25 |    0.5 | low desert |
-| (226:1)  | Cinnabar        |           |      0.00 |     -- |            |
-| (226:2)  | Galena          |    125011 |      4.57 |      5 | =          |
-| (226:3)  | Molybdenite     |     54447 |      1.99 |   1.75 | =          |
-| (226:4)  | Pyrolusite      |    111058 |      4.06 |      2 | high swamp |
-| (226:5)  | Rock Salt       |     52251 |      1.91 |      3 | low desert |
-| (226:6)  | Stibnite        |     34315 |      1.25 |    1.5 | =          |
-| (226:7)  | Chrysotile      |     70990 |      2.59 |      3 | =          |
-| (226:8)  | Diatomite       |     18793 |      0.69 |      1 | =          |
-| (226:9)  | Glauconite      |    144912 |      5.30 |     -- |            |
-| (226:10) | Graphite        |    142115 |      5.19 |      4 | =          |
-| (226:11) | Gypsum          |    202064 |      7.39 |      9 | low desert |
-| (226:12) | Mirabilite      |      7132 |      0.26 |    0.5 | =          |
-| (226:13) | Mica            |     52356 |      1.91 |      2 | =          |
-| (226:14) | Soapstone       |    787292 |     28.78 |      6 | WTF        |
-| (226:15) | Trona           |     32613 |      1.19 |      2 | low desert |
-| (227:0)  | Basaltic Sand   |     26617 |      0.97 |   0.75 | =          |
-| (227:1)  | Cassiterite     |     85503 |      3.13 |      2 | =          |
-| (227:2)  | Garnet Sand     |     49892 |      1.82 |    1.5 | =          |
-| (227:3)  | Granitic Sand   |     80803 |      2.95 |    2.5 | =          |
-| (227:4)  | Quartz Sand     |     11223 |      0.41 |    0.5 | =          |
-| (227:5)  | Volcanic Ash    |     20663 |      0.76 |      1 | =          |
-| (252:0)  | Limestone       |  91126816 |   3331.02 |    250 |            |
-| (252:1)  | Schist          |  10382160 |    379.51 |    150 |            |
-| (252:2)  | Serpentinite    |    759038 |     27.75 |        |            |
-| (252:3)  | Slate           |   1678277 |     61.35 |        |            |
-| (252:4)  | Skarn           |    944145 |     34.51 |        |            |
-| (253:0)  | Andesite        |   2174907 |     79.50 |        |            |
-| (253:1)  | Basalt          |   3082900 |    112.69 |        |            |
-| (253:2)  | Gneiss          |   4690941 |    171.47 |        |            |
-| (253:3)  | Granite         | 109235858 |   3992.98 |        |            |
-| (253:4)  | Greenschist     |    170731 |      6.24 |        |            |
-| (253:5)  | Marble          |    813571 |     29.74 |        |            |
-| (253:6)  | Pegmatite       |    643714 |     23.53 |        |            |
-| (253:7)  | Rhyolite        |    741184 |     27.09 |        |            |
-| (254:0)  | Diorite         |   4387174 |    160.37 |        |            |
-| (254:1)  | Gabbro          |   6853587 |    250.52 |        |            |
-| (254:2)  | Hornfels        |   1464459 |     53.53 |        |            |
-| (254:3)  | Peridotite      |  10930719 |    399.56 |        |            |
-| (254:4)  | Quartzite       |   1105212 |     40.40 |        |            |
-| (255:0)  | Breccia         |   4687882 |    171.36 |        |            |
-| (225:1)  | Carbonatite     |     58180 |      2.13 |        |            |
-| (255:2)  | Claystone       |   4027276 |    147.21 |        |            |
-| (255:3)  | Conglomerate    |   4389224 |    160.44 |        |            |
-| (255:4)  | Mudstone        |  56754585 |   2074.59 |        |            |
-  #+TBLFM: $4=$3/27357; %.2f     
+| ID       | Name            |     Count | Per Chunk | Target | Notes        |
+|----------+-----------------+-----------+-----------+--------+--------------|
+| (222:0)  | Bauxite         |    241959 |      7.08 |      5 |              |
+| (222:3)  | Brown Limonite  |     32799 |      0.96 |   0.75 |              |
+| (222:4)  | Yellow Limonite |     33092 |      0.97 |   0.75 |              |
+| (222:5)  | Vermiculite     |     37681 |      1.10 |      3 |              |
+| (223:0)  | Laterite        |    649914 |     19.02 |     12 |              |
+| (224:0)  | Banded Iron     |   1352015 |     39.56 |     30 |              |
+| (224:2)  | Chromite        |    219487 |      6.42 |      7 |              |
+| (224:4)  | Ilmenite        |     77559 |      2.27 |      2 | also in sand |
+| (224:5)  | Magnetite       |     39950 |      1.17 |    1.5 |              |
+| (224:6)  | Pollucite       |      2904 |      0.08 |   0.05 |              |
+| (224:8)  | Tantalite       |     29156 |      0.85 |   0.75 |              |
+| (224:9)  | Pitchblende     |     61179 |      1.79 |    1.5 |              |
+| (224:10) | Ferrovanadium   |     39067 |      1.14 |    1.5 |              |
+| (225:1)  | Bastnasite      |     47114 |      1.38 |    1.5 |              |
+| (225:2)  | Copper          |    303014 |      8.87 |     10 | x1.2         |
+| (225:3)  | Garnierite      |     25109 |      0.73 |    0.5 |              |
+| (225:4)  | Lepidolite      |    101667 |      2.97 |    2.5 |              |
+| (225:5)  | Magnesite       |    378544 |     11.08 |     10 |              |
+| (225:6)  | Pentlandite     |    167417 |      4.90 |      2 | /2           |
+| (225:7)  | Scheelite       |     85035 |      2.49 |      2 |              |
+| (225:8)  | Sphalerite      |    320597 |      9.38 |     10 |              |
+| (225:9)  | Wolframite      |     28987 |      0.85 |    0.5 |              |
+| (225:11) | Dolomite        |    583061 |     17.06 |     15 |              |
+| (225:12) | Kyanite         |    101900 |      2.98 |      2 |              |
+| (226:1)  | Cinnabar        |           |      0.00 |        |              |
+| (226:2)  | Galena          |    173403 |      5.07 |      5 |              |
+| (226:3)  | Molybdenite     |     63044 |      1.84 |   1.75 | also chalco  |
+| (226:4)  | Rock Salt       |     94655 |      2.77 |      2 |              |
+| (226:5)  | Stibnite        |     36539 |      1.07 |    1.5 | bp Cu/Pb     |
+| (226:10) | Gypsum          |    269614 |      7.89 |      6 |              |
+| (226:12) | Mica            |     72837 |      2.13 |      2 |              |
+| (227:0)  | Basaltic Sand   |     14377 |      0.42 |    0.5 |              |
+| (227:1)  | Garnet Sand     |     43735 |      1.28 |    1.5 |              |
+| (227:2)  | Granitic Sand   |    100208 |      2.93 |    2.5 |              |
+| (227:3)  | Quartz Sand     |     27364 |      0.80 |    0.5 |              |
+| (227:4)  | Volcanic Ash    |     57582 |      1.68 |    1.7 |              |
+| (252:0)  | Limestone       | 106388530 |   3113.05 |    250 | /10          |
+| (252:1)  | Schist          |   8824584 |    258.22 |    150 | too much?    |
+| (252:2)  | Serpentinite    |   1115192 |     32.63 |        |              |
+| (252:3)  | Slate           |   2555321 |     74.77 |        |              |
+| (252:4)  | Skarn           |   1032380 |     30.21 |        |              |
+| (253:0)  | Andesite        |   1074924 |     31.45 |        |              |
+| (253:1)  | Basalt          |    467244 |     13.67 |        |              |
+| (253:2)  | Gneiss          |   5143875 |    150.52 |        |              |
+| (253:3)  | Granite         | 127206587 |   3722.21 |        |              |
+| (253:4)  | Greenschist     |    163098 |      4.77 |        |              |
+| (253:5)  | Marble          |   1100146 |     32.19 |        |              |
+| (253:6)  | Pegmatite       |    884976 |     25.90 |        |              |
+| (253:7)  | Rhyolite        |    294846 |      8.63 |        |              |
+| (254:0)  | Diorite         |   5888766 |    172.31 |        |              |
+| (254:1)  | Gabbro          |   8339424 |    244.02 |        |              |
+| (254:2)  | Hornfels        |   3169962 |     92.76 |        |              |
+| (254:3)  | Peridotite      |  13949406 |    408.18 |        | why so much? |
+| (254:4)  | Quartzite       |   1065521 |     31.18 |        |              |
+| (255:0)  | Breccia         |   6691198 |    195.79 |        |              |
+| (255:1)  | Carbonatite     |     52653 |      1.54 |        |              |
+| (255:2)  | Claystone       |   5754246 |    168.38 |        |              |
+| (255:3)  | Conglomerate    |   5700032 |    166.79 |        |              |
+| (255:4)  | Mudstone        |  76833533 |   2248.24 |        |              |
+  #+TBLFM: $4=$3/34175; %.2f     
 
+
+  222:0)   Future Block!                : 
+(222:3)   Future Block!                 :  
+(222:4)   Future Block!                 :  
+(222:5)   Future Block!                 :  
+(223:0)   Future Block!                 :  
+(224:0)   Future Block!                 :  
+(224:2)   Future Block!                 :  
+(224:4)   Future Block!                 :  
+(224:5)   Future Block!                 :  
+(224:6)   Future Block!                 :  
+(224:8)   Future Block!                 :  
+(224:9)   Future Block!                 :  
+(224:10)  Future Block!                 :  
+(225:1)   Future Block!                 :  
+(225:2)   Future Block!                 :  
+(225:3)   Future Block!                 :  
+(225:4)   Future Block!                 :  
+(225:5)   Future Block!                 :  
+(225:6)   Future Block!                 :  
+(225:7)   Future Block!                 :  
+(225:8)   Future Block!                 :  
+(225:9)   Future Block!                 :  
+(225:11)  Future Block!                 :  
+(225:12)  Future Block!                 :  
+(226:2)   Future Block!                 :  
+(226:3)   Future Block!                 :  
+(226:4)   Future Block!                 :  
+(226:5)   Future Block!                 :  
+(226:10)  Future Block!                 :  
+(226:12)  Future Block!                 :  
+(227:0)   Future Block!                 :  
+(227:1)   Future Block!                 :  
+(227:2)   Future Block!                 :  
+(227:3)   Future Block!                 :  
+(227:4)   Future Block!                 :  
+(252:0)   Future Block!                 :  
+(252:1)   Future Block!                 :  
+(252:2)   Future Block!                 :  
+(252:3)   Future Block!                 :  
+(252:4)   Future Block!                 :  
+(253:0)   Future Block!                 :  
+(253:1)   Future Block!                 :  
+(253:2)   Future Block!                 :  
+(253:3)   Future Block!                 :  
+(253:4)   Future Block!                 :  
+(253:5)   Future Block!                 :  
+(253:6)   Future Block!                 :  
+(253:7)   Future Block!                 :  
+(254:0)   Future Block!                 :  
+(254:1)   Future Block!                 :  
+(254:2)   Future Block!                 :  
+(254:3)   Future Block!                 :  
+(254:4)   Future Block!                 :  
+(255:0)   Future Block!                 :  
+(255:1)   Future Block!                 :  
+(255:2)   Future Block!                 :  
+(255:3)   Future Block!                 :  
+(255:4)   Future Block!                 :  
