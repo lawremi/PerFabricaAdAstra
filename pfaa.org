@@ -35,168 +35,6 @@
    of the exoplanet. As an alternative to travel, the player may decide
    to settle down and terraform.
 
-* Gameplay
-** Star travel
-*** Goals
-    On any planet, the goals are:
-    * To survive
-    * To build a spaceship and fuel for traveling onward
-    * To terraform the world for long term settlement
-
-**** Traveling onward
-     This goal solves the end-game problem, where the player has
-     solved all challenges. The player is given the opportunity to
-     leave the conquered world behind, and to start a-new. However,
-     there is some continuity: the player is allowed to stock the ship
-     with supplies, and subsamples of that inventory appear as supply
-     modules strewn about the new world.
-
-**** Terraforming
-     It is not clear how we will model this, or how it would benefit
-     the robot player. It would be cool though to have NPC colonies
-     appear as the conditions were improved.
-     
-*** Robotic player
-    The idea is to initially model the player as a cyborg. This puts
-    less constraints on the player in hostile environments. It also
-    opens up interesting possibilities for modular player
-    abilities. The robot should be humanoid, for simplicity. We still
-    want to model the environment, because one goal is to bring NPCs
-    (non-cyborgs) to the world.
-
-**** Component-based abilities
-     The player abilities will be based on a component system, which
-     replaces the armor system. Instead of having a helmet, breast
-     plate, etc, the robotic explorer will have the following component
-     slots. There is a basic, built-in component of each type that
-     never wears down. The others have a limited life-span.
-
-     It turns out that IC2 already has the battery backpack and solar
-     helmet, which behave pretty much as we imagined. The gravitation
-     suite addon even extends the batpack to support flight. And
-     electric armor is essentially a shield. Really, our only
-     contribution will be fuel cells as battery alternatives, plus
-     different levels of batteries and solar cells.
-
-     This is also related to the mecha-armor of Factorization.
-
-***** Solar panels
-      There will be different levels of solar panels, with increasing
-      efficiency and cost. Solar panels yield electrical power, at a
-      rate depending on the type of panel and the amount of light. When
-      the energy is not being used (i.e., when the player is not moving
-      or working), the energy is deposited into the battery.
-      
-***** Battery
-      Better batteries: more storage, slower discharge.
-      
-***** Fuel cell
-      This provides power in addition to the solar panels and is
-      necessary for powering heavy duties, like drilling/digging. The
-      energy output will depend on the type of fuel. Excess energy is
-      deposited into the battery.
-
-      Question: could the fuel cell and battery fill the same slot?
-      Batteries should be capable of powering heavy machinery (at
-      least the type of machinery a humanoid robot would operate). An
-      alternative would be to support only batteries, and fuel cells
-      would charge the batteries. It makes sense to generalize: a fuel
-      cell and battery are both energy sources; the difference is that
-      the battery requires electricity for recharging, whereas a fuel
-      cell simply needs to be refilled with fuel.
-
-***** Auxiliary system
-      There will be one auxiliary that will consume
-      power. Possibilities:
-      * Balloon/dirigible
-      * Shield (combat, lava diving)
-      
-**** Respiration
-     The cyborg has a built-in air tank that automatically recharges
-     when in breathable atmosphere. The tanks will store much more air
-     than a single lung's worth, so the constraint is more similar to
-     hunger than swimming. The player can carry additional air tanks,
-     along with food.
-         
-**** Environmental Modeling
-***** Atmosphere
-      Important atmospheric properties are:
-       * Temperature (depends on day/night)
-       * Pressure
-       * Composition
-
-       Possible to do this by having special breathable air blocks that
-       change properties when they become adjacent to cold or raw
-       atmosphere. This may be too complicated though. Easier to
-       use force-fields (via MFFS) and then detect when a player is
-       outside of a force-field. Non-cyborgs have a limited amount of
-       time before death. This depends on the three properties above,
-       but comes out to around 30 seconds maybe for Mars.
-
-       If there are missing life support systems within the
-       force-field, the atmosphere will slowly deteriorate (over the
-       course of say, one day) and then things start dying. The HUD can
-       show the current temperature and composition status (green,
-       yellow red; not exact values) for the current dome.
-       
-***** Radiation
-      Planets with thin atmospheres and magnetospheres will not be able
-      to block the light from the sun. Depending on the type of star and
-      distance, this could mean lethal doses of radiation. Effects of
-      this radiation would be long-term, however, so it is tough to
-      model. Perhaps it would affect the growth of plants.
-
-**** Life Support
-     Machines, mechanical or biological, will be capable of
-     conditioning the air. These include:
-     * Heater/Cooler (increases/decreases temperature, pressure)
-     * Oxygen generation (electrolysis, biomass)
-
-     Both types of oxygen generation require water. The ship will come
-     with a finite water source. The occupant will produce water as
-     water vapor (exhalation) and as waste (urine, feces). The life
-     support system must recover that. Otherwise, it needs to be
-     provided externally.
-
-     The obvious advantage of a farm is the consumption of CO2 and the
-     production of food, thanks to photosynthesis. The light could come
-     from the star, or artificial lighting.
-
-     So, in summary, there are three machines:
-     * Heater[Factorization]/cooler
-     * Greenhouse: <= free CO2, <= H2O, => O2, => food
-     * Water reclaimer [TE Aq Accumulator]: <= free H2O, => captured H2O
-
-     And the "world" inside the habitat converts O2 to CO2 and generates
-     free H2O (waste, water vapor).
-
-     Note that we will avoid detailed modeling of this process. if a
-     machine breaks, bad things happen. The number of plants needed in
-     a greenhouse depends on the population. The better the
-     conditions, the more colonists, the more human resources. Note
-     that water could be obtained from indigenous sources. This is why
-     a heater/cooler is needed: it requires the user to maintain a
-     power source.
-
-     Eventually we might add an alternative to the greenhouse:
-     * Oxygen generator [IC2 electrolyzer]: <= H2O, => O2
-     * CO2 scrubber: <= free CO2, => captured CO2
-     
-*** Progression
-    An important gameplay mechanic is progression through tiers of
-    technology/development. Some mods model this using history: how one
-    idea led to the next over time. Since we are focused on the
-    present, historical progression is not relevant. Instead, we might
-    follow the technical complexity gradient: one technology depends on
-    having another. The robot is stranded on another world with limited
-    supplies, and the lofty goals of either leaving the planet or
-    terraforming it.
-
-*** Initiation
-    How does one become the robot? This could happen through a long
-    string of technological developments, based e.g. on IC2, or we
-    could enable early entry.
-
 * Concepts
 ** Science
 *** Physics
@@ -3210,7 +3048,168 @@
 
     The surface could be made more interesting by having supply pods
     scattered all over the planet that were dropped during the crash.
+
+* Star travel
+*** Goals
+    On any planet, the goals are:
+    * To survive
+    * To build a spaceship and fuel for traveling onward
+    * To terraform the world for long term settlement
+
+**** Traveling onward
+     This goal solves the end-game problem, where the player has
+     solved all challenges. The player is given the opportunity to
+     leave the conquered world behind, and to start a-new. However,
+     there is some continuity: the player is allowed to stock the ship
+     with supplies, and subsamples of that inventory appear as supply
+     modules strewn about the new world.
+
+**** Terraforming
+     It is not clear how we will model this, or how it would benefit
+     the robot player. It would be cool though to have NPC colonies
+     appear as the conditions were improved.
      
+*** Robotic player
+    The idea is to initially model the player as a cyborg. This puts
+    less constraints on the player in hostile environments. It also
+    opens up interesting possibilities for modular player
+    abilities. The robot should be humanoid, for simplicity. We still
+    want to model the environment, because one goal is to bring NPCs
+    (non-cyborgs) to the world.
+
+**** Component-based abilities
+     The player abilities will be based on a component system, which
+     replaces the armor system. Instead of having a helmet, breast
+     plate, etc, the robotic explorer will have the following component
+     slots. There is a basic, built-in component of each type that
+     never wears down. The others have a limited life-span.
+
+     It turns out that IC2 already has the battery backpack and solar
+     helmet, which behave pretty much as we imagined. The gravitation
+     suite addon even extends the batpack to support flight. And
+     electric armor is essentially a shield. Really, our only
+     contribution will be fuel cells as battery alternatives, plus
+     different levels of batteries and solar cells.
+
+     This is also related to the mecha-armor of Factorization.
+
+***** Solar panels
+      There will be different levels of solar panels, with increasing
+      efficiency and cost. Solar panels yield electrical power, at a
+      rate depending on the type of panel and the amount of light. When
+      the energy is not being used (i.e., when the player is not moving
+      or working), the energy is deposited into the battery.
+      
+***** Battery
+      Better batteries: more storage, slower discharge.
+      
+***** Fuel cell
+      This provides power in addition to the solar panels and is
+      necessary for powering heavy duties, like drilling/digging. The
+      energy output will depend on the type of fuel. Excess energy is
+      deposited into the battery.
+
+      Question: could the fuel cell and battery fill the same slot?
+      Batteries should be capable of powering heavy machinery (at
+      least the type of machinery a humanoid robot would operate). An
+      alternative would be to support only batteries, and fuel cells
+      would charge the batteries. It makes sense to generalize: a fuel
+      cell and battery are both energy sources; the difference is that
+      the battery requires electricity for recharging, whereas a fuel
+      cell simply needs to be refilled with fuel.
+
+***** Auxiliary system
+      There will be one auxiliary that will consume
+      power. Possibilities:
+      * Balloon/dirigible
+      * Shield (combat, lava diving)
+      
+**** Respiration
+     The cyborg has a built-in air tank that automatically recharges
+     when in breathable atmosphere. The tanks will store much more air
+     than a single lung's worth, so the constraint is more similar to
+     hunger than swimming. The player can carry additional air tanks,
+     along with food.
+         
+**** Environmental Modeling
+***** Atmosphere
+      Important atmospheric properties are:
+       * Temperature (depends on day/night)
+       * Pressure
+       * Composition
+
+       Possible to do this by having special breathable air blocks that
+       change properties when they become adjacent to cold or raw
+       atmosphere. This may be too complicated though. Easier to
+       use force-fields (via MFFS) and then detect when a player is
+       outside of a force-field. Non-cyborgs have a limited amount of
+       time before death. This depends on the three properties above,
+       but comes out to around 30 seconds maybe for Mars.
+
+       If there are missing life support systems within the
+       force-field, the atmosphere will slowly deteriorate (over the
+       course of say, one day) and then things start dying. The HUD can
+       show the current temperature and composition status (green,
+       yellow red; not exact values) for the current dome.
+       
+***** Radiation
+      Planets with thin atmospheres and magnetospheres will not be able
+      to block the light from the sun. Depending on the type of star and
+      distance, this could mean lethal doses of radiation. Effects of
+      this radiation would be long-term, however, so it is tough to
+      model. Perhaps it would affect the growth of plants.
+
+**** Life Support
+     Machines, mechanical or biological, will be capable of
+     conditioning the air. These include:
+     * Heater/Cooler (increases/decreases temperature, pressure)
+     * Oxygen generation (electrolysis, biomass)
+
+     Both types of oxygen generation require water. The ship will come
+     with a finite water source. The occupant will produce water as
+     water vapor (exhalation) and as waste (urine, feces). The life
+     support system must recover that. Otherwise, it needs to be
+     provided externally.
+
+     The obvious advantage of a farm is the consumption of CO2 and the
+     production of food, thanks to photosynthesis. The light could come
+     from the star, or artificial lighting.
+
+     So, in summary, there are three machines:
+     * Heater[Factorization]/cooler
+     * Greenhouse: <= free CO2, <= H2O, => O2, => food
+     * Water reclaimer [TE Aq Accumulator]: <= free H2O, => captured H2O
+
+     And the "world" inside the habitat converts O2 to CO2 and generates
+     free H2O (waste, water vapor).
+
+     Note that we will avoid detailed modeling of this process. if a
+     machine breaks, bad things happen. The number of plants needed in
+     a greenhouse depends on the population. The better the
+     conditions, the more colonists, the more human resources. Note
+     that water could be obtained from indigenous sources. This is why
+     a heater/cooler is needed: it requires the user to maintain a
+     power source.
+
+     Eventually we might add an alternative to the greenhouse:
+     * Oxygen generator [IC2 electrolyzer]: <= H2O, => O2
+     * CO2 scrubber: <= free CO2, => captured CO2
+     
+*** Progression
+    An important gameplay mechanic is progression through tiers of
+    technology/development. Some mods model this using history: how one
+    idea led to the next over time. Since we are focused on the
+    present, historical progression is not relevant. Instead, we might
+    follow the technical complexity gradient: one technology depends on
+    having another. The robot is stranded on another world with limited
+    supplies, and the lofty goals of either leaving the planet or
+    terraforming it.
+
+*** Initiation
+    How does one become the robot? This could happen through a long
+    string of technological developments, based e.g. on IC2, or we
+    could enable early entry.
+
 * Modules
   It seems like these ideas are too numerous to pack into a single,
   monolithic mod. Instead, we could have separate modules:
@@ -3271,63 +3270,7 @@
    independent of GT.
    
 * Mod Integration
-
-** Gregtech
-   
-*** Colors
-    | Ore         | color |
-    |-------------+-------|
-    | BORAX       | white |
-    | MOLYBDENITE |       |
-    * 
-    * PYROLUSITE
-    * ROCK_SALT("salt", Strength.WEAK),
-    * STIBNITE("antimony", Strength.WEAK),
-    BARITE("barium", Strength.MEDIUM),
-	BASTNASITE(Strength.MEDIUM),
-	CHALCOPYRITE("copper", Strength.MEDIUM),
-	GARNIERITE("nickel", Strength.MEDIUM),
-	LEPIDOLITE(Strength.MEDIUM),
-	MAGNESITE("magnesium", Strength.MEDIUM),
-	PENTLANDITE("nickel", Strength.MEDIUM),
-	SCHEELITE("tungstate", Strength.MEDIUM),
-	SPHALERITE("zinc", Strength.MEDIUM),
-	WOLFRAMITE("tungstate", Strength.MEDIUM),
-	
-	BANDED_IRON("iron", Strength.STRONG),
-	BERYL(Strength.STRONG),
-	CASSITERITE("tin", Strength.STRONG),
-	CHROMITE("chromium", Strength.STRONG),
-	ILMENITE(Strength.STRONG),
-	MAGNETITE("iron", Strength.STRONG),
-	POLLUCITE(Strength.STRONG),
-	SPODUMENE(Strength.STRONG),
-	TANTALITE(Strength.STRONG),
-	URANINITE(Strength.STRONG),
-	VANADIUM_MAGNETITE(Strength.STRONG),
-	
-	CHRYSOTILE("asbestos", Strength.WEAK),
-	DIATOMITE(Strength.WEAK),
-	GLAUCONITE(Strength.WEAK),
-	GRAPHITE(Strength.WEAK),
-	GYPSUM(Strength.WEAK),
-	MIRABILITE(Strength.WEAK),
-	MICA(Strength.WEAK),
-	SOAPSTONE("talc", Strength.WEAK),
-	TRONA(Strength.WEAK),
-	
-	ALUNITE(Strength.MEDIUM),
-	CELESTINE("strontium", Strength.MEDIUM),
-	DOLOMITE(Strength.MEDIUM),
-	MALACHITE("copper", Strength.MEDIUM),
-	WOLLASTONITE(Strength.MEDIUM),
-	ZEOLITE(Strength.MEDIUM),
-	
-	APATITE(Strength.STRONG),
-	KYANITE(Strength.STRONG),
-	PERLITE(Strength.STRONG),
-	PUMICE(Strength.STRONG);
-        
+** Gregtech        
 ** Custom Ore Generation
    * Generates all of the rocks and minerals
 
