@@ -2069,11 +2069,13 @@
      
 *** Uraninite
 **** Uranium
-     This would be a lot trickier, because it requires liquid/liquid
-     extraction using organic solvents (specifically 2.5% amine, 2.5%
-     isodecanol and 95% kerosene). We will need such solvents for
-     processing any uranium, however. IC2 simply yields pure uranium
-     when mined. How boring!
+     Most uranium ores (UO2) are acid leached with sulfuric acid,
+     which might be preceded by roasting.
+
+     The uranium is extracted from the sulfuric acid leach via
+     liquid/liquid extraction, with the solvents di(2-ethylhexyl)
+     phosphoric acid and a secondary/tertiary amine (2.5% amine, 2.5%
+     isodecanol and 95% kerosene) as the solvents.
      
      Kerosene comes from oil refining, but the tertiary amine that
      reacts with uranium would be complicated to synthesize. For
@@ -2081,6 +2083,38 @@
      can be synthesized from ethanol/methanol and ammonia using a
      zeolite catalyst.
 
+     Reference:
+     https://publications.csiro.au/rpr/download?pid=csiro:EP112117&dsid=DS3
+
+     Anyway, the acid leach is treated with ammonia, which
+     precipitates yellowcake: (NH4)2U2O7. There are other types of
+     yellowcake, like UO3 and U3O8. (NH4)2U2O7 thermally decomposes to
+     UO3 at 500 C. This in turn decomposes to U3O8 at 750C.
+
+     Anyway, for enrichment, yellowcake must be refined by treatment
+     of (NH4)2U2O7 with nitric acid to yield UO2(NO3)2.  Uranium is
+     extracted from the solution using two solvents: tributyl
+     phosphate and kerosene. This yields a purified UO2(NO3)2. It
+     should be noted that during reprocessing of nuclear fuel, fuel
+     rods can be dissolved with HNO3 to UO2(NO3)2.
+     
+     This is converted to UO2 via thermal decomposition at 500C to
+     yield UO3, which is reduced with H2 gas to UO2.  This is the
+     ceramic form of unenriched uranium, and it is useful for fuel
+     rods and heavy-water reactors.
+
+     The UO2 is treated with HF to yield UF4. To produce U metal, use
+     magnesium/calcium/aluminum thermite reduction (essentially UF4 is
+     enveloped in a Mg charge that is ignited in a crucible; highly
+     exothermic). Ignition occurs between 500-700 C and reaches in
+     excess of 1300 C. The slag is 2MgF2.
+     
+     For enrichment, the UF4 is instead oxidized with fluorine to
+     UF6 and purified by fractional distillation. UF6 then is brought
+     back to UO2 by reacting as a gas with water vapor to UO2F2-H2O,
+     which is reduced with H2 gas to UO2.
+     
+**** Molybdenum
 **** Vanadate
      After treating ore with the tertiary amine, mix with the sodium
      carbonate and follow the steps for magnetite.
