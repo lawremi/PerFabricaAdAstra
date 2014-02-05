@@ -1,14 +1,14 @@
 package org.pfaa.geologica.block;
 
 import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.GeoSubstance;
+import org.pfaa.geologica.GeoMaterial;
 
 public interface GeoBlockAccessors extends CompositeBlockAccessors {
 
-	public abstract GeoSubstance getSubstance(int meta);
+	public abstract GeoMaterial getSubstance(int meta);
 
-	public abstract boolean containsSubstance(GeoSubstance substance);
+	public abstract boolean containsSubstance(GeoMaterial material);
 
-	public abstract int getMeta(GeoSubstance rock);
+	public abstract int getMeta(GeoMaterial rock);
 
 }

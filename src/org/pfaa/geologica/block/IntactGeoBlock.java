@@ -2,26 +2,25 @@ package org.pfaa.geologica.block;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.common.MinecraftForge;
 
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
-import org.pfaa.geologica.GeoSubstance;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
-import org.pfaa.geologica.GeologicaTextures;
+import org.pfaa.geologica.processing.Gem;
 
 public class IntactGeoBlock extends GeoBlock {
 
-	public IntactGeoBlock(int id, Strength strength, Composition composition, Material material) {
+	public IntactGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(id, strength, composition, material);
 	}
 
 	@Override
     public int quantityDroppedWithBonus(int par1, Random par2Random)
     {
-        if (par1 > 0 && getSubstance(0).getComposition() == Composition.PURE)
+        if (par1 > 0 && getSubstance(0).getComposition() instanceof Gem)
         {
             int var3 = par2Random.nextInt(par1 + 2) - 1;
 
@@ -41,19 +40,19 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
 	public int idDropped(int meta, Random random, int par3) {
 		int dropped = super.idDropped(meta, random, par3);
-		GeoSubstance substance = getSubstance(meta);
-		if (substance.getComposition() == Composition.AGGREGATE && blockMaterial == Material.rock) {
+		GeoMaterial material = getSubstance(meta);
+		if (material.getComposition() instanceof Mixture && blockMaterial == Material.rock) {
 			dropped = dropRock(meta);
-		} else if (substance.getComposition() == Composition.PURE) {
-			// TODO: create a mineral/chemical item
+		} else if (material.getComposition() instanceof Gem) {
+			// TODO: create a gem item
 		}
 		return dropped;
 	}
 	
 	private int dropRock(int meta) {
 		int dropped = 0;
-		GeoSubstance substance = getSubstance(meta);
-		switch(substance.getStrength()) {
+		GeoMaterial material = getSubstance(meta);
+		switch(material.getStrength()) {
 		case WEAK:
 			dropped = GeologicaBlocks.WEAK_RUBBLE.blockID;
 			break;

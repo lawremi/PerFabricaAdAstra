@@ -9,12 +9,12 @@ import net.minecraft.entity.item.EntityFallingSand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class LooseGeoBlock extends GeoBlock {
 
-	public LooseGeoBlock(int id, Strength strength, Composition composition, Material material) {
+	public LooseGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(id, strength, composition, material);
 	}
 

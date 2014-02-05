@@ -3,8 +3,8 @@ package org.pfaa.geologica.integration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import org.pfaa.geologica.GeoSubstance.Strength;
-import org.pfaa.geologica.processing.SmeltingTemperature;
+import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.geologica.processing.Ore.SmeltingTemperature;
 
 public class TEIntegration {
 

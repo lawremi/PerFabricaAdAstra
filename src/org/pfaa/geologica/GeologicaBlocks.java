@@ -11,9 +11,9 @@ import net.minecraft.block.material.Material;
 
 import org.pfaa.ConfigIDProvider;
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
 import org.pfaa.geologica.block.GeoBlock;
@@ -22,6 +22,7 @@ import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
+import org.pfaa.geologica.processing.Ore;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;
@@ -58,13 +59,13 @@ public class GeologicaBlocks {
 	public static final Block STRONG_COBBLE_WALL = createWallBlock(STRONG_COBBLESTONE);
 	public static final Block VERY_STRONG_COBBLE_WALL = createWallBlock(VERY_STRONG_COBBLESTONE);
 	
-	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLESTONE, GeoSubstance.LIMESTONE);
-	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.GRANITE);
-	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.MARBLE);
+	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLESTONE, GeoMaterial.LIMESTONE);
+	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoMaterial.GRANITE);
+	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoMaterial.MARBLE);
 	
-	public static final StairsBlock LIMESTONE_BRICK_STAIRS = createStairsBlock(MEDIUM_STONE_BRICK, GeoSubstance.LIMESTONE);
-	public static final StairsBlock GRANITE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoSubstance.GRANITE);
-	public static final StairsBlock MARBLE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoSubstance.MARBLE);
+	public static final StairsBlock LIMESTONE_BRICK_STAIRS = createStairsBlock(MEDIUM_STONE_BRICK, GeoMaterial.LIMESTONE);
+	public static final StairsBlock GRANITE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.GRANITE);
+	public static final StairsBlock MARBLE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.MARBLE);
 	
 	public static final GeoBlock WEAK_RUBBLE = createRubbleBlock(Strength.WEAK);
 	
@@ -80,31 +81,31 @@ public class GeologicaBlocks {
 	public static final GeoBlock CLAY_BRICK = createClayBrickBlock();
 	
 	private static GeoBlock createStoneBlock(Strength strength) {
-		return createGeoBlock("Stone", IntactGeoBlock.class, strength, Composition.AGGREGATE, Material.rock);
+		return createGeoBlock("Stone", IntactGeoBlock.class, strength, Mixture.class, Material.rock);
 	}
 	private static GeoBlock createCobbleBlock(Strength strength) {
-		return createGeoBlock("Cobble", BrokenGeoBlock.class, strength, Composition.AGGREGATE, Material.rock);
+		return createGeoBlock("Cobble", BrokenGeoBlock.class, strength, Mixture.class, Material.rock);
 	}
 	private static GeoBlock createStoneBrickBlock(Strength strength) {
-		return createGeoBlock("StoneBrick", BrickGeoBlock.class, strength, Composition.AGGREGATE, Material.rock);
+		return createGeoBlock("StoneBrick", BrickGeoBlock.class, strength, Mixture.class, Material.rock);
 	}
 	private static GeoBlock createRubbleBlock(Strength strength) {
-		return createGeoBlock("Rubble", LooseGeoBlock.class, strength, Composition.AGGREGATE, Material.rock);
+		return createGeoBlock("Rubble", LooseGeoBlock.class, strength, Mixture.class, Material.rock);
 	}
 	private static GeoBlock createOreSandBlock() {
-		return createGeoBlock("OreSand", LooseGeoBlock.class, Strength.WEAK, Composition.ORE, Material.sand);
+		return createGeoBlock("OreSand", LooseGeoBlock.class, Strength.WEAK, Ore.class, Material.sand);
 	}
 	private static GeoBlock createOreRockBlock(Strength strength) {
-		return createGeoBlock("OreRock", IntactGeoBlock.class, strength, Composition.ORE, Material.rock);
+		return createGeoBlock("OreRock", IntactGeoBlock.class, strength, Ore.class, Material.rock);
 	}
 	private static GeoBlock createClayBlock() {
-		return createGeoBlock("Clay", IntactGeoBlock.class, Strength.WEAK, Composition.AGGREGATE, Material.clay);
+		return createGeoBlock("Clay", IntactGeoBlock.class, Strength.WEAK, Mixture.class, Material.clay);
 	}
 	private static GeoBlock createOreClayBlock() {
-		return createGeoBlock("OreClay", IntactGeoBlock.class, Strength.WEAK, Composition.ORE, Material.clay);
+		return createGeoBlock("OreClay", IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.clay);
 	}
 	private static GeoBlock createClayBrickBlock() {
-		return createGeoBlock("ClayBrick", BrickGeoBlock.class, Strength.WEAK, Composition.AGGREGATE, Material.clay);
+		return createGeoBlock("ClayBrick", BrickGeoBlock.class, Strength.WEAK, Mixture.class, Material.clay);
 	}
 	
 	public static List<Block> getBlocks() {
@@ -132,10 +133,10 @@ public class GeologicaBlocks {
 		return block;
 	}
 	
-	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoSubstance substance) {
-		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
+	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoMaterial material) {
+		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + material.getLowerName();
 		int id = ConfigIDProvider.getInstance().nextBlockID(name);
-		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMeta(substance));
+		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMeta(material));
 		block.setUnlocalizedName(name);
 		return block;
 	}
@@ -144,11 +145,11 @@ public class GeologicaBlocks {
 		return blockClass.getSimpleName().replaceAll("Block$", "");
 	}
 	
-	private static GeoBlock createGeoBlock(String suffix, Class<? extends GeoBlock> blockClass, Strength strength, Composition composition, Material material) {
+	private static GeoBlock createGeoBlock(String suffix, Class<? extends GeoBlock> blockClass, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		GeoBlock block = null;
 		String name = strength.getCamelName() + suffix;
 		try {
-			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, Composition.class, Material.class);
+			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, Class.class, Material.class);
 			int id = ConfigIDProvider.getInstance().nextBlockID(name);
 			block = constructor.newInstance(id, strength, composition, material);
 			block.setUnlocalizedName(name);

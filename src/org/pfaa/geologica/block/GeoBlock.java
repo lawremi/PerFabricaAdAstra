@@ -7,23 +7,23 @@ import java.util.List;
 import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
-	private List<GeoSubstance> substances = new ArrayList<GeoSubstance>();
+	private List<GeoMaterial> materials = new ArrayList<GeoMaterial>();
 	
 	private Strength strength;
-	private Composition composition;
+	private Class<? extends IndustrialMaterial> composition;
 	
-	public GeoBlock(int id, Strength strength, Composition composition, Material material) {
+	public GeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(id, material);
 		this.strength = strength;
 		this.composition = composition;
@@ -106,7 +106,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 			break;
 		case STRONG:
 			level = 1;
-			if (composition != Composition.AGGREGATE)
+			if (!hasComposition(Mixture.class))
 				level++;
 			break;
 		case VERY_STRONG:
@@ -117,42 +117,46 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return level;
 	}
 
+	public boolean hasComposition(Class<? extends IndustrialMaterial> composition) {
+		return composition.isAssignableFrom(this.composition);
+	}
+
 	private void setSubstances() {
-		List<GeoSubstance> substances = GeoSubstance.lookup(strength, composition, blockMaterial);
-		if (substances.size() > 16 || substances.size() < 1)
-			throw new IllegalArgumentException("GeoBlock only supports 1-16 substances");
-		this.substances.clear();
-		this.substances.addAll(substances);
+		List<GeoMaterial> materials = GeoMaterial.lookup(strength, composition, blockMaterial);
+		if (materials.size() > 16 || materials.size() < 1)
+			throw new IllegalArgumentException("GeoBlock only supports 1-16 materials");
+		this.materials.clear();
+		this.materials.addAll(materials);
 	}
 	
-	public List<GeoSubstance> getSubstances() {
-		return Collections.unmodifiableList(substances);
+	public List<GeoMaterial> getSubstances() {
+		return Collections.unmodifiableList(materials);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#getSubstance(int)
 	 */
 	@Override
-	public GeoSubstance getSubstance(int meta) {
-		return substances.get(meta);
+	public GeoMaterial getSubstance(int meta) {
+		return materials.get(meta);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#containsSubstance(org.pfaa.geologica.GeoSubstance)
 	 */
 	@Override
-	public boolean containsSubstance(GeoSubstance substance) {
-		return substances.contains(substance);
+	public boolean containsSubstance(GeoMaterial material) {
+		return materials.contains(material);
 	}
 	
 	@Override
-	public int getMeta(GeoSubstance substance) {
-		return substances.indexOf(substance);
+	public int getMeta(GeoMaterial material) {
+		return materials.indexOf(material);
 	}
 	
 	@Override
 	public int getMetaCount() {
-		return substances.size();
+		return materials.size();
 	}
 
 	@Override
@@ -160,15 +164,15 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return getSubstance(meta).getLowerName();
 	}
 
-	public ItemStack getItemStack(GeoSubstance substance) {
-		return new ItemStack(this, 1, getMeta(substance));
+	public ItemStack getItemStack(GeoMaterial material) {
+		return new ItemStack(this, 1, getMeta(material));
 	}
 
 	public Strength getStrength() {
 		return strength;
 	}
 
-	public Composition getComposition() {
+	public Class<? extends IndustrialMaterial> getComposition() {
 		return composition;
 	}
 

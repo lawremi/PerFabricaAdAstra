@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,10 +18,10 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.chemica.model.Chemicals;
-import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.Molecule.Molecules;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.BrickGeoBlock;
@@ -36,12 +34,12 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.IC2Integration;
 import org.pfaa.geologica.integration.TEIntegration;
-import org.pfaa.geologica.processing.CrudeMaterials;
-import org.pfaa.geologica.processing.SmeltingTemperature;
+import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.Ore.SmeltingTemperature;
 
 import com.google.common.base.CaseFormat;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeRegistration {
@@ -86,9 +84,7 @@ public class RecipeRegistration {
 						ingredients[i] = material;
 					}
 				}
-				int width = ModLoader.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "width");
-				int height = ModLoader.getPrivateValue(ShapedOreRecipe.class, shapedRecipe, "height");
-				recipes.add(RecipeUtils.createOreRecipe(damaged, ingredients, width, height));
+				recipes.add(RecipeUtils.recreateOreRecipe(shapedRecipe, damaged, ingredients));
 				break;
 			}
 		}
@@ -100,6 +96,7 @@ public class RecipeRegistration {
 	}
 
 	private static void addSmeltingRecipes() {
+		addSmeltingRecipesByMeta(GeologicaBlocks.WEAK_RUBBLE, GeologicaBlocks.WEAK_STONE, SmeltingTemperature.MEDIUM);
 		addSmeltingRecipesByMeta(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_STONE, SmeltingTemperature.MEDIUM);
 		addSmeltingRecipesByMeta(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_STONE, SmeltingTemperature.HIGH);
 	}
@@ -129,29 +126,28 @@ public class RecipeRegistration {
 	}
 
 	private static void addCobbleGrindingRecipes() {
-		addCobbleGrindingRecipe(GeoSubstance.ANDESITE, Block.sand, CrudeMaterials.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.BRECCIA, new ItemStack(Block.gravel, 2));
-		addCobbleGrindingRecipe(GeoSubstance.CARBONATITE, Block.sand, Chemicals.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoSubstance.CONGLOMERATE, new ItemStack(Block.sand), new ItemStack(Block.gravel), 1.0);
-		addCobbleGrindingRecipe(GeoSubstance.CLAYSTONE, new ItemStack(GeologicaItems.CLAY_DUST, 2));
-		addCobbleGrindingRecipe(GeoSubstance.DIORITE, Block.sand, CrudeMaterials.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.GABBRO, Block.sand, CrudeMaterials.FELDSPAR, 0.2);
-		addCobbleGrindingRecipe(GeoSubstance.GNEISS, Block.sand, CrudeMaterials.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.GABBRO, Block.sand, CrudeMaterials.FELDSPAR, 0.2);
-		addCobbleGrindingRecipe(GeoSubstance.GRANITE, Block.sand, CrudeMaterials.QUARTZ, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.GREENSCHIST, Block.sand, CrudeMaterials.CHRYSOTILE, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.HORNFELS, Block.sand, CrudeMaterials.MICA, 0.2);
-		addCobbleGrindingRecipe(GeoSubstance.LIMESTONE, Block.sand, Chemicals.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoSubstance.MARBLE, Block.sand, Chemicals.CaCO3, 1.0);
-		addCobbleGrindingRecipe(GeoSubstance.MUDSTONE, new ItemStack(Block.sand), new ItemStack(GeologicaItems.CLAY_DUST), 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.PEGMATITE, CrudeMaterials.FELDSPAR, CrudeMaterials.QUARTZ, 1.0);
-		addCobbleGrindingRecipe(GeoSubstance.PERIDOTITE, Block.sand, CrudeMaterials.OLIVINE, 0.5);
-		addCobbleGrindingRecipe(GeoSubstance.RHYOLITE, Block.sand, CrudeMaterials.QUARTZ, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.SCHIST, Block.sand, CrudeMaterials.MICA, 0.2);
-		addCobbleGrindingRecipe(GeoSubstance.SERPENTINITE, Block.sand, CrudeMaterials.CHRYSOTILE, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.SLATE, Block.sand, CrudeMaterials.MICA, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.SKARN, Block.sand, CrudeMaterials.WOLLASTONITE, 0.1);
-		addCobbleGrindingRecipe(GeoSubstance.QUARTZITE, new ItemStack(Block.sand, 2));
+		addCobbleGrindingRecipe(GeoMaterial.ANDESITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.BRECCIA, new ItemStack(Block.gravel, 2));
+		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Block.sand, Molecules.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Block.sand), new ItemStack(Block.gravel), 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.CLAYSTONE, new ItemStack(GeologicaItems.CLAY_DUST, 2));
+		addCobbleGrindingRecipe(GeoMaterial.DIORITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GABBRO, Block.sand, IndustrialMinerals.FELDSPAR, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.GNEISS, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GRANITE, Block.sand, IndustrialMinerals.QUARTZ, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GREENSCHIST, Block.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.HORNFELS, Block.sand, IndustrialMinerals.MICA, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.LIMESTONE, Block.sand, Molecules.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.MARBLE, Block.sand, Molecules.CaCO3, 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.MUDSTONE, new ItemStack(Block.sand), new ItemStack(GeologicaItems.CLAY_DUST), 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.PEGMATITE, IndustrialMinerals.FELDSPAR, IndustrialMinerals.QUARTZ, 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.PERIDOTITE, Block.sand, IndustrialMinerals.OLIVINE, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.RHYOLITE, Block.sand, IndustrialMinerals.QUARTZ, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SCHIST, Block.sand, IndustrialMinerals.MICA, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.SERPENTINITE, Block.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SLATE, Block.sand, IndustrialMinerals.MICA, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SKARN, Block.sand, IndustrialMinerals.WOLLASTONITE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.QUARTZITE, new ItemStack(Block.sand, 2));
 	}
 
 	private static void addStoneGrindingRecipes() {
@@ -225,26 +221,26 @@ public class RecipeRegistration {
 	}
 	
 	private static void oreDictify(GeoBlock block) {
-		if (block.getComposition() == Composition.AGGREGATE) {
+		if (block.hasComposition(Mixture.class)) {
 			oreDictifyAggregate(block);
-		} else if (block.getComposition() == Composition.ORE) {
+		} else if (block.hasComposition(Ore.class)) {
 			oreDictifyOre(block);
 		}
 	}
 
 	private static void oreDictifyOre(GeoBlock block) {
-		for (GeoSubstance substance : block.getSubstances()) {
-			oreDictifyOre(block, substance);
+		for (GeoMaterial material : block.getSubstances()) {
+			oreDictifyOre(block, material);
 		}
 	}
 
-	private static void oreDictifyOre(GeoBlock block, GeoSubstance substance) {
-		String postfix = substance.getOreDictKey();
+	private static void oreDictifyOre(GeoBlock block, GeoMaterial material) {
+		String postfix = material.getOreDictKey();
 		if (postfix == null) {
-			postfix = substance.getLowerName();
+			postfix = material.getLowerName();
 		}
 		String key = "ore" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
-		OreDictionary.registerOre(key, block.getItemStack(substance));
+		OreDictionary.registerOre(key, block.getItemStack(material));
 	}
 
 	private static String getAggregateOreDictKey(GeoBlock block) {
@@ -294,46 +290,46 @@ public class RecipeRegistration {
 		return null;
 	}
 
-	private static void addCobbleGrindingRecipe(GeoSubstance substance,
-			CrudeMaterials primaryDust, CrudeMaterials secondaryDust, double secondaryChance) {
-		addCobbleGrindingRecipe(substance, GeologicaItems.CRUDE_DUST.getItemStack(primaryDust, 2), secondaryDust, 
+	private static void addCobbleGrindingRecipe(GeoMaterial material,
+			IndustrialMinerals primaryDust, IndustrialMinerals secondaryDust, double secondaryChance) {
+		addCobbleGrindingRecipe(material, GeologicaItems.CRUDE_DUST.getItemStack(primaryDust, 2), secondaryDust, 
 				secondaryChance);
 	}
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, Block primaryOutput, 
-			CrudeMaterials secondaryDust, double secondaryChance) {
-		addCobbleGrindingRecipe(substance, new ItemStack(primaryOutput),  secondaryDust, secondaryChance);
+	private static void addCobbleGrindingRecipe(GeoMaterial material, Block primaryOutput, 
+			IndustrialMinerals secondaryDust, double secondaryChance) {
+		addCobbleGrindingRecipe(material, new ItemStack(primaryOutput),  secondaryDust, secondaryChance);
 	}
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, ItemStack primaryOutput, 
-			CrudeMaterials secondaryDust, double secondaryChance) {
+	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
+			IndustrialMinerals secondaryDust, double secondaryChance) {
 		ItemStack secondaryOutput = GeologicaItems.CRUDE_DUST.getItemStack(secondaryDust);
-		addCobbleGrindingRecipe(substance, primaryOutput, secondaryOutput, secondaryChance);
+		addCobbleGrindingRecipe(material, primaryOutput, secondaryOutput, secondaryChance);
 	}
 	
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, Block primaryOutput, 
-			Chemicals secondaryDust, double secondaryChance) {
-		addCobbleGrindingRecipe(substance, new ItemStack(primaryOutput),  secondaryDust, secondaryChance);
+	private static void addCobbleGrindingRecipe(GeoMaterial material, Block primaryOutput, 
+			Molecules secondaryDust, double secondaryChance) {
+		addCobbleGrindingRecipe(material, new ItemStack(primaryOutput),  secondaryDust, secondaryChance);
 	}
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, ItemStack primaryOutput, 
-			Chemicals secondaryDust, double secondaryChance) {
+	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
+			Molecules secondaryDust, double secondaryChance) {
 		ItemStack secondaryOutput = ChemicaItems.DUST.getItemStack(secondaryDust);
-		addCobbleGrindingRecipe(substance, primaryOutput, secondaryOutput, secondaryChance);
+		addCobbleGrindingRecipe(material, primaryOutput, secondaryOutput, secondaryChance);
 	}
 	
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, ItemStack primaryOutput, 
+	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
 			ItemStack secondaryOutput, double secondaryChance) 
 	{
-		ItemStack input = getCobbleBlock(substance.getStrength()).getItemStack(substance);
-		addGrindingRecipe(input, primaryOutput, secondaryOutput, secondaryChance, substance.getStrength());
+		ItemStack input = getCobbleBlock(material.getStrength()).getItemStack(material);
+		addGrindingRecipe(input, primaryOutput, secondaryOutput, secondaryChance, material.getStrength());
 	}
-	private static void addCobbleGrindingRecipe(GeoSubstance substance, ItemStack primaryOutput) 
+	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput) 
 	{
-		ItemStack input = getCobbleBlock(substance.getStrength()).getItemStack(substance);
-		addGrindingRecipe(input, primaryOutput, null, 0, substance.getStrength());
+		ItemStack input = getCobbleBlock(material.getStrength()).getItemStack(material);
+		addGrindingRecipe(input, primaryOutput, null, 0, material.getStrength());
 	}
 
 	private static void addStoneGrindingRecipes(GeoBlock intact, GeoBlock broken) {
-		for (GeoSubstance substance : intact.getSubstances()) {
-			addGrindingRecipe(intact.getItemStack(substance), broken.getItemStack(substance), null, 0, intact.getStrength());
+		for (GeoMaterial material : intact.getSubstances()) {
+			addGrindingRecipe(intact.getItemStack(material), broken.getItemStack(material), null, 0, intact.getStrength());
 		}
 	}
 	

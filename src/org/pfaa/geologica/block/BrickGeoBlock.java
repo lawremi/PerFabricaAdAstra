@@ -1,15 +1,13 @@
 package org.pfaa.geologica.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeologicaTextures;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class BrickGeoBlock extends GeoBlock {
 
-	public BrickGeoBlock(int id, Strength strength, Composition composition, Material material) {
+	public BrickGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(id, strength, composition, material);
 	}
 

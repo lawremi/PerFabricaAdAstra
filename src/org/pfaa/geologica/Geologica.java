@@ -19,7 +19,6 @@ import cpw.mods.fml.common.network.NetworkMod;
 	 name = "Geologica", 
 	 version = "@VERSION@",
 	 acceptedMinecraftVersions = "@MCVERSION@")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class Geologica {
 
 	@Instance("PFAAGeologica")
@@ -29,8 +28,8 @@ public class Geologica {
 		return instance;
 	}
 	
-	@SidedProxy(clientSide = "org.pfaa.geologica.client.ClientRegistrant", 
-			    serverSide = "org.pfaa.geologica.CommonRegistrant")
+	@SidedProxy(clientSide = "org.pfaa.geologica.client.registration.ClientRegistrant", 
+			    serverSide = "org.pfaa.geologica.registration.CommonRegistrant")
 	public static Registrant registrant;
 	
 	private Configuration configuration;

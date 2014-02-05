@@ -1,4 +1,4 @@
-package org.pfaa.geologica.client;
+package org.pfaa.geologica.client.registration;
 
 import org.pfaa.geologica.registration.CommonRegistrant;
 

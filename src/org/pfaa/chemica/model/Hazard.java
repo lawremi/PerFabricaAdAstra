@@ -5,10 +5,10 @@ public class Hazard {
 		NONE, OXIDIZER, WATER_REACTIVE, SIMPLE_ASPHYXIANT, CORROSIVE, BIOHAZARD, POISONOUS, RADIOACTIVE, CRYOGENIC
 	}
 	
-	private int health;
-	private int flammability;
-	private int instability;
-	private SpecialCode special;
+	public final int health;
+	public final int flammability;
+	public final int instability;
+	public final SpecialCode special;
 	
 	public Hazard(int health, int flammability, int instability, SpecialCode special) {
 		if (health < 0 || health > 4)

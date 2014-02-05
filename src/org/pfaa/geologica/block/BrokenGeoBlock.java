@@ -2,14 +2,13 @@ package org.pfaa.geologica.block;
 
 import net.minecraft.block.material.Material;
 
-import org.pfaa.geologica.GeoSubstance.Strength;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeologicaTextures;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class BrokenGeoBlock extends GeoBlock {
 
-	public BrokenGeoBlock(int id, Strength strength, Composition substanceType, Material material) {
-		super(id, strength, substanceType, material);
+	public BrokenGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> materialType, Material material) {
+		super(id, strength, materialType, material);
 	}
 
 	@Override
