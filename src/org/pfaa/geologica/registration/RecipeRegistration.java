@@ -262,8 +262,11 @@ public class RecipeRegistration {
 		oreDictifyOre(postfix, block.getItemStack(substance));
 	}
 	
+	private static String oreDictKey(String prefix, String postfix) {
+		return prefix + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
+	}
 	private static void oreDictifyOre(String postfix, ItemStack itemStack) {
-		String key = "ore" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
+		String key = oreDictKey("ore", postfix);
 		OreDictionary.registerOre(key, itemStack);
 		ItemStack smeltingOutput = getSmeltingOutput(key);
 		if (smeltingOutput != null) {
@@ -299,15 +302,16 @@ public class RecipeRegistration {
 	}
 	
 	private static void oreDictify(ProxyBlock block) {
-		String postfix = null;
+		String prefix = null;
 		if (block instanceof StairsBlock) {
-			postfix = "Stair";
+			prefix = "stair";
 		} else if (block instanceof SlabBlock) {
-			postfix = "Slab";
+			prefix = "slab";
 		} else if (block instanceof WallBlock) {
-			postfix = "Wall";
+			prefix = "wall";
 		}
-		String key = getAggregateOreDictKey((GeoBlock)block.getModelBlock()) + postfix;
+		String postfix = getAggregateOreDictKey((GeoBlock)block.getModelBlock());
+		String key = oreDictKey(prefix, postfix);
 		OreDictionary.registerOre(key, new ItemStack((Block)block, 1, OreDictionary.WILDCARD_VALUE));
 	}
 
