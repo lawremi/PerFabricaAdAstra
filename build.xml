@@ -2,7 +2,7 @@
   <!-- Properties -->
 
   <property name="mc.version" value="1.6.4"/>
-  <property name="forge.version" value="9.11.1.934"/>
+  <property name="forge.version" value="9.11.1.965"/>
   
   <property name="mod.name" value="${ant.project.name}"/>
 
@@ -20,9 +20,9 @@
   <property name="mcp.dir" value="${forge.dir}/mcp"/>
   
   <property name="mcpsrc.dir" value="${mcp.dir}/src"/>
-    
+
   <property name="forge.name"
-            value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
+            value="forge-${mc.version}-${forge.version}-src.zip"/>
   
   <available property="forge-exists" file="${download.dir}/${forge.name}"/>
   <available file="${src.dir}/.git" type="dir" property="git.present"/>
@@ -89,13 +89,13 @@
   
   <!-- Download necessary files -->
   <target name="download-files" depends="download-forge"/>
-  
+
   <!-- Download forge (if it doesn't exist) -->
   <target name="download-forge" unless="forge-exists">
-    <get src="http://files.minecraftforge.net/${forge.name}"
+    <get src="http://files.minecraftforge.net/maven/net/minecraftforge/forge/${mc.version}-${forge.version}/${forge.name}"
          dest="${download.dir}" usetimestamp="True"/>
   </target>
-  
+
   <!-- Setup mcp and forge -->
   <target name="setup" depends="download-files" if="out-of-date">
     
