@@ -36,12 +36,13 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 		this.setHardness(modelBlock.getBlockHardness(null, 0, 0, 0));
 		this.setResistance(modelBlock.getBlockResistance());
 		this.setStepSound(modelBlock.stepSound);
+		this.setLightOpacity(0); // workaround for lighting issue
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return modelBlock.getIcon(side, meta);
+		return modelBlock.getIcon(side, meta & 7);
 	}
 
 	@Override
@@ -50,13 +51,13 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 	}
 
 	@Override
-	protected ItemStack createStackedBlock(int par1) {
-		return new ItemStack(this.blockID, 2, par1);
+	protected ItemStack createStackedBlock(int meta) {
+		return new ItemStack(this.blockID, 2, meta & 7);
 	}
 
 	@Override
 	public String getFullSlabName(int meta) {
-		return super.getUnlocalizedName() + "." + modelBlock.getBlockNameSuffix(meta);
+		return super.getUnlocalizedName() + "." + modelBlock.getBlockNameSuffix(meta & 7);
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 
 	@Override
 	public String getBlockNameSuffix(int meta) {
-		return modelBlock.getBlockNameSuffix(meta);
+		return modelBlock.getBlockNameSuffix(meta & 7);
 	}
 
 }
