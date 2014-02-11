@@ -327,7 +327,9 @@
     | Reed                |                              | BOP           | Swamp                            |     1 | Eat anything                        |                            |
     | Rose Apple          |                              |               | Tropical forests                 |   2-3 | Eat like an apple, but tropical!    |                            |
     | Saskatoon berry     |                              |               | Low altitude mountain terrain    |     2 | Eat fruit                           |                            |
+    | Saxaul              |                              |               | Desert                           |     - | Water from bark                     |                            |
     | Sea Orach           |                              |               | Tropical scrub, steppe, desert   |     1 | Eat leaves                          |                            |
+    | Sicklepod           |                              |               | Fields (weed)                    |     1 | Eat leaves, meat substitute         | Tea is medicinal           |
     | (Wild) Sorghum      |                              |               | Plains                           |     - | Use as wheat substitute             |                            |
     | Sterculia tree      |                              |               | Tropical forest                  |     2 | Eat seed pods                       |                            |
     | Stonecrop           |                              |               | Temperate                        |     1 | Eat leaves                          |                            |
@@ -356,6 +358,7 @@
     | Wild rice           |                              | PHC           | Tropical                         |     2 | Eat rice                            |                            |
     | Wild rose           |                              | Vanilla       | -                                |     1 | Eat flower                          |                            |
     | Winged Bean         |                              |               | Tropical plains                  |     2 | Eat beans (2), tuber (4)            |                            |
+    | Wooly lousewort     |                              |               | Tundra                           |     2 | Eat steam after steaming            |                            |
     | Yam                 |                              |               | Tropical, coniferous forests     |     3 | Boil root                           |                            |
     | Yam bean            |                              |               | Tropical                         |     3 | Eat tuber, better boiled            |                            |
 
@@ -2109,10 +2112,11 @@
      exothermic). Ignition occurs between 500-700 C and reaches in
      excess of 1300 C. The slag is 2MgF2.
      
-     For enrichment, the UF4 is instead oxidized with fluorine to
-     UF6 and purified by fractional distillation. UF6 then is brought
-     back to UO2 by reacting as a gas with water vapor to UO2F2-H2O,
-     which is reduced with H2 gas to UO2.
+     For enrichment, the UF4 is instead oxidized with fluorine to UF6
+     and enriched for 235 by fractional distillation or one of the
+     other enrichment methods. UF6 then is brought back to UO2 by
+     reacting as a gas with water vapor to UO2F2-H2O, which is reduced
+     with H2 gas to UO2.
      
 **** Molybdenum
 **** Vanadate
@@ -3891,6 +3895,8 @@
 ** TODO Figure out Thaumcraft aspects for minerals
 ** TODO Compatibility with GT
    http://forum.industrial-craft.net/index.php?page=PMView&pmID=17212&s=dedc43669a7d9e2e9149907f08ddc2d6bf5cb819#pm17212
+** TODO Think about a saltpeter/KNO3 farming system
+   * Like RC, except in tropical climates, with dead plant matter.
    
 * Stats
 
@@ -3956,63 +3962,3 @@
 | (255:3)  | Conglomerate    |   5700032 |    166.79 |        |              |
 | (255:4)  | Mudstone        |  76833533 |   2248.24 |        |              |
   #+TBLFM: $4=$3/34175; %.2f     
-
-
-  222:0)   Future Block!                : 
-(222:3)   Future Block!                 :  
-(222:4)   Future Block!                 :  
-(222:5)   Future Block!                 :  
-(223:0)   Future Block!                 :  
-(224:0)   Future Block!                 :  
-(224:2)   Future Block!                 :  
-(224:4)   Future Block!                 :  
-(224:5)   Future Block!                 :  
-(224:6)   Future Block!                 :  
-(224:8)   Future Block!                 :  
-(224:9)   Future Block!                 :  
-(224:10)  Future Block!                 :  
-(225:1)   Future Block!                 :  
-(225:2)   Future Block!                 :  
-(225:3)   Future Block!                 :  
-(225:4)   Future Block!                 :  
-(225:5)   Future Block!                 :  
-(225:6)   Future Block!                 :  
-(225:7)   Future Block!                 :  
-(225:8)   Future Block!                 :  
-(225:9)   Future Block!                 :  
-(225:11)  Future Block!                 :  
-(225:12)  Future Block!                 :  
-(226:2)   Future Block!                 :  
-(226:3)   Future Block!                 :  
-(226:4)   Future Block!                 :  
-(226:5)   Future Block!                 :  
-(226:10)  Future Block!                 :  
-(226:12)  Future Block!                 :  
-(227:0)   Future Block!                 :  
-(227:1)   Future Block!                 :  
-(227:2)   Future Block!                 :  
-(227:3)   Future Block!                 :  
-(227:4)   Future Block!                 :  
-(252:0)   Future Block!                 :  
-(252:1)   Future Block!                 :  
-(252:2)   Future Block!                 :  
-(252:3)   Future Block!                 :  
-(252:4)   Future Block!                 :  
-(253:0)   Future Block!                 :  
-(253:1)   Future Block!                 :  
-(253:2)   Future Block!                 :  
-(253:3)   Future Block!                 :  
-(253:4)   Future Block!                 :  
-(253:5)   Future Block!                 :  
-(253:6)   Future Block!                 :  
-(253:7)   Future Block!                 :  
-(254:0)   Future Block!                 :  
-(254:1)   Future Block!                 :  
-(254:2)   Future Block!                 :  
-(254:3)   Future Block!                 :  
-(254:4)   Future Block!                 :  
-(255:0)   Future Block!                 :  
-(255:1)   Future Block!                 :  
-(255:2)   Future Block!                 :  
-(255:3)   Future Block!                 :  
-(255:4)   Future Block!                 :  
