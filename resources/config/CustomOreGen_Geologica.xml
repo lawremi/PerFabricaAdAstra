@@ -473,6 +473,7 @@
             <BiomeSet inherits='dome'/>
             <Replaces block='stone'/>
             <Replaces block='dirt'/>
+            <Replaces block='grass'/>
           </SubstitutePreset>
         </ConfigSection>
 
