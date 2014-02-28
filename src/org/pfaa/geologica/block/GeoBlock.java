@@ -16,6 +16,7 @@ import org.pfaa.block.CompositeBlock;
 import org.pfaa.geologica.GeoSubstance;
 import org.pfaa.geologica.GeoSubstance.Composition;
 import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.geologica.Geologica;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
@@ -97,25 +98,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	private int getHarvestLevel() {
-		int level = 0;
-		switch(strength) {
-		case WEAK:
-			level = 0;
-			break;
-		case MEDIUM:
-			level = 1;
-			break;
-		case STRONG:
-			level = 1;
-			if (composition != Composition.AGGREGATE)
-				level++;
-			break;
-		case VERY_STRONG:
-			level = 2;
-			break;
-		default:
-		}
-		return level;
+		return Geologica.getConfiguration().getHarvestLevel(this.composition, this.strength);
 	}
 
 	private void setSubstances() {

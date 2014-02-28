@@ -14,7 +14,7 @@ public class ItemCatalog {
 		try {
 			Constructor<T> constructor = itemClass.getConstructor(int.class);
 			String name = nameForItemClass(itemClass);
-			int id = ConfigIDProvider.getInstance().nextItemID(name);
+			int id = Geologica.getConfiguration().nextItemID(name);
 			item = constructor.newInstance(id);
 			item.setUnlocalizedName(name);
 		} catch (Exception e) {

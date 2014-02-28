@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
@@ -52,27 +53,33 @@ public class RecipeRegistration {
 		addGrindingRecipes();
 		addMeltingRecipes();
 		addStoneToolRecipes();
+		addStoneAbstractionRecipesForBrokenMods();
 	}
 	
+	private static void addStoneAbstractionRecipesForBrokenMods() {
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.cobblestone), "cobblestone"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.stone), "stone"));
+	}
+
 	private static void addStoneToolRecipes() {
-		addStoneToolRecipes(GeologicaBlocks.WEAK_RUBBLE, 0.75F);
-		addStoneToolRecipes(GeologicaBlocks.MEDIUM_COBBLESTONE, 0.50F);
-		addStoneToolRecipes(GeologicaBlocks.STRONG_COBBLESTONE, 0F);
-		addStoneToolRecipes(GeologicaBlocks.VERY_STRONG_COBBLESTONE, 0F);
+		addStoneToolRecipes(GeologicaBlocks.WEAK_RUBBLE);
+		addStoneToolRecipes(GeologicaBlocks.MEDIUM_COBBLESTONE);
+		addStoneToolRecipes(GeologicaBlocks.STRONG_COBBLESTONE);
+		addStoneToolRecipes(GeologicaBlocks.VERY_STRONG_COBBLESTONE);
 		if (Loader.isModLoaded("TConstruct"))
 			TCIntegration.addStoneMaterials();
 	}
 
-	private static void addStoneToolRecipes(GeoBlock block, float damage) {
-		addStoneToolRecipe(block, Item.pickaxeStone, damage);
-		addStoneToolRecipe(block, Item.axeStone, damage);
-		addStoneToolRecipe(block, Item.shovelStone, damage);
-		addStoneToolRecipe(block, Item.hoeStone, damage);
-		addStoneToolRecipe(block, Item.swordStone, damage);
+	private static void addStoneToolRecipes(GeoBlock block) {
+		addStoneToolRecipe(block, Item.pickaxeStone);
+		addStoneToolRecipe(block, Item.axeStone);
+		addStoneToolRecipe(block, Item.shovelStone);
+		addStoneToolRecipe(block, Item.hoeStone);
+		addStoneToolRecipe(block, Item.swordStone);
 	}
 
-	private static void addStoneToolRecipe(GeoBlock block, Item tool, float damage) {
-		ItemStack damaged = new ItemStack(tool, 1, (int)(damage * tool.getMaxDamage()));
+	private static void addStoneToolRecipe(GeoBlock block, Item tool) {
+		ItemStack damaged = new ItemStack(tool, 1, (int)(getInitialStoneToolDamage(block.getStrength()) * tool.getMaxDamage()));
 		ItemStack material = new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE);
 		ItemStack cobblestone = new ItemStack(Block.cobblestone, 1, OreDictionary.WILDCARD_VALUE);
 		List<IRecipe> recipes = (List<IRecipe>)CraftingManager.getInstance().getRecipeList();
@@ -103,6 +110,10 @@ public class RecipeRegistration {
 		}
 	}
 
+	private static float getInitialStoneToolDamage(Strength strength) {
+		return Geologica.getConfiguration().getInitialStoneToolDamage(strength);
+	}
+	
 	private static void registerOres() {
 		oreDictifyGeoBlocks();
 	}

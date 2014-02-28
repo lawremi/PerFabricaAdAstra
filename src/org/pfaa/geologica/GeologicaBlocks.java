@@ -4,14 +4,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-import org.pfaa.ConfigIDProvider;
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.GeoSubstance.Composition;
 import org.pfaa.geologica.GeoSubstance.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
@@ -23,7 +20,6 @@ import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;
 
 public class GeologicaBlocks {
@@ -141,7 +137,7 @@ public class GeologicaBlocks {
 	private static SlabBlock createSlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
 		String doubleToken = singleSlab == null ? "" : "Double";
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + doubleToken + nameForBlockClass(SlabBlock.class);
-		int id = ConfigIDProvider.getInstance().nextBlockID(name);
+		int id = Geologica.getConfiguration().nextBlockID(name);
 		SlabBlock block = new SlabBlock(id, modelBlock, singleSlab);
 		block.setUnlocalizedName(name);
 		return block;
@@ -149,7 +145,7 @@ public class GeologicaBlocks {
 	
 	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoSubstance substance) {
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
-		int id = ConfigIDProvider.getInstance().nextBlockID(name);
+		int id = Geologica.getConfiguration().nextBlockID(name);
 		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMeta(substance));
 		block.setUnlocalizedName(name);
 		return block;
@@ -164,7 +160,7 @@ public class GeologicaBlocks {
 		String name = strength.getCamelName() + suffix;
 		try {
 			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, Composition.class, Material.class);
-			int id = ConfigIDProvider.getInstance().nextBlockID(name);
+			int id = Geologica.getConfiguration().nextBlockID(name);
 			block = constructor.newInstance(id, strength, composition, material);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
@@ -179,7 +175,7 @@ public class GeologicaBlocks {
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + nameForBlockClass(blockClass);
 		try {
 			Constructor<T> constructor = blockClass.getConstructor(int.class, CompositeBlock.class);
-			int id = ConfigIDProvider.getInstance().nextBlockID(name);
+			int id = Geologica.getConfiguration().nextBlockID(name);
 			block = constructor.newInstance(id, modelBlock);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {

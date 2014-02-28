@@ -45,9 +45,9 @@ public class Geologica {
 	
 	public static Logger log;
 	
-	private Configuration configuration;
+	private static GeologicaConfiguration configuration;
 	
-	public Configuration getConfiguration() {
+	public static GeologicaConfiguration getConfiguration() {
 		return configuration;
 	}
 	
@@ -56,7 +56,7 @@ public class Geologica {
 	{
 		log = event.getModLog();
 		log.setParent(FMLLog.getLogger());
-		configuration = new Configuration(event.getSuggestedConfigurationFile());
+		configuration = new GeologicaConfiguration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
 		configuration.save();
 	}
