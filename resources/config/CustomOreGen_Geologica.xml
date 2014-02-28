@@ -393,7 +393,7 @@
           <BiomeSet inherits='continental' weight='0.5'/>
           <BiomeSet inherits='oceanic'/>
           <BiomeSet inherits='volcanic'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
         </VeinsPreset>
         
     </ConfigSection>
@@ -1101,7 +1101,7 @@
         <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                  range=':=5/64 * dimension.groundLevel' type='normal'/>
         <Setting name='OreVolumeNoiseCutoff' avg=':=0.6 * _default_'/>
-        <Replaces block='.*Stone.*'/>
+        <ReplacesOre block='stone'/>
       </CloudPreset>
 
       <VeinsPreset name='PresetHintVeinsSed'
@@ -2700,7 +2700,7 @@
                      drawWireframe='false'
                      wireframeColor='0xFF00FF00'>
           <Setting name='DistributionFrequency' avg='1'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='ParentRangeLimit' avg='8' range='2'/>
           <Setting name='CloudHeight'
                    avg=':= 40/64 * dimension.groundLevel'
@@ -2711,7 +2711,7 @@
                      block='StrongOreRock:9'
                      drawWireframe='false'
                      wireframeColor='0xFF0000FF'>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='ParentRangeLimit' avg='8' range='2'/>
           <Setting name='DistributionFrequency' avg=':= 1'/>
           <Setting name='CloudThickness' avg=':= 0.25 * _default_'
@@ -2728,7 +2728,7 @@
                      drawWireframe='false'
                      wireframeColor='0xFF555500'>
           <Setting name='DistributionFrequency' avg='0.005'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='CloudHeight'
                    avg=':= 50/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'/>
@@ -2741,7 +2741,7 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFFFFFF'>
           <Setting name='DistributionFrequency' avg='0.003'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='CloudRadius' avg=':= 1.3 * _default_'
                    range=':= 1.3 * _default_'/>
           <Setting name='CloudHeight'
@@ -2762,7 +2762,7 @@
                    range=':= 10/64 * dimension.groundLevel'/>
           <Setting name='BranchLength' avg=':= 0.5 * _default_'
                    range=':= 0.5 * _default_'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
         </VeinsPreset>
         
       </ConfigSection>
@@ -2876,7 +2876,7 @@
                      inherits='PresetLayeredVeinsVolcanic'
                      drawWireframe='false'
                      wireframeColor='0xFF000000'>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <OreBlock block='StrongOreRock:13' weight='0.75'/>
           <OreBlock block='49' weight='0.25'/> <!-- obsidian -->
           <Setting name='DistributionFrequency' avg='0.02'/>
@@ -2916,7 +2916,7 @@
           <BiomeSet inherits='ocean'/>
           <Replaces block='sand'/>
           <Replaces block='dirt'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <OreBlock block='WeakOreRock:9' weight='0.8'/>
           <!-- sandstone --> <OreBlock block='24' weight='0.2'/>
         </CloudPreset>
@@ -2959,7 +2959,7 @@
                      inherits='PresetMetamorphicContinental'
                      drawWireframe='false'
                      wireframeColor='0xFF000000'>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='CloudHeight' avg='45' range='5'/>
           <Setting name='DistributionFrequency' avg='0.001'/>
         </CloudPreset>
@@ -2999,7 +2999,7 @@
                      drawWireframe='false'
                      wireframeColor='0xFF000000'
                      block='WeakOreRock:10'>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesOre block='stone'/>
           <Setting name='DistributionFrequency' avg='0.003'/>
           <Setting name='MotherlodeHeight' avg='45' range='5'/>
         </VeinsPreset>
