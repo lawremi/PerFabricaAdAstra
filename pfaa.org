@@ -2685,7 +2685,27 @@
     * Are the tropical and plain rainforest mixed up in temp/rain?
     * Mountain has its min/max height set twice?
     * Why are fen and moor not typed as a swamp?
-    
+      
+** Native metals
+   The following native metals are relatively common:
+   * Gold
+   * Silver (usually w/ gold as electrum)
+   * Copper
+     
+   And various PGE metals occur, often as alloys:
+   * Platinum
+   * Osmium (+ Ir, Ru)
+   * Iridium (+ Os + Ru)
+   * Ruthenium (+ Ir)
+   * Palladium (+ Pt)
+   * Rhodium (+ Pt)
+   
+   Native copper (10%), gold (10%), electrum (5%) could be dropped from
+   conglomerate. The other native elements would require more advanced
+   processing. Realistically, copper nuggets are much rarer than gold
+   nuggets, but in terms of gameplay, it would be interesting to force
+   initial copper extraction to nuggets.
+
 ** Extra planets and moons
    Eventually, we want to include all planets (including exoplanets)
    and moons (including psuedo-randomaly generated ones). 
@@ -3916,7 +3936,7 @@
 | (224:9)  | Pitchblende     |     61179 |      1.79 |    1.5 |              |
 | (224:10) | Ferrovanadium   |     39067 |      1.14 |    1.5 |              |
 | (225:1)  | Bastnasite      |     47114 |      1.38 |    1.5 |              |
-| (225:2)  | Copper          |    303014 |      8.87 |     10 | x1.2         |
+| (225:2)  | Chalcopyrite    |    303014 |      8.87 |     10 | x1.2         |
 | (225:3)  | Garnierite      |     25109 |      0.73 |    0.5 |              |
 | (225:4)  | Lepidolite      |    101667 |      2.97 |    2.5 |              |
 | (225:5)  | Magnesite       |    378544 |     11.08 |     10 |              |
