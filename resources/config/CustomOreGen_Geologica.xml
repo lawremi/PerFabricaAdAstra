@@ -457,6 +457,12 @@
                             block='StrongStone:3'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='41' maxHeight='73'/>
+          <SubstitutePreset name='PresetGraniteShield'
+                            block='StrongStone:3'
+                            inherits='PresetPrimaryStratum'
+                            minHeight='41' maxHeight='80'>
+            <Biome name='shield'/> <!-- BOP -->
+          </SubstitutePreset>
           <SubstitutePreset name='PresetGraniteDome'
                             block='StrongStone:3'
                             inherits='PresetPrimaryStratum'
@@ -721,6 +727,11 @@
                        inherits='PresetMetamorphicVolcanic'>
             <Setting name='CloudHeight' avg='25' range='20'/>
           </CloudPreset>
+          <CloudPreset name='PresetGneissShield' block='StrongStone:2'
+                       inherits='PresetMetamorphicContinental'>
+            <Setting name='CloudHeight' avg='55' range='10'/>
+            <Biome name='shield'/>
+          </CloudPreset>
           <SubstitutePreset name='PresetGneissTops' block='StrongStone:2'
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='153' maxHeight='255'>
@@ -946,6 +957,7 @@
                       inherits='PresetGraniteMudstone'/>
           <Substitute name='Mudstone' inherits='PresetMudstone'/>
           <Substitute name='GraniteDome' inherits='PresetGraniteDome'/>
+          <Substitute name='GraniteShield' inherits='PresetGraniteShield'/>
           <Substitute name='MudstoneGranite' inherits='PresetMudstoneGranite'/>
           <Substitute name='MudstoneLimestone'
                       inherits='PresetMudstoneLimestone'/>
@@ -990,7 +1002,8 @@
                  inherits='PresetGreenschistVolcanic'/>
           <Cloud name='SchistVolcanic' inherits='PresetSchistVolcanic'/>
           <Cloud name='GneissVolcanic' inherits='PresetGneissVolcanic'/>
-
+          <Cloud name='GneissShield' inherits='PresetGneissShield'/>
+          
           <Substitute name='GabbroOceanic' inherits='PresetGabbroOceanic'/>
           <Substitute name='GabbroBasalt' inherits='PresetGabbroBasalt'/>
           <Substitute name='Basalt' inherits='PresetBasalt'/>
