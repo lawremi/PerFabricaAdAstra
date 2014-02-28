@@ -90,6 +90,10 @@ public class GeologicaBlocks {
 	public static final GeoBlock ORE_CLAY = createOreClayBlock();
 	public static final GeoBlock CLAY_BRICK = createClayBrickBlock();
 	
+	static {
+		//WEAK_STONE.addChanceDrop(GeoSubstance.CONGLOMERATE, new ChanceDrop().add(0.05, Item.goldNugget).add(0.05, "nuggetCopper"));
+	}
+	
 	private static GeoBlock createStoneBlock(Strength strength) {
 		return createGeoBlock("Stone", IntactGeoBlock.class, strength, Composition.AGGREGATE, Material.rock);
 	}
