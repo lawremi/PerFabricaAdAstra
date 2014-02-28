@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.block.CompositeBlockAccessors;
 
@@ -32,6 +33,7 @@ public class CompositeBlockItem extends ItemBlock {
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
 		CompositeBlockAccessors block = (CompositeBlockAccessors)Block.blocksList[this.getBlockID()];
-		return super.getUnlocalizedName() + "." + block.getBlockNameSuffix(itemStack.getItemDamage());
+		String suffix = itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? "*" : block.getBlockNameSuffix(itemStack.getItemDamage());
+		return super.getUnlocalizedName() + "." + suffix;
 	}
 }
