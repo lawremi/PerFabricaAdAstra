@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.block.CompositeBlock;
@@ -179,6 +180,12 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	@Override
 	public String getModId() {
 		return "geologica";
+	}
+
+	@Override
+	public boolean isGenMineableReplaceable(World world, int x, int y, int z,
+			int target) {
+		return composition == Composition.AGGREGATE;
 	}
 
 }
