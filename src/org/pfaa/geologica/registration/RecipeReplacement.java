@@ -17,9 +17,11 @@ public class RecipeReplacement {
 
 	private static void replaceStoneRecipes() {
 		Map<ItemStack, String> replacements = new HashMap<ItemStack, String>();
-		replacements.put(new ItemStack(Block.cobblestone, 1, OreDictionary.WILDCARD_VALUE), "blockCobble");
-		replacements.put(new ItemStack(Block.stone, 1, OreDictionary.WILDCARD_VALUE), "blockStone");
-		replacements.put(new ItemStack(Block.stoneBrick, 1, OreDictionary.WILDCARD_VALUE), "blockStoneBrick");
+		replacements.put(new ItemStack(Block.cobblestone, 1, OreDictionary.WILDCARD_VALUE), "cobblestone");
+		replacements.put(new ItemStack(Block.cobblestone, 1), "cobblestone");
+		replacements.put(new ItemStack(Block.stone, 1, OreDictionary.WILDCARD_VALUE), "stone");
+		replacements.put(new ItemStack(Block.stone, 1), "stone");
+		replacements.put(new ItemStack(Block.stoneBrick, 1), "stoneBrick");
 		ItemStack[] exclusions = new ItemStack[] {
 			new ItemStack(Block.stoneBrick),
 			new ItemStack(Block.stairsStoneBrick),
@@ -34,7 +36,7 @@ public class RecipeReplacement {
 			new ItemStack(Item.hoeStone),
 			new ItemStack(Item.swordStone)
 		};
-		RecipeUtils.createOreRecipes(replacements, exclusions);
+		RecipeUtils.oreDictifyRecipes(replacements, exclusions);
 	}
 
 }

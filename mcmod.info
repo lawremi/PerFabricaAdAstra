@@ -1,0 +1,17 @@
+{
+  "modinfoversion": 2,
+  "modlist": [{
+    "modid": "PFAAGeologica",
+    "name": "Geologica",
+    "description": "Adds realistic geology in the form of new types of rocks and ores. The distributions are completely customizable, either via the GUI during world creation, or by directly modifying the CustomOreGen config.",
+    "version": "@VERSION@",
+    "mcversion": "@MCVERSION@",
+    "url": "",
+    "updateUrl": "",
+    "authors": [ "noogenesis" ],
+    "credits": "Inspired by TerraFirmaCraft",
+    "parent": "mod_BuildCraftCore",
+    "requiredMods": [ "Forge", "CustomOreGenRevived" ],
+    "useDependencyInformation": "true"
+  }]
+}

@@ -1,14 +1,15 @@
 <project name="PFAA" default="main">
   <!-- Properties -->
 
-  <property name="mc.version" value="1.6.2"/>
-  <property name="forge.version" value="9.10.0.800"/>
+  <property name="mc.version" value="1.6.4"/>
+  <property name="forge.version" value="9.11.1.965"/>
   
   <property name="mod.name" value="Per Fabrica Ad Astra"/>
   <property name="mod.id" value="${ant.project.name}"/>
   
   <property name="build.dir" value="build"/>
   <property name="src.dir" value="${basedir}/src"/>
+  <property name="api.dir" value="${basedir}/api"/>
   <property name="resources.dir" value="${basedir}/resources"/>
   
   <property name="download.dir" value="download"/>
@@ -20,9 +21,9 @@
   <property name="mcp.dir" value="${forge.dir}/mcp"/>
   
   <property name="mcpsrc.dir" value="${mcp.dir}/src"/>
-    
+
   <property name="forge.name"
-            value="minecraftforge-src-${mc.version}-${forge.version}.zip"/>
+            value="forge-${mc.version}-${forge.version}-src.zip"/>
   
   <available property="forge-exists" file="${download.dir}/${forge.name}"/>
   <available file="${src.dir}/.git" type="dir" property="git.present"/>
@@ -89,17 +90,17 @@
   
   <!-- Download necessary files -->
   <target name="download-files" depends="download-forge"/>
-  
+
   <!-- Download forge (if it doesn't exist) -->
   <target name="download-forge" unless="forge-exists">
-    <get src="http://files.minecraftforge.net/${forge.name}"
+    <get src="http://files.minecraftforge.net/maven/net/minecraftforge/forge/${mc.version}-${forge.version}/${forge.name}"
          dest="${download.dir}" usetimestamp="True"/>
   </target>
 
   <!-- Setup mcp and forge -->
   <target name="setup" depends="download-files" if="out-of-date">
     
-    <!-- <delete dir="${forge.dir}" failonerror="false"/> -->
+    <delete dir="${forge.dir}" failonerror="false"/>
     
     <unzip dest="${forge.dir}/.." src="${download.dir}/${forge.name}"/>
     
@@ -118,15 +119,19 @@
   </target>
 
   <target name="clean-src">
-    <delete verbose="true">
+    <delete verbose="false" includeEmptyDirs="true" quiet="true">
       <fileset dir="${mcpsrc.dir}/minecraft">
         <present present="both" targetdir="${src.dir}" />
       </fileset>
+      <fileset dir="${mcpsrc.dir}/minecraft">
+        <present present="both" targetdir="${api.dir}" />
+      </fileset>
+      <fileset dir="${mcp.dir}/reobf/minecraft"/>
     </delete>
   </target>
   <target name="copy-src" depends="clean-src,initialize-version">
     <!-- Copy sources -->
-    <copy todir="${mcpsrc.dir}/minecraft" verbose="true">
+    <copy todir="${mcpsrc.dir}/minecraft" verbose="false">
       <fileset dir="${src.dir}"/>
       <filterset>
         <filter token="VERSION" value="${project.complete.version}" />
@@ -134,6 +139,9 @@
         <filter token="MODID" value="${mod.id}" />
         <filter token="MODNAME" value="${mod.name}" />
       </filterset>
+    </copy>
+    <copy todir="${mcpsrc.dir}/minecraft" verbose="false">
+      <fileset dir="${api.dir}"/>
     </copy>
   </target>
   
@@ -175,17 +183,24 @@
     
     <!-- Copy classes -->
     <copy todir="${classes.dir}">
-      <fileset dir="${mcp.dir}/reobf/minecraft"/>
+      <fileset dir="${mcp.dir}/reobf/minecraft">
+        <exclude name='**/ic2/**'/>
+        <exclude name='**/tconstruct/**'/>
+        <exclude name="**/net/**"/>
+        <exclude name="**/cpw/**"/>
+      </fileset>
     </copy>
     
     <!-- Copy resources -->
     <copy todir="${classes.dir}">
       <fileset dir="${resources.dir}"/>
+    </copy>
+
+    <copy todir="${classes.dir}">
+      <fileset file="mcmod.info"/>
       <filterset>
         <filter token="VERSION" value="${project.complete.version}" />
         <filter token="MCVERSION" value="[${mc.version}]" />
-        <filter token="MODID" value="${mod.id}" />
-        <filter token="MODNAME" value="${mod.name}" />
       </filterset>
     </copy>
     

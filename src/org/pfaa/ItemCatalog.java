@@ -1,10 +1,11 @@
 package org.pfaa;
 
 import java.lang.reflect.Constructor;
-import java.util.logging.Level;
 
 import net.minecraft.item.Item;
-import cpw.mods.fml.common.FMLLog;
+
+import org.pfaa.geologica.Geologica;
+
 import cpw.mods.fml.common.LoaderException;
 
 public class ItemCatalog {
@@ -13,11 +14,11 @@ public class ItemCatalog {
 		try {
 			Constructor<T> constructor = itemClass.getConstructor(int.class);
 			String name = nameForItemClass(itemClass);
-			int id = ConfigIDProvider.getInstance().nextItemID(name);
+			int id = Geologica.getConfiguration().nextItemID(name);
 			item = constructor.newInstance(id);
 			item.setUnlocalizedName(name);
 		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, "Failed to construct item");
+			Geologica.log.severe("Failed to construct item of class " + itemClass.getCanonicalName());
 			throw new LoaderException(e);
 		}
 		return item;

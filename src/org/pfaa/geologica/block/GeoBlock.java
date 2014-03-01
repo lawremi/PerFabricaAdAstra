@@ -8,13 +8,14 @@ import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
-import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.geologica.GeoSubstance;
+import org.pfaa.geologica.GeoSubstance.Composition;
+import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.geologica.Geologica;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
@@ -96,25 +97,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	private int getHarvestLevel() {
-		int level = 0;
-		switch(strength) {
-		case WEAK:
-			level = 0;
-			break;
-		case MEDIUM:
-			level = 1;
-			break;
-		case STRONG:
-			level = 1;
-			if (!hasComposition(Mixture.class))
-				level++;
-			break;
-		case VERY_STRONG:
-			level = 2;
-			break;
-		default:
-		}
-		return level;
+		return Geologica.getConfiguration().getHarvestLevel(this.composition, this.strength);
 	}
 
 	public boolean hasComposition(Class<? extends IndustrialMaterial> composition) {
@@ -183,6 +166,12 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	@Override
 	public String getModId() {
 		return "geologica";
+	}
+
+	@Override
+	public boolean isGenMineableReplaceable(World world, int x, int y, int z,
+			int target) {
+		return composition == Composition.AGGREGATE;
 	}
 
 }
