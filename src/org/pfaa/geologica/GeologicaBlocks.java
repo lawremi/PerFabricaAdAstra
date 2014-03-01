@@ -9,8 +9,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
 import org.pfaa.geologica.block.GeoBlock;
@@ -66,9 +67,9 @@ public class GeologicaBlocks {
 	public static final Block STRONG_STONE_BRICK_WALL = createWallBlock(STRONG_STONE_BRICK);
 	public static final Block VERY_STRONG_STONE_BRICK_WALL = createWallBlock(VERY_STRONG_STONE_BRICK);
 	
-	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLESTONE, GeoSubstance.LIMESTONE);
-	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.GRANITE);
-	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoSubstance.MARBLE);
+	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLESTONE, GeoMaterial.LIMESTONE);
+	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoMaterial.GRANITE);
+	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLESTONE, GeoMaterial.MARBLE);
 	
 	public static final StairsBlock LIMESTONE_BRICK_STAIRS = createStairsBlock(MEDIUM_STONE_BRICK, GeoMaterial.LIMESTONE);
 	public static final StairsBlock GRANITE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.GRANITE);
@@ -144,7 +145,7 @@ public class GeologicaBlocks {
 		return block;
 	}
 	
-	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoSubstance substance) {
+	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoMaterial substance) {
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
 		int id = Geologica.getConfiguration().nextBlockID(name);
 		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMeta(substance));
@@ -160,7 +161,7 @@ public class GeologicaBlocks {
 		GeoBlock block = null;
 		String name = strength.getCamelName() + suffix;
 		try {
-			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, Composition.class, Material.class);
+			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, IndustrialMaterial.class, Material.class);
 			int id = Geologica.getConfiguration().nextBlockID(name);
 			block = constructor.newInstance(id, strength, composition, material);
 			block.setUnlocalizedName(name);

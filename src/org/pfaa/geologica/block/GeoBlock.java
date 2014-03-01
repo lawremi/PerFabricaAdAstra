@@ -12,10 +12,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
+import org.pfaa.geologica.processing.Aggregate;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
@@ -171,7 +172,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	@Override
 	public boolean isGenMineableReplaceable(World world, int x, int y, int z,
 			int target) {
-		return composition == Composition.AGGREGATE;
+		return Aggregate.class.isAssignableFrom(composition);
 	}
 
 }

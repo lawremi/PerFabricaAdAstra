@@ -19,10 +19,10 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.chemica.model.Chemicals;
-import org.pfaa.geologica.GeoSubstance;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.Molecule.Molecules;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
@@ -266,7 +266,7 @@ public class RecipeRegistration {
 		}
 	}
 
-	private static void oreDictifyOre(GeoBlock block, GeoSubstance substance) {
+	private static void oreDictifyOre(GeoBlock block, GeoMaterial substance) {
 		String postfix = substance.getOreDictKey();
 		if (postfix == null ||Geologica.isTechnical()) {
 			postfix = substance.getLowerName();

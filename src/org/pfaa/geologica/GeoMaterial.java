@@ -57,7 +57,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	QUARTZ_SAND("quartz", Strength.WEAK, Material.sand),
 	VOLCANIC_ASH(Strength.WEAK, Material.sand),
 	
-	LATERITE(null, Strength.WEAK, Composition.AGGREGATE, Material.clay),
+	LATERITE(null, Strength.WEAK, Aggregates.SOIL, Material.clay),
 	
 	BAUXITE(Strength.WEAK, Material.clay),
 	BENTONITE(Strength.WEAK, Material.clay),

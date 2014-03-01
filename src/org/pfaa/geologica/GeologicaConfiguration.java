@@ -1,15 +1,14 @@
 package org.pfaa.geologica;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 
 import org.pfaa.IDProvider;
-import org.pfaa.geologica.GeoSubstance.Composition;
-import org.pfaa.geologica.GeoSubstance.Strength;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.geologica.processing.Aggregate;
 
 public class GeologicaConfiguration implements IDProvider {
 
@@ -43,14 +42,14 @@ public class GeologicaConfiguration implements IDProvider {
 		return this.config.getItem(name, nextItemId++).getInt();
 	}
 
-	public int getHarvestLevel(Composition composition, Strength strength) {
-		String key = composition + "." + strength;
+	public int getHarvestLevel(Class<? extends IndustrialMaterial> composition, Strength strength) {
+		String key = composition.getSimpleName() + "." + strength;
 		Property prop = this.config.get("HarvestLevels", key, getDefaultHarvestLevel(composition, strength), 
-				                        "Harvest level for " + strength + " " + composition);
+				                        "Harvest level for " + strength + " " + composition.getSimpleName());
 		return prop.getInt();
 	}
 	
-	private int getDefaultHarvestLevel(Composition composition, Strength strength) {
+	private int getDefaultHarvestLevel(Class<? extends IndustrialMaterial> composition, Strength strength) {
 		int level = 0;
 		switch(strength) {
 		case WEAK:
@@ -61,7 +60,7 @@ public class GeologicaConfiguration implements IDProvider {
 			break;
 		case STRONG:
 			level = 1;
-			if (composition != Composition.AGGREGATE)
+			if (!Aggregate.class.isAssignableFrom(composition))
 				level++;
 			break;
 		case VERY_STRONG:
