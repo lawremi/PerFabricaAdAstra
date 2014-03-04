@@ -2809,9 +2809,9 @@
                                 (dimension.generator = 'RandomLevelSource' |
                                 dimension.generator = 'ATGLevelSource')">
           <Cloud name='Pyrolusite' inherits='PresetPyrolusite'/>
-          <Cloud name='PyrolusiteOceanic'
-                 inherits='PresetPyrolusiteOceanic'/>
         </IfCondition>
+        <Cloud name='PyrolusiteOceanic'
+               inherits='PresetPyrolusiteOceanic'/>
       </ConfigSection>
     </ConfigSection>
 
