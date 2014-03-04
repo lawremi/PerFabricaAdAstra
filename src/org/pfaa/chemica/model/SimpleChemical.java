@@ -1,6 +1,5 @@
 package org.pfaa.chemica.model;
 
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
 
 public class SimpleChemical implements Chemical {
 
@@ -22,15 +21,9 @@ public class SimpleChemical implements Chemical {
 		this.fusion = fusion;
 		this.liquid = liquid;
 		this.vaporization = vaporization;
-		this.gas = determineGasDensity(gas);
+		this.gas = gas;
 	}
 	
-	private ChemicalPhaseProperties determineGasDensity(ChemicalPhaseProperties gas) {
-		double temperature = Math.max(vaporization.getTemperature(), Constants.STANDARD_TEMPERATURE);
-		double density = Gas.getDensity(formula.getMolarMass(), temperature, Constants.STANDARD_PRESSURE);
-		return new ChemicalPhaseProperties(gas.color, density, gas.hazard, gas.enthalpy, gas.entropy);
-	}
-
 	@Override
 	public String getOreDictKey() {
 		return oreDictKey;
