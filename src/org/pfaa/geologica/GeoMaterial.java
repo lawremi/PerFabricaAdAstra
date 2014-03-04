@@ -3,29 +3,28 @@ package org.pfaa.geologica;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.util.Elements;
-
 import net.minecraft.block.material.Material;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.Molecule.Molecules;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.PhaseProperties;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.Ore.Ores;
 import org.pfaa.geologica.processing.SimpleOre;
 
 import com.google.common.base.CaseFormat;
 
 public enum GeoMaterial implements IndustrialMaterial {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),
-	CARBONATITE(Aggregates.STONE.add(Molecules.CaCO3, 0.5), Strength.WEAK),
+	CARBONATITE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.WEAK),
 	CLAYSTONE(Aggregates.STONE, Strength.WEAK),
 	CONGLOMERATE(Aggregates.SAND.add(Aggregates.GRAVEL, 1.0), Strength.WEAK),
 	MUDSTONE(Aggregates.STONE, Strength.WEAK),
 	
-	LIMESTONE(Aggregates.STONE.add(Molecules.CaCO3, 0.5), Strength.MEDIUM),
+	LIMESTONE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.MEDIUM),
 	SCHIST(Aggregates.STONE, Strength.MEDIUM),
 	SERPENTINITE(Aggregates.STONE, Strength.MEDIUM),
 	SLATE(Aggregates.STONE, Strength.MEDIUM),
@@ -36,7 +35,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	GNEISS(Aggregates.STONE, Strength.STRONG),
 	GRANITE(Aggregates.STONE, Strength.STRONG),
 	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
-	MARBLE(Aggregates.STONE.add(Molecules.CaCO3, 1.0), Strength.STRONG),
+	MARBLE(Aggregates.STONE.add(Compounds.CaCO3, 1.0), Strength.STRONG),
 	PEGMATITE(Aggregates.STONE.add(IndustrialMinerals.FELDSPAR, 0.5), Strength.STRONG),
 	RHYOLITE(Aggregates.STONE, Strength.STRONG),
 	
@@ -46,13 +45,13 @@ public enum GeoMaterial implements IndustrialMaterial {
 	PERIDOTITE(Aggregates.STONE.add(IndustrialMinerals.OLIVINE, 0.5), Strength.VERY_STRONG),
 	QUARTZITE(Aggregates.SAND, Strength.VERY_STRONG),
 	
-	BASALTIC_MINERAL_SAND(Strength.WEAK, Material.sand),
+	BASALTIC_MINERAL_SAND(new SimpleOre(Compounds.Fe3O4).add(Aggregates.SAND, 0.4).add(IndustrialMinerals.GARNET, 1.4)
+					      .add(Compounds.FeCr2O4, 0.2).add(Compounds.FeTiO3, 0.6).add(Compounds.TiO2, 0.2).add(Compounds.ZrSiO4, 0.2),
+	                      Strength.WEAK, Material.sand),
 	CASSITERITE_SAND("tin", Strength.WEAK, Material.sand),
 	GARNET_SAND(Strength.WEAK, Material.sand),
-	GRANITIC_MINERAL_SAND(new SimpleOre(Molecules.Fe3O4).add(Aggregates.SAND, 1.0).add(IndustrialMinerals.KYANITE, 0.1)
-			              .add(Molecules.FeTiO3, 0.1).add(Molecules.TiO2, 0.1)
-			              .add(Molecules.CePO4, 0.03).add(Molecules.LaPO4, 0.015).add(Molecules.NdPO4, 0.009)
-					      .add(Molecules.PrPO4, 0.003).add(Elements.Th, 0.015), 
+	GRANITIC_MINERAL_SAND(new SimpleOre(Compounds.Fe3O4).add(Aggregates.SAND, 1.4).add(IndustrialMinerals.KYANITE, 0.2)
+			              .add(Compounds.FeTiO3, 0.4).add(Compounds.TiO2, 0.6).add(Compounds.ZrSiO4, 0.4).add(Ores.MONAZITE, 0.4), 
 			              Strength.WEAK, Material.sand),
 	QUARTZ_SAND("quartz", Strength.WEAK, Material.sand),
 	VOLCANIC_ASH(Strength.WEAK, Material.sand),

@@ -20,7 +20,7 @@ import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.Molecule.Molecules;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
@@ -159,7 +159,7 @@ public class RecipeRegistration {
 	private static void addCobbleGrindingRecipes() {
 		addCobbleGrindingRecipe(GeoMaterial.ANDESITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.BRECCIA, new ItemStack(Block.gravel, 2));
-		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Block.sand, Molecules.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Block.sand, Compounds.CaCO3, 0.5);
 		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Block.sand), new ItemStack(Block.gravel), 1.0);
 		addCobbleGrindingRecipe(GeoMaterial.CLAYSTONE, new ItemStack(GeologicaItems.CLAY_DUST, 2));
 		addCobbleGrindingRecipe(GeoMaterial.DIORITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
@@ -168,8 +168,8 @@ public class RecipeRegistration {
 		addCobbleGrindingRecipe(GeoMaterial.GRANITE, Block.sand, IndustrialMinerals.QUARTZ, 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.GREENSCHIST, Block.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.HORNFELS, Block.sand, IndustrialMinerals.MICA, 0.2);
-		addCobbleGrindingRecipe(GeoMaterial.LIMESTONE, Block.sand, Molecules.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoMaterial.MARBLE, Block.sand, Molecules.CaCO3, 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.LIMESTONE, Block.sand, Compounds.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.MARBLE, Block.sand, Compounds.CaCO3, 1.0);
 		addCobbleGrindingRecipe(GeoMaterial.MUDSTONE, new ItemStack(Block.sand), new ItemStack(GeologicaItems.CLAY_DUST), 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.PEGMATITE, IndustrialMinerals.FELDSPAR, IndustrialMinerals.QUARTZ, 1.0);
 		addCobbleGrindingRecipe(GeoMaterial.PERIDOTITE, Block.sand, IndustrialMinerals.OLIVINE, 0.5);
@@ -364,11 +364,11 @@ public class RecipeRegistration {
 	}
 	
 	private static void addCobbleGrindingRecipe(GeoMaterial material, Block primaryOutput, 
-			Molecules secondaryDust, double secondaryChance) {
+			Compounds secondaryDust, double secondaryChance) {
 		addCobbleGrindingRecipe(material, new ItemStack(primaryOutput),  secondaryDust, secondaryChance);
 	}
 	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
-			Molecules secondaryDust, double secondaryChance) {
+			Compounds secondaryDust, double secondaryChance) {
 		ItemStack secondaryOutput = ChemicaItems.DUST.getItemStack(secondaryDust);
 		addCobbleGrindingRecipe(material, primaryOutput, secondaryOutput, secondaryChance);
 	}
