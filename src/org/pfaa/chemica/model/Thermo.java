@@ -5,32 +5,35 @@ import java.util.List;
 
 public class Thermo {
 
-	private List<Shomate> shomates = new ArrayList();
+	private List<Segment> shomates = new ArrayList();
 	private List<Double> temperatureBreaks;
-	private double H, S;
 	
 	private Thermo(Thermo thermo) {
-		this.H = thermo.H;
-		this.S = thermo.S;
 		this.shomates.addAll(thermo.shomates);
 		this.temperatureBreaks.addAll(thermo.temperatureBreaks);
 	}
 	
-	public Thermo(double H, double S, Shomate shomate) {
-		this.H = H;
-		this.S = S;
+	private Thermo(Segment shomate) {
 		this.shomates.add(shomate);
 	}
 	
-	public Thermo(double H, double S, double Cp) { /* constant heat capacity */
-		this(H, S, new Shomate(H, S, Cp));
+	public Thermo(double S) { /* supports only transitions to this phase, but no heating or reactions */
+		this(Double.NaN, S, Double.NaN);
 	}
-
+	public Thermo(double H, double S, double Cp) { /* constant heat capacity */
+		this(H, S, Cp, 0);
+	}
 	public Thermo(double H, double S, double a, double b) { /* linear heat capacity */
-		this(H, S, new Shomate(H, S, a, b));
+		this(H, S, a, b, 0, 0);
+	}
+	public Thermo(double H, double S, double a, double b, double c, double e) { /* quadratic heat capacity */
+		this(new Segment(H, S, a, b, c, e));
+	}
+	public Thermo(double a, double b, double c, double d, double e, double f, double g) { /* quadratic heat capacity */
+		this(new Segment(a, b, c, d, e, f, g));
 	}
 	
-	private Shomate findSegment(double t) {
+	private Segment findSegment(double t) {
 		int si = this.temperatureBreaks.size() - 1;
 		while(si >= 0 && this.temperatureBreaks.get(si) < t)
 			si--;
@@ -42,15 +45,15 @@ public class Thermo {
 	}
 
 	public double integrateHeatCapacity(double t) {
-		return getEnthalpy(t) - this.H;
+		return getEnthalpy(t) - getStandardEnthalpy();
 	}
 	
 	public double getStandardEnthalpy() {
-		return this.H;
+		return getHeatCapacity(Constants.STANDARD_TEMPERATURE);
 	}
 	
 	public double getStandardEntropy() {
-		return this.S;
+		return getEntropy(Constants.STANDARD_TEMPERATURE);
 	}
 	
 	public double getEnthalpy(double t) {
@@ -61,7 +64,7 @@ public class Thermo {
 		return findSegment(t).getEntropy(t);
 	}
 	
-	public Thermo addSegment(double t0, Shomate segment) {
+	public Thermo addSegment(double t0, Segment segment) {
 		Thermo clone = new Thermo(this);
 		clone.shomates.add(segment);
 		clone.temperatureBreaks.add(t0);
@@ -69,25 +72,21 @@ public class Thermo {
 	}
 	
 	public Thermo addSegment(double t0, double Cp) {
-		return addSegment(t0, new Shomate(this.H, this.S, Cp));
+		return addSegment(t0, Cp, 0);
 	}
 	
 	public Thermo addSegment(double t0, double a, double b) {
-		return addSegment(t0, new Shomate(this.H, this.S, a, b));
+		return addSegment(t0, new Segment(this.getStandardEnthalpy(), this.getStandardEntropy(), a, b));
 	}
 	
-	public static class Shomate {
-		public final double a, b, c, d, e, f, g;
+	public Thermo addSegment(double t0, double a, double b, double c, double d, double e, double f, double g) {
+		return addSegment(t0, new Segment(a, b, c, d, e, f, g));
+	}
 	
-		public Shomate(double H, double S, double a) { /* constant heat capacity */
-			this(H, S, a, 0);
-		}
+	private static class Segment {
+		public final double a, b, c, d, e, f, g;
 		
-		public Shomate(double H, double S, double a, double b) { /* simple linear relationship */
-			this(a, b, 0, 0, 0, estimateF(H, a, b), estimateG(S, a, b));
-		}
-		
-		public Shomate(double a, double b, double c, double d, double e, double f, double g) {
+		public Segment(double a, double b, double c, double d, double e, double f, double g) { // full form
 			this.a = a;
 			this.b = b;
 			this.c = c;
@@ -97,14 +96,22 @@ public class Thermo {
 			this.g = g;
 		}
 		
-		private static double estimateF(double H, double a, double b) {
-			double t = Constants.STANDARD_TEMPERATURE / 1000;
-			return H - a * t - b * Math.pow(t, 2) / 2;
-		}
+		/* Simplified forms for when there are no published Shomate parameters */
 		
-		private static double estimateG(double S, double a, double b) {
-			double t = Constants.STANDARD_TEMPERATURE / 1000;
-			return S - a * Math.log(t) - b * t;
+		public Segment(double H, double S, double a) { // constant
+			this(H, S, a, 0);
+		}
+		public Segment(double H, double S, double a, double b) { // linear
+			this(H, S, a, b, 0, 0);
+		}
+		public Segment(double H, double S, double a, double b, double c, double e) { // quadratic
+			this.a = a;
+			this.b = b;
+			this.c = c;
+			this.d = 0;
+			this.e = e;
+			this.f = H - this.getEnthalpy(Constants.STANDARD_TEMPERATURE);
+			this.g = S - this.getEntropy(Constants.STANDARD_TEMPERATURE);
 		}
 		
 		public double getHeatCapacity(double t) {
