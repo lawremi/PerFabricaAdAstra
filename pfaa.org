@@ -806,6 +806,13 @@
    (20%), monazite (10%).  There is a chance drop of diamond from
    basaltic sands.
 
+   Summary:
+   
+   * Granitic :: 35% quartz, 25% magnetite, 5% kyanite, 10% zircon,
+                 15% rutile, 5% ilmenite, 5% monazite
+   * Basaltic :: 10% quartz, 35% garnet, 25% magnetite, 5% chromite,
+                 15% ilmenite, 5% zircon, 5% rutile + diamond drop
+
 ** Clays
 
    | Type                  | Occurrence                       | Prod | Use                                               |
@@ -999,6 +1006,17 @@
     An approach to estimating the enthalpies of fusion from solubility:
     http://www.umsl.edu/~chickosj/JSCPUBS/mottpce.pdf
     Might only apply to organics, but who cares?
+
+    Extrapolation would probably take too much work and would require
+    intuition that we are lacking. It is much better to restrict than
+    to introduce poorly defined chemicals. But what happens when a
+    substance is heated -- we should not allow it to be heated
+    infinitely (obviously the machine has some limit, but that may be
+    far in excess of the critical point). Easiest option is to simply
+    cease the heating and alert the user that the melting point has
+    been reached, but that would be lame in a machine that is supposed
+    to yield a molten product. But really, do we care about accurately
+    modeling the transition to something that is essentially useless?
     
     A bigger problem is the heat capacity: it has a complex
     dependency on temperature; i.e., there is no single
@@ -1012,10 +1030,10 @@
     directly simulate the thermodynamic system. Unfortunately, most
     chemicals/phases do not have a set of Shomate parameters.
 
-    One possibility is deriving our own. We have resources with Cp
-    values for a range of temperatures, as well as standard enthalpies
-    of formation and molar entropies. That might work, for the
-    standard phase, at least.
+    One possibility is using simpler forms of the equation. We have
+    resources with Cp values for a range of temperatures, as well as
+    standard enthalpies of formation and molar entropies. That might
+    work, for the standard phase, at least.
     
 *** Metals
     
@@ -1568,6 +1586,14 @@
        with liquid pipe support). This may be too simple. We sure as
        heck would not want to use the induction smelter for every one
        of our reactions.
+     
+     We could probably do both: the underlying model understands the
+     solubility of Al(OH)3, and that translates to specific,
+     simplified recipes.
+
+     A tougher problem: monazite, a mixture that consists of the
+     poorly characterized rare earth phosphates. These would need to
+     be coded as stubs. That is better than not at all.
      
 *** Reactors
     The reactor will be a multi-block structure, modeled after the
