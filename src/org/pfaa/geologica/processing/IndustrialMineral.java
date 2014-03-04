@@ -15,6 +15,7 @@ public interface IndustrialMineral extends IndustrialMaterial {
 	public enum IndustrialMinerals implements IndustrialMineral {
 		CHRYSOTILE(new Color(145, 165, 145), 2.53),
 		FELDSPAR(new Color(240, 210, 225), 2.56),
+		GARNET(new Color(227, 154, 38), 4.0),
 		KYANITE(Color.BLUE, 3.60),
 		MICA(new Color(180, 180, 190), 2.82),
 		QUARTZ(Color.WHITE, 2.65),
