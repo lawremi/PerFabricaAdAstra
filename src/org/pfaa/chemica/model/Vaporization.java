@@ -46,6 +46,10 @@ public class Vaporization {
 		public double getBoilingTemperature(double pressure) {
 			return b / (a - Math.log10(pressure)) - c;
 		}
+		public double getEvaporationRate(double temperature, double pressure, double molecularWeight) {
+			// rate is per unit area, which comes from the pressure units
+			return (getVaporPressure(temperature) - pressure) * Math.sqrt(molecularWeight / (2*Math.PI*Constants.R*temperature));
+		}
 	}
 
 }
