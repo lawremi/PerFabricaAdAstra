@@ -1,11 +1,13 @@
 package org.pfaa.chemica.model;
 
+import static org.pfaa.chemica.model.Element.Elements.Al;
 import static org.pfaa.chemica.model.Element.Elements.C;
 import static org.pfaa.chemica.model.Element.Elements.Ca;
 import static org.pfaa.chemica.model.Element.Elements.Ce;
 import static org.pfaa.chemica.model.Element.Elements.Co;
 import static org.pfaa.chemica.model.Element.Elements.Cr;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
+import static org.pfaa.chemica.model.Element.Elements.Ga;
 import static org.pfaa.chemica.model.Element.Elements.H;
 import static org.pfaa.chemica.model.Element.Elements.La;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
@@ -13,6 +15,7 @@ import static org.pfaa.chemica.model.Element.Elements.O;
 import static org.pfaa.chemica.model.Element.Elements.P;
 import static org.pfaa.chemica.model.Element.Elements.Pr;
 import static org.pfaa.chemica.model.Element.Elements.Si;
+import static org.pfaa.chemica.model.Element.Elements.Sn;
 import static org.pfaa.chemica.model.Element.Elements.Ti;
 import static org.pfaa.chemica.model.Element.Elements.Zr;
 
@@ -48,13 +51,14 @@ public interface Compound extends Chemical {
 					  new Hazard(3, 0, 0)), 
 			null, 
 			null,
-			new Vaporization(new AntoineCoefficients(6.81, 1301, -3.49)), 
+			new Vaporization(6.81, 1301, -3.49), 
 			new Gas(new Thermo(25.0, 55.2, -33.7, 7.95, -0.137, -404, 228)
 					.addSegment(1200, 58.2, 2.72, -0.492, 0.0388, -6.45, -426, 264), 
 					new Hazard(2, 0, 0))),	
-		//AlOH3(new Formula(Al), "bauxite", new Solid(Color.WHITE, 2.42, -1277, 71)),
+		AlOH3(new Formula(Al, new Part(O, H)._(3)), "aluminum", 
+			  new Solid(2.42, new Thermo(-1277, 71, 25.7, 155, -98.6, 0.690))),
 		//BaSO4("barium", new Fusion(1345, 40.6), new Solid(Color.WHITE, 4.5, -1465, 132, new Hazard(0, 0, 0))),
-		CaCO3(new Formula(Ca, new Part(C, O._(3))), "calcite", 
+		CaCO3(new Formula(Ca, new Part(C, O._(3))), "calcium", 
 			  new Solid(2.7, 
 					    new Thermo(-1207, 93, 82.3, 49.8, 0, 1.29))),
 		//CaWO4("tungstate", new Solid(Color.ORANGE, 6.1, -1645, 126)),
@@ -79,9 +83,12 @@ public interface Compound extends Chemical {
 			  			.addSegment(900, 201, 1.59, -6.66, 9.45, 3.19, -1174, 388)), 
 			  new Fusion(1870),
 			  new Liquid(new Thermo(164))),
-		FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", 
-			  new Solid(new Color(229, 60, 0), 4.25, 
+		gamma_FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", 
+			  new Solid(new Color(170, 60, 0), 4.25, 
 					    new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
+	    alpha_FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", // yellow, while gamma polymorph is red/brown 
+	    		    new Solid(new Color(207, 189, 33), 4.25, 
+	    		    		  new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
 		FeCr2O4(new Formula(Fe, Cr._(2), O._(4)), "chromium", 
 				new Solid(new Color(25, 10, 10), 4.7, new Thermo(-1438, 152, 160, 31.8, -6.33, 3.06)),
 				new Fusion(2500)),
@@ -92,6 +99,8 @@ public interface Compound extends Chemical {
 			   new Fusion(1638),
 			   new Liquid(new Thermo(161))),
 		//FeWO4("tungstate", new Solid(new Color(15, 10, 10), 7.5, -1154, 132)),
+	    GaOH3(new Formula(Ga, new Part(O, H)._(3)), "gallium",
+	    	  new Solid()), 
 		//NiS("nickel", new Fusion(1070, 30.1), new Solid(Color.BLACK, 5.8, -82, 53)),
 		//HgS("cinnabar", new Solid(new Color(139, 0, 0), 8.1, -58, 78, new Hazard(2, 1, 0))),
 		LaPO4(new Formula(La, new Part(P, O._(4))), "lanthanum",
@@ -110,7 +119,10 @@ public interface Compound extends Chemical {
 			  new Solid(new Color(184, 83, 43), 5.22, null)),
 		//Sb2S3("antimony", new Fusion(823, 40), new Solid(Color.GRAY, 4.64, -140, 182, new Hazard(2, 1, 0))),
 		//SiO2("quartz", new Fusion(1900, 14), new Solid(Color.WHITE, 2.6, -911, 42)),
-		//SnO2("tin", new Fusion(1903, Double.NaN), new Solid(Color.WHITE, 7.0, -581, 52, new Hazard(2, 0, 0))),
+		SnO2(new Formula(Sn, O._(2)), "tin",
+			 new Solid(Color.WHITE, 7.0, new Thermo(-581, 52, 60), new Hazard(2, 0, 0)),
+			 new Fusion(1903),
+			 new Liquid()), // FIXME: need heat of fusion
 		TiO2(new Formula(Ti, O._(2)), "titanium", 
 		     new Solid(4.23, 
 		    		   new Thermo(67, 18.7, -11.6, 2.45, -1.49, -965, 117), 

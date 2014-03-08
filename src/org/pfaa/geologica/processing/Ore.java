@@ -12,7 +12,8 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.PhaseProperties;
 
 /*
- * An Ore is a mixture from which we are trying to extract one or more chemicals.
+ * Minerals from which valuable compounds and elements are extracted.
+ * An ore can consist of multiple compounds, due to non-stoichiometry.
  */
 public interface Ore extends Mixture {
 	public Chemical getConcentrate();
@@ -22,16 +23,32 @@ public interface Ore extends Mixture {
 		LOW, MEDIUM, HIGH, VERY_HIGH
 	}
 	
-	/* Ores that are not do not form a GeoMaterial, i.e., ores not found directly in the world. */
+	
 	public enum Ores implements Ore {
+		ANATASE(Compounds.TiO2),
+		CALCITE(Compounds.CaCO3),
+		CASSITERITE(Compounds.SnO2), 
+		CHROMITE(Compounds.FeCr2O4),
+		GIBBSITE(new SimpleOre(Compounds.AlOH3).add(Compounds.GaOH3, 0.001)),
+		GOETHITE(Compounds.alpha_FeOH3),
+		LEPIDOCROCITE(Compounds.gamma_FeOH3),
+		HEMATITE(Compounds.Fe2O3),
+		ILMENITE(Compounds.FeTiO3),
+		MAGNETITE(Compounds.Fe3O4),
 		MONAZITE(new SimpleOre(Compounds.CePO4).add(Compounds.LaPO4, 0.5).add(Compounds.NdPO4, 0.3)
-				.add(Compounds.PrPO4, 0.15).add(Elements.Th, 0.5))
+				.add(Compounds.PrPO4, 0.15).add(Elements.Th, 0.5)),
+		RUTILE(Compounds.TiO2),
+		ZIRCON(Compounds.ZrSiO4)
 		;
 
 		private Ore delegate;
 		
 		private Ores(Ore delegate) {
 			this.delegate = delegate;
+		}
+		
+		private Ores(Chemical material) {
+			this(new SimpleOre(material));
 		}
 		
 		public String getOreDictKey() {

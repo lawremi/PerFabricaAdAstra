@@ -15,7 +15,7 @@ public interface Aggregate extends Mixture {
 	public Aggregate add(IndustrialMaterial material, double weight);
 	
 	public enum Aggregates implements Aggregate {
-		SAND, GRAVEL, STONE, SOIL;
+		SAND, GRAVEL, STONE, CLAY, DIRT;
 
 		@Override
 		public String getOreDictKey() {

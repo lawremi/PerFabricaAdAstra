@@ -13,14 +13,19 @@ public interface IndustrialMineral extends IndustrialMaterial {
 	public PhaseProperties getProperties();
 	
 	public enum IndustrialMinerals implements IndustrialMineral {
-		CHRYSOTILE(new Color(145, 165, 145), 2.53),
+		BENTONITE(new Color(245, 215, 210), 0.593),
+		CHRYSOTILE(new Color(110, 140, 110), 2.53),
 		FELDSPAR(new Color(240, 210, 225), 2.56),
+		FULLERS_EARTH(new Color(160, 160, 120), 0.65),
 		GARNET(new Color(227, 154, 38), 4.0),
-		KYANITE(Color.BLUE, 3.60),
-		MICA(new Color(180, 180, 190), 2.82),
+		KAOLINITE(new Color(245, 235, 235), 2.63),
+		KYANITE(new Color(110, 110, 250), 3.60),
+		MICA(new Color(195, 195, 205), 2.82),
 		QUARTZ(Color.WHITE, 2.65),
 		OLIVINE(new Color(155, 230, 40), 3.30),
-		WOLLASTONITE(Color.WHITE, 2.90)	
+		VERMICULITE(new Color(200, 80, 15), 2.5),
+		WOLLASTONITE(Color.WHITE, 2.90),
+		VOLCANIC_ASH(Color.gray, 3),
 		;
 
 		private String oreDictKey;

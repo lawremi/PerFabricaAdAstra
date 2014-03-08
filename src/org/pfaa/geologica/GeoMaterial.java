@@ -45,26 +45,28 @@ public enum GeoMaterial implements IndustrialMaterial {
 	PERIDOTITE(Aggregates.STONE.add(IndustrialMinerals.OLIVINE, 0.5), Strength.VERY_STRONG),
 	QUARTZITE(Aggregates.SAND, Strength.VERY_STRONG),
 	
-	BASALTIC_MINERAL_SAND(new SimpleOre(Compounds.Fe3O4).add(Aggregates.SAND, 0.4).add(IndustrialMinerals.GARNET, 1.4)
-					      .add(Compounds.FeCr2O4, 0.2).add(Compounds.FeTiO3, 0.6).add(Compounds.TiO2, 0.2).add(Compounds.ZrSiO4, 0.2),
+	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.add(Aggregates.SAND, 0.4).add(IndustrialMinerals.GARNET, 1.4)
+					      .add(Ores.CHROMITE, 0.2).add(Ores.ILMENITE, 0.6).add(Ores.RUTILE, 0.2).add(Ores.ZIRCON, 0.2),
 	                      Strength.WEAK, Material.sand),
-	CASSITERITE_SAND("tin", Strength.WEAK, Material.sand),
-	GARNET_SAND(Strength.WEAK, Material.sand),
-	GRANITIC_MINERAL_SAND(new SimpleOre(Compounds.Fe3O4).add(Aggregates.SAND, 1.4).add(IndustrialMinerals.KYANITE, 0.2)
-			              .add(Compounds.FeTiO3, 0.4).add(Compounds.TiO2, 0.6).add(Compounds.ZrSiO4, 0.4).add(Ores.MONAZITE, 0.4), 
+	CASSITERITE_SAND(Ores.CASSITERITE, Strength.WEAK, Material.sand),
+	GARNET_SAND(IndustrialMinerals.GARNET, Strength.WEAK, Material.sand),
+	GRANITIC_MINERAL_SAND(Ores.MAGNETITE.add(Aggregates.SAND, 1.4).add(IndustrialMinerals.KYANITE, 0.2)
+			              .add(Ores.ILMENITE, 0.4).add(Ores.RUTILE, 0.6).add(Ores.ZIRCON, 0.4).add(Ores.MONAZITE, 0.4), 
 			              Strength.WEAK, Material.sand),
-	QUARTZ_SAND("quartz", Strength.WEAK, Material.sand),
-	VOLCANIC_ASH(Strength.WEAK, Material.sand),
+	QUARTZ_SAND(IndustrialMinerals.QUARTZ, Strength.WEAK, Material.sand),
+	VOLCANIC_ASH(IndustrialMinerals.VOLCANIC_ASH, Strength.WEAK, Material.sand),
 	
-	LATERITE(null, Strength.WEAK, Aggregates.SOIL, Material.clay),
+	LATERITE(Aggregates.CLAY, Strength.WEAK, Material.clay),
 	
-	BAUXITE(Strength.WEAK, Material.clay),
-	BENTONITE(Strength.WEAK, Material.clay),
-	FULLERS_EARTH(Strength.WEAK, Material.clay),
-	KAOLINITE(Strength.WEAK, Material.clay),
-	BROWN_LIMONITE(Strength.WEAK, Material.clay),
-	YELLOW_LIMONITE(Strength.WEAK, Material.clay),
-	VERMICULITE(Strength.WEAK, Material.clay),
+	BAUXITE(Ores.GIBBSITE.add(Ores.HEMATITE, 0.45).add(Ores.CALCITE, 0.10)
+			.add(IndustrialMinerals.KAOLINITE, 0.10).add(IndustrialMinerals.QUARTZ, 0.05).add(Ores.ANATASE, 0.05), 
+			Strength.WEAK, Material.clay),
+	BENTONITE(IndustrialMinerals.BENTONITE, Strength.WEAK, Material.clay),
+	FULLERS_EARTH(IndustrialMinerals.FULLERS_EARTH, Strength.WEAK, Material.clay),
+	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
+	BROWN_LIMONITE(Ores.LEPIDOCROCITE.add(Aggregates.CLAY, 1.0), Strength.WEAK, Material.clay),
+	YELLOW_LIMONITE(Ores.GOETHITE.add(Aggregates.CLAY, 1.0), Strength.WEAK, Material.clay),
+	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
 	BORAX(Strength.WEAK),
 	CINNABAR(Strength.WEAK),
