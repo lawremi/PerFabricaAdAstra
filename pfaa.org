@@ -2020,8 +2020,21 @@
      As with all sulfide ores.
      
 **** Cadmium
-     Crude zinc oxide (after initial roasting) is seeded with zinc dust
-     to precipitate CdSO4. Presumably this can be electrolyzed to Cd?
+     Fractional distillation, or: Crude zinc oxide (after initial
+     roasting) is treated with H2SO4, and seeded with zinc dust to
+     precipitate metal impurities, which are filtered out. An excess
+     of zinc dust is added to precipitate CdSO4. That is redissolved
+     in H2SO4 and electrolyzed with Al(+) and Pb(-), and Cd is
+     deposited at the cathode.
+
+**** Gallium
+     Crude zinc oxide is treated with H2SO4 to yield various
+     sulfates. Neutralizing the solution precipitates the iron,
+     aluminum and gallium sulfates. Treatment with NaOH brings the
+     aluminum and gallium back into solution. Neutralization
+     precipitates, and HCl treatment produces gallium and aluminum
+     chloride. GaCl3 is dissolved in ether, treated with NaOH and
+     electrolyzed to produce Ga.
      
 *** Galena
 **** Lead
@@ -2240,6 +2253,21 @@
     This will require some special machine, a smelter/electrolyzer,
     that requires less energy than using straight electrolysis.
     
+**** Gallium
+     Gallium can replace Al in gibbsite, Al(OH)3. Ga(OH)3 ends up in
+     solution with Al(OH)3. Even after precipitation of the aluminum,
+     there is still too much aluminum in the solution. This is removed
+     by either adding CaCO3 (precipitating the Al as CaAl(OH)5?) or by
+     passing CO2 through the solution to neutralize it and precipitate
+     Al(OH)3. The concentrated gallium solution is electrolyzed to
+     produce Ga.
+     
+**** Red mud
+     In theory, one could mix the mud with coke and and smelt with an
+     electric arc furnace. The Fe2O3 is converted to pig iron. The
+     slag could be made into rock wool. This is not cheap but is
+     barely economically viable.
+     
 *** Zircon
     Separated from sand using spiral separators. The rutile and
     ilmenite are removed by magnets.
