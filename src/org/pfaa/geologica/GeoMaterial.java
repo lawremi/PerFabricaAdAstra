@@ -58,6 +58,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	
 	LATERITE(Aggregates.CLAY, Strength.WEAK, Material.clay),
 	
+	// FIXME: add niter (KNO3)? 
 	BAUXITE(Ores.GIBBSITE.add(Ores.HEMATITE, 0.45).add(Ores.CALCITE, 0.10)
 			.add(IndustrialMinerals.KAOLINITE, 0.10).add(IndustrialMinerals.QUARTZ, 0.05).add(Ores.ANATASE, 0.05), 
 			Strength.WEAK, Material.clay),
@@ -68,15 +69,20 @@ public enum GeoMaterial implements IndustrialMaterial {
 	YELLOW_LIMONITE(Ores.GOETHITE.add(Aggregates.CLAY, 1.0), Strength.WEAK, Material.clay),
 	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
-	BORAX(Strength.WEAK),
-	CINNABAR(Strength.WEAK),
-	GALENA("lead", Strength.WEAK),
-	MOLYBDENITE("molybdenum", Strength.WEAK),
-	PYROLUSITE("manganese", Strength.WEAK),
-	ROCK_SALT("salt", Strength.WEAK),
-	STIBNITE("antimony", Strength.WEAK),
+	// FIXME: should we add stone to all of the stone ores?
+	BORAX(Ores.BORAX, Strength.WEAK),
+	CINNABAR(Ores.CINNABAR.add(Ores.PYRITE, 0.05).add(Ores.REALGAR, 0.04).add(Ores.STIBNITE, 0.02).add(Ores.BARITE, 0.02), 
+			 Strength.WEAK),
+	GALENA(Ores.GALENA.add(Ores.SPHALERITE, 0.2).add(Ores.ACANTHITE, 0.05).add(Ores.FLUORITE, 0.05).add(Ores.BISMUTHINITE, 0.05)
+		   .add(Ores.REALGAR, 0.04).add(Ores.STIBNITE, 0.02).add(Ores.GREENOCKITE, 0.01), Strength.WEAK),
+	MOLYBDENITE(Ores.MOLYBDENITE.add(Ores.PYRITE, 0.05).add(Ores.CHALCOPYRITE, 0.05)
+			    .add(Ores.FLUORITE, 0.02), Strength.WEAK),
+	PYROLUSITE(Ores.PYROLUSITE.add(Ores.GOETHITE, 0.1), Strength.WEAK),
+	ROCK_SALT(Ores.HALITE.add(Ores.SYLVITE, 0.5).add(Ores.CARNALLITE, 0.1).add(Ores.GYPSUM, 0.05), Strength.WEAK),
+	STIBNITE(Ores.STIBNITE.add(Ores.PYRITE, 0.05).add(Ores.GALENA, 0.05).add(Ores.REALGAR, 0.04).add(Ores.CINNABAR, 0.02), 
+			 Strength.WEAK),
 	
-	BARITE("barium", Strength.MEDIUM),
+	BARITE(Ores.BARITE.add(Ores.CELESTINE, 0.05), Strength.MEDIUM),
 	BASTNASITE(Strength.MEDIUM),
 	CHALCOPYRITE("copper", Strength.MEDIUM),
 	GARNIERITE("nickel", Strength.MEDIUM),
@@ -112,7 +118,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	ALUNITE(Strength.MEDIUM),
 	CELESTINE("strontium", Strength.MEDIUM),
 	DOLOMITE(Strength.MEDIUM),
-	MALACHITE("copper", Strength.MEDIUM),
+	FLUORITE(Ores.FLUORITE, Strength.MEDIUM),
 	WOLLASTONITE(Strength.MEDIUM),
 	ZEOLITE(Strength.MEDIUM),
 	

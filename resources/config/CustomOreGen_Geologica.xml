@@ -256,7 +256,7 @@
         <Choice value='true' displayValue='On'/>
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
-      
+
     </ConfigSection>
 
     <ConfigSection>
@@ -1611,7 +1611,11 @@
                      block='WeakOreClay:6'
                      drawWireframe='false' wireframeColor='0xFFFF1111'>
         </VeinsPreset>
-        
+        <VeinsPreset name='PresetFluoriteDioriteContinental'
+                     inherits='PresetDioriteVeinsContinental'
+                     block='MediumOreRock:13'
+                     drawWireframe='false' wireframeColor='0xFF11FF11'>
+        </VeinsPreset>
         <VeinsPreset name='PresetDioriteVeinsOther'
                      inherits='PresetLayeredVeins'>
           <Setting name='DistributionFrequency' avg='0.02'/>
@@ -1640,7 +1644,11 @@
                      block='WeakOreClay:6'
                      drawWireframe='false' wireframeColor='0xFFFFFF11'>
         </VeinsPreset>
-
+        <VeinsPreset name='PresetFluoriteDioriteOther'
+                     inherits='PresetDioriteVeinsOther'
+                     block='MediumOreRock:13'
+                     drawWireframe='false' wireframeColor='0xFF88FF88'>
+        </VeinsPreset>
       </ConfigSection>
 
       <ConfigSection>
@@ -1653,12 +1661,16 @@
                  inherits='PresetChromiteDioriteContinental'/>
           <Veins name='VermiculiteDioriteContinental'
                  inherits='PresetVermiculiteDioriteContinental'/>
+          <Veins name='FluoriteDioriteContinental'
+                 inherits='PresetFluoriteDioriteContinental'/>
           <Veins name='IlmeniteDioriteOther'
                  inherits='PresetIlmeniteDioriteOther'/>
           <Veins name='ChromiteDioriteOther'
                  inherits='PresetChromiteDioriteOther'/>
           <Veins name='VermiculiteDioriteOther'
                  inherits='PresetVermiculiteDioriteOther'/>
+          <Veins name='FluoriteDioriteOther'
+                 inherits='PresetFluoriteDioriteOther'/>
         </IfCondition>
       </ConfigSection>
     </ConfigSection>
@@ -1864,8 +1876,9 @@
         </CloudPreset>
         <CloudPreset name='PresetEvaporiteGypsum'
                      inherits='PresetEvaporiteStratum'>
+          <OreBlock block='MediumOreRock:0' weight='0.05'/>
           <OreBlock block='MediumOreRock:11' weight='0.05'/>
-          <OreBlock block='WeakOreRock:11' weight='0.95'/>
+          <OreBlock block='WeakOreRock:11' weight='0.90'/>
           <Setting name='CloudHeight' avg='58' range='0'/>
           <Setting name='CloudThickness' avg='2' range='0'/>
         </CloudPreset>
@@ -2249,6 +2262,11 @@
                      drawWireframe='false'
                      wireframeColor='0xFF221100'
                      block='StrongOreRock:2'/>
+        <VeinsPreset name='PresetGraniteFluoriteContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFF22AA22'
+                     block='MediumOreRock:13'/>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
                      inherits='PresetLayeredVeinsVolcanic'>
@@ -2287,6 +2305,11 @@
                      drawWireframe='false'
                      wireframeColor='0xFF221100'
                      block='StrongOreRock:2'/>
+        <VeinsPreset name='PresetGraniteFluoriteVolcanic'
+                     inherits='PresetGraniteVeinsVolcanic'
+                     drawWireframe='false'
+                     wireframeColor='0xFF22AA22'
+                     block='MediumOreRock:13'/>
         
         <ConfigSection> <!-- Pegmatite -->
           <VeinsPreset name='PresetPegmatite'
@@ -2383,6 +2406,8 @@
             <Veins name='GraniteChalcopyriteVolcanic'
                    inherits='PresetGraniteChalcopyriteVolcanic'/>
           </IfCondition>
+          <Veins name='GraniteFluoriteContinental'
+                 inherits='PresetGraniteFluoriteContinental'/>
           <IfCondition condition=":=?GeologicaGenIron">
             <Veins name='GraniteMagnetiteVolcanic'
                    inherits='PresetGraniteMagnetiteVolcanic'/>
@@ -2393,6 +2418,8 @@
             <Veins name='GraniteCassiteriteVolcanic'
                    inherits='PresetGraniteCassiteriteVolcanic'/>
           </IfCondition>
+          <Veins name='GraniteFluoriteVolcanic'
+                 inherits='PresetGraniteFluoriteVolcanic'/>
         </IfCondition>
         <OptionChoice name='GeologicaGenPegmatite' default='true'
                       displayState='shown' displayGroup='groupGeologica'>
@@ -2640,8 +2667,7 @@
                      inherits='PresetSkarnVeins'
                      wireframeColor='0xFFFFFF00'
                      drawWireframe='false'>
-          <OreBlock block='MediumOreRock:2' weight='0.7'/>
-          <OreBlock block='MediumOreRock:13' weight='0.3'/>
+          <OreBlock block='MediumOreRock:2' weight='1.0'/>
           <Setting name='MotherlodeFrequency' avg=':= 3 * _default_'/>
         </VeinsPreset>
         <VeinsPreset name='PresetSkarnMagnetite'

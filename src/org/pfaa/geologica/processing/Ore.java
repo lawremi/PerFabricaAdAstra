@@ -25,19 +25,38 @@ public interface Ore extends Mixture {
 	
 	
 	public enum Ores implements Ore {
+		ACANTHITE(Compounds.Ag2S),
 		ANATASE(Compounds.TiO2),
+		BARITE(Compounds.BaSO4),
+		BISMUTHINITE(Compounds.Bi2S3),
+		BORAX(Compounds.Na2B4O7),
 		CALCITE(Compounds.CaCO3),
-		CASSITERITE(Compounds.SnO2), 
+		CASSITERITE(Compounds.SnO2),
+		CHALCOPYRITE(Compounds.CuFeS2),
 		CHROMITE(Compounds.FeCr2O4),
+		CINNABAR(Compounds.HgS),
+		CARNALLITE(new SimpleOre(Compounds.KCl).add(Compounds.MgCl2, 1.0)),
+		FLUORITE(Compounds.CaF2),
+		GALENA(Compounds.PbS),
 		GIBBSITE(new SimpleOre(Compounds.AlOH3).add(Compounds.GaOH3, 0.001)),
 		GOETHITE(Compounds.alpha_FeOH3),
+		GREENOCKITE(Compounds.CdS),
+		GYPSUM(Compounds.CaSO4_2H2O),
+		HALITE(Compounds.NaCl),
 		LEPIDOCROCITE(Compounds.gamma_FeOH3),
 		HEMATITE(Compounds.Fe2O3),
 		ILMENITE(Compounds.FeTiO3),
 		MAGNETITE(Compounds.Fe3O4),
+		MOLYBDENITE(new SimpleOre(Compounds.MoS2).add(Compounds.ReS2, 0.01)),
 		MONAZITE(new SimpleOre(Compounds.CePO4).add(Compounds.LaPO4, 0.5).add(Compounds.NdPO4, 0.3)
 				.add(Compounds.PrPO4, 0.15).add(Elements.Th, 0.5)),
+		PYRITE(Compounds.FeS2),
+		PYROLUSITE(Compounds.MnO2),
+		REALGAR(Compounds.AsS),
 		RUTILE(Compounds.TiO2),
+		SPHALERITE(Compounds.ZnS),
+		STIBNITE(Compounds.Sb2S3),
+		SYLVITE(Compounds.KCl),
 		ZIRCON(Compounds.ZrSiO4)
 		;
 

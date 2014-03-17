@@ -7,16 +7,22 @@ import java.util.List;
 
 public final class Formula {
 	public final List<Part> parts;
+	public final int hydration;
 	
 	public Formula(List<? extends PartFactory> parts) {
+		this(parts, 0);
+	}
+	public Formula(PartFactory... parts) {
+		this(Arrays.asList(parts));
+	}
+	
+	public Formula(List<? extends PartFactory> parts, int hydration) {
 		List<Part> reifiedParts = new ArrayList();
 		for (PartFactory part : parts) {
 			reifiedParts.add(part.getPart());
 		}
 		this.parts = Collections.unmodifiableList(reifiedParts);
-	}
-	public Formula(PartFactory... parts) {
-		this(Arrays.asList(parts));
+		this.hydration = hydration;
 	}
 	
 	/* First/last seems a pragmatic way of interpreting simple formulae,
@@ -57,6 +63,10 @@ public final class Formula {
 			mass += part.getMolarMass();
 		}
 		return mass;
+	}
+
+	public Formula hydrate(int hydration) {
+		return new Formula(this.parts, this.hydration + hydration);
 	}
 
 	public static final class Part implements PartFactory {
@@ -132,5 +142,4 @@ public final class Formula {
 	public static interface PartFactory {
 		public Part getPart();
 	}
-
 }
