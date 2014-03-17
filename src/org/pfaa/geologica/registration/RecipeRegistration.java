@@ -34,6 +34,7 @@ import org.pfaa.geologica.block.ProxyBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
+import org.pfaa.geologica.integration.FMPIntegration;
 import org.pfaa.geologica.integration.IC2Integration;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.integration.TEIntegration;
@@ -55,6 +56,7 @@ public class RecipeRegistration {
 		addMeltingRecipes();
 		addStoneToolRecipes();
 		addStoneAbstractionRecipesForBrokenMods();
+		registerMicroblocks();
 	}
 	
 	private static void addStoneAbstractionRecipesForBrokenMods() {
@@ -396,6 +398,18 @@ public class RecipeRegistration {
 		TEIntegration.addPulverizerRecipe(input, output, secondaryOutput, secondaryChance, strength);
 		if (strength == Strength.WEAK || strength == Strength.MEDIUM) {
 			IC2Integration.addMaceratorRecipe(input, output);
+		}
+	}
+
+	private static void registerMicroblocks() {
+		if (Loader.isModLoaded("ForgeMicroblock")) {
+			FMPIntegration.registerMicroblock(GeologicaBlocks.WEAK_STONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.MEDIUM_STONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_STONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_STONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.MEDIUM_COBBLESTONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_COBBLESTONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_COBBLESTONE);
 		}
 	}
 
