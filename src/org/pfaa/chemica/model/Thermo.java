@@ -17,6 +17,9 @@ public class Thermo {
 		this.shomates.add(shomate);
 	}
 	
+	public Thermo() { /* uncharacterized */
+		this(Double.NaN);
+	}
 	public Thermo(double S) { /* supports only transitions to this phase, but no heating or reactions */
 		this(Double.NaN, S, Double.NaN);
 	}
@@ -76,7 +79,11 @@ public class Thermo {
 	}
 	
 	public Thermo addSegment(double t0, double a, double b) {
-		return addSegment(t0, new Segment(this.getStandardEnthalpy(), this.getStandardEntropy(), a, b));
+		return addSegment(t0, a, b, 0);
+	}
+	
+	public Thermo addSegment(double t0, double a, double b, double transition) {
+		return addSegment(t0, new Segment(this.getStandardEnthalpy() + transition, this.getStandardEntropy(), a, b));
 	}
 	
 	public Thermo addSegment(double t0, double a, double b, double c, double d, double e, double f, double g) {
