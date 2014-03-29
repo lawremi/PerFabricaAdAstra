@@ -11,6 +11,8 @@ import org.pfaa.chemica.model.Vaporization.AntoineCoefficients;
 
 public interface Element extends Chemical, PartFactory {
 	public double getAtomicWeight();
+	public int getDefaultOxidationState();
+	public Formula.Part _(int quantity);
 	
 	public static enum Elements implements Element {
 		/*
@@ -18,7 +20,7 @@ public interface Element extends Chemical, PartFactory {
 			Li Be                               B  C  N  O  F  Ne 
 			Na Mg                               Al Si P  S  Cl Ar 
 			K  Ca Sc Ti V  Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr
-			R  Sr Y  Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I  Xe
+			R  Sr Y  Zr Nb Mo Tc Rb Rh Pd Ag Cd In Sn Sb Te I  Xe
 			Cs Ba Lu Hf Ta W  Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn
 			
 			Ce La Pr Nd ...
@@ -31,6 +33,16 @@ public interface Element extends Chemical, PartFactory {
 		 */
 		
 		H("hydrogen", 1.00, +1), /* See Molecules.H2 for properties */
+		Li("lithium", 6.94, +1,
+		   new Solid(new Color(240, 240, 240), 0.534,
+				     new Thermo(170, -883, 1977, -1487, -1.61, -31.2, 414),
+		             new Hazard(3, 2, 2, SpecialCode.WATER_REACTIVE)),
+		   new Fusion(454),
+		   new Liquid(0.512,
+				      new Thermo(32.5, -2.64, -6.33, 4.23, 0.00569, -7.12, 74.3)
+				   	  .addSegment(700, 26.0, 5.63, -4.01, 0.874, 0.344, -4.20, 66.4)),
+		   new Vaporization(1603),
+		   new Gas(new Thermo(23.3, -2.77, 0.767, -0.00360, -0.0352, 152, 166))),
 		B("boron", 10.8, +3,
 				   new Solid(new Color(82, 53, 7), 2.37, 
 						     new Thermo(10.2, 29.2, -18.0, 4.21, -0.551, -6.04, 7.09)
@@ -211,6 +223,22 @@ public interface Element extends Chemical, PartFactory {
 		   new Gas(new Thermo(188, -97.8, 20.2, -1.27, -177, 1.55, 220))),		
 		O("oxygen", 16.0, -2), /* See Compounds.O2 for properties */
 		F("fluorine", 19.0, -1), /* See Compounds.F2 for properties, solid density 1.7 */
+		Sr("strontium", 87.6, +2, 
+		   new Solid(new Color(212, 216, 220), 2.64,
+				     new Thermo(23.9, 9.30, 0.920, 0.0352, 0.00493, -7.53, 81.8),
+				     new Hazard(4, 0, 2, SpecialCode.WATER_REACTIVE)),
+		   new Fusion(1050),
+		   new Liquid(2.38, new Thermo(0.91, 50.9, 39.5)),
+		   new Vaporization(1650),
+		   new Gas(new Thermo(19.4, 3.74, -3.19, 0.871, 0.0540, 158, 187)
+				   .addSegment(2700, -39.0, -1.70, 7.99, -0.852, 188, 355, 243))),
+	    Y("yttrium", 88.9, +3,
+	      new Solid(new Color(212, 216, 220), 4.47,
+	    		    new Thermo(0, 44.4, 24.4, 6.99)),
+	      new Fusion(1799),
+	      new Liquid(4.24, new Thermo(50.7)),
+	      new Vaporization(3203),
+	      new Gas(new Thermo(164))),
 		Zr("zirconium", 91.2, +4, 
 		   new Solid(new Color(212, 216, 220), 6.52,
 				     new Thermo(29, -12.6, 20.7, -5.91, -0.157, -8.79, 76.0),
@@ -219,7 +247,7 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(5.8, new Thermo(17.4, 47.6, 41.8)),
 		   new Vaporization(4650),
 		   new Gas(new Thermo(39.5, -6.52, 2.26, -0.194, -12.5, 578, 212))),
-		 Mo("molybdenum", 96, +4, 
+		Mo("molybdenum", 96, +4, 
 			new Solid(new Color(105, 105, 105), 10.3,
 					  new Thermo(24.7, 3.96, -1.27, 1.15, -0.17, -8.11, 56.4)
 			          .addSegment(1900, 1231, -963, 284, -28, -712, -1486, 574),
@@ -228,6 +256,15 @@ public interface Element extends Chemical, PartFactory {
 			new Liquid(9.33, new Thermo(41.6, 43.1, 37.7)),
 			new Vaporization(4912),
 			new Gas(new Thermo(67.9, -40.5, 11.7, -0.819, -22.1, 601, 232))),
+		Rb("rubidium", 85.5, +1, 
+		   new Solid(new Color(175, 175, 175), 1.53,
+				     new Thermo(9.45, 65.3, 45.5, -26.8, -0.108, -6.43, 66.3),
+				     new Hazard(2, 3, 0, SpecialCode.WATER_REACTIVE)),
+		   new Fusion(312),
+		   new Liquid(1.46, new Thermo(35.5, -12.9, 8.55, -0.00283, -0.000119, -7.90, 130)),
+		   new Vaporization(961),
+		   new Gas(new Thermo(20.6, 0.462, -0.495, 0.174, 0.00439, 74.7, 195)
+			       .addSegment(1800, 74.1, -39.2, 9.91, -0.679, -35.1, 4.97, 214))),		
 		Ag("silver", 108, +1, 
 		   new Solid(new Color(213, 213, 213), 10.5,
 				     new Thermo(0, 42.6, 23.4, 6.28),
@@ -260,6 +297,16 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(6.53, new Thermo(67.6)),
 		   new Vaporization(2.26, 4475, -152),
 		   new Gas(new Thermo(168))),
+		Cs("caesium", 133, +1, 
+		   new Solid(new Color(170, 160, 115), 1.93,
+				     new Thermo(57.0, -50.0, 48.6, -16.7, -1.22, -19.3, 160),
+		             new Hazard(4, 3, 3, SpecialCode.WATER_REACTIVE)),
+		   new Fusion(302),
+		   new Liquid(1.84, new Thermo(30.0, 0.506, 0.348, -0.0995, 0.197, -6.23, 129)),
+		   new Vaporization(3.70, 3453, -26.8),
+		   new Gas(new Thermo(76.5, 175, 20.8)
+		           .addSegment(1000, 34.5, -13.8, 4.13, -0.138, -3.95, 58.2, 211)
+		           .addSegment(4000, -181, 80.0, -9.19, 0.330, 374, 518, 242))),
 		Ba("barium", 137, +2, 
 		   new Solid(new Color(70, 70, 70), 3.51,
 				     new Thermo(83.8, -406, 915, -520, -14.6, 248)
@@ -271,6 +318,15 @@ public interface Element extends Chemical, PartFactory {
 		   new Vaporization(4.08, 7599, -45.7),
 		   new Gas(new Thermo(-623, 430, -97.0, 7.47, 488, 1077, 19.0)
 		           .addSegment(4000, 770, -284, 41.4, -2.13, -1693, -1666, -26.3))),
+		W("tungsten", 184, +6, 
+		  new Solid(new Color(140, 140, 140), 19.3,
+				    new Thermo(24.0, 2.64, 1.26, -0.255, -0.0484, -7.43, 60.5)
+		            .addSegment(1900, -22.6, 90.3, -44.3, 7.18, -24.1, -9.98, -14.2),
+		            new Hazard(1, 2, 1)),
+		  new Fusion(3695),
+		  new Liquid(17.6, new Thermo(46.9, 45.7, 35.6)),
+		  new Vaporization(6203),
+		  new Gas(new Thermo(174))),		
 	    Re("rhenium", 186, +7, 
 		   new Solid(new Color(212, 216, 220), 21.0,
 				     new Thermo(0, 36.9, 26.4, 2.22)),
@@ -338,8 +394,8 @@ public interface Element extends Chemical, PartFactory {
 		   new Fusion(2115),
 		   new Liquid(Double.NaN, new Thermo(58.3)),
 		   new Vaporization(5061),
-		   new Gas(new Thermo(160)))
-		;
+		   new Gas(new Thermo(160)))		
+		   ;
 		
 		private Chemical delegate;
 		private double atomicWeight;
@@ -423,7 +479,12 @@ public interface Element extends Chemical, PartFactory {
 
 		@Override
 		public double getAtomicWeight() {
-			return atomicWeight;
+			return this.atomicWeight;
+		}
+
+		@Override
+		public int getDefaultOxidationState() {
+			return this.defaultOxidationState;
 		}
 	}
 }

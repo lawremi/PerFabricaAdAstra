@@ -43,6 +43,10 @@ public final class Formula {
 		return new Formula(newParts);
 	}
 	
+	public Formula substituteFirstPart(Element substitute) {
+		return this.setFirstPart(substitute._(this.getFirstPart().stoichiometry));
+	}
+	
 	public Formula setLastPart(Part newPart) {
 		List<Part> newParts = new ArrayList(this.parts);
 		newParts.set(newParts.size()-1, newPart);

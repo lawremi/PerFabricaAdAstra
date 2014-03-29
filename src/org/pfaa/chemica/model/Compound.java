@@ -13,39 +13,47 @@ import static org.pfaa.chemica.model.Element.Elements.Ce;
 import static org.pfaa.chemica.model.Element.Elements.Cl;
 import static org.pfaa.chemica.model.Element.Elements.Co;
 import static org.pfaa.chemica.model.Element.Elements.Cr;
+import static org.pfaa.chemica.model.Element.Elements.Cs;
 import static org.pfaa.chemica.model.Element.Elements.Cu;
 import static org.pfaa.chemica.model.Element.Elements.F;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
 import static org.pfaa.chemica.model.Element.Elements.Ga;
 import static org.pfaa.chemica.model.Element.Elements.H;
 import static org.pfaa.chemica.model.Element.Elements.Hg;
-import static org.pfaa.chemica.model.Element.Elements.La;
 import static org.pfaa.chemica.model.Element.Elements.K;
+import static org.pfaa.chemica.model.Element.Elements.La;
+import static org.pfaa.chemica.model.Element.Elements.Li;
 import static org.pfaa.chemica.model.Element.Elements.Mg;
 import static org.pfaa.chemica.model.Element.Elements.Mn;
 import static org.pfaa.chemica.model.Element.Elements.Mo;
 import static org.pfaa.chemica.model.Element.Elements.Na;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
+import static org.pfaa.chemica.model.Element.Elements.Ni;
 import static org.pfaa.chemica.model.Element.Elements.O;
 import static org.pfaa.chemica.model.Element.Elements.P;
 import static org.pfaa.chemica.model.Element.Elements.Pb;
 import static org.pfaa.chemica.model.Element.Elements.Pr;
 import static org.pfaa.chemica.model.Element.Elements.Re;
+import static org.pfaa.chemica.model.Element.Elements.Rb;
 import static org.pfaa.chemica.model.Element.Elements.S;
-import static org.pfaa.chemica.model.Element.Elements.Si;
 import static org.pfaa.chemica.model.Element.Elements.Sb;
+import static org.pfaa.chemica.model.Element.Elements.Si;
 import static org.pfaa.chemica.model.Element.Elements.Sn;
+import static org.pfaa.chemica.model.Element.Elements.Sr;
 import static org.pfaa.chemica.model.Element.Elements.Ti;
+import static org.pfaa.chemica.model.Element.Elements.W;
+import static org.pfaa.chemica.model.Element.Elements.Y;
 import static org.pfaa.chemica.model.Element.Elements.Zn;
 import static org.pfaa.chemica.model.Element.Elements.Zr;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Formula.Part;
-import org.pfaa.chemica.model.Vaporization.AntoineCoefficients;
 
 /* A compound is a type of chemical resulting from the combination of different 
  * atoms according to a specific structure and a specific proportion.
@@ -112,6 +120,10 @@ public interface Compound extends Chemical {
 		CaSO4_2H2O(new Formula(Ca, new Part(S, O._(4))).hydrate(2), "calcium", 
 			       new Solid(2.32, 
 				 	         new Thermo(-1433, 107, 186))),
+		CaWO4(new Formula(Ca, new Part(W, O._(4))), "tungsten", 
+			  new Solid(4.7, 
+					    new Thermo(-1645, 126, 133, 21.8, 0, 2.29)),
+			  new Fusion(1893)),
 	    CdS(new Formula(Cd, S), "cadmium", 
 	    	new Solid(new Color(244, 208, 10), 4.83, 
 	    	   	      new Thermo(-162, 65, 54.0, 3.77),
@@ -119,9 +131,12 @@ public interface Compound extends Chemical {
 			null, null,
 			new Vaporization(1250)),
 		//CaWO4("tungstate", new Solid(Color.ORANGE, 6.1, -1645, 126)),
-		//CeCO3F("bastnasite", new Solid(new Color(177, 81, 39), 4.4, )
+		CeCO3F(new Formula(Ce, new Part(C, O._(3), F)), "cerium", 
+			   new Solid(new Color(177, 81, 39), 4.95, new Thermo())),
 		CePO4(new Formula(Ce, new Part(P, O._(4))), "cerium",
 			   new Solid(new Color(184, 83, 43), 5.22, new Thermo())),
+		CoAsS(new Formula(Co, As, S), "cobalt", 
+			  new Solid(new Color(255, 80, 80), 6.33, new Thermo())),	   
 	    CoO(new Formula(Co, O), "cobalt", 
 			new Solid(Color.black, 6.44, 
 					  new Thermo(43.7, 22.4, -16.9, 6.56, 0.532, -250, 103)
@@ -161,10 +176,11 @@ public interface Compound extends Chemical {
 					     new Hazard(1, 0, 0)), 
 			   new Fusion(1638),
 			   new Liquid(new Thermo(161))),
-		//FeWO4("tungstate", new Solid(new Color(15, 10, 10), 7.5, -1154, 132)),
-	    GaOH3(new Formula(Ga, new Part(O, H)._(3)), "gallium",
-	    	  new Solid()), 
-		//NiS("nickel", new Fusion(1070, 30.1), new Solid(Color.BLACK, 5.8, -82, 53)),
+		FeWO4(new Formula(Fe, new Part(W, O._(4))), "tungsten",
+			  new Solid(Color.black, 6.64, 
+					    new Thermo(-1155, 132, 114))),
+	    Ni9S8(new Formula(Ni._(9), S._(8)), "nickel",
+	    	  new Solid(new Color(165, 150, 5), 4.8, new Thermo(-847, 475, 443))),
 		HgS(new Formula(Hg, S), "mercury", 
 			new Solid(new Color(139, 0, 0), 8.1, 
 					  new Thermo(-58, 78, 43.9, 15.3), 
@@ -177,14 +193,18 @@ public interface Compound extends Chemical {
 			new Liquid(1.52, new Thermo(-422, 86.7, 73.6)),
 			new Vaporization(4.78, 7441, -123),
 			new Gas(new Thermo(37.4, 0.792, -0.00970, 0.000827, -0.996, -226, 283.5))),
-		LaPO4(new Formula(La, new Part(P, O._(4))), "lanthanum",
-			  new Solid(new Color(184, 83, 43), 5.22, new Thermo())),
+		LiAlSiO32(new Formula(Li, Al, new Part(Si, O._(3))._(2)), "lithium",
+				  new Solid(new Color(190, 170, 170), 3.1, new Thermo())),
+		Li3KSi4O10OH2(new Formula(Li._(3), K, new Part(Si._(4), O._(10)), new Part(O, H)._(2)), "lithium",
+				      new Solid(new Color(240, 50, 140), 2.8, new Thermo())),
 	    MgCl2(new Formula(Mg, Cl._(2)).hydrate(6), "magnesium",
 	          new Solid(1.57, new Thermo(78.3, 2.44, 6.86, -1.73, -0.730, -668, 179)),
 			  new Fusion(987),
 			  new Liquid(2.11, new Thermo(-602, 130, 92.0)),
 			  new Vaporization(1685),
 			  new Gas(new Thermo(61.7, 0.573, -0.155, 0.0132, -0.431, -412, 349))),
+		MgCO3(new Formula(Mg, new Part(C, O._(3))), "magnesium",
+			  new Solid(2.96, new Thermo(44.9, 150, -74.2, 12.0, -0.629, -1133, 75.2))),
 	    MnO2(new Formula(Mn, O._(2)), "manganese",
 			 new Solid(5.03, new Thermo(-520, 53, 70.2, 8.86, 0.732, 1.67))),
 		//MgCO3("magnesite", new Solid(Color.WHITE, 3.0, -1113, 66)),
@@ -205,9 +225,15 @@ public interface Compound extends Chemical {
 		     new Vaporization(5.07, 8388, -82.6),
 		     new Gas(new Thermo(37.3, 0.792, -0.0270, 0.00231, -0.157, -193, 274))),
 		//NaCl("salt", new Fusion(1074, 30), new Solid(Color.WHITE, 2.2, -411, 72)),
-		NdPO4(new Formula(Nd, new Part(P, O._(4))), "neodynium",
-			  new Solid(new Color(184, 83, 43), 5.22, new Thermo())),	  
-		//NiO(new Formula(Ni, O), "nickel", new Solid(Color.GREEN, 2.7, -240, 38, new Hazard(2, 0, 0)), new Fusion(2228)),
+		NiO(new Formula(Ni, O), "nickel", 
+			new Solid(Color.GREEN, 2.7, new Thermo(-240, 38, 47.3, 9.00), 
+				      new Hazard(2, 0, 0)), 
+		    new Fusion(2228)),
+		NiOH2(new Formula(Ni, new Part(O, H)._(2)), "nickel", 
+			  new Solid(Color.GREEN, 4.10, new Thermo(-538, 79, 81), 
+					    new Hazard(2, 0, 0))),
+		Ni3Si2O5OH4(new Formula(Ni._(3), new Part(Si._(2), O._(5)), new Part(O, H)._(4)), "nickel",
+				    new Solid(Color.GREEN, 3.2, new Thermo())),					    
 		PbS(new Formula(Pb, S), "lead", 
 			new Solid(new Color(26, 26, 26), 7.6, 
 					  new Thermo(47.4, 7.55, 2.01, -0.700, -0.0318, -113, 146), 
@@ -216,10 +242,6 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(-98.3, 101, 66.9)),
 			new Vaporization(1554),
 			new Gas(new Thermo(77.9, -29.8, 7.55, -0.510, -25.1, 68.6, 311))),
-		PrPO4(new Formula(Pr, new Part(P, O._(4))), "praesodynium",
-			  new Solid(new Color(184, 83, 43), 5.22, new Thermo())),
-	    ReS2(new Formula(Re, S._(2)), "rhenium",
-	    	 new Solid(Color.black, 7.5, new Thermo())),
 		Sb2S3(new Formula(Sb._(2), S._(3)), "antimony", 
 			  new Solid(Color.GRAY, 4.64, 
 					    new Thermo(-175, 182, 101, 55.2), 
@@ -230,7 +252,11 @@ public interface Compound extends Chemical {
 		SnO2(new Formula(Sn, O._(2)), "tin",
 			 new Solid(Color.WHITE, 7.0, new Thermo(-581, 52, 60), new Hazard(2, 0, 0)),
 			 new Fusion(1903),
-			 new Liquid()), // FIXME: need heat of fusion
+			 new Liquid()),
+	    SrSO4(new Formula(Sr, new Part(S, O._(4))), "strontium",
+	    	  new Solid(Color.WHITE, 3.96, new Thermo(-1453, 117, 91.7, 55.4), new Hazard(1, 0, 0)),
+	    	  new Fusion(1879),
+	    	  new Liquid(new Thermo(136))),
 		TiO2(new Formula(Ti, O._(2)), "titanium", 
 		     new Solid(4.23, 
 		    		   new Thermo(67, 18.7, -11.6, 2.45, -1.49, -965, 117), 
@@ -257,6 +283,7 @@ public interface Compound extends Chemical {
 				ChemicalPhaseProperties liquid,	Vaporization vaporization, ChemicalPhaseProperties gas) 
 		{
 			this.delegate = new SimpleChemical(formula, oreDictKey, solid, fusion, liquid, vaporization, gas);
+			CompoundDictionary.register(formula, this);
 		}
 		
 		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 

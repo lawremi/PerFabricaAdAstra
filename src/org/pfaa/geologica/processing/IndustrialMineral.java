@@ -23,6 +23,8 @@ public interface IndustrialMineral extends IndustrialMaterial {
 		MICA(new Color(195, 195, 205), 2.82),
 		QUARTZ(Color.WHITE, 2.65),
 		OLIVINE(new Color(155, 230, 40), 3.30),
+		SEPIOLITE(new Color(230, 220, 220), 2),
+		TALC(new Color(90, 180, 90), 2.7),
 		VERMICULITE(new Color(200, 80, 15), 2.5),
 		WOLLASTONITE(Color.WHITE, 2.90),
 		VOLCANIC_ASH(Color.gray, 3),

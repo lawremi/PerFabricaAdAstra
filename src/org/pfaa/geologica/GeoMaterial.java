@@ -26,7 +26,8 @@ public enum GeoMaterial implements IndustrialMaterial {
 	
 	LIMESTONE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.MEDIUM),
 	SCHIST(Aggregates.STONE, Strength.MEDIUM),
-	SERPENTINITE(Aggregates.STONE, Strength.MEDIUM),
+	SERPENTINITE(Aggregates.STONE.add(IndustrialMinerals.CHRYSOTILE, 0.05)
+			     .add(IndustrialMinerals.TALC, 0.05), Strength.MEDIUM),
 	SLATE(Aggregates.STONE, Strength.MEDIUM),
 	SKARN(Aggregates.STONE, Strength.MEDIUM),
 	
@@ -36,7 +37,8 @@ public enum GeoMaterial implements IndustrialMaterial {
 	GRANITE(Aggregates.STONE, Strength.STRONG),
 	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
 	MARBLE(Aggregates.STONE.add(Compounds.CaCO3, 1.0), Strength.STRONG),
-	PEGMATITE(Aggregates.STONE.add(IndustrialMinerals.FELDSPAR, 0.5), Strength.STRONG),
+	PEGMATITE(Aggregates.STONE.add(IndustrialMinerals.FELDSPAR, 0.5)
+			  .add(IndustrialMinerals.QUARTZ, 0.2).add(IndustrialMinerals.MICA, 0.2), Strength.STRONG),
 	RHYOLITE(Aggregates.STONE, Strength.STRONG),
 	
 	DIORITE(Aggregates.STONE, Strength.VERY_STRONG),
@@ -82,16 +84,17 @@ public enum GeoMaterial implements IndustrialMaterial {
 	STIBNITE(Ores.STIBNITE.add(Ores.PYRITE, 0.05).add(Ores.GALENA, 0.05).add(Ores.REALGAR, 0.04).add(Ores.CINNABAR, 0.02), 
 			 Strength.WEAK),
 	
-	BARITE(Ores.BARITE.add(Ores.CELESTINE, 0.05), Strength.MEDIUM),
-	BASTNASITE(Strength.MEDIUM),
-	CHALCOPYRITE("copper", Strength.MEDIUM),
-	GARNIERITE("nickel", Strength.MEDIUM),
-	LEPIDOLITE(Strength.MEDIUM),
-	MAGNESITE("magnesium", Strength.MEDIUM),
-	PENTLANDITE("nickel", Strength.MEDIUM),
-	SCHEELITE("tungstate", Strength.MEDIUM),
-	SPHALERITE("zinc", Strength.MEDIUM),
-	WOLFRAMITE("tungstate", Strength.MEDIUM),
+	BARITE(Ores.BARITE, Strength.MEDIUM),
+	BASTNASITE(Ores.BASTNASITE, Strength.MEDIUM),
+	CHALCOPYRITE(Ores.CHALCOPYRITE.add(Ores.PYRITE, 0.10).add(Ores.MOLYBDENITE, 0.05)
+				 .add(Ores.COBALTITE, 0.01), Strength.MEDIUM),
+	GARNIERITE(Ores.NEPOUITE.add(SERPENTINITE, 1.0), Strength.MEDIUM),
+	LEPIDOLITE(Ores.LEPIDOLITE.add(PEGMATITE, 1.0).add(Ores.SPODUMENE, 0.2), Strength.MEDIUM),
+	MAGNESITE(Ores.MAGNESITE.add(IndustrialMinerals.TALC, 0.2), Strength.MEDIUM),
+	PENTLANDITE(Ores.PENTLANDITE.add(Ores.PYRITE, 0.1), Strength.MEDIUM),
+	SCHEELITE(Ores.SCHEELITE.add(Ores.CASSITERITE, 0.2).add(Ores.WOLFRAMITE, 0.2), Strength.MEDIUM),
+	SPHALERITE(Ores.SPHALERITE.add(Ores.GALENA, 0.2).add(Ores.PYRITE, 0.1), Strength.MEDIUM),
+	WOLFRAMITE(Ores.WOLFRAMITE.add(Ores.CASSITERITE, 0.2).add(Ores.SCHEELITE, 0.2), Strength.MEDIUM),
 	
 	BANDED_IRON("iron", Strength.STRONG),
 	BERYL(Strength.STRONG),

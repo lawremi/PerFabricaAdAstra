@@ -12,11 +12,14 @@ public class SimpleChemical implements Chemical {
 	private ChemicalPhaseProperties liquid;
 	private ChemicalPhaseProperties gas;
 	
+	public SimpleChemical(Formula formula, String oreDictKey, ChemicalPhaseProperties solid) {
+		this(formula, oreDictKey, solid, null, null, null, null);
+	}
 	public SimpleChemical(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 
 			ChemicalPhaseProperties liquid,	Vaporization vaporization, ChemicalPhaseProperties gas) 
 	{
 		this.formula = formula;
-		this.oreDictKey = oreDictKey == null ? formula.toString() : oreDictKey;;
+		this.oreDictKey = oreDictKey == null ? formula.toString() : oreDictKey;
 		this.solid = solid;
 		this.fusion = fusion;
 		this.liquid = liquid;

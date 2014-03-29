@@ -430,7 +430,7 @@
     Some of the recipe tweaks (durability, glass bottle), can be
     achieved with MineTweaker.
     http://minetweaker.powerofbytes.com/wiki
-    
+
 * Blocks
 ** Rocks
    Generating terrain with multiple rock types, instead of simply
@@ -906,7 +906,36 @@
    same shape. The player could construct a shape out of microblocks,
    hook it up to a pipe (via some adjacent machine) and pump concrete
    into it. The machine will then, after some time, yield an item of
-   the desired shape, consuming some amount of concrete. 
+   the desired shape, consuming some amount of concrete.
+** Crystals
+   For the ore textures, we should indicate the mineral by its crystal
+   habit, color, luster, and cleavage. Perhaps we can have a canonical
+   crystal rendered in high resolution, and that is sampled multiple
+   times to draw a number of crystals as an overlay on the rock. Since
+   these are simple triangles, we could even consider direct
+   rendering, which actually might be faster than drawing multiple
+   textures. We will sketch up prototypes first, of course.
+
+   | Mineral     | Habit       | Cleavage | Color        | Luster   |
+   |-------------+-------------+----------+--------------+----------|
+   | sphalerite  | euhedral    |      110 | yellow-brown | resinous |
+   | fluorite    | euhedral    |      111 | purple+green | vitreous |
+   | barite      | tabular     |      001 | white        | vitreous |
+   | cassiterite | prism-dipyr |  100+110 | black-brown  | metallic |
+   | lepidolite  | tabular     |      001 | pink-purple  | pearly   |
+   | cinnabar    |             |          |              |          |
+   
+   Vitreous should be semi-transparent (like stained glass), while
+   resinous should be much more translucent.
+
+   Tabular cleavage can have a sloping edge on one side, like BDcraft
+   lapis lazuli.
+
+   Other textures to fix:
+   * Pegmatite should be a mixture of various crystals.
+   * Banded iron should be redone as overlay
+   
+   
 * Items
 ** Chemicals
 *** Properties
@@ -1037,7 +1066,7 @@
     
 *** Metals
     
-    | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                | Current uses                            | Issues                     |
+    | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                | Current uses                            | Issues                           |
     |------------+-----------+---------------------+-------+-------+----------+--------------------------------------+-----------------------------------------+----------------------------------|
     | Lithium    | GT        | brine, ore          | 0.035 |  22:1 | 2:1 clay |                                      |                                         |                                  |
     | Sodium     | GT        | brine, ore          |       |   3:1 | 1:1 clay |                                      |                                         |                                  |
@@ -1062,7 +1091,7 @@
     | Tin        | BC/IC2    | ore                 |   0.2 |  12:1 | 3:1      | Many                                 |                                         |                                  |
     | Lead       | TE        | ore, Cu/Zn/Ag       |   3.5 |   6:1 | 6:1      | radiation, batteries, early wireless | IC2: reactors; GT: soldering, batteries |                                  |
     | Boron      |           | ore                 |       |       |          |                                      |                                         |                                  |
-    | Bismuth    |           | ore, Pb ore         |       |       |          |                                      |                                         |                                  |
+    | Bismuth    |           | ore, Pb ore         | 0.024 |       |          |                                      |                                         |                                  |
     | Tellurium  |           | Cu/Ni               |  5e-5 | 192:1 |          | +Cd solars                           |                                         |                                  |
     | Platinoid  | GT        | Ni/Cu/Cr/Co         |  2e-4 |  96:1 |          | catalyst                             |                                         |                                  |
     | Zirconium  |           | ore                 |       |       |          |                                      |                                         |                                  |
@@ -1071,7 +1100,7 @@
     | Uranium    | IC2       | ore                 |       |       |          |                                      |                                         |                                  |
     | Niobium    |           | ore                 | 0.001 |  48:1 |          |                                      |                                         |                                  |
     | Tantalum   |           | ore                 | 0.001 |  48:1 |          |                                      |                                         |                                  |
-    | Arsenic    |           | Cu                  |       |       |          |                                      |                                         |                                  |
+    | Arsenic    |           | Cu                  | 0.044 |       |          |                                      |                                         |                                  |
     | Antimony   |           | ore                 |  0.14 |  12:1 |          | SbO3: flame retardants; LA batteries |                                         |                                  |
     | Germanium  |           | Zn                  |       |       |          |                                      |                                         |                                  |
 
@@ -1085,7 +1114,7 @@
     | S       | processing gypsum, oil by-product (H2S)  |      | fertilizer, H2SO4 |
     | P       | apatite                                  |      |                   |
     | I       | brines                                   | 0.03 |                   |
-    | F       | flourite (CaF2)                          |      |                   |
+    | F       | flourite (CaF2)                          | 5    |                   |
     | Cl      | electrolysis of NaCl, etc                |      |                   |
     | Br      | brines                                   |      |                   |
     | He      | natural gas                              |      |                   |
@@ -1628,7 +1657,7 @@
      | CaO (s)          | H2O (l)           |                 | Ca(OH)2 (s)      |                     | mixer          |
      | Mg(OH)2 (s)      | HCl (aq)          |                 | MgCl2 (conc)     |                     |                |
      | MgCl2 (conc)     | e-                |                 | Mg (l)           | Cl2 (g)             | electrolyzer   |
-     | Li ore dust      | H2SO4 (aq)        |                 | Li2SO4 (aq)      |                     |                |
+     | Lepidolite dust  | H2SO4 (aq)        |                 | Li2SO4 (aq)      |                     |                |
      | Li2SO4 (aq)      | Na2CO3 (s)        |                 | Li2CO3 (s)       | Na2SO4 (aq)         | heated mixer   |
      | Li2CO3 (s)       | 2HCl (aq)         |                 | LiCl (aq)        | CO2 (g)             | mixer          |
      | 2LiCl (l)        | e-                |                 | 2Li (s)          | Cl2 (g)             | molten electro |
@@ -2051,10 +2080,13 @@
      
 *** Lepidolite
 **** Lithium
-     See Li ore dust reaction.
+     Like spodumene => Li2CO3. See lepidolite ore dust reaction.
      
 **** TODO Caesium
      Need to figure this out.
+     
+**** TODO Rubidium
+     
      
 *** Dolomite
 **** Magnesium
@@ -2082,6 +2114,14 @@
      in the initial step.
 
      Or aminate the KCl and use froth flotation.
+
+**** Carnallite
+     This is MgCl2*KCl*6H2O, i.e., MgCl2 and KCl complexed by
+     water. Dehydration (in a dryer), followed by melting the MgCl2
+     (but not the KCl) at 700-750C leads to separation of MgCl2 and
+     KCl, with a small amount of MgO produced through hydrolysis. The
+     MgO can be converted back to MgCl2 through chlorination during
+     melting (MgO + C + Cl2 => MgCl2 + CO/CO2, worth it?).
      
 *** Limestone/Marble
 **** Calcite (GT)
@@ -2201,6 +2241,12 @@
 **** Nickel
      Simply smelt it. In an induction furnace, include a sulfur
      source, like gypsum, for flux.
+
+     Or perhaps more realistic are hydrometallurgical processes, by
+     which metals are leached with sulfuric acid at 250C and high
+     pressure (or wait 3-4 months!). The leach solution is neutralized
+     with limestone, and the precipitated Ni hydroxide is roasted
+     to NiO and smelted.
      
 *** TODO Cassiterite
 **** Tin
@@ -2283,7 +2329,15 @@
      coke. Or directly induction smelted with Fe, producing Sb and
      FeS slag.
      
-*** TODO Borax
+*** Borax
+**** Boron
+     Three methods, increasing purity:
+     * Smelting of B2O3 with Mg or Al. The B2O3 is obtained by
+       treating borax with H2SO4 in a fusion furnace (750 C).
+     * Reduction of volatile boron halides with H2 at high
+       temperature.
+     * Thermal decomposition of diborane.
+     
 *** TODO Pyrolusite
 *** Pollucite
 **** Caesium
@@ -2376,7 +2430,7 @@
      Aluminothermic reaction w/ the purified oxide and iron.
      
 **** Rhenium
-     If the gas during roasting is captured, it can be condensed,
+     Rhenium oxide is filtered from the gas during roasting,
      leached with water and treated with NH4Cl to precipitate
      ammonium perrhenate. It can be reduced with hot H2 gas.
      
@@ -2450,6 +2504,15 @@
      with HNO3 (aq). And then dried. The reaction is extremely exothermic. 
 
      For K, simply add KCl (2 NP fertlizer + 1 KCl -> 3 NPK).
+
+*** Arsenic sulfides
+    Many sulfide ores contain arsenic sulfide minerals like realgar
+    and arsenopyrite. These volatilize upon roasting of the ore at
+    500-800C. The gases are burnt in O2 to produce As2O3, which is
+    condensed at ~100C, leaving SO2 in the gas phase. 
+
+**** Arsenic
+     Arsenic metal results from reduction of As2O3 with carbon at 500-800C. 
      
 ** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
