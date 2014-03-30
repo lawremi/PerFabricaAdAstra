@@ -1114,13 +1114,20 @@
     | S       | processing gypsum, oil by-product (H2S)  |      | fertilizer, H2SO4 |
     | P       | apatite                                  |      |                   |
     | I       | brines                                   | 0.03 |                   |
-    | F       | flourite (CaF2)                          | 5    |                   |
+    | F       | flourite (CaF2)                          |    5 |                   |
     | Cl      | electrolysis of NaCl, etc                |      |                   |
     | Br      | brines                                   |      |                   |
     | He      | natural gas                              |      |                   |
     | Ar      | cryogenic fractionation of atmosphere    |      |                   |
     | Ne      | cryogenic fractionation of atmosphere    |      |                   |
-
+    | Kr      | cryogenic fractionation of atmosphere    |      |                   |
+    | Xe      | cryogenic fractionation of atmosphere    |      |                   |
+    
+*** Elements too rare
+    * Sc: 2 tons / yr production
+    * Tc: almost non-existant in nature
+    * Fr/Ra/Rn: radioactive
+    
 *** Alloys
     Metals can be combined in a huge number of ways. Here are the
     available alloys:
@@ -1974,11 +1981,17 @@
                    sedimentation, or drying (requires more energy).
    
    The rest of this section describes how each specific ore can be
-   processed into economic materiaal ore minerals, it is
-   typically isolated from magnetite and ilmenite ore, and some times
-   carnotite (uranium) ore. It can also be extracted from flue dust
-   of heavy oil, phosphate ore slag and bauxite. Here we focus only
-   on extraction from magnetite.
+   processed into economic material. 
+   
+*** Magnetite
+**** Iron
+     Typical smelting of oxide ores.
+     
+**** Vanadium
+   Vanadium is typically isolated from magnetite and ilmenite ore,
+   and some times carnotite (uranium) ore. It can also be extracted
+   from flue dust of heavy oil, phosphate ore slag and bauxite. Here
+   we focus only on extraction from magnetite.
    
    In the induction smelter, magnetite ore + sand => iron +
    magnetite slag. That slag is then resmelted with sodium
@@ -1992,7 +2005,8 @@
    reactor would mix the NaVO3 (aq) and ammonia, resulting in an
    mixture of aqueous ammonia and solid vanadate. A liquid/solid
    separator yields the vanadate powder for roasting.
- 
+
+     
 *** Limonite
 **** Iron
      Basic smelting, 1250 C.
@@ -2065,6 +2079,15 @@
      chloride. GaCl3 is dissolved in ether, treated with NaOH and
      electrolyzed to produce Ga.
      
+**** Germanium
+     GeS2 is roasted with GeO2, and the Zn and Ge are extracted with
+     sulfuric acid. The solution is neutralized to precipitate only
+     GeO2. This is converted to GeCl4 by Cl2 gas or HCl, and the GeCl4
+     is purified by distillation. GeCl4 is hydrolyzed back to GeO2,
+     which is reduced with H2 or C to Ge.
+     
+**** Indium
+     
 *** Galena
 **** Lead
      Like any other sulfide ore.
@@ -2073,7 +2096,10 @@
      TE pulverizer already yields silver dust from lead ore.
      
 **** Antimony
-
+**** Vanadium (vanadinite)
+     Just like with magnetite, roasted (850 C) in presence of Na2CO3
+     or NaCl to produce sodium metavanadate.
+     
 *** Spodumene
 **** Lithium carbonate
      Treat with H2SO4, roast, leach with water and precipitate with Na2CO3.
@@ -2197,14 +2223,10 @@
      reacting as a gas with water vapor to UO2F2-H2O, which is reduced
      with H2 gas to UO2.
      
-**** Molybdenum
 **** Vanadate
      After treating ore with the tertiary amine, mix with the sodium
-     carbonate and follow the steps for magnetite.
-     
-**** Thorium
-**** Yttrium
-**** Technetium
+     carbonate and follow the steps for magnetite. This is actually
+     the mineral carnotite, which is probably associated with uraninite.
      
 *** Chromite
 **** Ferrochromium
@@ -2514,6 +2536,9 @@
 **** Arsenic
      Arsenic metal results from reduction of As2O3 with carbon at 500-800C. 
      
+*** Beryl
+    
+    
 ** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
    derived from petroleum.

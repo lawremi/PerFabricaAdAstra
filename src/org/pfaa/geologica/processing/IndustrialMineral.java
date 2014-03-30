@@ -13,6 +13,7 @@ public interface IndustrialMineral extends IndustrialMaterial {
 	public PhaseProperties getProperties();
 	
 	public enum IndustrialMinerals implements IndustrialMineral {
+		APATITE(new Color(160, 190, 160), 3.1),
 		BENTONITE(new Color(245, 215, 210), 0.593),
 		CHRYSOTILE(new Color(110, 140, 110), 2.53),
 		FELDSPAR(new Color(240, 210, 225), 2.56),

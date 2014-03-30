@@ -5,6 +5,7 @@ import static org.pfaa.chemica.model.Element.Elements.Al;
 import static org.pfaa.chemica.model.Element.Elements.As;
 import static org.pfaa.chemica.model.Element.Elements.B;
 import static org.pfaa.chemica.model.Element.Elements.Ba;
+import static org.pfaa.chemica.model.Element.Elements.Be;
 import static org.pfaa.chemica.model.Element.Elements.Bi;
 import static org.pfaa.chemica.model.Element.Elements.C;
 import static org.pfaa.chemica.model.Element.Elements.Ca;
@@ -27,6 +28,7 @@ import static org.pfaa.chemica.model.Element.Elements.Mg;
 import static org.pfaa.chemica.model.Element.Elements.Mn;
 import static org.pfaa.chemica.model.Element.Elements.Mo;
 import static org.pfaa.chemica.model.Element.Elements.Na;
+import static org.pfaa.chemica.model.Element.Elements.Nb;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
 import static org.pfaa.chemica.model.Element.Elements.O;
@@ -40,7 +42,10 @@ import static org.pfaa.chemica.model.Element.Elements.Sb;
 import static org.pfaa.chemica.model.Element.Elements.Si;
 import static org.pfaa.chemica.model.Element.Elements.Sn;
 import static org.pfaa.chemica.model.Element.Elements.Sr;
+import static org.pfaa.chemica.model.Element.Elements.Ta;
 import static org.pfaa.chemica.model.Element.Elements.Ti;
+import static org.pfaa.chemica.model.Element.Elements.U;
+import static org.pfaa.chemica.model.Element.Elements.V;
 import static org.pfaa.chemica.model.Element.Elements.W;
 import static org.pfaa.chemica.model.Element.Elements.Y;
 import static org.pfaa.chemica.model.Element.Elements.Zn;
@@ -100,6 +105,10 @@ public interface Compound extends Chemical {
 			  new Solid(4.5, new Thermo(-1465, 132, 141, 0.595, 0, 3.49), new Hazard(0, 0, 0)),
 			  new Fusion(1618), 
 			  new Liquid(new Thermo(157))),
+	    Be3Al2SiO36(new Formula(Be._(3), Al._(2), new Part(Si, O._(3))._(6)), "beryl", 
+				    new Solid(new Color(30, 200, 200), 2.7, new Thermo(-9000, 347, 593, 132, 17.1, -20.5)),
+				    new Fusion(1700),
+				    new Liquid(new Thermo(495))), // just made up the liquid entropy 
 		Bi2S3(new Formula(Bi._(2), S._(3)), "bismuth", 
 			  new Solid(new Color(160, 106, 0), 6.78, new Thermo(-143, 200, 155, -43.2, 36.2, 2.08), new Hazard(0, 0, 0)),
 			  new Fusion(1123), 
@@ -124,6 +133,8 @@ public interface Compound extends Chemical {
 			  new Solid(4.7, 
 					    new Thermo(-1645, 126, 133, 21.8, 0, 2.29)),
 			  new Fusion(1893)),
+		Cs2Al2Si4O12(new Formula(Cs._(2), Al._(2), new Part(Si, O._(3))._(4)).hydrate(2), "caesium",
+				     new Solid(Color.white, 2.9, new Thermo())),
 	    CdS(new Formula(Cd, S), "cadmium", 
 	    	new Solid(new Color(244, 208, 10), 4.83, 
 	    	   	      new Thermo(-162, 65, 54.0, 3.77),
@@ -167,15 +178,18 @@ public interface Compound extends Chemical {
 		FeCr2O4(new Formula(Fe, Cr._(2), O._(4)), "chromium", 
 				new Solid(new Color(25, 10, 10), 4.7, new Thermo(-1438, 152, 160, 31.8, -6.33, 3.06)),
 				new Fusion(2500)),
+		FeNb2O6(new Formula(Fe, Nb._(2), O._(6)), "niobium", new Solid()),
 		FeS2(new Formula(Fe, S._(2)), "iron", 
 			 new Solid(new Color(204, 154, 0), 4.9, 
 		   		       new Thermo(82.3, -23.7, 35.1, -9.60, -1.40, -196, 151))),
+		FeTa2O6(new Formula(Fe, Ta._(2), O._(6)), "tantalum", new Solid()),
 		FeTiO3(new Formula(Fe, Ti, O._(3)), "titanium", 
 			   new Solid(new Color(25, 10, 10), 4.6, 
 					     new Thermo(-1234, 106, 110, 38.8, -10.3, 1.91),
 					     new Hazard(1, 0, 0)), 
 			   new Fusion(1638),
 			   new Liquid(new Thermo(161))),
+		FeV2O4(new Formula(Fe, V._(2), O._(4)), "vanadium", new Solid()),
 		FeWO4(new Formula(Fe, new Part(W, O._(4))), "tungsten",
 			  new Solid(Color.black, 6.64, 
 					    new Thermo(-1155, 132, 114))),
@@ -193,6 +207,8 @@ public interface Compound extends Chemical {
 			new Liquid(1.52, new Thermo(-422, 86.7, 73.6)),
 			new Vaporization(4.78, 7441, -123),
 			new Gas(new Thermo(37.4, 0.792, -0.00970, 0.000827, -0.996, -226, 283.5))),
+		K2U2V2O12(new Formula(K._(2), new Part(U, O._(2))._(2), new Part(V, O._(4))._(2)).hydrate(3), "uranium",
+				  new Solid(new Color(250, 250, 35), 4.70, new Thermo())),
 		LiAlSiO32(new Formula(Li, Al, new Part(Si, O._(3))._(2)), "lithium",
 				  new Solid(new Color(190, 170, 170), 3.1, new Thermo())),
 		Li3KSi4O10OH2(new Formula(Li._(3), K, new Part(Si._(4), O._(10)), new Part(O, H)._(2)), "lithium",
@@ -242,6 +258,8 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(-98.3, 101, 66.9)),
 			new Vaporization(1554),
 			new Gas(new Thermo(77.9, -29.8, 7.55, -0.510, -25.1, 68.6, 311))),
+		Pb5V3O12Cl(new Formula(Pb._(5), new Part(V, O._(4))._(3), Cl), "vanadium",
+				   new Solid(new Color(210, 0, 0), 6.90, new Thermo())),
 		Sb2S3(new Formula(Sb._(2), S._(3)), "antimony", 
 			  new Solid(Color.GRAY, 4.64, 
 					    new Thermo(-175, 182, 101, 55.2), 
@@ -265,6 +283,12 @@ public interface Compound extends Chemical {
 		     new Liquid(new Thermo(78.0)),
 		     new Vaporization(3245),
 		     new Gas(new Thermo(285))),
+		UO2(new Formula(U, O._(2)), "uranium", 
+			new Solid(Color.black, 11.0, 
+					  new Thermo(70, 40, -37.5, 12.7, -1.45, -1111, 144), 
+					  new Hazard(1, 0, 0)), 
+		    new Fusion(3140),
+		    new Liquid(new Thermo(100))),
 		ZnS(new Formula(Zn, S), "zinc", 
 			new Solid(4.09, 
 					  new Thermo(-206, 201, 53.6, 3.97, 0, 0.814), 

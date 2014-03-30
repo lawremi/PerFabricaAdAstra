@@ -27,7 +27,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	LIMESTONE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.MEDIUM),
 	SCHIST(Aggregates.STONE, Strength.MEDIUM),
 	SERPENTINITE(Aggregates.STONE.add(IndustrialMinerals.CHRYSOTILE, 0.05)
-			     .add(IndustrialMinerals.TALC, 0.05), Strength.MEDIUM),
+			     .add(IndustrialMinerals.TALC, 0.05).add(IndustrialMinerals.OLIVINE, 0.05), Strength.MEDIUM),
 	SLATE(Aggregates.STONE, Strength.MEDIUM),
 	SKARN(Aggregates.STONE, Strength.MEDIUM),
 	
@@ -76,7 +76,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	CINNABAR(Ores.CINNABAR.add(Ores.PYRITE, 0.05).add(Ores.REALGAR, 0.04).add(Ores.STIBNITE, 0.02).add(Ores.BARITE, 0.02), 
 			 Strength.WEAK),
 	GALENA(Ores.GALENA.add(Ores.SPHALERITE, 0.2).add(Ores.ACANTHITE, 0.05).add(Ores.FLUORITE, 0.05).add(Ores.BISMUTHINITE, 0.05)
-		   .add(Ores.REALGAR, 0.04).add(Ores.STIBNITE, 0.02).add(Ores.GREENOCKITE, 0.01), Strength.WEAK),
+		   .add(Ores.REALGAR, 0.04).add(Ores.STIBNITE, 0.02).add(Ores.GREENOCKITE, 0.01).add(Ores.VANADINITE, 0.01), Strength.WEAK),
 	MOLYBDENITE(Ores.MOLYBDENITE.add(Ores.PYRITE, 0.05).add(Ores.CHALCOPYRITE, 0.05)
 			    .add(Ores.FLUORITE, 0.02), Strength.WEAK),
 	PYROLUSITE(Ores.PYROLUSITE.add(Ores.GOETHITE, 0.1), Strength.WEAK),
@@ -96,17 +96,18 @@ public enum GeoMaterial implements IndustrialMaterial {
 	SPHALERITE(Ores.SPHALERITE.add(Ores.GALENA, 0.2).add(Ores.PYRITE, 0.1), Strength.MEDIUM),
 	WOLFRAMITE(Ores.WOLFRAMITE.add(Ores.CASSITERITE, 0.2).add(Ores.SCHEELITE, 0.2), Strength.MEDIUM),
 	
-	BANDED_IRON("iron", Strength.STRONG),
-	BERYL(Strength.STRONG),
-	CASSITERITE("tin", Strength.STRONG),
-	CHROMITE("chromium", Strength.STRONG),
-	ILMENITE(Strength.STRONG),
-	MAGNETITE("iron", Strength.STRONG),
-	POLLUCITE(Strength.STRONG),
-	SPODUMENE(Strength.STRONG),
-	TANTALITE(Strength.STRONG),
-	URANINITE(Strength.STRONG),
-	VANADIUM_MAGNETITE(Strength.STRONG),
+	BANDED_IRON(Ores.HEMATITE.add(Ores.MAGNETITE, 0.5), Strength.STRONG),
+	BERYL(Ores.BERYL.add(PEGMATITE, 1.0), Strength.STRONG),
+	CASSITERITE(Ores.CASSITERITE.add(Ores.FLUORITE, 0.1).add(Ores.WOLFRAMITE, 0.1)
+			    .add(IndustrialMinerals.APATITE, 0.05).add(Ores.MOLYBDENITE, 0.05), Strength.STRONG),
+	CHROMITE(Ores.CHROMITE.add(SERPENTINITE, 0.5).add(Ores.MAGNETITE, 0.1), Strength.STRONG),
+	ILMENITE(Ores.ILMENITE.add(Ores.RUTILE, 0.2).add(Ores.MAGNETITE, 0.1), Strength.STRONG),
+	MAGNETITE(Ores.MAGNETITE, Strength.STRONG),
+	POLLUCITE(Ores.POLLUCITE.add(PEGMATITE, 1.0).add(Ores.SPODUMENE, 0.1), Strength.STRONG),
+	SPODUMENE(Ores.SPODUMENE.add(PEGMATITE, 1.0).add(Ores.LEPIDOLITE, 0.1), Strength.STRONG),
+	TANTALITE(Ores.TANTALITE.add(Ores.COLUMBITE, 2.0), Strength.STRONG),
+	URANINITE(Ores.URANINITE.add(Ores.CARNOTITE, 0.05), Strength.STRONG),
+	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG),
 	
 	CHRYSOTILE("asbestos", Strength.WEAK),
 	DIATOMITE(Strength.WEAK),

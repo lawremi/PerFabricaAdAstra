@@ -24,7 +24,7 @@ public interface Element extends Chemical, PartFactory {
 			Cs Ba Lu Hf Ta W  Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn
 			
 			Ce La Pr Nd ...
-			.. Th ...
+			.. Th .. U  ...
 		*/
 		
 		/*
@@ -43,6 +43,16 @@ public interface Element extends Chemical, PartFactory {
 				   	  .addSegment(700, 26.0, 5.63, -4.01, 0.874, 0.344, -4.20, 66.4)),
 		   new Vaporization(1603),
 		   new Gas(new Thermo(23.3, -2.77, 0.767, -0.00360, -0.0352, 152, 166))),
+		Be("beryllium", 9.01, +2,
+		   new Solid(new Color(40, 40, 40), 1.85,
+				     new Thermo(21.2, 5.69, 0.968, -0.00175, -0.588, -8.55, 30.1)
+		    		 .addSegment(1527, 30.0, -0.000396, 0.000169, -0.000026, -0.000105, -6.97, 40.8),
+				     new Hazard(3, 1, 0)),
+		   new Fusion(1560),
+		   new Liquid(1.69,
+				      new Thermo(25.4, 2.16, -0.00257, 0.000287, 0.00396, 5.44, 44.5)),
+		   new Vaporization(3243),
+		   new Gas(new Thermo(28.6, -5.38, 1.04, -0.0121, -426, 308, 164))),
 		B("boron", 10.8, +3,
 				   new Solid(new Color(82, 53, 7), 2.37, 
 						     new Thermo(10.2, 29.2, -18.0, 4.21, -0.551, -6.04, 7.09)
@@ -143,6 +153,33 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(4.11, new Thermo(13.7, 39.2, -22.1)),
 		   new Vaporization(3560),
 		   new Gas(new Thermo(9.27, 6.09, 0.577, -0.110, 6.50, 483, 204))),
+		V("vanadium", 50.9, +5,
+		  new Solid(new Color(145, 170, 190), 6.0, 
+				    new Thermo(26.3, 1.40, 2.21, 0.404, -0.176, -8.52, 59.3), 
+				    new Hazard(2, 1, 0)), 
+		  new Fusion(2183),
+		  new Liquid(5.5, new Thermo(17.3, 36.1, 46.2)),
+		  new Vaporization(3680),
+		  new Gas(new Thermo(32.0, -9.12, 2.94, -0.190, 1.41, 505, 220))),
+		Cr("chromium", 52.0, +3, 
+		   new Solid(new Color(212, 216, 220), 7.19,
+				     new Thermo(7.49, 71.5, -91.7, 46.0, 0.138, -4.23, 15.8)
+		   			 .addSegment(600, 18.5, 5.48, 7.90, -1.15, 1.27, -2.68, 48.1),
+		   			 new Hazard(2, 1, 1)),
+		   new Fusion(2180),
+		   new Liquid(6.3, new Thermo(21.6, 36.2, 39.3)),
+		   new Vaporization(2944),
+		   new Gas(new Thermo(13.7, -3.42, 0.394, -16.7, 383, 183, 397))),
+		Mn("manganese", 54.9, +4,
+		   new Solid(new Color(212, 216, 220), 7.21,
+				     new Thermo(27.2, 5.24, 7.78, -2.12, -0.282, -9.37, 61.5)
+		   			 .addSegment(980, 52.3, -28.7, 21.5, -4.98, -2.43, -21.2, 90.7)
+		   			 .addSegment(1361, 19.1, 31.4, -15.0, 3.21, 1.87, -2.76, 48.8)
+		   			 .addSegment(1412, -534, 679, -296, 46.4, 161, 469, -394)),
+		   new Fusion(1519),
+		   new Liquid(5.95, new Thermo(16.3, 43.5, 46.0)),
+		   new Vaporization(2334),
+		   new Gas(new Thermo(188, -97.8, 20.2, -1.27, -177, 1.55, 220))),
 		Fe("iron", 55.8, +3, 
 		   new Solid(Color.gray, 7.87, 
 				     new Thermo(24.0, 8.37, 0.000277, -8.60E-5, -5.00E-6, 0.268, 62.1), 
@@ -201,26 +238,7 @@ public interface Element extends Chemical, PartFactory {
 				             new Hazard(3, 2, 0)), 
 				   null, null, 
 				   new Vaporization(887),
-				   new Gas(new Thermo(74.3))),
-		Cr("chromium", 52.0, +3, 
-		   new Solid(new Color(212, 216, 220), 7.19,
-				     new Thermo(7.49, 71.5, -91.7, 46.0, 0.138, -4.23, 15.8)
-		             .addSegment(600, 18.5, 5.48, 7.90, -1.15, 1.27, -2.68, 48.1),
-		             new Hazard(2, 1, 1)),
-		   new Fusion(2180),
-		   new Liquid(6.3, new Thermo(21.6, 36.2, 39.3)),
-		   new Vaporization(2944),
-		   new Gas(new Thermo(13.7, -3.42, 0.394, -16.7, 383, 183, 397))),
-		Mn("manganese", 54.9, +4,
-		   new Solid(new Color(212, 216, 220), 7.21,
-				     new Thermo(27.2, 5.24, 7.78, -2.12, -0.282, -9.37, 61.5)
-		   			 .addSegment(980, 52.3, -28.7, 21.5, -4.98, -2.43, -21.2, 90.7)
-		   			 .addSegment(1361, 19.1, 31.4, -15.0, 3.21, 1.87, -2.76, 48.8)
-		   			 .addSegment(1412, -534, 679, -296, 46.4, 161, 469, -394)),
-		   new Fusion(1519),
-		   new Liquid(5.95, new Thermo(16.3, 43.5, 46.0)),
-		   new Vaporization(2334),
-		   new Gas(new Thermo(188, -97.8, 20.2, -1.27, -177, 1.55, 220))),		
+				   new Gas(new Thermo(74.3))),		
 		O("oxygen", 16.0, -2), /* See Compounds.O2 for properties */
 		F("fluorine", 19.0, -1), /* See Compounds.F2 for properties, solid density 1.7 */
 		Sr("strontium", 87.6, +2, 
@@ -247,6 +265,14 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(5.8, new Thermo(17.4, 47.6, 41.8)),
 		   new Vaporization(4650),
 		   new Gas(new Thermo(39.5, -6.52, 2.26, -0.194, -12.5, 578, 212))),
+		Nb("niobium", 92.9, +5, 
+				   new Solid(new Color(135, 150, 160), 8.57,
+						     new Thermo(22.0, 9.89, -5.65, 1.76, 0.0218, -6.88, 60.5),
+						     new Hazard(1, 1, 0)),
+				   new Fusion(2750),
+				   new Liquid(Double.NaN, new Thermo(29.7, 47.3, 33.5)),
+				   new Vaporization(5017),
+				   new Gas(new Thermo(-14637, 5142, -675, 31.5, 47657, 42523, 6194))),
 		Mo("molybdenum", 96, +4, 
 			new Solid(new Color(105, 105, 105), 10.3,
 					  new Thermo(24.7, 3.96, -1.27, 1.15, -0.17, -8.11, 56.4)
@@ -318,6 +344,15 @@ public interface Element extends Chemical, PartFactory {
 		   new Vaporization(4.08, 7599, -45.7),
 		   new Gas(new Thermo(-623, 430, -97.0, 7.47, 488, 1077, 19.0)
 		           .addSegment(4000, 770, -284, 41.4, -2.13, -1693, -1666, -26.3))),
+		Ta("tantalum", 181, +5, 
+		   new Solid(new Color(185, 190, 200), 16.7,
+				     new Thermo(20.7, 17.3, -15.7, 5.61, 0.0616, -6.60, 62.4)
+		   			 .addSegment(1300, -43.9, 73.0, -27.4, 4.00, 26.3, 60.2, 25.7),
+		   			 new Hazard(1, 1, 0)),
+		   new Fusion(3290),
+		   new Liquid(15, new Thermo(30.8, 50.4, 41.8)),
+		   new Vaporization(5731),
+		   new Gas(new Thermo(29.5, 3.42, -0.566, 0.0697, -4.93, 763, 208))),
 		W("tungsten", 184, +6, 
 		  new Solid(new Color(140, 140, 140), 19.3,
 				    new Thermo(24.0, 2.64, 1.26, -0.255, -0.0484, -7.43, 60.5)
@@ -394,7 +429,16 @@ public interface Element extends Chemical, PartFactory {
 		   new Fusion(2115),
 		   new Liquid(Double.NaN, new Thermo(58.3)),
 		   new Vaporization(5061),
-		   new Gas(new Thermo(160)))		
+		   new Gas(new Thermo(160))),
+		U("uranium", 238, +6,
+		  new Solid(new Color(95, 95, 95), 19.1,
+				    new Thermo(0, 50.2, 9.68, 41.0, -2.65, 53.7)
+				    .addSegment(672, 41, 2.93)
+				    .addSegment(772, 42, 4.79)),
+		  new Fusion(1405),
+		  new Liquid(17.3, new Thermo(56.7)),
+		  new Vaporization(4404),
+		  new Gas(new Thermo(200)))
 		   ;
 		
 		private Chemical delegate;
