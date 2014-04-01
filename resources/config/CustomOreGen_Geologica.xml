@@ -1832,8 +1832,10 @@
               <Cloud name='PentlanditePeridotite'
                      inherits='PresetPentlanditePeridotite'/>
             </IfCondition>
-            <Veins name='PeridotiteSerpentinite'
-                   inherits='PresetPeridotiteSerpentinite'/>
+            <IfCondition condition=":=?GeologicaGenSerpVeins">
+              <Veins name='PeridotiteSerpentinite'
+                     inherits='PresetPeridotiteSerpentinite'/>
+            </IfCondition>
             <Cloud name='IlmeniteDioriteLayer'
                    inherits='PresetIlmeniteDioriteLayer'/>
             <Cloud name='ChromiteDioriteLayer'
@@ -2265,8 +2267,11 @@
         <VeinsPreset name='PresetGraniteFluoriteContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
-                     wireframeColor='0xFF22AA22'
-                     block='MediumOreRock:13'/>
+                     wireframeColor='0xFF22AA22'>
+          <OreBlock block='MediumOreRock:13' weight='0.92'/>
+          <OreBlock block='MediumOreRock:8' weight='0.06'/>
+          <OreBlock block='WeakOreRock:2' weight='0.02'/>
+        </VeinsPreset>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
                      inherits='PresetLayeredVeinsVolcanic'>
@@ -2308,8 +2313,11 @@
         <VeinsPreset name='PresetGraniteFluoriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
-                     wireframeColor='0xFF22AA22'
-                     block='MediumOreRock:13'/>
+                     wireframeColor='0xFF22AA22'>
+          <OreBlock block='MediumOreRock:13' weight='0.92'/>
+          <OreBlock block='MediumOreRock:8' weight='0.06'/>
+          <OreBlock block='WeakOreRock:2' weight='0.02'/>
+        </VeinsPreset>
         
         <ConfigSection> <!-- Pegmatite -->
           <VeinsPreset name='PresetPegmatite'
