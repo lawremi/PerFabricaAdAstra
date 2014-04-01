@@ -19,12 +19,12 @@ import com.google.common.base.CaseFormat;
 
 public enum GeoMaterial implements IndustrialMaterial {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),
-	CARBONATITE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.WEAK),
+	CARBONATITE(Aggregates.STONE.add(Ores.CALCITE, 0.5), Strength.WEAK),
 	CLAYSTONE(Aggregates.STONE, Strength.WEAK),
 	CONGLOMERATE(Aggregates.SAND.add(Aggregates.GRAVEL, 1.0), Strength.WEAK),
 	MUDSTONE(Aggregates.STONE, Strength.WEAK),
 	
-	LIMESTONE(Aggregates.STONE.add(Compounds.CaCO3, 0.5), Strength.MEDIUM),
+	LIMESTONE(Aggregates.STONE.add(Ores.CALCITE, 0.5), Strength.MEDIUM),
 	SCHIST(Aggregates.STONE, Strength.MEDIUM),
 	SERPENTINITE(Aggregates.STONE.add(IndustrialMinerals.CHRYSOTILE, 0.05)
 			     .add(IndustrialMinerals.TALC, 0.05).add(IndustrialMinerals.OLIVINE, 0.05), Strength.MEDIUM),
@@ -36,7 +36,7 @@ public enum GeoMaterial implements IndustrialMaterial {
 	GNEISS(Aggregates.STONE, Strength.STRONG),
 	GRANITE(Aggregates.STONE, Strength.STRONG),
 	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
-	MARBLE(Aggregates.STONE.add(Compounds.CaCO3, 1.0), Strength.STRONG),
+	MARBLE(Aggregates.STONE.add(Ores.CALCITE, 1.0), Strength.STRONG),
 	PEGMATITE(Aggregates.STONE.add(IndustrialMinerals.FELDSPAR, 0.5)
 			  .add(IndustrialMinerals.QUARTZ, 0.2).add(IndustrialMinerals.MICA, 0.2), Strength.STRONG),
 	RHYOLITE(Aggregates.STONE, Strength.STRONG),
@@ -109,27 +109,29 @@ public enum GeoMaterial implements IndustrialMaterial {
 	URANINITE(Ores.URANINITE.add(Ores.CARNOTITE, 0.05), Strength.STRONG),
 	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG),
 	
-	CHRYSOTILE("asbestos", Strength.WEAK),
-	DIATOMITE(Strength.WEAK),
-	GLAUCONITE(Strength.WEAK),
-	GRAPHITE(Strength.WEAK),
-	GYPSUM(Strength.WEAK),
-	MIRABILITE(Strength.WEAK),
-	MICA(Strength.WEAK),
-	SOAPSTONE("talc", Strength.WEAK),
-	TRONA(Strength.WEAK),
+	CHRYSOTILE(new SimpleMixture(IndustrialMinerals.CHRYSOTILE).add(SERPENTINITE, 0.5), Strength.WEAK),
+	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
+	GLAUCONITE(new SimpleMixture(IndustrialMinerals.GLAUCONITE).add(Aggregates.SAND, 1.0), Strength.WEAK),
+	GRAPHITE(new SimpleMixture(IndustrialMinerals.GRAPHITE).add(IndustrialMinerals.COAL, 0.5), Strength.WEAK),
+	GYPSUM(new SimpleMixture(IndustrialMinerals.GYPSUM).add(Ores.HALITE, 0.05), Strength.WEAK),
+	MIRABILITE(new SimpleMixture(IndustrialMinerals.MIRABILITE)
+	           .add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
+	MICA(new SimpleMixture(IndustrialMinerals.MICA).add(PEGMATITE, 0.5), Strength.WEAK),
+	SOAPSTONE(new SimpleMixture(IndustrialMinerals.TALC).add(SERPENTINITE, 0.5), Strength.WEAK),
+	TRONA(new SimpleMixture(IndustrialMinerals.TRONA)
+          .add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
 	
-	ALUNITE(Strength.MEDIUM),
-	CELESTINE("strontium", Strength.MEDIUM),
-	DOLOMITE(Strength.MEDIUM),
-	FLUORITE(Ores.FLUORITE, Strength.MEDIUM),
-	WOLLASTONITE(Strength.MEDIUM),
-	ZEOLITE(Strength.MEDIUM),
+	ALUNITE(new SimpleMixture(IndustrialMinerals.ALUNITE).add(IndustrialMinerals.BENTONITE, 0.1), Strength.MEDIUM),
+	CELESTINE(Ores.CELESTINE.add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.MEDIUM),
+	DOLOMITE(new SimpleMixture(IndustrialMinerals.DOLOMITE).add(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
+	FLUORITE(Ores.FLUORITE.add(Ores.SPHALERITE, 0.06).add(Ores.GALENA, 0.02), Strength.MEDIUM),
+	WOLLASTONITE(new SimpleMixture(IndustrialMinerals.WOLLASTONITE).add(Ores.CALCITE, 0.1), Strength.MEDIUM),
+	ZEOLITE(IndustrialMinerals.ZEOLITE, Strength.MEDIUM),
 	
-	APATITE(Strength.STRONG),
-	KYANITE(Strength.STRONG),
-	PERLITE(Strength.STRONG),
-	PUMICE(Strength.STRONG);
+	APATITE(IndustrialMinerals.APATITE, Strength.STRONG),
+	KYANITE(new SimpleMixture(IndustrialMinerals.KYANITE).add(PEGMATITE, 0.5), Strength.STRONG),
+	PERLITE(new SimpleMixture(IndustrialMinerals.PERLITE).add(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
+	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG);
     
 	static Mixture ROCK = new SimpleMixture(Aggregates.STONE);
 	
