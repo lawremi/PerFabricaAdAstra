@@ -934,8 +934,7 @@
    Other textures to fix:
    * Pegmatite should be a mixture of various crystals.
    * Banded iron should be redone as overlay
-   
-   
+      
 * Items
 ** Chemicals
 *** Properties
@@ -1941,8 +1940,29 @@
    See this for thermal decomposition:
    http://www.docbrown.info/page07/sblockb.htm#11.
 
-  Smelting energy depends on the necessary temperature.
-  
+   Smelting energy depends on the necessary temperature.
+
+*** Mod integration
+    Many mods add basic furnaces. Those are integrated via the ore
+    dictionary. But we also need realistic smelting with reductants. 
+
+    Possible machines for reduction:
+    * Multi-smelter [Engineer's Toolbox]
+    * Induction smelter [Thermal Expansion] : 2=>1(+1)
+    * High oven [Tinker's Steelworks] : 1(+3 modifiers)=>liquid
+      
+    One problem is that mods tend to conflate metal dusts with crushed
+    metal ores. Obviously, the metal dust is already reduced (and
+    might result from grinding an ingot), while the ore still requires
+    processing. Even mods that distinguish metal dusts from ores do so
+    only with regard to purity, not chemistry. Tinker's Steelworks is
+    the only one that pretends to do chemistry (but has no idea what
+    it is doing). The player will get whatever the
+    grinder/pulverizer/macerator/etc produces.  We need to be careful
+    with the ore dictionary, so that only crushed ores are valid input
+    to smelting. These would be the keys "crushed" and
+    "crushedPurified" (eg: crushedTin).
+    
 ** Pyrolysis
    Another type of cooking is pyrolysis, thermal decomposition without
    combustion: http://en.wikipedia.org/wiki/Pyrolysis. We could use the
@@ -3470,10 +3490,19 @@
    independent of GT.
    
 * Mod Integration
-** Gregtech        
-** Custom Ore Generation
-   * Generates all of the rocks and minerals
+  We define a complex chemical model and programmatically manifest it
+  through integration with other mods. Eventually, we might have our
+  own system of machines, but for now, our model is sufficiently
+  detailed such that any external representation is a reduction of its
+  complexity.
 
+  Below is a list of the targeted mods and how we might integrate with
+  them. Most of the integration is implicit, i.e., through the ore
+  dictionary, but we will also need to add custom recipes.
+  
+** Gregtech
+** Mekanism
+** Resonant Induction
 ** Engineer's Toolbox
    Modular machine construction, based around a generic framework
    called a "socket". A socket has item, fluid and energy storage, as
@@ -3489,20 +3518,28 @@
    This might simplify our machine implementation: we just need to
    create modules. GasCraft is already based on sockets.
    
-** GasCraft
-   Should integrate with its gasses and machines.
-   
+*** GasCraft
+    Should integrate with its gasses and machines.
+    
 ** BuildCraft
    Generates oil, but Geologica could/should easily do
-   this. Otherwise, seems largely redundant with other mods, except
-   for maybe the pump, floodgate and filler.
+   this. The planned distillation tower will be useful.
    
 ** IndustrialCraft
 ** Forestry
-   * Add rocks and ores to the relevant backpacks
+   * Ore dictionary should allow rocks/ores in backpacks.
      
 ** RailCraft
+   * Coke oven could be generalized to any type of pyrolysis.
+   * Rock crusher should handle ores via ore dictionary.
+     
 ** Thermal Expansion
+*** Induction furnace
+    Could potentially support enhanced reduction. Currently, sand is
+    supported for flux; presumably the electric current is the
+    reductant. But then this should be called an electric arc
+    furnace. An induction furnace is only for melting.
+    
 *** Pulverizer
     Mapping from strength to MJ cost:
     
@@ -3512,14 +3549,10 @@
     | Medium      | 300 |
     | Strong      | 450 |
     | Very Strong | 675 |
+
 ** Foundry
    Smelting with liquid metals... kind of like TC.
-   
-** ExtraBiomesXL/BOP/etc
-   Will generate rocks/ores in all of its biomes. Hopefully this
-   integrates with Forgotten Nature, which would add many trees and
-   crops.
-   
+      
 ** EnderIO
    Provides TE-like facilities for energy storage, item/liquid/power
    transfer, etc.
@@ -3532,22 +3565,13 @@
    While we will endeavor to have blocks that rely on rendering rather
    than GUIs, clarity will be limited. Thus, Waila tooltips may help.
    
-** Millenaire
-   Possible basis for alien villages on other planets. May help us
-   add a chemist's lab, where chemicals can be taken and traded.
-
 ** Thaumcraft?
    We should add magical aspects to every item, so that we mesh with
-   magic-based gameplay.
-   
-** ComputerCraft?
-   Important for use of computers, which any spaceship will
-   have. Often leads to imbalanced gameplay, however. Perhaps we
-   have specialized robots?
-   
+   magic-based gameplay. The ore dictionary should handle this somehow.
+      
 ** MineChem?
-   Sort of a scientific mix of EE3 Thaumcraft. Substances are broken
-   down into chemicals (as revealed by a microscope), and those
+   Sort of a scientific mix of EE3 and Thaumcraft. Substances are
+   broken down into chemicals (as revealed by a microscope), and those
    chemicals can be broken down into their elements. By recombining
    elements and then combining those compounds, substances are
    (re)created. Even has BuildCraft and ComputerCraft turtle
@@ -3556,15 +3580,8 @@
    though than EE itself.
 
    Presumably we could define our chemicals within this
-   system. Probably better to do our own thing for now.
+   system, but for now we can hopefully rely on the ore dictionary.
 
-** FrogCraft
-   IC2 addon very similar in goals to chemica (industrial
-   chemistry). Should probably support some of its
-   machines/items. For example, it has a chemical reactor.
-   
-** Thaumcraft [1.5.2]
-   We should add magical aspects to every item.
    
 * Other resources
 ** Forge tutorials
@@ -4052,6 +4069,7 @@
    - State "DONE"       from "TODO"       [2014-02-02 Sun 19:10]
 ** TODO Clays should break into piles upon harvesting
 ** TODO Add grinding recipes for ores
+** TODO Special case ground rock salt => foodSalt
 ** TODO Add clay breaking crafting recipes
 ** TODO Define Mystcraft symbol for each deposit
 ** TODO Figure out Thaumcraft aspects for minerals

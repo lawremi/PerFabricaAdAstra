@@ -9,6 +9,4 @@ public interface IndustrialMaterial {
 	public String name();
 	public String getOreDictKey();
 	public PhaseProperties getProperties(Phase phase);
-	// potential additions
-	// public boolean isMetal();
 }

@@ -1,15 +1,17 @@
 package org.pfaa.geologica.processing;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.List;
 
 import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.IndustrialMaterial.Phase;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
-import org.pfaa.chemica.model.IndustrialMaterial.Phase;
 
-public interface IndustrialMineral extends IndustrialMaterial {
+public interface IndustrialMineral extends Mineral {
 	public PhaseProperties getProperties();
 	
 	public enum IndustrialMinerals implements IndustrialMineral {
@@ -72,6 +74,21 @@ public interface IndustrialMineral extends IndustrialMaterial {
 		@Override
 		public PhaseProperties getProperties() {
 			return properties;
+		}
+
+		@Override
+		public List<MixtureComponent> getComponents() {
+			return Collections.EMPTY_LIST;
+		}
+
+		@Override
+		public Mixture add(IndustrialMaterial material, double weight) {
+			return mixWith(material, weight);
+		}
+
+		@Override
+		public Ore mixWith(IndustrialMaterial material, double weight) {
+			return new SimpleOre(this).add(material, weight);
 		}
 	}
 

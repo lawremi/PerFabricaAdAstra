@@ -216,6 +216,17 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
+      <OptionChoice name='GeologicaGenTungsten' default='true'
+                    displayState='shown' displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of tungsten ore
+          (scheelite, wolframite).
+        </Description>
+        <DisplayName>Tungsten</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+      
       <OptionChoice name='GeologicaGenNickel' default='true'
                     displayState='shown' displayGroup='groupGeologicaOres'>
         <Description>
@@ -2166,10 +2177,12 @@
                      inherits='PresetSEDEXSphaleriteGalenaHintVeins'/>
             </Cloud>
           </IfCondition>
-          <Cloud name='SEDEXScheelite' inherits='PresetSEDEXScheelite'>
-            <Veins name='SEDEXScheeliteHintVeins'
-                   inherits='PresetSEDEXScheeliteHintVeins'/>
-          </Cloud>
+          <IfCondition condition=":=?GeologicaGenTungsten">
+            <Cloud name='SEDEXScheelite' inherits='PresetSEDEXScheelite'>
+              <Veins name='SEDEXScheeliteHintVeins'
+                     inherits='PresetSEDEXScheeliteHintVeins'/>
+            </Cloud>
+          </IfCondition>
           <IfCondition condition=":=?GeologicaGenCopper">
             <Cloud name='SEDEXChalcopyrite'
                    inherits='PresetSEDEXChalcopyrite'>
@@ -2184,11 +2197,13 @@
                      inherits='PresetSEDEXSphaleriteGalenaHintVeinsOceanic'/>
             </Cloud>
           </IfCondition>
-          <Cloud name='SEDEXScheeliteOceanic'
-                 inherits='PresetSEDEXScheeliteOceanic'>
-            <Veins name='SEDEXScheeliteHintVeinsOceanic'
-                   inherits='PresetSEDEXScheeliteHintVeinsOceanic'/>
-          </Cloud>
+          <IfCondition condition=":=?GeologicaGenTungsten">
+            <Cloud name='SEDEXScheeliteOceanic'
+                   inherits='PresetSEDEXScheeliteOceanic'>
+              <Veins name='SEDEXScheeliteHintVeinsOceanic'
+                     inherits='PresetSEDEXScheeliteHintVeinsOceanic'/>
+            </Cloud>
+          </IfCondition>
           <IfCondition condition=":=?GeologicaGenCopper">
             <Cloud name='SEDEXChalcopyriteOceanic'
                    inherits='PresetSEDEXChalcopyriteOceanic'>

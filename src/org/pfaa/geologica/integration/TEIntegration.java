@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.pfaa.geologica.GeoMaterial.Strength;
-import org.pfaa.geologica.processing.Ore.SmeltingTemperature;
+import org.pfaa.geologica.processing.OreMineral.SmeltingTemperature;
 
 public class TEIntegration {
 

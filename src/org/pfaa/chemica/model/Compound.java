@@ -61,8 +61,7 @@ import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Formula.Part;
 
 /* A compound is a type of chemical resulting from the combination of different 
- * atoms according to a specific structure and a specific proportion.
- * The proportion may be roughly defined for many minerals (non-stoichiometry). 
+ * atoms according to a fixed stoichiometry.
  * Purists would claim that a compound must consist of multiple elements, but
  * we broaden that definition to include polyatomic molecules like O2 and Cl2.
  */

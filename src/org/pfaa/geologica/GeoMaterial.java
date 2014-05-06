@@ -8,16 +8,17 @@ import net.minecraft.block.material.Material;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Ore.Ores;
-import org.pfaa.geologica.processing.SimpleOre;
+import org.pfaa.geologica.processing.OreMineral.Ores;
+import org.pfaa.geologica.processing.SimpleOreMineral;
 
 import com.google.common.base.CaseFormat;
 
-public enum GeoMaterial implements IndustrialMaterial {
+public enum GeoMaterial implements Mixture {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),
 	CARBONATITE(Aggregates.STONE.add(Ores.CALCITE, 0.5), Strength.WEAK),
 	CLAYSTONE(Aggregates.STONE, Strength.WEAK),
@@ -109,28 +110,28 @@ public enum GeoMaterial implements IndustrialMaterial {
 	URANINITE(Ores.URANINITE.add(Ores.CARNOTITE, 0.05), Strength.STRONG),
 	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG),
 	
-	CHRYSOTILE(new SimpleMixture(IndustrialMinerals.CHRYSOTILE).add(SERPENTINITE, 0.5), Strength.WEAK),
+	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE.mixWith(SERPENTINITE, 0.5), Strength.WEAK),
 	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
-	GLAUCONITE(new SimpleMixture(IndustrialMinerals.GLAUCONITE).add(Aggregates.SAND, 1.0), Strength.WEAK),
-	GRAPHITE(new SimpleMixture(IndustrialMinerals.GRAPHITE).add(IndustrialMinerals.COAL, 0.5), Strength.WEAK),
-	GYPSUM(new SimpleMixture(IndustrialMinerals.GYPSUM).add(Ores.HALITE, 0.05), Strength.WEAK),
-	MIRABILITE(new SimpleMixture(IndustrialMinerals.MIRABILITE)
-	           .add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
-	MICA(new SimpleMixture(IndustrialMinerals.MICA).add(PEGMATITE, 0.5), Strength.WEAK),
-	SOAPSTONE(new SimpleMixture(IndustrialMinerals.TALC).add(SERPENTINITE, 0.5), Strength.WEAK),
-	TRONA(new SimpleMixture(IndustrialMinerals.TRONA)
-          .add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
+	GLAUCONITE(IndustrialMinerals.GLAUCONITE.mixWith(Aggregates.SAND, 1.0), Strength.WEAK),
+	GRAPHITE(IndustrialMinerals.GRAPHITE.mixWith(IndustrialMinerals.COAL, 0.5), Strength.WEAK),
+	GYPSUM(IndustrialMinerals.GYPSUM.mixWith(Ores.HALITE, 0.05), Strength.WEAK),
+	MIRABILITE(IndustrialMinerals.MIRABILITE
+	           .mixWith(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
+	MICA(IndustrialMinerals.MICA.mixWith(PEGMATITE, 0.5), Strength.WEAK),
+	SOAPSTONE(IndustrialMinerals.TALC.mixWith(SERPENTINITE, 0.5), Strength.WEAK),
+	TRONA(IndustrialMinerals.TRONA
+          .mixWith(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.WEAK),
 	
-	ALUNITE(new SimpleMixture(IndustrialMinerals.ALUNITE).add(IndustrialMinerals.BENTONITE, 0.1), Strength.MEDIUM),
+	ALUNITE(IndustrialMinerals.ALUNITE.mixWith(IndustrialMinerals.BENTONITE, 0.1), Strength.MEDIUM),
 	CELESTINE(Ores.CELESTINE.add(IndustrialMinerals.GYPSUM, 0.2).add(Ores.HALITE, 0.05), Strength.MEDIUM),
-	DOLOMITE(new SimpleMixture(IndustrialMinerals.DOLOMITE).add(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
+	DOLOMITE(IndustrialMinerals.DOLOMITE.mixWith(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
 	FLUORITE(Ores.FLUORITE.add(Ores.SPHALERITE, 0.06).add(Ores.GALENA, 0.02), Strength.MEDIUM),
-	WOLLASTONITE(new SimpleMixture(IndustrialMinerals.WOLLASTONITE).add(Ores.CALCITE, 0.1), Strength.MEDIUM),
+	WOLLASTONITE(IndustrialMinerals.WOLLASTONITE.mixWith(Ores.CALCITE, 0.1), Strength.MEDIUM),
 	ZEOLITE(IndustrialMinerals.ZEOLITE, Strength.MEDIUM),
 	
 	APATITE(IndustrialMinerals.APATITE, Strength.STRONG),
-	KYANITE(new SimpleMixture(IndustrialMinerals.KYANITE).add(PEGMATITE, 0.5), Strength.STRONG),
-	PERLITE(new SimpleMixture(IndustrialMinerals.PERLITE).add(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
+	KYANITE(IndustrialMinerals.KYANITE.mixWith(PEGMATITE, 0.5), Strength.STRONG),
+	PERLITE(IndustrialMinerals.PERLITE.mixWith(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG);
     
 	static Mixture ROCK = new SimpleMixture(Aggregates.STONE);
@@ -147,15 +148,15 @@ public enum GeoMaterial implements IndustrialMaterial {
 
 	private Strength strength;
 	private Material blockMaterial;
-	private IndustrialMaterial composition;
+	private Mixture composition;
 		
-	GeoMaterial(IndustrialMaterial composition, Strength strength, Material blockMaterial) {
+	GeoMaterial(Mixture composition, Strength strength, Material blockMaterial) {
 		this.strength = strength;
 		this.blockMaterial = blockMaterial;
 		this.composition = composition;
 	}
 	
-	GeoMaterial(IndustrialMaterial composition, Strength strength) {
+	GeoMaterial(Mixture composition, Strength strength) {
 		this(composition, strength, Material.rock);
 	}
 	
@@ -200,5 +201,15 @@ public enum GeoMaterial implements IndustrialMaterial {
 	@Override
 	public PhaseProperties getProperties(Phase phase) {
 		return composition.getProperties(phase);
-	}	
+	}
+
+	@Override
+	public List<MixtureComponent> getComponents() {
+		return composition.getComponents();
+	}
+
+	@Override
+	public Mixture add(IndustrialMaterial material, double weight) {
+		return composition.add(material, weight);
+	}
 }
