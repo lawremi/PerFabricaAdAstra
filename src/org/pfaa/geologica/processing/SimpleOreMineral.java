@@ -24,7 +24,7 @@ public class SimpleOreMineral extends SimpleMineral implements OreMineral {
 	}
 	
 	@Override
-	public OreMineral add(IndustrialMaterial material, double weight) {
+	public OreMineral add(Chemical material, double weight) {
 		Mixture mixture = super.add(material, weight);
 		return new SimpleOreMineral(this.concentrate, mixture);
 	}

@@ -17,7 +17,7 @@ public class SimpleMineral extends SimpleMixture implements Mineral {
 	}
 
 	@Override
-	public Ore mixWith(IndustrialMaterial material, double weight) {
+	public Ore add(IndustrialMaterial material, double weight) {
 		return new SimpleOre(this).add(material, weight);
 	}
 }

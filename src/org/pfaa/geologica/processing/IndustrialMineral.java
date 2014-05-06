@@ -82,12 +82,7 @@ public interface IndustrialMineral extends Mineral {
 		}
 
 		@Override
-		public Mixture add(IndustrialMaterial material, double weight) {
-			return mixWith(material, weight);
-		}
-
-		@Override
-		public Ore mixWith(IndustrialMaterial material, double weight) {
+		public Ore add(IndustrialMaterial material, double weight) {
 			return new SimpleOre(this).add(material, weight);
 		}
 	}

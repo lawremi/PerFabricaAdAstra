@@ -7,8 +7,6 @@ import static org.pfaa.chemica.model.Element.Elements.Cs;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
 import static org.pfaa.chemica.model.Element.Elements.Ga;
 import static org.pfaa.chemica.model.Element.Elements.La;
-import static org.pfaa.chemica.model.Element.Elements.Mg;
-import static org.pfaa.chemica.model.Element.Elements.Mn;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
 import static org.pfaa.chemica.model.Element.Elements.Pr;
@@ -27,7 +25,6 @@ import org.pfaa.chemica.model.CompoundDictionary;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
 import org.pfaa.chemica.model.SimpleChemical;
@@ -39,7 +36,7 @@ import org.pfaa.chemica.model.SimpleChemical;
  */
 public interface OreMineral extends Mineral {
 	public Chemical getConcentrate();
-	public OreMineral add(IndustrialMaterial material, double weight);
+	public OreMineral add(Chemical material, double weight);
 	
 	public static enum SmeltingTemperature {
 		LOW, MEDIUM, HIGH, VERY_HIGH
@@ -143,15 +140,14 @@ public interface OreMineral extends Mineral {
 		}
 
 		@Override
-		public OreMineral add(IndustrialMaterial material, double weight) {
+		public OreMineral add(Chemical material, double weight) {
 			return delegate.add(material, weight);
 		}
 
 		@Override
-		public Ore mixWith(IndustrialMaterial material, double weight) {
-			return delegate.mixWith(material, weight);
+		public Ore add(IndustrialMaterial material, double weight) {
+			return delegate.add(material, weight);
 		}
-		
 	}
 	
 	public static class Substitution {

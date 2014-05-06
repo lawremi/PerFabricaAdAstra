@@ -20,6 +20,8 @@ import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
+import org.pfaa.geologica.processing.Aggregate;
+import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral;
 
 import cpw.mods.fml.common.LoaderException;
@@ -93,31 +95,31 @@ public class GeologicaBlocks {
 	}
 	
 	private static GeoBlock createStoneBlock(Strength strength) {
-		return createGeoBlock("Stone", IntactGeoBlock.class, strength, Mixture.class, Material.rock);
+		return createGeoBlock("Stone", IntactGeoBlock.class, strength, Aggregate.class, Material.rock);
 	}
 	private static GeoBlock createCobbleBlock(Strength strength) {
-		return createGeoBlock("Cobble", BrokenGeoBlock.class, strength, Mixture.class, Material.rock);
+		return createGeoBlock("Cobble", BrokenGeoBlock.class, strength, Aggregate.class, Material.rock);
 	}
 	private static GeoBlock createStoneBrickBlock(Strength strength) {
-		return createGeoBlock("StoneBrick", BrickGeoBlock.class, strength, Mixture.class, Material.rock);
+		return createGeoBlock("StoneBrick", BrickGeoBlock.class, strength, Aggregate.class, Material.rock);
 	}
 	private static GeoBlock createRubbleBlock(Strength strength) {
-		return createGeoBlock("Rubble", LooseGeoBlock.class, strength, Mixture.class, Material.rock);
+		return createGeoBlock("Rubble", LooseGeoBlock.class, strength, Aggregate.class, Material.rock);
 	}
 	private static GeoBlock createOreSandBlock() {
-		return createGeoBlock("OreSand", LooseGeoBlock.class, Strength.WEAK, OreMineral.class, Material.sand);
+		return createGeoBlock("OreSand", LooseGeoBlock.class, Strength.WEAK, Ore.class, Material.sand);
 	}
 	private static GeoBlock createOreRockBlock(Strength strength) {
-		return createGeoBlock("OreRock", IntactGeoBlock.class, strength, OreMineral.class, Material.rock);
+		return createGeoBlock("OreRock", IntactGeoBlock.class, strength, Ore.class, Material.rock);
 	}
 	private static GeoBlock createClayBlock() {
-		return createGeoBlock("Clay", IntactGeoBlock.class, Strength.WEAK, Mixture.class, Material.clay);
+		return createGeoBlock("Clay", IntactGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay);
 	}
 	private static GeoBlock createOreClayBlock() {
-		return createGeoBlock("OreClay", IntactGeoBlock.class, Strength.WEAK, OreMineral.class, Material.clay);
+		return createGeoBlock("OreClay", IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.clay);
 	}
 	private static GeoBlock createClayBrickBlock() {
-		return createGeoBlock("ClayBrick", BrickGeoBlock.class, Strength.WEAK, Mixture.class, Material.clay);
+		return createGeoBlock("ClayBrick", BrickGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay);
 	}
 	
 	public static List<Block> getBlocks() {
