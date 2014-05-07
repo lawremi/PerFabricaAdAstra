@@ -1,34 +1,35 @@
 package org.pfaa.geologica.processing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.pfaa.chemica.model.Chemical;
-import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+import org.pfaa.chemica.model.CompoundDictionary;
+import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.PhaseProperties;
-import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.SimpleChemical;
 
 public class SimpleOreMineral extends SimpleMineral implements OreMineral {
-
-	private Chemical concentrate;
-
-	public SimpleOreMineral(Chemical concentrate) {
-		super(concentrate, 1.0);
-		this.concentrate = concentrate;
+	public SimpleOreMineral(Chemical concentrate, Substitution... substitutions) {
+		this(substitute(concentrate, substitutions));
 	}
 	
-	private SimpleOreMineral(Chemical concentrate, Mixture mixture) {
-		super(mixture.getComponents());
-		this.concentrate = concentrate;
+	public SimpleOreMineral(Mixture mixture) {
+		this(mixture.getComponents());
+	}
+	
+	public SimpleOreMineral(List<MixtureComponent> components) {
+		super(components);
 	}
 	
 	@Override
-	public OreMineral add(Chemical material, double weight) {
-		Mixture mixture = super.add(material, weight);
-		return new SimpleOreMineral(this.concentrate, mixture);
+	public OreMineral mix(Chemical material, double weight) {
+		Mixture mixture = super.mix(material, weight);
+		return new SimpleOreMineral(mixture.getComponents());
 	}
-
+	
 	@Override
 	public String name() {
 		return getOreDictKey() + "Ore";
@@ -36,12 +37,25 @@ public class SimpleOreMineral extends SimpleMineral implements OreMineral {
 
 	@Override
 	public String getOreDictKey() {
-		return concentrate.getOreDictKey();
+		return getConcentrate().getOreDictKey();
 	}
 
 	@Override
 	public Chemical getConcentrate() {
-		return concentrate;
+		return (Chemical)this.getComponents().get(0).material;
 	}
 
+	private static List<MixtureComponent> substitute(Chemical concentrate, Substitution[] substitutions) {
+		List<MixtureComponent> components = new ArrayList();
+		components.add(new MixtureComponent(concentrate, 1.0));
+		for (Substitution substitution : substitutions) {
+			Formula formula = concentrate.getFormula().substituteFirstPart(substitution.getMaterial());
+			Chemical compound = CompoundDictionary.lookup(formula);
+			if (compound == null) {
+				compound = new SimpleChemical(formula, substitution.material.getOreDictKey(), new Solid());
+			}
+			components.add(new MixtureComponent(compound, substitution.weight));
+		}
+		return components;
+	}
 }

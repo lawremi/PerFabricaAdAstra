@@ -19,15 +19,12 @@ import static org.pfaa.chemica.model.Element.Elements.Y;
 import java.util.List;
 
 import org.pfaa.chemica.model.Chemical;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.CompoundDictionary;
 import org.pfaa.chemica.model.Element;
-import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
-import org.pfaa.chemica.model.SimpleChemical;
 
 
 /*
@@ -36,7 +33,7 @@ import org.pfaa.chemica.model.SimpleChemical;
  */
 public interface OreMineral extends Mineral {
 	public Chemical getConcentrate();
-	public OreMineral add(Chemical material, double weight);
+	public OreMineral mix(Chemical material, double weight);
 	
 	public static enum SmeltingTemperature {
 		LOW, MEDIUM, HIGH, VERY_HIGH
@@ -51,7 +48,7 @@ public interface OreMineral extends Mineral {
 		BISMUTHINITE(Compounds.Bi2S3),
 		BORAX(Compounds.Na2B4O7),
 		CALCITE(Compounds.CaCO3),
-		CARNALLITE(new SimpleOreMineral(Compounds.KCl).add(Compounds.MgCl2, 1.0)),
+		CARNALLITE(Compounds.KCl.mix(Compounds.MgCl2, 1.0)),
 		CARNOTITE(Compounds.K2U2V2O12),
 		CASSITERITE(Compounds.SnO2),
 		CELESTINE(Compounds.SrSO4, new Substitution(Ba, 0.2)),
@@ -89,8 +86,7 @@ public interface OreMineral extends Mineral {
 		STIBNITE(Compounds.Sb2S3),
 		SYLVITE(Compounds.KCl),
 		TANTALITE(Compounds.FeTa2O6),
-		TITANO_MAGNETITE(new SimpleOreMineral(Compounds.Fe3O4)
-		                 .add(Compounds.FeV2O4, 0.05)),
+		TITANO_MAGNETITE(Compounds.Fe3O4.mix(Compounds.FeV2O4, 0.05)),
 		URANINITE(Compounds.UO2),
 		VANADINITE(Compounds.Pb5V3O12Cl),
 		WOLFRAMITE(Compounds.FeWO4),
@@ -103,23 +99,14 @@ public interface OreMineral extends Mineral {
 			this.delegate = delegate;
 		}
 		
-		private Ores(Chemical material, Substitution... substitution) {
-			this(createDelegate(material, substitution));
+		private Ores(Mixture mixture) {
+			this(new SimpleOreMineral(mixture));
 		}
 		
-		private static OreMineral createDelegate(Chemical material, Substitution[] substitutions) {
-			OreMineral delegate = new SimpleOreMineral(material);
-			for (Substitution substitution : substitutions) {
-				Formula formula = material.getFormula().substituteFirstPart(substitution.substitute);
-				Chemical compound = CompoundDictionary.lookup(formula);
-				if (compound == null) {
-					compound = new SimpleChemical(formula, substitution.substitute.getOreDictKey(), new Solid());
-				}
-				delegate.add(compound, substitution.rate);
-			}
-			return delegate;
+		private Ores(Chemical material, Substitution... substitution) {
+			this(new SimpleOreMineral(material, substitution));
 		}
-
+		
 		public String getOreDictKey() {
 			return delegate.getOreDictKey();
 		}
@@ -140,24 +127,24 @@ public interface OreMineral extends Mineral {
 		}
 
 		@Override
-		public OreMineral add(Chemical material, double weight) {
-			return delegate.add(material, weight);
+		public OreMineral mix(Chemical material, double weight) {
+			return delegate.mix(material, weight);
 		}
 
 		@Override
-		public Ore add(IndustrialMaterial material, double weight) {
-			return delegate.add(material, weight);
+		public Ore mix(IndustrialMaterial material, double weight) {
+			return delegate.mix(material, weight);
 		}
 	}
 	
-	public static class Substitution {
-		public final Element substitute;
-		public final double rate;
-		
+	public static class Substitution extends MixtureComponent {
 		public Substitution(Element substitute, double rate) {
-			super();
-			this.substitute = substitute;
-			this.rate = rate;
+			super(substitute, rate);
+		}
+		
+		@Override
+		public Element getMaterial() {
+			return (Element)this.material;
 		}
 	}
 }

@@ -15,8 +15,8 @@ public class SimpleAggregate extends SimpleMixture implements Aggregate {
 		super(mixture.getComponents());
 	}	
 	
-	public Aggregate add(IndustrialMaterial material, double weight) {
-		return new SimpleAggregate(super.add(material, weight));
+	public Aggregate mix(IndustrialMaterial material, double weight) {
+		return new SimpleAggregate(super.mix(material, weight));
 	}
 	
 }

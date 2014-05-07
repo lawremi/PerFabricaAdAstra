@@ -5,5 +5,5 @@ import org.pfaa.chemica.model.Mixture;
 
 public interface Ore extends Mixture {
 	public Mineral getConcentrate();
-	public Ore add(IndustrialMaterial material, double weight);
+	public Ore mix(IndustrialMaterial material, double weight);
 }

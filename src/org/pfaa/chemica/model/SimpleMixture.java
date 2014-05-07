@@ -85,7 +85,7 @@ public class SimpleMixture implements Mixture {
 	}
 	
 	@Override
-	public Mixture add(IndustrialMaterial material, double weight) {
+	public Mixture mix(IndustrialMaterial material, double weight) {
 		List<MixtureComponent> components = new ArrayList(this.components);
 		components.add(new MixtureComponent(material, weight));
 		return new SimpleMixture(components);

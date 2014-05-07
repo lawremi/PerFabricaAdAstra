@@ -353,5 +353,10 @@ public interface Compound extends Chemical {
 		public Formula getFormula() {
 			return delegate.getFormula();
 		}
+
+		@Override
+		public Mixture mix(IndustrialMaterial material, double weight) {
+			return delegate.mix(material, weight);
+		}
 	}
 }

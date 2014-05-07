@@ -506,7 +506,12 @@ public interface Element extends Chemical, PartFactory {
 		public ChemicalPhaseProperties getProperties(IndustrialMaterial.Phase phase) {
 			return delegate.getProperties(phase);
 		}
-		
+
+		@Override
+		public Mixture mix(IndustrialMaterial material, double weight) {
+			return this.delegate.mix(material, weight);
+		}
+
 		@Override
 		public Formula getFormula() {
 			return delegate.getFormula();

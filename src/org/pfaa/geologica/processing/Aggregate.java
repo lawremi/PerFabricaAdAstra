@@ -12,7 +12,7 @@ import org.pfaa.chemica.model.IndustrialMaterial.Phase;
 
 public interface Aggregate extends Mixture {
 	
-	public Aggregate add(IndustrialMaterial material, double weight);
+	public Aggregate mix(IndustrialMaterial material, double weight);
 	
 	public enum Aggregates implements Aggregate {
 		SAND, GRAVEL, STONE, CLAY, DIRT;
@@ -33,10 +33,9 @@ public interface Aggregate extends Mixture {
 		}
 
 		@Override
-		public Aggregate add(IndustrialMaterial material, double weight) {
+		public Aggregate mix(IndustrialMaterial material, double weight) {
 			return new SimpleAggregate(new MixtureComponent(this, 1.0), 
 					                   new MixtureComponent(material, weight));
 		}
-
 	}
 }

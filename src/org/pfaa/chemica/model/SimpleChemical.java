@@ -65,5 +65,9 @@ public class SimpleChemical implements Chemical {
 	public String name() {
 		return formula.toString();
 	}
-
+	
+	@Override
+	public Mixture mix(IndustrialMaterial material, double weight) {
+		return new SimpleMixture(this).mix(material, weight);
+	}
 }

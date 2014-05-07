@@ -23,8 +23,8 @@ public class SimpleOre extends SimpleMixture implements Ore {
 		return concentrate;
 	}
 
-	public Ore add(IndustrialMaterial material, double weight) {
-		Mixture mixture = super.add(material, weight);
+	public Ore mix(IndustrialMaterial material, double weight) {
+		Mixture mixture = super.mix(material, weight);
 		return new SimpleOre(this.concentrate, mixture);
 	}
 }

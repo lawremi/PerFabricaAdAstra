@@ -10,4 +10,8 @@ public class MixtureComponent {
 		this.material = material;
 		this.weight = weight;
 	}
+	
+	public IndustrialMaterial getMaterial() {
+		return this.material;
+	}
 }
