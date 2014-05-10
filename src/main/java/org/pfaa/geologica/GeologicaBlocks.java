@@ -144,14 +144,14 @@ public class GeologicaBlocks {
 		String doubleToken = singleSlab == null ? "" : "Double";
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + doubleToken + nameForBlockClass(SlabBlock.class);
 		SlabBlock block = new SlabBlock(modelBlock, singleSlab);
-		block.setUnlocalizedName(name);
+		block.setBlockName(name);
 		return block;
 	}
 	
 	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoMaterial substance) {
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
 		StairsBlock block = new StairsBlock(modelBlock, modelBlock.getMeta(substance));
-		block.setUnlocalizedName(name);
+		block.setBlockName(name);
 		return block;
 	}
 	
@@ -165,7 +165,7 @@ public class GeologicaBlocks {
 		try {
 			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(Strength.class, Class.class, Material.class);
 			block = constructor.newInstance(strength, composition, material);
-			block.setUnlocalizedName(name);
+			block.setBlockName(name);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct GeoBlock: " + name);
 			throw new LoaderException(e);
@@ -179,7 +179,7 @@ public class GeologicaBlocks {
 		try {
 			Constructor<T> constructor = blockClass.getConstructor(CompositeBlock.class);
 			block = constructor.newInstance(modelBlock);
-			block.setUnlocalizedName(name);
+			block.setBlockName(name);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct derived block: " + name);
 			throw new LoaderException(e);
@@ -190,8 +190,8 @@ public class GeologicaBlocks {
 	private static FlowingBlock createFlowingBlock(GeoMaterial material) {
 		String name = material.getLowerName() + "Flowing";
 		FlowingBlock block = new FlowingBlock(material.getBlockMaterial());
-		block.setUnlocalizedName(name);
-		block.setTextureName("geologica:" + material.getLowerName());
+		block.setBlockName(name);
+		block.setBlockTextureName("geologica:" + material.getLowerName());
 		return block;
 	}
 }
