@@ -39,7 +39,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		}
 		public Liquid(double density, Thermo thermo, Hazard hazard)
 		{
-			this(null, density, thermo, hazard);
+			this(new Color(200, 200, 230), density, thermo, hazard);
 		}
 		public Liquid(double density, Thermo thermo)
 		{
