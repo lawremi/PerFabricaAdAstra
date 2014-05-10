@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockStep;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import org.pfaa.RegistrationUtils;
@@ -22,7 +22,7 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 	private CompositeBlock modelBlock;
 	private SlabBlock otherSlab;
 	private boolean isDoubleSlab;
-	private Icon[] icons;
+	private IIcon[] icons;
 	
 	public SlabBlock(int id, CompositeBlock modelBlock, SlabBlock singleSlab) {
 		super(id, singleSlab != null);
@@ -41,7 +41,7 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		return modelBlock.getIcon(side, meta & 7);
 	}
 

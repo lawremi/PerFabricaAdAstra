@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public class StairsBlock extends BlockStairs implements ProxyBlock {
 
@@ -20,7 +20,7 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		return modelBlock.getIcon(side, modelBlockMeta);
 	}
 

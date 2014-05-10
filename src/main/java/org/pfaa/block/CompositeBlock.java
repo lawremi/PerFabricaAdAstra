@@ -9,14 +9,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public abstract class CompositeBlock extends Block implements CompositeBlockAccessors {
 
-	private Icon[] icons;
+	private IIcon[] icons;
 	
 	public CompositeBlock(int id, Material material) {
 		super(id, material);
@@ -29,7 +29,7 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		return icons[damageDropped(meta)];
 	}
 	
@@ -53,8 +53,8 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister registry) {
-		icons = new Icon[getMetaCount()];
+	public void registerIcons(IIconRegister registry) {
+		icons = new IIcon[getMetaCount()];
 		String base = getModId() + ":" + getUnlocalizedName().replaceFirst("tile\\.", "");
 		for (int i = 0; i < getMetaCount(); ++i)
         {

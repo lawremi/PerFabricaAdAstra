@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import org.pfaa.block.CompositeBlock;
@@ -39,7 +39,7 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		return modelBlock.getIcon(side, meta);
 	}
 

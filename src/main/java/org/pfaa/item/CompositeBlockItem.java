@@ -3,13 +3,10 @@ package org.pfaa.item;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.block.CompositeBlockAccessors;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class CompositeBlockItem extends ItemBlock {
 
@@ -19,7 +16,7 @@ public class CompositeBlockItem extends ItemBlock {
 	}
 
 	@Override
-	public Icon getIconFromDamage(int damage) {
+	public IIcon getIconFromDamage(int damage) {
 		Block block = Block.blocksList[this.getBlockID()];
 		return block.getIcon(0, getMetadata(damage));
 	}
