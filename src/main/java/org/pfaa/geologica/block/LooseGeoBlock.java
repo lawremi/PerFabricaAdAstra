@@ -2,10 +2,10 @@ package org.pfaa.geologica.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
-import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.EntityFallingSand;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -25,7 +25,7 @@ public class LooseGeoBlock extends GeoBlock {
     }
 
 	@Override
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
+    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5)
     {
         par1World.scheduleBlockUpdate(par2, par3, par4, this, this.tickRate(null));
     }
@@ -50,7 +50,7 @@ public class LooseGeoBlock extends GeoBlock {
      */
     private void tryToFall(World par1World, int par2, int par3, int par4)
     {
-        if (BlockSand.canFallBelow(par1World, par2, par3 - 1, par4) && par3 >= 0)
+        if (BlockSand.func_149831_e(par1World, par2, par3 - 1, par4) && par3 >= 0)
         {
             byte var8 = 32;
 
@@ -58,7 +58,7 @@ public class LooseGeoBlock extends GeoBlock {
             {
                 if (!par1World.isRemote)
                 {
-                    EntityFallingSand var9 = new EntityFallingSand(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), this.blockID, par1World.getBlockMetadata(par2, par3, par4));
+                	EntityFallingBlock var9 = new EntityFallingBlock(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F), this, par1World.getBlockMetadata(par2, par3, par4));
                     par1World.spawnEntityInWorld(var9);
                 }
             }
@@ -66,14 +66,14 @@ public class LooseGeoBlock extends GeoBlock {
             {
                 par1World.setBlockToAir(par2, par3, par4);
 
-                while (BlockSand.canFallBelow(par1World, par2, par3 - 1, par4) && par3 > 0)
+                while (BlockSand.func_149831_e(par1World, par2, par3 - 1, par4) && par3 > 0)
                 {
                     --par3;
                 }
 
                 if (par3 > 0)
                 {
-                    par1World.setBlock(par2, par3, par4, this.blockID);
+                    par1World.setBlock(par2, par3, par4, this);
                 }
             }
         }
