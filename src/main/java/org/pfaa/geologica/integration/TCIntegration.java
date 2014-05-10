@@ -1,16 +1,8 @@
 package org.pfaa.geologica.integration;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 
 import org.pfaa.geologica.GeologicaBlocks;
-
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.ToolMaterial;
 
 public class TCIntegration {
 	private static final int STONE_ID = 1;
@@ -24,23 +16,6 @@ public class TCIntegration {
 	}
 	
 	public static void addStoneMaterial(int materialID, Block stone, double durabilityMultiplier, double speedMultiplier) {
-		ToolMaterial baseStone = TConstructRegistry.getMaterial(STONE_ID);
-		TConstructRegistry.addToolMaterial(materialID, 
-				stone.getUnlocalizedName(), STONE_HARVEST_LEVEL, 
-				(int)(baseStone.durability * durabilityMultiplier), 
-				(int)(baseStone.miningspeed * speedMultiplier), 
-				baseStone.attack, baseStone.handleModifier, 
-				0 /* reinforced */, 1 /* stonebound */, 
-				baseStone.style(), baseStone.ability);
-		Set<List<Integer>> patternKeys = new HashSet(TConstructRegistry.patternPartMapping.keySet());
-		for (List<Integer> key : patternKeys) {
-			int keyMaterialID = key.get(2);
-			if (keyMaterialID == STONE_ID) {
-				int patternID = key.get(0);
-				int patternMeta = key.get(1);
-				ItemStack output = TConstructRegistry.patternPartMapping.get(key);
-				TConstructRegistry.addPartMapping(patternID, patternMeta, materialID, output);
-			}
-		}
+		// TODO: re-add support for this, which never worked anyway
 	}
 }
