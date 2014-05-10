@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -19,8 +21,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
@@ -60,8 +62,8 @@ public class RecipeRegistration {
 	}
 	
 	private static void addStoneAbstractionRecipesForBrokenMods() {
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.cobblestone), "cobblestone"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Block.stone), "stone"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.cobblestone), "cobblestone"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.stone), "stone"));
 	}
 
 	private static void addStoneToolRecipes() {
@@ -74,17 +76,17 @@ public class RecipeRegistration {
 	}
 
 	private static void addStoneToolRecipes(GeoBlock block) {
-		addStoneToolRecipe(block, Item.pickaxeStone);
-		addStoneToolRecipe(block, Item.axeStone);
-		addStoneToolRecipe(block, Item.shovelStone);
-		addStoneToolRecipe(block, Item.hoeStone);
-		addStoneToolRecipe(block, Item.swordStone);
+		addStoneToolRecipe(block, Items.stone_pickaxe);
+		addStoneToolRecipe(block, Items.stone_axe);
+		addStoneToolRecipe(block, Items.stone_shovel);
+		addStoneToolRecipe(block, Items.stone_hoe);
+		addStoneToolRecipe(block, Items.stone_sword);
 	}
 
 	private static void addStoneToolRecipe(GeoBlock block, Item tool) {
 		ItemStack damaged = new ItemStack(tool, 1, (int)(getInitialStoneToolDamage(block.getStrength()) * tool.getMaxDamage()));
 		ItemStack material = new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE);
-		ItemStack cobblestone = new ItemStack(Block.cobblestone, 1, OreDictionary.WILDCARD_VALUE);
+		ItemStack cobblestone = new ItemStack(Blocks.cobblestone, 1, OreDictionary.WILDCARD_VALUE);
 		List<IRecipe> recipes = (List<IRecipe>)CraftingManager.getInstance().getRecipeList();
 		for (IRecipe recipe : recipes) {
 			ItemStack output = recipe.getRecipeOutput();
@@ -159,28 +161,28 @@ public class RecipeRegistration {
 	}
 
 	private static void addCobbleGrindingRecipes() {
-		addCobbleGrindingRecipe(GeoMaterial.ANDESITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.BRECCIA, new ItemStack(Block.gravel, 2));
-		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Block.sand, Compounds.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Block.sand), new ItemStack(Block.gravel), 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.ANDESITE, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.BRECCIA, new ItemStack(Blocks.gravel, 2));
+		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Blocks.sand, Compounds.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Blocks.sand), new ItemStack(Block.gravel), 1.0);
 		addCobbleGrindingRecipe(GeoMaterial.CLAYSTONE, new ItemStack(GeologicaItems.CLAY_DUST, 2));
-		addCobbleGrindingRecipe(GeoMaterial.DIORITE, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.GABBRO, Block.sand, IndustrialMinerals.FELDSPAR, 0.2);
-		addCobbleGrindingRecipe(GeoMaterial.GNEISS, Block.sand, IndustrialMinerals.FELDSPAR, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.GRANITE, Block.sand, IndustrialMinerals.QUARTZ, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.GREENSCHIST, Block.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.HORNFELS, Block.sand, IndustrialMinerals.MICA, 0.2);
-		addCobbleGrindingRecipe(GeoMaterial.LIMESTONE, Block.sand, Compounds.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoMaterial.MARBLE, Block.sand, Compounds.CaCO3, 1.0);
-		addCobbleGrindingRecipe(GeoMaterial.MUDSTONE, new ItemStack(Block.sand), new ItemStack(GeologicaItems.CLAY_DUST), 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.DIORITE, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GABBRO, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.GNEISS, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GRANITE, Blocks.sand, IndustrialMinerals.QUARTZ, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.GREENSCHIST, Blocks.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.HORNFELS, Blocks.sand, IndustrialMinerals.MICA, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.LIMESTONE, Blocks.sand, Compounds.CaCO3, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.MARBLE, Blocks.sand, Compounds.CaCO3, 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.MUDSTONE, new ItemStack(Blocks.sand), new ItemStack(GeologicaItems.CLAY_DUST), 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.PEGMATITE, IndustrialMinerals.FELDSPAR, IndustrialMinerals.QUARTZ, 1.0);
-		addCobbleGrindingRecipe(GeoMaterial.PERIDOTITE, Block.sand, IndustrialMinerals.OLIVINE, 0.5);
-		addCobbleGrindingRecipe(GeoMaterial.RHYOLITE, Block.sand, IndustrialMinerals.QUARTZ, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.SCHIST, Block.sand, IndustrialMinerals.MICA, 0.2);
-		addCobbleGrindingRecipe(GeoMaterial.SERPENTINITE, Block.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.SLATE, Block.sand, IndustrialMinerals.MICA, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.SKARN, Block.sand, IndustrialMinerals.WOLLASTONITE, 0.1);
-		addCobbleGrindingRecipe(GeoMaterial.QUARTZITE, new ItemStack(Block.sand, 2));
+		addCobbleGrindingRecipe(GeoMaterial.PERIDOTITE, Blocks.sand, IndustrialMinerals.OLIVINE, 0.5);
+		addCobbleGrindingRecipe(GeoMaterial.RHYOLITE, Blocks.sand, IndustrialMinerals.QUARTZ, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SCHIST, Blocks.sand, IndustrialMinerals.MICA, 0.2);
+		addCobbleGrindingRecipe(GeoMaterial.SERPENTINITE, Blocks.sand, IndustrialMinerals.CHRYSOTILE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SLATE, Blocks.sand, IndustrialMinerals.MICA, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.SKARN, Blocks.sand, IndustrialMinerals.WOLLASTONITE, 0.1);
+		addCobbleGrindingRecipe(GeoMaterial.QUARTZITE, new ItemStack(Blocks.sand, 2));
 	}
 
 	private static void addStoneGrindingRecipes() {

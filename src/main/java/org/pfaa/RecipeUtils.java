@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -19,7 +18,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.pfaa.geologica.Geologica;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class RecipeUtils {
@@ -137,7 +135,7 @@ public class RecipeUtils {
         		input[i] = OreDictionary.getOres((String) input[i]);
         	}
         }
-		ShapedOreRecipe recipe = new ShapedOreRecipe(output, 'x', Block.anvil);
+		ShapedOreRecipe recipe = new ShapedOreRecipe(output, 'x', Blocks.anvil);
 		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, input, "input");
 		/* field names repeated to dispatch to correct overload */
 		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, width, "width", "width");
