@@ -6,7 +6,7 @@ import java.util.List;
 public class Thermo {
 
 	private List<Segment> shomates = new ArrayList();
-	private List<Double> temperatureBreaks;
+	private List<Double> temperatureBreaks = new ArrayList();;
 	
 	private Thermo(Thermo thermo) {
 		this.shomates.addAll(thermo.shomates);
