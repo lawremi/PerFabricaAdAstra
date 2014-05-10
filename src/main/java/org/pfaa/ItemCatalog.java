@@ -12,10 +12,9 @@ public class ItemCatalog {
 	protected static <T extends Item> T createItem(Class<T> itemClass) {
 		T item = null;
 		try {
-			Constructor<T> constructor = itemClass.getConstructor(int.class);
+			Constructor<T> constructor = itemClass.getConstructor();
 			String name = nameForItemClass(itemClass);
-			int id = Geologica.getConfiguration().nextItemID(name);
-			item = constructor.newInstance(id);
+			item = constructor.newInstance();
 			item.setUnlocalizedName(name);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct item of class " + itemClass.getCanonicalName());

@@ -2,24 +2,22 @@ package org.pfaa.block;
 
 import java.util.List;
 
-import org.pfaa.RegistrationUtils;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class CompositeBlock extends Block implements CompositeBlockAccessors {
 
 	private IIcon[] icons;
 	
-	public CompositeBlock(int id, Material material) {
-		super(id, material);
+	public CompositeBlock(Material material) {
+		super(material);
 	}
 	
 	@Override
@@ -37,11 +35,11 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	 * @see org.pfaa.block.ICompositeBlock#getSubBlocks(int, net.minecraft.creativetab.CreativeTabs, java.util.List)
 	 */
 	@Override
-	public void getSubBlocks(int id, CreativeTabs creativeTabs, List list)
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
     {
 		for (int i = 0; i < getMetaCount(); ++i)
         {
-            list.add(new ItemStack(id, 1, damageDropped(i)));
+            list.add(new ItemStack(item, 1, damageDropped(i)));
         }
     }
 	

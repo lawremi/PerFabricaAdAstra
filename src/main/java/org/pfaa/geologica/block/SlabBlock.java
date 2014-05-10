@@ -3,29 +3,29 @@ package org.pfaa.geologica.block;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockStep;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-import org.pfaa.RegistrationUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SlabBlock extends BlockStep implements CompositeBlockAccessors, ProxyBlock {
+public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, ProxyBlock {
 
 	private CompositeBlock modelBlock;
 	private SlabBlock otherSlab;
 	private boolean isDoubleSlab;
 	private IIcon[] icons;
 	
-	public SlabBlock(int id, CompositeBlock modelBlock, SlabBlock singleSlab) {
-		super(id, singleSlab != null);
+	public SlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
+		super(singleSlab != null, modelBlock.getMaterial());
 		this.modelBlock = modelBlock;
 		if (singleSlab != null) {
 			this.isDoubleSlab = true;
@@ -46,27 +46,27 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 	}
 
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
-		return getSingleSlabId();
+	public Item getItemDropped(int par1, Random par2Random, int par3) {
+		return getSingleSlabItem();
 	}
 
 	@Override
 	protected ItemStack createStackedBlock(int meta) {
-		return new ItemStack(this.blockID, 2, meta & 7);
+		return new ItemStack(this, 2, meta & 7);
 	}
 
 	@Override
-	public String getFullSlabName(int meta) {
+	public String func_150002_b(int meta) {
 		return super.getUnlocalizedName() + "." + modelBlock.getBlockNameSuffix(meta & 7);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTabs, List list)
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
     {
 		for (int i = 0; i < getMetaCount(); ++i)
         {
-            list.add(new ItemStack(id, 1, damageDropped(i)));
+            list.add(new ItemStack(item, 1, damageDropped(i)));
         }
     }
 	
@@ -80,16 +80,16 @@ public class SlabBlock extends BlockStep implements CompositeBlockAccessors, Pro
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int idPicked(World par1World, int par2, int par3, int par4) {
-		return getSingleSlabId();
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return new ItemStack(getSingleSlabItem(), 1, world.getBlockMetadata(x, y, z));
 	}
 
 	public SlabBlock getSingleSlab() {
 		return isDoubleSlab() ? otherSlab : this;
 	}
 
-	private int getSingleSlabId() {
-		return getSingleSlab().blockID;
+	private Item getSingleSlabItem() {
+		return Item.getItemFromBlock(getSingleSlab());
 	}
 	
 	public SlabBlock getDoubleSlab() {

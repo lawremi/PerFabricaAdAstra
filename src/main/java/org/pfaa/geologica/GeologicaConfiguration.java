@@ -2,15 +2,14 @@ package org.pfaa.geologica;
 
 import java.io.File;
 
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
-import org.pfaa.IDProvider;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.processing.Aggregate;
 
-public class GeologicaConfiguration implements IDProvider {
+public class GeologicaConfiguration {
 
 	private Configuration config;
 
@@ -29,19 +28,6 @@ public class GeologicaConfiguration implements IDProvider {
 	private int nextPlacedBlockId = MAX_TERRAIN_BLOCK_ID + 1;
 	private int nextItemId = 10000;
 	
-	@Override
-	public int nextTerrainBlockID(String name) {
-		return this.config.getBlock(name, nextTerrainBlockId--).getInt();
-	}
-	@Override
-	public int nextBlockID(String name) {
-		return this.config.getBlock(name, nextPlacedBlockId++).getInt();
-	}
-	@Override
-	public int nextItemID(String name) {
-		return this.config.getItem(name, nextItemId++).getInt();
-	}
-
 	public int getHarvestLevel(Class<? extends IndustrialMaterial> composition, Strength strength) {
 		String key = composition.getSimpleName() + "." + strength.ordinal() + "_" + strength;
 		Property prop = this.config.get("HarvestLevels", key, getDefaultHarvestLevel(composition, strength), 

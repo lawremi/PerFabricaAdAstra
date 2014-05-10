@@ -5,8 +5,8 @@ import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 
 public class IndustrialMineralItem extends IndustrialMaterialItem<IndustrialMinerals> {
 
-	public IndustrialMineralItem(int id) {
-		super(id, IndustrialMinerals.class);
+	public IndustrialMineralItem() {
+		super(IndustrialMinerals.class);
 	}
 
 }

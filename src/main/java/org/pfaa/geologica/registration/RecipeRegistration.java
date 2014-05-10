@@ -98,13 +98,13 @@ public class RecipeRegistration {
 					if (ingredients[i] instanceof List) 
 					{
 						for (ItemStack ingredient : (List<ItemStack>)ingredients[i]) {
-							if (ingredient.itemID == cobblestone.itemID) {
+							if (ingredient.getItem() == cobblestone.getItem()) {
 								ingredients[i] = material;
 								origIngredients[i] = cobblestone;
 							}
 						}
 					} else if (ingredients[i] instanceof ItemStack) {
-						if (((ItemStack)ingredients[i]).itemID == cobblestone.itemID) {
+						if (((ItemStack)ingredients[i]).getItem() == cobblestone.getItem()) {
 							ingredients[i] = material;
 						}
 					}
@@ -164,7 +164,7 @@ public class RecipeRegistration {
 		addCobbleGrindingRecipe(GeoMaterial.ANDESITE, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.BRECCIA, new ItemStack(Blocks.gravel, 2));
 		addCobbleGrindingRecipe(GeoMaterial.CARBONATITE, Blocks.sand, Compounds.CaCO3, 0.5);
-		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Blocks.sand), new ItemStack(Block.gravel), 1.0);
+		addCobbleGrindingRecipe(GeoMaterial.CONGLOMERATE, new ItemStack(Blocks.sand), new ItemStack(Blocks.gravel), 1.0);
 		addCobbleGrindingRecipe(GeoMaterial.CLAYSTONE, new ItemStack(GeologicaItems.CLAY_DUST, 2));
 		addCobbleGrindingRecipe(GeoMaterial.DIORITE, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.1);
 		addCobbleGrindingRecipe(GeoMaterial.GABBRO, Blocks.sand, IndustrialMinerals.FELDSPAR, 0.2);
@@ -237,7 +237,7 @@ public class RecipeRegistration {
 	private static void addSmeltingRecipesByMeta(CompositeBlock input, Block output, SmeltingTemperature temperature) {
 		for(int meta = 0; meta < input.getMetaCount(); meta++) {
 			ItemStack outputStack = new ItemStack(output, 1, meta);
-			FurnaceRecipes.smelting().addSmelting(input.blockID, meta, outputStack, 0);
+			FurnaceRecipes.smelting().func_151394_a(new ItemStack(input, 1, meta), outputStack, 0);
 			TEIntegration.addFurnaceRecipe(new ItemStack(input, 1, meta), outputStack, temperature);
 		}
 	}
@@ -286,7 +286,7 @@ public class RecipeRegistration {
 		OreDictionary.registerOre(key, itemStack);
 		ItemStack smeltingOutput = getSmeltingOutput(key);
 		if (smeltingOutput != null) {
-			FurnaceRecipes.smelting().addSmelting(itemStack.itemID, itemStack.getItemDamage(), smeltingOutput, 0);
+			FurnaceRecipes.smelting().func_151394_a(itemStack, smeltingOutput, 0);
 		}		
 	}
 

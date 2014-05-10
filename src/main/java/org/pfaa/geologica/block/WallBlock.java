@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -21,10 +22,10 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	@Override
 	public boolean canConnectWallTo(IBlockAccess par1iBlockAccess, int par2,
 			int par3, int par4) {
-		int l = par1iBlockAccess.getBlockId(par2, par3, par4);
-		if (l == GeologicaBlocks.MEDIUM_STONE_BRICK_WALL.blockID ||
-			l == GeologicaBlocks.STRONG_STONE_BRICK_WALL.blockID || 
-			l == GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL.blockID) {
+		Block block = par1iBlockAccess.getBlock(par2, par3, par4);
+		if (block == GeologicaBlocks.MEDIUM_STONE_BRICK_WALL ||
+			block == GeologicaBlocks.STRONG_STONE_BRICK_WALL || 
+			block == GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL) {
 			return true;
 		}
 		return super.canConnectWallTo(par1iBlockAccess, par2, par3, par4);
@@ -32,8 +33,8 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 
 	private final CompositeBlock modelBlock;
 	
-	public WallBlock(int id, CompositeBlock modelBlock) {
-		super(id, modelBlock);
+	public WallBlock(CompositeBlock modelBlock) {
+		super(modelBlock);
 		this.modelBlock = modelBlock;
 	}
 
@@ -45,11 +46,11 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTabs, List list)
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
     {
 		for (int i = 0; i < getMetaCount(); ++i)
         {
-            list.add(new ItemStack(id, 1, damageDropped(i)));
+            list.add(new ItemStack(item, 1, damageDropped(i)));
         }
     }
 	

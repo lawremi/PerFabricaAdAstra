@@ -3,6 +3,7 @@ package org.pfaa.geologica.block;
 import java.util.Random;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
@@ -12,13 +13,13 @@ import org.pfaa.geologica.GeologicaBlocks;
 
 public class IntactGeoBlock extends GeoBlock {
 
-	public IntactGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(id, strength, composition, material);
+	public IntactGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
+		super(strength, composition, material);
 	}
 
 	@Override
-	public int idDropped(int meta, Random random, int par3) {
-		int dropped = super.idDropped(meta, random, par3);
+	public Item getItemDropped(int meta, Random random, int par3) {
+		Item dropped = super.getItemDropped(meta, random, par3);
 		GeoMaterial material = getSubstance(meta);
 		if (material.getComposition() instanceof Mixture && blockMaterial == Material.rock) {
 			dropped = dropRock(meta);
@@ -26,21 +27,21 @@ public class IntactGeoBlock extends GeoBlock {
 		return dropped;
 	}
 	
-	private int dropRock(int meta) {
-		int dropped = 0;
+	private Item dropRock(int meta) {
+		Item dropped = null;
 		GeoMaterial material = getSubstance(meta);
 		switch(material.getStrength()) {
 		case WEAK:
-			dropped = GeologicaBlocks.WEAK_RUBBLE.blockID;
+			dropped = Item.getItemFromBlock(GeologicaBlocks.WEAK_RUBBLE);
 			break;
 		case MEDIUM:
-			dropped = GeologicaBlocks.MEDIUM_COBBLESTONE.blockID;
+			dropped = Item.getItemFromBlock(GeologicaBlocks.MEDIUM_COBBLESTONE);
 			break;
 		case STRONG:
-			dropped = GeologicaBlocks.STRONG_COBBLESTONE.blockID;
+			dropped = Item.getItemFromBlock(GeologicaBlocks.STRONG_COBBLESTONE);
 			break;
 		case VERY_STRONG:
-			dropped = this.blockID;
+			dropped = Item.getItemFromBlock(this);
 			break;
 		default:
 			break;

@@ -7,8 +7,8 @@ import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class BrickGeoBlock extends GeoBlock {
 
-	public BrickGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(id, strength, composition, material);
+	public BrickGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
+		super(strength, composition, material);
 	}
 
 	@Override

@@ -25,8 +25,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	private Strength strength;
 	private Class<? extends IndustrialMaterial> composition;
 	
-	public GeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(id, material);
+	public GeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
+		super(material);
 		this.strength = strength;
 		this.composition = composition;
 		setCreativeTab(CreativeTabs.tabBlock);

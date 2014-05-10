@@ -4,8 +4,8 @@ import net.minecraft.item.Item;
 
 public class ClayDustItem extends Item {
 
-	public ClayDustItem(int id) {
-		super(id);
+	public ClayDustItem() {
+		super();
 	}
 
 	

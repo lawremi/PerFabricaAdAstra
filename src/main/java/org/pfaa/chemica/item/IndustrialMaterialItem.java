@@ -14,8 +14,8 @@ public class IndustrialMaterialItem<T extends Enum & IndustrialMaterial> extends
 	
 	private Class<T> enumClass;
 	
-	public IndustrialMaterialItem(int id, Class<T> enumClass) {
-		super(id);
+	public IndustrialMaterialItem(Class<T> enumClass) {
+		this.enumClass = enumClass;
 	}
 
 	public IndustrialMaterial getIndustrialMaterial(int damage) {

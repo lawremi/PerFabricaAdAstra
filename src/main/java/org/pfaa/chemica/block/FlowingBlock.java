@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 
 public class FlowingBlock extends Block {
 
-	public FlowingBlock(int par1, Material par2Material) {
-		super(par1, par2Material);
+	public FlowingBlock(Material par2Material) {
+		super(par2Material);
 		// TODO Auto-generated constructor stub
 	}
 

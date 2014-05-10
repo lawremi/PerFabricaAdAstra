@@ -143,16 +143,14 @@ public class GeologicaBlocks {
 	private static SlabBlock createSlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
 		String doubleToken = singleSlab == null ? "" : "Double";
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + doubleToken + nameForBlockClass(SlabBlock.class);
-		int id = Geologica.getConfiguration().nextBlockID(name);
-		SlabBlock block = new SlabBlock(id, modelBlock, singleSlab);
+		SlabBlock block = new SlabBlock(modelBlock, singleSlab);
 		block.setUnlocalizedName(name);
 		return block;
 	}
 	
 	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoMaterial substance) {
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
-		int id = Geologica.getConfiguration().nextBlockID(name);
-		StairsBlock block = new StairsBlock(id, modelBlock, modelBlock.getMeta(substance));
+		StairsBlock block = new StairsBlock(modelBlock, modelBlock.getMeta(substance));
 		block.setUnlocalizedName(name);
 		return block;
 	}
@@ -165,9 +163,8 @@ public class GeologicaBlocks {
 		GeoBlock block = null;
 		String name = strength.getCamelName() + suffix;
 		try {
-			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(int.class, Strength.class, Class.class, Material.class);
-			int id = Geologica.getConfiguration().nextBlockID(name);
-			block = constructor.newInstance(id, strength, composition, material);
+			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(Strength.class, Class.class, Material.class);
+			block = constructor.newInstance(strength, composition, material);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct GeoBlock: " + name);
@@ -180,9 +177,8 @@ public class GeologicaBlocks {
 		T block = null;
 		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + nameForBlockClass(blockClass);
 		try {
-			Constructor<T> constructor = blockClass.getConstructor(int.class, CompositeBlock.class);
-			int id = Geologica.getConfiguration().nextBlockID(name);
-			block = constructor.newInstance(id, modelBlock);
+			Constructor<T> constructor = blockClass.getConstructor(CompositeBlock.class);
+			block = constructor.newInstance(modelBlock);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct derived block: " + name);
@@ -193,8 +189,7 @@ public class GeologicaBlocks {
 	
 	private static FlowingBlock createFlowingBlock(GeoMaterial material) {
 		String name = material.getLowerName() + "Flowing";
-		int id = Geologica.getConfiguration().nextBlockID(name);
-		FlowingBlock block = new FlowingBlock(id, material.getBlockMaterial());
+		FlowingBlock block = new FlowingBlock(material.getBlockMaterial());
 		block.setUnlocalizedName(name);
 		block.setTextureName("geologica:" + material.getLowerName());
 		return block;

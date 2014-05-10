@@ -14,20 +14,20 @@ import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class LooseGeoBlock extends GeoBlock {
 
-	public LooseGeoBlock(int id, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(id, strength, composition, material);
+	public LooseGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
+		super(strength, composition, material);
 	}
 
 	@Override
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
     {
-        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(null));
+        par1World.scheduleBlockUpdate(par2, par3, par4, this, this.tickRate(null));
     }
 
 	@Override
     public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
     {
-        par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(null));
+        par1World.scheduleBlockUpdate(par2, par3, par4, this, this.tickRate(null));
     }
 
 	@Override

@@ -11,8 +11,8 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 	private final Block modelBlock;
 	private final int modelBlockMeta;
 	
-	public StairsBlock(int id, Block block, int meta) {
-		super(id, block, meta);
+	public StairsBlock(Block block, int meta) {
+		super(block, meta);
 		this.modelBlock = block;
 		this.modelBlockMeta = meta;
 		this.setLightOpacity(0); // workaround for lighting issue
