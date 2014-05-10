@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeoMaterial.Strength;
 
 public class LooseGeoBlock extends GeoBlock {
@@ -80,17 +81,22 @@ public class LooseGeoBlock extends GeoBlock {
     }
     
 	@Override
-	protected StepSound determineStepSound() {
+	protected Block.SoundType determineStepSound() {
 		if (blockMaterial == Material.rock)
-			return soundGravelFootstep;
+			return soundTypeGravel;
 		else return super.determineStepSound();
 	}
 	
 	@Override
-	protected void setHarvestLevels() {
-		MinecraftForge.setBlockHarvestLevel(this, "shovel", 0);
+	public String getHarvestTool(int metadata) {
+		return "shovel";
 	}
 
+	@Override
+	public int getHarvestLevel(int metadata) {
+		return 0;
+	}
+	
 	@Override
 	protected float determineHardness() {
 		float hardness = 0;

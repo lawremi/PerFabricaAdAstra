@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.block.StepSound;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,18 +33,17 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		setCreativeTab(CreativeTabs.tabBlock);
 		setSubstances();
 		setHardness(determineHardness());
-		setHarvestLevels();
 		setStepSound(determineStepSound());
 	}
 	
-	protected StepSound determineStepSound() {
-		StepSound sound = null;
+	protected Block.SoundType determineStepSound() {
+		Block.SoundType sound = null;
 		if (blockMaterial == Material.rock) {
-			sound = soundStoneFootstep;
+			sound = soundTypeStone;
 		} else if (blockMaterial == Material.sand) {
-			sound = soundSandFootstep;
+			sound = soundTypeSand;
 		} else if (blockMaterial == Material.clay) {
-			sound = soundGravelFootstep;
+			sound = soundTypeGravel;
 		}
 		return sound;
 	}
@@ -87,17 +87,15 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return 0.6F;
 	}
 
-	protected void setHarvestLevels() {
-		MinecraftForge.setBlockHarvestLevel(this, getToolForMaterial(), getHarvestLevel());
-	}
-
-	private String getToolForMaterial() {
+	@Override
+	public String getHarvestTool(int metadata) {
 		if (blockMaterial == Material.rock)
 			return "pickaxe";
 		else return "shovel";
 	}
 
-	private int getHarvestLevel() {
+	@Override
+	public int getHarvestLevel(int metadata) {
 		return Geologica.getConfiguration().getHarvestLevel(this.composition, this.strength);
 	}
 
@@ -170,8 +168,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	@Override
-	public boolean isGenMineableReplaceable(World world, int x, int y, int z,
-			int target) {
+	public boolean isReplaceableOreGen(World world, int x, int y, int z,
+			Block target) {
 		return Aggregate.class.isAssignableFrom(composition);
 	}
 
