@@ -27,8 +27,12 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		{
 			this(density, thermo, new Hazard());
 		}
+		public Solid(Thermo thermo)
+		{
+			this(Double.NaN, thermo);
+		}
 		public Solid() {
-			this(Double.NaN, null);
+			this(null);
 		}
 	}
 	
