@@ -5,15 +5,18 @@ import java.util.List;
 
 import net.minecraft.block.material.Material;
 
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
+import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral;
 import org.pfaa.geologica.processing.OreMineral.Ores;
+import org.pfaa.geologica.processing.SimpleCrude;
 import org.pfaa.geologica.processing.SimpleOre;
 
 import com.google.common.base.CaseFormat;
@@ -132,7 +135,20 @@ public enum GeoMaterial implements Mixture {
 	APATITE(IndustrialMinerals.APATITE, Strength.STRONG),
 	KYANITE(IndustrialMinerals.KYANITE.mix(PEGMATITE, 0.5), Strength.STRONG),
 	PERLITE(IndustrialMinerals.PERLITE.mix(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
-	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG);
+	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
+	
+	LIGHT_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.5).mix(Crudes.NAPHTHAS, 0.45).mix(Crudes.AROMATICS, 0.05).
+			  mix(Compounds.H2S, 0.005), Strength.WEAK, Material.water),
+	HEAVY_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.3).mix(Crudes.NAPHTHAS, 0.5).mix(Crudes.AROMATICS, 0.15).
+			  mix(Crudes.ASPHALT, 0.05).mix(Compounds.H2S, 0.01), Strength.MEDIUM, Material.water),
+	EXTRA_HEAVY_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.15).mix(Crudes.NAPHTHAS, 0.45).mix(Crudes.AROMATICS, 0.30).
+			        mix(Crudes.ASPHALT, 0.10).mix(Compounds.H2S, 0.02), Strength.STRONG, Material.water),
+	OIL_SANDS(Crudes.ASPHALT.mix(Aggregates.SAND, 1.0), Strength.VERY_STRONG, Material.sand),
+	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Compounds.PROPANE, 0.002).
+			    mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
+			    Strength.WEAK, Material.air),
+	OIL_SHALE(Crudes.KEROGEN.mix(MUDSTONE, 1.0).mix(Crudes.ASPHALT, 0.5), Strength.WEAK)
+	;
     
 	public enum Strength { 
 		WEAK, MEDIUM, STRONG, VERY_STRONG;

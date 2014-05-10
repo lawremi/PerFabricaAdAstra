@@ -192,8 +192,14 @@ public interface Compound extends Chemical {
 		FeWO4(new Formula(Fe, new Part(W, O._(4))), "tungsten",
 			  new Solid(Color.black, 6.64, 
 					    new Thermo(-1155, 132, 114))),
-	    Ni9S8(new Formula(Ni._(9), S._(8)), "nickel",
-	    	  new Solid(new Color(165, 150, 5), 4.8, new Thermo(-847, 475, 443))),
+		H2S(new Formula(H._(2), S), "sulfur",
+			null,
+			null,
+			new Solid(0.949, new Thermo(122)),
+			new Vaporization(4.53, 959, -0.539),
+			new Gas(new Thermo(26.9, 18.7, 3.43, -3.38, 0.136, -28.9, 233).
+					addSegment(1400, 51.2, 4.15, -0.644, 0.0416, -10.5, -55.9, 244), 
+					new Hazard(4, 4, 0))),
 		HgS(new Formula(Hg, S), "mercury", 
 			new Solid(new Color(139, 0, 0), 8.1, 
 					  new Thermo(-58, 78, 43.9, 15.3), 
@@ -247,6 +253,8 @@ public interface Compound extends Chemical {
 		NiOH2(new Formula(Ni, new Part(O, H)._(2)), "nickel", 
 			  new Solid(Color.GREEN, 4.10, new Thermo(-538, 79, 81), 
 					    new Hazard(2, 0, 0))),
+	    Ni9S8(new Formula(Ni._(9), S._(8)), "nickel",
+			  new Solid(new Color(165, 150, 5), 4.8, new Thermo(-847, 475, 443))),
 		Ni3Si2O5OH4(new Formula(Ni._(3), new Part(Si._(2), O._(5)), new Part(O, H)._(4)), "nickel",
 				    new Solid(Color.GREEN, 3.2, new Thermo())),					    
 		PbS(new Formula(Pb, S), "lead", 
@@ -297,7 +305,44 @@ public interface Compound extends Chemical {
 			   new Solid(new Color(210, 210, 210), 4.56,
 					     new Thermo(85.2, 137, -94.6, 21.7, -1.74, -2061, 140)
 			                        .addSegment(1700, 151, 0, 0, 0, 0, -2082, 238),
-			             new Hazard(1, 0, 1)))
+			             new Hazard(1, 0, 1))),
+		METHANE(new Formula(C, H._(4)).setSmiles("c"), "methane", 
+				new Solid(0.494, new Thermo(104)),
+				new Fusion(90),
+				new Liquid(new Thermo(-74, 116, 52.9)),
+				new Vaporization(3.99, 443, -0.49),
+				new Gas(new Thermo(-0.703, 108, -42.5, 5.86, 0.679, -76.8, 159)
+						.addSegment(1300, 85.8, 11.2, -2.11, 0.138, -26.4, -154, 224),
+						new Hazard())
+				),
+		ETHANE(new Formula(C._(2), H._(6)).setSmiles("cc"), "ethane", 
+			   null,
+			   new Fusion(90.4),
+			   new Liquid(new Thermo(127)),
+			   new Vaporization(4.51, 791, -6.42),
+			   new Gas(new Thermo(6.16, 173, -0.683, 9.07, 0.126, -93.1, 186))
+				),
+		PROPANE(new Formula(C._(3), H._(8)).setSmiles("ccc"), "propane", 
+				new Solid(new Thermo(130)),
+				new Fusion(85.5),
+				new Liquid(new Thermo(-119, 171, 98.4)),
+				new Vaporization(4.54, 1149, 24.9),
+				new Gas(new Thermo(-105, 270, 12.8, 231, -0.689, -0.00266))
+				),
+		N_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cccc"), "butane", 
+			  	 null,
+			  	 new Fusion(135),
+			  	 new Liquid(new Thermo(-148, 230, 132)),
+			  	 new Vaporization(4.36, 1176, -2.07),
+			  	 new Gas(new Thermo(-126, 310, 21.9, 294, -0.829, -0.00695))
+				),
+		ISO_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cc(c)c"), "butane", 
+				   null,
+				   null,
+				   new Liquid(new Thermo(201)),
+				   new Vaporization(4.33, 1132,	0.918),
+				   new Gas(new Thermo(-126, 310, 13.3, 316, -0.991, -0.0157))
+					)
 		;
 		
 		private Chemical delegate;
