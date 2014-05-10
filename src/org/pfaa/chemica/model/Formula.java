@@ -6,23 +6,26 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Formula {
-	public final List<Part> parts;
-	public final int hydration;
+	private List<Part> parts;
+	private int hydration;
+	private String smiles;
 	
-	public Formula(List<? extends PartFactory> parts) {
-		this(parts, 0);
-	}
 	public Formula(PartFactory... parts) {
 		this(Arrays.asList(parts));
 	}
 	
-	public Formula(List<? extends PartFactory> parts, int hydration) {
+	private Formula(List<? extends PartFactory> parts) {
 		List<Part> reifiedParts = new ArrayList();
 		for (PartFactory part : parts) {
 			reifiedParts.add(part.getPart());
 		}
-		this.parts = Collections.unmodifiableList(reifiedParts);
-		this.hydration = hydration;
+		this.parts = reifiedParts;
+	}
+	
+	private Formula(Formula other) {
+		this.parts = new ArrayList(other.parts);
+		this.hydration = other.hydration;
+		this.smiles = other.smiles;
 	}
 	
 	/* First/last seems a pragmatic way of interpreting simple formulae,
@@ -38,9 +41,9 @@ public final class Formula {
 	}
 	
 	public Formula setFirstPart(Part newPart) {
-		List<Part> newParts = new ArrayList(this.parts);
-		newParts.set(0, newPart);
-		return new Formula(newParts);
+		Formula copy = new Formula(this);
+		copy.parts.set(0, newPart);
+		return copy;
 	}
 	
 	public Formula substituteFirstPart(Element substitute) {
@@ -48,9 +51,9 @@ public final class Formula {
 	}
 	
 	public Formula setLastPart(Part newPart) {
-		List<Part> newParts = new ArrayList(this.parts);
-		newParts.set(newParts.size()-1, newPart);
-		return new Formula(newParts);
+		Formula copy = new Formula(this);
+		copy.parts.set(copy.parts.size()-1, newPart);
+		return copy;
 	}
 	
 	public String toString() {
@@ -70,9 +73,24 @@ public final class Formula {
 	}
 
 	public Formula hydrate(int hydration) {
-		return new Formula(this.parts, this.hydration + hydration);
+		Formula copy = new Formula(this);
+		copy.hydration = copy.hydration + hydration;
+		return copy;
 	}
 
+	public List<Part> getParts() {
+		return parts;
+	}
+	
+	public int getHydration() {
+		return hydration;
+	}
+	
+	public Formula setSmiles(String smiles) {
+		this.smiles = smiles;
+		return this;
+	}
+	
 	public static final class Part implements PartFactory {
 		public final Element element;
 		public final int stoichiometry;
