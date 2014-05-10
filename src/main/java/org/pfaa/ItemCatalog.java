@@ -18,7 +18,7 @@ public class ItemCatalog {
 			item = constructor.newInstance(id);
 			item.setUnlocalizedName(name);
 		} catch (Exception e) {
-			Geologica.log.severe("Failed to construct item of class " + itemClass.getCanonicalName());
+			Geologica.log.fatal("Failed to construct item of class " + itemClass.getCanonicalName());
 			throw new LoaderException(e);
 		}
 		return item;

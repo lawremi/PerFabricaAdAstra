@@ -45,7 +45,7 @@ public class RecipeUtils {
         			recipesToAdd.add(createOreRecipe(recipe, replacements));
 					recipesToRemove.add(recipe);
 				} catch (Exception e) {
-					Geologica.log.warning("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
+					Geologica.log.warn("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
 				}
         	}
         }
