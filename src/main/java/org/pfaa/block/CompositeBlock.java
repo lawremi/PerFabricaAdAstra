@@ -51,7 +51,7 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister registry) {
+	public void registerBlockIcons(IIconRegister registry) {
 		icons = new IIcon[getMetaCount()];
 		String base = getModId() + ":" + getUnlocalizedName().replaceFirst("tile\\.", "");
 		for (int i = 0; i < getMetaCount(); ++i)
