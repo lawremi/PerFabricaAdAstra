@@ -9,8 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 import org.pfaa.block.CompositeBlock;
+import org.pfaa.chemica.block.FlowingBlock;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
@@ -22,7 +22,6 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Ore;
-import org.pfaa.geologica.processing.OreMineral;
 
 import cpw.mods.fml.common.LoaderException;
 
@@ -89,6 +88,9 @@ public class GeologicaBlocks {
 	public static final GeoBlock CLAY = createClayBlock();
 	public static final GeoBlock ORE_CLAY = createOreClayBlock();
 	public static final GeoBlock CLAY_BRICK = createClayBrickBlock();
+	
+	public static final FlowingBlock LIGHT_OIL = createFlowingBlock(GeoMaterial.LIGHT_OIL); 
+	public static final FlowingBlock HEAVY_OIL = createFlowingBlock(GeoMaterial.HEAVY_OIL);
 	
 	static {
 		//WEAK_STONE.addChanceDrop(GeoSubstance.CONGLOMERATE, new ChanceDrop().add(0.05, Item.goldNugget).add(0.05, "nuggetCopper"));
@@ -186,6 +188,15 @@ public class GeologicaBlocks {
 			Geologica.log.severe("Failed to construct derived block: " + name);
 			throw new LoaderException(e);
 		}
+		return block;
+	}
+	
+	private static FlowingBlock createFlowingBlock(GeoMaterial material) {
+		String name = material.getLowerName() + "Flowing";
+		int id = Geologica.getConfiguration().nextBlockID(name);
+		FlowingBlock block = new FlowingBlock(id, material.getBlockMaterial());
+		block.setUnlocalizedName(name);
+		block.setTextureName("geologica:" + material.getLowerName());
 		return block;
 	}
 }
