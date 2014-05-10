@@ -43,7 +43,7 @@ public class GeologicaConfiguration implements IDProvider {
 	}
 
 	public int getHarvestLevel(Class<? extends IndustrialMaterial> composition, Strength strength) {
-		String key = composition.getSimpleName() + "." + strength;
+		String key = composition.getSimpleName() + "." + strength.ordinal() + "_" + strength;
 		Property prop = this.config.get("HarvestLevels", key, getDefaultHarvestLevel(composition, strength), 
 				                        "Harvest level for " + strength + " " + composition.getSimpleName());
 		return prop.getInt();
