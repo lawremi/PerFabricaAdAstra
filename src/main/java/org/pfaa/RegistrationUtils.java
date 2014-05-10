@@ -1,22 +1,14 @@
 package org.pfaa;
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.Icon;
-import net.minecraftforge.client.MinecraftForgeClient;
 
-import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.Geologica;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.LoaderException;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class RegistrationUtils {
 
@@ -29,7 +21,7 @@ public class RegistrationUtils {
 					registerBlock((Block)value, itemClass);
 				}
 			} catch (Exception e) {
-				Geologica.log.severe("Failed to register field '" + field.getName() + "' as block");
+				Geologica.log.fatal("Failed to register field '" + field.getName() + "' as block");
 				throw new LoaderException(e);
 			}
 		}

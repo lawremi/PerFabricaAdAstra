@@ -6,15 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Logger;
 
-import net.minecraftforge.common.Configuration;
-
+import org.apache.logging.log4j.Logger;
 import org.pfaa.Registrant;
 
 import com.google.common.io.ByteStreams;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -23,7 +20,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(modid = "PFAAGeologica", 
 	 name = "Geologica", 
@@ -54,7 +50,6 @@ public class Geologica {
 	public void preload(FMLPreInitializationEvent event)
 	{
 		log = event.getModLog();
-		log.setParent(FMLLog.getLogger());
 		configuration = new GeologicaConfiguration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
 		configuration.save();

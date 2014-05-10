@@ -130,7 +130,7 @@ public class GeologicaBlocks {
 			try {
 				blocks.add((Block)field.get(null));
 			} catch (Exception e) {
-				Geologica.log.severe("Failed to get block from field '" + field.getName() + "'");
+				Geologica.log.fatal("Failed to get block from field '" + field.getName() + "'");
 				throw new LoaderException(e);
 			}
 		}
@@ -170,7 +170,7 @@ public class GeologicaBlocks {
 			block = constructor.newInstance(id, strength, composition, material);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
-			Geologica.log.severe("Failed to construct GeoBlock: " + name);
+			Geologica.log.fatal("Failed to construct GeoBlock: " + name);
 			throw new LoaderException(e);
 		}
 		return block;
@@ -185,7 +185,7 @@ public class GeologicaBlocks {
 			block = constructor.newInstance(id, modelBlock);
 			block.setUnlocalizedName(name);
 		} catch (Exception e) {
-			Geologica.log.severe("Failed to construct derived block: " + name);
+			Geologica.log.fatal("Failed to construct derived block: " + name);
 			throw new LoaderException(e);
 		}
 		return block;
