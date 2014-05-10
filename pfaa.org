@@ -635,13 +635,6 @@
     * Skarn: sand + (10%) wollastonite
     * Quartzite: 2 sand
       
-*** Melting
-    The amount of energy required to melt rocks could depend on the
-    strength. Stronger rocks are tougher to melt. In theory, the
-    rocks are tougher to melt but then the lava has more energy. But
-    modeling lava temperature would be too much. So, for interesting
-    gameplay, we say stronger rocks take more to melt.
-    
 *** Stone variants
     How do we handle variants of stone? These include:
     * Moss stone (moss form of cobblestone)
@@ -1062,7 +1055,7 @@
     resources with Cp values for a range of temperatures, as well as
     standard enthalpies of formation and molar entropies. That might
     work, for the standard phase, at least.
-    
+
 *** Metals
     
     | Metal      | Mods      | Source              |  Prod |  Fe:x | Mod Bal  | Uses (besides alloys)                | Current uses                            | Issues                           |
@@ -1232,7 +1225,26 @@
     | Slightly Soluble      | 100 to 1000         |
     | Very Slightly Soluble | 1000 to 10,000      |
     | Practically Insoluble | Greater than 10,000 |
+    
+*** Temperature
+    We will not model arbitrary temperatures of materials, except
+    within machines. Instead, we assume room temperature or the
+    transition temperature to the phase closer to room
+    temperature.
 
+    There is a point at which thermal radiation becomes visible, and
+    we essentially render liquids as lava.
+
+    | Temperature           | Color                       |
+    |-----------------------+-----------------------------|
+    | 480 °C (896 °F)       | faint red glow              |
+    | 580 °C (1,076 °F)     | dark red                    |
+    | 730 °C (1,350 °F)     | bright red, slightly orange |
+    | 930 °C (1,710 °F)     | bright orange               |
+    | 1,100 °C (2,010 °F)   | pale yellowish orange       |
+    | 1,300 °C (2,370 °F)   | yellowish white             |
+    | > 1,400 °C (2,550 °F) | white                       |
+    
 *** Chemicals from other mods
     Some chemicals are obtained from other mods:
 
@@ -1241,7 +1253,6 @@
     | Factorization | H2SO4                                                                        |
     | Gregtech      | Be, Ca, CaCO3, C, Cl, D, H2, He, Th, W, U, Si, Na, Na2(SO4)2, CH4, K, N2, Pu |
     |               |                                                                              |
-
 ** Tools
 ** Batteries
    In increasing order of cost and energy density:
@@ -2568,10 +2579,45 @@
 
    
 *** Resources
-    Oil can be found in liquid deposits, or as a solid in
-    shale. Shale also contains pockets of natural gas. The GasCraft
-    generates shale oil and gas, and Buildcraft generates oil,
-    although in weird fountains.
+    Oil can be found in liquid deposits, or can be produced from
+    kerogen-rich oil shale, with veins of so-called liquid "tight"
+    oil. Oil shale also contains pockets (perhaps vein-like fractures)
+    of natural gas (called shale gas).  Alternatively or in addition,
+    shale could yield shale gas by chance when broken (like gravel
+    yielding flint). However, most natural gas occurs in isolation or
+    in association with oil (above).
+
+    Natural gas is mostly methane (95%), with some amount of
+    ethane (3%), and propane (0.2%). 
+
+    There are about 150 types of crude oil on the market, typically
+    classified along two axes: heavy/light (density) and sweet/sour
+    (sulfur content). The two variables are correlated: the heavier,
+    the sourer. Extremely heavy/thick oil is called bitumen. The
+    chemical composition can also vary. Hydrocarbons up to C4 (butane)
+    are usually dissolved gas (natural gas).
+
+    With regard to shale, while tight oil is light, shale oil probably
+    falls under the "extra heavy" category.
+    
+    Average composition:
+    | Type       | Avg. Percent |  Range | Primary Source |
+    |------------+--------------+--------+----------------|
+    | Alkanes    |          30% | 15-60% | Light          |
+    | Naphthenes |          49% | 30-60% | Heavy          |
+    | Aromatics  |          15% |  3-30% | Extra heavy    |
+    | Asphaltics |           6% |     6% | Bitumen        |
+ 
+    From this we could come up with this composition for each type:
+    | Density     | Alkanes | Naphtha | Aromatic | Asphalt |  H2S | Occurrence |
+    |-------------+---------+---------+----------+---------+------+------------|
+    | Light       |     50% |     45% |       5% |      0% | 0.5% |        30% |
+    | Heavy       |     30% |     50% |      15% |      5% |   1% |        15% |
+    | Extra heavy |     15% |     45% |      30% |     10% |   2% |        25% |
+    | Bitumen     |     10% |     20% |      50% |     20% |   3% |        30% |
+
+    The GasCraft generates shale oil and
+    gas, and Buildcraft generates oil, although in weird fountains.
     
 *** Unit Operations
 **** Atmospheric distillation
@@ -3501,8 +3547,23 @@
   dictionary, but we will also need to add custom recipes.
   
 ** Gregtech
-** Mekanism
-** Resonant Induction
+** Waila
+   While we will endeavor to have blocks that rely on rendering rather
+   than GUIs, clarity will be limited. Thus, Waila tooltips may help.
+** RailCraft
+   * Coke oven could be generalized to any type of pyrolysis.
+   * Rock crusher should handle ores via ore dictionary.
+** Forestry
+   * Ore dictionary should allow rocks/ores in backpacks.     
+** IndustrialCraft
+** BuildCraft
+   Generates oil, but Geologica could/should easily do
+   this. The planned distillation tower will be useful.
+** Mekanism    
+** Rotary Craft
+** Witchery
+   The most chemical of all of the magic mods. Uses actual chemicals
+   in e.g. distillation.
 ** Engineer's Toolbox
    Modular machine construction, based around a generic framework
    called a "socket". A socket has item, fluid and energy storage, as
@@ -3519,20 +3580,7 @@
    create modules. GasCraft is already based on sockets.
    
 *** GasCraft
-    Should integrate with its gasses and machines.
-    
-** BuildCraft
-   Generates oil, but Geologica could/should easily do
-   this. The planned distillation tower will be useful.
-   
-** IndustrialCraft
-** Forestry
-   * Ore dictionary should allow rocks/ores in backpacks.
-     
-** RailCraft
-   * Coke oven could be generalized to any type of pyrolysis.
-   * Rock crusher should handle ores via ore dictionary.
-     
+    Should integrate with its gasses and machines.   
 ** Thermal Expansion
 *** Induction furnace
     Could potentially support enhanced reduction. Currently, sand is
@@ -3549,21 +3597,16 @@
     | Medium      | 300 |
     | Strong      | 450 |
     | Very Strong | 675 |
-
-** Foundry
-   Smelting with liquid metals... kind of like TC.
-      
 ** EnderIO
    Provides TE-like facilities for energy storage, item/liquid/power
    transfer, etc.
 
    Machines:
    * Ore Smelter :: 3 inputs (one more than Induction Smelter), one output.
-   * SAG Mill :: Grinder with 4 outputs
-   
-** Waila
-   While we will endeavor to have blocks that rely on rendering rather
-   than GUIs, clarity will be limited. Thus, Waila tooltips may help.
+   * SAG Mill :: Grinder with 4 outputs   
+** Resonant Induction      
+** Galacticraft
+   Obvious base for exploration of other worlds.
    
 ** Thaumcraft?
    We should add magical aspects to every item, so that we mesh with
@@ -3581,7 +3624,14 @@
 
    Presumably we could define our chemicals within this
    system, but for now we can hopefully rely on the ore dictionary.
+   
+** Electrodynamics
+   Seems too immature right now, but looks like it has potential.
 
+* Libraries
+** Enchiridion
+   A library for making custom books; we will have a lot of explaining
+   to do. But can they be generated dynamically?
    
 * Other resources
 ** Forge tutorials
