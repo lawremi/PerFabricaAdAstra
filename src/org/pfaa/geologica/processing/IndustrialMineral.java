@@ -12,8 +12,6 @@ import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.PhaseProperties;
 
 public interface IndustrialMineral extends Mineral {
-	public PhaseProperties getProperties();
-	
 	public enum IndustrialMinerals implements IndustrialMineral {
 		ALUNITE(new Color(225, 180, 65), 2.7),
 		APATITE(new Color(160, 190, 160), 3.1),
@@ -69,11 +67,6 @@ public interface IndustrialMineral extends Mineral {
 				return properties;
 			}
 			return null;
-		}
-
-		@Override
-		public PhaseProperties getProperties() {
-			return properties;
 		}
 
 		@Override
