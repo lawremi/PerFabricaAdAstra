@@ -158,12 +158,20 @@ public enum GeoMaterial implements Mixture {
 		this(composition, strength, Material.rock);
 	}
 	
+	GeoMaterial(OreMineral composition, Strength strength, Material blockMaterial) {
+		this(new SimpleOre(composition), strength, blockMaterial);
+	}
+	
 	GeoMaterial(OreMineral composition, Strength strength) {
-		this(new SimpleOre(composition), strength, Material.rock);
+		this(composition, strength, Material.rock);
+	}
+	
+	GeoMaterial(IndustrialMineral composition, Strength strength, Material blockMaterial) {
+		this(new SimpleOre(composition), strength, blockMaterial);
 	}
 	
 	GeoMaterial(IndustrialMineral composition, Strength strength) {
-		this(new SimpleOre(composition), strength, Material.rock);
+		this(composition, strength, Material.rock);
 	}
 	
 	public int getId() {
