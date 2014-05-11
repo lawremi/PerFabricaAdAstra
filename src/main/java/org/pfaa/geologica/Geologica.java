@@ -22,9 +22,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = "PFAAGeologica", 
-	 name = "Geologica", 
-	 version = "@VERSION@",
-	 acceptedMinecraftVersions = "@MCVERSION@")
+	 useMetadata = true)
 public class Geologica {
 
 	@Instance("PFAAGeologica")
