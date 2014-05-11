@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = "PFAAGeologica", 
-	 useMetadata = false)
+	 useMetadata = true)
 public class Geologica {
 
 	@Instance("PFAAGeologica")
