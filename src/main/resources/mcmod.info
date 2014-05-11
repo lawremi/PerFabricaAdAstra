@@ -9,7 +9,6 @@
     "url": "http://www.minecraftforum.net/topic/2363832-172-per-fabrica-ad-astra-geologica/",
     "authorList": [ "noogenesis" ],
     "credits": "Inspired by TerraFirmaCraft",
-    "requiredMods": [ "Forge", "CustomOreGen" ],
-    "useDependencyInformation": "true"
+    "requiredMods": [ "Forge", "CustomOreGen" ]
   }]
 }
