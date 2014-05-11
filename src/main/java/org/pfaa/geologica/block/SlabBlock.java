@@ -71,11 +71,9 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
     {
-		if (!this.isDoubleSlab) {
-			for (int i = 0; i < getMetaCount(); ++i)
-			{
-				list.add(new ItemStack(item, 1, damageDropped(i)));
-			}
+		for (int i = 0; i < getMetaCount(); ++i)
+		{
+			list.add(new ItemStack(item, 1, damageDropped(i)));
 		}
     }
 	
