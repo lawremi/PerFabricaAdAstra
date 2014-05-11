@@ -1,17 +1,15 @@
 {
-  "modinfoversion": 2,
-  "modlist": [{
+  "modListVersion": 2,
+  "modList": [{
     "modid": "PFAAGeologica",
     "name": "Geologica",
     "description": "Adds realistic geology in the form of new types of rocks and ores. The distributions are completely customizable, either via the GUI during world creation, or by directly modifying the CustomOreGen config.",
-    "version": "@VERSION@",
-    "mcversion": "@MCVERSION@",
-    "url": "",
-    "updateUrl": "",
-    "authors": [ "noogenesis" ],
+    "version": "$version",
+    "mcversion": "$mcversion",
+    "url": "http://www.minecraftforum.net/topic/2363832-172-per-fabrica-ad-astra-geologica/",
+    "authorList": [ "noogenesis" ],
     "credits": "Inspired by TerraFirmaCraft",
-    "parent": "mod_BuildCraftCore",
-    "requiredMods": [ "Forge", "CustomOreGenRevived" ],
+    "requiredMods": [ "Forge", "CustomOreGen" ],
     "useDependencyInformation": "true"
   }]
 }
