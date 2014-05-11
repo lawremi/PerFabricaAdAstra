@@ -8,7 +8,6 @@ public class CommonRegistrant implements Registrant {
 	public void preregister() {
 		BlockRegistration.init();
 		EntityRegistration.init();
-		LanguageRegistration.init();
 	}
 
 	@Override
