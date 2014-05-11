@@ -21,13 +21,6 @@ public class GeologicaConfiguration {
 		this(new Configuration(file));
 	}
 
-	private static final int MAX_TERRAIN_BLOCK_ID = 255;
-	private static final int MIN_TERRAIN_BLOCK_ID = 150;
-	
-	private int nextTerrainBlockId = MAX_TERRAIN_BLOCK_ID;
-	private int nextPlacedBlockId = MAX_TERRAIN_BLOCK_ID + 1;
-	private int nextItemId = 10000;
-	
 	public int getHarvestLevel(Class<? extends IndustrialMaterial> composition, Strength strength) {
 		String key = composition.getSimpleName() + "." + strength.ordinal() + "_" + strength;
 		Property prop = this.config.get("HarvestLevels", key, getDefaultHarvestLevel(composition, strength), 
