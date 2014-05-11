@@ -22,7 +22,6 @@ import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
@@ -40,8 +39,9 @@ import org.pfaa.geologica.integration.FMPIntegration;
 import org.pfaa.geologica.integration.IC2Integration;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.integration.TEIntegration;
+import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.OreMineral;
+import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.SmeltingTemperature;
 
 import com.google.common.base.CaseFormat;
@@ -257,9 +257,9 @@ public class RecipeRegistration {
 	}
 	
 	private static void oreDictify(GeoBlock block) {
-		if (block.hasComposition(Mixture.class)) {
+		if (block.hasComposition(Aggregate.class)) {
 			oreDictifyAggregate(block);
-		} else if (block.hasComposition(OreMineral.class)) {
+		} else if (block.hasComposition(Ore.class)) {
 			oreDictifyOre(block);
 		}
 	}
@@ -272,7 +272,7 @@ public class RecipeRegistration {
 
 	private static void oreDictifyOre(GeoBlock block, GeoMaterial substance) {
 		String postfix = substance.getOreDictKey();
-		if (postfix == null ||Geologica.isTechnical()) {
+		if (postfix == null || Geologica.isTechnical()) {
 			postfix = substance.getLowerName();
 		}
 		oreDictifyOre(postfix, block.getItemStack(substance));
