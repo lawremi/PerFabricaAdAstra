@@ -28,7 +28,7 @@ public class SimpleChemical implements Chemical {
 		this.fusion = fusion;
 		this.liquid = liquid;
 		this.vaporization = vaporization;
-		this.gas = gas.assumeDensityAtSTP(formula.getMolarMass());
+		this.gas = gas == null ? null : gas.assumeDensityAtSTP(formula.getMolarMass());
 	}
 	
 	@Override
