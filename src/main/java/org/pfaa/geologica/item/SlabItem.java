@@ -11,7 +11,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class SlabItem extends ItemSlab {
-	public SlabItem(SlabBlock block) {
-		super(block, block.getSingleSlab(), block.getDoubleSlab(), block.isDoubleSlab());
+	public SlabItem(Block block) {
+		super(block, ((SlabBlock)block).getSingleSlab(), 
+			         ((SlabBlock)block).getDoubleSlab(), 
+			         ((SlabBlock)block).isDoubleSlab());
 	}
 }

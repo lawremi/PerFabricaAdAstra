@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockSlab;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,6 +47,12 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister p_149651_1_) {
+		// icon already registered by model block
+	}
+
+	@Override
 	public Item getItemDropped(int par1, Random par2Random, int par3) {
 		return getSingleSlabItem();
 	}
@@ -64,10 +71,12 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
     {
-		for (int i = 0; i < getMetaCount(); ++i)
-        {
-            list.add(new ItemStack(item, 1, damageDropped(i)));
-        }
+		if (!this.isDoubleSlab) {
+			for (int i = 0; i < getMetaCount(); ++i)
+			{
+				list.add(new ItemStack(item, 1, damageDropped(i)));
+			}
+		}
     }
 	
 	public int getMetaCount() {
