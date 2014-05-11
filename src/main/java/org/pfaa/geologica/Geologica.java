@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = "PFAAGeologica", 
-	 useMetadata = true)
+	 useMetadata = false)
 public class Geologica {
 
 	@Instance("PFAAGeologica")
@@ -50,7 +50,6 @@ public class Geologica {
 		log = event.getModLog();
 		configuration = new GeologicaConfiguration(event.getSuggestedConfigurationFile());
 		registrant.preregister();
-		configuration.save();
 	}
 	
 	@EventHandler
@@ -63,6 +62,7 @@ public class Geologica {
 	public void postload(FMLPostInitializationEvent event) {
 		registrant.postregister();
 		exportCOGConfig();
+		configuration.save();
 	}
 	
 	private void exportCOGConfig() {
