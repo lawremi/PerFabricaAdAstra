@@ -6,10 +6,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
+import org.pfaa.geologica.processing.Aggregate;
 
 public class IntactGeoBlock extends GeoBlock {
 
@@ -21,7 +21,7 @@ public class IntactGeoBlock extends GeoBlock {
 	public Item getItemDropped(int meta, Random random, int par3) {
 		Item dropped = super.getItemDropped(meta, random, par3);
 		GeoMaterial material = getSubstance(meta);
-		if (material.getComposition() instanceof Mixture && blockMaterial == Material.rock) {
+		if (material.getComposition() instanceof Aggregate && blockMaterial == Material.rock) {
 			dropped = dropRock(meta);
 		}
 		return dropped;
