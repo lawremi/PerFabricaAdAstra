@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 
 import org.pfaa.geologica.Geologica;
+import org.pfaa.geologica.block.StairsBlock;
 
 import com.google.common.base.CaseFormat;
 
@@ -22,7 +23,7 @@ public class RegistrationUtils {
 				if (value instanceof Block && blockClass.isAssignableFrom(value.getClass())) {
 					Block block = (Block)value;
 					String name = CaseFormat.UPPER_UNDERSCORE.
-							      to(CaseFormat.LOWER_CAMEL, field.getName());
+							      to(CaseFormat.LOWER_CAMEL, field.getName().replaceAll("__", "."));
 					block.setBlockName(name);
 					GameRegistry.registerBlock(block, itemClass, name);
 				}

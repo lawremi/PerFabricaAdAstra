@@ -68,13 +68,13 @@ public class GeologicaBlocks {
 	public static final Block STRONG_STONE_BRICK_WALL = createWallBlock(STRONG_STONE_BRICK);
 	public static final Block VERY_STRONG_STONE_BRICK_WALL = createWallBlock(VERY_STRONG_STONE_BRICK);
 	
-	public static final StairsBlock LIMESTONE_COBBLE_STAIRS = createStairsBlock(MEDIUM_COBBLE, GeoMaterial.LIMESTONE);
-	public static final StairsBlock GRANITE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLE, GeoMaterial.GRANITE);
-	public static final StairsBlock MARBLE_COBBLE_STAIRS = createStairsBlock(STRONG_COBBLE, GeoMaterial.MARBLE);
+	public static final StairsBlock MEDIUM_COBBLE_STAIRS__LIMESTONE = createStairsBlock(MEDIUM_COBBLE, GeoMaterial.LIMESTONE);
+	public static final StairsBlock STRONG_COBBLE_STAIRS__GRANITE = createStairsBlock(STRONG_COBBLE, GeoMaterial.GRANITE);
+	public static final StairsBlock STRONG_COBBLE_STAIRS__MARBLE = createStairsBlock(STRONG_COBBLE, GeoMaterial.MARBLE);
 	
-	public static final StairsBlock LIMESTONE_BRICK_STAIRS = createStairsBlock(MEDIUM_STONE_BRICK, GeoMaterial.LIMESTONE);
-	public static final StairsBlock GRANITE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.GRANITE);
-	public static final StairsBlock MARBLE_BRICK_STAIRS = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.MARBLE);
+	public static final StairsBlock MEDIUM_STONE_BRICK_STAIRS__LIMESTONE = createStairsBlock(MEDIUM_STONE_BRICK, GeoMaterial.LIMESTONE);
+	public static final StairsBlock STRONG_STONE_BRICK_STAIRS__GRANITE = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.GRANITE);
+	public static final StairsBlock STRONG_STONE_BRICK_STAIRS__MARBLE = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.MARBLE);
 	
 	public static final GeoBlock WEAK_RUBBLE = createRubbleBlock(Strength.WEAK);
 	
@@ -142,19 +142,13 @@ public class GeologicaBlocks {
 	}
 	private static SlabBlock createSlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
 		String doubleToken = singleSlab == null ? "" : "Double";
-		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + doubleToken + nameForBlockClass(SlabBlock.class);
 		SlabBlock block = new SlabBlock(modelBlock, singleSlab);
 		return block;
 	}
 	
 	private static StairsBlock createStairsBlock(GeoBlock modelBlock, GeoMaterial substance) {
-		String name = modelBlock.getUnlocalizedName().replaceFirst("tile\\.", "") + "Stairs" + "." + substance.getLowerName();
 		StairsBlock block = new StairsBlock(modelBlock, modelBlock.getMeta(substance));
 		return block;
-	}
-	
-	private static String nameForBlockClass(Class<? extends Block> blockClass) {
-		return blockClass.getSimpleName().replaceAll("Block$", "");
 	}
 	
 	private static GeoBlock createGeoBlock(Class<? extends GeoBlock> blockClass, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {

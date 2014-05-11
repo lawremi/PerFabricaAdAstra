@@ -147,12 +147,12 @@ public class RecipeRegistration {
 		addBrickRecipe(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_STONE_BRICK);
 		addBrickRecipe(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_STONE_BRICK);
 		addBrickRecipe(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_STONE_BRICK);
-		addStairsRecipe(GeologicaBlocks.LIMESTONE_COBBLE_STAIRS);
-		addStairsRecipe(GeologicaBlocks.GRANITE_COBBLE_STAIRS);
-		addStairsRecipe(GeologicaBlocks.MARBLE_COBBLE_STAIRS);
-		addStairsRecipe(GeologicaBlocks.LIMESTONE_BRICK_STAIRS);
-		addStairsRecipe(GeologicaBlocks.GRANITE_BRICK_STAIRS);
-		addStairsRecipe(GeologicaBlocks.MARBLE_BRICK_STAIRS);
+		addStairsRecipe(GeologicaBlocks.MEDIUM_COBBLE_STAIRS__LIMESTONE);
+		addStairsRecipe(GeologicaBlocks.STRONG_COBBLE_STAIRS__GRANITE);
+		addStairsRecipe(GeologicaBlocks.STRONG_COBBLE_STAIRS__MARBLE);
+		addStairsRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK_STAIRS__LIMESTONE);
+		addStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__GRANITE);
+		addStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__MARBLE);
 	}
 
 	private static void addGrindingRecipes() {
