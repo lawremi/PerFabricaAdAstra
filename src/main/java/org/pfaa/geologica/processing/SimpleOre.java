@@ -27,4 +27,14 @@ public class SimpleOre extends SimpleMixture implements Ore {
 		Mixture mixture = super.mix(material, weight);
 		return new SimpleOre(this.concentrate, mixture);
 	}
+	
+	@Override
+	public String name() {
+		return concentrate.name() + " ore";
+	}
+
+	@Override
+	public String getOreDictKey() {
+		return concentrate.getOreDictKey();
+	}
 }
