@@ -34,6 +34,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		setSubstances();
 		setHardness(determineHardness());
 		setStepSound(determineStepSound());
+		setHarvestLevel(determineHarvestTool(), determineHarvestLevel());
 	}
 	
 	protected Block.SoundType determineStepSound() {
@@ -87,15 +88,13 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return 0.6F;
 	}
 
-	@Override
-	public String getHarvestTool(int metadata) {
+	public String determineHarvestTool() {
 		if (blockMaterial == Material.rock)
 			return "pickaxe";
 		else return "shovel";
 	}
 
-	@Override
-	public int getHarvestLevel(int metadata) {
+	private int determineHarvestLevel() {
 		return Geologica.getConfiguration().getHarvestLevel(this.composition, this.strength);
 	}
 
