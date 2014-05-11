@@ -7,6 +7,8 @@ import net.minecraft.item.ItemBlock;
 
 import org.pfaa.geologica.Geologica;
 
+import com.google.common.base.CaseFormat;
+
 import cpw.mods.fml.common.LoaderException;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -18,16 +20,17 @@ public class RegistrationUtils {
 			try {
 				Object value = field.get(null);
 				if (value instanceof Block && blockClass.isAssignableFrom(value.getClass())) {
-					registerBlock((Block)value, itemClass);
+					Block block = (Block)value;
+					String name = CaseFormat.UPPER_UNDERSCORE.
+							      to(CaseFormat.LOWER_CAMEL, field.getName());
+					block.setBlockName(name);
+					GameRegistry.registerBlock(block, itemClass, name);
 				}
 			} catch (Exception e) {
 				Geologica.log.fatal("Failed to register field '" + field.getName() + "' as block");
 				throw new LoaderException(e);
 			}
 		}
-	}
-	private static void registerBlock(Block block, Class<? extends ItemBlock> itemClass) {
-		GameRegistry.registerBlock(block, itemClass, null);
 	}
 	
 }

@@ -68,9 +68,9 @@ public class RecipeRegistration {
 
 	private static void addStoneToolRecipes() {
 		addStoneToolRecipes(GeologicaBlocks.WEAK_RUBBLE);
-		addStoneToolRecipes(GeologicaBlocks.MEDIUM_COBBLESTONE);
-		addStoneToolRecipes(GeologicaBlocks.STRONG_COBBLESTONE);
-		addStoneToolRecipes(GeologicaBlocks.VERY_STRONG_COBBLESTONE);
+		addStoneToolRecipes(GeologicaBlocks.MEDIUM_COBBLE);
+		addStoneToolRecipes(GeologicaBlocks.STRONG_COBBLE);
+		addStoneToolRecipes(GeologicaBlocks.VERY_STRONG_COBBLE);
 		if (Loader.isModLoaded("TConstruct"))
 			TCIntegration.addStoneMaterials();
 	}
@@ -125,22 +125,22 @@ public class RecipeRegistration {
 
 	private static void addSmeltingRecipes() {
 		addSmeltingRecipesByMeta(GeologicaBlocks.WEAK_RUBBLE, GeologicaBlocks.WEAK_STONE, SmeltingTemperature.MEDIUM);
-		addSmeltingRecipesByMeta(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_STONE, SmeltingTemperature.MEDIUM);
-		addSmeltingRecipesByMeta(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_STONE, SmeltingTemperature.HIGH);
+		addSmeltingRecipesByMeta(GeologicaBlocks.MEDIUM_COBBLE, GeologicaBlocks.MEDIUM_STONE, SmeltingTemperature.MEDIUM);
+		addSmeltingRecipesByMeta(GeologicaBlocks.STRONG_COBBLE, GeologicaBlocks.STRONG_STONE, SmeltingTemperature.HIGH);
 	}
 
 	private static void addCraftingRecipes() {
-		addSlabRecipe(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_COBBLE_SLAB);
-		addSlabRecipe(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_COBBLE_SLAB);
+		addSlabRecipe(GeologicaBlocks.MEDIUM_COBBLE, GeologicaBlocks.MEDIUM_COBBLE_SLAB);
+		addSlabRecipe(GeologicaBlocks.STRONG_COBBLE, GeologicaBlocks.STRONG_COBBLE_SLAB);
 		addSlabRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK, GeologicaBlocks.MEDIUM_STONE_BRICK_SLAB);
 		addSlabRecipe(GeologicaBlocks.STRONG_STONE_BRICK, GeologicaBlocks.STRONG_STONE_BRICK_SLAB);
 		addSlabRecipe(GeologicaBlocks.VERY_STRONG_STONE_BRICK, GeologicaBlocks.VERY_STRONG_STONE_BRICK_SLAB);
 		addSlabRecipe(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_STONE_SLAB);
 		addSlabRecipe(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_STONE_SLAB);
 		addSlabRecipe(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_STONE_SLAB);
-		addWallRecipe(GeologicaBlocks.MEDIUM_COBBLESTONE, GeologicaBlocks.MEDIUM_COBBLE_WALL);
-		addWallRecipe(GeologicaBlocks.STRONG_COBBLESTONE, GeologicaBlocks.STRONG_COBBLE_WALL);
-		addWallRecipe(GeologicaBlocks.VERY_STRONG_COBBLESTONE, GeologicaBlocks.VERY_STRONG_COBBLE_WALL);
+		addWallRecipe(GeologicaBlocks.MEDIUM_COBBLE, GeologicaBlocks.MEDIUM_COBBLE_WALL);
+		addWallRecipe(GeologicaBlocks.STRONG_COBBLE, GeologicaBlocks.STRONG_COBBLE_WALL);
+		addWallRecipe(GeologicaBlocks.VERY_STRONG_COBBLE, GeologicaBlocks.VERY_STRONG_COBBLE_WALL);
 		addWallRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK, GeologicaBlocks.MEDIUM_STONE_BRICK_WALL);
 		addWallRecipe(GeologicaBlocks.STRONG_STONE_BRICK, GeologicaBlocks.STRONG_STONE_BRICK_WALL);
 		addWallRecipe(GeologicaBlocks.VERY_STRONG_STONE_BRICK, GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL);
@@ -187,18 +187,18 @@ public class RecipeRegistration {
 
 	private static void addStoneGrindingRecipes() {
 		addStoneGrindingRecipes(GeologicaBlocks.WEAK_STONE, GeologicaBlocks.WEAK_RUBBLE);
-		addStoneGrindingRecipes(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_COBBLESTONE);
-		addStoneGrindingRecipes(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_COBBLESTONE);
-		addStoneGrindingRecipes(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_COBBLESTONE);
+		addStoneGrindingRecipes(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_COBBLE);
+		addStoneGrindingRecipes(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_COBBLE);
+		addStoneGrindingRecipes(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_COBBLE);
 	}
 
 	private static void addMeltingRecipes() {
 		addStoneMeltingRecipes(GeologicaBlocks.MEDIUM_STONE);
-		addStoneMeltingRecipes(GeologicaBlocks.MEDIUM_COBBLESTONE);
+		addStoneMeltingRecipes(GeologicaBlocks.MEDIUM_COBBLE);
 		addStoneMeltingRecipes(GeologicaBlocks.STRONG_STONE);
-		addStoneMeltingRecipes(GeologicaBlocks.STRONG_COBBLESTONE);
+		addStoneMeltingRecipes(GeologicaBlocks.STRONG_COBBLE);
 		addStoneMeltingRecipes(GeologicaBlocks.VERY_STRONG_STONE);
-		addStoneMeltingRecipes(GeologicaBlocks.VERY_STRONG_COBBLESTONE);
+		addStoneMeltingRecipes(GeologicaBlocks.VERY_STRONG_COBBLE);
 	}
 
 	private static void addStoneMeltingRecipes(GeoBlock block) {
@@ -343,11 +343,11 @@ public class RecipeRegistration {
 		case WEAK:
 			return GeologicaBlocks.WEAK_RUBBLE;
 		case MEDIUM:
-			return GeologicaBlocks.MEDIUM_COBBLESTONE;
+			return GeologicaBlocks.MEDIUM_COBBLE;
 		case STRONG:
-			return GeologicaBlocks.STRONG_COBBLESTONE;
+			return GeologicaBlocks.STRONG_COBBLE;
 		case VERY_STRONG:
-			return GeologicaBlocks.VERY_STRONG_COBBLESTONE;
+			return GeologicaBlocks.VERY_STRONG_COBBLE;
 		}
 		return null;
 	}
@@ -409,9 +409,9 @@ public class RecipeRegistration {
 			FMPIntegration.registerMicroblock(GeologicaBlocks.MEDIUM_STONE);
 			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_STONE);
 			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_STONE);
-			FMPIntegration.registerMicroblock(GeologicaBlocks.MEDIUM_COBBLESTONE);
-			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_COBBLESTONE);
-			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_COBBLESTONE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.MEDIUM_COBBLE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_COBBLE);
+			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_COBBLE);
 		}
 	}
 

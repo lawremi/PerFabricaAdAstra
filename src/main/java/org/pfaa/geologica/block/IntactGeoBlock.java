@@ -35,10 +35,10 @@ public class IntactGeoBlock extends GeoBlock {
 			dropped = Item.getItemFromBlock(GeologicaBlocks.WEAK_RUBBLE);
 			break;
 		case MEDIUM:
-			dropped = Item.getItemFromBlock(GeologicaBlocks.MEDIUM_COBBLESTONE);
+			dropped = Item.getItemFromBlock(GeologicaBlocks.MEDIUM_COBBLE);
 			break;
 		case STRONG:
-			dropped = Item.getItemFromBlock(GeologicaBlocks.STRONG_COBBLESTONE);
+			dropped = Item.getItemFromBlock(GeologicaBlocks.STRONG_COBBLE);
 			break;
 		case VERY_STRONG:
 			dropped = Item.getItemFromBlock(this);
