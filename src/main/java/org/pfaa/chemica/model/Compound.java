@@ -195,7 +195,7 @@ public interface Compound extends Chemical {
 		H2S(new Formula(H._(2), S), "sulfur",
 			null,
 			null,
-			new Solid(0.949, new Thermo(122)),
+			new Liquid(0.949, new Thermo(122)),
 			new Vaporization(4.53, 959, -0.539),
 			new Gas(new Thermo(26.9, 18.7, 3.43, -3.38, 0.136, -28.9, 233).
 					addSegment(1400, 51.2, 4.15, -0.644, 0.0416, -10.5, -55.9, 244), 
@@ -347,30 +347,30 @@ public interface Compound extends Chemical {
 		
 		private Chemical delegate;
 		
-		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 
-				ChemicalPhaseProperties liquid,	Vaporization vaporization, ChemicalPhaseProperties gas) 
+		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+				Liquid liquid,	Vaporization vaporization, Gas gas) 
 		{
 			this.delegate = new SimpleChemical(formula, oreDictKey, solid, fusion, liquid, vaporization, gas);
 			CompoundDictionary.register(formula, this);
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 
-				ChemicalPhaseProperties liquid,	Vaporization vaporization) 
+		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+				Liquid liquid,	Vaporization vaporization) 
 		{
 			this(formula, oreDictKey, solid, fusion, liquid, vaporization, new Gas());
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 
-				ChemicalPhaseProperties liquid) 
+		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+				Liquid liquid) 
 		{
 			this(formula, oreDictKey, solid, fusion, liquid, null);
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion) {
+		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion) {
 			this(formula, oreDictKey, solid, fusion, new Liquid());
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, ChemicalPhaseProperties solid) {
+		private Compounds(Formula formula, String oreDictKey, Solid solid) {
 			this(formula, oreDictKey, solid, null);
 		}
 	

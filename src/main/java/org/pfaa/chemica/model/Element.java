@@ -446,9 +446,9 @@ public interface Element extends Chemical, PartFactory {
 		private int defaultOxidationState;
 	
 		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
-				         ChemicalPhaseProperties solid, Fusion fusion, 
-						 ChemicalPhaseProperties liquid, Vaporization vaporization, 
-						 ChemicalPhaseProperties gas) 
+				         Solid solid, Fusion fusion, 
+						 Liquid liquid, Vaporization vaporization, 
+						 Gas gas) 
 		{
 			Formula formula = new Formula(this._(1));
 			this.delegate = new SimpleChemical(formula, oreDictKey, solid, fusion, liquid, 
@@ -458,28 +458,28 @@ public interface Element extends Chemical, PartFactory {
 		}
 	
 		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
-				         ChemicalPhaseProperties solid, Fusion fusion, 
-					     ChemicalPhaseProperties liquid, Vaporization vaporization) 
+				         Solid solid, Fusion fusion, 
+					     Liquid liquid, Vaporization vaporization) 
 		{
 			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, liquid, 
 				 vaporization, null);
 		}
 	
 		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState,
-				         ChemicalPhaseProperties solid, Fusion fusion, 
-				         ChemicalPhaseProperties liquid) 
+				         Solid solid, Fusion fusion, 
+				         Liquid liquid) 
 		{
 			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, liquid, null);
 		}
 	
 		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState,
-				         ChemicalPhaseProperties solid, Fusion fusion) 
+				         Solid solid, Fusion fusion) 
 		{
 			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, null);
 		}
 	
 		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
-				         ChemicalPhaseProperties solid) {
+				         Solid solid) {
 			this(oreDictKey, atomicWeight, defaultOxidationState, solid, null);
 		}
 	

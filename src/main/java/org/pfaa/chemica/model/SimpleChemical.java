@@ -1,5 +1,9 @@
 package org.pfaa.chemica.model;
 
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+
 
 public class SimpleChemical implements Chemical {
 
@@ -12,11 +16,11 @@ public class SimpleChemical implements Chemical {
 	private ChemicalPhaseProperties liquid;
 	private ChemicalPhaseProperties gas;
 	
-	public SimpleChemical(Formula formula, String oreDictKey, ChemicalPhaseProperties solid) {
+	public SimpleChemical(Formula formula, String oreDictKey, Solid solid) {
 		this(formula, oreDictKey, solid, null, null, null, null);
 	}
-	public SimpleChemical(Formula formula, String oreDictKey, ChemicalPhaseProperties solid, Fusion fusion, 
-			ChemicalPhaseProperties liquid,	Vaporization vaporization, ChemicalPhaseProperties gas) 
+	public SimpleChemical(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+			Liquid liquid,	Vaporization vaporization, Gas gas) 
 	{
 		this.formula = formula;
 		this.oreDictKey = oreDictKey == null ? formula.toString() : oreDictKey;
@@ -24,7 +28,7 @@ public class SimpleChemical implements Chemical {
 		this.fusion = fusion;
 		this.liquid = liquid;
 		this.vaporization = vaporization;
-		this.gas = gas;
+		this.gas = gas.assumeDensityAtSTP(formula.getMolarMass());
 	}
 	
 	@Override

@@ -76,6 +76,16 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 			this(null);
 		}
 		
+		public Gas(Color color, double density, Thermo thermo, Hazard hazard)
+		{
+			super(color, density, thermo, hazard);
+		}
+		
+		public Gas assumeDensityAtSTP(double molarMass) {
+			double density = Gas.getDensity(molarMass, Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE);
+			return new Gas(this.color, density, this.thermo, this.hazard);
+		}
+		
 		public static double getDensity(double molarMass, double temperature, double pressure) {
 			return (molarMass * pressure) / (Constants.R * temperature);
 		}
