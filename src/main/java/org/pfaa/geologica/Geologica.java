@@ -56,12 +56,12 @@ public class Geologica {
 	public void load(FMLInitializationEvent event)
 	{
 		registrant.register();
+		exportCOGConfig();
 	}
 	
 	@EventHandler
 	public void postload(FMLPostInitializationEvent event) {
 		registrant.postregister();
-		exportCOGConfig();
 		configuration.save();
 	}
 	
