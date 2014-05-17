@@ -1368,7 +1368,8 @@
           <Setting name='DistributionFrequency' avg=':=_default_'/>
           <Setting name='CloudRadius' avg='5' range='2' type='normal'/>
           <BiomeType name='desert'/>
-          <Setting name='CloudHeight' avg='65' range='2' type='uniform'/>
+          <Setting name='CloudHeight' avg='62' range='2'
+                   type='uniform' scaleTo='position'/>
         </CloudPreset>
         <StandardGenPreset name='PresetVolcanicAsh'
                            block='PFAAGeologica:WeakOreSand:5'
