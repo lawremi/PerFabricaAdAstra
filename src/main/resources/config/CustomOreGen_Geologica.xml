@@ -82,7 +82,7 @@
 
       <BiomeSet name='plateau'>
         <Biome name='lush desert'/> <!-- BOP -->
-        <Biome name='mesa'/> <!-- BOP -->
+        <Biome name='mesa'/>
       </BiomeSet>
       
       <BiomeSet name='river'>
