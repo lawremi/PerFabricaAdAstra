@@ -909,15 +909,34 @@
    rendering, which actually might be faster than drawing multiple
    textures. We will sketch up prototypes first, of course.
 
-   | Mineral     | Habit       | Cleavage | Color        | Luster   |
-   |-------------+-------------+----------+--------------+----------|
-   | sphalerite  | euhedral    |      110 | yellow-brown | resinous |
-   | fluorite    | euhedral    |      111 | purple+green | vitreous |
-   | barite      | tabular     |      001 | white        | vitreous |
-   | cassiterite | prism-dipyr |  100+110 | black-brown  | metallic |
-   | lepidolite  | tabular     |      001 | pink-purple  | pearly   |
-   | cinnabar    |             |          |              |          |
-   
+   | Mineral      | Habit       | Cleavage | Color        | Luster   |
+   |--------------+-------------+----------+--------------+----------|
+   | sphalerite   | euhedral    |      110 | yellow-brown | resinous |
+   | fluorite     | euhedral    |      111 | purple+green | vitreous |
+   | barite       | tabular     |      001 | white        | vitreous |
+   | cassiterite  | prism-dipyr |  100+110 | black-brown  | metallic |
+   | lepidolite   | tabular     |      001 | pink-purple  | pearly   |
+   | cinnabar     |             |          |              |          |
+   | bastnasite   | tabular     |          |              |          |
+   | chalcopyrite |             |          |              |          |
+   | pentlandite  |             |          |              |          |
+   | scheelite    |             |          |              |          |
+   | wolframite   |             |          |              |          |
+   | apatite      |             |          |              |          |
+   | beryl        |             |          |              |          |
+   | chromite     |             |          |              |          |
+   | ilmenite     |             |          |              |          |
+   | kyanite      |             |          |              |          |
+   | *magnetite   |             |          |              |          |
+   | pollucite    |             |          |              |          |
+   | spodumene    |             |          |              |          |
+   | tantalite    |             |          |              |          |
+   | galena       |             |          |              |          |
+   | molybdenite  |             |          |              |          |
+   | pyrolusite   |             |          |              |          |
+   | stibnite     |             |          |              |          |
+   | uraninite    |             |          |              |          |
+
    Vitreous should be semi-transparent (like stained glass), while
    resinous should be much more translucent.
 
