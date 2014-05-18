@@ -260,7 +260,7 @@ tile.weakOreRock.gypsum.name=Gypsum
 tile.weakOreRock.mirabilite.name=Mirabilite
 tile.weakOreRock.mica.name=Mica
 tile.weakOreRock.soapstone.name=Soapstone (Talc)
-tile.weakOreRock.trona.name=Soda Ash (Trona)
+tile.weakOreRock.trona.name=Trona (Soda Ash)
 
 # Medium Ore Rocks
 tile.mediumOreRock.barite.name=Barite Ore (Barium)
