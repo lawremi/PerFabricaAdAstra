@@ -1483,7 +1483,7 @@
             Generate Geologica serpentinite veins that are rich in
             soapstone, magnesite, chromite and chrysotile.
           </Description>
-          <DisplayName>Ore-rich serpentinite veins</DisplayName>
+          <DisplayName>Serpentinite veins</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
@@ -2496,7 +2496,7 @@
             Generate Geologica pegmatite veins with a rich assortment
             of minerals.
           </Description>
-          <DisplayName>Ore-rich pegmatite veins</DisplayName>
+          <DisplayName>Pegmatite veins</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
@@ -2934,7 +2934,7 @@
           <Description>
             Generate Geologica barite deposits.
           </Description>
-          <DisplayName>Barite</DisplayName>
+          <DisplayName>Barite deposits</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
@@ -3108,7 +3108,7 @@
           <Description>
             Generate Geologica graphite deposits in various patterns.
           </Description>
-          <DisplayName>Graphite</DisplayName>
+          <DisplayName>Graphite deposits</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
@@ -3163,7 +3163,7 @@
             Generate Geologica mineral clay deposits, including
             bentonite, Fuller's earth and kaolinite.
           </Description>
-          <DisplayName>Mineral clays</DisplayName>
+          <DisplayName>Mineral clay deposits</DisplayName>
           <Choice value='true' displayValue='On'/>
           <Choice value='false' displayValue='Off'/>
         </OptionChoice>
