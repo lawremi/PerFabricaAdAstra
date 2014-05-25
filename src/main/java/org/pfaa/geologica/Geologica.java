@@ -88,6 +88,6 @@ public class Geologica {
 	public static final String RESOURCE_DIR = "/assets/geologica";
 
 	public static boolean isTechnical() {
-		return Loader.isModLoaded("gregtech_addon");
+		return Loader.isModLoaded("gregtech");
 	}
 }
