@@ -9,6 +9,7 @@ import java.io.OutputStream;
 
 import org.apache.logging.log4j.Logger;
 import org.pfaa.Registrant;
+import org.pfaa.geologica.integration.GTIntegration;
 
 import com.google.common.io.ByteStreams;
 
@@ -88,6 +89,6 @@ public class Geologica {
 	public static final String RESOURCE_DIR = "/assets/geologica";
 
 	public static boolean isTechnical() {
-		return Loader.isModLoaded("gregtech");
+		return GTIntegration.isGregtechInstalled();
 	}
 }

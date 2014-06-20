@@ -7,6 +7,7 @@ import net.minecraftforge.common.config.Property;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.geologica.integration.GTIntegration;
 import org.pfaa.geologica.processing.Aggregate;
 
 public class GeologicaConfiguration {
@@ -62,6 +63,9 @@ public class GeologicaConfiguration {
 	
 	private static float getDefaultInitialStoneToolDamage(Strength strength) {
 		float damage;
+		if (GTIntegration.isGregtechInstalled()) {
+			return GTIntegration.getDefaultInitialStoneToolDamage(strength);
+		}
 		switch(strength) {
 		case WEAK:
 			damage = 0.75F;
