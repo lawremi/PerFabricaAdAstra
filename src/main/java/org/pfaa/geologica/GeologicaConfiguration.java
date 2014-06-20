@@ -79,4 +79,29 @@ public class GeologicaConfiguration {
 		return damage;
 	}
 
+	public float getRockHardness(Strength strength) {
+		Property prop = this.config.get("RockHardness", strength.name(), getDefaultRockHardness(strength), 
+                "Hardness for " + strength + " rocks");
+		return (float)prop.getDouble(0);
+	}
+
+	private static float getDefaultRockHardness(Strength strength) {
+		float hardness = 0;
+		switch(strength) {
+		case WEAK:
+			hardness = 1.0F;
+			break;
+		case MEDIUM:
+			hardness = 2.0F;
+			break;
+		case STRONG:
+			hardness = 3.0F;
+			break;
+		case VERY_STRONG:
+			hardness = 4.0F;
+			break;
+		default:
+		}
+		return hardness;
+	}
 }

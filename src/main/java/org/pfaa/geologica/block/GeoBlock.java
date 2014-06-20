@@ -61,23 +61,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
  
 	private float determineRockHardness() {
-		float hardness = 0;
-		switch(strength) {
-		case WEAK:
-			hardness = 1.0F;
-			break;
-		case MEDIUM:
-			hardness = 2.0F;
-			break;
-		case STRONG:
-			hardness = 3.0F;
-			break;
-		case VERY_STRONG:
-			hardness = 4.0F;
-			break;
-		default:
-		}
-		return hardness;
+		return Geologica.getConfiguration().getRockHardness(this.strength);
 	}
 
 	private float determineClayHardness() {
