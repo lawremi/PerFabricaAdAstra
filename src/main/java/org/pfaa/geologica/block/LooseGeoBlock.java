@@ -117,5 +117,9 @@ public class LooseGeoBlock extends GeoBlock {
 		}
 		return hardness;
 	}
+	
+	protected float determineResistance() {
+		return 0;
+	}
 
 }

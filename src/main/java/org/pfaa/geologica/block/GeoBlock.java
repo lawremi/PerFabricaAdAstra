@@ -33,10 +33,15 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		setCreativeTab(CreativeTabs.tabBlock);
 		setSubstances();
 		setHardness(determineHardness());
+		setResistance(determineResistance());
 		setStepSound(determineStepSound());
 		setHarvestLevel(determineHarvestTool(), determineHarvestLevel());
 	}
 	
+	protected float determineResistance() {
+		return this.blockHardness * 5.0F;
+	}
+
 	protected Block.SoundType determineStepSound() {
 		Block.SoundType sound = null;
 		if (blockMaterial == Material.rock) {
