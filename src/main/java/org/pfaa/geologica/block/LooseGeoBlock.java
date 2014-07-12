@@ -99,27 +99,11 @@ public class LooseGeoBlock extends GeoBlock {
 	
 	@Override
 	protected float determineHardness() {
-		float hardness = 0;
-		switch(getStrength()) {
-		case WEAK:
-			hardness = 0.6F;
-			break;
-		case MEDIUM:
-			hardness = 0.8F;
-			break;
-		case STRONG:
-			hardness = 1.0F;
-			break;
-		case VERY_STRONG:
-			hardness = 1.2F;
-			break;
-		default:
-		}
-		return hardness;
+		return 0.6F;
 	}
 	
 	protected float determineResistance() {
-		return 0;
+		return 0F;
 	}
 
 }
