@@ -1318,7 +1318,7 @@
           <Setting name='CloudHeight' avg='62' range='1'
                    type='uniform' scaleTo='sealevel'/>
           <Replaces block='minecraft:grass'/>
-          <Replaces block='.*sand'/>
+          <ReplacesRegexp block='.*sand'/>
           <!-- <Replaces block='.*dirt'/> -->
           <Replaces block='minecraft:gravel'/>
         </CloudPreset>
@@ -2786,7 +2786,7 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFFFF00'>
           <Setting name='DistributionFrequency' avg='0.005'/>
-          <Replaces block='.*Stone.*'/>
+          <ReplacesRegexp block='.*Stone.*'/>
           <Setting name='CloudHeight'
                    avg=':= 45/64 * dimension.groundLevel'
                    range=':= 0/64 * dimension.groundLevel'/>
