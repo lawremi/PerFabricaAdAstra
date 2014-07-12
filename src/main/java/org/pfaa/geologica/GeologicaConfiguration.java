@@ -56,8 +56,9 @@ public class GeologicaConfiguration {
 	}
 
 	public float getInitialStoneToolDamage(Strength strength) {
-		Property prop = this.config.get("InitialStoneToolDamage", strength.name(), getDefaultInitialStoneToolDamage(strength), 
-				                        "Fraction damaged for " + strength + " stone tools");
+		Property prop = this.config.get("InitialStoneToolDamage", strength.name(), 
+				getDefaultInitialStoneToolDamage(strength), 
+				"Fraction damaged for " + strength + " stone tools");
 		return (float)prop.getDouble(0);
 	}
 	
@@ -80,7 +81,8 @@ public class GeologicaConfiguration {
 	}
 
 	public float getRockHardness(Strength strength) {
-		Property prop = this.config.get("RockHardness", strength.name(), getDefaultRockHardness(strength), 
+		Property prop = this.config.get("RockHardness", strength.ordinal() + "_" + strength.name(), 
+				getDefaultRockHardness(strength), 
                 "Hardness for " + strength + " rocks");
 		return (float)prop.getDouble(0);
 	}
