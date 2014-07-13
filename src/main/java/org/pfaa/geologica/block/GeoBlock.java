@@ -39,7 +39,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 	
 	protected float determineResistance() {
-		return this.blockHardness * 5.0F;
+		return Geologica.getConfiguration().getRockResistance(this.strength);
 	}
 
 	protected Block.SoundType determineStepSound() {

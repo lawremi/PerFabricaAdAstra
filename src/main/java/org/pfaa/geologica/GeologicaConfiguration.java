@@ -84,9 +84,15 @@ public class GeologicaConfiguration {
 		Property prop = this.config.get("RockHardness", strength.ordinal() + "_" + strength.name(), 
 				getDefaultRockHardness(strength), 
                 "Hardness for " + strength + " rocks");
-		return (float)prop.getDouble(0);
+		Property mult = this.config.get("RockHardness", "multiplier", 1.0F, "Multiplier of all rock hardness values");
+		return (float)prop.getDouble(0) * (float)mult.getDouble(1.0F);
 	}
 
+	public float getRockResistance(Strength strength) {
+		Property mult = this.config.get("RockResistance", "multiplier", 5.0F, "Multiplier that transforms hardness to resistance");
+		return this.getRockHardness(strength) * (float)mult.getDouble(5.0F);
+	}
+	
 	private static float getDefaultRockHardness(Strength strength) {
 		float hardness = 0;
 		switch(strength) {
