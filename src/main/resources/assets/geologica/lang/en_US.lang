@@ -298,3 +298,10 @@ tile.strongOreRock.apatite.name=Apatite
 tile.strongOreRock.kyanite.name=Kyanite
 tile.strongOreRock.perlite.name=Perlite
 tile.strongOreRock.pumice.name=Pumice
+
+# Vanilla ore overrides
+tile.coalOre.name=Coal Ore
+tile.diamondOre.name=Diamond Ore
+tile.emeraldOre.name=Emerald Ore
+tile.lapisOre.name=Lapis Lazuli Ore
+tile.redstoneOre.name=Redstone Ore
