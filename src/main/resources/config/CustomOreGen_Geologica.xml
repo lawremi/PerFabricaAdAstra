@@ -3180,33 +3180,33 @@
 
   <ConfigSection> <!-- Vanilla ore overrides; disabled by default -->
     
-    <IfCondition condition=":=blockExists('PFAAGeologica:CoalOre')">
-      <Substitute name='CoalSubstitute' block='PFAAGeologica:CoalOre'>
+    <IfCondition condition=":=blockExists('PFAAGeologica:coalOre')">
+      <Substitute name='CoalSubstitute' block='PFAAGeologica:coalOre'>
         <ReplacesOre block='oreCoal'/>
       </Substitute>
     </IfCondition>
     
-    <IfCondition condition=":=blockExists('PFAAGeologica:DiamondOre')">
-      <Substitute name='DiamondSubstitute' block='PFAAGeologica:DiamondOre'>
+    <IfCondition condition=":=blockExists('PFAAGeologica:diamondOre')">
+      <Substitute name='DiamondSubstitute' block='PFAAGeologica:diamondOre'>
         <ReplacesOre block='oreDiamond'/>
       </Substitute>
     </IfCondition>
 
-    <IfCondition condition=":=blockExists('PFAAGeologica:EmeraldOre')">
-      <Substitute name='EmeraldSubstitute' block='PFAAGeologica:EmeraldOre'>
-        <ReplacesOre block='oreDiamond'/>
+    <IfCondition condition=":=blockExists('PFAAGeologica:emeraldOre')">
+      <Substitute name='EmeraldSubstitute' block='PFAAGeologica:emeraldOre'>
+        <ReplacesOre block='oreEmerald'/>
       </Substitute>
     </IfCondition>
     
-    <IfCondition condition=":=blockExists('PFAAGeologica:LapisOre')">
-      <Substitute name='LapisSubstitute' block='PFAAGeologica:LapisOre'>
-        <ReplacesOre block='oreDiamond'/>
+    <IfCondition condition=":=blockExists('PFAAGeologica:lapisOre')">
+      <Substitute name='LapisSubstitute' block='PFAAGeologica:lapisOre'>
+        <ReplacesOre block='oreLapis'/>
       </Substitute>
     </IfCondition>
 
-    <IfCondition condition=":=blockExists('PFAAGeologica:RedstoneOre')">
-      <Substitute name='RedstoneSubstitute' block='PFAAGeologica:RedstoneOre'>
-        <ReplacesOre block='oreDiamond'/>
+    <IfCondition condition=":=blockExists('PFAAGeologica:redstoneOre')">
+      <Substitute name='RedstoneSubstitute' block='PFAAGeologica:redstoneOre'>
+        <ReplacesOre block='oreRedstone'/>
       </Substitute>
     </IfCondition>
     

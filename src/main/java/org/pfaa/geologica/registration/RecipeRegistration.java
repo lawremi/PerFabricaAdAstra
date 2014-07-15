@@ -345,8 +345,7 @@ public class RecipeRegistration {
 		String name = Block.blockRegistry.getNameForObject(block);
 		if (name != null) {
 			String material = name.substring(name.indexOf(':') + 1, name.length() - 3);
-			Geologica.log.debug("Registering " + block.getUnlocalizedName() + " as ore" + material);
-			OreDictionary.registerOre("ore" + material, new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
+			OreDictionary.registerOre(oreDictKey("ore", material), new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
 		}
 	}
 	
