@@ -2587,8 +2587,7 @@
      Arsenic metal results from reduction of As2O3 with carbon at 500-800C. 
      
 *** Beryl
-    
-    
+       
 ** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
    derived from petroleum.
@@ -2696,7 +2695,10 @@
      Coke from oil refineries contains vanadium. The coke is leached
      using sulfuric acid and then ammonium vanadates are precipated,
      as from magnetite.
-     
+
+** Food processing
+   http://www.nzifst.org.nz/unitoperations/
+   
 * Manufacturing
 ** Processes
    Basic processes:
