@@ -32,7 +32,7 @@ group = "org.pfaa.pfaa"
 
 minecraft {
     version = "1.7.2-10.12.1.1060"
-    assetDir = "eclipse/assets"
+    runDir = "eclipse/assets"
 }
 
 archivesBaseName = "PFAA-" + project.minecraft.version
