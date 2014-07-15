@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.block.FlowingBlock;
@@ -19,6 +20,7 @@ import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
+import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Ore;
@@ -91,6 +93,12 @@ public class GeologicaBlocks {
 	
 	public static final FlowingBlock LIGHT_OIL = createFlowingBlock(GeoMaterial.LIGHT_OIL); 
 	public static final FlowingBlock HEAVY_OIL = createFlowingBlock(GeoMaterial.HEAVY_OIL);
+	
+	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
+	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
+	public static final VanillaOreOverrideBlock EMERALD_ORE = new VanillaOreOverrideBlock(Blocks.emerald_ore);
+	public static final VanillaOreOverrideBlock LAPIS_ORE = new VanillaOreOverrideBlock(Blocks.lapis_ore);
+	public static final VanillaOreOverrideBlock REDSTONE_ORE = new VanillaOreOverrideBlock(Blocks.redstone_ore);
 	
 	static {
 		//WEAK_STONE.addChanceDrop(GeoSubstance.CONGLOMERATE, new ChanceDrop().add(0.05, Item.goldNugget).add(0.05, "nuggetCopper"));

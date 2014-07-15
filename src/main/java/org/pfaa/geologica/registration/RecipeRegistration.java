@@ -34,6 +34,7 @@ import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.ProxyBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.StairsBlock;
+import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.FMPIntegration;
 import org.pfaa.geologica.integration.IC2Integration;
@@ -253,6 +254,8 @@ public class RecipeRegistration {
 			oreDictify((GeoBlock)block);
 		} else if (block instanceof ProxyBlock) {
 			oreDictify((ProxyBlock)block);
+		} else if (block instanceof VanillaOreOverrideBlock) {
+			oreDictify((VanillaOreOverrideBlock)block);
 		}
 	}
 	
@@ -336,6 +339,15 @@ public class RecipeRegistration {
 		OreDictionary.registerOre(key, new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
 		if (block instanceof BrickGeoBlock) // for recipes that accept any type of stone brick (mossy, etc)
 			OreDictionary.registerOre("stoneBricks", new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
+	}
+	
+	private static void oreDictify(VanillaOreOverrideBlock block) {
+		String name = Block.blockRegistry.getNameForObject(block);
+		if (name != null) {
+			String material = name.substring(name.indexOf(':') + 1, name.length() - 3);
+			Geologica.log.debug("Registering " + block.getUnlocalizedName() + " as ore" + material);
+			OreDictionary.registerOre("ore" + material, new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
+		}
 	}
 	
 	private static GeoBlock getCobbleBlock(Strength strength) {

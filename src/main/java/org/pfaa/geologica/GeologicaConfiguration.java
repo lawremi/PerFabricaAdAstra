@@ -112,4 +112,10 @@ public class GeologicaConfiguration {
 		}
 		return hardness;
 	}
+
+	public boolean isVanillaOreOverrideEnabled() {
+		Property bool = this.config.get("Toggles", "overrideVanillaOreBlocks", false, 
+			"Whether to replace coal, diamond, emerald, lapis and redstone with blocks that drop ore blocks, instead of items");
+		return bool.getBoolean(false);
+	}
 }

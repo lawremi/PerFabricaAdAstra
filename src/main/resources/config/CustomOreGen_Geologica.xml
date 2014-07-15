@@ -3177,5 +3177,39 @@
       </ConfigSection>
     </ConfigSection>
   </ConfigSection>
+
+  <ConfigSection> <!-- Vanilla ore overrides; disabled by default -->
+    
+    <IfCondition condition=":=blockExists('PFAAGeologica:CoalOre')">
+      <Substitute name='CoalSubstitute' block='PFAAGeologica:CoalOre'>
+        <ReplacesOre block='oreCoal'/>
+      </Substitute>
+    </IfCondition>
+    
+    <IfCondition condition=":=blockExists('PFAAGeologica:DiamondOre')">
+      <Substitute name='DiamondSubstitute' block='PFAAGeologica:DiamondOre'>
+        <ReplacesOre block='oreDiamond'/>
+      </Substitute>
+    </IfCondition>
+
+    <IfCondition condition=":=blockExists('PFAAGeologica:EmeraldOre')">
+      <Substitute name='EmeraldSubstitute' block='PFAAGeologica:EmeraldOre'>
+        <ReplacesOre block='oreDiamond'/>
+      </Substitute>
+    </IfCondition>
+    
+    <IfCondition condition=":=blockExists('PFAAGeologica:LapisOre')">
+      <Substitute name='LapisSubstitute' block='PFAAGeologica:LapisOre'>
+        <ReplacesOre block='oreDiamond'/>
+      </Substitute>
+    </IfCondition>
+
+    <IfCondition condition=":=blockExists('PFAAGeologica:RedstoneOre')">
+      <Substitute name='RedstoneSubstitute' block='PFAAGeologica:RedstoneOre'>
+        <ReplacesOre block='oreDiamond'/>
+      </Substitute>
+    </IfCondition>
+    
+  </ConfigSection>
   
 </IfModInstalled>
