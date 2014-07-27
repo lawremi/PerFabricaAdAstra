@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.IndustrialMaterial.Phase;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.Phase;
 import org.pfaa.chemica.model.PhaseProperties;
 
 public interface IndustrialMineral extends Mineral {
@@ -45,11 +46,11 @@ public interface IndustrialMineral extends Mineral {
 		;
 
 		private String oreDictKey;
-		private PhaseProperties properties;
+		private ConditionProperties properties;
 		
 		private IndustrialMinerals(String oreDictKey, Color color, double density, Hazard hazard) {
 			this.oreDictKey = oreDictKey;
-			this.properties = new PhaseProperties(color, density, hazard);
+			this.properties = new ConditionProperties(Phase.SOLID, color, density, hazard);
 		}
 		
 		private IndustrialMinerals(Color color, double density) {
@@ -62,11 +63,8 @@ public interface IndustrialMineral extends Mineral {
 		}
 
 		@Override
-		public PhaseProperties getProperties(Phase phase) {
-			if (phase == Phase.SOLID) {
-				return properties;
-			}
-			return null;
+		public ConditionProperties getProperties(Condition condition) {
+			return properties;
 		}
 
 		@Override

@@ -10,7 +10,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.block.FlowingBlock;
+import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.fluid.IndustrialFluid;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
@@ -23,6 +25,7 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Aggregate;
+import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
 
 import cpw.mods.fml.common.LoaderException;
@@ -91,8 +94,14 @@ public class GeologicaBlocks {
 	public static final GeoBlock WEAK_ORE_CLAY = createOreClayBlock();
 	public static final GeoBlock WEAK_CLAY_BRICK = createClayBrickBlock();
 	
-	public static final FlowingBlock LIGHT_OIL = createFlowingBlock(GeoMaterial.LIGHT_OIL); 
-	public static final FlowingBlock HEAVY_OIL = createFlowingBlock(GeoMaterial.HEAVY_OIL);
+	public static final IndustrialFluidBlock LIGHT_OIL = createFluidBlock(GeoMaterial.LIGHT_OIL);
+	public static final IndustrialFluidBlock MEDIUM_OIL = createFluidBlock(GeoMaterial.MEDIUM_OIL);
+	public static final IndustrialFluidBlock HEAVY_OIL = createFluidBlock(GeoMaterial.HEAVY_OIL);
+	public static final IndustrialFluidBlock EXTRA_HEAVY_OIL = createFluidBlock(GeoMaterial.EXTRA_HEAVY_OIL);
+	public static final IndustrialFluidBlock NATURAL_GAS = createFluidBlock(GeoMaterial.NATURAL_GAS);
+	
+	public static final GeoBlock CRUDE_SAND = createCrudeSandBlock();
+	public static final GeoBlock CRUDE_ROCK = createCrudeRockBlock();
 	
 	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
 	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
@@ -130,6 +139,12 @@ public class GeologicaBlocks {
 	}
 	private static GeoBlock createClayBrickBlock() {
 		return createGeoBlock(BrickGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay);
+	}
+	private static GeoBlock createCrudeSandBlock() {
+		return createGeoBlock(LooseGeoBlock.class, Strength.WEAK, Crude.class, Material.sand);
+	}
+	private static GeoBlock createCrudeRockBlock() {
+		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.rock);
 	}
 	
 	public static List<Block> getBlocks() {
@@ -183,10 +198,8 @@ public class GeologicaBlocks {
 		return block;
 	}
 	
-	private static FlowingBlock createFlowingBlock(GeoMaterial material) {
-		String name = material.getLowerName() + "Flowing";
-		FlowingBlock block = new FlowingBlock(material.getBlockMaterial());
-		block.setBlockTextureName("geologica:" + material.getLowerName());
-		return block;
+	private static IndustrialFluidBlock createFluidBlock(GeoMaterial material) {
+		IndustrialFluid fluid = IndustrialFluid.getCanonicalFluidForPhase(material, Condition.STP);
+		return new IndustrialFluidBlock(fluid);
 	}
 }

@@ -5,15 +5,17 @@ import java.awt.Color;
 public class ChemicalPhaseProperties extends PhaseProperties {
 	public final Thermo thermo;
 	
-	public ChemicalPhaseProperties(Color color, double density, Thermo thermo, Hazard hazard) {
-		super(color, density, hazard);
+	private static final Color COLORLESS = new Color(230, 230, 245);
+	
+	public ChemicalPhaseProperties(Phase phase, Color color, double density, Thermo thermo, Hazard hazard) {
+		super(phase, color, density, hazard);
 		this.thermo = thermo;
 	}
 	
 	public static class Solid extends ChemicalPhaseProperties {
 		public Solid(Color color, double density, Thermo thermo, Hazard hazard)
 		{
-			super(color, density, thermo, hazard);
+			super(Phase.SOLID, color, density, thermo, hazard);
 		}
 		public Solid(Color color, double density, Thermo thermo)
 		{
@@ -37,17 +39,19 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 	}
 	
 	public static class Liquid extends ChemicalPhaseProperties {
-		public Liquid(Color color, double density, Thermo thermo, Hazard hazard)
+		private final Yaws yaws;
+		public Liquid(Color color, double density, Thermo thermo, Hazard hazard, Yaws yaws)
 		{
-			super(color, density, thermo, hazard);
+			super(Phase.LIQUID, color, density, thermo, hazard);
+			this.yaws = yaws;
 		}
-		public Liquid(double density, Thermo thermo, Hazard hazard)
+		public Liquid(double density, Thermo thermo, Hazard hazard, Yaws yaws)
 		{
-			this(new Color(200, 200, 230), density, thermo, hazard);
+			this(COLORLESS, density, thermo, hazard, yaws);
 		}
 		public Liquid(double density, Thermo thermo)
 		{
-			this(density, thermo, new Hazard());
+			this(density, thermo, new Hazard(), null);
 		}
 		public Liquid(Thermo thermo)
 		{
@@ -56,38 +60,99 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		public Liquid() {
 			this(null);
 		}
+		
+		@Override
+		public double getViscosity(double temperature) {
+			return this.yaws == null ? super.getViscosity(temperature) : this.yaws.getViscosity(temperature);
+		}
+		
+		public static class Yaws {
+			private double A;
+			private double B;
+			private double C;
+			private double D;
+
+			public Yaws(double A, double B, double C, double D) {
+				this.A = A;
+				this.B = B;
+				this.C = C;
+				this.D = D;
+			}
+			
+			public double getViscosity(double temperature) {
+				double exp = this.A + this.B / temperature + this.C * temperature + this.D * Math.pow(temperature, 2);
+				return Math.pow(10, exp);
+			}
+		}
+		
 	}
 	
 	public static class Gas extends ChemicalPhaseProperties {
-		public Gas(Color color, Thermo thermo, Hazard hazard)
-		{
-			super(color, Double.NaN, thermo, hazard);
+		private final double molarMass;
+		private final Sutherland sutherland;
+
+		public Gas(Gas gas, double molarMass) {
+			this(gas.getColor(), gas.thermo, gas.getHazard(), gas.sutherland, molarMass);
 		}
-		public Gas(Thermo thermo, Hazard hazard)
+		
+		public Gas(Color color, Thermo thermo, Hazard hazard, Sutherland sutherland, double molarMass)
 		{
-			this(Color.WHITE, thermo, hazard);
+			super(Phase.GAS, color, Double.NaN, thermo, hazard);
+			this.molarMass = molarMass;
+			this.sutherland = sutherland;
+		}
+		public Gas(Color color, Thermo thermo, Hazard hazard, Sutherland sutherland)
+		{
+			this(color, thermo, hazard, sutherland, Double.NaN);
+		}
+		public Gas(Thermo thermo, Hazard hazard, Sutherland sutherland)
+		{
+			this(COLORLESS, thermo, hazard, sutherland);
 		}
 		public Gas(Thermo thermo)
 		{
-			this(thermo, new Hazard());
+			this(thermo, new Hazard(), null);
 		}
 		public Gas()
 		{
 			this(null);
 		}
 		
-		public Gas(Color color, double density, Thermo thermo, Hazard hazard)
-		{
-			super(color, density, thermo, hazard);
+		@Override
+		public double getDensity(Condition condition) {
+			if (Double.isNaN(this.molarMass)) {
+				return super.getDensity(condition);
+			} else {
+				return getDensity(condition, this.molarMass);
+			}
 		}
 		
-		public Gas assumeDensityAtSTP(double molarMass) {
-			double density = Gas.getDensity(molarMass, Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE);
-			return new Gas(this.color, density, this.thermo, this.hazard);
+		private static double getDensity(Condition condition, double molarMass) {
+			return (molarMass * condition.pressure) / (Constants.R * condition.temperature) / 1E6;
+		}
+
+		@Override
+		public double getViscosity(double temperature) {
+			return this.sutherland == null ? super.getViscosity(temperature) : this.sutherland.getViscosity(temperature);
 		}
 		
-		public static double getDensity(double molarMass, double temperature, double pressure) {
-			return (molarMass * pressure) / (Constants.R * temperature);
+		public static class Sutherland {
+			private double refViscosity;
+			private double refTemperature;
+			private double constant; // approximately 1.47 * boiling point
+
+			public Sutherland(double refViscosity, double refTemperature, double constant) {
+				this.refViscosity = refViscosity / 1000;
+				this.refTemperature = refTemperature;
+				this.constant = constant;
+			}
+			
+			public double getViscosity(double temperature) {
+				return refViscosity * 
+						((refTemperature + constant) / (temperature + constant) * 
+						Math.pow(temperature / refTemperature, 1.5)); 
+			}
 		}
+
 	}
 }

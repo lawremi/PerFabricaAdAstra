@@ -18,25 +18,19 @@ import static org.pfaa.chemica.model.Element.Elements.Cs;
 import static org.pfaa.chemica.model.Element.Elements.Cu;
 import static org.pfaa.chemica.model.Element.Elements.F;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
-import static org.pfaa.chemica.model.Element.Elements.Ga;
 import static org.pfaa.chemica.model.Element.Elements.H;
 import static org.pfaa.chemica.model.Element.Elements.Hg;
 import static org.pfaa.chemica.model.Element.Elements.K;
-import static org.pfaa.chemica.model.Element.Elements.La;
 import static org.pfaa.chemica.model.Element.Elements.Li;
 import static org.pfaa.chemica.model.Element.Elements.Mg;
 import static org.pfaa.chemica.model.Element.Elements.Mn;
 import static org.pfaa.chemica.model.Element.Elements.Mo;
 import static org.pfaa.chemica.model.Element.Elements.Na;
 import static org.pfaa.chemica.model.Element.Elements.Nb;
-import static org.pfaa.chemica.model.Element.Elements.Nd;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
 import static org.pfaa.chemica.model.Element.Elements.O;
 import static org.pfaa.chemica.model.Element.Elements.P;
 import static org.pfaa.chemica.model.Element.Elements.Pb;
-import static org.pfaa.chemica.model.Element.Elements.Pr;
-import static org.pfaa.chemica.model.Element.Elements.Re;
-import static org.pfaa.chemica.model.Element.Elements.Rb;
 import static org.pfaa.chemica.model.Element.Elements.S;
 import static org.pfaa.chemica.model.Element.Elements.Sb;
 import static org.pfaa.chemica.model.Element.Elements.Si;
@@ -47,16 +41,15 @@ import static org.pfaa.chemica.model.Element.Elements.Ti;
 import static org.pfaa.chemica.model.Element.Elements.U;
 import static org.pfaa.chemica.model.Element.Elements.V;
 import static org.pfaa.chemica.model.Element.Elements.W;
-import static org.pfaa.chemica.model.Element.Elements.Y;
 import static org.pfaa.chemica.model.Element.Elements.Zn;
 import static org.pfaa.chemica.model.Element.Elements.Zr;
 
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas.Sutherland;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Formula.Part;
 
@@ -74,11 +67,11 @@ public interface Compound extends Chemical {
 		    new Fusion(273), 
 			new Liquid(1.00, 
 					   new Thermo(-204, 1523, -3196, 2474, 3.86, -257, -489), 
-					   new Hazard(0, 0, 0)), 
+					   new Hazard(0, 0, 0), new Yaws(-10.2, 1.79E3, 1.77E-2, 1.26E-5)), 
 			new Vaporization(4.65, 1435, -64.8), 
 			new Gas(new Thermo(30.1, 6.83, 6.79, -2.53, 0.0821, -251, 223)
 			        .addSegment(1700, 42.0, 8.62, -1.50, 0.0981, -11.2, -272, 220), 
-					new Hazard(0, 0, 0))),
+					new Hazard(0, 0, 0), new Sutherland(13, 373, 961))),
 		CO2(new Formula(C, O._(2)), null, 
 			new Solid(1.56, 
 					  new Thermo(-427, 51.1, 0, 300), 
@@ -88,7 +81,7 @@ public interface Compound extends Chemical {
 			new Vaporization(6.81, 1301, -3.49), 
 			new Gas(new Thermo(25.0, 55.2, -33.7, 7.95, -0.137, -404, 228)
 					.addSegment(1200, 58.2, 2.72, -0.492, 0.0388, -6.45, -426, 264), 
-					new Hazard(2, 0, 0))),
+					new Hazard(2, 0, 0), new Sutherland(14.8, 293, 240))),
 		Ag2S(new Formula(Ag._(2), S), "silver", 
 			 new Solid(Color.black, 7.23, new Thermo(-32.6, 144, 55.4, 77.9).addSegment(452, 91.2, 0, 5.86)),
 			 new Fusion(1098),
@@ -199,7 +192,7 @@ public interface Compound extends Chemical {
 			new Vaporization(4.53, 959, -0.539),
 			new Gas(new Thermo(26.9, 18.7, 3.43, -3.38, 0.136, -28.9, 233).
 					addSegment(1400, 51.2, 4.15, -0.644, 0.0416, -10.5, -55.9, 244), 
-					new Hazard(4, 4, 0))),
+					new Hazard(4, 4, 0), new Sutherland(11.3, 273, 313))),
 		HgS(new Formula(Hg, S), "mercury", 
 			new Solid(new Color(139, 0, 0), 8.1, 
 					  new Thermo(-58, 78, 43.9, 15.3), 
@@ -313,35 +306,39 @@ public interface Compound extends Chemical {
 				new Vaporization(3.99, 443, -0.49),
 				new Gas(new Thermo(-0.703, 108, -42.5, 5.86, 0.679, -76.8, 159)
 						.addSegment(1300, 85.8, 11.2, -2.11, 0.138, -26.4, -154, 224),
-						new Hazard())
+						new Hazard(1, 4, 0), new Sutherland(11.6, 311, 165))
 				),
 		ETHANE(new Formula(C._(2), H._(6)).setSmiles("cc"), "ethane", 
 			   null,
 			   new Fusion(90.4),
 			   new Liquid(new Thermo(127)),
 			   new Vaporization(4.51, 791, -6.42),
-			   new Gas(new Thermo(6.16, 173, -0.683, 9.07, 0.126, -93.1, 186))
+			   new Gas(new Thermo(6.16, 173, -0.683, 9.07, 0.126, -93.1, 186),
+					   new Hazard(1, 4, 0), new Sutherland(9.1, 298, 272))
 				),
 		PROPANE(new Formula(C._(3), H._(8)).setSmiles("ccc"), "propane", 
 				new Solid(new Thermo(130)),
 				new Fusion(85.5),
 				new Liquid(new Thermo(-119, 171, 98.4)),
 				new Vaporization(4.54, 1149, 24.9),
-				new Gas(new Thermo(-105, 270, 12.8, 231, -0.689, -0.00266))
+				new Gas(new Thermo(-105, 270, 12.8, 231, -0.689, -0.00266),
+						new Hazard(1, 4, 0), new Sutherland(8.0, 289, 338))
 				),
 		N_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cccc"), "butane", 
 			  	 null,
 			  	 new Fusion(135),
 			  	 new Liquid(new Thermo(-148, 230, 132)),
 			  	 new Vaporization(4.36, 1176, -2.07),
-			  	 new Gas(new Thermo(-126, 310, 21.9, 294, -0.829, -0.00695))
+			  	 new Gas(new Thermo(-126, 310, 21.9, 294, -0.829, -0.00695),
+			  			 new Hazard(1, 4, 0), new Sutherland(8.4, 289, 400))
 				),
 		ISO_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cc(c)c"), "butane", 
 				   null,
-				   null,
+				   new Fusion(113),
 				   new Liquid(new Thermo(201)),
 				   new Vaporization(4.33, 1132,	0.918),
-				   new Gas(new Thermo(-126, 310, 13.3, 316, -0.991, -0.0157))
+				   new Gas(new Thermo(-126, 310, 13.3, 316, -0.991, -0.0157),
+						   new Hazard(1, 4, 0), new Sutherland(7.5, 296, 385))
 					)
 		;
 		
@@ -390,8 +387,8 @@ public interface Compound extends Chemical {
 		}
 	
 		@Override
-		public ChemicalPhaseProperties getProperties(IndustrialMaterial.Phase phase) {
-			return delegate.getProperties(phase);
+		public ConditionProperties getProperties(Condition condition) {
+			return delegate.getProperties(condition);
 		}
 
 		@Override

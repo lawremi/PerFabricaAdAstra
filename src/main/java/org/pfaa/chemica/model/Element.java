@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Formula.PartFactory;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
@@ -371,9 +372,10 @@ public interface Element extends Chemical, PartFactory {
 		   new Solid(new Color(155, 155, 155), 14.25,
 				     new Thermo(-2.18, 66.1, 21.5, 29.2)),
 		   new Fusion(234),
-		   new Liquid(13.5, 
+		   new Liquid(new Color(188, 188, 188), 13.5, 
 				      new Thermo(0, 75.9, 28),
-				      new Hazard(3, 0, 0)),
+				      new Hazard(3, 0, 0),
+				      new Yaws(-0.275, 137, 4.18E-6, -1.20E-9)),
 		   new Vaporization(4.86, 3007, -10.0),
 		   new Gas(new Thermo(20.7, 0.179, -0.0801, 0.0105, 0.00701, 55.2, 200))),
 		Pb("lead", 207, +2, 
@@ -503,8 +505,8 @@ public interface Element extends Chemical, PartFactory {
 		}
 	
 		@Override
-		public ChemicalPhaseProperties getProperties(IndustrialMaterial.Phase phase) {
-			return delegate.getProperties(phase);
+		public ConditionProperties getProperties(Condition condition) {
+			return delegate.getProperties(condition);
 		}
 
 		@Override

@@ -1263,6 +1263,9 @@
     | 1,100 °C (2,010 °F)   | pale yellowish orange       |
     | 1,300 °C (2,370 °F)   | yellowish white             |
     | > 1,400 °C (2,550 °F) | white                       |
+
+    Colored lighting is possible:
+    http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/1446134-1-7-2-beta-colored-light-api-mod-writers-can
     
 *** Chemicals from other mods
     Some chemicals are obtained from other mods:
@@ -2618,24 +2621,32 @@
     With regard to shale, while tight oil is light, shale oil probably
     falls under the "extra heavy" category.
     
-    Average composition:
-    | Type       | Avg. Percent |  Range | Primary Source |
-    |------------+--------------+--------+----------------|
-    | Alkanes    |          30% | 15-60% | Light          |
-    | Naphthenes |          49% | 30-60% | Heavy          |
-    | Aromatics  |          15% |  3-30% | Extra heavy    |
-    | Asphaltics |           6% |     6% | Bitumen        |
- 
     From this we could come up with this composition for each type:
-    | Density     | Alkanes | Naphtha | Aromatic | Asphalt |  H2S | Occurrence |
-    |-------------+---------+---------+----------+---------+------+------------|
-    | Light       |     50% |     45% |       5% |      0% | 0.5% |        30% |
-    | Heavy       |     30% |     50% |      15% |      5% |   1% |        15% |
-    | Extra heavy |     15% |     45% |      30% |     10% |   2% |        25% |
-    | Bitumen     |     10% |     20% |      50% |     20% |   3% |        30% |
+    | Type        | Alkanes | Naphtha | Aromatic | Asphalt |   H2S | Occurrence |
+    |-------------+---------+---------+----------+---------+-------+------------|
+    | Light       |     50% |     45% |       5% |      0% |  0.5% |        10% |
+    | Medium      |     40% |     48% |      10% |      2% | 0.75% |        20% |
+    | Heavy       |     30% |     50% |      15% |      5% |    1% |        15% |
+    | Extra heavy |     15% |     45% |      30% |     10% |    2% |        25% |
+    | Oil sand    |     10% |     20% |      50% |     20% |    3% |        30% |
 
-    The GasCraft generates shale oil and
-    gas, and Buildcraft generates oil, although in weird fountains.
+    Densities from light to extra-heavy: 0.8, 0.9, 1.0, 1.1
+
+    But that is just chemical composition. In terms of crude fractions
+    and products:
+    | Type        | Fuel gas | L Naptha | H Naptha | Kerosene | LGO | HGO | Res |
+    |-------------+----------+----------+----------+----------+-----+-----+-----|
+    | Light       |      10% |      40% |      30% |      10% |  5% |  0% |  5% |
+    | Medium      |       5% |      15% |      35% |      20% | 10% |  5% | 10% |
+    | Heavy       |       0% |       5% |      15% |      25% | 25% | 10% | 20% |
+    | Extra heavy |       0% |       0% |       5% |      10% | 15% | 20% | 50% |
+    | Bitumen     |       0% |       0% |       5% |      10% | 15% | 20% | 50% |
+
+    The main difference between extra heavy and bitumen is the
+    viscosity: bitumen is highly viscous.
+    
+    GasCraft generates shale oil and gas, and Buildcraft generates
+    oil, although in weird fountains.
     
 *** Unit Operations
 **** Atmospheric distillation

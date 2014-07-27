@@ -3,12 +3,11 @@ package org.pfaa.geologica.processing;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.PhaseProperties;
-import org.pfaa.chemica.model.SimpleMixture;
-import org.pfaa.chemica.model.IndustrialMaterial.Phase;
 
 public interface Aggregate extends Mixture {
 	
@@ -23,7 +22,7 @@ public interface Aggregate extends Mixture {
 		}
 
 		@Override
-		public PhaseProperties getProperties(Phase phase) {
+		public ConditionProperties getProperties(Condition condition) {
 			return null;
 		}
 

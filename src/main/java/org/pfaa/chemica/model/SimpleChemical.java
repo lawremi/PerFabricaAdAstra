@@ -28,7 +28,7 @@ public class SimpleChemical implements Chemical {
 		this.fusion = fusion;
 		this.liquid = liquid;
 		this.vaporization = vaporization;
-		this.gas = gas == null ? null : gas.assumeDensityAtSTP(formula.getMolarMass());
+		this.gas = gas == null ? null : new Gas(gas, formula.getMolarMass());
 	}
 	
 	@Override
@@ -51,8 +51,23 @@ public class SimpleChemical implements Chemical {
 		return formula;
 	}
 
+	private Phase getPhaseForCondition(Condition condition) {
+		if (this.vaporization != null && condition.temperature > this.vaporization.getTemperature(condition.pressure)) {
+			return Phase.GAS;
+		} else if (this.fusion != null && condition.temperature > this.fusion.getTemperature()) {
+			return Phase.LIQUID;
+		} else {
+			return Phase.SOLID;
+		}
+	}
+	
 	@Override
-	public ChemicalPhaseProperties getProperties(IndustrialMaterial.Phase phase) {
+	public ConditionProperties getProperties(Condition condition) {
+		Phase phase = this.getPhaseForCondition(condition);
+		return new ConditionProperties(this.getPhaseProperties(phase), condition);
+	}
+
+	private PhaseProperties getPhaseProperties(Phase phase) {
 		switch(phase) {
 		case SOLID:
 			return solid;
@@ -64,7 +79,7 @@ public class SimpleChemical implements Chemical {
 			throw new IllegalArgumentException("Unknown phase: " + phase);
 		}
 	}
-
+	
 	@Override
 	public String name() {
 		return formula.toString();

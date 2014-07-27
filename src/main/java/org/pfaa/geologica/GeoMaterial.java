@@ -6,10 +6,11 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.PhaseProperties;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
@@ -137,17 +138,23 @@ public enum GeoMaterial implements Mixture {
 	PERLITE(IndustrialMinerals.PERLITE.mix(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
 	
-	LIGHT_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.5).mix(Crudes.NAPHTHAS, 0.45).mix(Crudes.AROMATICS, 0.05).
-			  mix(Compounds.H2S, 0.005), Strength.WEAK, Material.water),
-	HEAVY_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.3).mix(Crudes.NAPHTHAS, 0.5).mix(Crudes.AROMATICS, 0.15).
-			  mix(Crudes.ASPHALT, 0.05).mix(Compounds.H2S, 0.01), Strength.MEDIUM, Material.water),
-	EXTRA_HEAVY_OIL(new SimpleCrude(Crudes.PARAFFINS, 0.15).mix(Crudes.NAPHTHAS, 0.45).mix(Crudes.AROMATICS, 0.30).
-			        mix(Crudes.ASPHALT, 0.10).mix(Compounds.H2S, 0.02), Strength.STRONG, Material.water),
-	OIL_SANDS(Crudes.ASPHALT.mix(Aggregates.SAND, 1.0), Strength.VERY_STRONG, Material.sand),
+	LIGHT_OIL(new SimpleCrude(Crudes.FUEL_GAS, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
+			  mix(Crudes.KEROSENE, 0.1).mix(Crudes.LIGHT_GAS_OIL, 0.05).mix(Crudes.HEAVY_GAS_OIL, 0.05).
+			  mix(Crudes.BITUMEN, 0.10), Strength.WEAK, Material.water),
+	MEDIUM_OIL(new SimpleCrude(Crudes.FUEL_GAS, 0.05).mix(Crudes.LIGHT_NAPHTHA, 0.15).mix(Crudes.HEAVY_NAPHTHA, 0.30).
+		 	   mix(Crudes.KEROSENE, 0.15).mix(Crudes.LIGHT_GAS_OIL, 0.1).mix(Crudes.HEAVY_GAS_OIL, 0.05).
+			   mix(Crudes.BITUMEN, 0.2), Strength.MEDIUM, Material.water),
+	HEAVY_OIL(new SimpleCrude(Crudes.LIGHT_NAPHTHA, 0.05).mix(Crudes.HEAVY_NAPHTHA, 0.10).
+			  mix(Crudes.KEROSENE, 0.20).mix(Crudes.LIGHT_GAS_OIL, 0.25).mix(Crudes.HEAVY_GAS_OIL, 0.1).
+			  mix(Crudes.BITUMEN, 0.3), Strength.STRONG, Material.water),
+	EXTRA_HEAVY_OIL(new SimpleCrude(Crudes.HEAVY_NAPHTHA, 0.05).
+			        mix(Crudes.KEROSENE, 0.05).mix(Crudes.LIGHT_GAS_OIL, 0.10).mix(Crudes.HEAVY_GAS_OIL, 0.2).
+				    mix(Crudes.BITUMEN, 0.6), Strength.STRONG, Material.water),
+	OIL_SAND(EXTRA_HEAVY_OIL.mix(Aggregates.SAND, 2.0), Strength.WEAK, Material.sand),
 	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Compounds.PROPANE, 0.002).
 			    mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
 			    Strength.WEAK, Material.air),
-	OIL_SHALE(Crudes.KEROGEN.mix(MUDSTONE, 1.0).mix(Crudes.ASPHALT, 0.5), Strength.WEAK)
+	OIL_SHALE(new SimpleCrude(Crudes.KEROGEN, 0.15).mix(MUDSTONE, 1.0).mix(Crudes.BITUMEN, 0.05), Strength.WEAK)
 	;
     
 	public enum Strength { 
@@ -229,8 +236,8 @@ public enum GeoMaterial implements Mixture {
 	}
 
 	@Override
-	public PhaseProperties getProperties(Phase phase) {
-		return composition.getProperties(phase);
+	public ConditionProperties getProperties(Condition condition) {
+		return composition.getProperties(condition);
 	}
 
 	@Override

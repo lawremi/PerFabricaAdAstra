@@ -19,8 +19,12 @@ public class Vaporization {
 	}
 	
 	public double getTemperature() {
+		return this.getTemperature(Constants.STANDARD_PRESSURE);
+	}
+	
+	public double getTemperature(double pressure) {
 		if (antoineCoefficients != null) {
-			return antoineCoefficients.getBoilingTemperature(1.0);
+			return antoineCoefficients.getBoilingTemperature(pressure);
 		}
 		return temperature;
 	}

@@ -3,8 +3,9 @@ package org.pfaa.chemica.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.IndustrialMaterial.Phase;
 import org.pfaa.chemica.model.PhaseProperties;
 
 import cpw.mods.fml.relauncher.Side;
@@ -41,14 +42,14 @@ public class IndustrialMaterialItem<T extends Enum & IndustrialMaterial> extends
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemStack, int par2) {
-		return this.getPhaseProperties(itemStack).color.getRGB();
+		return this.getProperties(itemStack).color.getRGB();
 	}
 
-	public PhaseProperties getPhaseProperties(ItemStack itemStack) {
-		return getPhaseProperties(itemStack.getItemDamage());
+	public ConditionProperties getProperties(ItemStack itemStack) {
+		return getProperties(itemStack.getItemDamage());
 	}
 	
-	public PhaseProperties getPhaseProperties(int damage) {
-		return getIndustrialMaterial(damage).getProperties(Phase.SOLID);
+	public ConditionProperties getProperties(int damage) {
+		return getIndustrialMaterial(damage).getProperties(Condition.STP);
 	}
 }

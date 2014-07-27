@@ -1,10 +1,9 @@
 package org.pfaa.chemica.model;
 
-import org.pfaa.chemica.model.IndustrialMaterial.Phase;
 
 public class MixtureComponent {
 	public final IndustrialMaterial material;
-	public final double weight;
+	public final double weight; // volume fraction
 	
 	public MixtureComponent(IndustrialMaterial material, double weight) {
 		this.material = material;

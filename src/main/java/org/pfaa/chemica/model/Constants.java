@@ -6,4 +6,5 @@ public interface Constants {
 	public final double STANDARD_PRESSURE = 101; // kPa
 	
 	public final double R = 0.008314; /* (m^3*kPa) / (K*mol) */
+	public final double AIR_DENSITY = 0.001225;
 }

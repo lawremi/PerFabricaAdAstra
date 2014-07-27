@@ -20,11 +20,12 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.PhaseProperties;
 
 
 /*
@@ -117,8 +118,8 @@ public interface OreMineral extends Mineral {
 		}
 
 		@Override
-		public PhaseProperties getProperties(Phase phase) {
-			return delegate.getProperties(phase);
+		public ConditionProperties getProperties(Condition condition) {
+			return delegate.getProperties(condition);
 		}
 
 		@Override
