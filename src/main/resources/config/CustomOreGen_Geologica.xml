@@ -1156,7 +1156,7 @@
           <Setting name='CloudThickness'
                    avg=':=coalSize * _default_'
                    range=':=coalSize * _default_'/>
-          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Setting name='OreDensity' avg=':=1.5 * _default_'/>
           <BiomeSet inherits='inland' weight='0.5'/>
           <BiomeType name='swamp' weight='0.5'/>
         </CloudPreset>
@@ -1197,7 +1197,7 @@
           <Setting name='CloudThickness'
                    avg=':=ironSize * _default_'
                    range=':=ironSize * _default_'/>
-          <Setting name='OreDensity' avg=':=3 * _default_'/>
+          <Setting name='OreDensity' avg=':=_default_'/>
           <OreBlock block='PFAAGeologica:strongOreRock:0' weight='1.0'/>
           <BiomeSet inherits='inland' weight='0.5'/>
           <BiomeSet inherits='folded' weight='0.5'/>
@@ -3178,6 +3178,180 @@
     </ConfigSection>
   </ConfigSection>
 
+  <ConfigSection> <!-- Petroleum -->
+    <OptionChoice name='GeologicaPetroleum' default='true'
+                  displayState='shown' displayGroup='groupGeologica'>
+      <Description>
+        Generate petroleum resources, including crude oil (four
+        types), oil sand, oil shale and natural gas.
+      </Description>
+      <DisplayName>Petroleum</DisplayName>
+      <Choice value='true' displayValue='On'/>
+      <Choice value='false' displayValue='Off'/>
+    </OptionChoice>
+
+    <CloudPreset name='PresetCrudeOil'
+                 inherits='PresetStratum'>
+      <Setting name='CloudHeight' avg='40' range='10'/>
+      <Setting name='DistributionFrequency' avg='0.001'/>
+      <Setting name='CloudRadius' avg='8' range='2' type='normal'/>
+      <ReplacesOre block='stone'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilContinental'
+                 inherits='PresetCrudeOil'>
+      <BiomeSet inherits='inland'/>
+    </CloudPreset>
+      
+    <CloudPreset name='PresetCrudeOilLightContinental'
+                 inherits='PresetCrudeOilContinental'
+                 wireframeColor='0xFFAAAAAA'
+                 drawWireframe='true'>
+      <OreBlock block='PFAAGeologica:lightOil' weight='0.5'/>
+      <OreBlock block='PFAAGeologica:naturalGas' weight='0.5'/>
+      <Setting name='DistributionFrequency' avg=':=2*_default_'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilMediumContinental'
+                 inherits='PresetCrudeOilContinental'
+                 wireframeColor='0xFF888888'
+                 drawWireframe='true'>
+      <OreBlock block='PFAAGeologica:mediumOil' weight='0.7'/>
+      <OreBlock block='PFAAGeologica:naturalGas' weight='0.3'/>
+      <Setting name='DistributionFrequency' avg=':=3.5*_default_'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilHeavyContinental'
+                 inherits='PresetCrudeOilContinental'
+                 wireframeColor='0xFF444444'
+                 drawWireframe='true'>
+      <OreBlock block='PFAAGeologica:mediumOil' weight='0.9'/>
+      <OreBlock block='PFAAGeologica:naturalGas' weight='0.1'/>
+      <Setting name='DistributionFrequency' avg=':=2*_default_'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilExtraHeavyContinental'
+                 inherits='PresetCrudeOilContinental'
+                 block='PFAAGeologica:extraHeavyOil'
+                 wireframeColor='0xFF000000'
+                 drawWireframe='true'>
+      <Setting name='DistributionFrequency' avg=':=3*_default_'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilOceanic'
+                 inherits='PresetCrudeOil'>
+      <BiomeSet inherits='oceanic'/>
+      <Setting name='CloudHeight' avg='25' range='5'/>
+      <Setting name='CloudRadius' avg='16' range='4' type='normal'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetCrudeOilLightOceanic'
+                 inherits='PresetCrudeOilOceanic'
+                 block='PFAAGeologica:lightOil'/>
+
+    <CloudPreset name='PresetCrudeOilMediumOceanic'
+                 inherits='PresetCrudeOilOceanic'
+                 block='PFAAGeologica:mediumOil'/>
+
+    <CloudPreset name='PresetCrudeOilHeavyOceanic'
+                 inherits='PresetCrudeOilOceanic'
+                 block='PFAAGeologica:heavyOil'/>
+
+    <CloudPreset name='PresetCrudeOilExtraHeavyOceanic'
+                 inherits='PresetCrudeOilOceanic'
+                 block='PFAAGeologica:extraHeavyOil'/>
+
+    <CloudPreset name='PresetOilShale'
+                 inherits='PresetStratum'
+                 wireframeColor='0xFF8E6500'
+                 drawWireframe='true'>
+      <Setting name='CloudHeight' avg='50' range='5'/>
+      <Setting name='DistributionFrequency' avg='0.005'/>
+      <OreBlock block='PFAAGeologica:crudeRock' weight='0.3'/>
+      <OreBlock block='PFAAGeologica:weakStone:4' weight='0.7'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetOilShaleOceanic'
+                 inherits='PresetOilShale'>
+      <BiomeSet inherits='oceanic'/>
+      <Setting name='CloudHeight' avg='40' range='5'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetOilShaleContinental'
+                 inherits='PresetOilShale'>
+      <BiomeSet inherits='inland'/>
+    </CloudPreset>
+
+    <VeinsPreset name='PresetTightOil'
+                 wireframeColor='0xFF00FFFF'
+                 drawWireframe='true'>
+      <Setting name='ParentRangeLimit' avg='4' range='2'/>
+      <Setting name='MotherlodeFrequency' avg='5'/>
+      <OreBlock block='PFAAGeologica:lightOil' weight='0.3'/>
+      <OreBlock block='PFAAGeologica:naturalGas' weight='0.7'/>      
+    </VeinsPreset>
+    
+    <CloudPreset name='PresetNaturalGas'
+                 inherits='PresetStratum'
+                 block='PFAAGeologica:naturalGas'>
+      <Setting name='CloudHeight' avg='40' range='10'/>
+      <Setting name='DistributionFrequency' avg='0.001'/>
+      <Setting name='CloudRadius' avg='8' range='2' type='normal'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetNaturalGasContinental'
+                 inherits='PresetNaturalGas'>
+      <BiomeSet inherits='continental'/>
+    </CloudPreset>
+    
+    <CloudPreset name='PresetNaturalGasOceanic'
+                 inherits='PresetNaturalGas'>
+      <BiomeSet inherits='oceanic'/>
+      <Setting name='CloudHeight' avg='25' range='5'/>
+      <Setting name='CloudRadius' avg='16' range='4' type='normal'/>
+    </CloudPreset>
+
+    <CloudPreset name='PresetOilSand' inherits='PresetStratum'
+                 block='PFAAGeologica:crudeSand'>
+      <Setting name='DistributionFrequency' avg='0.001' range='0'/>
+      <Setting name='CloudHeight' avg='62' range='1'/>
+      <Replaces block='minecraft:dirt'/>
+      <BiomeType name='plains'/>
+    </CloudPreset>
+    
+    <IfCondition condition=":=?GeologicaPetroleum &amp;
+                            (dimension.generator = 'RandomLevelSource' |
+                            dimension.generator = 'ATGLevelSource')">
+      <Cloud name='CrudeOilLightContinental'
+             inherits='PresetCrudeOilLightContinental'/>
+      <Cloud name='CrudeOilMediumContinental'
+             inherits='PresetCrudeOilMediumContinental'/>
+      <Cloud name='CrudeOilHeavyContinental'
+             inherits='PresetCrudeOilHeavyContinental'/>
+      <Cloud name='CrudeOilExtraHeavyContinental'
+             inherits='PresetCrudeOilExtraHeavyContinental'/>
+      <Cloud name='OilShaleContinental'
+             inherits='PresetOilShaleContinental'>
+        <Veins name='TightOil' inherits='PresetTightOil'/>
+      </Cloud>
+      <Cloud name='NaturalGasContinental'
+             inherits='PresetNaturalGasContinental'/>
+      <Cloud name='CrudeOilLightOceanic'
+             inherits='PresetCrudeOilLightOceanic'/>
+      <Cloud name='CrudeOilMediumOceanic'
+             inherits='PresetCrudeOilMediumOceanic'/>
+      <Cloud name='CrudeOilHeavyOceanic'
+             inherits='PresetCrudeOilHeavyOceanic'/>
+      <Cloud name='CrudeOilExtraHeavyOceanic'
+             inherits='PresetCrudeOilExtraHeavyOceanic'/>
+      <Cloud name='OilShaleOceanic'
+             inherits='PresetOilShaleOceanic'/>
+      <Cloud name='NaturalGasOceanic'
+             inherits='PresetNaturalGasOceanic'/>
+      <Cloud name='OilSand' inherits='PresetOilSand'/>
+    </IfCondition>
+  </ConfigSection>
+  
   <ConfigSection> <!-- Vanilla ore overrides; disabled by default -->
     
     <IfCondition condition=":=blockExists('PFAAGeologica:coalOre')">
@@ -3211,5 +3385,5 @@
     </IfCondition>
     
   </ConfigSection>
-  
+
 </IfModInstalled>
