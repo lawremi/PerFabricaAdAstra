@@ -3193,6 +3193,7 @@
     <CloudPreset name='PresetCrudeOil'
                  inherits='PresetStratum'>
       <Setting name='CloudHeight' avg='40' range='10'/>
+      <Setting name='CloudThickness' avg='3' range='1'/>
       <Setting name='DistributionFrequency' avg='0.001'/>
       <Setting name='CloudRadius' avg='8' range='2' type='normal'/>
       <ReplacesOre block='stone'/>
@@ -3205,8 +3206,7 @@
       
     <CloudPreset name='PresetCrudeOilLightContinental'
                  inherits='PresetCrudeOilContinental'
-                 wireframeColor='0xFFAAAAAA'
-                 drawWireframe='true'>
+                 wireframeColor='0xFFAAAAAA'>
       <OreBlock block='PFAAGeologica:lightOil' weight='0.5'/>
       <OreBlock block='PFAAGeologica:naturalGas' weight='0.5'/>
       <Setting name='DistributionFrequency' avg=':=2*_default_'/>
@@ -3214,8 +3214,7 @@
 
     <CloudPreset name='PresetCrudeOilMediumContinental'
                  inherits='PresetCrudeOilContinental'
-                 wireframeColor='0xFF888888'
-                 drawWireframe='true'>
+                 wireframeColor='0xFF888888'>
       <OreBlock block='PFAAGeologica:mediumOil' weight='0.7'/>
       <OreBlock block='PFAAGeologica:naturalGas' weight='0.3'/>
       <Setting name='DistributionFrequency' avg=':=3.5*_default_'/>
@@ -3223,8 +3222,7 @@
 
     <CloudPreset name='PresetCrudeOilHeavyContinental'
                  inherits='PresetCrudeOilContinental'
-                 wireframeColor='0xFF444444'
-                 drawWireframe='true'>
+                 wireframeColor='0xFF444444'>
       <OreBlock block='PFAAGeologica:mediumOil' weight='0.9'/>
       <OreBlock block='PFAAGeologica:naturalGas' weight='0.1'/>
       <Setting name='DistributionFrequency' avg=':=2*_default_'/>
@@ -3233,8 +3231,7 @@
     <CloudPreset name='PresetCrudeOilExtraHeavyContinental'
                  inherits='PresetCrudeOilContinental'
                  block='PFAAGeologica:extraHeavyOil'
-                 wireframeColor='0xFF000000'
-                 drawWireframe='true'>
+                 wireframeColor='0xFF000000'>
       <Setting name='DistributionFrequency' avg=':=3*_default_'/>
     </CloudPreset>
 
@@ -3263,12 +3260,13 @@
 
     <CloudPreset name='PresetOilShale'
                  inherits='PresetStratum'
-                 wireframeColor='0xFF8E6500'
-                 drawWireframe='true'>
+                 wireframeColor='0xFF8E6500'>
       <Setting name='CloudHeight' avg='50' range='5'/>
       <Setting name='DistributionFrequency' avg='0.005'/>
+      <Setting name='CloudThickness' avg='3' range='1'/>
       <OreBlock block='PFAAGeologica:crudeRock' weight='0.3'/>
       <OreBlock block='PFAAGeologica:weakStone:4' weight='0.7'/>
+      <ReplacesOre block='stone'/>
     </CloudPreset>
 
     <CloudPreset name='PresetOilShaleOceanic'
@@ -3282,21 +3280,38 @@
       <BiomeSet inherits='inland'/>
     </CloudPreset>
 
+    <VeinsPreset name='PresetTightVeins'
+                 inherits='PresetLayeredVeinsLite'>
+      <Setting name='MotherlodeHeight' avg='50' range='2'/>
+      <Setting name='ParentRangeLimit' avg='4' range='2'/>
+      <ReplacesOre block='stone'/>
+      <Replaces block='PFAAGeologica:crudeRock'/>
+    </VeinsPreset>
+                 
     <VeinsPreset name='PresetTightOil'
                  wireframeColor='0xFF00FFFF'
-                 drawWireframe='true'>
-      <Setting name='ParentRangeLimit' avg='4' range='2'/>
-      <Setting name='MotherlodeFrequency' avg='5'/>
-      <OreBlock block='PFAAGeologica:lightOil' weight='0.3'/>
-      <OreBlock block='PFAAGeologica:naturalGas' weight='0.7'/>      
+                 inherits='PresetTightVeins'
+                 block='PFAAGeologica:lightOil'>
+      <Setting name='MotherlodeFrequency' avg='2'/>
+    </VeinsPreset>
+
+    <VeinsPreset name='PresetTightGas'
+                 wireframeColor='0xFF00FFFF'
+                 inherits='PresetTightVeins'
+                 block='PFAAGeologica:naturalGas'>
+      <Setting name='MotherlodeFrequency' avg='3'/>
     </VeinsPreset>
     
     <CloudPreset name='PresetNaturalGas'
                  inherits='PresetStratum'
-                 block='PFAAGeologica:naturalGas'>
+                 wireframeColor='0xFF0000AA'
+                 block='PFAAGeologica:naturalGas'
+                 drawWireframe='false'>
       <Setting name='CloudHeight' avg='40' range='10'/>
-      <Setting name='DistributionFrequency' avg='0.001'/>
+      <Setting name='DistributionFrequency' avg='0.004'/>
       <Setting name='CloudRadius' avg='8' range='2' type='normal'/>
+      <Setting name='CloudThickness' avg='3' range='1'/>
+      <ReplacesOre block='stone'/>
     </CloudPreset>
 
     <CloudPreset name='PresetNaturalGasContinental'
@@ -3333,6 +3348,7 @@
       <Cloud name='OilShaleContinental'
              inherits='PresetOilShaleContinental'>
         <Veins name='TightOil' inherits='PresetTightOil'/>
+        <Veins name='TightGas' inherits='PresetTightGas'/>
       </Cloud>
       <Cloud name='NaturalGasContinental'
              inherits='PresetNaturalGasContinental'/>
