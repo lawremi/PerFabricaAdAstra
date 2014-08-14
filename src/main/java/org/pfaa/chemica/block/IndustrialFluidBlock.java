@@ -289,34 +289,4 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
     	int other = this.getQuantaValue(world, x, y, z);
     	return other > 0 && other < quanta;
     }
-	
-	/* 
-	 * We take the cue from Buildcraft and disallow displacement (actually replacement) of all liquids.
-	 * This has to be done in three places, due to gratuitous code duplication.
-	 */
-	
-	@Override
-	public boolean canFlowInto(IBlockAccess world, int x, int y, int z) {
-		if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
-			return false;
-		}
-		return super.canFlowInto(world, x, y, z);
-	}
-	
-	@Override
-	public boolean canDisplace(IBlockAccess world, int x, int y, int z) {
-		if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
-			return false;
-		}
-		return super.canDisplace(world, x, y, z);
-	}
-
-	@Override
-	public boolean displaceIfPossible(World world, int x, int y, int z) {
-		if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
-			return false;
-		}
-		return super.displaceIfPossible(world, x, y, z);
-	}
-	
 }
