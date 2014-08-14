@@ -70,7 +70,7 @@ public class SimpleMixture implements Mixture {
 		double totalWeight = getTotalWeight();
 		int r = 0, g = 0, b = 0;
 		int health = 0, flammability = 0, instability = 0, luminosity = 0;
-		double density = 0;
+		double density = 0, opaqueWeight = 0;
 		double[] phaseWeight = new double[Phase.values().length];
 		for (MixtureComponent comp : this.components) {
 			ConditionProperties props = comp.material.getProperties(condition);
@@ -86,10 +86,14 @@ public class SimpleMixture implements Mixture {
 			flammability = Math.max(flammability, props.hazard.flammability);
 			instability = Math.max(instability, props.hazard.instability);
 			phaseWeight[props.phase.ordinal()] += comp.weight;
+			if (props.opaque)
+				opaqueWeight += normWeight; 
 		}
 		Phase phase = Phase.values()[Doubles.indexOf(phaseWeight, Doubles.max(phaseWeight))];
 		return new ConditionProperties(phase, new Color(r, g, b), density,
-				                       new Hazard(health, flammability, instability), this.getViscosity(condition, density), luminosity);
+				                       new Hazard(health, flammability, instability), 
+				                       this.getViscosity(condition, density), luminosity,
+				                       opaqueWeight > 0.5);
 	}
 
 	private static final double THOMAS_A = 0.00273;

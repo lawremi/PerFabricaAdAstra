@@ -13,6 +13,7 @@ public class ConditionProperties {
 	public final Hazard hazard;
 	public final double viscosity;
 	public final int luminosity;
+	public final boolean opaque;
 	
 	public ConditionProperties(PhaseProperties properties, Condition condition) {
 		this(properties.getPhase(), 
@@ -20,11 +21,12 @@ public class ConditionProperties {
 			 properties.getDensity(condition),
 		     properties.getHazard(), 
 		     properties.getViscosity(condition.temperature),
-		     properties.getLuminosity(condition.temperature));
+		     properties.getLuminosity(condition.temperature),
+		     properties.getOpaque());
 	}
 	
 	public ConditionProperties(Phase phase, Color color, double density,
-			Hazard hazard, double viscosity, int luminosity) {
+			Hazard hazard, double viscosity, int luminosity, boolean opaque) {
 		super();
 		this.phase = phase;
 		this.color = color;
@@ -32,9 +34,10 @@ public class ConditionProperties {
 		this.density = density;
 		this.viscosity = viscosity;
 		this.luminosity = luminosity;
+		this.opaque = opaque;
 	}
 	
 	public ConditionProperties(Phase phase, Color color, double density, Hazard hazard) {
-		this(phase, color, density, hazard, phase == Phase.SOLID ? Double.POSITIVE_INFINITY : Double.NaN, 0);
+		this(phase, color, density, hazard, phase == Phase.SOLID ? Double.POSITIVE_INFINITY : Double.NaN, 0, false);
 	}
 }

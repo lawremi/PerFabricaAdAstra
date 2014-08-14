@@ -7,7 +7,9 @@ public class CommonRegistrant implements Registrant {
 	@Override
 	public void preregister() {
 		BlockRegistration.init();
+		ItemRegistration.init();
 		EntityRegistration.init();
+		HandlerRegistration.init();
 	}
 
 	@Override

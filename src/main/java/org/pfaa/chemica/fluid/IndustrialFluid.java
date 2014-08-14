@@ -19,7 +19,7 @@ public class IndustrialFluid extends Fluid {
 	private boolean molten;
 	private double pressure;
 	private IndustrialMaterial material;
-	private boolean opaque = true;
+	private boolean opaque;
 	
 	public IndustrialFluid(String fluidName, IndustrialMaterial material) {
 		super(fluidName);
@@ -87,11 +87,7 @@ public class IndustrialFluid extends Fluid {
 		ConditionProperties props = material.getProperties(condition);
 		IndustrialFluid fluid = new IndustrialFluid(name, material);
 		fluid.setGaseous(props.phase == Phase.GAS);
-		if (props.density < Constants.AIR_DENSITY) {
-			fluid.setDensity((int)(props.density - Constants.AIR_DENSITY));
-		} else {
-			fluid.setDensity((int)(props.density * 1000));
-		}
+		fluid.setDensity((int)(convertToForgeDensity(props.density)));
 		fluid.setCondition(condition);
 		fluid.setIsMolten(!fluid.isGaseous() && condition.temperature > Constants.STANDARD_TEMPERATURE);
 		if (Double.isNaN(props.viscosity)) {
@@ -103,7 +99,12 @@ public class IndustrialFluid extends Fluid {
 		}
 		fluid.setLuminosity(props.luminosity);
 		fluid.setColor(props.color);
+		fluid.setOpaque(props.opaque);
 		return fluid;
+	}
+
+	private static double convertToForgeDensity(double density) {
+		return (density <= Constants.AIR_DENSITY ? (density - Constants.AIR_DENSITY) : density) * 1000;
 	}
 
 	private static Condition roundCondition(IndustrialMaterial material, Phase phase) {
@@ -134,5 +135,9 @@ public class IndustrialFluid extends Fluid {
 	
 	public void setOpaque(boolean opaque) {
 		this.opaque = opaque;
+	}
+
+	public double getMaterialDensity() {
+		return this.material.getProperties(this.getCondition()).density;
 	}
 }

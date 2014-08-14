@@ -7,15 +7,16 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 	
 	private static final Color COLORLESS = new Color(230, 230, 245);
 	
-	public ChemicalPhaseProperties(Phase phase, Color color, double density, Thermo thermo, Hazard hazard) {
-		super(phase, color, density, hazard);
+	public ChemicalPhaseProperties(Phase phase, Color color, double density, Thermo thermo, 
+			Hazard hazard, boolean opaque) {
+		super(phase, color, density, hazard, opaque);
 		this.thermo = thermo;
 	}
 	
 	public static class Solid extends ChemicalPhaseProperties {
 		public Solid(Color color, double density, Thermo thermo, Hazard hazard)
 		{
-			super(Phase.SOLID, color, density, thermo, hazard);
+			super(Phase.SOLID, color, density, thermo, hazard, true);
 		}
 		public Solid(Color color, double density, Thermo thermo)
 		{
@@ -42,7 +43,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		private final Yaws yaws;
 		public Liquid(Color color, double density, Thermo thermo, Hazard hazard, Yaws yaws)
 		{
-			super(Phase.LIQUID, color, density, thermo, hazard);
+			super(Phase.LIQUID, color, density, thermo, hazard, false);
 			this.yaws = yaws;
 		}
 		public Liquid(double density, Thermo thermo, Hazard hazard, Yaws yaws)
@@ -97,7 +98,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		
 		public Gas(Color color, Thermo thermo, Hazard hazard, Sutherland sutherland, double molarMass)
 		{
-			super(Phase.GAS, color, Double.NaN, thermo, hazard);
+			super(Phase.GAS, color, Double.NaN, thermo, hazard, false);
 			this.molarMass = molarMass;
 			this.sutherland = sutherland;
 		}

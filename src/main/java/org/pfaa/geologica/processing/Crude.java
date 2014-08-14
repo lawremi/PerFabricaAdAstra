@@ -36,7 +36,7 @@ public interface Crude extends Mixture, Vaporizable {
 		
 		private Crudes(Phase phase, Color color, double density, Hazard hazard, double viscosity, 
 				       double boilingTemperature, double sulfurFraction) {
-			this(new SimpleCrude(new ConditionProperties(phase, color, density, hazard, viscosity, 0), 
+			this(new SimpleCrude(new ConditionProperties(phase, color, density, hazard, viscosity, 0, true), 
 				 Double.isNaN(boilingTemperature) ? null : new Vaporization(boilingTemperature), 
 				 sulfurFraction));
 		}

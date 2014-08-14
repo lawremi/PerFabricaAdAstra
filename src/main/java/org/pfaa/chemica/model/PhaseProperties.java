@@ -11,24 +11,14 @@ public class PhaseProperties {
 	private final Color color; // base color, modified by thermal radiation
 	private final Hazard hazard;
 	private final double density; // g/mL, not relevant for gases
+	private final boolean opaque;
 	
-	public PhaseProperties(Phase phase, Color color, double density, Hazard hazard) {
+	public PhaseProperties(Phase phase, Color color, double density, Hazard hazard, boolean opaque) {
 		this.phase = phase;
 		this.color = color;
 		this.density = density;
 		this.hazard = hazard;
-	}
-
-	public PhaseProperties(Phase phase, Color color, Hazard hazard) {
-		this(phase, color, Double.NaN, hazard);
-	}
-	
-	public PhaseProperties(Phase phase, Color color, double density) {
-		this(phase, color, density, new Hazard());
-	}
-	
-	public PhaseProperties(Phase phase, Color color) {
-		this(phase, color, Double.NaN);
+		this.opaque = opaque;
 	}
 	
 	public Phase getPhase() {
@@ -80,5 +70,9 @@ public class PhaseProperties {
 			} 
 		}
 		return color;
+	}
+
+	public boolean getOpaque() {
+		return this.opaque;
 	}
 }

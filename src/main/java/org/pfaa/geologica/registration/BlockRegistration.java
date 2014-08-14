@@ -4,6 +4,7 @@ import net.minecraft.item.ItemBlock;
 
 import org.pfaa.RegistrationUtils;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.item.ColoredItemBlock;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.block.GeoBlock;
@@ -21,7 +22,7 @@ public class BlockRegistration  {
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, WallBlock.class, CompositeBlockItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, SlabBlock.class, SlabItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, StairsBlock.class, ItemBlock.class);
-		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, IndustrialFluidBlock.class, ItemBlock.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, IndustrialFluidBlock.class, ColoredItemBlock.class);
 		
 		if (Geologica.getConfiguration().isVanillaOreOverrideEnabled()) {
 			RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, VanillaOreOverrideBlock.class, ItemBlock.class);
