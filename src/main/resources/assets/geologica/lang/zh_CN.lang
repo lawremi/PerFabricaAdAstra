@@ -1,9 +1,9 @@
 # Stone
 tile.weakStone.breccia.name=角砾岩
-tile.weakStone.carbonatite.name=碳酸盐岩
+tile.weakStone.carbonatite.name=碳酸岩
 tile.weakStone.claystone.name=粘土岩
 tile.weakStone.conglomerate.name=砾岩
-tile.weakStone.mudstone.name=泥石/页岩
+tile.weakStone.mudstone.name=泥岩
 tile.mediumStone.limestone.name=石灰岩
 tile.mediumStone.schist.name=片岩
 tile.mediumStone.serpentinite.name=蛇纹岩
@@ -14,14 +14,14 @@ tile.strongStone.basalt.name=玄武岩
 tile.strongStone.gneiss.name=片麻岩
 tile.strongStone.granite.name=花岗岩
 tile.strongStone.greenschist.name=绿片岩
-tile.strongStone.pegmatite.name=结晶花岗岩
+tile.strongStone.pegmatite.name=伟晶岩
 tile.strongStone.marble.name=大理石
 tile.strongStone.rhyolite.name=流纹岩
 tile.veryStrongStone.diorite.name=闪长岩
 tile.veryStrongStone.gabbro.name=辉长岩
 tile.veryStrongStone.hornfels.name=角页岩
 tile.veryStrongStone.peridotite.name=橄榄岩
-tile.veryStrongStone.quartzite.name=硅岩
+tile.veryStrongStone.quartzite.name=矽岩
 
 # Cobblestone
 tile.mediumCobble.limestone.name=石灰岩圆石
@@ -34,14 +34,14 @@ tile.strongCobble.basalt.name=玄武岩圆石
 tile.strongCobble.gneiss.name=片麻岩圆石
 tile.strongCobble.granite.name=花岗岩圆石
 tile.strongCobble.greenschist.name=绿片岩圆石
-tile.strongCobble.pegmatite.name=结晶花岗岩圆石
+tile.strongCobble.pegmatite.name=伟晶岩圆石
 tile.strongCobble.marble.name=大理石圆石
 tile.strongCobble.rhyolite.name=流纹岩圆石
 tile.veryStrongCobble.diorite.name=闪长岩圆石
 tile.veryStrongCobble.gabbro.name=辉长岩圆石
 tile.veryStrongCobble.hornfels.name=角页岩圆石
 tile.veryStrongCobble.peridotite.name=橄榄岩圆石
-tile.veryStrongCobble.quartzite.name=硅岩圆石
+tile.veryStrongCobble.quartzite.name=矽岩圆石
 
 # Brick
 tile.mediumStoneBrick.limestone.name=石灰岩石砖
@@ -55,13 +55,13 @@ tile.strongStoneBrick.gneiss.name=片麻岩石砖
 tile.strongStoneBrick.granite.name=花岗岩石砖
 tile.strongStoneBrick.greenschist.name=绿片岩石砖
 tile.strongStoneBrick.marble.name=大理石砖
-tile.strongStoneBrick.pegmatite.name=结晶花岗岩石砖
+tile.strongStoneBrick.pegmatite.name=伟晶岩石砖
 tile.strongStoneBrick.rhyolite.name=流纹岩石砖
 tile.veryStrongStoneBrick.diorite.name=闪长岩石砖
 tile.veryStrongStoneBrick.gabbro.name=辉长岩石砖
 tile.veryStrongStoneBrick.hornfels.name=角页岩石砖
 tile.veryStrongStoneBrick.peridotite.name=橄榄岩石砖
-tile.veryStrongStoneBrick.quartzite.name=硅岩石砖
+tile.veryStrongStoneBrick.quartzite.name=矽岩石砖
 
 # Brick Walls
 tile.mediumStoneBrickWall.limestone.name=石灰岩石砖墙
@@ -75,38 +75,38 @@ tile.strongStoneBrickWall.gneiss.name=片麻岩石砖墙
 tile.strongStoneBrickWall.granite.name=花岗岩石砖墙
 tile.strongStoneBrickWall.greenschist.name=绿片岩石砖墙
 tile.strongStoneBrickWall.marble.name=大理石砖墙
-tile.strongStoneBrickWall.pegmatite.name=结晶花岗岩石砖墙
+tile.strongStoneBrickWall.pegmatite.name=伟晶岩石砖墙
 tile.strongStoneBrickWall.rhyolite.name=流纹岩石砖墙
 tile.veryStrongStoneBrickWall.diorite.name=闪长岩石砖墙
 tile.veryStrongStoneBrickWall.gabbro.name=辉长岩石砖墙
 tile.veryStrongStoneBrickWall.hornfels.name=角页岩石砖墙
 tile.veryStrongStoneBrickWall.peridotite.name=橄榄岩石砖墙
-tile.veryStrongStoneBrickWall.quartzite.name=硅岩石砖墙
+tile.veryStrongStoneBrickWall.quartzite.name=矽岩石砖墙
 
 # Rubble
-tile.weakRubble.breccia.name=角砾岩砂砾
-tile.weakRubble.carbonatite.name=碳酸盐岩砂砾
-tile.weakRubble.claystone.name=粘土岩砂砾
-tile.weakRubble.conglomerate.name=砾岩砂砾
-tile.weakRubble.mudstone.name=泥石/页岩砂砾
-tile.mediumRubble.limestone.name=石灰岩砂砾
-tile.mediumRubble.schist.name=片岩砂砾
-tile.mediumRubble.serpentinite.name=蛇纹岩砂砾
-tile.mediumRubble.slate.name=板岩砂砾
-tile.mediumRubble.skarn.name=矽卡岩砂砾
-tile.strongRubble.andesite.name=安山岩砂砾
-tile.strongRubble.basalt.name=玄武岩砂砾
-tile.strongRubble.gneiss.name=片麻岩砂砾
-tile.strongRubble.granite.name=花岗岩砂砾
-tile.strongRubble.greenschist.name=绿片岩砂砾
-tile.strongRubble.pegmatite.name=结晶花岗岩砂砾
-tile.strongRubble.marble.name=大理石砂砾
-tile.strongRubble.rhyolite.name=流纹岩砂砾
-tile.veryStrongRubble.diorite.name=闪长岩砂砾
-tile.veryStrongRubble.gabbro.name=辉长岩砂砾
-tile.veryStrongRubble.hornfels.name=角页岩砂砾
-tile.veryStrongRubble.peridotite.name=橄榄岩砂砾
-tile.veryStrongRubble.quartzite.name=硅岩砂砾
+tile.weakRubble.breccia.name=角砾岩碎石
+tile.weakRubble.carbonatite.name=碳酸盐岩碎石
+tile.weakRubble.claystone.name=粘土岩碎石
+tile.weakRubble.conglomerate.name=砾岩碎石
+tile.weakRubble.mudstone.name=泥岩碎石
+tile.mediumRubble.limestone.name=石灰岩碎石
+tile.mediumRubble.schist.name=片岩碎石
+tile.mediumRubble.serpentinite.name=蛇纹岩碎石
+tile.mediumRubble.slate.name=板岩碎石
+tile.mediumRubble.skarn.name=矽卡岩碎石
+tile.strongRubble.andesite.name=安山岩碎石
+tile.strongRubble.basalt.name=玄武岩碎石
+tile.strongRubble.gneiss.name=片麻岩碎石
+tile.strongRubble.granite.name=花岗岩碎石
+tile.strongRubble.greenschist.name=绿片岩碎石
+tile.strongRubble.pegmatite.name=伟晶岩碎石
+tile.strongRubble.marble.name=大理石碎石
+tile.strongRubble.rhyolite.name=流纹岩碎石
+tile.veryStrongRubble.diorite.name=闪长岩碎石
+tile.veryStrongRubble.gabbro.name=辉长岩碎石
+tile.veryStrongRubble.hornfels.name=角页岩碎石
+tile.veryStrongRubble.peridotite.name=橄榄岩碎石
+tile.veryStrongRubble.quartzite.name=矽岩碎石
 
 # Cobblestone Slab
 tile.mediumCobbleSlab.limestone.name=石灰岩圆石板
@@ -119,14 +119,14 @@ tile.strongCobbleSlab.basalt.name=玄武岩圆石板
 tile.strongCobbleSlab.gneiss.name=片麻岩圆石板
 tile.strongCobbleSlab.granite.name=花岗岩圆石板
 tile.strongCobbleSlab.greenschist.name=绿片岩圆石板
-tile.strongCobbleSlab.pegmatite.name=结晶花岗岩圆石板
+tile.strongCobbleSlab.pegmatite.name=伟晶岩圆石板
 tile.strongCobbleSlab.marble.name=大理石圆石板
 tile.strongCobbleSlab.rhyolite.name=流纹岩圆石板
 tile.veryStrongCobbleSlab.diorite.name=闪长岩圆石板
 tile.veryStrongCobbleSlab.gabbro.name=辉长岩圆石板
 tile.veryStrongCobbleSlab.hornfels.name=角页岩圆石板
 tile.veryStrongCobbleSlab.peridotite.name=橄榄岩圆石板
-tile.veryStrongCobbleSlab.quartzite.name=硅岩圆石板
+tile.veryStrongCobbleSlab.quartzite.name=矽岩圆石板
 
 # Stone Slab
 tile.mediumStoneSlab.limestone.name=石灰岩石板
@@ -139,14 +139,14 @@ tile.strongStoneSlab.basalt.name=玄武岩石板
 tile.strongStoneSlab.gneiss.name=片麻岩石板
 tile.strongStoneSlab.granite.name=花岗岩石板
 tile.strongStoneSlab.greenschist.name=绿片岩石板
-tile.strongStoneSlab.pegmatite.name=结晶花岗岩石板
+tile.strongStoneSlab.pegmatite.name=伟晶岩石板
 tile.strongStoneSlab.marble.name=大理石板
 tile.strongStoneSlab.rhyolite.name=流纹岩石板
 tile.veryStrongStoneSlab.diorite.name=闪长岩石板
 tile.veryStrongStoneSlab.gabbro.name=辉长岩石板
 tile.veryStrongStoneSlab.hornfels.name=角页岩石板
 tile.veryStrongStoneSlab.peridotite.name=橄榄岩石板
-tile.veryStrongStoneSlab.quartzite.name=硅岩石板
+tile.veryStrongStoneSlab.quartzite.name=矽岩石板
 
 # Brick Slab
 tile.mediumStoneBrickSlab.limestone.name=石灰岩石砖板
@@ -159,14 +159,14 @@ tile.strongStoneBrickSlab.basalt.name=玄武岩石砖板
 tile.strongStoneBrickSlab.gneiss.name=片麻岩石砖板
 tile.strongStoneBrickSlab.granite.name=花岗岩石砖板
 tile.strongStoneBrickSlab.greenschist.name=绿片岩石砖板
-tile.strongStoneBrickSlab.pegmatite.name=结晶花岗岩石砖板
+tile.strongStoneBrickSlab.pegmatite.name=伟晶岩石砖板
 tile.strongStoneBrickSlab.marble.name=大理石砖板
 tile.strongStoneBrickSlab.rhyolite.name=流纹岩石砖板
 tile.veryStrongStoneBrickSlab.diorite.name=闪长岩石砖板
 tile.veryStrongStoneBrickSlab.gabbro.name=辉长岩石砖板
 tile.veryStrongStoneBrickSlab.hornfels.name=角页岩石砖板
 tile.veryStrongStoneBrickSlab.peridotite.name=橄榄岩石砖板
-tile.veryStrongStoneBrickSlab.quartzite.name=硅岩石砖板
+tile.veryStrongStoneBrickSlab.quartzite.name=矽岩石砖板
 
 # Cobblestone Stairs
 tile.mediumCobbleStairs.limestone.name=石灰岩圆石楼梯
@@ -179,7 +179,7 @@ tile.strongCobbleStairs.basalt.name=玄武岩圆石楼梯
 tile.strongCobbleStairs.gneiss.name=片麻岩圆石楼梯
 tile.strongCobbleStairs.granite.name=花岗岩圆石楼梯
 tile.strongCobbleStairs.greenschist.name=绿片岩圆石楼梯
-tile.strongCobbleStairs.pegmatite.name=结晶花岗岩圆石楼梯
+tile.strongCobbleStairs.pegmatite.name=伟晶岩圆石楼梯
 tile.strongCobbleStairs.marble.name=大理石圆石楼梯
 tile.strongCobbleStairs.rhyolite.name=流纹岩圆石楼梯
 
@@ -194,14 +194,14 @@ tile.strongStoneBrickStairs.basalt.name=玄武岩石砖楼梯
 tile.strongStoneBrickStairs.gneiss.name=片麻岩石砖楼梯
 tile.strongStoneBrickStairs.granite.name=花岗岩石砖楼梯
 tile.strongStoneBrickStairs.greenschist.name=绿片岩石砖楼梯
-tile.strongStoneBrickStairs.pegmatite.name=结晶花岗岩石砖楼梯
+tile.strongStoneBrickStairs.pegmatite.name=伟晶岩石砖楼梯
 tile.strongStoneBrickStairs.marble.name=大理石石砖楼梯
 tile.strongStoneBrickStairs.rhyolite.name=流纹岩石砖楼梯
 tile.veryStrongStoneBrickStairs.diorite.name=闪长岩石砖楼梯
 tile.veryStrongStoneBrickStairs.gabbro.name=辉长岩石砖楼梯
 tile.veryStrongStoneBrickStairs.hornfels.name=角页岩石砖楼梯
 tile.veryStrongStoneBrickStairs.peridotite.name=橄榄岩石砖楼梯
-tile.veryStrongStoneBrickStairs.quartzite.name=硅岩石砖楼梯
+tile.veryStrongStoneBrickStairs.quartzite.name=矽岩石砖楼梯
 
 # Cobblestone Wall
 tile.mediumCobbleWall.limestone.name=石灰岩圆石墙
@@ -214,14 +214,14 @@ tile.strongCobbleWall.basalt.name=玄武岩圆石墙
 tile.strongCobbleWall.gneiss.name=片麻岩圆石墙
 tile.strongCobbleWall.granite.name=花岗岩圆石墙
 tile.strongCobbleWall.greenschist.name=绿片岩圆石墙
-tile.strongCobbleWall.pegmatite.name=结晶花岗岩圆石墙
+tile.strongCobbleWall.pegmatite.name=伟晶岩圆石墙
 tile.strongCobbleWall.marble.name=大理石圆石墙
 tile.strongCobbleWall.rhyolite.name=流纹岩圆石墙
 tile.veryStrongCobbleWall.diorite.name=闪长岩圆石墙
 tile.veryStrongCobbleWall.gabbro.name=辉长岩圆石墙
 tile.veryStrongCobbleWall.hornfels.name=角页岩圆石墙
 tile.veryStrongCobbleWall.peridotite.name=橄榄岩圆石墙
-tile.veryStrongCobbleWall.quartzite.name=硅岩圆石墙
+tile.veryStrongCobbleWall.quartzite.name=矽岩圆石墙
 
 # Ore Sands
 tile.weakOreSand.basalticMineralSand.name=玄武岩矿砂
@@ -232,11 +232,11 @@ tile.weakOreSand.quartzSand.name=石英砂
 tile.weakOreSand.volcanicAsh.name=火山灰
 
 # Clays
-tile.weakClay.laterite.name=砖红壤性土
-tile.weakClayBrick.laterite.name=砖红壤砖
+tile.weakClay.laterite.name=铁矾土
+tile.weakClayBrick.laterite.name=铁矾土砖
 
 # Ore Clays
-tile.weakOreClay.bauxite.name=矾土
+tile.weakOreClay.bauxite.name=铝土
 tile.weakOreClay.bentonite.name=膨润土
 tile.weakOreClay.brownLimonite.name=棕色褐铁矿
 tile.weakOreClay.yellowLimonite.name=黄色褐铁矿
@@ -246,8 +246,8 @@ tile.weakOreClay.fullersEarth.name=漂白土
 
 # Weak Ore Rocks
 tile.weakOreRock.borax.name=硼砂矿(硼)
-tile.weakOreRock.cinnabar.name=朱砂矿(水银)
-tile.weakOreRock.galena.name=方铅矿(铅)
+tile.weakOreRock.cinnabar.name=朱砂矿(汞)
+tile.weakOreRock.galena.name=方铅矿(铅/银)
 tile.weakOreRock.molybdenite.name=辉钼矿(钼)
 tile.weakOreRock.pyrolusite.name=软锰矿(锰)
 tile.weakOreRock.rockSalt.name=矿盐
@@ -264,7 +264,7 @@ tile.weakOreRock.trona.name=纯碱(天然碱)
 
 # Medium Ore Rocks
 tile.mediumOreRock.barite.name=重晶石(钡)
-tile.mediumOreRock.bastnasite.name=氟碳铈矿(铈)
+tile.mediumOreRock.bastnasite.name=氟碳铈镧矿(铈)
 tile.mediumOreRock.chalcopyrite.name=黄铜矿(铜)
 tile.mediumOreRock.celestine.name=天青石(锶)
 tile.mediumOreRock.garnierite.name=硅镁镍矿(镍)
@@ -282,7 +282,7 @@ tile.mediumOreRock.wollastonite.name=钙硅石
 tile.mediumOreRock.zeolite.name=沸石
 
 # Strong Ore Rocks
-tile.strongOreRock.bandedIron.name=带状铁矿
+tile.strongOreRock.bandedIron.name=带状铁矿（铁）
 tile.strongOreRock.beryl.name=绿柱石矿(铍)
 tile.strongOreRock.cassiterite.name=锡石矿(锡)
 tile.strongOreRock.chromite.name=铬铁矿(铬)
