@@ -64,7 +64,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		String prefix = fluid.isMolten() ? "molten" : fluid.isGaseous() ? "gas" : "fluid";
+		String prefix = fluid.isGaseous() ? "gas" : fluid.isSuperHeated() ? "molten" : "fluid";
 		String postfix = fluid.isOpaque() ? "_opaque" : "";
 		fluid.setStillIcon(register.registerIcon("chemica:" + prefix + "_still" + postfix));
 		fluid.setFlowingIcon(register.registerIcon("chemica:" + prefix + "_flow" + postfix));

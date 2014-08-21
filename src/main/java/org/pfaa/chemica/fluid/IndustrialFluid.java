@@ -16,7 +16,6 @@ import org.pfaa.chemica.model.PhaseProperties;
 public class IndustrialFluid extends Fluid {
 
 	private Color color;
-	private boolean molten;
 	private double pressure;
 	private IndustrialMaterial material;
 	private boolean opaque;
@@ -35,12 +34,8 @@ public class IndustrialFluid extends Fluid {
 		this.color = color;
 	}
 
-	public boolean isMolten() {
-		return molten;
-	}
-	
-	public void setIsMolten(boolean molten) {
-		this.molten = molten;
+	public boolean isSuperHeated() {
+		return this.getTemperature() >= PhaseProperties.MIN_GLOWING_TEMPERATURE;
 	}
 	
 	public IndustrialMaterial getIndustrialMaterial() {
@@ -89,9 +84,8 @@ public class IndustrialFluid extends Fluid {
 		fluid.setGaseous(props.phase == Phase.GAS);
 		fluid.setDensity((int)(convertToForgeDensity(props.density)));
 		fluid.setCondition(condition);
-		fluid.setIsMolten(!fluid.isGaseous() && condition.temperature > Constants.STANDARD_TEMPERATURE);
 		if (Double.isNaN(props.viscosity)) {
-			if (fluid.isMolten()) {
+			if (fluid.isSuperHeated()) {
 				fluid.setViscosity(FluidRegistry.LAVA.getViscosity());
 			}
 		} else {
