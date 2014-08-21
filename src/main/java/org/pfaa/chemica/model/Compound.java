@@ -387,7 +387,7 @@ public interface Compound extends Chemical {
 		}
 	
 		@Override
-		public ConditionProperties getProperties(Condition condition) {
+		public ChemicalConditionProperties getProperties(Condition condition) {
 			return delegate.getProperties(condition);
 		}
 

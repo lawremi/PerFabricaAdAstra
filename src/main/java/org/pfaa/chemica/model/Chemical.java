@@ -6,6 +6,6 @@ import java.util.List;
 /* A pure substance, including elements and compounds with fixed stoichiometry */
 public interface Chemical extends IndustrialMaterial, Vaporizable {
 	public Fusion getFusion();
-	public ConditionProperties getProperties(Condition condition);
+	public ChemicalConditionProperties getProperties(Condition condition);
 	public Formula getFormula();
 }

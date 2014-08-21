@@ -62,12 +62,12 @@ public class SimpleChemical implements Chemical {
 	}
 	
 	@Override
-	public ConditionProperties getProperties(Condition condition) {
+	public ChemicalConditionProperties getProperties(Condition condition) {
 		Phase phase = this.getPhaseForCondition(condition);
-		return new ConditionProperties(this.getPhaseProperties(phase), condition);
+		return new ChemicalConditionProperties(this.getPhaseProperties(phase), condition);
 	}
 
-	private PhaseProperties getPhaseProperties(Phase phase) {
+	private ChemicalPhaseProperties getPhaseProperties(Phase phase) {
 		switch(phase) {
 		case SOLID:
 			return solid;

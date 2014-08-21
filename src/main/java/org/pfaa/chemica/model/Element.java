@@ -505,7 +505,7 @@ public interface Element extends Chemical, PartFactory {
 		}
 	
 		@Override
-		public ConditionProperties getProperties(Condition condition) {
+		public ChemicalConditionProperties getProperties(Condition condition) {
 			return delegate.getProperties(condition);
 		}
 
