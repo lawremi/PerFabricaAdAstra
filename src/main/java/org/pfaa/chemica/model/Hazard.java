@@ -1,5 +1,9 @@
 package org.pfaa.chemica.model;
 
+import java.util.List;
+
+import net.minecraft.potion.PotionEffect;
+
 public class Hazard {
 	public enum SpecialCode {
 		NONE, OXIDIZER, WATER_REACTIVE, SIMPLE_ASPHYXIANT, CORROSIVE, BIOHAZARD, POISONOUS, RADIOACTIVE, CRYOGENIC
