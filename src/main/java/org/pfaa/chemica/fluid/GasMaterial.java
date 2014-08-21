@@ -6,11 +6,13 @@ import net.minecraft.block.material.Material;
 public class GasMaterial extends Material
 {
     private static final String __OBFID = "CL_00000541";
+	private boolean flammable;
 
-    public GasMaterial(MapColor par1MapColor)
+    public GasMaterial(MapColor par1MapColor, boolean flammable)
     {
         super(par1MapColor);
         this.setReplaceable();
+        this.flammable = flammable;
     }
 
     /**
@@ -29,5 +31,10 @@ public class GasMaterial extends Material
 	@Override
 	public boolean isOpaque() {
 		return false;
+	}
+	
+	@Override
+	public boolean getCanBurn() {
+		return this.flammable;
 	}
 }

@@ -131,7 +131,7 @@ public class IndustrialFluid extends Fluid {
 		this.opaque = opaque;
 	}
 
-	public double getMaterialDensity() {
-		return this.material.getProperties(this.getCondition()).density;
+	public ConditionProperties getProperties() {
+		return this.material.getProperties(this.getCondition());
 	}
 }

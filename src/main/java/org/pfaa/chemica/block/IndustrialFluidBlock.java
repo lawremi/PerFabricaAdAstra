@@ -11,6 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -30,13 +31,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 /* FIXME: It would be cool to use this for chemical spills, but 
  * this is not going to scale for arbitrary chemicals. 
  * We may need to extend BlockFluidClassic, but catch all calls
- * in order to query a tile entity and set the fluid-specific properties 
+ * in order to query NBT information and set the fluid-specific properties 
  * on the block instance before delegating to the superclass. 
  */
 public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	private IndustrialFluid fluid;
-	private static Material gas = new GasMaterial(MapColor.airColor);
+	private Random rand;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));
@@ -44,7 +45,16 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	}
 
 	private static Material materialForIndustrialFluid(IndustrialFluid fluid) {
-		return fluid.isGaseous() ? gas : 
+		// TODO: we need a new Material so that we can mark liquids as flammable 
+		//       (used by lava ignition mechanism), but many things will break, like:
+		//       - Entity movement, drowning, rendering of air bubbles
+		//       - Blocks like sand falling through
+		//       - Rendering of a fog color
+		//       But weird things also happen, like: 
+		//       - Irrigation of crops
+		//       - Water-based mob spawning
+		boolean flammable = fluid.getProperties().hazard.flammability > 0;
+		return fluid.isGaseous() ? new GasMaterial(MapColor.airColor, flammable) : 
 			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? Material.lava : 
 				Material.water;
 	}
@@ -107,7 +117,8 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	@Override
     public void updateTick(World world, int x, int y, int z, Random rand)
     {
-		this.tryToReact();
+		// TODO: super-heated blocks should add sound and particle effects, like BlocksLiquid.func_149799_m()
+		this.rand = rand;
 		if (this.getFluid().isGaseous()) {
 			this.updateGas(world, x, y, z, rand);
 		} else {
@@ -115,9 +126,12 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		}
     }
     
-	private void tryToReact() {
-		// TODO Auto-generated method stub
-		
+	private void tryToChangePhase(World world, int x, int y, int z, Random rand) {
+		// TODO: if we have a chemical, check condition at this position and 
+		//       check for phase change, at rate inversely proportional to 
+		//       the heat capacity and enthalpy of transition. This will require
+		//       having a solid block for every chemical. Currently, we are not
+		//       sure if we will even have fluid blocks for arbitrary chemicals.
 	}
 
 	private void updateGas(World world, int x, int y, int z, Random rand)
@@ -230,10 +244,6 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
         }
         
         numLateralFlows = Math.min(numLateralFlows, numFeasibleLateralFlows);
-        if (!source && !this.canDisplace(world, x, y + densityDir, z)) {
-        	Geologica.log.info("cannot displace block above: lateral flows: " + numLateralFlows + "(" + numFeasibleLateralFlows + ") " + flowVertically);
-        }
-        
         while(numLateralFlows > 0) {
         	int i = rand.nextInt(canFlowLaterally.length);
         	if (canFlowLaterally[i]) {
@@ -250,6 +260,39 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
         }
     }
 
+	@Override
+	public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
+		int flammability = 0;
+		if (!this.isSourceBlock(world, x, y, z)) {
+			flammability = Math.max(0, this.fluid.getProperties().hazard.flammability - 1) * 100;
+			BiomeGenBase.TempCategory tempCategory = world.getBiomeGenForCoords(x, z).getTempCategory();
+			if (tempCategory == BiomeGenBase.TempCategory.COLD) {
+				flammability -= 50;
+			} else if (tempCategory == BiomeGenBase.TempCategory.WARM) {
+				flammability += 50;
+			}
+		}
+		return flammability;
+	}
+
+	@Override
+	public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z,
+			ForgeDirection face) {
+		return this.getFlammability(world, x, y, z, face) / 3;
+	}
+	
+	@Override
+	protected void flowIntoBlock(World world, int x, int y, int z, int meta) {
+		Block block = world.getBlock(x, y, z);
+		if (block == Blocks.torch || block.getMaterial() == Material.fire) {
+			if (this.rand.nextInt(300) < this.getFlammability(world, x, y, z, ForgeDirection.UNKNOWN)) {
+				world.setBlock(x, y, z, Blocks.fire);
+			}
+		} else {
+			super.flowIntoBlock(world, x, y, z, meta);
+		}
+	}
+
 	private boolean canDisplaceInDirection(World world, int x, int y, int z, ForgeDirection dir) {
 		return this.canDisplace(world, x + dir.offsetX, y, z + dir.offsetZ);
 	}
@@ -265,7 +308,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	private boolean shouldGasFlowVertically(World world, int x, int y, int z,
 			Random rand, int numFeasibleLateralFlows) {
 		// Forge density units are too large for gases when rounding to integer
-		double materialDensity = this.fluid.getMaterialDensity(); 
+		double materialDensity = this.fluid.getProperties().density; 
 		double conc = this.getQuantaValue(world, x, y, z) / (double)this.quantaPerBlock;
 		// FIXME: this air density will need to be the atmospheric density of the dimension
 		double pVertical = Math.abs(conc*(Constants.AIR_DENSITY - conc*materialDensity)) / 
@@ -289,4 +332,40 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
     	int other = this.getQuantaValue(world, x, y, z);
     	return other > 0 && other < quanta;
     }
+	
+	/* 
+	 * We disallow self-replacement (source blocks destroying other source blocks is bad).
+	 * 
+	 * This has to be done in three places, due to gratuitous code duplication.
+	 */
+	
+	private boolean shouldDisplace(IBlockAccess world, int x, int y, int z) {
+		Block block = world.getBlock(x, y, z);
+		return block != this; 
+	}
+	
+	@Override
+	public boolean canFlowInto(IBlockAccess world, int x, int y, int z) {
+		if (!shouldDisplace(world, x, y, z)) {
+			return false;
+		}
+		return super.canFlowInto(world, x, y, z);
+	}
+	
+	@Override
+	public boolean canDisplace(IBlockAccess world, int x, int y, int z) {
+		if (!shouldDisplace(world, x, y, z)) {
+			return false;
+		}
+		return super.canDisplace(world, x, y, z);
+	}
+
+	@Override
+	public boolean displaceIfPossible(World world, int x, int y, int z) {
+		if (!shouldDisplace(world, x, y, z)) {
+			return false;
+		}
+		return super.displaceIfPossible(world, x, y, z);
+	}
+	
 }

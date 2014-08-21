@@ -1201,7 +1201,7 @@
      * Level 4: like burning in lava (must drink milk to stop)
      
 **** Flammability
-     Will ignite when in contact with a flame, depending on
+     Will ignite when in contact with a flame/spark, depending on
      temperature. Temperatures for each level:
      * Level 1: > 200 C
      * Level 2: > 100 C
@@ -1212,14 +1212,27 @@
      matter of degree. If player catches on fire with flammable items
      in inventory, the items will burn up, damaging the player. For
      L3 and L4, using flint and steel will ignite items in inventory.
-     
+
+     Adapting vanilla mechanics:
+     * Lava should be capable of igniting anything >=L1. This means
+       a custom material that is flammable.
+     * Fire should spread according to a probability that is
+       proportional to the flammability. This is easy to support. But
+       what about modeling the ambient temperature? Not right now.
+       
+     In vanilla, liquids (water) extinguish torches. But what happens
+     when a flammable fluid attempts to flow into a torch? Probably
+     should ignite with the same probability as fire spreading.
+
 **** Reactivity
      Will explode, depending on temperature/force:
      * Level 1: explodes if heated > 200 C
      * Level 2: explodes if heated > 100 C
      * Level 3: explodes if near any heating or another explosion 
      * Level 4: explodes whenever thrown (or anything from L3)
-       
+
+     L4 has explosive radius of TNT; otherwise creeper radius.
+     
 **** Special
      * Water reactive: obviously blows up when contacts water!
      * Asphyxiant: when exposed, count down as if underwater, then pain
@@ -3663,7 +3676,12 @@
 * Libraries
 ** Enchiridion
    A library for making custom books; we will have a lot of explaining
-   to do. But can they be generated dynamically?
+   to do. But can they be generated dynamically? Or do we want to use
+   HQM here to interactively guide the player?
+
+** Brewing API
+   Add new brewing recipes and potions. Perhaps useful for primitive
+   chemistry?
    
 * Other resources
 ** Forge tutorials
