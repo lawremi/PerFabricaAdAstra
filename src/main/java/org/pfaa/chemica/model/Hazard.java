@@ -30,4 +30,37 @@ public class Hazard {
 	public Hazard() {
 		this(1, 0, 0);
 	}
+
+	private static final double[] IGNITION_TEMP_LIMITS = new double[] { 
+		Double.POSITIVE_INFINITY, 500, 400, Constants.STANDARD_TEMPERATURE, 200
+	};
+
+	public boolean isFlammable(Condition condition) {
+		return condition.temperature >= IGNITION_TEMP_LIMITS[this.flammability];
+	}
+	
+	private static final double[] EXPLOSION_TEMP_LIMITS = new double[] { 
+		Double.POSITIVE_INFINITY, 500, 400, 300, Constants.STANDARD_TEMPERATURE
+	};
+	
+	public int getExplosionRadius(Condition condition) {
+		if (condition.temperature >= EXPLOSION_TEMP_LIMITS[this.instability]) {
+			return this.instability; 
+		} else {
+			return 0;
+		}
+	}
+	
+	public List<PotionEffect> getHealthEffects() {
+		switch(this.health) {
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		default:
+			throw new IllegalStateException("Invalid health value");
+		}
+	}
+	
 }
