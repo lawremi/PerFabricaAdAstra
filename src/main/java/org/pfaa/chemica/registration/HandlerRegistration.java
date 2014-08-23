@@ -1,4 +1,4 @@
-package org.pfaa.geologica.registration;
+package org.pfaa.chemica.registration;
 
 import net.minecraftforge.common.MinecraftForge;
 

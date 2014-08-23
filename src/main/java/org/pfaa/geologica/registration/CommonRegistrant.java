@@ -9,7 +9,6 @@ public class CommonRegistrant implements Registrant {
 		BlockRegistration.init();
 		ItemRegistration.init();
 		EntityRegistration.init();
-		HandlerRegistration.init();
 	}
 
 	@Override
