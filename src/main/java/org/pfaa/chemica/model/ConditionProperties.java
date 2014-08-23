@@ -2,10 +2,6 @@ package org.pfaa.chemica.model;
 
 import java.awt.Color;
 
-import org.pfaa.chemica.utils.ColorUtils;
-
-import net.minecraftforge.fluids.FluidRegistry;
-
 public class ConditionProperties {
 	public final Phase phase;
 	public final Color color;

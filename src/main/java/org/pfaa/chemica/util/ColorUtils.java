@@ -1,4 +1,4 @@
-package org.pfaa.chemica.utils;
+package org.pfaa.chemica.util;
 
 import java.awt.Color;
 

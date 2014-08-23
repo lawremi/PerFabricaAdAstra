@@ -2,9 +2,9 @@ package org.pfaa.chemica.model;
 
 import java.awt.Color;
 
-import org.pfaa.chemica.utils.ColorUtils;
-
 import net.minecraftforge.fluids.FluidRegistry;
+
+import org.pfaa.chemica.util.ColorUtils;
 
 public class PhaseProperties {
 	private final Phase phase;
