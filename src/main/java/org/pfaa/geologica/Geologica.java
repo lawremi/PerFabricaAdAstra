@@ -34,7 +34,7 @@ public class Geologica {
 	}
 	
 	@SidedProxy(clientSide = "org.pfaa.geologica.client.registration.ClientRegistrant", 
-                    serverSide = "org.pfaa.geologica.registration.CommonRegistrant")
+                serverSide = "org.pfaa.geologica.registration.CommonRegistrant")
 	public static Registrant registrant;
 	
 	public static Logger log;
