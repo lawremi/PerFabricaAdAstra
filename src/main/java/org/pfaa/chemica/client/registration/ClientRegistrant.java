@@ -1,6 +1,6 @@
 package org.pfaa.chemica.client.registration;
 
-import org.pfaa.geologica.registration.CommonRegistrant;
+import org.pfaa.chemica.registration.CommonRegistrant;
 
 public class ClientRegistrant extends CommonRegistrant {
 
