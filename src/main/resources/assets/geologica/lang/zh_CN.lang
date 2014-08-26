@@ -282,7 +282,7 @@ tile.mediumOreRock.wollastonite.name=钙硅石
 tile.mediumOreRock.zeolite.name=沸石
 
 # Strong Ore Rocks
-tile.strongOreRock.bandedIron.name=带状铁矿（铁）
+tile.strongOreRock.bandedIron.name=带状铁矿
 tile.strongOreRock.beryl.name=绿柱石矿(铍)
 tile.strongOreRock.cassiterite.name=锡石矿(锡)
 tile.strongOreRock.chromite.name=铬铁矿(铬)
@@ -298,3 +298,10 @@ tile.strongOreRock.apatite.name=磷灰石
 tile.strongOreRock.kyanite.name=蓝晶石
 tile.strongOreRock.perlite.name=珍珠岩
 tile.strongOreRock.pumice.name=浮石
+
+# Vanilla ore overrides
+tile.coalOre.name=煤矿
+tile.diamondOre.name=钻石矿
+tile.emeraldOre.name=绿宝石矿
+tile.lapisOre.name=青金石矿
+tile.redstoneOre.name=红石矿
