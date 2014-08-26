@@ -12,6 +12,9 @@ import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Phase;
 import org.pfaa.chemica.model.PhaseProperties;
+import org.pfaa.geologica.Geologica;
+
+import com.google.common.base.CaseFormat;
 
 public class IndustrialFluid extends Fluid {
 
@@ -64,7 +67,7 @@ public class IndustrialFluid extends Fluid {
 		if (props == null || props.phase == Phase.SOLID) {
 			return null;
 		}
-		String name = props.phase.name() + "_" + material.name();
+		String name = (props.phase.name() + "_" + material.name()).toLowerCase();
 		Fluid existingFluid = FluidRegistry.getFluid(name);
 		IndustrialFluid fluid;
 		if (existingFluid instanceof IndustrialFluid) {
