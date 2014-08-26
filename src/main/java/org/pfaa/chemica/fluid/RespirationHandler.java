@@ -85,7 +85,6 @@ public class RespirationHandler {
     		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
     		if (block != null) {
         		float oxygenContent = getBreathableOxygenContent(block, entity);
-        		Chemica.log.info("oxygen content: " + oxygenContent);
         		if (oxygenContent < MIN_PERMISSIBLE_OXYGEN_CONTENT) {
 	        		Random rand = new Random();
 	        		setAirLevel(entity, decreaseAirSupply(entity, initAirLevel, rand));
