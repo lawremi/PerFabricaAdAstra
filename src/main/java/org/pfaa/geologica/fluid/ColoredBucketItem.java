@@ -11,11 +11,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ColoredBucketItem extends ItemBucket {
 
 	private IIcon overlay;
-	private int color;
+	private Block fluidBlock;
 	
 	public ColoredBucketItem(Block block) {
 		super(block);
-		this.color = block.colorMultiplier(null, 0, 0, 0);
+		this.fluidBlock = block; 
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ColoredBucketItem extends ItemBucket {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack itemStack, int renderPass) {
-		return renderPass > 0 ? this.color : super.getColorFromItemStack(itemStack, renderPass); 
+		return renderPass > 0 ? this.getColor() : super.getColorFromItemStack(itemStack, renderPass); 
 	}
 
 	@Override
@@ -52,4 +52,8 @@ public class ColoredBucketItem extends ItemBucket {
 		return "bucket_empty";
 	}
 
+	@SideOnly(Side.CLIENT)
+	private int getColor() {
+		return this.fluidBlock.colorMultiplier(null, 0, 0, 0);
+	}
 }
