@@ -52,6 +52,7 @@ import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
 import org.pfaa.chemica.model.Formula.Part;
+import org.pfaa.chemica.model.Hazard.SpecialCode;
 
 /* A compound is a type of chemical resulting from the combination of different 
  * atoms according to a fixed stoichiometry.
@@ -249,7 +250,16 @@ public interface Compound extends Chemical {
 	    Ni9S8(new Formula(Ni._(9), S._(8)), "nickel",
 			  new Solid(new Color(165, 150, 5), 4.8, new Thermo(-847, 475, 443))),
 		Ni3Si2O5OH4(new Formula(Ni._(3), new Part(Si._(2), O._(5)), new Part(O, H)._(4)), "nickel",
-				    new Solid(Color.GREEN, 3.2, new Thermo())),					    
+				    new Solid(Color.GREEN, 3.2, new Thermo())),
+	    O2(new Formula(O._(2)), "oxygen",
+			null,
+			null,
+			new Liquid(1.14, new Thermo(129)),
+			new Vaporization(3.95, 340,	-4.14),
+			new Gas(new Thermo(31.3, -20.2, 57.9, -36.5, -0.00737, -8.90, 247).
+					addSegment(700, 30.03, 8.77, -3.99, 0.788, -0.742, -11.3, 236).
+					addSegment(2000, 20.9, 10.7, -2.02, 0.146, 9.25, 5.34, 238), 
+					new Hazard(3, 0, 0, SpecialCode.OXIDIZER), new Sutherland(127, 292, 20.1))),
 		PbS(new Formula(Pb, S), "lead", 
 			new Solid(new Color(26, 26, 26), 7.6, 
 					  new Thermo(47.4, 7.55, 2.01, -0.700, -0.0318, -113, 146), 
