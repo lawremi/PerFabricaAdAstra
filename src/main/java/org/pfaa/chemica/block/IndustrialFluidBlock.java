@@ -7,22 +7,23 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
-import net.minecraftforge.fluids.Fluid;
 
-import org.pfaa.chemica.fluid.GasMaterial;
+import org.pfaa.chemica.fluid.FluidMaterial;
 import org.pfaa.chemica.fluid.IndustrialFluid;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.render.EntityDropParticleFX;
-import org.pfaa.geologica.Geologica;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -48,13 +49,12 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		// TODO: we need a new Material so that we can mark liquids as flammable 
 		//       (used by lava ignition mechanism), but many things will break, like:
 		//       - Entity movement, drowning, rendering of air bubbles
-		//       - Blocks like sand falling through
-		//       - Rendering of a fog color
+		//       - Blocks like sand falling through (sort of works, as long as already falling)
 		//       But weird things also happen, like: 
 		//       - Irrigation of crops
 		//       - Water-based mob spawning
 		boolean flammable = fluid.getProperties().hazard.flammability > 0;
-		return fluid.isGaseous() ? new GasMaterial(MapColor.airColor, flammable) : 
+		return fluid.isGaseous() ? new FluidMaterial(MapColor.airColor, flammable, false) : 
 			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? Material.lava : 
 				Material.water;
 	}
@@ -87,6 +87,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		this.trySeepEffect(world, x, y, z, rand);
 	}
 
+	@SideOnly(Side.CLIENT)
 	private void trySeepEffect(World world, int x, int y, int z, Random rand) {
 		if (rand.nextInt(10) == 0
 				&& World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)
@@ -105,9 +106,8 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		}
 	}
 	
-	// FIXME: for some reason, BlockFluidClassic returns null for this...
 	@Override
-	public Fluid getFluid() {
+	public IndustrialFluid getFluid() {
 		return this.fluid;
 	}
 	
@@ -285,9 +285,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	protected void flowIntoBlock(World world, int x, int y, int z, int meta) {
 		Block block = world.getBlock(x, y, z);
 		if (block == Blocks.torch || block.getMaterial() == Material.fire) {
-			if (this.rand.nextInt(300) < this.getFlammability(world, x, y, z, ForgeDirection.UNKNOWN)) {
-				world.setBlock(x, y, z, Blocks.fire);
-			}
+			this.tryToIgnite(world, x, y, z);
 		} else {
 			super.flowIntoBlock(world, x, y, z, meta);
 		}
@@ -367,5 +365,56 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		}
 		return super.displaceIfPossible(world, x, y, z);
 	}
+
+	@Override
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
+    {
+		if (entity.isBurning()) {
+			if (!this.tryToIgnite(world, x, y, z)) {
+				entity.extinguish();
+			}
+		}
+    }
 	
+	private boolean tryToIgnite(World world, int x, int y, int z) {
+		if (this.rand.nextInt(300) < this.getFlammability(world, x, y, z, ForgeDirection.UNKNOWN)) {
+			world.setBlock(x, y, z, Blocks.fire);
+			return true;
+		}
+		return false;
+	}
+	
+    public static IndustrialFluidBlock atEyeLevel(EntityLivingBase entity) {
+    	double j0 = entity.posY + (entity.worldObj.isRemote ? 0 : entity.getEyeHeight());
+		int i = MathHelper.floor_double(entity.posX);
+        int j = MathHelper.floor_double(j0);
+        int k = MathHelper.floor_double(entity.posZ);
+    	Block block = entity.worldObj.getBlock(i, j, k);
+    	if (block instanceof IndustrialFluidBlock) {
+    		IndustrialFluidBlock fluidBlock = (IndustrialFluidBlock)block;
+    		float filled = fluidBlock.getFilledPercentage(entity.worldObj, i, j, k);
+    		float density = fluidBlock.getFluid().getDensity();
+    		Block nbor = entity.worldObj.getBlock(i, j - (density > 0 ? -1 : 1), k);
+    		if (nbor == block) {
+    			filled = 1.0F;
+    		}
+    		if (positionInFilledPortion(j0, filled)) {
+    			return fluidBlock;
+    		}
+    	}
+    	return null;
+	}
+
+	private static boolean positionInFilledPortion(double j0, float filled) {
+		if (filled < 0)
+        {
+            filled *= -1;
+            return j0 > (double)(MathHelper.floor_double(j0) + (1 - filled));
+        }
+        else
+        {
+            return j0 < (double)(MathHelper.floor_double(j0) + filled);
+        }
+	}
+
 }

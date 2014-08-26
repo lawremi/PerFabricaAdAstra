@@ -1454,18 +1454,21 @@
     This relies on materials having different specific gravities.
 
     Types:
-    * Centrifuge :: Spins an object so that its contents separate by
-                    density through centrifugal force. This requires
-                    a lot of energy. This already exists in GT.
-    * Spiral :: Spiral sluice relies on gravity to accelerate
-                materials down the incline, with the denser materials
-                tending toward the middle. No energy required.
     * Settling :: A multiblock settling tank could take a mixture at
                   the top and yield one or more solids (one from each
                   of the bottom blocks) depending on the relative 
                   densities. The more blocks, the more liquid that
                   can be processed. This is simpler and cheaper than
-                  spiral separation, but proceeds much more slowly.
+                  spiral separation, but proceeds much more
+                  slowly. One could claim that Gregtech's support for
+                  throwing ore into a cauldron is similar to
+                  this. Could we support automation with hoppers?
+    * Spiral :: Spiral sluice relies on gravity to accelerate
+                materials down the incline, with the denser materials
+                tending toward the middle. No energy required.
+    * Centrifuge :: Spins an object so that its contents separate by
+                    density through centrifugal force. This requires
+                    a lot of energy. This already exists in IC2 and GT.
     * Cyclonic :: A cyclone of fluid (liquid or gas) is established,
                   denser particles hit the wall and fall
                   out. Liquid/solid separators are called
@@ -1476,7 +1479,8 @@
                         pretty slow.
     * Jig Beds :: Fluidized bed with pulsing water instead of
                   shaking. Works faster than shaking tables but
-                  material will need to be dried.
+                  material will need to be dried. This is most similar
+                  to the IC2 ore washing machine.
     
     Centrifuge recipes:
      | Input       | Output                   |
@@ -1516,12 +1520,12 @@
     some matrix that reacts with the water, removing it from solution.
 
 *** Electrostatic
-    Charge-based separation. Useful for small particles like mineral
-    sands (rutile and ilmenite are conductive, the rest are
+    Conductivity-based separation. Useful for small particles like
+    mineral sands (rutile and ilmenite are conductive, the rest are
     not). Also, cassiterite. Requires some energy to maintain the
     electric field. No slurry required.
 
-    See:
+    This lists some conductivity values and outlines sand processing:
     http://www.iluka.com/docs/mining-and-processing/mineral-separation.pdf
     
 *** Magnetic
@@ -1529,7 +1533,9 @@
     energy for the electromagnet. Useful for magnetite ores. Advanced,
     high-powered separators can separate ores containing iron (like
     ilmenite).
-    
+
+    See: http://pubs.usgs.gov/of/1999/ofr-99-0529/
+      
 ** Reactions
    A chemical reactor performs some combination of these functions:
    * mixing
@@ -2040,8 +2046,8 @@
                       there are many methods (see separation section):
      * Gravity/density-based
      * Chemical, e.g. froth-flotation
-     * Electrostatic
-     * Magnetic
+     * Electrostatic (for mineral sands)
+     * Magnetic (mostly for iron-containing minerals)
    * Dewatering :: If a slurry is formed during separation, the water
                    needs to be removed. Perhaps by filtering,
                    sedimentation, or drying (requires more energy).
@@ -2071,7 +2077,6 @@
    reactor would mix the NaVO3 (aq) and ammonia, resulting in an
    mixture of aqueous ammonia and solid vanadate. A liquid/solid
    separator yields the vanadate powder for roasting.
-
      
 *** Limonite
 **** Iron
@@ -2178,7 +2183,6 @@
      Need to figure this out.
      
 **** TODO Rubidium
-     
      
 *** Dolomite
 **** Magnesium

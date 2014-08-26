@@ -15,6 +15,8 @@ import codechicken.lib.math.MathHelper;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class FogHandler {
 
@@ -25,13 +27,11 @@ public class FogHandler {
 
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onFogColors(FogColors event) {
-		int x = (int)event.entity.posX;
-		int y = (int)event.entity.posY;
-		int z = (int)event.entity.posZ;
-		Block block = event.entity.worldObj.getBlock(x, y, z);
-		if (block instanceof IndustrialFluidBlock) {
-			int color = ((BlockFluidBase)block).getFluid().getColor();
+		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(event.entity);
+		if (block != null) {
+			int color = block.getFluid().getColor();
 			event.red = (color >> 16 & 255) / 255.0F;
 			event.green = (color >> 8 & 255) / 255.0F;
 	        event.blue = (color & 255) / 255.0F;
@@ -39,13 +39,11 @@ public class FogHandler {
 	}
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void onFogDensity(FogDensity event) {
-		int x = (int)MathHelper.floor_double(event.entity.posX);
-		int y = (int)MathHelper.floor_double(event.entity.posY);
-		int z = (int)MathHelper.floor_double(event.entity.posZ);
-		Block block = event.entity.worldObj.getBlock(x, y, z);
-		if (block instanceof IndustrialFluidBlock) {
-			Fluid fluid = ((BlockFluidBase)block).getFluid();
+		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(event.entity);
+		if (block != null) {
+			Fluid fluid = block.getFluid();
 			GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
 			if (!fluid.isGaseous() && event.entity.isPotionActive(Potion.waterBreathing))
 			{

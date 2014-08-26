@@ -3,17 +3,21 @@ package org.pfaa.chemica.fluid;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 
-public class GasMaterial extends Material
-{
-    private static final String __OBFID = "CL_00000541";
+public class FluidMaterial extends Material {
 	private boolean flammable;
+	private boolean opaque;
 
-    public GasMaterial(MapColor par1MapColor, boolean flammable)
-    {
+	public FluidMaterial(MapColor par1MapColor, boolean flammable, boolean opaque) {
         super(par1MapColor);
         this.setReplaceable();
         this.flammable = flammable;
-    }
+        this.opaque = opaque;
+	}
+	
+	@Override
+	public boolean getCanBurn() {
+		return this.flammable;
+	}
 
     /**
      * Returns if this material is considered solid or not
@@ -27,14 +31,10 @@ public class GasMaterial extends Material
     {
         return false;
     }
-
+    
 	@Override
 	public boolean isOpaque() {
-		return false;
-	}
-	
-	@Override
-	public boolean getCanBurn() {
-		return this.flammable;
+		return this.opaque;
 	}
 }
+
