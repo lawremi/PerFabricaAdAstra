@@ -83,7 +83,7 @@ public class RespirationHandler {
     		// TODO: handle oxygen _over_dose
     		// TODO: make it so the oxygen content for gases is averaged with air content
     		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
-    		if (block != null) {
+    		if (block != null && (block.getFluid().isGaseous() || entity.canBreatheUnderwater())) {
         		float oxygenContent = getBreathableOxygenContent(block, entity);
         		if (oxygenContent < MIN_PERMISSIBLE_OXYGEN_CONTENT) {
 	        		Random rand = new Random();

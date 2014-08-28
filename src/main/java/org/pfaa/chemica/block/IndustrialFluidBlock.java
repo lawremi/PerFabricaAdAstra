@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -24,6 +25,8 @@ import org.pfaa.chemica.fluid.IndustrialFluid;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.render.EntityDropParticleFX;
+
+import com.mojang.realmsclient.dto.McoServer.WorldType;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -39,24 +42,41 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	private IndustrialFluid fluid;
 	private Random rand;
+	private boolean spoofWater;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));
 		this.fluid = fluid;
 	}
 
+	/* We want our own material for liquids, because Material.water will cause:
+	 * - Water bottles to be filled with water
+	 *   - Ideally, they would fill with the liquid; but we need a hook 
+	 * - Crops to be irrigated
+	 *   - One idea is to reverse this: create polluted soil
+	 * - Inability of lava to ignite flammable liquids
+	 * - Water mobs to spawn [block with EntityJoinWorldEvent]
+	 * - Water and beach crops to be sustained [can disable at block-level]
+	 * 
+	 * But if we use a custom material, then:
+	 * - Movement breaks
+	 *   - Tough to fix; might sort of work for players, but not other entities
+	 * - Burning entities are not extinguished (when block does not change to fire)
+	 *   - Could be fixed if we fix the movement issue
+	 * - Witches will not use a water breathing potion
+	 * - Entities are not forced to dismount when riding another entity
+	 *   - Easy to code this with the drowning code
+	 * - Dogs will not shake off the liquid upon exiting
+	 * - Drowning breaks [fixed; had to do this for gases]
+	 * - Sand/gravel do not fall when placed directly above [also bug for gases]
+	 */
 	private static Material materialForIndustrialFluid(IndustrialFluid fluid) {
-		// TODO: we need a new Material so that we can mark liquids as flammable 
-		//       (used by lava ignition mechanism), but many things will break, like:
-		//       - Entity movement, drowning, rendering of air bubbles
-		//       - Blocks like sand falling through (sort of works, as long as already falling)
-		//       But weird things also happen, like: 
-		//       - Irrigation of crops
-		//       - Water-based mob spawning
-		boolean flammable = fluid.getProperties().hazard.flammability > 0;
-		return fluid.isGaseous() ? new FluidMaterial(MapColor.airColor, flammable, false) : 
-			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? Material.lava : 
-				Material.water;
+		MapColor mapColor = fluid.isGaseous() ? MapColor.tntColor :
+			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? MapColor.tntColor : 
+					MapColor.waterColor;
+		return new FluidMaterial(mapColor, 
+				fluid.getProperties().hazard.flammability > 0,
+				fluid.getProperties().opaque);
 	}
 
 	@Override
@@ -71,6 +91,14 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		return side != 0 && side != 1 ? this.fluid.getFlowingIcon() : this.fluid.getStillIcon();
 	}
 	
+	@Override
+	public Material getMaterial() {
+		if (this.spoofWater) {
+			return Material.water;
+		}
+		return super.getMaterial();
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
@@ -417,4 +445,11 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
         }
 	}
 
+	public void spoofWater() {
+		this.spoofWater = true;
+	}
+	
+	public void unspoofWater() {
+		this.spoofWater = false;
+	}
 }
