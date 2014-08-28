@@ -265,7 +265,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		int flammability = 0;
 		if (!this.isSourceBlock(world, x, y, z)) {
 			flammability = Math.max(0, this.fluid.getProperties().hazard.flammability - 1) * 100;
-			BiomeGenBase.TempCategory tempCategory = world.getBiomeGenForCoords(x, z).getTempCategory();
+			BiomeGenBase.TempCategory tempCategory = ((World)world).getBiomeGenForCoords(x, z).getTempCategory();
 			if (tempCategory == BiomeGenBase.TempCategory.COLD) {
 				flammability -= 50;
 			} else if (tempCategory == BiomeGenBase.TempCategory.WARM) {
