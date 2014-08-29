@@ -79,11 +79,13 @@ public class RespirationHandler {
     private static void handleRespiration(EntityLivingBase entity, int initAirLevel) {
     	if (entity.isEntityAlive())
         {
-    		// TODO: if fluid is extremely hot (>320K), we should just apply damage
-    		// TODO: handle oxygen _over_dose
-    		// TODO: make it so the oxygen content for gases is averaged with air content
+    		// TODO: if liquid is irritant (health hazard), apply negative effects
+    		//       this requires an algorithm like Entity.handleWaterMovement().
+    		//       if fluid is extremely hot (>320K), we should just apply damage. 
     		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
     		if (block != null && (block.getFluid().isGaseous() || entity.canBreatheUnderwater())) {
+    			// TODO: apply health effects for gases here
+    			// TODO: as part of the above, handle oxygen _over_dose
         		float oxygenContent = getBreathableOxygenContent(block, entity);
         		if (oxygenContent < MIN_PERMISSIBLE_OXYGEN_CONTENT) {
 	        		Random rand = new Random();
