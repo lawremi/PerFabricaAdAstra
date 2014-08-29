@@ -71,12 +71,10 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	 * - Sand/gravel do not fall when placed directly above [also bug for gases]
 	 */
 	private static Material materialForIndustrialFluid(IndustrialFluid fluid) {
-		MapColor mapColor = fluid.isGaseous() ? MapColor.tntColor :
-			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? MapColor.tntColor : 
-					MapColor.waterColor;
-		return new FluidMaterial(mapColor, 
-				fluid.getProperties().hazard.flammability > 0,
-				fluid.getProperties().opaque);
+		boolean flammable = fluid.getProperties().hazard.flammability > 0;
+		return fluid.isGaseous() ? new FluidMaterial(MapColor.airColor, flammable, false) :
+			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? Material.lava :
+				Material.water;
 	}
 
 	@Override
