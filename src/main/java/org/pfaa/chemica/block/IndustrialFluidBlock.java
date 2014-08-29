@@ -42,7 +42,6 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	private IndustrialFluid fluid;
 	private Random rand;
-	private boolean spoofWater;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));
@@ -91,14 +90,6 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		return side != 0 && side != 1 ? this.fluid.getFlowingIcon() : this.fluid.getStillIcon();
 	}
 	
-	@Override
-	public Material getMaterial() {
-		if (this.spoofWater) {
-			return Material.water;
-		}
-		return super.getMaterial();
-	}
-
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
@@ -443,13 +434,5 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
         {
             return j0 < (double)(MathHelper.floor_double(j0) + filled);
         }
-	}
-
-	public void spoofWater() {
-		this.spoofWater = true;
-	}
-	
-	public void unspoofWater() {
-		this.spoofWater = false;
 	}
 }
