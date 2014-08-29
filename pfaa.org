@@ -1200,6 +1200,34 @@
      * Level 3: damage similar to cave spider poison
      * Level 4: like burning in lava (must drink milk to stop)
      
+     New idea: it seems that gases should apply effects when at eye
+     level (inhaled) and liquids when contacted in the
+     world. Ingestion of liquids should magnify effects. If marked as
+     poisonous, poison effect obviously applies always.
+
+     Liquid Contact:
+     * Level >=2: Instant damage
+     * Level >=3: Poison effect
+     * Level >=4: Increased poison effect, usually lethal
+     
+     Liquid ingestion (drinking a potion):
+     * Level >=1: Nausea
+     * Level >=2: Nausea + instant damage
+     * Level >=3: Nausea + poison effect  
+     * Level >=4: Nausea + increased poison effect, usually lethal
+     
+     Gas inhalation (immediately upon contact):
+     * Level >=2: Nausea
+     * Level >=3: Nausea + poison effect  
+     * Level >=4: Nausea + increased poison effect, usually lethal
+     
+     Some liquids may have additional effects. They may also need
+     custom countermeasures. For now, level >= 3 treated by milk.
+
+     If the boiling point is near room temperature, contact with
+     liquid is equivalent to contact with the gas. Or we need to model
+     liquids spawning gases, which would be cool.
+     
 **** Flammability
      Will ignite when in contact with a flame/spark, depending on
      temperature. Temperatures for each level:
@@ -3608,28 +3636,12 @@
 ** BuildCraft
    Generates oil, but Geologica could/should easily do
    this. The planned distillation tower will be useful.
+** Applied Energistics
+** Electrical Age
 ** Mekanism    
-** Rotary Craft
 ** Witchery
    The most chemical of all of the magic mods. Uses actual chemicals
    in e.g. distillation.
-** Engineer's Toolbox
-   Modular machine construction, based around a generic framework
-   called a "socket". A socket has item, fluid and energy storage, as
-   well as redstone channels and latches. All six sides of a socket
-   can have an attached module. A module might handle anything,
-   including item/fluid/energy input/output, redstone logic, ore
-   processing, etc. While at first glance it seems strange that a
-   furnace, grinder and centrifuge can be combined into one block,
-   realize that there are constraints: to get items to/from the
-   inventory, sides must be occupied. For more complex machines, the
-   module would only interface with a multi-block structure.
-
-   This might simplify our machine implementation: we just need to
-   create modules. GasCraft is already based on sockets.
-   
-*** GasCraft
-    Should integrate with its gasses and machines.   
 ** Thermal Expansion
 *** Induction furnace
     Could potentially support enhanced reduction. Currently, sand is
@@ -3657,7 +3669,7 @@
 ** Galacticraft
    Obvious base for exploration of other worlds.
    
-** Thaumcraft?
+** Thaumcraft
    We should add magical aspects to every item, so that we mesh with
    magic-based gameplay. The ore dictionary should handle this somehow.
       

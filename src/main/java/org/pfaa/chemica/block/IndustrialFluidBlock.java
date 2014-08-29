@@ -50,10 +50,11 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	/* We want our own material for liquids, because Material.water will cause:
 	 * - Water bottles to be filled with water
-	 *   - Ideally, they would fill with the liquid; but we need a hook 
+	 *   - Ideally, they would fill with the liquid
 	 * - Crops to be irrigated
-	 *   - One idea is to reverse this: create polluted soil
+	 *   - One idea is to reverse this: create polluted soil that spreads through dirt/farmland
 	 * - Inability of lava to ignite flammable liquids
+	 *   - On liquid block update, look +/- 2 in X/Z for lava, call its updateTick() while spoofing flammable material.
 	 * - Water mobs to spawn [block with EntityJoinWorldEvent]
 	 * - Water and beach crops to be sustained [can disable at block-level]
 	 * 
