@@ -41,7 +41,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	private IndustrialFluid fluid;
-	private Random rand;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));
@@ -136,7 +135,6 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
     public void updateTick(World world, int x, int y, int z, Random rand)
     {
 		// TODO: super-heated blocks should add sound and particle effects, like BlocksLiquid.func_149799_m()
-		this.rand = rand;
 		if (this.getFluid().isGaseous()) {
 			this.updateGas(world, x, y, z, rand);
 		} else {
@@ -397,7 +395,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
     }
 	
 	private boolean tryToIgnite(World world, int x, int y, int z) {
-		if (this.rand.nextInt(300) < this.getFlammability(world, x, y, z, ForgeDirection.UNKNOWN)) {
+		if (world.rand.nextInt(300) < this.getFlammability(world, x, y, z, ForgeDirection.UNKNOWN)) {
 			world.setBlock(x, y, z, Blocks.fire);
 			return true;
 		}
