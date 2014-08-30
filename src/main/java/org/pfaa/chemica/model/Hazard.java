@@ -1,7 +1,9 @@
 package org.pfaa.chemica.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class Hazard {
@@ -55,16 +57,28 @@ public class Hazard {
 		}
 	}
 	
-	public List<PotionEffect> getHealthEffects() {
-		switch(this.health) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		default:
-			throw new IllegalStateException("Invalid health value");
-		}
+	private PotionEffect createPotionEffect(Potion potion, int durationAmplifier) {
+		return new PotionEffect(potion.id, 20 * 2 ^ (this.health + durationAmplifier));
 	}
 	
+	// happens when inside a fluid block
+	public List<PotionEffect> getContactEffects() {
+		List<PotionEffect> effects = new ArrayList<PotionEffect>();
+		if (this.health >= 2) {
+			effects.add(this.createPotionEffect(Potion.poison, 0));
+		}
+		return effects;
+	}
+	
+	// happens when drinking a liquid (potion)
+	public List<PotionEffect> getIngestionEffects() {
+		List<PotionEffect> effects = new ArrayList<PotionEffect>();
+		if (this.health >= 1) {
+			effects.add(this.createPotionEffect(Potion.confusion, 1));
+		}
+		if (this.health >= 2) {
+			effects.add(this.createPotionEffect(Potion.poison, 1));
+		}
+		return effects;
+	}
 }
