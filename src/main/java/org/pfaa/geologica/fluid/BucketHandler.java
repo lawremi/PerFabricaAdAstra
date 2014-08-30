@@ -29,7 +29,7 @@ public final class BucketHandler {
 
 	@SubscribeEvent
 	public void onBucketFill(FillBucketEvent event) {
-		ItemStack result = fillCustomBucket(event.world, event.target);
+		ItemStack result = fillCustomBucket(event.world, event.target, event.current);
 
 		if (result == null) {
 			return;
@@ -39,12 +39,16 @@ public final class BucketHandler {
 		event.setResult(Result.ALLOW);
 	}
 
-	private ItemStack fillCustomBucket(World world, MovingObjectPosition pos) {
+	private ItemStack fillCustomBucket(World world, MovingObjectPosition pos, ItemStack container) {
 		Block block = world.getBlock(pos.blockX, pos.blockY, pos.blockZ);
 		Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 		if (fluid != null) {
+			boolean isSource = world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0;
+			if (!isSource) {
+				return null;
+			}
 			FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
-			ItemStack bucket = FluidContainerRegistry.fillFluidContainer(fluidStack, FluidContainerRegistry.EMPTY_BUCKET);
+			ItemStack bucket = FluidContainerRegistry.fillFluidContainer(fluidStack, container);
 			if (bucket != null) {
 				world.setBlockToAir(pos.blockX, pos.blockY, pos.blockZ);
 				return bucket;
