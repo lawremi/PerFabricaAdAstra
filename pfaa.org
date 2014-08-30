@@ -1202,23 +1202,17 @@
      
      New idea: it seems that gases should apply effects when at eye
      level (inhaled) and liquids when contacted in the
-     world. Ingestion of liquids should magnify effects. If marked as
-     poisonous, poison effect obviously applies always.
+     world. Ingestion of liquids should magnify effects.
 
-     Liquid Contact:
-     * Level >=2: Instant damage
-     * Level >=3: Poison effect
+     Fluid contact:
+     * Level >=2: Poison effect
+     * Level >=3: Increased poison effect
      * Level >=4: Increased poison effect, usually lethal
      
-     Liquid ingestion (drinking a potion):
+     Fluid ingestion (drinking a potion):
      * Level >=1: Nausea
-     * Level >=2: Nausea + instant damage
-     * Level >=3: Nausea + poison effect  
-     * Level >=4: Nausea + increased poison effect, usually lethal
-     
-     Gas inhalation (immediately upon contact):
-     * Level >=2: Nausea
-     * Level >=3: Nausea + poison effect  
+     * Level >=2: Nausea + poison effect
+     * Level >=3: Nausea + increased poison effect  
      * Level >=4: Nausea + increased poison effect, usually lethal
      
      Some liquids may have additional effects. They may also need

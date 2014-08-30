@@ -79,7 +79,7 @@ public class RespirationHandler {
     private static void handleRespiration(EntityLivingBase entity, int initAirLevel) {
     	if (entity.isEntityAlive())
         {
-    		// TODO: if liquid is irritant (health hazard), apply negative effects
+    		// TODO: if liquid is health hazard, apply negative effects in a separate handler;
     		//       this requires an algorithm like Entity.handleWaterMovement().
     		//       if fluid is extremely hot (>320K), we should just apply damage. 
     		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
