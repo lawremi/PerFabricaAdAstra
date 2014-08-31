@@ -90,7 +90,7 @@
       </BiomeSet>
       
       <BiomeSet name='ocean'>
-        <BiomeType name='OCEAN'/>
+        <BiomeType name='ocean'/>
       </BiomeSet>
 
       <BiomeSet name='island'>
