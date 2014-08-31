@@ -90,11 +90,7 @@
       </BiomeSet>
       
       <BiomeSet name='ocean'>
-        <BiomeType name='water'/>
-        <BiomeSet inherits='river' weight='-1'/>
-        <BiomeType name='swamp' weight='-1'/>
-        <BiomeType name='forest' weight='-1'/>
-        <BiomeType name='jungle' weight='-1'/>
+        <BiomeType name='ocean'/>
       </BiomeSet>
 
       <BiomeSet name='island'>
