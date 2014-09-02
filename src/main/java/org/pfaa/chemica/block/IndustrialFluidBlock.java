@@ -54,6 +54,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	 *   - One idea is to reverse this: create polluted soil that spreads through dirt/farmland
 	 * - Inability of lava to ignite flammable liquids
 	 *   - On liquid block update, look +/- 2 in X/Z for lava, call its updateTick() while spoofing flammable material.
+	 *   - Splash particles are the wrong color (blue)
 	 * - Water mobs to spawn [block with EntityJoinWorldEvent]
 	 * - Water and beach crops to be sustained [can disable at block-level]
 	 * 
@@ -66,6 +67,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	 * - Entities are not forced to dismount when riding another entity
 	 *   - Easy to code this with the drowning code
 	 * - Dogs will not shake off the liquid upon exiting
+	 * - There are no splash particles
 	 * - Drowning breaks [fixed; had to do this for gases]
 	 * - Sand/gravel do not fall when placed directly above [also bug for gases]
 	 */
