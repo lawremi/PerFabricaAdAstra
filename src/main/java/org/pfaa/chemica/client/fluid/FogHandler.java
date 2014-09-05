@@ -1,19 +1,14 @@
 package org.pfaa.chemica.client.fluid;
 
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 
 import org.lwjgl.opengl.GL11;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
 
-import codechicken.lib.math.MathHelper;
-
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
