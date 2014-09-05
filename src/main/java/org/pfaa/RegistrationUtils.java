@@ -7,8 +7,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.fluid.ColoredBucketItem;
 
@@ -69,4 +71,8 @@ public class RegistrationUtils {
 				new ItemStack(item), FluidContainerRegistry.EMPTY_BUCKET);
 	}
 	
+	private static void registerFlaskForFluid(Fluid fluid) {
+	    FluidContainerRegistry.registerFluidContainer(fluid, 
+                new ItemStack(ChemicaItems.FLASK, fluid.getID()), FluidContainerRegistry.EMPTY_BUCKET);
+	}
 }
