@@ -77,6 +77,7 @@ public enum GeoMaterial implements Mixture {
 	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
 	// FIXME: should we add stone to all of the stone ores?
+	//        maybe this should just be the "host rock" once we add that concept?
 	BORAX(Ores.BORAX, Strength.WEAK),
 	CINNABAR(Ores.CINNABAR.mix(Ores.PYRITE, 0.05).mix(Ores.REALGAR, 0.04).mix(Ores.STIBNITE, 0.02).mix(Ores.BARITE, 0.02), 
 			 Strength.WEAK),
@@ -111,7 +112,7 @@ public enum GeoMaterial implements Mixture {
 	POLLUCITE(Ores.POLLUCITE.mix(PEGMATITE, 1.0).mix(Ores.SPODUMENE, 0.1), Strength.STRONG),
 	SPODUMENE(Ores.SPODUMENE.mix(PEGMATITE, 1.0).mix(Ores.LEPIDOLITE, 0.1), Strength.STRONG),
 	TANTALITE(Ores.TANTALITE.mix(Ores.COLUMBITE, 2.0), Strength.STRONG),
-	URANINITE(Ores.URANINITE.mix(Ores.CARNOTITE, 0.05), Strength.STRONG),
+	PITCHBLENDE(Ores.URANINITE.mix(Ores.CARNOTITE, 0.05), Strength.STRONG),
 	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG),
 	
 	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE.mix(SERPENTINITE, 0.5), Strength.WEAK),

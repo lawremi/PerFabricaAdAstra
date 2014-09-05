@@ -233,6 +233,7 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(6.10, new Thermo(24.6, 2.70, -1.27, 0.197, 0.286, -0.909, 89.9)), 
 		   new Vaporization(2673),
 		   new Gas(new Thermo(20.3, 0.570, -0.210, 0.0258, 3.05, 273, 201))),
+		// TODO: Ge
 		As("arsenic", 74.9, +3,
 				   new Solid(new Color(112, 112, 112), 5.73, 
 						     new Thermo(0, 35.1, 21.6, 9.79), 
@@ -308,6 +309,7 @@ public interface Element extends Chemical, PartFactory {
 		   new Liquid(8.00, new Thermo(Double.NaN, 62.2, 29.7)),
 		   new Vaporization(1040),
 		   new Gas(new Thermo(112, 168, 20.8))),
+		// TODO: In
 		Sn("tin", 119, +4, 
 		   new Solid(new Color(212, 216, 220), 7.28,
 				     new Thermo(0, 51.2, 23.1, 19.6),
