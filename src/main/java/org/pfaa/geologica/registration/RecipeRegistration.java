@@ -274,11 +274,12 @@ public class RecipeRegistration {
 	}
 
 	private static void oreDictifyOre(GeoBlock block, GeoMaterial substance) {
+		ItemStack oreStack = block.getItemStack(substance);
 		String postfix = substance.getOreDictKey();
-		if (postfix == null || Geologica.isTechnical()) {
-			postfix = substance.getLowerName();
+		if (postfix != null && !Geologica.isTechnical()) {
+		    oreDictifyOre(postfix, oreStack);
 		}
-		oreDictifyOre(postfix, block.getItemStack(substance));
+		oreDictifyOre(substance.getLowerName(), oreStack);
 	}
 	
 	private static String oreDictKey(String prefix, String postfix) {
