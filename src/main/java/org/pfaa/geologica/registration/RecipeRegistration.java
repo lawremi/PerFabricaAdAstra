@@ -385,8 +385,8 @@ public class RecipeRegistration {
 	}
 	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
 			Compounds secondaryDust, double secondaryChance) {
-		ItemStack secondaryOutput = ChemicaItems.DUST.getItemStack(secondaryDust);
-		addCobbleGrindingRecipe(material, primaryOutput, secondaryOutput, secondaryChance);
+		//ItemStack secondaryOutput = ChemicaItems.DUST.getItemStack(secondaryDust);
+		//addCobbleGrindingRecipe(material, primaryOutput, secondaryOutput, secondaryChance);
 	}
 	
 	private static void addCobbleGrindingRecipe(GeoMaterial material, ItemStack primaryOutput, 
