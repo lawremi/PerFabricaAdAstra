@@ -5,6 +5,6 @@ import org.pfaa.geologica.GeologicaBlocks;
 
 public class ItemRegistration {
 	public static void init() {
-		RegistrationUtils.registerBucketsForDeclaredFluidBlocks(GeologicaBlocks.class);
+		RegistrationUtils.registerContainersForDeclaredFluidBlocks(GeologicaBlocks.class);
 	}
 }

@@ -3,6 +3,7 @@ package org.pfaa;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -39,12 +40,27 @@ public class RegistrationUtils {
 		}
 	}
 
+	public static void registerDeclaredItems(Class catalogClass) {
+	    Field[] fields = catalogClass.getFields();
+        for (Field field : fields) {
+            try {
+                Item item = (Item)field.get(null);
+                String name = fieldNameToUnlocalizedName(field.getName());
+                item.setUnlocalizedName(name);
+                GameRegistry.registerItem(item, name);
+            } catch (Exception e) {
+                Geologica.log.fatal("Failed to register field '" + field.getName() + "' as item");
+                throw new LoaderException(e);
+            }
+        }
+	}
+	
 	private static String fieldNameToUnlocalizedName(String name) {
 		return CaseFormat.UPPER_UNDERSCORE.
 				      to(CaseFormat.LOWER_CAMEL, name.replaceAll("__", "."));
 	}
 	
-	public static void registerBucketsForDeclaredFluidBlocks(Class catalogClass) {
+	public static void registerContainersForDeclaredFluidBlocks(Class catalogClass) {
 		Field[] fields = catalogClass.getFields();
 		for (Field field : fields) {
 			try {
@@ -53,6 +69,7 @@ public class RegistrationUtils {
 					BlockFluidBase block = (BlockFluidBase)value;
 					if (!block.getFluid().isGaseous()) {
 						registerBucketForFluid(block);
+						registerFlaskForFluid(block.getFluid());
 					}
 				}
 			} catch (Exception e) {
@@ -73,6 +90,6 @@ public class RegistrationUtils {
 	
 	private static void registerFlaskForFluid(Fluid fluid) {
 	    FluidContainerRegistry.registerFluidContainer(fluid, 
-                new ItemStack(ChemicaItems.FLASK, fluid.getID()), FluidContainerRegistry.EMPTY_BUCKET);
+                new ItemStack(ChemicaItems.FILLED_GLASS_BOTTLE, fluid.getID()), FluidContainerRegistry.EMPTY_BOTTLE);
 	}
 }
