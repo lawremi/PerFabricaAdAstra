@@ -44,13 +44,9 @@ public final class FluidContainerHandler {
 		Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 		if (fluid != null) {
 			boolean isSource = world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0;
-			if (!isSource) {
-				return null;
-			}
-			FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
-			ItemStack container = FluidContainerRegistry.fillFluidContainer(fluidStack, itemStack);
-			if (container != null) {
-				return container;
+			if (isSource) {
+			    FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
+	            return FluidContainerRegistry.fillFluidContainer(fluidStack, itemStack);
 			}
 		}
 		return null;
