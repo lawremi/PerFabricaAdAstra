@@ -58,7 +58,7 @@ public class Hazard {
 	}
 	
 	private PotionEffect createPotionEffect(Potion potion, int durationAmplifier) {
-		return new PotionEffect(potion.id, 20 * 2 ^ (this.health + durationAmplifier));
+		return new PotionEffect(potion.id, 20 * (int)Math.pow(2, this.health + durationAmplifier));
 	}
 	
 	// happens when inside a fluid block
