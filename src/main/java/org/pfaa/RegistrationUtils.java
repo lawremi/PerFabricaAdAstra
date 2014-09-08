@@ -90,6 +90,6 @@ public class RegistrationUtils {
 	
 	private static void registerFlaskForFluid(Fluid fluid) {
 	    FluidContainerRegistry.registerFluidContainer(fluid, 
-                new ItemStack(ChemicaItems.FILLED_GLASS_BOTTLE, fluid.getID()), FluidContainerRegistry.EMPTY_BOTTLE);
+                new ItemStack(ChemicaItems.FILLED_GLASS_BOTTLE, 1, fluid.getID()), FluidContainerRegistry.EMPTY_BOTTLE);
 	}
 }
