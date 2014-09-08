@@ -26,7 +26,7 @@ public interface Crude extends Mixture, Vaporizable {
 		HEAVY_NAPHTHA(Phase.LIQUID, new Color(130, 115, 25), 0.7, new Hazard(1, 3, 0), 1.1, 500, 0.004),
 		KEROSENE(Phase.LIQUID, new Color(100, 90, 10), 0.8, new Hazard(0, 2, 0), 1.64, 600, 0.007),
 		LIGHT_GAS_OIL(Phase.LIQUID, new Color(90, 70, 20), 0.9, new Hazard(0, 2, 0), 2.25, 700, 0.02),
-		HEAVY_GAS_OIL(Phase.LIQUID, new Color(50, 25, 0), 1.0, new Hazard(2, 2, 0), 30, 900, 0.03),
+		HEAVY_GAS_OIL(Phase.LIQUID, new Color(50, 25, 0), 1.0, new Hazard(1, 2, 0), 30, 900, 0.03),
 		BITUMEN(Phase.LIQUID, Color.black, 1.2, new Hazard(1, 2, 0), 240, 1000, 0.04),
 		// no better place to put this one
 		KEROGEN(Phase.SOLID, new Color(165, 125, 30), 1.2, new Hazard(), Double.NaN, Double.NaN, Double.NaN)
