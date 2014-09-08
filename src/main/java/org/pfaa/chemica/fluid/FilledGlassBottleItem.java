@@ -1,21 +1,23 @@
 package org.pfaa.chemica.fluid;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
-import org.pfaa.chemica.Chemica;
-import org.pfaa.chemica.fluid.IndustrialFluid;
 
 import com.google.common.base.CaseFormat;
 
@@ -31,6 +33,7 @@ public class FilledGlassBottleItem extends ItemPotion {
 	
     public FilledGlassBottleItem() {
         this.setTextureName("potion");
+        this.setMaxStackSize(64);
     }
     
 	private Fluid getFluidForItemStack(ItemStack itemStack) {
@@ -80,5 +83,31 @@ public class FilledGlassBottleItem extends ItemPotion {
     public String getItemStackDisplayName(ItemStack p_77653_1_)
     {
         return StatCollector.translateToLocal(this.getUnlocalizedName(p_77653_1_) + ".name").trim();
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tabs, List itemStacks)
+    {
+        Collection<Fluid> fluids = FluidRegistry.getRegisteredFluids().values();
+        for (Fluid fluid : fluids) {
+            FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
+            ItemStack filledContainer = FluidContainerRegistry.fillFluidContainer(fluidStack, FluidContainerRegistry.EMPTY_BOTTLE);
+            if (filledContainer != null) {
+                itemStacks.add(filledContainer);
+            }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List lines, boolean p_77624_4_)
+    {
+        Fluid fluid = this.getFluidForItemStack(itemStack);
+        if (fluid instanceof IndustrialFluid) {
+            IndustrialFluid industrialFluid = (IndustrialFluid)fluid;
+            lines.add(EnumChatFormatting.BLUE + I18n.format("label.hazard.health") + ": " + 
+                      industrialFluid.getProperties().hazard.health);
+        }
     }
 }
