@@ -102,7 +102,7 @@ public class RespirationHandler {
 	            		generateBubbleParticles(entity, rand);
 		            }
         		}
-        	} else {
+        	} else if (!(entity instanceof EntityPlayer)) {
         		setAirLevel(entity, FluidRespirationProperties.FULL_AIR_LEVEL);
     		}
         }
