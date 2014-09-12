@@ -35,7 +35,7 @@ public final class FluidContainerHandler {
 		    event.world.setBlockToAir(event.target.blockX, event.target.blockY, event.target.blockZ);
 		}
 		
-		event.result = result;
+		event.setFilledContainer(result);
 		event.setResult(Result.ALLOW);
 	}
 
