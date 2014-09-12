@@ -8,25 +8,26 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
+import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.fluid.FluidMaterial;
 import org.pfaa.chemica.fluid.IndustrialFluid;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.render.EntityDropParticleFX;
-
-import com.mojang.realmsclient.dto.McoServer.WorldType;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -40,7 +41,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class IndustrialFluidBlock extends BlockFluidClassic {
 
-	private IndustrialFluid fluid;
+        private IndustrialFluid fluid;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));
@@ -48,15 +49,9 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	}
 
 	/* We want our own material for liquids, because Material.water will cause:
-	 * - Water bottles to be filled with water
-	 *   - Ideally, they would fill with the liquid
-	 * - Crops to be irrigated
-	 *   - One idea is to reverse this: create polluted soil that spreads through dirt/farmland
-	 * - Inability of lava to ignite flammable liquids
-	 *   - On liquid block update, look +/- 2 in X/Z for lava, call its updateTick() while spoofing flammable material.
-	 *   - Splash particles are the wrong color (blue)
-	 * - Water mobs to spawn [block with EntityJoinWorldEvent]
-	 * - Water and beach crops to be sustained [can disable at block-level]
+	 * - Splash particles are the wrong color (blue) [no gameplay consequences]
+	 * - Beach crops (reeds) to be sustained [not a huge deal; they are tough crops]
+	 * - A bunch of other problems for which we have already corrected
 	 * 
 	 * But if we use a custom material, then:
 	 * - Movement breaks
@@ -78,7 +73,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 				Material.water;
 	}
 
-	@Override
+    @Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
 		return this.fluid.getColor();
@@ -140,6 +135,10 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		if (this.getFluid().isGaseous()) {
 			this.updateGas(world, x, y, z, rand);
 		} else {
+		    if (this.fluid.isPollutant()) {
+		        this.polluteSoil(world, x, y, z, rand);
+		    }
+		    this.tryToCatchFireFromLava(world, x, y, z, rand);
 			super.updateTick(world, x, y, z, rand);
 		}
     }
@@ -304,7 +303,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	@Override
 	protected void flowIntoBlock(World world, int x, int y, int z, int meta) {
 		Block block = world.getBlock(x, y, z);
-		if (block == Blocks.torch || block.getMaterial() == Material.fire) {
+		if (block == Blocks.torch || block.getMaterial() == Material.fire || block.getMaterial() == Material.lava) {
 			this.tryToIgnite(world, x, y, z);
 		} else {
 			super.flowIntoBlock(world, x, y, z, meta);
@@ -436,4 +435,45 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
             return j0 < (double)(MathHelper.floor_double(j0) + filled);
         }
 	}
+	
+	private void polluteSoil(World world, int x, int y, int z, Random rand)
+    {
+        for (int xi = x - 4; xi <= x + 4; ++xi)
+        {
+            for (int yi = y - 1; yi <= y; ++yi)
+            {
+                for (int zi = z - 4; zi <= z + 4; ++zi)
+                {
+                    Block block = world.getBlock(xi, yi, zi);
+                    if (block == Blocks.farmland || (block.getMaterial() == Material.ground && rand.nextInt(5) == 1)) {
+                        world.setBlock(xi, yi, zi, ChemicaBlocks.POLLUTED_SOIL);
+                    }
+                }
+            }
+        }
+    }
+
+	@Override
+	public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable)
+	{
+	    return !this.fluid.isPollutant();
+	}
+
+	/* Gases are ignited by lava itself, we handle liquids here */
+	private void tryToCatchFireFromLava(World world, int x, int y, int z, Random rand)
+    {
+	    if (this.fluid.getProperties().hazard.flammability > 0 && world.isAirBlock(x, y + 1, z)) {
+	        for (int xi = x - 1; xi <= x + 1; ++xi)
+	        {
+	            for (int zi = z - 1; zi <= z + 1; ++zi)
+	            {
+	                if ((world.getBlock(xi, y, zi).getMaterial() == Material.lava && rand.nextInt(3) == 0) ||
+	                    (world.getBlock(xi, y - 1, zi).getMaterial() == Material.lava && rand.nextInt(9) == 0)) {
+	                    world.setBlock(x, y + (this.isSourceBlock(world, x, y, z) ? 1 : 0), z, Blocks.fire);
+	                    return;
+	                }
+	            }
+	        }
+	    }
+    }
 }

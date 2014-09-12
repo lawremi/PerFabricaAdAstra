@@ -137,4 +137,9 @@ public class IndustrialFluid extends Fluid {
 	public ConditionProperties getProperties() {
 		return this.material.getProperties(this.getCondition());
 	}
+
+    public boolean isPollutant()
+    {
+        return true;
+    }
 }
