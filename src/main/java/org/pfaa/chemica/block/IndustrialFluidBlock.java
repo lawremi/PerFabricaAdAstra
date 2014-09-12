@@ -1,5 +1,6 @@
 package org.pfaa.chemica.block;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -392,6 +393,13 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 			if (!this.tryToIgnite(world, x, y, z)) {
 				entity.extinguish();
 			}
+		}
+		if (entity instanceof EntityLiving) {
+		    EntityLiving livingEntity = (EntityLiving)entity;
+		    List<PotionEffect> contactEffects = this.fluid.getProperties().hazard.getContactEffects();
+	        for (PotionEffect effect : contactEffects) {
+	            livingEntity.addPotionEffect(effect);
+	        }
 		}
     }
 	
