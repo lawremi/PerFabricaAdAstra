@@ -42,7 +42,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class IndustrialFluidBlock extends BlockFluidClassic {
 
-        private IndustrialFluid fluid;
+    private IndustrialFluid fluid;
 	
 	public IndustrialFluidBlock(IndustrialFluid fluid) {
 		super(fluid, materialForIndustrialFluid(fluid));

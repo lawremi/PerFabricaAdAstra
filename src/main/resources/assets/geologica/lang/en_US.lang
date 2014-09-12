@@ -305,3 +305,16 @@ tile.diamondOre.name=Diamond Ore
 tile.emeraldOre.name=Emerald Ore
 tile.lapisOre.name=Lapis Lazuli Ore
 tile.redstoneOre.name=Redstone Ore
+
+# Fluids
+tile.lightOil.name=Light Oil
+tile.mediumOil.name=Medium Oil
+tile.heavyOil.name=Heavy Oil
+tile.extraHeavyOil.name=Extra Heavy Oil
+tile.naturalGas.name=Natural Gas
+
+# Buckets
+item.liquidLightOilBucket.name=Bucket of Light Oil
+item.liquidMediumOilBucket.name=Bucket of Medium Oil
+item.liquidHeavyOilBucket.name=Bucket of Heavy Oil
+item.liquidExtraHeavyOilBucket.name=Bucket of Extra Heavy Oil

@@ -1,0 +1,13 @@
+# Glass bottles
+item.liquidLightOilBottle.name=Bottle of Light Oil
+item.liquidMediumOilBottle.name=Bottle of Medium Oil
+item.liquidHeavyOilBottle.name=Bottle of Heavy Oil
+item.liquidExtraHeavyOilBottle.name=Bottle of Extra Heavy Oil
+
+# Other blocks
+tile.pollutedSoil.name=Polluted Soil
+
+# Tooltip labels
+label.hazard.health=Health Hazard
+label.hazard.flammability=Flammability Hazard
+label.hazard.instability=Instability Hazard
