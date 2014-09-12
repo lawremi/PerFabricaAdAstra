@@ -2,6 +2,7 @@ package org.pfaa.chemica.fluid;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,14 +13,15 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 import org.lwjgl.opengl.GL11;
-import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.IndustrialMaterial;
@@ -83,9 +85,11 @@ public class RespirationHandler {
     		//       this requires an algorithm like Entity.handleWaterMovement().
     		//       if fluid is extremely hot (>320K), we should just apply damage. 
     		IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
+    		/* We handle gases here, as well as force water breathing entities to drown in liquids */
     		if (block != null && (block.getFluid().isGaseous() || entity.canBreatheUnderwater())) {
     			// TODO: apply health effects for gases here
     			// TODO: as part of the above, handle oxygen _over_dose
+    		    // TODO: handle H2O content of liquids for water breathing mobs
         		float oxygenContent = getBreathableOxygenContent(block, entity);
         		if (oxygenContent < MIN_PERMISSIBLE_OXYGEN_CONTENT) {
 	        		Random rand = new Random();
@@ -226,4 +230,20 @@ public class RespirationHandler {
         
         GL11.glDisable(GL11.GL_BLEND);
 	}
+    
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+        if (entityInIndustrialFluid(event.world, event.entity)) {
+            event.setCanceled(true);
+        }
+    }
+
+    private boolean entityInIndustrialFluid(World world, Entity entity)
+    {
+        int i = MathHelper.floor_double(entity.posX);
+        int j = MathHelper.floor_double(entity.posY);
+        int k = MathHelper.floor_double(entity.posZ);
+        Block block = world.getBlock(i, j, k);
+        return block instanceof IndustrialFluidBlock;
+    }
 }
