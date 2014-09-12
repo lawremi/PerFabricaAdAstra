@@ -74,9 +74,9 @@ public class FilledGlassBottleItem extends ItemPotion {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
-	    String fluidPostfix = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, 
+	    String fluidToken = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, 
 	            this.getFluidForItemStack(itemStack).getName());
-		return this.getUnlocalizedName() + "." + fluidPostfix;
+		return "item." + fluidToken + "Bottle";
 	}
 
     @Override
