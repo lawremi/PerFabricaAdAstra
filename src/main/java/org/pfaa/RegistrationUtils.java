@@ -17,6 +17,7 @@ import org.pfaa.geologica.fluid.ColoredBucketItem;
 
 import com.google.common.base.CaseFormat;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.LoaderException;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -31,6 +32,8 @@ public class RegistrationUtils {
 					Block block = (Block)value;
 					String name = fieldNameToUnlocalizedName(field.getName());
 					block.setBlockName(name);
+					String prefix = Loader.instance().activeModContainer().getModId().replaceFirst("PFAA", "");
+					block.setBlockTextureName(prefix + ":" + name);
 					GameRegistry.registerBlock(block, itemClass, name);
 				}
 			} catch (Exception e) {
