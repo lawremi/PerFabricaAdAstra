@@ -2426,7 +2426,7 @@
             <Setting name='SegmentForkFrequency' avg='0.10'/>  
             <Setting name='SegmentAngle' avg='0' range='0.3'/>
             <Setting name='ParentRangeLimit' avg='10' range='2'/>
-            <Setting name='MotherlodeFrequency' avg='0.004'/>
+            <Setting name='MotherlodeFrequency' avg='0.01'/>
             <Setting name='MotherlodeHeight' avg='30' range='10'/>
             <Setting name='SegmentRadius' avg='1.5' range='0.5' type='normal'/>
             <OreBlock block='PFAAGeologica:weakStone:1'
@@ -2446,12 +2446,17 @@
             <!-- chalco -->
             <OreBlock block='PFAAGeologica:mediumOreRock:2'
                       weight='0.025'/>
+            <Replaces block='PFAAGeologica:mediumStone:1'/>
+            <Replaces block='PFAAGeologica:mediumStone:3'/>
+            <Replaces block='PFAAGeologica:strongStone:1'/>
             <Replaces block='PFAAGeologica:strongStone:2'/>
             <Replaces block='PFAAGeologica:strongStone:3'/>
             <Replaces block='PFAAGeologica:strongStone:4'/>
             <Replaces block='PFAAGeologica:veryStrongStone:0'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
-            <BiomeSet inherits='inland'/>
+            <Replaces block='PFAAGeologica:veryStrongStone:4'/>
+            <BiomeSet inherits='shieldVolcano'/>
+            <BiomeType name='mesa'/>
           </VeinsPreset>
         </ConfigSection>
         
@@ -3150,7 +3155,7 @@
         <CloudPreset name='PresetKaolinite'
                      inherits='PresetSedStrategicCloud'
                      block='PFAAGeologica:weakOreClay:3'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      wireframeColor='0xFF0000FF'>
           <Setting name='DistributionFrequency' avg=':= 12 * _default_'/>
           <Setting name='OreDensity' avg=':=3 * _default_'/>
