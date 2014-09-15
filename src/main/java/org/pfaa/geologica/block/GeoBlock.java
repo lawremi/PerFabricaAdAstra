@@ -151,11 +151,6 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	@Override
-	public String getModId() {
-		return "geologica";
-	}
-
-	@Override
 	public boolean isReplaceableOreGen(World world, int x, int y, int z,
 			Block target) {
 		return Aggregate.class.isAssignableFrom(composition);
