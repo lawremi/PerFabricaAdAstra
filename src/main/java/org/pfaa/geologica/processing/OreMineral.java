@@ -2,6 +2,7 @@ package org.pfaa.geologica.processing;
 
 import static org.pfaa.chemica.model.Element.Elements.Ba;
 import static org.pfaa.chemica.model.Element.Elements.Cd;
+import static org.pfaa.chemica.model.Element.Elements.Ce;
 import static org.pfaa.chemica.model.Element.Elements.Co;
 import static org.pfaa.chemica.model.Element.Elements.Cs;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
@@ -14,6 +15,7 @@ import static org.pfaa.chemica.model.Element.Elements.Rb;
 import static org.pfaa.chemica.model.Element.Elements.Re;
 import static org.pfaa.chemica.model.Element.Elements.Sr;
 import static org.pfaa.chemica.model.Element.Elements.Th;
+import static org.pfaa.chemica.model.Element.Elements.U;
 import static org.pfaa.chemica.model.Element.Elements.Y;
 
 import java.util.List;
@@ -70,6 +72,7 @@ public interface OreMineral extends Mineral {
 		LEPIDOLITE(Compounds.Li3KSi4O10OH2, new Substitution(Rb, 0.01), new Substitution(Cs, 0.005)),
 		MAGNETITE(Compounds.Fe3O4),
 		MAGNESITE(Compounds.MgCO3),
+		MICROLITE(Compounds.NaCaTa2O6OH),
 		MOLYBDENITE(Compounds.MoS2, new Substitution(Re, 0.01)),
 		MONAZITE(Compounds.CePO4, new Substitution(La, 0.5), new Substitution(Nd, 0.3),
 				 new Substitution(Pr, 0.15), new Substitution(Th, 0.5)),
@@ -78,6 +81,9 @@ public interface OreMineral extends Mineral {
 		PENTLANDITE(Compounds.Ni9S8, new Substitution(Fe, 1.0), new Substitution(Co, 0.01)),
 		POLLUCITE(Compounds.Cs2Al2Si4O12, new Substitution(Rb, 0.05)),
 		PYRITE(Compounds.FeS2, new Substitution(Ni, 0.1), new Substitution(Co, 0.05)),
+		PYROCHLORE(Compounds.NaCaNb2O6OH, new Substitution(Ce, 0.03), new Substitution(La, 0.015), 
+		           new Substitution(Nd, 0.01), new Substitution(Y, 0.01), 
+		           new Substitution(Th, 0.01), new Substitution(U, 0.005)),
 		PYROLUSITE(Compounds.MnO2),
 		REALGAR(Compounds.AsS),
 		RUTILE(Compounds.TiO2),

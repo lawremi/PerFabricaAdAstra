@@ -119,6 +119,8 @@ public interface Compound extends Chemical {
 					    new Thermo(-1186, 92.6, 99.9)),
 			 new Vaporization(2806),
 			 new Gas(new Thermo(57.4, 0.718, -0.194, 0.0166, -0.571, -804, 340))),
+	    NaCaNb2O6OH(new Formula(Na, Ca, Nb._(2), O._(6), new Part(O, H)), "niobium", new Solid()),
+	    NaCaTa2O6OH(new Formula(Na, Ca, Ta._(2), O._(6), new Part(O, H)), "tantalum", new Solid()),
 		CaSO4_2H2O(new Formula(Ca, new Part(S, O._(4))).hydrate(2), "calcium", 
 			       new Solid(2.32, 
 				 	         new Thermo(-1433, 107, 186))),
