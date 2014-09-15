@@ -490,6 +490,12 @@
                             minHeight='52' maxHeight='80'>
             <BiomeSet inherits='oceanic'/>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetBasaltMesa'
+                            block='PFAAGeologica:strongStone:1'
+                            inherits='PresetPrimaryStratumContinental'
+                            minHeight='86' maxHeight='110'>
+            <BiomeType name='mesa'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Rhyolite -->
@@ -536,6 +542,11 @@
           <Replaces block='PFAAGeologica:strongStone:3'/>
         </CloudPreset>
 
+        <SubstitutePreset name='PresetPrimarySedimentaryMesa'
+                          inherits='PresetPrimarySedimentaryContinental'>
+          <BiomeType name='mesa'/>
+        </SubstitutePreset>
+        
         <SubstitutePreset name='PresetPrimarySedimentaryOceanic'
                      inherits='PresetPrimaryStratum'
                      minHeight='37' maxHeight='49'>
@@ -614,7 +625,10 @@
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='77' maxHeight='110'>
           </SubstitutePreset>
-          
+          <SubstitutePreset name='PresetLimestoneMesa'
+                            block='PFAAGeologica:mediumStone:0'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='60' maxHeight='70'/>
         </ConfigSection>
         
         <ConfigSection> <!-- Sandstone -->
@@ -631,6 +645,10 @@
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='113' maxHeight='150'>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetSandstoneMesa'
+                            block='minecraft:sandstone'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='71' maxHeight='80'/>
         </ConfigSection>
         
       </ConfigSection>  
@@ -802,6 +820,10 @@
                             block='PFAAGeologica:veryStrongStone:4'
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='153' maxHeight='255'/>
+          <SubstitutePreset name='PresetQuartziteMesa'
+                            block='PFAAGeologica:veryStrongStone:4'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='81' maxHeight='85'/>
         </ConfigSection>
         
       </ConfigSection>
@@ -1013,6 +1035,11 @@
           <Cloud name='SchistVolcanic' inherits='PresetSchistVolcanic'/>
           <Cloud name='GneissVolcanic' inherits='PresetGneissVolcanic'/>
           <Cloud name='GneissShield' inherits='PresetGneissShield'/>
+
+          <Substitute name='LimestoneMesa' inherits='PresetLimestoneMesa'/>
+          <Substitute name='SandstoneMesa' inherits='PresetSandstoneMesa'/>
+          <Substitute name='QuartziteMesa' inherits='PresetQuartziteMesa'/>
+          <Substitute name='BasaltMesa' inherits='PresetBasaltMesa'/>
           
           <Substitute name='GabbroOceanic' inherits='PresetGabbroOceanic'/>
           <Substitute name='GabbroBasalt' inherits='PresetGabbroBasalt'/>
