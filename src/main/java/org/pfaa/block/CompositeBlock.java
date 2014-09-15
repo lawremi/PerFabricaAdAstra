@@ -47,13 +47,11 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 		return this.blockResistance / 3.0F;
 	}
 	
-	public abstract String getModId();
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister registry) {
 		icons = new IIcon[getMetaCount()];
-		String base = getModId() + ":" + getUnlocalizedName().replaceFirst("tile\\.", "");
+		String base = this.getTextureName();
 		for (int i = 0; i < getMetaCount(); ++i)
         {
             icons[i] = registry.registerIcon(base + "_" + getBlockNameSuffix(i));
