@@ -2357,7 +2357,7 @@
             <Replaces block='PFAAGeologica:strongStone:4'/>
             <Replaces block='PFAAGeologica:veryStrongStone:0'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
-            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.614'/>
+            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.644'/>
             <OreBlock block='PFAAGeologica:weakOreRock:13' weight='0.05'/> 
             <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/> 
             <OreBlock block='PFAAGeologica:mediumOreRock:5' weight='0.05'/> 
@@ -2366,7 +2366,6 @@
             <OreBlock block='PFAAGeologica:mediumOreRock:4' weight='0.025'/>
             <OreBlock block='PFAAGeologica:strongOreRock:8' weight='0.02'/>
             <OreBlock block='PFAAGeologica:strongOreRock:6' weight='0.001'/>
-            <OreBlock block='PFAAGeologica:mediumOreRock:1' weight='0.03'/>
             <OreBlock block='PFAAGeologica:strongOreRock:11' weight='0.02'/>
             <OreBlock block='PFAAGeologica:strongOreRock:7' weight='0.07'/>
             <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.025'/>
@@ -2391,46 +2390,41 @@
           </VeinsPreset>
           <VeinsPreset name='PresetCarbonatite'
                        inherits='PresetRockVeins'
-                       drawWireframe='false'
+                       drawWireframe='true'
                        wireframeColor='0xFF0000FF'>
             <Setting name='BranchLength' avg=':= 0.5 * _default_'
-                     range=':= 0.5 * _default_'/> 
+                     range=':= 0.5 * _default_'/>
+            <Setting name='BranchFrequency' avg='1' range='0'/>
+            <Setting name='BranchInclination' avg='-1' range='0.2'/>
+            <Setting name='SegmentForkFrequency' avg='0.10'/>  
+            <Setting name='SegmentAngle' avg='0' range='0.3'/>
             <Setting name='ParentRangeLimit' avg='10' range='2'/>
-            <Setting name='MotherlodeFrequency' avg='1.0'/>
-            <Setting name='MotherlodeHeight' avg='40' range='10'/>
+            <Setting name='MotherlodeFrequency' avg='0.004'/>
+            <Setting name='MotherlodeHeight' avg='30' range='10'/>
             <Setting name='SegmentRadius' avg='1.5' range='0.5' type='normal'/>
             <OreBlock block='PFAAGeologica:weakStone:1'
-                      weight='0.735'/>
+                      weight='0.810'/>
             <!-- RE -->
             <OreBlock block='PFAAGeologica:mediumOreRock:1'
                       weight='0.05'/>
-             <!-- verm -->
-            <OreBlock block='PFAAGeologica:weakOreClay:6'
-                      weight='0.04'/>
-            <!-- chalco -->
-            <OreBlock block='PFAAGeologica:mediumOreRock:2'
-                      weight='0.025'/>
-            <!-- FeVa -->
-            <OreBlock block='PFAAGeologica:strongOreRock:10'
-                      weight='0.025'/>
-             <!-- U -->
-            <OreBlock block='PFAAGeologica:strongOreRock:9'
-                      weight='0.025'/>
-            <!-- Ti -->
-            <OreBlock block='PFAAGeologica:strongOreRock:4'
-                      weight='0.025'/>
             <!-- apatite -->
             <OreBlock block='PFAAGeologica:strongOreRock:11'
                       weight='0.05'/>
+            <!-- verm -->
+            <OreBlock block='PFAAGeologica:weakOreClay:6'
+                      weight='0.04'/>
             <!-- barite -->
-            <OreBlock block='PFAAGeologica:mediumOreRock:0' weight='0.025'/> 
+            <OreBlock block='PFAAGeologica:mediumOreRock:0'
+                      weight='0.025'/>
+            <!-- chalco -->
+            <OreBlock block='PFAAGeologica:mediumOreRock:2'
+                      weight='0.025'/>
             <Replaces block='PFAAGeologica:strongStone:2'/>
             <Replaces block='PFAAGeologica:strongStone:3'/>
             <Replaces block='PFAAGeologica:strongStone:4'/>
             <Replaces block='PFAAGeologica:veryStrongStone:0'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
-            <BiomeSet inherits='felsic'/>
-            <BiomeSet inherits='dome'/>
+            <BiomeSet inherits='inland'/>
           </VeinsPreset>
         </ConfigSection>
         
@@ -2488,9 +2482,8 @@
           <Veins name='PegmatiteContinental'
                  inherits='PresetPegmatiteContinental'/>
           <Veins name='PegmatiteVolcanic'
-                 inherits='PresetPegmatiteVolcanic'>
-            <Veins name='Carbonatite' inherits='PresetCarbonatite'/>
-          </Veins>
+                 inherits='PresetPegmatiteVolcanic'/>
+          <Veins name='Carbonatite' inherits='PresetCarbonatite'/>
         </IfCondition>
       </ConfigSection>
     </ConfigSection>
