@@ -3226,6 +3226,14 @@
           <Setting name='OreDensity' avg=':=3 * _default_'/>
           <Biome name='.*' weight='1'/>
         </CloudPreset>
+        <VeinsPreset name='PresetApatiteHintVeins'
+               inherits='PresetHintVeins'
+               block='PFAAGeologica:strongOreRock:11'
+               drawWireframe='false'>
+          <Setting name='MotherlodeFrequency' avg=':= 0.25 * _default_'/>
+          <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
+                   range=':=10/64 * dimension.groundLevel' type='uniform'/>
+        </VeinsPreset>
         <StandardGenPreset name='PresetPumice'
                            inherits='PresetVolcanicAsh'
                            block='PFAAGeologica:strongOreRock:14'>
