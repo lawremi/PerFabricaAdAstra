@@ -2187,6 +2187,13 @@
           <Setting name='CloudHeight' avg='60' range='0'/>
           <Setting name='CloudThickness' avg='1' range='0'/>
         </CloudPreset>
+        <VeinsPreset name='PresetEvaporiteGypsumHintVeins'
+                     block='PFAAGeologica:weakOreRock:11'
+                     inherits='PresetHintVeinsSed'
+                     drawWireframe='false'>
+          <Setting name='MotherlodeHeight' avg='58' range='2'/>
+          <Setting name='MotherlodeFrequency' avg=':= 0.05 * _default_'/>
+        </VeinsPreset>
         <CloudPreset name='PresetLakeEvaporite'
                      inherits='PresetEvaporiteStratum'
                      drawWireframe='false'>
