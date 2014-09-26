@@ -3284,27 +3284,30 @@
                      wireframeColor='0xFF000000'>
           <ReplacesOre block='stone'/>
           <Setting name='CloudHeight' avg='45' range='5'/>
-          <Setting name='DistributionFrequency' avg='0.001'/>
+          <Setting name='DistributionFrequency' avg='0.002'/>
         </CloudPreset>
 
         <CloudPreset name='PresetSchistGraphiteCloud'
                      inherits='PresetGraphiteCloud'
                      wireframeColor='0xFFFF5555'>
-          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.20'/>
+          <OreBlock block='minecraft:diamond_ore' weight='0.005'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.195'/>
           <OreBlock block='PFAAGeologica:mediumStone:1' weight='0.80'/>
         </CloudPreset>
 
         <CloudPreset name='PresetGneissGraphiteCloud'
                      inherits='PresetGraphiteCloud'
                      wireframeColor='0xFF222222'>
-          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.20'/>
+          <OreBlock block='minecraft:diamond_ore' weight='0.01'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.19'/>
           <OreBlock block='PFAAGeologica:strongStone:2' weight='0.80'/>
         </CloudPreset>
 
         <CloudPreset name='PresetQuartziteGraphiteCloud'
                      inherits='PresetGraphiteCloud'
                      wireframeColor='0xFFAAAA00'>
-          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.20'/>
+          <OreBlock block='minecraft:diamond_ore' weight='0.02'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.18'/>
           <OreBlock block='PFAAGeologica:veryStrongStone:4' weight='0.80'/>
         </CloudPreset>
 
