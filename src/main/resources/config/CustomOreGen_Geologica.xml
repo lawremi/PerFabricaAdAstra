@@ -2564,6 +2564,13 @@
           <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.06'/>
           <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.02'/>
         </VeinsPreset>
+        <VeinsPreset name='PresetGraniteQuartzContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'
+                     block='PFAAGeologica:strongOreRock:1'>
+          <Setting name='DistributionFrequency' avg='0.015'/>
+        </VeinsPreset>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
                      inherits='PresetLayeredVeinsVolcanic'>
@@ -2600,8 +2607,19 @@
         <VeinsPreset name='PresetGraniteCassiteriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
-                     wireframeColor='0xFF221100'
-                     block='PFAAGeologica:strongOreRock:2'/>
+                     wireframeColor='0xFF221100'>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:2' weight='0.9'/>
+          <OreBlock block='PFAAGeologica:mediumOreRock:7' weight='0.05'/>
+          <OreBlock block='minecraft:gold_ore' weight='0.05'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteQuartzVolcanic'
+                     inherits='PresetGraniteVeinsVolcanic'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'
+                     block='PFAAGeologica:strongOreRock:1'>
+          <Setting name='DistributionFrequency' avg='0.02'/>
+        </VeinsPreset>
         <VeinsPreset name='PresetGraniteFluoriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
@@ -2721,6 +2739,10 @@
           </IfCondition>
           <Veins name='GraniteFluoriteContinental'
                  inherits='PresetGraniteFluoriteContinental'/>
+          <IfCondition condition=":=?GeologicaGenQuartz">
+            <Veins name='GraniteQuartzContinental'
+                   inherits='PresetGraniteQuartzContinental'/>
+          </IfCondition>
           <IfCondition condition=":=?GeologicaGenIron">
             <Veins name='GraniteMagnetiteVolcanic'
                    inherits='PresetGraniteMagnetiteVolcanic'/>
