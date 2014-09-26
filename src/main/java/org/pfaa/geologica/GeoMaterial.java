@@ -43,7 +43,8 @@ public enum GeoMaterial implements Mixture {
 	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
 	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG),
 	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.5)
-			  .mix(IndustrialMinerals.QUARTZ, 0.2).mix(IndustrialMinerals.MICA, 0.2), Strength.STRONG),
+			  .mix(IndustrialMinerals.QUARTZ, 0.2).mix(IndustrialMinerals.MICA, 0.2).mix(Ores.MICROLITE, 0.02), 
+			  Strength.STRONG),
 	RHYOLITE(Aggregates.STONE, Strength.STRONG),
 	
 	DIORITE(Aggregates.STONE, Strength.VERY_STRONG),
