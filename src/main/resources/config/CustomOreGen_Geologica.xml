@@ -2550,8 +2550,12 @@
         <VeinsPreset name='PresetGraniteCassiteriteContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
-                     wireframeColor='0xFF221100'
-                     block='PFAAGeologica:strongOreRock:2'/>
+                     wireframeColor='0xFF221100'>
+          <Setting name='DistributionFrequency' avg='0.015'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:2' weight='0.9'/>
+          <OreBlock block='PFAAGeologica:mediumOreRock:7' weight='0.05'/>
+          <OreBlock block='minecraft:gold_ore' weight='0.05'/>
+        </VeinsPreset>
         <VeinsPreset name='PresetGraniteFluoriteContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
