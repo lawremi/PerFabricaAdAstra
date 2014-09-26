@@ -24,7 +24,7 @@ import com.google.common.base.CaseFormat;
 
 public enum GeoMaterial implements Mixture {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),
-	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.5), Strength.WEAK),
+	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.5).mix(Ores.PYROCHLORE, 0.02).mix(Ores.MICROLITE, 0.005), Strength.WEAK),
 	CLAYSTONE(Aggregates.STONE, Strength.WEAK),
 	CONGLOMERATE(Aggregates.SAND.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
 	MUDSTONE(Aggregates.STONE, Strength.WEAK),
