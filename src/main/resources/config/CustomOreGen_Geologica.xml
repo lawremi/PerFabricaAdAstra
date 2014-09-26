@@ -11,6 +11,13 @@
     
 ***************************************************************************-->
 
+<!-- TODO:
+     * Move kyanite from pegmatite to something associated with
+       gneiss/schist. Probably like what we did with graphite.
+     * Pegmatite could chance-drop sheet mica and other crystals.
+     * Processing schist (as well as pegmatite) could yield mica.
+-->
+
 <!-- ATG Adaptations
   - Rework stone heights
     Mudstone: 47-74 => 47-89 (current: 47-74)
@@ -23,25 +30,73 @@
   
   <ConfigSection>
 
+    <OptionChoice name='GeologicaActive'
+                  default=':= dimension.generator = "RandomLevelSource" | dimension.generator = "ATGLevelSource"'
+                  displayGroup='groupInternal'>
+      <Choice value='true' displayValue='On'/>
+      <Choice value='false' displayValue='Off'/>
+      <Comment>
+        Controls whether Geologica is active in the current
+        dimension. By default, it is active in the overworld and
+        Mystcraft ages. To disable for a specific dimension, set this
+        to false in the CustomOreGen_Options.txt found in the
+        dimension directory (preferably before visiting it).
+      </Comment>
+    </OptionChoice>
+    
     <OptionDisplayGroup name='groupGeologicaOres' displayName='Geologica Ores'
                         displayState='shown'> 
       <Description> 
         Enable/disable ores for certain metals and other substances.
       </Description>
     </OptionDisplayGroup>
-    
+
     <OptionDisplayGroup name='groupGeologica' displayName='Geologica Forms'
                         displayState='shown'> 
       <Description> 
         Enable/disable Geologica rock and ore formations.
       </Description>
     </OptionDisplayGroup>
+
+    <OptionChoice name='GeologicaGenRocks' default='true'
+                  displayState='shown' displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica rock distributions in the default pattern.
+        </Description>
+        <DisplayName>Geologica rocks</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+    </OptionChoice>
+
+    <OptionChoice name='GeologicaGenOres' default='true'
+                 displayState='shown_dynamic'
+                 displayGroup='groupGeologicaOres'>
+      <Description>
+        Generate Geologica ore formations
+      </Description>
+      <DisplayName>Geologica ores</DisplayName>
+      <Choice value='true' displayValue='On'/>
+      <Choice value='false' displayValue='Off'/>
+    </OptionChoice>
     
+    <OptionChoice name='GeologicaPetroleum' default='true'
+                  displayState='shown' displayGroup='groupGeologica'>
+      <Description>
+        Generate petroleum resources, including crude oil (four
+        types), oil sand, oil shale and natural gas.
+      </Description>
+      <DisplayName>Petroleum</DisplayName>
+      <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+    </OptionChoice>
+
     <ConfigSection>
-      <Substitute name='DirtSubstitute' block='minecraft:stone' minHeight = '0'
-                  maxHeight=':= 40/64 * dimension.groundLevel'>
-        <Replaces block='minecraft:dirt'/>
-      </Substitute>
+      <IfChoice name='GeologicaActive' value='true'>
+        <Substitute name='DirtSubstitute' block='minecraft:stone'
+                    minHeight = '0' maxHeight=':= 40/64 * dimension.groundLevel'>
+          <Replaces block='minecraft:dirt'/>
+        </Substitute>
+      </IfChoice>
     </ConfigSection>
 
     <ConfigSection> <!-- Biome Sets -->
@@ -108,8 +163,9 @@
     
     <ConfigSection>
 
-      <OptionChoice name='GeologicaOverride' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaOverride' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           If Geologica generates a type of ore, override the
           corresponding generation from vanilla or other mods. It is
@@ -122,8 +178,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
       
-      <OptionChoice name='GeologicaGenCoal' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenCoal' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of coal
         </Description>
@@ -132,8 +189,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenIron' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenIron' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of iron (hematite, magnetite)
         </Description>
@@ -142,8 +200,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenCopper' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenCopper' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of copper ore
           (chalcopyrite, malachite)
@@ -153,18 +212,20 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenTin' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenTin' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
-          Generate Geologica distributions of copper ore (cassiterite)
+          Generate Geologica distributions of tin ore (cassiterite)
         </Description>
         <DisplayName>Tin (Cassiterite)</DisplayName>
         <Choice value='true' displayValue='On'/>
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenAluminum' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenAluminum' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of aluminium ore (bauxite).
         </Description>
@@ -173,8 +234,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenMercury' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenMercury' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of mercury ore (cinnabar).
         </Description>
@@ -183,8 +245,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenLeadZinc' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenLeadZinc' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of zinc and lead ore
           (sphalerite, galena).
@@ -194,8 +257,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenTungsten' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenTungsten' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of tungsten ore
           (scheelite, wolframite).
@@ -205,8 +269,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
       
-      <OptionChoice name='GeologicaGenNickel' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenNickel' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of nickel ore (pentlandite,
           garnierite).
@@ -216,8 +281,53 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenUranium' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenChromium' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of chromium ore (chromite).
+        </Description>
+        <DisplayName>Chromium (Chromite)</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenTitanium' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of titanium ore (ilmenite).
+        </Description>
+        <DisplayName>Titanium (ilmenite)</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenMolybdenum' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of molybdenum ore (molybdenite).
+        </Description>
+        <DisplayName>Molybdenum (Molybdenite)</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenManganese' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of manganese ore (pyrolusite).
+        </Description>
+        <DisplayName>Manganese (Pyrolusite)</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+      
+      <OptionChoice name='GeologicaGenUranium' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of uranium ore (uraninite).
         </Description>
@@ -226,8 +336,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
-      <OptionChoice name='GeologicaGenApatite' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenApatite' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of apatite (phosphate ore).
         </Description>
@@ -236,8 +347,9 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
       
-      <OptionChoice name='GeologicaGenSalt' default='true'
-                    displayState='shown' displayGroup='groupGeologicaOres'>
+      <OptionChoice name='GeologicaGenSalt' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
         <Description>
           Generate Geologica distributions of salt ore (halite).
         </Description>
@@ -246,8 +358,216 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
+      <OptionChoice name='GeologicaGenQuartz' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologicaOres'>
+        <Description>
+          Generate Geologica distributions of quartz.
+        </Description>
+        <DisplayName>Quartz</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
     </ConfigSection>
 
+    <ConfigSection>
+      
+      <OptionChoice name='GeologicaGenBIF'
+                    default=':=?GeologicaGenOres &amp; ?GeologicaGenIron'
+                    displayState=':=if(?GeologicaGenOres &amp; ?GeologicaGenIron, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate sedimentary banded iron formations, primarily of
+          hematite, with some recoverable magnetite.
+        </Description>
+        <DisplayName>Banded Iron Formations</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenSandOres' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica placer deposits (iron, tin,
+          garnet). This is recommended if you disable vanilla iron.
+        </Description>
+        <DisplayName>Placer deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenVolcanic' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica volcanic ore deposits including
+          alunite, ash, perlite, pumice and zeolite.
+        </Description>
+        <DisplayName>Volcanic deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenSerpVeins' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica serpentinite veins that are rich in
+          soapstone, magnesite, chromite and chrysotile.
+        </Description>
+        <DisplayName>Serpentinite veins</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenLaterites' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica ore deposits in bogs and tropical
+          lateritic soils (bauxite, limonite, garnierite).
+        </Description>
+        <DisplayName>Bog/lateritic ores</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenIgVeins' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica ore veins in igneous rock (ilmenite,
+          chromite, vermiculite, magnetite, chalcopyrite, ...) 
+        </Description>
+        <DisplayName>Ore veins in igneous rock</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenIgIntrusion' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica igneous intrusions where mafic rock has
+          penetrated the upper reaches of the crust. Contain large
+          deposits of magnetite, magnesite, pentlandite, ilmenite,
+          chromite and vermiculite.
+        </Description>
+        <DisplayName>Igneous intrusions</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenEvaporite' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica marine evaporite deposits rich in
+          gypsum and rock salt.
+        </Description>
+        <DisplayName>Evaporite deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenVMS' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica Volcagenic Massive Sulfide deposits,
+          rich in sulfide ores like sphalerite, galena, and
+          chalcopyrite.
+        </Description>
+        <DisplayName>VMS deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenSEDEX' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate SEDimentary EXhalative deposits rich in
+          sphalerite, galena, scheelite, and chalcopyrite.
+        </Description>
+        <DisplayName>SEDEX deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenPegmatite' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica pegmatite veins with a rich assortment
+          of minerals.
+        </Description>
+        <DisplayName>Pegmatite veins</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenCarbonate' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica carbonate deposits with minerals like
+          magnesite, soapstone, wollastonite, sphalerite and galena.
+        </Description>
+        <DisplayName>Carbonate ore deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenBarite' default=':=?GeologicaGenOres'
+                      displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica barite deposits.
+        </Description>
+        <DisplayName>Barite deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenMarine' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica marine-related deposits.
+        </Description>
+        <DisplayName>Marine-related deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenGraphite' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica graphite deposits in various patterns.
+        </Description>
+        <DisplayName>Graphite deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenClay' default=':=?GeologicaGenOres'
+                    displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
+                    displayGroup='groupGeologica'>
+        <Description>
+          Generate Geologica mineral clay deposits, including
+          bentonite, Fuller's earth and kaolinite.
+        </Description>
+        <DisplayName>Mineral clay deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+    
+    </ConfigSection>
+    
     <ConfigSection>
       <!--
       <Substitute name='CountOceanChunks' block='PFAAGeologica:strongStone:1'
@@ -260,7 +580,7 @@
 
       <SubstitutePreset name='PresetPrimaryStratum'>
         <Replaces block='minecraft:stone'/>
-        <IfCondition condition=":=?GeologicaOverride">
+        <IfCondition condition=":=?GeologicaOverride &amp; ?GeologicaActive">
           <IfCondition condition=":=?GeologicaGenCoal">
             <ReplacesOre block='oreCoal'/>
           </IfCondition>
@@ -285,6 +605,18 @@
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenNickel">
             <ReplacesOre block='oreNickel'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenChromium">
+            <ReplacesOre block='oreChromium'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenTitanium">
+            <ReplacesOre block='oreTitanium'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenMolybdenum">
+            <ReplacesOre block='oreMolydenum'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenManganese">
+            <ReplacesOre block='oreManganese'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenSalt">
             <ReplacesOre block='oreSalt'/>
@@ -959,20 +1291,7 @@
 
       <ConfigSection> <!-- Distributions -->
         
-        <OptionChoice name='GeologicaGenRocks' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica rock distributions in the default pattern.
-          </Description>
-          <DisplayName>Geologica rocks</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        
-        <IfCondition condition=":=?GeologicaGenRocks &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
-          
+        <IfCondition condition=":=?GeologicaGenRocks &amp; ?GeologicaActive">
           <Substitute name='DioriteContinental'
                       inherits='PresetDioriteContinental'/>
           <Substitute name='GraniteContinental'
@@ -1264,20 +1583,7 @@
             
       <ConfigSection> <!-- Distributions -->
                 
-        <OptionChoice name='GeologicaGenBIF' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate sedimentary banded iron formations, primarily of
-            hematite, with some recoverable magnetite.
-          </Description>
-          <DisplayName>Banded Iron Formations</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-
-        <IfCondition condition=":=?GeologicaGenCoal &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenCoal &amp; ?GeologicaActive">
           <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
             <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
           </Cloud>
@@ -1287,10 +1593,7 @@
           </Cloud>
         </IfCondition>
 
-        <IfCondition condition=":=?GeologicaGenIron &amp;
-                                ?GeologicaGenBIF &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenBIF &amp; ?GeologicaActive">
           <Cloud name='BandedIron' inherits='PresetBandedIron'>
             <Veins name='BandedIronHintVeins'
                    inherits='PresetBandedIronHintVeins'/>
@@ -1393,21 +1696,8 @@
       </ConfigSection>
 
       <ConfigSection>
-
-        <OptionChoice name='GeologicaGenSandOres' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica placer deposits (iron, tin,
-            garnet). This is recommended if you disable vanilla iron.
-          </Description>
-          <DisplayName>Placer deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
         
-        <IfCondition condition=":=?GeologicaGenSandOres &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenSandOres &amp; ?GeologicaActive">
           <IfCondition condition=":=?GeologicaGenIron">
             <Cloud name='BasalticSandBeach' inherits='PresetBasalticSandBeach'
                    drawWireframe='false' wireframeColor='0xFFFF2222'/>
@@ -1429,22 +1719,13 @@
                  drawWireframe='false' wireframeColor='0xFF222222'/>
           <Cloud name='GarnetSandAlluvial' inherits='PresetGarnetSandAlluvial'
                  drawWireframe='false' wireframeColor='0xFF222222'/>
-          <Cloud name='QuartzSand' inherits='PresetQuartzSand'
-                 drawWireframe='false' wireframeColor='0xFFFF9922'/>
+          <IfCondition condition=":=?GeologicaGenQuartz">
+            <Cloud name='QuartzSand' inherits='PresetQuartzSand'
+                   drawWireframe='false' wireframeColor='0xFFFF9922'/>
+          </IfCondition>
         </IfCondition>
-        <OptionChoice name='GeologicaGenVolcanic' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica volcanic ore deposits including
-            alunite, perlite, pumice and zeolite.
-          </Description>
-          <DisplayName>Volcanic deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenVolcanic &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        
+        <IfCondition condition=":=?GeologicaGenVolcanic &amp; ?GeologicaActive">
           <StandardGen name='VolcanicAsh' inherits='PresetVolcanicAsh'
                        drawWireframe='false'
                        wireframeColor='0xFF999922'/>
@@ -1463,18 +1744,19 @@
                      wireframeColor='0xFF00AA00'>
           <OreBlock block='PFAAGeologica:mediumStone:2' weight='0.816'/>
           <OreBlock block='PFAAGeologica:mediumOreRock:5' weight='0.01'/>
-          <OreBlock block='PFAAGeologica:strongOreRock:3' weight='0.01'/>
+          <OreBlock weight='0.01'>
+            <IfChoice name='GeologicaGenChromium' value='true'>
+              <Then block='PFAAGeologica:strongOreRock:3'/>
+              <Else block='PFAAGeologica:mediumStone:2'/>
+            </IfChoice>
+          </OreBlock>
           <OreBlock block='PFAAGeologica:veryStrongStone:3' weight='0.05'/>
-          <IfChoice name='GeologicaGenNickel' value='true'>
-            <Then>
-            <OreBlock block='PFAAGeologica:mediumOreRock:6'
-                      weight='0.005'/>
-            </Then>
-            <Else>
-            <OreBlock block='PFAAGeologica:mediumStone:2'
-                      weight='0.005'/>
-            </Else>
-          </IfChoice>
+          <OreBlock weight='0.005'>
+            <IfChoice name='GeologicaGenNickel' value='true'>
+              <Then block='PFAAGeologica:mediumOreRock:6'/>
+              <Else block='PFAAGeologica:mediumStone:2'/>
+            </IfChoice>
+          </OreBlock>
           <OreBlock block='PFAAGeologica:weakOreRock:14' weight='0.10'/>
           <OreBlock block='PFAAGeologica:weakOreRock:7' weight='0.009'/>
         </VeinsPreset>
@@ -1482,20 +1764,8 @@
       </ConfigSection>
 
       <ConfigSection>
-        <OptionChoice name='GeologicaGenSerpVeins' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica serpentinite veins that are rich in
-            soapstone, magnesite, chromite and chrysotile.
-          </Description>
-          <DisplayName>Serpentinite veins</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        
         <IfCondition condition=":=?GeologicaGenSerpVeins &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Veins name='Serpentinite' inherits='PresetSerpentinite'/>
         </IfCondition>
       </ConfigSection>
@@ -1588,19 +1858,8 @@
       </ConfigSection>
 
       <ConfigSection>
-        <OptionChoice name='GeologicaGenLaterites' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica ore deposits in bogs and tropical
-            lateritic soils (bauxite, limonite, garnierite).
-          </Description>
-          <DisplayName>Bog/lateritic ores</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
         <IfCondition condition=":=?GeologicaGenLaterites &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Cloud name='Laterite' inherits='PresetLaterite'/>
           <IfCondition condition=":=?GeologicaGenAluminum">
             <Cloud name='LateriteBauxite' inherits='PresetLateriteBauxite'/>
@@ -1617,17 +1876,6 @@
       
     </ConfigSection>
 
-    <OptionChoice name='GeologicaGenIgVeins' default='true'
-                  displayState='shown' displayGroup='groupGeologica'>
-      <Description>
-        Generate Geologica ore veins in igneous rock (ilmenite,
-        chromite, vermiculite, magnetite, chalcopyrite, ...) 
-      </Description>
-      <DisplayName>Ore veins in igneous rock</DisplayName>
-      <Choice value='true' displayValue='On'/>
-      <Choice value='false' displayValue='Off'/>
-    </OptionChoice>
-    
     <ConfigSection> <!-- Veins in diorite/gabbro -->
       <ConfigSection>
         
@@ -1696,21 +1944,27 @@
       </ConfigSection>
 
       <ConfigSection>
-        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
-          <Veins name='IlmeniteDioriteContinental'
-               inherits='PresetIlmeniteDioriteContinental'/>
-          <Veins name='ChromiteDioriteContinental'
-                 inherits='PresetChromiteDioriteContinental'/>
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp; ?GeologicaActive">
+          <IfCondition condition=":=?GeologicaGenTitanium">
+            <Veins name='IlmeniteDioriteContinental'
+                   inherits='PresetIlmeniteDioriteContinental'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenChromium">
+            <Veins name='ChromiteDioriteContinental'
+                   inherits='PresetChromiteDioriteContinental'/>
+          </IfCondition>
           <Veins name='VermiculiteDioriteContinental'
                  inherits='PresetVermiculiteDioriteContinental'/>
           <Veins name='FluoriteDioriteContinental'
                  inherits='PresetFluoriteDioriteContinental'/>
-          <Veins name='IlmeniteDioriteOther'
-                 inherits='PresetIlmeniteDioriteOther'/>
-          <Veins name='ChromiteDioriteOther'
-                 inherits='PresetChromiteDioriteOther'/>
+          <IfCondition condition=":=?GeologicaGenTitanium">
+            <Veins name='IlmeniteDioriteOther'
+                   inherits='PresetIlmeniteDioriteOther'/>
+          </IfCondition>
+          <IfCondition condition=":=?GeologicaGenChromium">
+            <Veins name='ChromiteDioriteOther'
+                   inherits='PresetChromiteDioriteOther'/>
+          </IfCondition>
           <Veins name='VermiculiteDioriteOther'
                  inherits='PresetVermiculiteDioriteOther'/>
           <Veins name='FluoriteDioriteOther'
@@ -1849,22 +2103,8 @@
       </ConfigSection>
       
       <ConfigSection>
-        <OptionChoice name='GeologicaGenIgIntrusion' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica igneous intrusions where mafic rock has
-            penetrated the upper reaches of the crust. Contain large
-            deposits of magnetite, magnesite, pentlandite, ilmenite,
-            chromite and vermiculite.
-          </Description>
-          <DisplayName>Igneous intrusions</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        
         <IfCondition condition=":=?GeologicaGenIgIntrusion &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Cloud name='PeridoditeIntrusion' inherits='PresetPeridotiteIntrusion'>
             <Cloud name='GabbroIntrusion'
                    inherits='PresetGabbroIntrusion'/>
@@ -1882,10 +2122,14 @@
               <Veins name='PeridotiteSerpentinite'
                      inherits='PresetPeridotiteSerpentinite'/>
             </IfCondition>
-            <Cloud name='IlmeniteDioriteLayer'
-                   inherits='PresetIlmeniteDioriteLayer'/>
-            <Cloud name='ChromiteDioriteLayer'
-                   inherits='PresetChromiteDioriteLayer'/>
+            <IfCondition condition=":=?GeologicaGenTitanium">
+              <Cloud name='IlmeniteDioriteLayer'
+                     inherits='PresetIlmeniteDioriteLayer'/>
+            </IfCondition>
+            <IfCondition condition=":=?GeologicaGenChromium">
+              <Cloud name='ChromiteDioriteLayer'
+                     inherits='PresetChromiteDioriteLayer'/>
+            </IfCondition>
             <Cloud name='VermiculiteDiorite'
                    inherits='PresetVermiculiteDiorite'/>
           </Cloud>
@@ -1953,30 +2197,23 @@
       </ConfigSection>
 
       <ConfigSection>
-        <OptionChoice name='GeologicaGenEvaporite' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica marine evaporite deposits rich in
-            gypsum and rock salt.
-          </Description>
-          <DisplayName>Evaporite deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
         <IfCondition condition=":=?GeologicaGenEvaporite &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Cloud name='EvaporiteLimestone' inherits='PresetEvaporiteLimestone'>
             <Cloud name='EvaporiteGypsum'
-                   inherits='PresetEvaporiteGypsum'/>
+                   inherits='PresetEvaporiteGypsum'>
+              <Veins name='EvaporiteGypsumHintVeins'
+                     inherits='PresetEvaporiteGypsumHintVeins'/>
+            </Cloud>
             <IfCondition condition=":=?GeologicaGenSalt">
               <Cloud name='EvaporiteRockSalt'
                      inherits='PresetEvaporiteRockSalt'/>
             </IfCondition>
           </Cloud>
           <Cloud name='LakeEvaporite' inherits='PresetLakeEvaporite'>
-            <Cloud name='EvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
-            <Cloud name='EvaporiteRockSalt' inherits='PresetEvaporiteRockSalt'/>
+            <Cloud name='LakeEvaporiteGypsum' inherits='PresetEvaporiteGypsum'/>
+            <Cloud name='LakeEvaporiteRockSalt'
+                   inherits='PresetEvaporiteRockSalt'/>
           </Cloud>
         </IfCondition>
       </ConfigSection>
@@ -2079,20 +2316,7 @@
       </ConfigSection>
 
       <ConfigSection>
-        <OptionChoice name='GeologicaGenVMS' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica Volcagenic Massive Sulfide deposits,
-            rich in sulfide ores like sphalerite, galena, and
-            chalcopyrite.
-          </Description>
-          <DisplayName>VMS deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenVMS &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenVMS &amp; ?GeologicaActive">
           <Cloud name='VMSRhyolite'
                  inherits='PresetVMSRhyolite'>
             <IfCondition condition=":=?GeologicaGenLeadZinc">
@@ -2196,19 +2420,7 @@
       </ConfigSection>
 
       <ConfigSection>
-        <OptionChoice name='GeologicaGenSEDEX' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate SEDimentary EXhalative deposits rich in
-            sphalerite, galena, scheelite, and chalcopyrite.
-          </Description>
-          <DisplayName>SEDEX deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenVMS &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenVMS &amp; ?GeologicaActive">
           <IfCondition condition=":=?GeologicaGenLeadZinc">
             <Cloud name='SEDEXSphaleriteGalena'
                    inherits='PresetSEDEXSphaleriteGalena'>
@@ -2266,15 +2478,24 @@
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
           <OreBlock block='PFAAGeologica:weakStone:0' weight='0.7'/>
-          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.20'/>
-          <OreBlock block='PFAAGeologica:weakOreRock:3' weight='0.10'/>
+          <OreBlock weight='0.20'>
+            <IfChoice name='GeologicaGenCopper' value='true'>
+              <Then block='PFAAGeologica:mediumOreRock:2'/>
+              <Else block='PFAAGeologica:weakStone:0'/>
+            </IfChoice>
+          </OreBlock>
+          <OreBlock weight='0.10'>
+            <IfChoice name='GeologicaGenMolybdenum' value='true'>
+              <Then block='PFAAGeologica:weakOreRock:3'/>
+              <Else block='PFAAGeologica:weakStone:0'/>
+            </IfChoice>
+          </OreBlock>
         </VeinsPreset>
       </ConfigSection>
       <ConfigSection>
         <IfCondition condition=":=?GeologicaGenIgVeins &amp;
                                 ?GeologicaGenCopper &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Veins name='Porphyry' inherits='PresetPorphyry'/>
         </IfCondition>
       </ConfigSection>
@@ -2417,7 +2638,7 @@
           </VeinsPreset>
           <VeinsPreset name='PresetCarbonatite'
                        inherits='PresetRockVeins'
-                       drawWireframe='true'
+                       drawWireframe='false'
                        wireframeColor='0xFF0000FF'>
             <Setting name='BranchLength' avg=':= 0.5 * _default_'
                      range=':= 0.5 * _default_'/>
@@ -2462,9 +2683,7 @@
         
       </ConfigSection>
       <ConfigSection>
-        <IfCondition condition=":=?GeologicaGenIgVeins &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenIgVeins &amp; ?GeologicaActive">
           <IfCondition condition=":=?GeologicaGenCopper">
             <Veins name='GraniteChalcopyriteContinental'
                    inherits='PresetGraniteChalcopyriteContinental'/>
@@ -2497,20 +2716,13 @@
           </IfCondition>
           <Veins name='GraniteFluoriteVolcanic'
                  inherits='PresetGraniteFluoriteVolcanic'/>
+          <IfCondition condition=":=?GeologicaGenQuartz">
+            <Veins name='GraniteQuartzVolcanic'
+                   inherits='PresetGraniteQuartzVolcanic'/>
+          </IfCondition>
         </IfCondition>
-        <OptionChoice name='GeologicaGenPegmatite' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica pegmatite veins with a rich assortment
-            of minerals.
-          </Description>
-          <DisplayName>Pegmatite veins</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
         <IfCondition condition=":=?GeologicaGenPegmatite &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Veins name='PegmatiteContinental'
                  inherits='PresetPegmatiteContinental'/>
           <Veins name='PegmatiteVolcanic'
@@ -2657,19 +2869,9 @@
       </ConfigSection>
       
       <ConfigSection>
-        <OptionChoice name='GeologicaGenCarbonate' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica carbonate deposits with minerals like
-            magnesite, soapstone, wollastonite, sphalerite and galena.
-          </Description>
-          <DisplayName>Carbonate ore deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
+        
         <IfCondition condition=":=?GeologicaGenCarbonate &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Cloud name='Dolomite' inherits='PresetDolomite'>
             <Veins name='MagnesiteDolomite' inherits='PresetMagnesiteDolomite'/>
             <Veins name='SoapstoneDolomite'
@@ -2871,9 +3073,7 @@
       </ConfigSection>
       
       <ConfigSection>
-        <IfCondition condition=":=?GeologicaGenUranium &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenUranium &amp; ?GeologicaActive">
           <Cloud name='UraniumUnconformitySandstone'
                  inherits='PresetUraniumUnconformitySandstone'>
             <Cloud name='UraniumUnconformitySlate'
@@ -2909,8 +3109,8 @@
       
       <ConfigSection>
         <IfCondition condition=":=?GeologicaGenLaterites &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaGenManganese &amp;
+                                ?GeologicaActive">
           <Cloud name='Pyrolusite' inherits='PresetPyrolusite'/>
           <Cloud name='PyrolusiteOceanic'
                inherits='PresetPyrolusiteOceanic'/>
@@ -2930,24 +3130,13 @@
         <CloudPreset name='PresetBariteOceanic'
                      inherits='PresetBarite'>
           <Setting name='CloudHeight'
-                   avg=':= 45/64 * dimension.groundLevel'
+                   avg=':= 40/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'/>
-          <BiomeType name='ocean'/>
+          <BiomeSet inherits='sedocean'/>
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
-        <OptionChoice name='GeologicaGenBarite' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica barite deposits.
-          </Description>
-          <DisplayName>Barite deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenBarite &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenBarite &amp; ?GeologicaActive">
           <Cloud name='Barite' inherits='PresetBarite'/>
           <Cloud name='BariteOceanic' inherits='PresetBariteOceanic'/>
         </IfCondition>
@@ -3017,42 +3206,29 @@
           <Setting name='CloudHeight'
                    avg=':= 48/64 * dimension.groundLevel'
                    range=':= 0.25 * _default_'/>
-          <BiomeType name='ocean'/>
+          <BiomeType name='sedocean'/>
           <Replaces block='minecraft:sand'/>
           <Replaces block='minecraft:dirt'/>
           <ReplacesOre block='stone'/>
           <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.8'/>
-          <!-- sandstone --> <OreBlock block='minecraft:sandstone' weight='0.2'/>
+          <OreBlock block='minecraft:sandstone' weight='0.2'/>
         </CloudPreset>
       </ConfigSection>
       <ConfigSection>
-        <IfCondition condition=":=?GeologicaGenVolcanic &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenVolcanic &amp; ?GeologicaActive">
           <Veins name='Alunite' inherits='PresetAlunite'/>
           <Veins name='PerliteVeins' inherits='PresetPerliteVeins'/>
           <StandardGen name='Pumice' inherits='PresetPumice'/>
           <Cloud name='Zeolite' inherits='PresetZeolite'/>
         </IfCondition>
-        <OptionChoice name='GeologicaGenMarine' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica marine-related deposits.
-          </Description>
-          <DisplayName>Marine-related deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenMarine &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenMarine &amp; ?GeologicaActive">
           <Cloud name='Glauconite' inherits='PresetGlauconite'/>
           <Cloud name='Diatomite' inherits='PresetDiatomite'/>
         </IfCondition>
-        <IfCondition condition=":=?GeologicaGenApatite &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
-          <Cloud name='ApatiteBeds' inherits='PresetApatiteBeds'/>
+        <IfCondition condition=":=?GeologicaGenApatite &amp; ?GeologicaActive">
+          <Cloud name='ApatiteBeds' inherits='PresetApatiteBeds'>
+            <Veins name='ApatiteHintVeins' inherits='PresetApatiteHintVeins'/>
+          </Cloud>
         </IfCondition>
       </ConfigSection>
     </ConfigSection>
@@ -3110,18 +3286,7 @@
         
       </ConfigSection>
       <ConfigSection>
-        <OptionChoice name='GeologicaGenGraphite' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica graphite deposits in various patterns.
-          </Description>
-          <DisplayName>Graphite deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
-        <IfCondition condition=":=?GeologicaGenGraphite &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+        <IfCondition condition=":=?GeologicaGenGraphite &amp; ?GeologicaActive">
           <Cloud name='SchistGraphiteCloud'
                  inherits='PresetSchistGraphiteCloud'/>
           <Cloud name='GneissGraphiteCloud'
@@ -3166,19 +3331,9 @@
       </ConfigSection>
       
       <ConfigSection>
-        <OptionChoice name='GeologicaGenClay' default='true'
-                      displayState='shown' displayGroup='groupGeologica'>
-          <Description>
-            Generate Geologica mineral clay deposits, including
-            bentonite, Fuller's earth and kaolinite.
-          </Description>
-          <DisplayName>Mineral clay deposits</DisplayName>
-          <Choice value='true' displayValue='On'/>
-          <Choice value='false' displayValue='Off'/>
-        </OptionChoice>
+        
         <IfCondition condition=":=?GeologicaGenClay &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <StandardGen name='Bentonite' inherits='PresetBentonite'/>
           <Cloud name='FullersEarth' inherits='PresetFullersEarth'/>
           <Cloud name='Kaolinite' inherits='PresetKaolinite'/>
@@ -3188,17 +3343,7 @@
   </ConfigSection>
 
   <ConfigSection> <!-- Petroleum -->
-    <OptionChoice name='GeologicaPetroleum' default='true'
-                  displayState='shown' displayGroup='groupGeologica'>
-      <Description>
-        Generate petroleum resources, including crude oil (four
-        types), oil sand, oil shale and natural gas.
-      </Description>
-      <DisplayName>Petroleum</DisplayName>
-      <Choice value='true' displayValue='On'/>
-      <Choice value='false' displayValue='Off'/>
-    </OptionChoice>
-
+    
     <CloudPreset name='PresetCrudeOil'
                  inherits='PresetStratum'>
       <Setting name='CloudHeight' avg='40' range='10'/>
@@ -3343,9 +3488,7 @@
       <BiomeType name='plains'/>
     </CloudPreset>
     
-    <IfCondition condition=":=?GeologicaPetroleum &amp;
-                            (dimension.generator = 'RandomLevelSource' |
-                            dimension.generator = 'ATGLevelSource')">
+    <IfCondition condition=":=?GeologicaPetroleum &amp; ?GeologicaActive">
       <Cloud name='CrudeOilLightContinental'
              inherits='PresetCrudeOilLightContinental'/>
       <Cloud name='CrudeOilMediumContinental'
