@@ -2997,12 +2997,16 @@
           <OreBlock block='minecraft:sandstone' weight='0.25'/>
           <OreBlock block='PFAAGeologica:mediumOreRock:14' weight='0.75'/>
         </VeinsPreset>
+        <VeinsPreset name='PresetSkarnScheelite'
+                     inherits='PresetSkarnVeins'
+                     wireframeColor='0xFF11FF00'
+                     block='PFAAGeologica:mediumOreRock:7'
+                     drawWireframe='false'/>
       </ConfigSection>
 
       <ConfigSection>
         <IfCondition condition=":=?GeologicaGenCarbonate &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Cloud name='SkarnDeposit' inherits='PresetSkarnDeposit'>
             <Veins name='SkarnMagnesite'
                    inherits='PresetSkarnMagnesite'/>
@@ -3017,6 +3021,10 @@
             <IfCondition condition=":=?GeologicaGenIron">
               <Veins name='SkarnMagnetite'
                      inherits='PresetSkarnMagnetite'/>
+            </IfCondition>
+            <IfCondition condition=":=?GeologicaGenTungsten">
+              <Veins name='SkarnScheelite'
+                     inherits='PresetSkarnScheelite'/>
             </IfCondition>
             <Veins name='SkarnWollastonite'
                    inherits='PresetSkarnWollastonite'/>
