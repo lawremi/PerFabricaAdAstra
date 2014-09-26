@@ -70,52 +70,51 @@ public enum GeoMaterial implements Mixture {
 	// FIXME: add niter (KNO3)? 
 	BAUXITE(Ores.GIBBSITE.mix(Ores.HEMATITE, 0.45).mix(Ores.CALCITE, 0.10)
 			.mix(IndustrialMinerals.KAOLINITE, 0.10).mix(IndustrialMinerals.QUARTZ, 0.05).mix(Ores.ANATASE, 0.05), 
-			Strength.WEAK, Material.clay),
+			Strength.WEAK, LATERITE),
 	BENTONITE(IndustrialMinerals.BENTONITE, Strength.WEAK, Material.clay),
 	FULLERS_EARTH(IndustrialMinerals.FULLERS_EARTH, Strength.WEAK, Material.clay),
 	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
-	BROWN_LIMONITE(Ores.LEPIDOCROCITE.mix(Aggregates.CLAY, 1.0), Strength.WEAK, Material.clay),
-	YELLOW_LIMONITE(Ores.GOETHITE.mix(Aggregates.CLAY, 1.0), Strength.WEAK, Material.clay),
+	BROWN_LIMONITE(Ores.LEPIDOCROCITE.mix(Aggregates.CLAY, 1.0), Strength.WEAK, LATERITE),
+	YELLOW_LIMONITE(Ores.GOETHITE.mix(Aggregates.CLAY, 1.0), Strength.WEAK, LATERITE),
 	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
-	// FIXME: should we add stone to all of the stone ores?
-	//        maybe this should just be the "host rock" once we add that concept?
-	BORAX(Ores.BORAX, Strength.WEAK),
+	BORAX(Ores.BORAX, Strength.WEAK, null, Material.rock),
 	CINNABAR(Ores.CINNABAR.mix(Ores.PYRITE, 0.05).mix(Ores.REALGAR, 0.04).mix(Ores.STIBNITE, 0.02).mix(Ores.BARITE, 0.02), 
-			 Strength.WEAK),
+			 Strength.WEAK, BASALT),
 	GALENA(Ores.GALENA.mix(Ores.SPHALERITE, 0.2).mix(Ores.ACANTHITE, 0.05).mix(Ores.FLUORITE, 0.05).mix(Ores.BISMUTHINITE, 0.05)
-		   .mix(Ores.REALGAR, 0.04).mix(Ores.STIBNITE, 0.02).mix(Ores.GREENOCKITE, 0.01).mix(Ores.VANADINITE, 0.01), Strength.WEAK),
+		   .mix(Ores.REALGAR, 0.04).mix(Ores.STIBNITE, 0.02).mix(Ores.GREENOCKITE, 0.01).mix(Ores.VANADINITE, 0.01), Strength.WEAK,
+		   Aggregates.STONE),
 	MOLYBDENITE(Ores.MOLYBDENITE.mix(Ores.PYRITE, 0.05).mix(Ores.CHALCOPYRITE, 0.05)
-			    .mix(Ores.FLUORITE, 0.02), Strength.WEAK),
-	PYROLUSITE(Ores.PYROLUSITE.mix(Ores.GOETHITE, 0.1), Strength.WEAK),
-	ROCK_SALT(Ores.HALITE.mix(Ores.SYLVITE, 0.5).mix(Ores.CARNALLITE, 0.1).mix(Ores.GYPSUM, 0.05), Strength.WEAK),
+			    .mix(Ores.FLUORITE, 0.02), Strength.WEAK, BRECCIA),
+	PYROLUSITE(Ores.PYROLUSITE.mix(Ores.GOETHITE, 0.1), Strength.WEAK, Aggregates.STONE),
+	ROCK_SALT(Ores.HALITE.mix(Ores.SYLVITE, 0.5).mix(Ores.CARNALLITE, 0.1).mix(Ores.GYPSUM, 0.05), Strength.WEAK, Aggregates.STONE),
 	STIBNITE(Ores.STIBNITE.mix(Ores.PYRITE, 0.05).mix(Ores.GALENA, 0.05).mix(Ores.REALGAR, 0.04).mix(Ores.CINNABAR, 0.02), 
-			 Strength.WEAK),
+			 Strength.WEAK, GRANITE),
 	
-	BARITE(Ores.BARITE, Strength.MEDIUM),
-	BASTNASITE(Ores.BASTNASITE, Strength.MEDIUM),
+	BARITE(Ores.BARITE, Strength.MEDIUM, Aggregates.STONE),
+	BASTNASITE(Ores.BASTNASITE, Strength.MEDIUM, CARBONATITE),
 	CHALCOPYRITE(Ores.CHALCOPYRITE.mix(Ores.PYRITE, 0.10).mix(Ores.MOLYBDENITE, 0.05)
-				 .mix(Ores.COBALTITE, 0.01), Strength.MEDIUM),
-	GARNIERITE(Ores.NEPOUITE.mix(SERPENTINITE, 1.0), Strength.MEDIUM),
-	LEPIDOLITE(Ores.LEPIDOLITE.mix(PEGMATITE, 1.0).mix(Ores.SPODUMENE, 0.2), Strength.MEDIUM),
-	MAGNESITE(Ores.MAGNESITE.mix(IndustrialMinerals.TALC, 0.2), Strength.MEDIUM),
-	PENTLANDITE(Ores.PENTLANDITE.mix(Ores.PYRITE, 0.1), Strength.MEDIUM),
-	SCHEELITE(Ores.SCHEELITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.WOLFRAMITE, 0.2), Strength.MEDIUM),
-	SPHALERITE(Ores.SPHALERITE.mix(Ores.GALENA, 0.2).mix(Ores.PYRITE, 0.1), Strength.MEDIUM),
-	WOLFRAMITE(Ores.WOLFRAMITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.SCHEELITE, 0.2), Strength.MEDIUM),
+				 .mix(Ores.COBALTITE, 0.01), Strength.MEDIUM, Aggregates.STONE),
+	GARNIERITE(Ores.NEPOUITE, Strength.MEDIUM, SERPENTINITE),
+	LEPIDOLITE(Ores.LEPIDOLITE.mix(Ores.SPODUMENE, 0.2), Strength.MEDIUM, PEGMATITE),
+	MAGNESITE(Ores.MAGNESITE.mix(IndustrialMinerals.TALC, 0.2), Strength.MEDIUM, Aggregates.STONE),
+	PENTLANDITE(Ores.PENTLANDITE.mix(Ores.PYRITE, 0.1), Strength.MEDIUM, SERPENTINITE),
+	SCHEELITE(Ores.SCHEELITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.WOLFRAMITE, 0.2), Strength.MEDIUM, Aggregates.STONE),
+	SPHALERITE(Ores.SPHALERITE.mix(Ores.GALENA, 0.2).mix(Ores.PYRITE, 0.1), Strength.MEDIUM, Aggregates.STONE),
+	WOLFRAMITE(Ores.WOLFRAMITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.SCHEELITE, 0.2), Strength.MEDIUM, PEGMATITE),
 	
-	BANDED_IRON(Ores.HEMATITE.mix(Ores.MAGNETITE, 0.5), Strength.STRONG),
-	BERYL(Ores.BERYL.mix(PEGMATITE, 1.0), Strength.STRONG),
+	BANDED_IRON(Ores.HEMATITE.mix(Ores.MAGNETITE, 0.5), Strength.STRONG, MUDSTONE),
+	QUARTZ(IndustrialMinerals.QUARTZ, Strength.STRONG, GRANITE),
 	CASSITERITE(Ores.CASSITERITE.mix(Ores.FLUORITE, 0.1).mix(Ores.WOLFRAMITE, 0.1)
-			    .mix(IndustrialMinerals.APATITE, 0.05).mix(Ores.MOLYBDENITE, 0.05), Strength.STRONG),
-	CHROMITE(Ores.CHROMITE.mix(SERPENTINITE, 0.5).mix(Ores.MAGNETITE, 0.1), Strength.STRONG),
-	ILMENITE(Ores.ILMENITE.mix(Ores.RUTILE, 0.2).mix(Ores.MAGNETITE, 0.1), Strength.STRONG),
-	MAGNETITE(Ores.MAGNETITE, Strength.STRONG),
-	POLLUCITE(Ores.POLLUCITE.mix(PEGMATITE, 1.0).mix(Ores.SPODUMENE, 0.1), Strength.STRONG),
-	SPODUMENE(Ores.SPODUMENE.mix(PEGMATITE, 1.0).mix(Ores.LEPIDOLITE, 0.1), Strength.STRONG),
-	TANTALITE(Ores.TANTALITE.mix(Ores.COLUMBITE, 2.0), Strength.STRONG),
-	PITCHBLENDE(Ores.URANINITE.mix(Ores.CARNOTITE, 0.05), Strength.STRONG),
-	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG),
+			    .mix(IndustrialMinerals.APATITE, 0.05).mix(Ores.MOLYBDENITE, 0.05), Strength.STRONG, GRANITE),
+	CHROMITE(Ores.CHROMITE.mix(SERPENTINITE, 0.5).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, SERPENTINITE),
+	ILMENITE(Ores.ILMENITE.mix(Ores.RUTILE, 0.2).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, DIORITE),
+	MAGNETITE(Ores.MAGNETITE, Strength.STRONG, GRANITE),
+	POLLUCITE(Ores.POLLUCITE.mix(Ores.SPODUMENE, 0.1), Strength.STRONG, PEGMATITE),
+	SPODUMENE(Ores.SPODUMENE.mix(Ores.LEPIDOLITE, 0.1), Strength.STRONG, PEGMATITE),
+	TANTALITE(Ores.TANTALITE.mix(Ores.COLUMBITE, 2.0), Strength.STRONG, PEGMATITE),
+	PITCHBLENDE(Ores.URANINITE.mix(Ores.CARNOTITE, 0.05), Strength.STRONG, Aggregates.STONE),
+	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG, PERIDOTITE),
 	
 	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE.mix(SERPENTINITE, 0.5), Strength.WEAK),
 	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
@@ -124,20 +123,20 @@ public enum GeoMaterial implements Mixture {
 	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MIRABILITE(IndustrialMinerals.MIRABILITE
 	           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
-	MICA(IndustrialMinerals.MICA.mix(PEGMATITE, 0.5), Strength.WEAK),
-	SOAPSTONE(IndustrialMinerals.TALC.mix(SERPENTINITE, 0.5), Strength.WEAK),
+	MICA(IndustrialMinerals.MICA, Strength.WEAK, PEGMATITE),
+	SOAPSTONE(IndustrialMinerals.TALC, Strength.WEAK, SERPENTINITE),
 	TRONA(IndustrialMinerals.TRONA
           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	
 	ALUNITE(IndustrialMinerals.ALUNITE.mix(IndustrialMinerals.BENTONITE, 0.1), Strength.MEDIUM),
 	CELESTINE(Ores.CELESTINE.mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.MEDIUM),
 	DOLOMITE(IndustrialMinerals.DOLOMITE.mix(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
-	FLUORITE(Ores.FLUORITE.mix(Ores.SPHALERITE, 0.06).mix(Ores.GALENA, 0.02), Strength.MEDIUM),
+	FLUORITE(Ores.FLUORITE.mix(Ores.SPHALERITE, 0.06).mix(Ores.GALENA, 0.02), Strength.MEDIUM, Aggregates.STONE),
 	WOLLASTONITE(IndustrialMinerals.WOLLASTONITE.mix(Ores.CALCITE, 0.1), Strength.MEDIUM),
 	ZEOLITE(IndustrialMinerals.ZEOLITE, Strength.MEDIUM),
 	
-	APATITE(IndustrialMinerals.APATITE, Strength.STRONG),
-	KYANITE(IndustrialMinerals.KYANITE.mix(PEGMATITE, 0.5), Strength.STRONG),
+	APATITE(IndustrialMinerals.APATITE, Strength.STRONG, Aggregates.STONE),
+	KYANITE(IndustrialMinerals.KYANITE, Strength.STRONG, PEGMATITE),
 	PERLITE(IndustrialMinerals.PERLITE.mix(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
 	
@@ -173,32 +172,51 @@ public enum GeoMaterial implements Mixture {
 	private Strength strength;
 	private Material blockMaterial;
 	private Mixture composition;
+    private IndustrialMaterial host;
 		
-	GeoMaterial(Mixture composition, Strength strength, Material blockMaterial) {
+	GeoMaterial(Mixture composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
+	    this.composition = composition;
 		this.strength = strength;
+		this.host = host;
 		this.blockMaterial = blockMaterial;
-		this.composition = composition;
+	}
+	
+	GeoMaterial(Mixture composition, Strength strength, Material blockMaterial) {
+	    this(composition, strength, null, blockMaterial);
+	}
+	
+	GeoMaterial(Mixture composition, Strength strength, IndustrialMaterial host) {
+	    this(composition, strength, host, blockMaterialFromHost(host));
 	}
 	
 	GeoMaterial(Mixture composition, Strength strength) {
-		this(composition, strength, Material.rock);
+        this(composition, strength, Material.rock);
+    }
+	
+	GeoMaterial(OreMineral composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
+		this(new SimpleOre(composition), strength, host, blockMaterial);
 	}
 	
-	GeoMaterial(OreMineral composition, Strength strength, Material blockMaterial) {
-		this(new SimpleOre(composition), strength, blockMaterial);
+	GeoMaterial(OreMineral composition, Strength strength, IndustrialMaterial host) {
+		this(composition, strength, host, blockMaterialFromHost(host));
 	}
 	
-	GeoMaterial(OreMineral composition, Strength strength) {
-		this(composition, strength, Material.rock);
+	GeoMaterial(IndustrialMineral composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
+        this(new SimpleOre(composition), strength, host, blockMaterial);
+    }
+
+	GeoMaterial(IndustrialMineral composition, Strength strength, IndustrialMaterial host) {
+	    this(composition, strength, host, blockMaterialFromHost(host));
 	}
-	
+
 	GeoMaterial(IndustrialMineral composition, Strength strength, Material blockMaterial) {
-		this(new SimpleOre(composition), strength, blockMaterial);
+		this(composition, strength, null, blockMaterial);
 	}
 	
 	GeoMaterial(IndustrialMineral composition, Strength strength) {
 		this(composition, strength, Material.rock);
 	}
+	
 	
 	public int getId() {
 		return ordinal();
@@ -228,6 +246,10 @@ public enum GeoMaterial implements Mixture {
 		return this.composition;
 	}
 
+	public IndustrialMaterial getHost() {
+	    return this.host;
+	}
+	
 	public static List<GeoMaterial> lookup(Strength strength, Class<? extends IndustrialMaterial> compositionType, Material blockMaterial) {
 		List<GeoMaterial> materialsToReturn = new ArrayList<GeoMaterial>();
 		for (GeoMaterial material : values()) {
@@ -252,4 +274,17 @@ public enum GeoMaterial implements Mixture {
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return composition.mix(material, weight);
 	}
+	
+	private static Material blockMaterialFromHost(IndustrialMaterial host)
+    {
+        Material material = Material.rock;
+        if (host == Aggregates.SAND) {
+            material = Material.sand;
+        } else if (host == Aggregates.STONE) {
+            material = Material.rock;
+        } else if (host instanceof GeoMaterial) {
+            material = ((GeoMaterial)host).getBlockMaterial();
+        }
+        return material;
+    }
 }
