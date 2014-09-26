@@ -143,6 +143,11 @@
         <BiomeType name='ocean'/>
         <BiomeSet inherits='island'/>
       </BiomeSet>
+
+      <BiomeSet name='sedocean'>
+        <BiomeType name='ocean'/>
+        <Biome name='deep ocean' weight='-1'/>
+      </BiomeSet>
       
       <BiomeSet name='continental'>
         <Biome name='.*'/>
@@ -1444,7 +1449,7 @@
                    inherits='PresetSedStrategicCloud'>
         <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                  range=':=5/64 * dimension.groundLevel' type='normal'/>
-        <BiomeType name='ocean'/>
+        <BiomeSet inherits='sedocean'/>
       </CloudPreset>
 
       <CloudPreset name='PresetMetaStrategicCloud'
@@ -1496,15 +1501,15 @@
         <CloudPreset name='PresetCoalBedsOceanic' inherits='PresetCoalBeds'
                      drawWireframe='false'>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
-                 range=':=5/64 * dimension.groundLevel' type='normal'/>
-          <BiomeType name='ocean' weight='0.5'/>
+                   range=':=5/64 * dimension.groundLevel' type='normal'/>
+          <BiomeSet inherits='sedocean' weight='0.5'/>
         </CloudPreset>
 
         <VeinsPreset name='PresetCoalBedHintVeinsOceanic'
                      inherits='PresetCoalBedHintVeins'>
           <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
                  range=':=5/64 * dimension.groundLevel' type='normal'/>
-          <BiomeType name='ocean' weight='0.5'/>
+          <BiomeSet inherits='sedocean' weight='0.5'/>
         </VeinsPreset>
         
       </ConfigSection>
@@ -1533,7 +1538,7 @@
                      drawWireframe='false'>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='normal'/>
-          <BiomeType name='ocean'/>
+          <BiomeSet inherits='sedocean'/>
           <Replaces block='PFAAGeologica:mediumStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
         </CloudPreset>
@@ -2356,7 +2361,7 @@
         <CloudPreset name='PresetSEDEXSphaleriteGalenaOceanic'
                      inherits='PresetSEDEXSphaleriteGalena'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <BiomeType name='ocean'/>
+          <BiomeSet inherits='sedocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='uniform'/>
         </CloudPreset>
@@ -2381,7 +2386,7 @@
         <CloudPreset name='PresetSEDEXScheeliteOceanic'
                      inherits='PresetSEDEXScheelite'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <BiomeType name='ocean'/>
+          <BiomeSet inherits='sedocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel'
                    type='uniform'/>
@@ -2405,7 +2410,7 @@
         <CloudPreset name='PresetSEDEXChalcopyriteOceanic'
                      inherits='PresetSEDEXChalcopyrite'>
           <Setting name='DistributionFrequency' avg=':= 2 * _default_'/>
-          <BiomeType name='ocean'/>
+          <BiomeSet inherits='sedocean'/>
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='uniform'/>
         </CloudPreset>
@@ -2755,8 +2760,7 @@
       <ConfigSection>
         <IfCondition condition=":=?GeologicaGenIgVeins &amp;
                                 ?GeologicaGenMercury &amp;
-                                (dimension.generator = 'RandomLevelSource' |
-                                dimension.generator = 'ATGLevelSource')">
+                                ?GeologicaActive">
           <Veins name='Cinnabar' inherits='PresetCinnabar'/>
         </IfCondition>
       </ConfigSection>
@@ -2790,7 +2794,7 @@
             <Setting name='DistributionFrequency' avg='0.01'/>
             <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.3'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:12' weight='0.7'/>
-            <BiomeType name='ocean'/>
+            <BiomeSet inherits='sedocean'/>
           </CloudPreset>
           <VeinsPreset name='PresetLayeredVeinsDolomite'
                        inherits='PresetLayeredVeinsLite'>
@@ -2860,7 +2864,7 @@
             <Setting name='DistributionFrequency' avg=':= 0.005'/>
             <Setting name='MotherlodeHeight'
                      avg=':= 40/64 * dimension.groundLevel'/>
-            <BiomeType name='ocean'/>
+            <BiomeSet inherits='sedocean'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.60'/>
             <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.20'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:0' weight='0.20'/>
