@@ -2640,18 +2640,15 @@
             <Replaces block='PFAAGeologica:strongStone:4'/>
             <Replaces block='PFAAGeologica:veryStrongStone:0'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
-            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.644'/>
+            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.739'/>
             <OreBlock block='PFAAGeologica:weakOreRock:13' weight='0.05'/> 
             <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/> 
-            <OreBlock block='PFAAGeologica:mediumOreRock:5' weight='0.05'/> 
             <OreBlock block='PFAAGeologica:mediumOreRock:9' weight='0.01'/>
-            <OreBlock block='PFAAGeologica:mediumOreRock:7' weight='0.02'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:4' weight='0.025'/>
             <OreBlock block='PFAAGeologica:strongOreRock:8' weight='0.02'/>
             <OreBlock block='PFAAGeologica:strongOreRock:6' weight='0.001'/>
             <OreBlock block='PFAAGeologica:strongOreRock:11' weight='0.02'/>
             <OreBlock block='PFAAGeologica:strongOreRock:7' weight='0.07'/>
-            <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.025'/>
             <OreBlock block='PFAAGeologica:strongOreRock:2' weight='0.015'/>
           </VeinsPreset>
           <VeinsPreset name='PresetPegmatiteVolcanic'
