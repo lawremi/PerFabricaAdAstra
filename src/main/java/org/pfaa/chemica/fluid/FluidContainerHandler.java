@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.FillFluidContainerEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -31,10 +30,6 @@ public final class FluidContainerHandler {
 			return;
 		}
 
-		if (event instanceof FillBucketEvent) {
-		    event.world.setBlockToAir(event.target.blockX, event.target.blockY, event.target.blockZ);
-		}
-		
 		event.result = result;
 		event.setResult(Result.ALLOW);
 	}
@@ -50,6 +45,7 @@ public final class FluidContainerHandler {
 			FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
 			ItemStack container = FluidContainerRegistry.fillFluidContainer(fluidStack, itemStack);
 			if (container != null) {
+				world.setBlockToAir(pos.blockX, pos.blockY, pos.blockZ);
 				return container;
 			}
 		}
