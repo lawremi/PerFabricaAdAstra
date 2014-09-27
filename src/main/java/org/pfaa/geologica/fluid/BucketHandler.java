@@ -1,13 +1,18 @@
 /**
  * Derived from buildcraft.energy.BucketHandler; changed to use FluidContainerRegistry
  */
-package org.pfaa.chemica.fluid;
+package org.pfaa.geologica.fluid;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.FillFluidContainerEvent;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -15,16 +20,16 @@ import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public final class FluidContainerHandler {
+public final class BucketHandler {
 
-	public static FluidContainerHandler INSTANCE = new FluidContainerHandler();
+	public static BucketHandler INSTANCE = new BucketHandler();
 
-	private FluidContainerHandler() {
+	private BucketHandler() {
 	}
 
 	@SubscribeEvent
-	public void onFill(FillFluidContainerEvent event) {
-		ItemStack result = fillCustomContainer(event.world, event.target, event.current);
+	public void onBucketFill(FillBucketEvent event) {
+		ItemStack result = fillCustomBucket(event.world, event.target, event.current);
 
 		if (result == null) {
 			return;
@@ -34,7 +39,7 @@ public final class FluidContainerHandler {
 		event.setResult(Result.ALLOW);
 	}
 
-	private ItemStack fillCustomContainer(World world, MovingObjectPosition pos, ItemStack itemStack) {
+	private ItemStack fillCustomBucket(World world, MovingObjectPosition pos, ItemStack container) {
 		Block block = world.getBlock(pos.blockX, pos.blockY, pos.blockZ);
 		Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 		if (fluid != null) {
@@ -43,10 +48,10 @@ public final class FluidContainerHandler {
 				return null;
 			}
 			FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
-			ItemStack container = FluidContainerRegistry.fillFluidContainer(fluidStack, itemStack);
-			if (container != null) {
+			ItemStack bucket = FluidContainerRegistry.fillFluidContainer(fluidStack, container);
+			if (bucket != null) {
 				world.setBlockToAir(pos.blockX, pos.blockY, pos.blockZ);
-				return container;
+				return bucket;
 			}
 		}
 		return null;
