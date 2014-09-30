@@ -3010,6 +3010,11 @@
           <Cloud name='SkarnDeposit' inherits='PresetSkarnDeposit'>
             <Veins name='SkarnMagnesite'
                    inherits='PresetSkarnMagnesite'/>
+            <IfModInstalled name="gregtech">
+              <IfCondition condition=":=?GregtechGenLapis">
+                <Veins name='SkarnLazurite' inherits='PresetSkarnLazurite'/>
+              </IfCondition>
+            </IfModInstalled>
             <IfCondition condition=":=?GeologicaGenLeadZinc">
               <Veins name='SkarnSphaleriteGalena'
                      inherits='PresetSkarnSphaleriteGalena'/>
