@@ -2368,7 +2368,6 @@
           <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.35'/>
           <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.65'/>
           <Setting name='DistributionFrequency' avg=':= 3 * _default_'/>
-          <Setting name='OreDensity' avg=':= 1.5 * _default_'/>
         </CloudPreset>
         <CloudPreset name='PresetSEDEXSphaleriteGalenaOceanic'
                      inherits='PresetSEDEXSphaleriteGalena'>
