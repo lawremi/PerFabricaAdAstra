@@ -1486,9 +1486,13 @@
           <Setting name='CloudThickness'
                    avg=':=coalSize * _default_'
                    range=':=coalSize * _default_'/>
-          <Setting name='OreDensity' avg=':=1.5 * _default_'/>
           <BiomeSet inherits='inland' weight='0.5'/>
           <BiomeType name='swamp' weight='0.5'/>
+          <IfModInstalled name='gregtech'>
+            <IfChoice name='GregtechGenCoal' value='true'>
+              <BiomeType name='swamp' weight='-0.5'/> <!-- lignite instead -->
+            </IfChoice>
+          </IfModInstalled>
         </CloudPreset>
 
         <VeinsPreset name='PresetCoalBedHintVeins' block='minecraft:coal_ore'
