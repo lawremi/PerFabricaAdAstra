@@ -2115,7 +2115,7 @@
       <ConfigSection>
         <IfCondition condition=":=?GeologicaGenIgIntrusion &amp;
                                 ?GeologicaActive">
-          <Cloud name='PeridoditeIntrusion' inherits='PresetPeridotiteIntrusion'>
+          <Cloud name='PeridotiteIntrusion' inherits='PresetPeridotiteIntrusion'>
             <Cloud name='GabbroIntrusion'
                    inherits='PresetGabbroIntrusion'/>
             <Cloud name='DioriteIntrusion'
