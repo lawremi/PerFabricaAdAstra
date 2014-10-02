@@ -79,7 +79,7 @@
       <Choice value='false' displayValue='Off'/>
     </OptionChoice>
     
-    <OptionChoice name='GeologicaPetroleum' default='true'
+    <OptionChoice name='GeologicaGenPetroleum' default='true'
                   displayState='shown' displayGroup='groupGeologica'>
       <Description>
         Generate petroleum resources, including crude oil (four
@@ -87,11 +87,11 @@
       </Description>
       <DisplayName>Petroleum</DisplayName>
       <Choice value='true' displayValue='On'/>
-        <Choice value='false' displayValue='Off'/>
+      <Choice value='false' displayValue='Off'/>
     </OptionChoice>
 
     <ConfigSection>
-      <IfChoice name='GeologicaActive' value='true'>
+      <IfChoice name='GeologicaGenRocks' value='true'>
         <Substitute name='DirtSubstitute' block='minecraft:stone'
                     minHeight = '0' maxHeight=':= 40/64 * dimension.groundLevel'>
           <Replaces block='minecraft:dirt'/>
@@ -3547,7 +3547,7 @@
       <BiomeType name='plains'/>
     </CloudPreset>
     
-    <IfCondition condition=":=?GeologicaPetroleum &amp; ?GeologicaActive">
+    <IfCondition condition=":=?GeologicaGenPetroleum &amp; ?GeologicaActive">
       <Cloud name='CrudeOilLightContinental'
              inherits='PresetCrudeOilLightContinental'/>
       <Cloud name='CrudeOilMediumContinental'
