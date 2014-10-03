@@ -12,8 +12,6 @@
 ***************************************************************************-->
 
 <!-- TODO:
-     * Move kyanite from pegmatite to something associated with
-       gneiss/schist. Probably like what we did with graphite.
      * Pegmatite could chance-drop sheet mica and other crystals.
      * Processing schist (as well as pegmatite) could yield mica.
 -->
@@ -367,7 +365,7 @@
                     displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
                     displayGroup='groupGeologicaOres'>
         <Description>
-          Generate Geologica distributions of quartz.
+          Generate Geologica distributions of quartz and associated minerals.
         </Description>
         <DisplayName>Quartz</DisplayName>
         <Choice value='true' displayValue='On'/>
@@ -2575,9 +2573,11 @@
         <VeinsPreset name='PresetGraniteQuartzContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
-                     wireframeColor='0xFFFF0055'
-                     block='PFAAGeologica:strongOreRock:1'>
+                     wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.015'/>
+          <OreBlock name='PFAAGeologica:strongOreRock:1' avg='0.93'/>
+          <OreBlock name='PFAAGeologica:strongOreRock:12' avg='0.05'/>
+          <OreBlock name='PFAAGeologica:verystrongStone:4' avg='0.02'/>
         </VeinsPreset>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
@@ -2625,9 +2625,11 @@
         <VeinsPreset name='PresetGraniteQuartzVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
-                     wireframeColor='0xFFFF0055'
-                     block='PFAAGeologica:strongOreRock:1'>
+                     wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.02'/>
+          <OreBlock name='PFAAGeologica:strongOreRock:1' avg='0.93'/>
+          <OreBlock name='PFAAGeologica:strongOreRock:12' avg='0.05'/>
+          <OreBlock name='PFAAGeologica:verystrongStone:4' avg='0.02'/>
         </VeinsPreset>
         <VeinsPreset name='PresetGraniteFluoriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
@@ -2650,9 +2652,9 @@
             <Replaces block='PFAAGeologica:strongStone:4'/>
             <Replaces block='PFAAGeologica:veryStrongStone:0'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
-            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.739'/>
+            <OreBlock block='PFAAGeologica:strongStone:6' weight='0.779'/>
             <OreBlock block='PFAAGeologica:weakOreRock:13' weight='0.05'/> 
-            <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/> 
+            <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.01'/> 
             <OreBlock block='PFAAGeologica:mediumOreRock:9' weight='0.01'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:4' weight='0.025'/>
             <OreBlock block='PFAAGeologica:strongOreRock:8' weight='0.02'/>
@@ -3251,6 +3253,16 @@
           <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=10/64 * dimension.groundLevel' type='uniform'/>
         </VeinsPreset>
+        <CloudPreset name='PresetKyanite'
+                     inherits='PresetMetamorphicContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFF000000'>
+          <ReplacesOre block='stone'/>
+          <Setting name='CloudHeight' avg='45' range='5'/>
+          <Setting name='DistributionFrequency' avg='0.0025'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.10'/>
+          <OreBlock block='PFAAGeologica:veryStrongStone:4' weight='0.90'/>
+        </CloudPreset>
         <StandardGenPreset name='PresetPumice'
                            inherits='PresetVolcanicAsh'
                            block='PFAAGeologica:strongOreRock:14'>
@@ -3296,6 +3308,9 @@
           <Cloud name='ApatiteBeds' inherits='PresetApatiteBeds'>
             <Veins name='ApatiteHintVeins' inherits='PresetApatiteHintVeins'/>
           </Cloud>
+        </IfCondition>
+        <IfCondition condition=":=?GeologicaGenQuartz &amp; ?GeologicaActive">
+          <Cloud name='Kyanite' inherits='PresetKyanite'/>
         </IfCondition>
       </ConfigSection>
     </ConfigSection>
