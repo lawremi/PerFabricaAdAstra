@@ -874,6 +874,7 @@
           <Setting name='CloudThickness' avg='4' range='2'/>
           <Setting name='CloudHeight' avg=':= 75/64 * dimension.groundLevel'
                    range='30'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:4'/>
           <Replaces block='PFAAGeologica:mediumStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
@@ -1007,6 +1008,7 @@
           <Setting name='DistributionFrequency' avg='0.02'/>
           <Setting name='CloudHeight' avg='40' range='5'/>
           <Setting name='CloudThickness' avg='3' range='1'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:4'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
@@ -1016,6 +1018,7 @@
                      inherits='PresetStratumVolcanic'>
           <Setting name='DistributionFrequency' avg='0.2'/>
           <Setting name='CloudThickness' avg='4' range='2'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
@@ -1025,6 +1028,7 @@
                      inherits='PresetStratumOceanic'>
           <Setting name='DistributionFrequency' avg='0.1'/>
           <Setting name='CloudThickness' avg='3' range='2'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:veryStrongStone:1'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
         </CloudPreset>
@@ -1057,6 +1061,7 @@
         <ConfigSection> <!-- Skarn -->
           <CloudPreset name='PresetSkarn'
                        inherits='PresetMetamorphicContinental'>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:weakStone:4'/>
             <Replaces block='PFAAGeologica:strongStone:3'/>
             <Replaces block='PFAAGeologica:mediumStone:0'/>
@@ -1115,6 +1120,7 @@
             <Setting name='DistributionFrequency' avg='0.02'/>
             <Setting name='CloudHeight' avg='10' range='5'/>
             <Setting name='CloudThickness' avg='3' range='1'/>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
           </CloudPreset>
 
@@ -1124,6 +1130,7 @@
             <Setting name='DistributionFrequency' avg='0.05'/>
             <Setting name='CloudHeight' avg='15' range='10'/>
             <Setting name='CloudThickness' avg='3' range='1'/>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:veryStrongStone:1'/>
             <Replaces block='PFAAGeologica:strongStone:1'/>
           </CloudPreset>
@@ -1436,6 +1443,7 @@
         <Setting name='CloudHeight' avg=':=55/64 * dimension.groundLevel'
                  range=':=10/64 * dimension.groundLevel' type='normal'/>
         <Setting name='OreVolumeNoiseCutoff' avg=':=0.6 * _default_'/>
+        <Replaces block='minecraft:stone'/>
         <Replaces block='PFAAGeologica:weakStone:0'/>
         <Replaces block='PFAAGeologica:weakStone:2'/>
         <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1467,6 +1475,7 @@
                    inherits='PresetHintVeins'>
         <Setting name='MotherlodeHeight'
                  avg=':=55/64 * dimension.groundLevel'/>
+        <Replaces block='minecraft:stone'/>
         <Replaces block='PFAAGeologica:weakStone:0'/>
         <Replaces block='PFAAGeologica:weakStone:2'/>
         <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1533,6 +1542,7 @@
           <Setting name='CloudHeight' avg=':=40/64 * dimension.groundLevel'
                    range=':=5/64 * dimension.groundLevel' type='normal'/>
           <BiomeSet inherits='sedocean'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:mediumStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
         </CloudPreset>
@@ -1545,6 +1555,7 @@
         </VeinsPreset>
         <VeinsPreset name='PresetBandedIronHintVeinsOceanic'
                      inherits='PresetBandedIronHintVeins'>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:mediumStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
           <Setting name='MotherlodeHeight' avg=':=40/64 * dimension.groundLevel'
@@ -1558,7 +1569,8 @@
           <Setting name='MotherlodeFrequency' avg='0.2'/>
           <Setting name='MotherlodeHeight' avg='35' range='2'/>
           <Setting name='BranchLength' avg=':= 0.5 * _default_'
-                   range=':= 0.5 * _default_'/> 
+                   range=':= 0.5 * _default_'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
           <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1570,6 +1582,7 @@
         </VeinsPreset>
         <VeinsPreset name='PresetSubBIFBrecciaOceanic'
                      inherits='PresetSubBIFBreccia'>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
           <Replaces block='PFAAGeologica:weakStone:4'/>
           <Setting name='MotherlodeHeight' avg=':=30/64 * dimension.groundLevel'
@@ -1685,6 +1698,7 @@
                    range='20'/>
           <BiomeSet inherits='volcanic'/>
           <Biome name='badlands' weight='0.5'/> <!-- BOP -->
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:7'/>
           <Replaces block='minecraft:dirt'/>
@@ -1779,6 +1793,7 @@
           <Setting name='CloudHeight'
                    avg=':= 55/64 * dimension.groundLevel'
                    range='5'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
           <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1844,6 +1859,7 @@
           <Setting name='CloudHeight' avg='53' range='2'/>
           <Setting name='CloudThickness' avg='3' range='1'/>
           <Setting name='ParentRangeLimit' avg='5' range='2'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
           <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1882,6 +1898,7 @@
           <Setting name='MotherlodeHeight'
                    avg=':= 10/64 * dimension.groundLevel'
                    range=':= 3/64 * dimension.groundLevel'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
           <Replaces block='PFAAGeologica:veryStrongStone:1'/>
         </VeinsPreset>
@@ -1912,6 +1929,7 @@
                    avg=':= 20/64 * dimension.groundLevel'
                    range=':= 20/64 * dimension.groundLevel'
                    type='normal'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
           <Replaces block='PFAAGeologica:veryStrongStone:1'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
@@ -1980,6 +1998,7 @@
           <Setting name='CloudRadius' avg='32' range='5'/>
           <Setting name='CloudHeight' range='0'/>
           <Setting name='ParentRangeLimit' avg='3' range='2'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
           <Replaces block='PFAAGeologica:veryStrongStone:1'/>
           <Replaces block='PFAAGeologica:veryStrongStone:3'/>
@@ -2145,6 +2164,7 @@
           <BiomeType name='plains'/>
           <BiomeType name='wasteland'/>
           <BiomeType name='wet' weight='-1'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
           <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -2476,6 +2496,7 @@
           <Setting name='MotherlodeHeight' avg='10' range='10'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:veryStrongStone:0'/>
+          <Replaces block='minecraft:stone'/>
           <OreBlock block='PFAAGeologica:weakStone:0' weight='0.7'/>
           <OreBlock weight='0.20'>
             <IfChoice name='GeologicaGenCopper' value='true'>
@@ -2511,6 +2532,7 @@
           <Setting name='BranchLength' avg=':= 2 * _default_'
                    range=':= 2 * _default_'/>
           <Setting name='MotherlodeSize' avg=':= 2 * _default_'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:strongStone:2'/>
           <Replaces block='PFAAGeologica:mediumStone:1'/>
@@ -2567,6 +2589,7 @@
           <Setting name='BranchLength' avg=':= 2 * _default_'
                    range=':= 2 * _default_'/>
           <Setting name='MotherlodeSize' avg=':= 2 * _default_'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:3'/>
           <Replaces block='PFAAGeologica:strongStone:2'/>
           <Replaces block='PFAAGeologica:mediumStone:1'/>
@@ -2621,6 +2644,7 @@
                        drawWireframe='false'
                        wireframeColor='0xFFFF0055'>
             <Setting name='MotherlodeFrequency' avg='0.006'/>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:strongStone:2'/>
             <Replaces block='PFAAGeologica:strongStone:3'/>
             <Replaces block='PFAAGeologica:strongStone:4'/>
@@ -2685,6 +2709,7 @@
             <!-- chalco -->
             <OreBlock block='PFAAGeologica:mediumOreRock:2'
                       weight='0.025'/>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:mediumStone:1'/>
             <Replaces block='PFAAGeologica:mediumStone:3'/>
             <Replaces block='PFAAGeologica:strongStone:1'/>
@@ -2764,6 +2789,7 @@
                    range=':= 10/64 * dimension.groundLevel'/>
           <Setting name='BranchLength' avg=':= 2 * _default_'
                    range=':= 2 * _default_'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:1'/>
           <BiomeSet inherits='oceanic'/>
         </VeinsPreset>
@@ -2795,6 +2821,7 @@
             <Setting name='CloudHeight'
                      avg=':= 55/64 * dimension.groundLevel'
                      range=':= 2/64 * dimension.groundLevel'/>
+            <Replaces block='minecraft:stone'/>
             <Replaces block='PFAAGeologica:weakStone:0'/>
             <Replaces block='PFAAGeologica:weakStone:2'/>
             <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -3185,6 +3212,7 @@
           <Setting name='MotherlodeFrequency' avg='0.1'/>
           <Setting name='MotherlodeHeight' avg='90' range='10'
                    type='uniform'/>
+          <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:strongStone:7'/>
           <Replaces block='PFAAGeologica:strongStone:0'/>
         </VeinsPreset>
