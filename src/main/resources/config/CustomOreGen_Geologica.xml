@@ -85,7 +85,7 @@
         Generate petroleum resources, including crude oil (four
         types), oil sand, oil shale and natural gas.
       </Description>
-      <DisplayName>Petroleum</DisplayName>
+      <DisplayName>Geologica petroleum</DisplayName>
       <Choice value='true' displayValue='On'/>
       <Choice value='false' displayValue='Off'/>
     </OptionChoice>
