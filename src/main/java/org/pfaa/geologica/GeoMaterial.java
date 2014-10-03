@@ -30,6 +30,7 @@ public enum GeoMaterial implements Mixture {
 	MUDSTONE(Aggregates.STONE, Strength.WEAK),
 	
 	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.5), Strength.MEDIUM),
+	// TODO: yield mica?
 	SCHIST(Aggregates.STONE, Strength.MEDIUM),
 	SERPENTINITE(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.05)
 			     .mix(IndustrialMinerals.TALC, 0.05).mix(IndustrialMinerals.OLIVINE, 0.05), Strength.MEDIUM),
@@ -42,6 +43,7 @@ public enum GeoMaterial implements Mixture {
 	GRANITE(Aggregates.STONE, Strength.STRONG),
 	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
 	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG),
+	// TODO: chance drop "sheet" mica?
 	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.5)
 			  .mix(IndustrialMinerals.QUARTZ, 0.2).mix(IndustrialMinerals.MICA, 0.2).mix(Ores.MICROLITE, 0.02), 
 			  Strength.STRONG),
@@ -136,7 +138,7 @@ public enum GeoMaterial implements Mixture {
 	ZEOLITE(IndustrialMinerals.ZEOLITE, Strength.MEDIUM),
 	
 	APATITE(IndustrialMinerals.APATITE, Strength.STRONG, Aggregates.STONE),
-	KYANITE(IndustrialMinerals.KYANITE, Strength.STRONG, PEGMATITE),
+	KYANITE(IndustrialMinerals.KYANITE, Strength.STRONG, QUARTZITE),
 	PERLITE(IndustrialMinerals.PERLITE.mix(IndustrialMinerals.OBSIDIAN, 0.1), Strength.STRONG),
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
 	
