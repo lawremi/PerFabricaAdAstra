@@ -630,6 +630,10 @@
           <IfCondition condition=":=?GeologicaGenApatite">
             <ReplacesOre block='oreApatite'/>
           </IfCondition>
+          <IfCondition condition=":=?GeologicaGenRocks">
+            <ReplacesOre block='blockMarble'/>
+            <ReplacesOre block='blockLimestone'/>
+          </IfCondition>
         </IfCondition>
       </SubstitutePreset>
 
@@ -2575,9 +2579,9 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.015'/>
-          <OreBlock name='PFAAGeologica:strongOreRock:1' avg='0.93'/>
-          <OreBlock name='PFAAGeologica:strongOreRock:12' avg='0.05'/>
-          <OreBlock name='PFAAGeologica:verystrongStone:4' avg='0.02'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.93'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/>
+          <OreBlock block='PFAAGeologica:verystrongStone:4' weight='0.02'/>
         </VeinsPreset>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
@@ -2627,9 +2631,9 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.02'/>
-          <OreBlock name='PFAAGeologica:strongOreRock:1' avg='0.93'/>
-          <OreBlock name='PFAAGeologica:strongOreRock:12' avg='0.05'/>
-          <OreBlock name='PFAAGeologica:verystrongStone:4' avg='0.02'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.93'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/>
+          <OreBlock block='PFAAGeologica:verystrongStone:4' weight='0.02'/>
         </VeinsPreset>
         <VeinsPreset name='PresetGraniteFluoriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
