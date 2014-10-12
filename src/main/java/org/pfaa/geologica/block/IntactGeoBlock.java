@@ -20,7 +20,7 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
 	public Item getItemDropped(int meta, Random random, int par3) {
 		Item dropped = super.getItemDropped(meta, random, par3);
-		GeoMaterial material = getSubstance(meta);
+		GeoMaterial material = getGeoMaterial(meta);
 		if (material.getComposition() instanceof Aggregate && blockMaterial == Material.rock) {
 			dropped = dropRock(meta);
 		}
@@ -29,7 +29,7 @@ public class IntactGeoBlock extends GeoBlock {
 	
 	private Item dropRock(int meta) {
 		Item dropped = null;
-		GeoMaterial material = getSubstance(meta);
+		GeoMaterial material = getGeoMaterial(meta);
 		switch(material.getStrength()) {
 		case WEAK:
 			dropped = Item.getItemFromBlock(GeologicaBlocks.WEAK_RUBBLE);

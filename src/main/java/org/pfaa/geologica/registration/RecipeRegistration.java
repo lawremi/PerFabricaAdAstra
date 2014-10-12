@@ -268,7 +268,7 @@ public class RecipeRegistration {
 	}
 
 	private static void oreDictifyOre(GeoBlock block) {
-		for (GeoMaterial material : block.getSubstances()) {
+		for (GeoMaterial material : block.getGeoMaterials()) {
 			oreDictifyOre(block, material);
 		}
 	}
@@ -402,7 +402,7 @@ public class RecipeRegistration {
 	}
 
 	private static void addStoneGrindingRecipes(GeoBlock intact, GeoBlock broken) {
-		for (GeoMaterial material : intact.getSubstances()) {
+		for (GeoMaterial material : intact.getGeoMaterials()) {
 			addGrindingRecipe(intact.getItemStack(material), broken.getItemStack(material), null, 0, intact.getStrength());
 		}
 	}

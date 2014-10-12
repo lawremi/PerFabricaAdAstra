@@ -5,9 +5,9 @@ import org.pfaa.geologica.GeoMaterial;
 
 public interface GeoBlockAccessors extends CompositeBlockAccessors {
 
-	public abstract GeoMaterial getSubstance(int meta);
+	public abstract GeoMaterial getGeoMaterial(int meta);
 
-	public abstract boolean containsSubstance(GeoMaterial material);
+	public abstract boolean containsGeoMaterial(GeoMaterial material);
 
 	public abstract int getMeta(GeoMaterial rock);
 
