@@ -3632,7 +3632,16 @@
    this. The planned distillation tower will be useful.
 ** Applied Energistics
 ** Electrical Age
-** Mekanism    
+** Mekanism
+** Binnie's Mods (Genetics, Botany, ExtraBees/Trees)
+   The gameplay seems appropriate for any biology we might
+   implement. Might be interesting to integrate ideas from CloneCraft
+   (dead?) into this.
+
+** WarpDrive
+   May be dead, but this lets one build a ship and fly it freely
+   through the cosmos.
+   
 ** Witchery
    The most chemical of all of the magic mods. Uses actual chemicals
    in e.g. distillation.
@@ -3692,6 +3701,12 @@
 ** Brewing API
    Add new brewing recipes and potions. Perhaps useful for primitive
    chemistry?
+   
+** Eureka
+   JSON-based research-based progression system
+   
+** Easy Multiblock Structures
+   We will have a lot of these...
    
 * Other resources
 ** Forge tutorials
