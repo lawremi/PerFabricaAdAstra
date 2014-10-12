@@ -21,7 +21,7 @@ public class RecipeReplacement {
 		replacements.put(new ItemStack(Blocks.cobblestone, 1), "cobblestone");
 		replacements.put(new ItemStack(Blocks.stone, 1, OreDictionary.WILDCARD_VALUE), "stone");
 		replacements.put(new ItemStack(Blocks.stone, 1), "stone");
-		replacements.put(new ItemStack(Blocks.stonebrick, 1), "stoneBrick");
+		replacements.put(new ItemStack(Blocks.stonebrick, 1), "stoneBricks");
 		ItemStack[] exclusions = new ItemStack[] {
 			new ItemStack(Blocks.stonebrick),
 			new ItemStack(Blocks.stone_brick_stairs),
