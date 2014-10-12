@@ -314,7 +314,7 @@ public class RecipeRegistration {
 		} else if (block instanceof BrokenGeoBlock) {
 			return "cobblestone";
 		} else if (block instanceof BrickGeoBlock) {
-			return "stoneBrick";
+			return "stoneBricks";
 		} else if (block instanceof LooseGeoBlock) {
 			return "rubble";
 		}
