@@ -11,11 +11,6 @@
     
 ***************************************************************************-->
 
-<!-- TODO:
-     * Pegmatite could chance-drop sheet mica and other crystals.
-     * Processing schist (as well as pegmatite) could yield mica.
--->
-
 <!-- ATG Adaptations
   - Rework stone heights
     Mudstone: 47-74 => 47-89 (current: 47-74)
@@ -89,12 +84,12 @@
     </OptionChoice>
 
     <ConfigSection>
-      <IfChoice name='GeologicaGenRocks' value='true'>
+      <IfCondition condition=":=?GeologicaGenRocks &amp; ?GeologicaActive">
         <Substitute name='DirtSubstitute' block='minecraft:stone'
                     minHeight = '0' maxHeight=':= 40/64 * dimension.groundLevel'>
           <Replaces block='minecraft:dirt'/>
         </Substitute>
-      </IfChoice>
+      </IfCondition>
     </ConfigSection>
 
     <ConfigSection> <!-- Biome Sets -->
@@ -2441,7 +2436,7 @@
       </ConfigSection>
 
       <ConfigSection>
-        <IfCondition condition=":=?GeologicaGenVMS &amp; ?GeologicaActive">
+        <IfCondition condition=":=?GeologicaGenSEDEX &amp; ?GeologicaActive">
           <IfCondition condition=":=?GeologicaGenLeadZinc">
             <Cloud name='SEDEXSphaleriteGalena'
                    inherits='PresetSEDEXSphaleriteGalena'>
