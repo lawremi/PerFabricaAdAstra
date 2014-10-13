@@ -1064,9 +1064,8 @@
             <Replaces block='PFAAGeologica:mediumStone:0'/>
             <Replaces block='PFAAGeologica:strongStone:1'/>
             <Setting name='DistributionFrequency' avg='0.01'/>
-            <OreBlock block='PFAAGeologica:mediumStone:4' weight='0.85'/>
+            <OreBlock block='PFAAGeologica:mediumStone:4' weight='0.9'/>
             <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.05'/>
-            <OreBlock block='PFAAGeologica:veryStrongStone:2' weight='0.05'/>
             <OreBlock block='PFAAGeologica:strongStone:5' weight='0.045'/>
             <OreBlock block='minecraft:lapis_ore' weight='0.005'/>
           </CloudPreset>
@@ -1139,18 +1138,15 @@
                        inherits='PresetMetamorphicContinental'>
             <OreBlock block='PFAAGeologica:mediumStone:4' weight='0.05'/>
             <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.05'/>
-            <OreBlock block='PFAAGeologica:veryStrongStone:2' weight='0.05'/>
-            <OreBlock block='PFAAGeologica:strongStone:5' weight='0.85'/>
+            <OreBlock block='PFAAGeologica:strongStone:5' weight='0.9'/>
           </CloudPreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Hornfels -->
           <CloudPreset name='PresetHornfels'
                        inherits='PresetMetamorphicContinental'>
-            <OreBlock block='PFAAGeologica:mediumStone:4' weight='0.05'/>
-            <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.05'/>
-            <OreBlock block='PFAAGeologica:veryStrongStone:2' weight='0.85'/>
-            <OreBlock block='PFAAGeologica:strongStone:5' weight='0.05'/>
+            <OreBlock block='PFAAGeologica:weakStone:2' weight='0.10'/>
+            <OreBlock block='PFAAGeologica:veryStrongStone:2' weight='0.9'/>
           </CloudPreset>
         </ConfigSection>
         
