@@ -13,11 +13,15 @@ public class SimpleOre extends SimpleMixture implements Ore {
 		this.concentrate = concentrate;
 	}
 	
+	public SimpleOre(Ore ore) {
+		this(ore.getConcentrate(), ore);
+	}
+	
 	private SimpleOre(Mineral concentrate, Mixture mixture) {
 		super(mixture.getComponents());
 		this.concentrate = concentrate;
 	}
-
+	
 	@Override
 	public Mineral getConcentrate() {
 		return concentrate;
