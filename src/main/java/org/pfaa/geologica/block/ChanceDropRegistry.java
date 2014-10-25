@@ -76,7 +76,7 @@ public class ChanceDropRegistry {
 			for (ChanceDrop drop : this.drops) {
 				if (rand.nextFloat() < drop.chance) {
 					ItemStack itemStack = drop.itemStack.copy();
-					itemStack.stackSize += rand.nextInt(drop.bonus);
+					itemStack.stackSize += rand.nextInt(drop.bonus + 1);
 					if (drop.fortuneMultiplies) {
 						itemStack.stackSize *= (Math.max(rand.nextInt(fortune + 2) - 1, 0) + 1);
 					} else {
