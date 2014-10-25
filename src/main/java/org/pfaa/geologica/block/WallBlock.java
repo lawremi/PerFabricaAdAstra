@@ -13,6 +13,7 @@ import net.minecraft.world.IBlockAccess;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.GeologicaBlocks;
+import org.pfaa.geologica.client.registration.ClientRegistrant;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,6 +33,7 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	}
 
 	private final CompositeBlock modelBlock;
+	private boolean renderAsWall;
 	
 	public WallBlock(CompositeBlock modelBlock) {
 		super(modelBlock);
@@ -73,4 +75,31 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 		return modelBlock;
 	}
 
+	@Override
+	public boolean canRenderInPass(int pass) {
+		return modelBlock.canRenderInPass(pass);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return modelBlock.getRenderBlockPass();
+	}
+
+	@Override
+	public int getRenderType() {
+		if (this.renderAsWall) {
+			return super.getRenderType();
+		} else {
+			return ClientRegistrant.compositeWallBlockRenderer.getRenderId();
+		}
+	}
+	
+	public void enableRenderAsWall() {
+		this.renderAsWall = true;
+	}
+	
+	public void disableRenderAsWall() {
+		this.renderAsWall = false;
+	}
 }
