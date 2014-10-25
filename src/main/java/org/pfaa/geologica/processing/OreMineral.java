@@ -18,6 +18,7 @@ import static org.pfaa.chemica.model.Element.Elements.Th;
 import static org.pfaa.chemica.model.Element.Elements.U;
 import static org.pfaa.chemica.model.Element.Elements.Y;
 
+import java.awt.Color;
 import java.util.List;
 
 import org.pfaa.chemica.model.Chemical;
@@ -25,6 +26,7 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
+import org.pfaa.chemica.model.Element.Elements;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
