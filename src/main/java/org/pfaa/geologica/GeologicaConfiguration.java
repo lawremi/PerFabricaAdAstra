@@ -115,7 +115,13 @@ public class GeologicaConfiguration {
 
 	public boolean isVanillaOreOverrideEnabled() {
 		Property bool = this.config.get("Toggles", "overrideVanillaOreBlocks", false, 
-			"Whether to replace coal, diamond, emerald, lapis and redstone with blocks that drop ore blocks, instead of items");
+			"Whether to replace vanilla ore blocks with blocks that drop ore blocks, instead of items (DEPRECATED; do not change)");
+		return bool.getBoolean(false);
+	}
+	
+	public boolean isVanillaOreGemDropEnabled() {
+		Property bool = this.config.get("Toggles", "vanillaOreDropsGems", true, 
+			"Whether vanilla ore blocks should drop gems, as they do in vanilla");
 		return bool.getBoolean(false);
 	}
 }
