@@ -44,7 +44,7 @@ public interface OreMineral extends Mineral {
 	public enum Ores implements OreMineral {
 		ACANTHITE(Compounds.Ag2S),
 		ANATASE(Compounds.TiO2),
-		BARITE(Compounds.BaSO4, new Substitution(Sr, 0.05)),
+		BARITE(Compounds.BaSO4, new Color(250, 250, 170), new Substitution(Sr, 0.05)),
 		BASTNASITE(Compounds.CeCO3F, new Substitution(La, 0.2), new Substitution(Y, 0.1)),
 		BERYL(Compounds.Be3Al2SiO36),
 		BISMUTHINITE(Compounds.Bi2S3),
@@ -52,13 +52,14 @@ public interface OreMineral extends Mineral {
 		CALCITE(Compounds.CaCO3),
 		CARNALLITE(Compounds.KCl.mix(Compounds.MgCl2, 1.0)),
 		CARNOTITE(Compounds.K2U2V2O12),
-		CASSITERITE(Compounds.SnO2),
-		CELESTINE(Compounds.SrSO4, new Substitution(Ba, 0.2)),
+		CASSITERITE(Compounds.SnO2, new Color(30, 20, 0)),
+		CELESTINE(Compounds.SrSO4, new Color(200, 200, 250), new Substitution(Ba, 0.2)),
 		CHALCOPYRITE(Compounds.CuFeS2), // TODO: Se and Te can substitute for S
 		CHROMITE(Compounds.FeCr2O4),
 		CINNABAR(Compounds.HgS),
 		COBALTITE(Compounds.CoAsS),
-		FLUORITE(Compounds.CaF2),
+		CUPRITE(Compounds.Cu2O, Color.red),
+		FLUORITE(Compounds.CaF2, new Color(155, 0, 165)),
 		GALENA(Compounds.PbS),
 		GIBBSITE(Compounds.AlOH3, new Substitution(Ga, 0.001)),
 		GOETHITE(Compounds.alpha_FeOH3, new Substitution(Ni, 0.05), new Substitution(Co, 0.01)),
@@ -71,6 +72,7 @@ public interface OreMineral extends Mineral {
 		LEPIDOLITE(Compounds.Li3KSi4O10OH2, new Substitution(Rb, 0.01), new Substitution(Cs, 0.005)),
 		MAGNETITE(Compounds.Fe3O4),
 		MAGNESITE(Compounds.MgCO3),
+		MALACHITE(Compounds.Cu2CO3OH2),
 		MICROLITE(Compounds.NaCaTa2O6OH),
 		MOLYBDENITE(Compounds.MoS2, new Substitution(Re, 0.01)),
 		MONAZITE(Compounds.CePO4, new Substitution(La, 0.5), new Substitution(Nd, 0.3),
@@ -85,9 +87,10 @@ public interface OreMineral extends Mineral {
 		           new Substitution(Th, 0.01), new Substitution(U, 0.005)),
 		PYROLUSITE(Compounds.MnO2),
 		REALGAR(Compounds.AsS),
-		RUTILE(Compounds.TiO2),
-		SCHEELITE(Compounds.CaWO4), // TODO: Mo can substitute for W (powellite)
-		SPHALERITE(Compounds.ZnS, new Substitution(Cd, 0.01), new Substitution(Ga, 0.001)), // TODO: Ge, In @ 0.0005?
+		RUTILE(Compounds.TiO2, new Color(130, 60, 5)),
+		SCHEELITE(Compounds.CaWO4, new Color(240, 200, 150)), // TODO: Mo can substitute for W (powellite)
+		SPHALERITE(Compounds.ZnS, new Color(30, 75, 50), 
+				   new Substitution(Cd, 0.01), new Substitution(Ga, 0.001)), // TODO: Ge, In @ 0.0005?
 		SPODUMENE(Compounds.LiAlSiO32),
 		STIBNITE(Compounds.Sb2S3),
 		SYLVITE(Compounds.KCl),
@@ -96,7 +99,8 @@ public interface OreMineral extends Mineral {
 		URANINITE(Compounds.UO2),
 		VANADINITE(Compounds.Pb5V3O12Cl),
 		WOLFRAMITE(Compounds.FeWO4),
-		ZIRCON(Compounds.ZrSiO4)
+		ZIRCON(Compounds.ZrSiO4, new Color(130, 60, 5)),
+		GOLD(Elements.Au)
 		;
 
 		private OreMineral delegate;
@@ -110,7 +114,11 @@ public interface OreMineral extends Mineral {
 		}
 		
 		private Ores(Chemical material, Substitution... substitution) {
-			this(new SimpleOreMineral(material, substitution));
+			this(material, null, substitution);
+		}
+		
+		private Ores(Chemical material, Color color, Substitution... substitution) {
+			this(new SimpleOreMineral(material, color, substitution));
 		}
 		
 		public String getOreDictKey() {
@@ -130,11 +138,6 @@ public interface OreMineral extends Mineral {
 		@Override
 		public Chemical getConcentrate() {
 			return delegate.getConcentrate();
-		}
-
-		@Override
-		public OreMineral mix(Chemical material, double weight) {
-			return delegate.mix(material, weight);
 		}
 
 		@Override
