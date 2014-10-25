@@ -40,7 +40,7 @@ public class ChanceDropRegistry {
 	
 	public ArrayList<ItemStack> getDrops(GeoMaterial material, Random rand, int fortune) {
 		ChanceDropSet drops = this.dropsByMaterial.get(material);
-		return drops.getDrops(rand, fortune);
+		return drops != null ? drops.getDrops(rand, fortune) : null;
 	}
 	
 	private static class ChanceDrop {
