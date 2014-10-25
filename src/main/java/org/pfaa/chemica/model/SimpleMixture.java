@@ -67,6 +67,9 @@ public class SimpleMixture implements Mixture {
 		if (this.components.size() == 0) {
 			return null;
 		}
+		if (this.components.size() == 1) {
+			return this.components.get(0).material.getProperties(condition);
+		}
 		double totalWeight = getTotalWeight();
 		int r = 0, g = 0, b = 0, luminosity = 0;
 		float health = 0, flammability = 0, instability = 0;
