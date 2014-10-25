@@ -1123,7 +1123,6 @@
             <OreBlock block='PFAAGeologica:mediumStone:4' weight='0.9'/>
             <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.05'/>
             <OreBlock block='PFAAGeologica:strongStone:5' weight='0.045'/>
-            <OreBlock block='minecraft:lapis_ore' weight='0.005'/>
           </CloudPreset>
           <CloudPreset name='PresetSkarnOceanic'
                        inherits='PresetSkarn'>
