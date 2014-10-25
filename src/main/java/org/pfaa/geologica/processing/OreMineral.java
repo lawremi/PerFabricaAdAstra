@@ -32,11 +32,10 @@ import org.pfaa.chemica.model.MixtureComponent;
 
 /*
  * Minerals from which valuable compounds and elements are extracted.
- * An ore can consist of multiple compounds, due to non-stoichiometry.
+ * Like any mineral, an ore can consist of multiple compounds, due to non-stoichiometry.
  */
 public interface OreMineral extends Mineral {
 	public Chemical getConcentrate();
-	public OreMineral mix(Chemical material, double weight);
 	
 	public static enum SmeltingTemperature {
 		LOW, MEDIUM, HIGH, VERY_HIGH
