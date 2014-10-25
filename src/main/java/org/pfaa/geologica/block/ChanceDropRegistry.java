@@ -1,17 +1,15 @@
 package org.pfaa.geologica.block;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import org.pfaa.geologica.GeoMaterial;
-
-import scala.actors.threadpool.Arrays;
 
 public class ChanceDropRegistry {
 	
