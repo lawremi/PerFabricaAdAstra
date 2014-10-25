@@ -29,6 +29,7 @@ import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
+import org.pfaa.geologica.block.ChanceDropRegistry;
 import org.pfaa.geologica.block.GeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.ProxyBlock;
@@ -60,6 +61,7 @@ public class RecipeRegistration {
 		addStoneToolRecipes();
 		addStoneAbstractionRecipesForBrokenMods();
 		registerMicroblocks();
+		registerOreDrops();
 	}
 	
 	private static void addStoneAbstractionRecipesForBrokenMods() {
@@ -431,6 +433,40 @@ public class RecipeRegistration {
 			FMPIntegration.registerMicroblock(GeologicaBlocks.STRONG_COBBLE);
 			FMPIntegration.registerMicroblock(GeologicaBlocks.VERY_STRONG_COBBLE);
 		}
+	}
+
+	private static void registerOreDrops() {
+		ChanceDropRegistry drops = ChanceDropRegistry.instance();
+		registerOreDrop(drops, GeoMaterial.CONGLOMERATE, "nuggetCopper", 1, 3, 0.1F, true);
+		registerOreDrop(drops, GeoMaterial.GARNET_SAND, Items.gold_nugget, 6, 6, 0.1F, true);
+		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetElectrum", 3, 3, 0.05F, true);
+		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetSilver", 1, 2, 0.05F, true);
+		if (Geologica.getConfiguration().isVanillaOreGemDropEnabled()) {
+			registerOreDrop(drops, GeoMaterial.COAL, Items.coal, 1, 0, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.DIAMOND, Items.diamond, 1, 0, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.LAPIS, "gemLapis", 4, 5, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.EMERALD, Items.emerald, 1, 0, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.REDSTONE, Items.redstone, 4, 2, 1.0F, false);
+		}
+	}
+
+	private static void registerOreDrop(ChanceDropRegistry drops,
+			GeoMaterial material, String key, int quantity, int bonus, float chance, 
+			boolean fortuneMultiplies) 
+	{
+		List<ItemStack> ores = OreDictionary.getOres(key);
+		if (ores.size() > 0) {
+			ItemStack drop = ores.get(0).copy();
+			drop.stackSize = quantity;
+			drops.addChanceDrop(material, drop, bonus, chance, fortuneMultiplies);
+		}
+	}
+
+	private static void registerOreDrop(ChanceDropRegistry drops,
+			GeoMaterial material, Item item, int quantity, int bonus, float chance, 
+			boolean fortuneMultiplies)
+	{
+		drops.addChanceDrop(material, new ItemStack(item, quantity), bonus, chance, fortuneMultiplies);
 	}
 
 }
