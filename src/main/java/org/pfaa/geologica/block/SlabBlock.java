@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.client.registration.ClientRegistrant;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -112,4 +113,19 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 		return modelBlock.getBlockNameSuffix(meta & 7);
 	}
 
+	@Override
+	public boolean canRenderInPass(int pass) {
+		return modelBlock.canRenderInPass(pass);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return modelBlock.getRenderBlockPass();
+	}
+
+	@Override
+	public int getRenderType() {
+		return modelBlock.getRenderType();
+	}
 }

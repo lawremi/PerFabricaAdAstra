@@ -8,6 +8,9 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
@@ -17,6 +20,7 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
+import org.pfaa.geologica.block.ChanceDropRegistry;
 import org.pfaa.geologica.block.GeoBlock;
 import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
@@ -128,10 +132,10 @@ public class GeologicaBlocks {
 		return createGeoBlock(LooseGeoBlock.class, Strength.WEAK, Ore.class, Material.sand);
 	}
 	private static GeoBlock createOreRockBlock(Strength strength) {
-		return createGeoBlock(IntactGeoBlock.class, strength, Ore.class, Material.rock);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, strength, Ore.class, Material.rock));
 	}
 	private static GeoBlock createClayBlock() {
-		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay));
 	}
 	private static GeoBlock createOreClayBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.clay);

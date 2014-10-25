@@ -5,13 +5,18 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeoMaterial.Strength;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class LooseGeoBlock extends GeoBlock {
 
@@ -104,6 +109,26 @@ public class LooseGeoBlock extends GeoBlock {
 	
 	protected float determineResistance() {
 		return 0F;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	protected boolean useMultipassRendering() {
+		return this.getMaterial() == Material.rock ? true : super.useMultipassRendering();
+	}
+	
+	@Override
+	protected IIcon registerUnderlayIcon(IIconRegister registry, int i) {
+		if (this.getMaterial() == Material.rock)
+			return getNative(this.getGeoMaterial(i)).block.registerUnderlayIcon(registry, i);
+		else return super.registerUnderlayIcon(registry, i);
+	}
+	
+	@Override
+	protected IIcon registerOverlayIcon(IIconRegister registry, int i) {
+		if (this.getMaterial() == Material.rock)
+			return registry.registerIcon("geologica:rubbleOverlay");
+		return super.registerOverlayIcon(registry, i);
 	}
 
 }

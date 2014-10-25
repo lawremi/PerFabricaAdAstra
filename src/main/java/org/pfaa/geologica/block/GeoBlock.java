@@ -3,25 +3,18 @@ package org.pfaa.geologica.block;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.model.Condition;
@@ -29,9 +22,12 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
-import org.pfaa.geologica.client.registration.ClientRegistrant;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
+import org.pfaa.geologica.processing.Crude;
+import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.VanillaOre;
+import org.pfaa.util.BlockWithMeta;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -54,10 +50,9 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	private Strength strength;
 	private Class<? extends IndustrialMaterial> composition;
 
-	private int renderPass;
-	private IIcon[] overlayIcons = new IIcon[4];
-	private static Set<Block> stoneBlocks;
-	private static Map<GeoMaterial, ItemStack> materialToNativeBlock = new HashMap();
+	private IIcon[] oreOverlayIcons = new IIcon[4];
+
+	private static Map<GeoMaterial, BlockWithMeta<GeoBlock>> materialToNativeBlock = new HashMap();
 	
 	public GeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(material);
@@ -126,8 +121,9 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 
 	private void setGeoMaterials() {
 		List<GeoMaterial> materials = GeoMaterial.lookup(strength, composition, blockMaterial);
-		if (materials.size() > 16 || materials.size() < 1)
-			throw new IllegalArgumentException("GeoBlock only supports 1-16 materials");
+		if (materials.size() > 16) {
+			materials = materials.subList(0, 16);
+		}
 		this.materials.clear();
 		this.materials.addAll(materials);
 	}
@@ -144,6 +140,11 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return materials.get(meta);
 	}
 
+	public GeoMaterial getGeoMaterial(World world, int x, int y, int z) {
+		int meta = world.getBlockMetadata(x, y, z);
+		return this.getGeoMaterial(meta);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#containsSubstance(org.pfaa.geologica.GeoSubstance)
 	 */
@@ -184,9 +185,139 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	@Override
-	public boolean isReplaceableOreGen(World world, int x, int y, int z,
-			Block target) {
+	public boolean isReplaceableOreGen(World world, int x, int y, int z, Block target) {
 		return Aggregate.class.isAssignableFrom(composition);
 	}
 
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		GeoMaterial material = this.getGeoMaterial(metadata);
+		ArrayList<ItemStack> drops = ChanceDropRegistry.instance().getDrops(material, world.rand, fortune);
+		if (drops.size() > 0) {
+			return drops;
+		} else {
+			return super.getDrops(world, x, y, z, metadata, fortune);
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	protected IIcon getUnderlayIcon(IBlockAccess world, int x, int y, int z, int side) {
+		int meta = world.getBlockMetadata(x, y, z);
+		IndustrialMaterial host = this.getGeoMaterial(meta).getHost();
+		if (host != null) {
+			IIcon icon = getHostIcon(host, world, x, y, z);
+			if (icon != null) {
+				return icon;
+			}
+		}
+		return this.getUnderlayIcon(side, meta);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	protected IIcon getHostIcon(IndustrialMaterial host, IBlockAccess world, int x, int y, int z) {
+		return null;
+	}
+	
+	@Override
+	protected int overlayColorMultiplier(int meta) {
+		GeoMaterial material = this.getGeoMaterial(meta);
+		if (material.getHost() != null) {
+			return material.getProperties(Condition.STP).color.getRGB();
+		}
+		return super.overlayColorMultiplier(meta);
+	}
+
+	@Override
+	protected boolean useMultipassRendering() {
+		return this.needsHost();
+	}
+
+	private boolean needsHost() {
+		return !Aggregate.class.isAssignableFrom(this.getComposition());
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister registry) {
+		if (this.needsHost()) {
+			// TODO: this needs to vary by position (1-4)
+			this.oreOverlayIcons[0] = registry.registerIcon("geologica:" + this.getOverlayIconName());
+		}
+		super.registerBlockIcons(registry);
+	}
+	
+	private String getMaterialName() {
+		Material material = this.getMaterial();
+		if (material == Material.rock) {
+			return "Rock";
+		} else if (material == Material.clay) {
+			return "Clay";
+		} else if (material == Material.sand) {
+			return "Sand";
+		}
+		return null;
+	}
+	
+	private String getOverlayIconName() {
+		return this.getStrength().name().toLowerCase() + this.getCompositionName() + this.getMaterialName() + "Overlay"; 
+	}
+
+	private String getCompositionName() {
+		return VanillaOre.class.isAssignableFrom(this.getComposition()) ? "VanillaOre" : "Ore";
+	}
+
+	@Override
+	protected IIcon registerOverlayIcon(IIconRegister registry, int i) {
+		if (this.getGeoMaterial(i).getHost() != null) {
+			return this.oreOverlayIcons[0];
+		}
+		return super.registerOverlayIcon(registry, i);
+	}
+	
+	private static Block getBlockForAggregate(Aggregate host) {
+		if (host == Aggregates.STONE) {
+			return Blocks.stone;
+		} else if (host == Aggregates.SAND) {
+			return Blocks.sand;
+		} else if (host == Aggregates.CLAY) {
+			return Blocks.clay;
+		} else if (host == Aggregates.GRAVEL) {
+			return Blocks.gravel;
+		} else if (host == Aggregates.DIRT) {
+			return Blocks.dirt;
+		} else if (host == Aggregates.OBSIDIAN) {
+			return Blocks.obsidian;
+		}
+		return null;
+	}
+	
+	@Override
+	protected IIcon registerUnderlayIcon(IIconRegister registry, int i) {
+		IndustrialMaterial host = this.getGeoMaterial(i).getHost();
+		if (host instanceof GeoMaterial) {
+			GeoMaterial material = (GeoMaterial)host;
+			BlockWithMeta<GeoBlock> blockWithMeta = getNative(material);
+			return blockWithMeta.block.registerMetaIcon(registry, blockWithMeta.meta);
+		} else if (host instanceof Aggregate) {
+			Block block = getBlockForAggregate((Aggregate)host);
+			if (block != null) {
+				return block.getIcon(0, 0);
+			}
+		}
+		return super.registerMetaIcon(registry, i);
+	}
+
+	public static GeoBlock registerNative(GeoBlock block) {
+		List<GeoMaterial> materials = block.getGeoMaterials();
+		int meta = 0;
+		for (GeoMaterial key : materials) {
+			materialToNativeBlock.put(key, new BlockWithMeta(block, meta++));
+		}
+		return block;
+	}
+	
+	public static BlockWithMeta<GeoBlock> getNative(GeoMaterial material) {
+		return materialToNativeBlock.get(material);
+	}
 }
