@@ -27,6 +27,7 @@ import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.VanillaOre;
 
 import cpw.mods.fml.common.LoaderException;
 
@@ -109,12 +110,10 @@ public class GeologicaBlocks {
 	public static final VanillaOreOverrideBlock LAPIS_ORE = new VanillaOreOverrideBlock(Blocks.lapis_ore);
 	public static final VanillaOreOverrideBlock REDSTONE_ORE = new VanillaOreOverrideBlock(Blocks.redstone_ore);
 	
-	static {
-		//WEAK_STONE.addChanceDrop(GeoSubstance.CONGLOMERATE, new ChanceDrop().add(0.05, Item.goldNugget).add(0.05, "nuggetCopper"));
-	}
+	public static final GeoBlock VANILLA_ORE_ROCK = createVanillaOreRockBlock();
 	
 	private static GeoBlock createStoneBlock(Strength strength) {
-		return createGeoBlock(IntactGeoBlock.class, strength, Aggregate.class, Material.rock);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, strength, Aggregate.class, Material.rock));
 	}
 	private static GeoBlock createCobbleBlock(Strength strength) {
 		return createGeoBlock(BrokenGeoBlock.class, strength, Aggregate.class, Material.rock);
@@ -145,6 +144,9 @@ public class GeologicaBlocks {
 	}
 	private static GeoBlock createCrudeRockBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.rock);
+	}
+	private static GeoBlock createVanillaOreRockBlock() {
+		return createGeoBlock(IntactGeoBlock.class, Strength.STRONG, VanillaOre.class, Material.rock);
 	}
 	
 	public static List<Block> getBlocks() {
