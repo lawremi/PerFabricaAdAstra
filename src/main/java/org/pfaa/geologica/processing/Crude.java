@@ -29,7 +29,8 @@ public interface Crude extends Mixture, Vaporizable {
 		HEAVY_GAS_OIL(Phase.LIQUID, new Color(50, 25, 0), 1.0, new Hazard(1, 2, 0), 30, 900, 0.03),
 		BITUMEN(Phase.LIQUID, Color.black, 1.2, new Hazard(1, 2, 0), 240, 1000, 0.04),
 		// no better place to put this one
-		KEROGEN(Phase.SOLID, new Color(165, 125, 30), 1.2, new Hazard(), Double.NaN, Double.NaN, Double.NaN)
+		KEROGEN(Phase.SOLID, new Color(165, 125, 30), 1.2, new Hazard(), Double.NaN, Double.NaN, Double.NaN),
+		FIXED_CARBON(Phase.SOLID, Color.darkGray, 1.1, new Hazard(), Double.NaN, Double.NaN, 0.006)
 		;
 
 		private Crude delegate;
