@@ -283,7 +283,7 @@ tile.mediumOreRock.zeolite.name=Zeolite
 
 # Strong Ore Rocks
 tile.strongOreRock.bandedIron.name=Banded Iron Ore
-tile.strongOreRock.beryl.name=Beryl Ore (Beryllium)
+tile.strongOreRock.quartz.name=Quartz Ore
 tile.strongOreRock.cassiterite.name=Cassiterite Ore (Tin)
 tile.strongOreRock.chromite.name=Chromite Ore (Chromium)
 tile.strongOreRock.ilmenite.name=Ilmenite Ore (Titanium)
@@ -318,3 +318,15 @@ item.liquidLightOilBucket.name=Bucket of Light Oil
 item.liquidMediumOilBucket.name=Bucket of Medium Oil
 item.liquidHeavyOilBucket.name=Bucket of Heavy Oil
 item.liquidExtraHeavyOilBucket.name=Bucket of Extra Heavy Oil
+
+# Crudes
+tile.crudeSand.oilSand.name=Oil Sand
+tile.crudeRock.oilShale.name=Oil Shale
+tile.crudeRock.coal.name=Coal
+
+# Geologica versions of vanilla ores
+tile.vanillaOreRock.gold.name=Gold Ore
+tile.vanillaOreRock.lapis.name=Lapis Lazuli Ore
+tile.vanillaOreRock.diamond.name=Diamond Ore
+tile.vanillaOreRock.emerald.name=Emerald Ore
+tile.vanillaOreRock.redstone.name=Redstone Ore
