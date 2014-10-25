@@ -122,6 +122,7 @@ public class RecipeRegistration {
 	
 	private static void registerOres() {
 		oreDictifyGeoBlocks();
+		oreDictifyStoneBrick();
 	}
 
 	private static void addSmeltingRecipes() {
@@ -241,6 +242,11 @@ public class RecipeRegistration {
 			FurnaceRecipes.smelting().func_151394_a(new ItemStack(input, 1, meta), outputStack, 0);
 			TEIntegration.addFurnaceRecipe(new ItemStack(input, 1, meta), outputStack, temperature);
 		}
+	}
+
+	// FIXME: remove this hack when we get this into Forge
+	private static void oreDictifyStoneBrick() {
+		OreDictionary.registerOre("stoneBricks", Blocks.stonebrick);
 	}
 
 	private static void oreDictifyGeoBlocks() {
