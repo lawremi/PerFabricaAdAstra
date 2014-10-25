@@ -36,4 +36,12 @@ public class ConditionProperties {
 	public ConditionProperties(Phase phase, Color color, double density, Hazard hazard) {
 		this(phase, color, density, hazard, phase == Phase.SOLID ? Double.POSITIVE_INFINITY : Double.NaN, 0, false);
 	}
+	
+	private ConditionProperties(ConditionProperties props, Color overrideColor) {
+		this(props.phase, overrideColor, props.density, props.hazard, props.viscosity, props.luminosity, props.opaque);
+	}
+	
+	public ConditionProperties recolor(Color overrideColor) {
+		return new ConditionProperties(this, overrideColor);
+	}
 }
