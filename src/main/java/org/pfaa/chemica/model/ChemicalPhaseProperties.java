@@ -35,7 +35,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 			this(Double.NaN, thermo);
 		}
 		public Solid() {
-			this(null);
+			this(new Thermo());
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 			this(Double.NaN, thermo);
 		}
 		public Liquid() {
-			this(null);
+			this(new Thermo());
 		}
 		
 		@Override
@@ -116,7 +116,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		}
 		public Gas()
 		{
-			this(null);
+			this(new Thermo());
 		}
 		
 		@Override
