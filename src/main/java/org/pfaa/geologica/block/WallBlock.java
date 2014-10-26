@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
@@ -86,13 +87,20 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 		return modelBlock.getRenderBlockPass();
 	}
 
+	/* Overriding this will break:
+	 * * Triggering the block underneath when the entity walks up to or falls off the wall
+	 * * Entities path finding around the wall
+	 * 
+	 * We could return the wall render ID when there is no renderer (we are on the server).
+	 * However, this does not solve the problem for single player.
+	 */
 	@Override
 	public int getRenderType() {
-		if (this.renderAsWall) {
+		//if (this.renderAsWall) {
 			return super.getRenderType();
-		} else {
-			return ClientRegistrant.compositeWallBlockRenderer.getRenderId();
-		}
+		//} else {
+		//	return ClientRegistrant.compositeWallBlockRenderer.getRenderId();
+		//}
 	}
 	
 	public void enableRenderAsWall() {
@@ -101,5 +109,16 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	
 	public void disableRenderAsWall() {
 		this.renderAsWall = false;
+	}
+
+	@Override
+	public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(int meta) {
+		return modelBlock.colorMultiplier(meta);
 	}
 }

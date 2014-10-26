@@ -166,10 +166,4 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	public int getRenderBlockPass() {
 		return this.useMultipassRendering() ? 1 : 0;
 	}
-
-	@Override
-	public int getRenderType() {
-		return ClientRegistrant.compositeBlockRenderer.getRenderId();
-	}
-	
 }

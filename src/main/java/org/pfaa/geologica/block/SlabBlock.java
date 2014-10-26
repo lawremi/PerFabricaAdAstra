@@ -128,4 +128,10 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	public int getRenderType() {
 		return modelBlock.getRenderType();
 	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(int meta) {
+		return modelBlock.colorMultiplier(meta);
+	}
 }

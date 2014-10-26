@@ -19,6 +19,7 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 		this.modelBlock = block;
 		this.modelBlockMeta = meta;
 		this.setLightOpacity(0); // workaround for lighting issue
+		this.useNeighborBrightness = true;
 	}
 
 	@Override
@@ -44,15 +45,6 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {
 		return modelBlock.getRenderBlockPass();
-	}
-
-	@Override
-	public int getRenderType() {
-		if (this.renderAsStairs) {
-			return super.getRenderType();
-		} else {
-			return ClientRegistrant.compositeStairsBlockRenderer.getRenderId();
-		}
 	}
 	
 	public void enableRenderAsStairs() {
