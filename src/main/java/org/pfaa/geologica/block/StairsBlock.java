@@ -12,7 +12,6 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 
 	private final Block modelBlock;
 	private final int modelBlockMeta;
-	private boolean renderAsStairs;
 	
 	public StairsBlock(Block block, int meta) {
 		super(block, meta);
@@ -45,13 +44,5 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {
 		return modelBlock.getRenderBlockPass();
-	}
-	
-	public void enableRenderAsStairs() {
-		this.renderAsStairs = true;
-	}
-	
-	public void disableRenderAsStairs() {
-		this.renderAsStairs = false;
 	}
 }
