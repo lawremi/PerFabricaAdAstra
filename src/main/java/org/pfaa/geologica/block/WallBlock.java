@@ -34,7 +34,6 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	}
 
 	private final CompositeBlock modelBlock;
-	private boolean renderAsWall;
 	
 	public WallBlock(CompositeBlock modelBlock) {
 		super(modelBlock);
@@ -101,14 +100,6 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 		//} else {
 		//	return ClientRegistrant.compositeWallBlockRenderer.getRenderId();
 		//}
-	}
-	
-	public void enableRenderAsWall() {
-		this.renderAsWall = true;
-	}
-	
-	public void disableRenderAsWall() {
-		this.renderAsWall = false;
 	}
 
 	@Override
