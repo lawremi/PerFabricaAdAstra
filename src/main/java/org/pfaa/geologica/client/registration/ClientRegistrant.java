@@ -1,31 +1,29 @@
 package org.pfaa.geologica.client.registration;
 
-import org.pfaa.geologica.client.render.CompositeBlockRenderer;
-import org.pfaa.geologica.client.render.CompositeStairsBlockRenderer;
-import org.pfaa.geologica.client.render.CompositeWallBlockRenderer;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.GeologicaBlocks;
+import org.pfaa.geologica.block.StairsBlock;
+import org.pfaa.geologica.client.render.CompositeBlockItemRenderer;
 import org.pfaa.geologica.registration.CommonRegistrant;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
-
 public class ClientRegistrant extends CommonRegistrant {
-	public static CompositeBlockRenderer compositeBlockRenderer;
-	public static CompositeWallBlockRenderer compositeWallBlockRenderer;
-	public static CompositeStairsBlockRenderer compositeStairsBlockRenderer;
-	
 	@Override
 	public void register() {
 		super.register();
-		registerRenders();
+		registerRenderers();
 	}
 
-	private void registerRenders() {
-		compositeBlockRenderer = new CompositeBlockRenderer(RenderingRegistry.getNextAvailableRenderId());
-		RenderingRegistry.registerBlockHandler(compositeBlockRenderer);
-		
-		compositeWallBlockRenderer = new CompositeWallBlockRenderer(RenderingRegistry.getNextAvailableRenderId());
-		RenderingRegistry.registerBlockHandler(compositeWallBlockRenderer);
-		
-		compositeStairsBlockRenderer = new CompositeStairsBlockRenderer(RenderingRegistry.getNextAvailableRenderId());
-		RenderingRegistry.registerBlockHandler(compositeStairsBlockRenderer);
+	private void registerRenderers() {
+		IItemRenderer renderer = new CompositeBlockItemRenderer();
+		for (Block block : GeologicaBlocks.getBlocks()) {
+			if (block instanceof CompositeBlockAccessors || block instanceof StairsBlock) {
+				MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(block), renderer);
+			}
+		}
 	}
 }
