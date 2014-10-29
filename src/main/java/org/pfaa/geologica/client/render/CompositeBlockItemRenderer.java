@@ -28,13 +28,16 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 		renderer.useInventoryTint = false;
 		if (type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
 			this.translateToHand();
-		} else if (type == ItemRenderType.INVENTORY) {
-			this.setupAlphaBlending(block);
 		}
 		if (block.canRenderInPass(0)) {
 			renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
 		}
 		if (block.canRenderInPass(1)) {
+			if (type == ItemRenderType.INVENTORY) {
+				this.setupAlphaBlending(block);
+			} else { // hack to get the overlay quads to render on outside; otherwise, it flickers
+				GL11.glScalef(1.01F, 1.01F, 1.01F);
+			}
 			this.setupOverlayColor(item);
 			renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
 		}
