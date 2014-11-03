@@ -126,7 +126,7 @@ public class IntactGeoBlock extends GeoBlock {
 	
 	@Override
 	public boolean hasTileEntity(int metadata) {
-		return this.getGeoMaterial(metadata).getHost() instanceof Aggregate;
+		return metadata < this.getMetaCount() ? this.getGeoMaterial(metadata).getHost() instanceof Aggregate : false;
 	}
 	
 	@SideOnly(Side.CLIENT)
