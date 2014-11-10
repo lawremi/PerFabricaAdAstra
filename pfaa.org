@@ -178,7 +178,7 @@
 **** Classical Age (700 BC - 600 AD)
      Like the roman empire...
      
-** Agriculture
+** Agriculture and Forestry 
    We could add some aspects to agriculture:
 
 *** Aquaculture
@@ -245,130 +245,14 @@
     edible plants. These could be wild forms of the crops (which in
     the real world are highly localized) and/or the set of widespread
     wild edible plants. Or we just take the vanilla set. If we take
-    the wild crop path (along the lines of PHC bushes), then there is
-    really no need for breeding, unless some wild crops are
-    omitted. Then we have the question of which to omit, and the
-    the wild crops would need to be very rare for the sake of
-    realism. Tracking down rare crops might not be much fun,
-    although people do it for bees. The alternative, generating
-    realistic edible plants, is more interesting: it introduces
-    unconventional (at least for this part of the world) foods and
-    makes the world richer. Call it ForageCraft or WildCraft.
+    the wild crop path (along the lines of PHC bushes), then breeding
+    would be about improving crop traits, as well as mutating between
+    species.  Generating realistic, edible, non-crop plants, is also
+    interesting: it introduces unconventional (at least for this part
+    of the world) foods and makes the world richer. Call it
+    ForageCraft or WildCraft.
 
-    Here is a list of what might be found in the wild:
-
-    | Plant               | Phylogenetics                | Mod           | Biome                            | Value | Use                                 | Notes                      |
-    |---------------------+------------------------------+---------------+----------------------------------+-------+-------------------------------------+----------------------------|
-    | Berries             |                              | Nat,PHC,BOP   | Temperate                        |     2 | Eat fruit                           |                            |
-    | Mushrooms           |                              | Vanilla       | -                                |     - | Eat whole                           |                            |
-    | Dandelions          | asterid/asterales            | Vanilla       | -                                |     1 | Eat; white juice as glue            |                            |
-    | Acacia tree         | rosid/fabaceae               | BOP,Forestry  | -                                |     1 | Eat leaves                          |                            |
-    | Agave               | monocot/asparagales          |               | Desert                           |     1 | Eat, string                         | BOP has inedible bromeliad |
-    | Alfalfa             |                              |               |                                  |       |                                     |                            |
-    | Almond tree         | rosid/rosaceae/prunus        | ET            | Tropics, desert, evergreen scrub |     3 | Eat nuts                            |                            |
-    | Amaranth  (Pigweed) | caryophyllales/amaranthaceae |               | Widespread                       |     1 | Eat leaves, seeds                   | Weed                       |
-    | Arctic willow       | rosid/malpighiales           |               | Tundra                           |     1 | Eat raw shoots                      |                            |
-    | Arrowroot           | monocot/zingiberales         |               | Tropical                         |     3 | Boil roots                          |                            |
-    | Asparagus           |                              | PHC           | Temperate                        |     2 | Boil stems                          |                            |
-    | Bael                |                              |               | Hills and plains, forests        |     2 | Eat fruit                           |                            |
-    | Bamboo              |                              | BOP,PHC       | Moist, tropical                  |     2 | Eat shoots                          |                            |
-    | Banana              |                              | PHC,ET        | Tropics                          |     3 | Eat fruit                           |                            |
-    | Baobab tree         |                              | Forestry      | Savanna                          |     2 | Eat roots, fruit, string            | Forestry has no fruit      |
-    | /Batoko plum/       |                              |               | Rainforest                       |     2 | Eat fruit (best as jam)             |                            |
-    | Bearberry           |                              |               | Arctic                           |     2 | Eat fruit                           | Similar: cloud berry       |
-    | Beech               |                              | ET            | Forest                           |     3 | Eat nuts                            |                            |
-    | Bignay tree         | rosid/malpighiales           |               | Rainforest                       |     2 | Eat fruit                           |                            |
-    | Breadfruit tree     | rosid/rosaceae/moraceae      |               | Tropics, forest                  |     2 | Cook fruit; sap is glue, pulp paper |                            |
-    | Burdock             |                              |               | Temperate                        |     2 | Boil roots                          |                            |
-    | Canna (lily)        | monocot/zingiberales         |               | Tropical                         |     2 | Eat roots; string, seeds purple dye |                            |
-    | Cashew tree         | rosid/sapindales/...         |               | Tropical                         |     3 | Eat nuts                            |                            |
-    | Cattails            | monocot/poales               | BOP           | -                                |     2 | Eat shoots; weaving                 |                            |
-    | Cactus fruit        | caryophyllales/cactaceae     | PHC           | Desert                           |     2 | Eat fruit                           |                            |
-    | Chestnut tree       | rosid/fagales                | Forestry      | Forest                           |     3 | Roast nuts                          | Forestry not edible        |
-    | Chicory             |                              |               | Plains                           |     1 | Eat                                 |                            |
-    | Chickweed           |                              |               | Temperate fields                 |     1 | Eat leaves                          |                            |
-    | Chufa               |                              |               | Moist sandy                      |     2 | Eat; oil from tuber                 |                            |
-    | Clover              |                              | BOP           | -                                |     1 | Boil to eat                         |                            |
-    | Coconut             |                              |               | Beach                            |     3 | Eat; string                         |                            |
-    | Crowberry           |                              |               | Tundra                           |     2 | Eat fruit                           |                            |
-    | Date Palm           |                              |               | Desert                           |     1 | Eat fruit; weaving                  |                            |
-    | Daylily             |                              |               | Tropic, temperate                |     2 | Eat roots                           |                            |
-    | Desert parsley      |                              |               | Desert                           |     1 | Eat roots                           |                            |
-    | Elderberry tree     |                              | ET            | Swamps                           |     2 | Eat fruit                           |                            |
-    | Fireweed            |                              |               | Temperate plains, arctic         |     1 | Eat all                             |                            |
-    | Fishtail Palm       |                              |               | Warm/moist mountains             |     3 | Eat juice from top                  |                            |
-    | Ginseng             | asterid/apiales              |               | Forest (hills)                   |     0 | No food value, but medicinal buffs? |                            |
-    | Hawthorn bush       |                              |               | Temperate                        |     2 | Eat fruit (apple)                   |                            |
-    | Hazelnut tree       |                              | ET            | Temperate, outside forests       |     3 | Eat nuts                            |                            |
-    | Horseradish tree    |                              |               | Tropical forests                 |     1 | Eat leaves, roast seeds             |                            |
-    | Iceland moss        |                              |               | Arctic                           |     1 | Eat whole                           |                            |
-    | Indian potato       |                              |               | Temperate                        |     3 | Better cooked                       | A wild potato?             |
-    | Jerusalem artichoke |                              |               | Temperate                        |     2 | Eat roots                           | Looks like sunflower       |
-    | Jewelweed           |                              |               | Mountain woods                   |     2 | Eat stems                           |                            |
-    | Juniper             |                              |               | Dry temperate                    |     1 | Eat berries                         |                            |
-    | Kudzu vines         |                              |               | Tropical forests                 |     2 | Every part                          | Many uses, ways to eat     |
-    | Kumquat             |                              | ET            | Tropical forests                 |     2 | Eat fruit                           |                            |
-    | Lotus               |                              |               | River                            |     3 | Cook roots                          |                            |
-    | Malanga             |                              |               | Tropical plains                  |     3 | Cook roots                          |                            |
-    | Mango tree          |                              | PHC           | Moist tropics                    |     3 | Eat fruit                           |                            |
-    | Manioc              |                              |               | Tropical                         |     3 | Cook roots                          |                            |
-    | Marsh marigold      |                              |               | Swamp, arctic                    |     1 | Cook it                             |                            |
-    | Maypop vine         | rosid/malpighiales           |               | River bank, thicket, pasture     |     2 | Eat fruit                           |                            |
-    | Mulberry tree       |                              |               | Forest; string                   |     2 | Eat fruit                           |                            |
-    | Nettle              |                              |               | Moist temperate                  |     3 | Eat shoots, leaves                  | Damage, unless cooked      |
-    | Nipa Palm           |                              |               | Mangrove                         |     3 | Eat fruit on top; sugar-rich sap    |                            |
-    | Oak                 |                              | vanilla       | -                                |     0 | Acorn (from ET) flour, bark tanning |                            |
-    | Olive               | asterid/lamiales             | ET            | Dry coastal                      |     1 | Eat fruit; oil                      |                            |
-    | Orach               |                              |               | Beach                            |     1 | Eat entire plant                    |                            |
-    | Papaya              |                              | PHC           | Rainforest                       |     3 | Eat fruit                           |                            |
-    | Persimmon           |                              | PHC           | Forest                           |     3 | Eat fruit                           |                            |
-    | Pine                |                              | BOP           | -                                |     1 | Eat various parts; sap as glue      |                            |
-    | Plantain            |                              | ET            | -                                |     2 | Eat fruit                           |                            |
-    | Reed                |                              | BOP           | Swamp                            |     1 | Eat anything                        |                            |
-    | Rose Apple          |                              |               | Tropical forests                 |   2-3 | Eat like an apple, but tropical!    |                            |
-    | Saskatoon berry     |                              |               | Low altitude mountain terrain    |     2 | Eat fruit                           |                            |
-    | Saxaul              |                              |               | Desert                           |     - | Water from bark                     |                            |
-    | Sea Orach           |                              |               | Tropical scrub, steppe, desert   |     1 | Eat leaves                          |                            |
-    | Sicklepod           |                              |               | Fields (weed)                    |     1 | Eat leaves, meat substitute         | Tea is medicinal           |
-    | (Wild) Sorghum      |                              |               | Plains                           |     - | Use as wheat substitute             |                            |
-    | Sterculia tree      |                              |               | Tropical forest                  |     2 | Eat seed pods                       |                            |
-    | Stonecrop           |                              |               | Temperate                        |     1 | Eat leaves                          |                            |
-    | Sugarcane           |                              | Vanilla       | -                                |     1 | Eat raw                             |                            |
-    | Sunflower           |                              | Vanilla       | -                                |     1 | Eat seeds                           |                            |
-    | Sweetsop tree       |                              |               | Tropical forest                  |     2 | Eat fruit                           |                            |
-    | Tamarind tree       |                              |               | Drier tropics                    |     2 | Eat fruit                           |                            |
-    | Taro                |                              |               | Tropical fields                  |     3 | Cook roots                          |                            |
-    | Ti                  |                              |               | Tropical forest                  |     3 | Cook roots; rope, weaving           |                            |
-    | Tropical almond     |                              |               | Tropical forest, beach           |     3 | Eat seeds                           |                            |
-    | Walnut              |                              | Forestry, PHC | Forest                           |     3 | Eat nuts                            |                            |
-    | Water chestnut      |                              |               | River                            |     2 | Eat fruit                           |                            |
-    | Water lilly         |                              | Vanilla       | Rivers/swamps                    |     2 | Eat all, fruit                      |                            |
-    | Water plantain      |                              |               | Rivers                           |     3 | Cook roots                          |                            |
-    | Wild apple          |                              | Vanilla       | -                                |   2-3 | Fruit                               |                            |
-    | Wild caper          |                              |               | Dry scrub, desert                |     2 | Eat fruit                           |                            |
-    | Wild carrot         |                              | BOP           | -                                |     ? | Eat tuber                           |                            |
-    | Wild desert gourd   |                              |               | Desert                           |     2 | Eat seeds from gourd                |                            |
-    | Wild sorrel         |                              |               | Fields                           |     1 | Eat leaves                          |                            |
-    | Wild fig            |                              | PHC           | Tropical forest                  |     2 | Eat fruit                           |                            |
-    | Wild gourd          |                              |               | Rainforest                       |     2 | Boil fruit                          |                            |
-    | Wild grape          |                              |               | Forest                           |     2 | Eat fruit                           |                            |
-    | Wild mint           | asterid/lamiales             |               |                                  |       |                                     |                            |
-    | Wild onion/garlic   |                              | PHC           | Plains                           |     2 | Eat bulbs                           | Also, ginger               |
-    | Wild pistachio      |                              |               | Desert, scrub, evergreen forests |     3 | Cook nuts                           |                            |
-    | Wild rice           |                              | PHC           | Tropical                         |     2 | Eat rice                            |                            |
-    | Wild rose           |                              | Vanilla       | -                                |     1 | Eat flower                          |                            |
-    | Winged Bean         |                              |               | Tropical plains                  |     2 | Eat beans (2), tuber (4)            |                            |
-    | Wooly lousewort     |                              |               | Tundra                           |     2 | Eat steam after steaming            |                            |
-    | Yam                 |                              |               | Tropical, coniferous forests     |     3 | Boil root                           |                            |
-    | Yam bean            |                              |               | Tropical                         |     3 | Eat tuber, better boiled            |                            |
-
-    Hunger key:
-    1 :: Refills 0.5 shank
-    2 :: Refills 1.5 shanks
-    3 :: Refills 3 shanks (like bread)
-    4 :: Refills 4 shanks, high saturation (like steak)
-    
-    These are wild plants; not cultivatable. Trees do not yield
+    The wild plants are not cultivatable. Trees do not yield
     saplings, plants do not yield seeds, but they can be replanted
     directly. Breeding is the only means of reproduction and can lead
     to cultivation, through mutation. The breeding needs to integrate
@@ -379,24 +263,148 @@
     blocks from that mod. We *could* require certain mods, but it
     would be nice to be functional independently. Obviously, breeding
     will depend on Forestry.
-    
-    Currently about 80 plants. Proposals for simplification:
-    * Have one palm tree (+coconut); BOP already has them
-    * Have one type of wild herb (mint?), instead of all herbs.
 
-    These already exist wild from PHC (? are questionable):
-    * Berries (and BOP, Natura, etc)
-    * Bamboo shoots
-    * Cactus fruit
-    * Grapes
-    * ?Kiwi
-    * ?Rhubarb
-    * ?Rutabaga
-    * Seaweed
-    * Spice leaves
-    * Sunflower
-    * White mushrooms
-            
+*** Wild edible plants
+   Here is a list of what might be found in the wild:
+
+   | Plant               | Phylogenetics                | Mod             | Biome                            | Value | Use                                 | Notes                      |
+   |---------------------+------------------------------+-----------------+----------------------------------+-------+-------------------------------------+----------------------------|
+   | Berries             |                              | Nat,PHC,BOP,PMP | Temperate                        |     2 | Eat fruit                           |                            |
+   | Mushrooms           |                              | Vanilla,PHC,PMP | -                                |     - | Eat whole                           |                            |
+   | Dandelions          | asterid/asterales            | Vanilla,PMP     | -                                |     1 | Eat; white juice as glue            |                            |
+   | Acacia tree         | rosid/fabaceae               | BOP,Forestry    | -                                |     1 | Eat leaves                          |                            |
+   | Agave               | monocot/asparagales          |                 | Desert                           |     1 | Eat, string                         | BOP has inedible bromeliad |
+   | Alfalfa             |                              |                 |                                  |       |                                     |                            |
+   | Almond tree         | rosid/rosaceae/prunus        | ET              | Tropics, desert, evergreen scrub |     3 | Eat nuts                            |                            |
+   | Amaranth  (Pigweed) | caryophyllales/amaranthaceae |                 | Widespread                       |     1 | Eat leaves, seeds                   | Weed                       |
+   | Arctic willow       | rosid/malpighiales           |                 | Tundra                           |     1 | Eat raw shoots                      |                            |
+   | Arrowroot           | monocot/zingiberales         |                 | Tropical                         |     3 | Boil roots                          |                            |
+   | Asparagus           |                              | PHC             | Temperate                        |     2 | Boil stems                          |                            |
+   | Bael                |                              |                 | Hills and plains, forests        |     2 | Eat fruit                           |                            |
+   | Bamboo              |                              | BOP,PHC,PMP     | Moist, tropical                  |     2 | Eat shoots                          |                            |
+   | Banana              |                              | PHC,ET          | Tropics                          |     3 | Eat fruit                           |                            |
+   | Baobab tree         |                              | Forestry        | Savanna                          |     2 | Eat roots, fruit, string            | Forestry has no fruit      |
+   | /Batoko plum/       |                              |                 | Rainforest                       |     2 | Eat fruit (best as jam)             |                            |
+   | Bearberry           |                              |                 | Arctic                           |     2 | Eat fruit                           | Similar: cloud berry       |
+   | Beech               |                              | ET              | Forest                           |     3 | Eat nuts                            |                            |
+   | Bignay tree         | rosid/malpighiales           |                 | Rainforest                       |     2 | Eat fruit                           |                            |
+   | Breadfruit tree     | rosid/rosaceae/moraceae      |                 | Tropics, forest                  |     2 | Cook fruit; sap is glue, pulp paper |                            |
+   | Burdock             |                              |                 | Temperate                        |     2 | Boil roots                          |                            |
+   | Canna               | monocot/zingiberales         |                 | Tropical                         |     2 | Eat roots; string, seeds purple dye |                            |
+   | Cashew tree         | rosid/sapindales/...         |                 | Tropical                         |     3 | Eat nuts                            |                            |
+   | Cattails            | monocot/poales               | BOP,PMP         | -                                |     2 | Eat shoots; weaving                 |                            |
+   | Cactus fruit        | caryophyllales/cactaceae     | PHC,PMP         | Desert                           |     2 | Eat fruit                           |                            |
+   | Chestnut tree       | rosid/fagales                | Forestry        | Forest                           |     3 | Roast nuts                          | Forestry not edible        |
+   | Chicory             |                              |                 | Plains                           |     1 | Eat                                 |                            |
+   | Chickweed           |                              |                 | Temperate fields                 |     1 | Eat leaves                          |                            |
+   | Chufa               |                              |                 | Moist sandy                      |     2 | Eat; oil from tuber                 |                            |
+   | Clover              |                              | BOP             | -                                |     1 | Boil to eat                         |                            |
+   | Coconut             |                              |                 | Beach                            |     3 | Eat; string                         |                            |
+   | Crowberry           |                              |                 | Tundra                           |     2 | Eat fruit                           |                            |
+   | Date Palm           |                              |                 | Desert                           |     1 | Eat fruit; weaving                  |                            |
+   | Daylily             |                              |                 | Tropic, temperate                |     2 | Eat roots                           |                            |
+   | Desert parsley      |                              |                 | Desert                           |     1 | Eat roots                           |                            |
+   | Elderberry tree     |                              | ET,PMP          | Swamps                           |     2 | Eat fruit                           |                            |
+   | Fireweed            |                              |                 | Temperate plains, arctic         |     1 | Eat all                             |                            |
+   | Fishtail Palm       |                              |                 | Warm/moist mountains             |     3 | Eat juice from top                  |                            |
+   | Ginseng             | asterid/apiales              |                 | Forest (hills)                   |     0 | No food value, but medicinal buffs? |                            |
+   | Hawthorn bush       |                              |                 | Temperate                        |     2 | Eat fruit (apple)                   |                            |
+   | Hazelnut tree       |                              | ET              | Temperate, outside forests       |     3 | Eat nuts                            |                            |
+   | Horseradish tree    |                              |                 | Tropical forests                 |     1 | Eat leaves, roast seeds             |                            |
+   | Iceland moss        |                              |                 | Arctic                           |     1 | Eat whole                           |                            |
+   | Indian potato       |                              |                 | Temperate                        |     3 | Better cooked                       | A wild potato?             |
+   | Jerusalem artichoke |                              |                 | Temperate                        |     2 | Eat roots                           | Looks like sunflower       |
+   | Jewelweed           |                              |                 | Mountain woods                   |     2 | Eat stems                           |                            |
+   | Juniper             |                              |                 | Dry temperate                    |     1 | Eat berries                         |                            |
+   | Kudzu vines         |                              |                 | Tropical forests                 |     2 | Every part                          | Many uses, ways to eat     |
+   | Kumquat             |                              | ET              | Tropical forests                 |     2 | Eat fruit                           |                            |
+   | Lotus               |                              |                 | River                            |     3 | Cook roots                          |                            |
+   | Malanga             |                              |                 | Tropical plains                  |     3 | Cook roots                          |                            |
+   | Mango tree          |                              | PHC             | Moist tropics                    |     3 | Eat fruit                           |                            |
+   | Manioc              |                              |                 | Tropical                         |     3 | Cook roots                          |                            |
+   | Marsh marigold      |                              |                 | Swamp, arctic                    |     1 | Cook it                             |                            |
+   | Maypop vine         | rosid/malpighiales           |                 | River bank, thicket, pasture     |     2 | Eat fruit                           |                            |
+   | Mulberry tree       |                              |                 | Forest; string                   |     2 | Eat fruit                           |                            |
+   | Nettle              |                              |                 | Moist temperate                  |     3 | Eat shoots, leaves                  | Damage, unless cooked      |
+   | Nipa Palm           |                              |                 | Mangrove                         |     3 | Eat fruit on top; sugar-rich sap    |                            |
+   | Oak                 |                              | vanilla         | -                                |     0 | Acorn (from ET) flour, bark tanning |                            |
+   | Olive               | asterid/lamiales             | ET              | Dry coastal                      |     1 | Eat fruit; oil                      |                            |
+   | Orach               |                              |                 | Beach                            |     1 | Eat entire plant                    |                            |
+   | Papaya              |                              | PHC             | Rainforest                       |     3 | Eat fruit                           |                            |
+   | Persimmon           |                              | PHC             | Forest                           |     3 | Eat fruit                           |                            |
+   | Pine                |                              | BOP             | -                                |     1 | Eat various parts; sap as glue      |                            |
+   | Plantain            |                              | ET              | -                                |     2 | Eat fruit                           |                            |
+   | Reed                |                              | BOP             | Swamp                            |     1 | Eat anything                        |                            |
+   | Rose Apple          |                              |                 | Tropical forests                 |   2-3 | Eat like an apple, but tropical!    |                            |
+   | Saskatoon berry     |                              |                 | Low altitude mountain terrain    |     2 | Eat fruit                           |                            |
+   | Saxaul              |                              |                 | Desert                           |     - | Water from bark                     |                            |
+   | Sea Orach           |                              |                 | Tropical scrub, steppe, desert   |     1 | Eat leaves                          |                            |
+   | Sicklepod           |                              |                 | Fields (weed)                    |     1 | Eat leaves, meat substitute         | Tea is medicinal           |
+   | (Wild) Sorghum      |                              |                 | Plains                           |     - | Use as wheat substitute             |                            |
+   | Sterculia tree      |                              |                 | Tropical forest                  |     2 | Eat seed pods                       |                            |
+   | Stonecrop           |                              | PMP             | Temperate                        |     1 | Eat leaves                          |                            |
+   | Sugarcane           |                              | Vanilla         | -                                |     1 | Eat raw                             |                            |
+   | Sunflower           |                              | Vanilla         | -                                |     1 | Eat seeds                           |                            |
+   | Sweetsop tree       |                              |                 | Tropical forest                  |     2 | Eat fruit                           |                            |
+   | Tamarind tree       |                              |                 | Drier tropics                    |     2 | Eat fruit                           |                            |
+   | Taro                |                              |                 | Tropical fields                  |     3 | Cook roots                          |                            |
+   | Ti                  |                              |                 | Tropical forest                  |     3 | Cook roots; rope, weaving           |                            |
+   | Tropical almond     |                              |                 | Tropical forest, beach           |     3 | Eat seeds                           |                            |
+   | Walnut              |                              | Forestry, PHC   | Forest                           |     3 | Eat nuts                            |                            |
+   | Water chestnut      |                              | PMP             | River                            |     2 | Eat fruit                           |                            |
+   | Water lilly         |                              | Vanilla,PMP     | Rivers/swamps                    |     2 | Eat all, fruit                      |                            |
+   | Water plantain      |                              |                 | Rivers                           |     3 | Cook roots                          |                            |
+   | Wild apple          |                              | Vanilla         | -                                |   2-3 | Fruit                               |                            |
+   | Wild caper          |                              |                 | Dry scrub, desert                |     2 | Eat fruit                           |                            |
+   | Wild carrot         |                              | BOP,PMP         | -                                |     ? | Eat tuber                           |                            |
+   | Wild desert gourd   |                              |                 | Desert                           |     2 | Eat seeds from gourd                |                            |
+   | Wild sorrel         |                              |                 | Fields                           |     1 | Eat leaves                          |                            |
+   | Wild fig            |                              | PHC             | Tropical forest                  |     2 | Eat fruit                           |                            |
+   | Wild gourd          |                              |                 | Rainforest                       |     2 | Boil fruit                          |                            |
+   | Wild grape          |                              |                 | Forest                           |     2 | Eat fruit                           |                            |
+   | Wild mint           | asterid/lamiales             | PMP             |                                  |       |                                     |                            |
+   | Wild onion/garlic   |                              | PHC             | Plains                           |     2 | Eat bulbs                           | Also, ginger               |
+   | Wild pistachio      |                              |                 | Desert, scrub, evergreen forests |     3 | Cook nuts                           |                            |
+   | Wild rice           |                              | PHC             | Tropical                         |     2 | Eat rice                            |                            |
+   | Wild rose           |                              | Vanilla,PMP     | -                                |     1 | Eat flower                          |                            |
+   | Winged Bean         |                              |                 | Tropical plains                  |     2 | Eat beans (2), tuber (4)            |                            |
+   | Wooly lousewort     |                              |                 | Tundra                           |     2 | Eat steam after steaming            |                            |
+   | Yam                 |                              |                 | Tropical, coniferous forests     |     3 | Boil root                           |                            |
+   | Yam bean            |                              |                 | Tropical                         |     3 | Eat tuber, better boiled            |                            |
+
+   Hunger key:
+   1 :: Refills 0.5 shank
+   2 :: Refills 1.5 shanks
+   3 :: Refills 3 shanks (like bread)
+   4 :: Refills 4 shanks, high saturation (like steak)
+       
+   Currently about 80 plants. Proposals for simplification:
+   * Have one palm tree (+coconut); BOP already has them
+   * Have one type of wild herb (mint?), instead of all herbs.
+
+   These already exist wild from PHC (? are questionable):
+   * Berries (and BOP, Natura, etc)
+   * Bamboo shoots
+   * Cactus fruit
+   * Grapes
+   * ?Kiwi
+   * ?Rhubarb
+   * ?Rutabaga
+   * Seaweed
+   * Spice leaves
+   * Sunflower
+   * White mushrooms
+
+*** Forestry
+    Wikipedia has some nice references:
+    * Wood products: http://en.wikipedia.org/wiki/Wood#Uses (see
+      categories at bottom of page)
+    * Non-wood forest products: http://en.wikipedia.org/wiki/Non-timber_forest_product
+    
+*** Biofuels
+
+*** Fibers 
+    
 *** Balanced diet
     If we have lots of plants, then we have lots of food. To make
     things more interesting, we should encourage balanced diets. Use
@@ -413,15 +421,15 @@
     
 *** Adapting existing mods
     PHC provides many interesting crops, and Forestry brings fun
-    automation and breeding. Possible improvements:
+    automation and breeding.
+
+    Improvements that should happen for PHC:
     * PHC juices should be Forge fluids
     * PHC needs to be integrated with Forestry farms and machines
       * Farms
       * Squeezer
       * Fermenter
       * Breeding mechanism
-    * PHC needs to be integrated with Thaumcraft essences
-    * PHC bushes and seed spawning should be biome-dependent
     * PHC crops should have biome-specific growth rates (hunger overhaul)
     * PHC crops should show up in village fields
     * PHC tools should have durability
@@ -431,6 +439,10 @@
     achieved with MineTweaker.
     http://minetweaker.powerofbytes.com/wiki
 
+    Turns out someone has integrated PHC with Forestry-like breeding
+    mechanics, and it is totally customizable: Agricraft. In theory,
+    we could have Plant Mega Pack plants mutate to PHC crops.
+    
 * Blocks
 ** Rocks
    Generating terrain with multiple rock types, instead of simply
@@ -765,14 +777,7 @@
    | Feldspar       | process pegmatite                     | -           |   20 |                                              |         |
    | Quartz         | process pegmatite                     |             |      |                                              |         |
    | Muscovite/Mica | in pegmatite, process pegmatite       | weak        |  0.3 | fireproof, insulation, lubricant             |         |
-   
-   
-   This gives a total of 16 weak, 16 medium and 14 strong
-   minerals. And one very strong (corundum), but we might model that
-   as chance-dropped gems, instead of as a separate
-   block. Technically, Beryl is very strong, although we have it set
-   as strong for now.
-
+  
 ** Sands
    Here are some sand types we could model:
     
@@ -796,15 +801,14 @@
    million tonnes / yr, or about 6:1 with Fe. Basaltic sands will have
    more ilmenite, while granitic will have less (and thus more zircon,
    rutile and monazite). Maybe ilmenite (30%), zircon (40%), rutile
-   (20%), monazite (10%).  There is a chance drop of diamond from
-   basaltic sands.
+   (20%), monazite (10%).
 
    Summary:
    
    * Granitic :: 35% quartz, 25% magnetite, 5% kyanite, 10% zircon,
                  15% rutile, 5% ilmenite, 5% monazite
    * Basaltic :: 10% quartz, 35% garnet, 25% magnetite, 5% chromite,
-                 15% ilmenite, 5% zircon, 5% rutile + diamond drop
+                 15% ilmenite, 5% zircon, 5% rutile
 
 ** Clays
 
@@ -2046,7 +2050,7 @@
 *** Destructive distillation
     Here is one recipe:
     Coal => Coke + NH3 (l) + coal tar (l) + coal gas
-    This will not work in the coke over, obviously, because coal
+    This will not work in the coke oven, obviously, because coal
     directly yields creosote oil. Perhaps we could distill (using the
     Forestry still) creosote oil to yield NH3?
 
@@ -2629,7 +2633,30 @@
      Arsenic metal results from reduction of As2O3 with carbon at 500-800C. 
      
 *** Beryl
-       
+
+** Coal
+   There are three main types of coal that represent increasing stages
+   of metamorphosis from peat:
+   * Lignite
+   * Bituminous coal
+   * Anthracite
+   As one progresses from lignite to anthracite, the amount of fixed
+   carbon increases compared to the impurities of moisture (water),
+   volatiles (aliphatic and aromatic hydrocarbons), ash (rock), and
+   sulfur.
+
+   The breakdown is something like:
+   | Coal       | Moisture | Volatiles | Ash | Fixed Carbon |
+   |------------+----------+-----------+-----+--------------|
+   | Lignite    |      40% |       25% |  5% |          30% |
+   | Bituminous |      15% |       15% | 10% |          60% |
+   | Anthracite |       0% |        0% | 10% |          90% |
+
+   The volatile fraction should be lighter in lignite than bituminous coal.
+
+   Then we can process it:
+   http://sophiadacycole.com/wp-content/uploads/2014/04/coal_tree_USGS.jpg
+   
 ** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
    derived from petroleum.
@@ -2854,24 +2881,24 @@
 
    Some specific types of ore deposits:
    
-   | Deposit                    | Occurs                               | Ores                                                    | Minerals                                                    |
-   |----------------------------+--------------------------------------+---------------------------------------------------------+-------------------------------------------------------------|
-   | Banded Iron Formation      | Sed                                  | Fe                                                      |                                                             |
-   | Volcagenic Massive Sulfide | Ocean, ice mountains                 | Cu Zn Pb Au Ag (bp: Co Sn Ba S Se Mn Cd In Bi Te Ga Ge) |                                                             |
-   | Sedimentary Exhalative     | Sed                                  | Pb Zn Ba (less: Ag Cu Au Bi W)                          |                                                             |
-   | Porphyry                   | Breccia veins in diorite             | Cu (rare:  Mo, Ag, Au)                                  |                                                             |
-   | Layered intrusions         | Peridotite, gabbro, diorite          | Cr Ni PGE Ti Vn                                         |                                                             |
-   | Kambalda                   | Serpentine                           | Ni                                                      |                                                             |
-   | Placer                     | Rivers: gravel, sand                 | Fe(mag) Sn RE Cr granite:Ti(ru)/Zr basalt:Ti(il)        | Au drop, granitic: W drop, basaltic: diamond, sapphire drop |
-   | Pegmatite                  | Plains: granite                      | W-rich, Li-rich: Li Cs Nb Ta (Be)                       | aquamarine tourmaline topaz fluorite apatite corundum       |
-   | Serpentinite               | Anywhere, more common deep, EH/Ocean | Ni, chlorite, magnesite, chrysotile                     |                                                             |
-   | Carbonatite                | Mountains: granite                   | Fe(mag) Th Ba Cu U Ti RE                                | apatite, verm, fluorite                                     |
-   | Evaporite                  | Plains, desert                       |                                                         |                                                             |
-   | Iron Oxide Copper Gold     | Breccia veins under BIF in granite   | Cu, Au                                                  |                                                             |
-   | Conglomerate Au/U          | Veins in bowl of conglomerate        | Au, U                                                   |                                                             |
-   | Granitic Cu/Au (Sn/W)      | Veins in granite                     | Cu Au (less: Sn/W)                                      |                                                             |
-   | Carbonate Zn/Pb            | Limestone                            | Zn Pb                                                   |                                                             |
-   | Greenstone                 | Greenschist                          | Cu+Au Zn/Pb                                             |                                                             |
+   | Deposit                    | Occurs                               | Ores                                                    | Minerals                                              |
+   |----------------------------+--------------------------------------+---------------------------------------------------------+-------------------------------------------------------|
+   | Banded Iron Formation      | Sed                                  | Fe                                                      |                                                       |
+   | Volcagenic Massive Sulfide | Ocean, ice mountains                 | Cu Zn Pb Au Ag (bp: Co Sn Ba S Se Mn Cd In Bi Te Ga Ge) |                                                       |
+   | Sedimentary Exhalative     | Sed                                  | Pb Zn Ba (less: Ag Cu Au Bi W)                          |                                                       |
+   | Porphyry                   | Breccia veins in diorite             | Cu (rare:  Mo, Ag, Au)                                  |                                                       |
+   | Layered intrusions         | Peridotite, gabbro, diorite          | Cr Ni PGE Ti Vn                                         |                                                       |
+   | Kambalda                   | Serpentine                           | Ni                                                      |                                                       |
+   | Placer                     | Rivers: gravel, sand                 | Fe(mag) Sn RE Cr granite:Ti(ru)/Zr basalt:Ti(il)        |                                                       |
+   | Pegmatite                  | Plains: granite                      | W-rich, Li-rich: Li Cs Nb Ta (Be)                       | aquamarine tourmaline topaz fluorite apatite corundum |
+   | Serpentinite               | Anywhere, more common deep, EH/Ocean | Ni, chlorite, magnesite, chrysotile                     |                                                       |
+   | Carbonatite                | Mountains: granite                   | Fe(mag) Th Ba Cu U Ti RE                                | apatite, verm, fluorite                               |
+   | Evaporite                  | Plains, desert                       |                                                         |                                                       |
+   | Iron Oxide Copper Gold     | Breccia veins under BIF in granite   | Cu, Au                                                  |                                                       |
+   | Conglomerate Au/U          | Veins in bowl of conglomerate        | Au, U                                                   |                                                       |
+   | Granitic Cu/Au (Sn/W)      | Veins in granite                     | Cu Au (less: Sn/W)                                      |                                                       |
+   | Carbonate Zn/Pb            | Limestone                            | Zn Pb                                                   |                                                       |
+   | Greenstone                 | Greenschist                          | Cu+Au Zn/Pb                                             |                                                       |
 
    Placer deposits could be modeled by shoveling a black sand, with a
    gold nugget as a rare drop. Pulverizing generates 1 magnetite
@@ -2979,11 +3006,12 @@
    * Palladium (+ Pt)
    * Rhodium (+ Pt)
    
-   Native copper (10%), gold (10%), electrum (5%) could be dropped from
-   conglomerate. The other native elements would require more advanced
-   processing. Realistically, copper nuggets are much rarer than gold
-   nuggets, but in terms of gameplay, it would be interesting to force
-   initial copper extraction to nuggets.
+   Native copper (10%), gold (10%), electrum (5%) could be dropped
+   from conglomerate and mineral sands. The other native elements
+   would require more advanced processing. Realistically, copper
+   nuggets are much rarer than gold nuggets, but in terms of gameplay,
+   it would be interesting to force initial copper extraction to
+   nuggets.
 
 ** Extra planets and moons
    Eventually, we want to include all planets (including exoplanets)
@@ -4192,17 +4220,24 @@
    - State "DONE"       from "TODO"       [2013-07-23 Tue 05:19]
 ** DONE Abstract biome restrictions (support BOP)
    - State "DONE"       from "TODO"       [2014-02-02 Sun 19:10]
-** TODO Clays should break into piles upon harvesting
-** TODO Add grinding recipes for ores
-** TODO Special case ground rock salt => foodSalt
-** TODO Add clay breaking crafting recipes
-** TODO Define Mystcraft symbol for each deposit
-** TODO Figure out Thaumcraft aspects for minerals
-** TODO Compatibility with GT
+** DONE Compatibility with GT
    http://forum.industrial-craft.net/index.php?page=PMView&pmID=17212&s=dedc43669a7d9e2e9149907f08ddc2d6bf5cb819#pm17212
+** TODO Figure out Thaumcraft aspects for minerals
 ** TODO Think about a saltpeter/KNO3 farming system
-   * Like RC, except in tropical climates, with dead plant matter.
-   
+** TODO Add GT gem generation
+** People hate the new overlays
+*** DONE Use a unique overlay for each ore
+    - State "DONE"       from "TODO"       [2014-11-07 Fri 08:51]
+*** DONE Blocks should render in pass 0 and use a custom block renderer that draws both icons
+    - State "DONE"       from "TODO"       [2014-11-09 Sun 06:45]
+    Should avoid rendering in front of e.g. potion effects
+
+*** DONE Improve contrast of realgar texture
+    - State "DONE"       from "TODO"       [2014-11-07 Fri 17:00]
+*** TODO Test realgar and pyrite generation
+*** DONE Add translations for realgar and pyrite
+    - State "DONE"       from "TODO"       [2014-11-09 Sun 06:46]
+    
 * Stats
 
 | ID       | Name            |     Count | Per Chunk | Target | Notes        |
