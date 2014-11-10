@@ -8,8 +8,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.logging.log4j.Logger;
-import org.pfaa.Registrant;
 import org.pfaa.geologica.integration.GTIntegration;
+import org.pfaa.geologica.registration.CommonRegistrant;
 
 import com.google.common.io.ByteStreams;
 
@@ -35,7 +35,7 @@ public class Geologica {
 	
 	@SidedProxy(clientSide = "org.pfaa.geologica.client.registration.ClientRegistrant", 
                 serverSide = "org.pfaa.geologica.registration.CommonRegistrant")
-	public static Registrant registrant;
+	public static CommonRegistrant registrant;
 	
 	public static Logger log;
 	

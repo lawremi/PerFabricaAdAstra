@@ -1,5 +1,7 @@
 package org.pfaa.block;
 
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -9,6 +11,9 @@ public interface CompositeBlockAccessors {
 	public abstract String getBlockNameSuffix(int meta);
 	public abstract int getMetaCount();
 	
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(int meta);
+	public abstract boolean enableOverlay();
+	public abstract void disableOverlay();
+	
+	public abstract void enableDefaultRenderer();
+	public abstract void disableDefaultRenderer();
 }

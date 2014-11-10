@@ -19,16 +19,6 @@ public class CompositeBlockItem extends ItemBlock {
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack itemStack, int pass) {
-		Block block = this.field_150939_a;
-		if (block.canRenderInPass(pass)) {
-			return ((CompositeBlockAccessors)block).colorMultiplier(itemStack.getItemDamage());
-		}
-		return super.getColorFromItemStack(itemStack, pass);
-	}
-
-	@Override
 	public IIcon getIconFromDamage(int damage) {
 		return this.field_150939_a.getIcon(0, getMetadata(damage));
 	}

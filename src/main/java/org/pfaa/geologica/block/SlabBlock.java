@@ -114,24 +114,27 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	}
 
 	@Override
-	public boolean canRenderInPass(int pass) {
-		return modelBlock.canRenderInPass(pass);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderBlockPass() {
-		return modelBlock.getRenderBlockPass();
-	}
-
-	@Override
 	public int getRenderType() {
 		return modelBlock.getRenderType();
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(int meta) {
-		return modelBlock.colorMultiplier(meta);
+	public boolean enableOverlay() {
+		return modelBlock.enableOverlay();
+	}
+
+	@Override
+	public void disableOverlay() {
+		modelBlock.disableOverlay();
+	}
+
+	@Override
+	public void enableDefaultRenderer() {
+		modelBlock.enableDefaultRenderer();
+	}
+
+	@Override
+	public void disableDefaultRenderer() {
+		modelBlock.disableDefaultRenderer();
 	}
 }

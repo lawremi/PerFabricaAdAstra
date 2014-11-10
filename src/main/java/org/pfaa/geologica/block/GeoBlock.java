@@ -32,25 +32,12 @@ import org.pfaa.util.BlockWithMeta;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/* Rendering strategy:
- * If the GeoMaterial has a host, then we render the host texture, with an overlay (32x32).
- * We get the color from the GeoMaterial, and the overlay style depends on the
- * strength and block Material (sand ore is 'wavy') of the GeoMaterial.
- * For example: 
- * * weak => "fragmented" -- kind of like emerald ore, but not shiny
- * * medium => "diagonal scratches" -- like netherquartz
- * * strong => "horizontal bands" -- like vanilla ores.
- * BrickGeoBlock and BrokenGeoBlock will override to draw "crack" overlay.
- * The same thing needs to happen for walls, stairs, slabs, etc.
- */
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
 	private List<GeoMaterial> materials = new ArrayList<GeoMaterial>();
 	
 	private Strength strength;
 	private Class<? extends IndustrialMaterial> composition;
-
-	private IIcon[] oreOverlayIcons = new IIcon[4];
 
 	private static Map<GeoMaterial, BlockWithMeta<GeoBlock>> materialToNativeBlock = new HashMap();
 	
@@ -220,59 +207,12 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 	
 	@Override
-	protected int overlayColorMultiplier(int meta) {
-		GeoMaterial material = this.getGeoMaterial(meta);
-		if (material.getHost() != null) {
-			return material.getProperties(Condition.STP).color.getRGB();
-		}
-		return super.overlayColorMultiplier(meta);
-	}
-
-	@Override
-	protected boolean useMultipassRendering() {
+	public boolean useMultipassRendering() {
 		return this.needsHost();
 	}
 
 	private boolean needsHost() {
 		return !Aggregate.class.isAssignableFrom(this.getComposition());
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister registry) {
-		if (this.needsHost()) {
-			// TODO: this needs to vary by position (1-4)
-			this.oreOverlayIcons[0] = registry.registerIcon("geologica:" + this.getOverlayIconName());
-		}
-		super.registerBlockIcons(registry);
-	}
-	
-	private String getMaterialName() {
-		Material material = this.getMaterial();
-		if (material == Material.rock) {
-			return "Rock";
-		} else if (material == Material.clay) {
-			return "Clay";
-		} else if (material == Material.sand) {
-			return "Sand";
-		}
-		return null;
-	}
-	
-	private String getOverlayIconName() {
-		return this.getStrength().name().toLowerCase() + this.getCompositionName() + this.getMaterialName() + "Overlay"; 
-	}
-
-	private String getCompositionName() {
-		return VanillaOre.class.isAssignableFrom(this.getComposition()) ? "VanillaOre" : "Ore";
-	}
-
-	@Override
-	protected IIcon registerOverlayIcon(IIconRegister registry, int i) {
-		if (this.getGeoMaterial(i).getHost() != null) {
-			return this.oreOverlayIcons[0];
-		}
-		return super.registerOverlayIcon(registry, i);
 	}
 	
 	private static Block getBlockForAggregate(Aggregate host) {
