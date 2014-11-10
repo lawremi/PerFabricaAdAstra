@@ -1477,8 +1477,9 @@
       
       <VeinsPreset name='PresetSphaleriteGalena'
                    inherits='PresetLayeredVeinsLite'>
-        <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.65'/>
-        <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.35'/>
+        <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.62'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.33'/>
+        <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.05'/>
       </VeinsPreset>
       
     </ConfigSection>
@@ -1530,17 +1531,19 @@
         <Replaces block='PFAAGeologica:weakStone:3'/>
         <Replaces block='PFAAGeologica:weakStone:4'/>
         <Replaces block='PFAAGeologica:mediumStone:0'/>
-        <Replaces block='minecraft:sandstone'/>
+        <Replaces block='PFAAGeologica:strongStone:8'/>
       </VeinsPreset>
 
       <ConfigSection> <!-- Coal -->
-        <CloudPreset name='PresetCoalBeds' block='PFAAGeologica:crudeRock:1'
+        <CloudPreset name='PresetCoalBeds'
                      inherits='PresetSedStrategicCloud'
                      drawWireframe='false'>
           <Setting name='DistributionFrequency'
                  avg=':=20 * _default_'/>
           <Setting name='CloudRadius' avg=':=1.4 * _default_'
                    range=':=1.4 * _default_'/>
+          <OreBlock block='PFAAGeologica:crudeRock:1' weight='0.98'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.02'/>
           <BiomeSet inherits='inland' weight='0.5'/>
           <BiomeType name='swamp' weight='0.5'/>
           <IfModInstalled name='gregtech'>
@@ -1550,7 +1553,8 @@
           </IfModInstalled>
         </CloudPreset>
 
-        <VeinsPreset name='PresetCoalBedHintVeins' block='PFAAGeologica:crudeRock:1'
+        <VeinsPreset name='PresetCoalBedHintVeins'
+                     block='PFAAGeologica:crudeRock:1'
                      inherits='PresetHintVeinsSed'>
           <Setting name='MotherlodeFrequency' avg=':=1.2 * _default_'
                    range=':=_default_'/> 
@@ -2435,8 +2439,9 @@
                      inherits='PresetSEDEX'
                      drawWireframe='false'
                      wireframeColor='0xFF3300FF'>
-          <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.35'/>
-          <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.65'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.33'/>
+          <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.62'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.05'/>
           <Setting name='DistributionFrequency' avg=':= 3 * _default_'/>
         </CloudPreset>
         <CloudPreset name='PresetSEDEXSphaleriteGalenaOceanic'
@@ -2485,9 +2490,10 @@
         
         <CloudPreset name='PresetSEDEXChalcopyrite'
                      inherits='PresetSEDEX'
-                     block='PFAAGeologica:mediumOreRock:2'
                      drawWireframe='false'
                      wireframeColor='0xFFFFFF00'>
+          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.95'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.05'/>
         </CloudPreset>
         <CloudPreset name='PresetSEDEXChalcopyriteOceanic'
                      inherits='PresetSEDEXChalcopyrite'>
@@ -2609,9 +2615,10 @@
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
                      wireframeColor='0xFFFFFF00'>
-          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.89'/>
+          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.88'/>
           <OreBlock block='PFAAGeologica:vanillaOreRock:0' weight='0.10'/>
           <OreBlock block='PFAAGeologica:strongOreRock:9' weight='0.01'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.01'/>
         </VeinsPreset>
         <VeinsPreset name='PresetGraniteMagnetiteContinental'
                      inherits='PresetGraniteVeinsContinental'
@@ -2677,9 +2684,10 @@
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
                      wireframeColor='0xFFFFFF00'>
-          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.89'/>
+          <OreBlock block='PFAAGeologica:mediumOreRock:2' weight='0.88'/>
           <OreBlock block='PFAAGeologica:vanillaOreRock:0' weight='0.10'/>
           <OreBlock block='PFAAGeologica:strongOreRock:9' weight='0.01'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.01'/>
         </VeinsPreset>
         <VeinsPreset name='PresetGraniteMagnetiteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
