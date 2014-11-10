@@ -1,19 +1,23 @@
 package org.pfaa.geologica.block;
 
-import org.pfaa.geologica.client.registration.ClientRegistrant;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.util.IIcon;
 
-public class StairsBlock extends BlockStairs implements ProxyBlock {
+import org.pfaa.block.CompositeBlock;
+import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.Geologica;
 
-	private final Block modelBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class StairsBlock extends BlockStairs implements ProxyBlock, CompositeBlockAccessors {
+
+	private final CompositeBlock modelBlock;
 	private final int modelBlockMeta;
+	private boolean defaultRendererEnabled;
 	
-	public StairsBlock(Block block, int meta) {
+	public StairsBlock(CompositeBlock block, int meta) {
 		super(block, meta);
 		this.modelBlock = block;
 		this.modelBlockMeta = meta;
@@ -36,13 +40,41 @@ public class StairsBlock extends BlockStairs implements ProxyBlock {
 	}
 
 	@Override
-	public boolean canRenderInPass(int pass) {
-		return modelBlock.canRenderInPass(pass);
+	public String getBlockNameSuffix(int meta) {
+		return null;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderBlockPass() {
-		return modelBlock.getRenderBlockPass();
+	public int getMetaCount() {
+		return 0;
+	}
+
+	@Override
+	public boolean enableOverlay() {
+		return modelBlock.enableOverlay();
+	}
+
+	@Override
+	public void disableOverlay() {
+		modelBlock.disableOverlay();
+	}
+
+	@Override
+	public void enableDefaultRenderer() {
+		this.defaultRendererEnabled = true;
+	}
+
+	@Override
+	public void disableDefaultRenderer() {
+		this.defaultRendererEnabled = false;
+	}
+
+	@Override
+	public int getRenderType() {
+		if (this.defaultRendererEnabled) {
+			return super.getRenderType();
+		} else {
+			return Geologica.instance.registrant.getStairsCompositeBlockRendererId();
+		}
 	}
 }

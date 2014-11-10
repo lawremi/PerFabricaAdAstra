@@ -21,4 +21,11 @@ public class CommonRegistrant implements Registrant {
 		RecipeReplacement.init();
 	}
 	
+	public int getCompositeBlockRendererId() {
+		return 0;
+	}
+
+	public int getStairsCompositeBlockRendererId() {
+		return 0;
+	}
 }

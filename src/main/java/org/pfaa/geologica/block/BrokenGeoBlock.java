@@ -23,7 +23,7 @@ public class BrokenGeoBlock extends GeoBlock {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	protected boolean useMultipassRendering() {
+	public boolean useMultipassRendering() {
 		return true;
 	}
 

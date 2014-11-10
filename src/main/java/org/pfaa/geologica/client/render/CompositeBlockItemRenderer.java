@@ -1,12 +1,13 @@
 package org.pfaa.geologica.client.render;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
+import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.client.registration.CompositeBlockRenderer;
 
 public class CompositeBlockItemRenderer implements IItemRenderer {
 
@@ -29,42 +30,17 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 		if (type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
 			this.translateToHand();
 		}
-		if (block.canRenderInPass(0)) {
-			renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
-		}
-		if (block.canRenderInPass(1)) {
-			if (type == ItemRenderType.INVENTORY) {
-				this.setupAlphaBlending(block);
-			} else { // hack to get the overlay quads to render on outside; otherwise, it flickers
+		CompositeBlockAccessors compositeBlock = (CompositeBlockAccessors)block;
+		compositeBlock.disableOverlay();
+		renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
+		if (compositeBlock.enableOverlay()) {
+			CompositeBlockRenderer.setupAlphaBlending();
+			if (type != ItemRenderType.INVENTORY) { // hack to get the overlay quads to render on outside; otherwise, it flickers
 				GL11.glScalef(1.01F, 1.01F, 1.01F);
 			}
-			this.setupOverlayColor(item);
 			renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
 		}
 		renderer.useInventoryTint = true;
-	}
-
-	private void setupOverlayColor(ItemStack itemStack) {
-		int color = itemStack.getItem().getColorFromItemStack(itemStack, 1);
-        float r = (float)(color >> 16 & 0xff) / 255F;
-        float g = (float)(color >> 8 & 0xff) / 255F;
-        float b = (float)(color & 0xff) / 255F;
-        GL11.glColor4f(r, g, b, 1.0F);
-	}
-
-	private void setupAlphaBlending(Block block) {
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
-        if (block.getRenderBlockPass() != 0)
-        {
-            GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
-            GL11.glEnable(GL11.GL_BLEND);
-            OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-        }
-        else
-        {
-            GL11.glAlphaFunc(GL11.GL_GREATER, 0.5F);
-            GL11.glDisable(GL11.GL_BLEND);
-        }
 	}
 
 	private void translateToHand() {

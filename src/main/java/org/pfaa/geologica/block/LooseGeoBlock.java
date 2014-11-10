@@ -113,7 +113,7 @@ public class LooseGeoBlock extends GeoBlock {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	protected boolean useMultipassRendering() {
+	public boolean useMultipassRendering() {
 		return this.getMaterial() == Material.rock ? true : super.useMultipassRendering();
 	}
 	

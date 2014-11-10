@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.client.registration.ClientRegistrant;
 
@@ -38,12 +39,6 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	public WallBlock(CompositeBlock modelBlock) {
 		super(modelBlock);
 		this.modelBlock = modelBlock;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta) {
-		return modelBlock.getIcon(side, meta);
 	}
 
 	@Override
@@ -77,39 +72,50 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 
 	@Override
 	public boolean canRenderInPass(int pass) {
-		return modelBlock.canRenderInPass(pass);
+		if (pass == 1) {
+			return this.enableOverlay();
+		} else {
+			this.disableOverlay();
+			return true;
+		}
+	}
+
+	/* 
+	 * We need to use the BlockWall renderer, or else path finding will break. 
+	 * Thus, we render the overlay via the alpha pass.
+	 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return 1;
+	}
+
+	@Override
+	public boolean enableOverlay() {
+		return modelBlock.enableOverlay();
+	}
+
+	@Override
+	public void disableOverlay() {
+		modelBlock.disableOverlay();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getRenderBlockPass() {
-		return modelBlock.getRenderBlockPass();
+	public IIcon getIcon(int side, int meta) {
+		return modelBlock.getIcon(side, meta);
 	}
-
-	/* Overriding this will break:
-	 * * Triggering the block underneath when the entity walks up to or falls off the wall
-	 * * Entities path finding around the wall
-	 * 
-	 * We could return the wall render ID when there is no renderer (we are on the server).
-	 * However, this does not solve the problem for single player.
-	 */
-	@Override
-	public int getRenderType() {
-		//if (this.renderAsWall) {
-			return super.getRenderType();
-		//} else {
-		//	return ClientRegistrant.compositeWallBlockRenderer.getRenderId();
-		//}
-	}
-
+	
 	@Override
 	public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
 		return true;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(int meta) {
-		return modelBlock.colorMultiplier(meta);
+	public void enableDefaultRenderer() {
+	}
+
+	@Override
+	public void disableDefaultRenderer() {
 	}
 }
