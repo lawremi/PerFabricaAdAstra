@@ -444,8 +444,9 @@
                       displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
                       displayGroup='groupGeologica'>
         <Description>
-          Generate Geologica volcanic ore deposits including
-          alunite, ash, perlite, pumice and zeolite.
+          Generate Geologica volcanic ore deposits including alunite,
+          ash, perlite, pumice and zeolite, as well as fumaroles
+          (volcanic pipes) with gypsum, halite and realgar.
         </Description>
         <DisplayName>Volcanic deposits</DisplayName>
         <Choice value='true' displayValue='On'/>
@@ -2620,8 +2621,17 @@
         <VeinsPreset name='PresetGraniteStibniteContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
-                     wireframeColor='0xFFFF0055'
-                     block='PFAAGeologica:weakOreRock:6'/>
+                     wireframeColor='0xFFFF0055'>
+          <OreBlock block='PFAAGeologica:weakOreRock:6' weight='0.8'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.2'/>
+        </VeinsPreset>
+        <VeinsPreset name='PresetGraniteRealgarContinental'
+                     inherits='PresetGraniteVeinsContinental'
+                     drawWireframe='false'
+                     wireframeColor='0xFFFF0055'>
+          <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.8'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:6' weight='0.2'/>
+        </VeinsPreset>
         <VeinsPreset name='PresetGraniteCassiteriteContinental'
                      inherits='PresetGraniteVeinsContinental'
                      drawWireframe='false'
@@ -2817,6 +2827,8 @@
           </IfCondition>
           <Veins name='GraniteStibniteContinental'
                  inherits='PresetGraniteStibniteContinental'/>
+          <Veins name='GraniteRealgarContinental'
+                 inherits='PresetGraniteRealgarContinental'/>
           <IfCondition condition=":=?GeologicaGenTin">
             <Veins name='GraniteCassiteriteContinental'
                    inherits='PresetGraniteCassiteriteContinental'/>
@@ -3515,6 +3527,39 @@
         </IfCondition>
       </ConfigSection>
     </ConfigSection>
+
+    <ConfigSection>
+      <VeinsPreset name="PresetFumarole"
+                   inherits='PresetPipeVeins' seed='0xE222'
+                   drawWireframe='false'>
+        <WireframeColor>0x40336699</WireframeColor> 
+        <Setting name='MotherlodeFrequency'
+                 avg=':= 0.5 * _default_'/> 
+        <Setting name='MotherlodeHeight'
+                 avg=':= 20/64 * dimension.groundLevel' range='5'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.1'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:11' weight='0.6'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:5' weight='0.3'/>
+        <BiomeSet inherits='felsic'/>
+      </VeinsPreset>
+      <VeinsPreset name="PresetFumaroleLava" block='minecraft:lava'
+                   inherits='PresetFumarole' seed='0xE222'
+                   drawWireframe='false'>
+        <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
+        <Setting name='SegmentRadius' avg=':= 0.5 * _default_'/>
+        <ReplacesOre block='stone'/>
+        <Replaces block='minecraft:dirt'/>
+        <Replaces block='minecraft:gravel'/>
+      </VeinsPreset>
+    </ConfigSection>
+    <ConfigSection>
+      <IfCondition condition=":=?GeologicaGenVolcanic &amp; ?GeologicaActive">
+        <Veins name="Fumarole" inherits='PresetFumarole'>
+          <Veins name="FumaroleLava" inherits='PresetFumaroleLava'/>
+        </Veins>
+      </IfCondition>
+    </ConfigSection>
+    
   </ConfigSection>
 
   <ConfigSection> <!-- Petroleum -->
@@ -3709,7 +3754,7 @@
       </VeinsPreset>
       <VeinsPreset name="PresetKimberlitePipesLava" block='minecraft:lava'
                    inherits='PresetKimberlitePipes' seed='0xF186'
-                   drawWireframe='true'>
+                   drawWireframe='false'>
         <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
         <Setting name='SegmentRadius' avg=':= 0.5 * _default_'/>
         <ReplacesOre block='stone'/>
