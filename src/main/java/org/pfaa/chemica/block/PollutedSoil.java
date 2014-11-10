@@ -10,6 +10,8 @@ public class PollutedSoil extends Block {
     {
         super(Material.ground);
         this.setCreativeTab(CreativeTabs.tabBlock);
+        this.setHardness(0.5F);
+        this.setStepSound(soundTypeGravel);
     }
 
 }
