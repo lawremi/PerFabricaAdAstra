@@ -121,34 +121,34 @@ public enum GeoMaterial implements Mixture {
 	CHALCOPYRITE(Ores.CHALCOPYRITE.mix(Ores.PYRITE, 0.10).mix(Ores.MOLYBDENITE, 0.05)
 				 .mix(Ores.COBALTITE, 0.01), Strength.MEDIUM, Aggregates.STONE),
 	GARNIERITE(Ores.NEPOUITE, Strength.MEDIUM, SERPENTINITE),
-	LEPIDOLITE(Ores.LEPIDOLITE.mix(Ores.SPODUMENE, 0.2), Strength.MEDIUM, GRANITE),
+	LEPIDOLITE(Ores.LEPIDOLITE.mix(Ores.SPODUMENE, 0.2), Strength.MEDIUM, PEGMATITE),
 	MAGNESITE(Ores.MAGNESITE.mix(IndustrialMinerals.TALC, 0.2), Strength.MEDIUM, Aggregates.STONE),
 	PENTLANDITE(Ores.PENTLANDITE.mix(Ores.PYRITE, 0.1), Strength.MEDIUM, SERPENTINITE),
 	SCHEELITE(Ores.SCHEELITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.WOLFRAMITE, 0.2), Strength.MEDIUM, Aggregates.STONE),
 	SPHALERITE(Ores.SPHALERITE.mix(Ores.GALENA, 0.2).mix(Ores.PYRITE, 0.1), Strength.MEDIUM, Aggregates.STONE),
-	WOLFRAMITE(Ores.WOLFRAMITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.SCHEELITE, 0.2), Strength.MEDIUM, GRANITE),
+	WOLFRAMITE(Ores.WOLFRAMITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.SCHEELITE, 0.2), Strength.MEDIUM, PEGMATITE),
 	
 	BANDED_IRON(Ores.HEMATITE.mix(Ores.MAGNETITE, 0.5), Strength.STRONG, MUDSTONE),
 	QUARTZ(IndustrialMinerals.QUARTZ, Strength.STRONG, GRANITE),
 	CASSITERITE(Ores.CASSITERITE.mix(Ores.FLUORITE, 0.1).mix(Ores.WOLFRAMITE, 0.1)
-			    .mix(IndustrialMinerals.APATITE, 0.05).mix(Ores.MOLYBDENITE, 0.05), Strength.STRONG, GRANITE),
+			    .mix(IndustrialMinerals.APATITE, 0.05).mix(Ores.MOLYBDENITE, 0.05), Strength.STRONG, Aggregates.STONE),
 	CHROMITE(Ores.CHROMITE.mix(SERPENTINITE, 0.5).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, SERPENTINITE),
 	ILMENITE(Ores.ILMENITE.mix(Ores.RUTILE, 0.2).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, DIORITE),
 	MAGNETITE(Ores.MAGNETITE, Strength.STRONG, GRANITE),
-	POLLUCITE(Ores.POLLUCITE.mix(Ores.SPODUMENE, 0.1), Strength.STRONG, GRANITE),
-	SPODUMENE(Ores.SPODUMENE.mix(Ores.LEPIDOLITE, 0.1), Strength.STRONG, GRANITE),
-	TANTALITE(Ores.TANTALITE.mix(Ores.COLUMBITE, 2.0), Strength.STRONG, GRANITE),
+	POLLUCITE(Ores.POLLUCITE.mix(Ores.SPODUMENE, 0.1), Strength.STRONG, PEGMATITE),
+	SPODUMENE(Ores.SPODUMENE.mix(Ores.LEPIDOLITE, 0.1), Strength.STRONG, PEGMATITE),
+	TANTALITE(Ores.TANTALITE.mix(Ores.COLUMBITE, 2.0), Strength.STRONG, PEGMATITE),
 	PITCHBLENDE(Ores.URANINITE.mix(Ores.CARNOTITE, 0.05), Strength.STRONG, Aggregates.STONE),
 	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG, PERIDOTITE),
 	
 	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE.mix(SERPENTINITE, 0.5), Strength.WEAK),
 	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
-	/* UNUSED PLACEHOLDER */ GLAUCONITE(IndustrialMinerals.GLAUCONITE.mix(Aggregates.SAND, 1.0), Strength.WEAK),
+	REALGAR(Ores.REALGAR.mix(Ores.ORPIMENT, 0.1).mix(Ores.STIBNITE, 0.04).mix(Ores.CINNABAR, 0.04), Strength.WEAK, GRANITE),
 	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(COAL, 0.5), Strength.WEAK),
 	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MIRABILITE(IndustrialMinerals.MIRABILITE
 	           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
-	MICA(IndustrialMinerals.MICA, Strength.WEAK, GRANITE),
+	MICA(IndustrialMinerals.MICA, Strength.WEAK, PEGMATITE),
 	SOAPSTONE(IndustrialMinerals.TALC, Strength.WEAK, SERPENTINITE),
 	TRONA(IndustrialMinerals.TRONA
           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
@@ -161,15 +161,16 @@ public enum GeoMaterial implements Mixture {
 	ZEOLITE(IndustrialMinerals.ZEOLITE, Strength.MEDIUM),
 	
 	APATITE(IndustrialMinerals.APATITE, Strength.STRONG, Aggregates.STONE),
-	KYANITE(IndustrialMinerals.KYANITE, Strength.STRONG, GRANITE),
+	KYANITE(IndustrialMinerals.KYANITE, Strength.STRONG, PEGMATITE),
 	PERLITE(IndustrialMinerals.PERLITE, Strength.STRONG, Aggregates.OBSIDIAN),
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
+	PYRITE(Ores.PYRITE.mix(Ores.CHALCOPYRITE, 0.05).mix(Ores.SPHALERITE, 0.05), Strength.STRONG, Aggregates.STONE),
 	
 	GOLD(new SimpleVanillaOre(Ores.GOLD), Strength.STRONG, Aggregates.STONE), // TODO: electrum
 	LAPIS(new SimpleVanillaOre(IndustrialMinerals.LAZURITE.mix(Ores.CALCITE, 0.4).
 		  mix(IndustrialMinerals.SODALITE, 0.4).mix(Ores.PYRITE, 0.2)), Strength.STRONG, GRANITE),
 	DIAMOND(new SimpleVanillaOre(IndustrialMinerals.DIAMOND), Strength.STRONG, PERIDOTITE),
-	EMERALD(new SimpleVanillaOre(Ores.BERYL), Strength.STRONG, GRANITE), 
+	EMERALD(new SimpleVanillaOre(Ores.BERYL), Strength.STRONG, PEGMATITE), 
 	REDSTONE(new SimpleVanillaOre(Ores.CUPRITE.mix(Ores.CHALCOPYRITE, 0.25).
 			 mix(IndustrialMinerals.AZURITE, 0.1).mix(Ores.MALACHITE, 0.1)),
 			 Strength.STRONG, Aggregates.STONE) 
