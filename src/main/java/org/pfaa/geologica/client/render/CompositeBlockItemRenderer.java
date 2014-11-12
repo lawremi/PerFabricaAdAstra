@@ -34,7 +34,7 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 		compositeBlock.disableOverlay();
 		renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
 		if (compositeBlock.enableOverlay()) {
-			CompositeBlockRenderer.setupAlphaBlending();
+			CompositeBlockRenderer.enableAlphaBlending();
 			if (type != ItemRenderType.INVENTORY) { // hack to get the overlay quads to render on outside; otherwise, it flickers
 				GL11.glScalef(1.01F, 1.01F, 1.01F);
 			}

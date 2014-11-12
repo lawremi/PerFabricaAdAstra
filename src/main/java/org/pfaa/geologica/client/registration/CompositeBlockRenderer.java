@@ -36,8 +36,9 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 		compositeBlock.disableOverlay();
 		flag = this.renderWorldBlockPass(x, y, z, block, renderer);
 		if (flag && compositeBlock.enableOverlay()) {
-			setupAlphaBlending();
+			enableAlphaBlending();
 			this.renderWorldBlockPass(x, y, z, block, renderer);
+			disableAlphaBlending();
 		}
 		return flag;
 	}
@@ -57,10 +58,14 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 		return this.renderId;
 	}
 
-	public static void setupAlphaBlending() {
+	public static void enableAlphaBlending() {
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+	}
+	
+	public static void disableAlphaBlending() {
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 }
