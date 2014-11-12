@@ -20,7 +20,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
