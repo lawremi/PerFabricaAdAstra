@@ -20,7 +20,7 @@ public class FallingCompositeBlockRenderer extends RenderFallingBlock {
 			compositeBlock.disableOverlay();
 			super.doRender(entity, x, y, z, f, f1);
 			if (compositeBlock.enableOverlay()) {
-				CompositeBlockRenderer.setupAlphaBlending();
+				CompositeBlockRenderer.enableAlphaBlending();
 				super.doRender(entity, x, y, z, f, f1);	
 			}
 		} else {
