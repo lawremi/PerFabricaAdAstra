@@ -1,4 +1,4 @@
-package org.pfaa.geologica.client.registration;
+package org.pfaa.geologica.client.render;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,7 +22,7 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-		CompositeBlockAccessors compositeBlock = (CompositeBlockAccessors)block; 
+		CompositeBlock compositeBlock = (CompositeBlock)block; 
 		compositeBlock.enableDefaultRenderer();
 		renderer.renderBlockAsItem(block, metadata, 1.0F);
 		compositeBlock.disableDefaultRenderer();
@@ -36,9 +36,8 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 		compositeBlock.disableOverlay();
 		flag = this.renderWorldBlockPass(x, y, z, block, renderer);
 		if (flag && compositeBlock.enableOverlay()) {
-			enableAlphaBlending();
 			this.renderWorldBlockPass(x, y, z, block, renderer);
-			disableAlphaBlending();
+			compositeBlock.disableOverlay();
 		}
 		return flag;
 	}
@@ -64,8 +63,5 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
         GL11.glEnable(GL11.GL_BLEND);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 	}
-	
-	public static void disableAlphaBlending() {
-		GL11.glDisable(GL11.GL_BLEND);
-	}
+
 }

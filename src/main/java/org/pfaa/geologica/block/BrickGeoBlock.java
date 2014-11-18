@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BrickGeoBlock extends GeoBlock {
 
 	public BrickGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(strength, composition, material);
+		super(strength, composition, material, true);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class IntactGeoBlock extends GeoBlock {
 	private static Set<Block> stoneBlocks;
 
 	public IntactGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(strength, composition, material);
+		super(strength, composition, material, false);
 	}
 
 	@Override
@@ -135,9 +135,6 @@ public class IntactGeoBlock extends GeoBlock {
 			initStoneBlocks();
 		}
 		HostTileEntity te = (HostTileEntity)world.getTileEntity(x, y, z);
-		if (te == null) { // why would this happen?
-			return null;
-		}
 		ItemStack host = te.getHost();
 		if (host == null) {
 			host = getAdjacentStone(world, x, y, z);

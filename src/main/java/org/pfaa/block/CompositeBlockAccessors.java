@@ -13,7 +13,4 @@ public interface CompositeBlockAccessors {
 	
 	public abstract boolean enableOverlay();
 	public abstract void disableOverlay();
-	
-	public abstract void enableDefaultRenderer();
-	public abstract void disableDefaultRenderer();
 }

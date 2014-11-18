@@ -26,8 +26,9 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	private boolean overlayEnabled;
 	private boolean defaultRendererEnabled;
 	
-	public CompositeBlock(Material material) {
+	public CompositeBlock(Material material, boolean defaultRendererEnabled) {
 		super(material);
+		this.defaultRendererEnabled = defaultRendererEnabled;
 	}
 	
 	@Override
@@ -127,7 +128,7 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	
 	@Override
 	public int getRenderType() {
-		if (this.defaultRendererEnabled) {
+		if (this.renderAsNormalBlock()) {
 			return super.getRenderType();
 		} else {
 			return Geologica.instance.registrant.getCompositeBlockRendererId();
@@ -147,15 +148,36 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 		this.overlayEnabled = false;
 	}
 
-	@Override
 	public void enableDefaultRenderer() {
 		this.defaultRendererEnabled = true;
 	}
 
-	@Override
 	public void disableDefaultRenderer() {
 		this.defaultRendererEnabled = false;
 	}
-	
-	
+
+	@Override
+	public boolean renderAsNormalBlock() {
+		return this.defaultRendererEnabled;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return this.renderAsNormalBlock() && this.useMultipassRendering() ? 1 : 0;
+	}
+
+	@Override
+	public boolean canRenderInPass(int pass) {
+		if (pass <= this.getRenderBlockPass()) {
+			if (pass == 1) {
+				this.enableOverlay();
+			} else {
+				this.disableOverlay();
+			}
+			return true;
+		}
+		return false;
+	}
+
 }

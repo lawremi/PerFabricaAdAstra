@@ -127,14 +127,16 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	public void disableOverlay() {
 		modelBlock.disableOverlay();
 	}
-
+	
 	@Override
-	public void enableDefaultRenderer() {
-		modelBlock.enableDefaultRenderer();
+	public boolean canRenderInPass(int pass) {
+		return modelBlock.canRenderInPass(pass);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return modelBlock.getRenderBlockPass();
 	}
 
-	@Override
-	public void disableDefaultRenderer() {
-		modelBlock.disableDefaultRenderer();
-	}
 }
