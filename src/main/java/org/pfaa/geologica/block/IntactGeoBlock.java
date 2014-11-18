@@ -82,66 +82,14 @@ public class IntactGeoBlock extends GeoBlock {
 		return null;
 	}
 	
-	public static class HostTileEntity extends TileEntity {
-
-		private ItemStack host;
-		
-		public HostTileEntity() {
-			
-		}
-	
-		@Override
-		public void readFromNBT(NBTTagCompound nbt) {
-			super.readFromNBT(nbt);
-			NBTTagCompound hostTag = nbt.getCompoundTag("host");
-			if (hostTag != null) {
-				this.host = ItemStack.loadItemStackFromNBT(hostTag);
-			}
-		}
-
-		@Override
-		public void writeToNBT(NBTTagCompound nbt) {
-			super.writeToNBT(nbt);
-			if (this.host != null) {
-				NBTTagCompound hostTag = new NBTTagCompound();
-				this.host.writeToNBT(hostTag);
-				nbt.setTag("host", hostTag);
-			}
-		}
-
-		public ItemStack getHost() {
-			return host;
-		}
-
-		public void setHost(ItemStack host) {
-			this.host = host;
-		}
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, int metadata)
-    {
-		return new HostTileEntity();
-    }
-	
-	@Override
-	public boolean hasTileEntity(int metadata) {
-		return metadata < this.getMetaCount() ? this.getGeoMaterial(metadata).getHost() instanceof Aggregate : false;
-	}
-	
 	@SideOnly(Side.CLIENT)
 	private static IIcon getAdjacentStoneIcon(IBlockAccess world, int x, int y, int z) {
 		if (stoneBlocks == null) {
 			initStoneBlocks();
 		}
-		HostTileEntity te = (HostTileEntity)world.getTileEntity(x, y, z);
-		ItemStack host = te.getHost();
-		if (host == null) {
-			host = getAdjacentStone(world, x, y, z);
-			if (host == null)
-				return null;
-			te.setHost(host);
-		}
+		ItemStack host = getAdjacentStone(world, x, y, z);
+		if (host == null)
+			return null;
 		Block block = ((ItemBlock)host.getItem()).field_150939_a;
 		return block.getIcon(0, host.getItemDamage());
 	}
