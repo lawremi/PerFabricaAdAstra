@@ -72,22 +72,13 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 
 	@Override
 	public boolean canRenderInPass(int pass) {
-		if (pass == 1) {
-			return this.enableOverlay();
-		} else {
-			this.disableOverlay();
-			return true;
-		}
+		return modelBlock.canRenderInPass(pass);
 	}
 
-	/* 
-	 * We need to use the BlockWall renderer, or else path finding will break. 
-	 * Thus, we render the overlay via the alpha pass.
-	 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {
-		return 1;
+		return modelBlock.getRenderBlockPass();
 	}
 
 	@Override
@@ -109,13 +100,5 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	@Override
 	public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
 		return true;
-	}
-
-	@Override
-	public void enableDefaultRenderer() {
-	}
-
-	@Override
-	public void disableDefaultRenderer() {
 	}
 }

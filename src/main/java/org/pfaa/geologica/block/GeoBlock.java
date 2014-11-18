@@ -41,8 +41,10 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 
 	private static Map<GeoMaterial, BlockWithMeta<GeoBlock>> materialToNativeBlock = new HashMap();
 	
-	public GeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(material);
+	public GeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material, 
+			boolean defaultRendererEnabled) 
+	{
+		super(material, defaultRendererEnabled);
 		this.strength = strength;
 		this.composition = composition;
 		setCreativeTab(CreativeTabs.tabBlock);

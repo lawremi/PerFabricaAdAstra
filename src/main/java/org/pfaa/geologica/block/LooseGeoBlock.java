@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class LooseGeoBlock extends GeoBlock {
 
 	public LooseGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		super(strength, composition, material);
+		super(strength, composition, material, material == Material.rock);
 	}
 
 	@Override
@@ -114,21 +114,19 @@ public class LooseGeoBlock extends GeoBlock {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean useMultipassRendering() {
-		return this.getMaterial() == Material.rock ? true : super.useMultipassRendering();
+		return this.getMaterial() == Material.rock;
 	}
 	
 	@Override
 	protected IIcon registerUnderlayIcon(IIconRegister registry, int i) {
 		if (this.getMaterial() == Material.rock)
 			return getNative(this.getGeoMaterial(i)).block.registerUnderlayIcon(registry, i);
-		else return super.registerUnderlayIcon(registry, i);
+		else return super.registerMetaIcon(registry, i);
 	}
 	
 	@Override
 	protected IIcon registerOverlayIcon(IIconRegister registry, int i) {
-		if (this.getMaterial() == Material.rock)
-			return registry.registerIcon("geologica:rubbleOverlay");
-		return super.registerOverlayIcon(registry, i);
+		return registry.registerIcon("geologica:rubbleOverlay");
 	}
 
 }

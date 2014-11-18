@@ -9,7 +9,6 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import org.lwjgl.opengl.GL11;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.client.registration.CompositeBlockRenderer;
 
 public class FallingCompositeBlockRenderer extends RenderFallingBlock {
 	@Override

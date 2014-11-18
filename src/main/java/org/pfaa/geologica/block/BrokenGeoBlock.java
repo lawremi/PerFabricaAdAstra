@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BrokenGeoBlock extends GeoBlock {
 
 	public BrokenGeoBlock(Strength strength, Class<? extends IndustrialMaterial> materialType, Material material) {
-		super(strength, materialType, material);
+		super(strength, materialType, material, true);
 	}
 
 	@Override

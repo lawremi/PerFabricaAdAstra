@@ -10,6 +10,7 @@ import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.client.render.CompositeBlockItemRenderer;
+import org.pfaa.geologica.client.render.CompositeBlockRenderer;
 import org.pfaa.geologica.client.render.FallingCompositeBlockRenderer;
 import org.pfaa.geologica.registration.CommonRegistrant;
 
@@ -18,8 +19,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class ClientRegistrant extends CommonRegistrant {
 	
 	private CompositeBlockRenderer compositeBlockRenderer;
-	private CompositeBlockRenderer stairsCompositeBlockRenderer;
-
+	
 	@Override
 	public void register() {
 		super.register();
@@ -38,17 +38,11 @@ public class ClientRegistrant extends CommonRegistrant {
 		
 		this.compositeBlockRenderer = new CompositeBlockRenderer(RenderingRegistry.getNextAvailableRenderId());
 		RenderingRegistry.registerBlockHandler(this.compositeBlockRenderer);
-		this.stairsCompositeBlockRenderer = new StairsCompositeBlockRenderer(RenderingRegistry.getNextAvailableRenderId());
-		RenderingRegistry.registerBlockHandler(this.stairsCompositeBlockRenderer);
 	}
 	
 	@Override
 	public int getCompositeBlockRendererId() {
 		return this.compositeBlockRenderer.getRenderId();
 	}
-	
-	@Override
-	public int getStairsCompositeBlockRendererId() {
-		return this.stairsCompositeBlockRenderer.getRenderId();
-	}
+
 }

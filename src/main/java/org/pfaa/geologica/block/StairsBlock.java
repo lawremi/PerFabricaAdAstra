@@ -60,21 +60,14 @@ public class StairsBlock extends BlockStairs implements ProxyBlock, CompositeBlo
 	}
 
 	@Override
-	public void enableDefaultRenderer() {
-		this.defaultRendererEnabled = true;
+	public boolean canRenderInPass(int pass) {
+		return modelBlock.canRenderInPass(pass);
 	}
 
 	@Override
-	public void disableDefaultRenderer() {
-		this.defaultRendererEnabled = false;
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return modelBlock.getRenderBlockPass();
 	}
 
-	@Override
-	public int getRenderType() {
-		if (this.defaultRendererEnabled) {
-			return super.getRenderType();
-		} else {
-			return Geologica.instance.registrant.getStairsCompositeBlockRendererId();
-		}
-	}
 }

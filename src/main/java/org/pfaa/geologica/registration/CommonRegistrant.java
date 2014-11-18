@@ -25,7 +25,4 @@ public class CommonRegistrant implements Registrant {
 		return 0;
 	}
 
-	public int getStairsCompositeBlockRendererId() {
-		return 0;
-	}
 }

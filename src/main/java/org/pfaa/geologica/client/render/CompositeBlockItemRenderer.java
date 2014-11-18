@@ -7,7 +7,6 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.client.registration.CompositeBlockRenderer;
 
 public class CompositeBlockItemRenderer implements IItemRenderer {
 
@@ -39,6 +38,7 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 				GL11.glScalef(1.01F, 1.01F, 1.01F);
 			}
 			renderer.renderBlockAsItem(block, item.getItemDamage(), 1.0F);
+			compositeBlock.disableOverlay();
 		}
 		renderer.useInventoryTint = true;
 	}
