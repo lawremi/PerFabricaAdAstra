@@ -239,6 +239,7 @@ tile.weakOreSand.garnetSand.name=Garnet Sand
 tile.weakOreSand.graniticMineralSand.name=Granitic Mineral Sand
 tile.weakOreSand.quartzSand.name=Quartz Sand
 tile.weakOreSand.volcanicAsh.name=Volcanic Ash
+tile.weakOreSand.glauconiteSand.name=Glauconite Sand
 
 # Clays
 tile.weakClay.laterite.name=Lateritic Soil
