@@ -1,7 +1,6 @@
 package org.pfaa.geologica.registration;
 
-import org.pfaa.geologica.block.IntactGeoBlock;
-
+import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 
@@ -11,6 +10,6 @@ public class EntityRegistration {
 	}
 
 	private static void registerTileEntities() {
-		GameRegistry.registerTileEntity(IntactGeoBlock.HostTileEntity.class, "GeoBlockHost");
+		GameRegistry.registerTileEntity(TileEntity.class, "GeoBlockHost");
 	}
 }
