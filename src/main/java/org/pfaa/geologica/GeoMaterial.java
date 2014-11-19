@@ -88,7 +88,7 @@ public enum GeoMaterial implements Mixture {
 			              Strength.WEAK, Aggregates.SAND),
 	QUARTZ_SAND(IndustrialMinerals.QUARTZ, Strength.WEAK, Aggregates.SAND, Material.sand),
 	VOLCANIC_ASH(IndustrialMinerals.VOLCANIC_ASH, Strength.WEAK, Material.sand),
-	GLAUCONITE_SAND(IndustrialMinerals.GLAUCONITE, Strength.WEAK, Aggregates.SAND),
+	GLAUCONITE(IndustrialMinerals.GLAUCONITE, Strength.WEAK, Aggregates.SAND),
 	
 	LATERITE(Aggregates.CLAY, Strength.WEAK, Material.clay),
 	
