@@ -128,7 +128,7 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	
 	@Override
 	public int getRenderType() {
-		if (this.renderAsNormalBlock()) {
+		if (this.defaultRendererEnabled) {
 			return super.getRenderType();
 		} else {
 			return Geologica.instance.registrant.getCompositeBlockRendererId();
@@ -157,14 +157,9 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	}
 
 	@Override
-	public boolean renderAsNormalBlock() {
-		return this.defaultRendererEnabled;
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {
-		return this.renderAsNormalBlock() && this.useMultipassRendering() ? 1 : 0;
+		return this.defaultRendererEnabled && this.useMultipassRendering() ? 1 : 0;
 	}
 
 	@Override
