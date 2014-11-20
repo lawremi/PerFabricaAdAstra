@@ -115,7 +115,7 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 
 	@Override
 	public int getRenderType() {
-		return modelBlock.getRenderType();
+		return super.getRenderType();
 	}
 
 	@Override
