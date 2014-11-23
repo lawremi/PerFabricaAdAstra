@@ -2,6 +2,7 @@ package org.pfaa.geologica.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -15,7 +16,8 @@ public class ColoredBucketItem extends ItemBucket {
 	
 	public ColoredBucketItem(Block block) {
 		super(block);
-		this.fluidBlock = block; 
+		this.fluidBlock = block;
+		this.setContainerItem(Items.bucket);
 	}
 
 	@Override
