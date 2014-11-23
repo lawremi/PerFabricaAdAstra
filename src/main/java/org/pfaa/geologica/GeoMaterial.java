@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.material.Material;
 
+import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
@@ -166,14 +167,14 @@ public enum GeoMaterial implements Mixture {
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
 	PYRITE(Ores.PYRITE.mix(Ores.CHALCOPYRITE, 0.05).mix(Ores.SPHALERITE, 0.05), Strength.STRONG, Aggregates.STONE),
 	
-	GOLD(new SimpleVanillaOre(Ores.GOLD), Strength.STRONG, Aggregates.STONE), // TODO: electrum
+	GOLD(new SimpleVanillaOre(Ores.GOLD).mix(Alloys.ELECTRUM, 1.0), Strength.STRONG, Aggregates.STONE),
 	LAPIS(new SimpleVanillaOre(IndustrialMinerals.LAZURITE.mix(Ores.CALCITE, 0.4).
 		  mix(IndustrialMinerals.SODALITE, 0.4).mix(Ores.PYRITE, 0.2)), Strength.STRONG, GRANITE),
 	DIAMOND(new SimpleVanillaOre(IndustrialMinerals.DIAMOND), Strength.STRONG, PERIDOTITE),
 	EMERALD(new SimpleVanillaOre(Ores.BERYL), Strength.STRONG, PEGMATITE), 
 	REDSTONE(new SimpleVanillaOre(Ores.CUPRITE.mix(Ores.CHALCOPYRITE, 0.25).
 			 mix(IndustrialMinerals.AZURITE, 0.1).mix(Ores.MALACHITE, 0.1)),
-			 Strength.STRONG, Aggregates.STONE) 
+			 Strength.STRONG, Aggregates.STONE)
 	;
     
 	public enum Strength { 

@@ -14,6 +14,7 @@ public interface Element extends Chemical, PartFactory {
 	public double getAtomicWeight();
 	public int getDefaultOxidationState();
 	public Formula.Part _(int quantity);
+	public Alloy alloy(Element solute, double weight);
 	
 	public static enum Elements implements Element {
 		/*
@@ -546,6 +547,11 @@ public interface Element extends Chemical, PartFactory {
 		@Override
 		public int getDefaultOxidationState() {
 			return this.defaultOxidationState;
+		}
+
+		@Override
+		public Alloy alloy(Element solute, double weight) {
+			return new SimpleAlloy(this, solute, weight);
 		}
 	}
 }
