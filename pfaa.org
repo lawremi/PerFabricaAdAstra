@@ -1144,53 +1144,87 @@
     * Fr/Ra/Rn: radioactive
     
 *** Alloys
-    Metals can be combined in a huge number of ways. Here are the
-    available alloys:
+    Metals can be mixed in a huge number of ways. Here are the
+    available alloys (the percentages are weight-based and
+    relative to 1.0 base metal):
     
-    | Alloy            | Metals       | Production | Use       |
-    |------------------+--------------+------------+-----------|
-    | Stainless steel  | 6Fe+2FeCr+Mn | blast      | many      |
-    | Galvanized steel | Fe+Zn        |            |           |
-    |                  | Mg+Al        |            |           |
-    |                  | Ca+Pb        |            | batteries |
-    |                  | Sb+Pb        |            | batteries |
-    | Brass            | Cu+Zn        |            |           |
-    |                  | Te+Fe/Cu/Pb  |            |           |
+    | Alloy               | Metals               | Production | Use                       |
+    |---------------------+----------------------+------------+---------------------------|
+    | Steel               | Fe+1%C               |            | many                      |
+    | High C Steel        | Fe+5%C               |            | heat treatable            |
+    | Stainless steel     | 6Fe+2FeCr+Mn         | blast      | many                      |
+    | Galvanized steel    | Fe+Zn                |            |                           |
+    |                     | Mg+Al                |            |                           |
+    |                     | Ca+Pb                |            | batteries                 |
+    |                     | Sb+Pb                |            | batteries                 |
+    | Brass               | Cu+Zn                |            |                           |
+    |                     | Te+Fe/Cu/Pb          |            |                           |
+    | Aircraft Al (7075)  | Al+2%Zn+2%Mg+.5%Cu   |            | transport                 |
+    | Duralumin (2024)    | Al+1%Cu+1.5%Mg+.5%Mn |            | air, hardware             |
+    | Al Li               | Al+10%Li             |            |                           |
+    | General Al (6061)   | Al+.5%Si+1%Mg        |            | tanks, arch               |
+    | Marine Al (5086)    | Al+4%Mg+.5%Mn        |            | boat hulls                |
+    | Wire Al (8000)      | Could not find this  |            | wiring                    |
+    | Alnico              | Fe+40%Al+30%Ni+20%Co |            | magnets                   |
+    | Wood's metal        | Bi+50%Pb+40%Sn+30%Cd |            |                           |
+    | Nichrome            | Ni+30%Cr             |            | ignition, foam cutters    |
+    | Aluminum bronze     | Cu+20%Al             |            |                           |
+    | Beryllium copper    | Cu+10%Be             |            |                           |
+    | Nickel silver       | Cu+25%Zn+25%Ni       |            | plumbing                  |
+    | Cupronickel         | Cu+10%Ni+1%Fe        |            | heat exchange, valves     |
+    | Mischmetal          | Ce+50%La+25%Nd+25%Pr |            | ferrocerium               |
+    | Ferrocerium         | Mischmetal+30%Fe     |            | Add Ce to steel           |
+    | Ferrochrome         | Fe+Cr                |            |                           |
+    | Ferromolybdenum     | Fe+50%Mo             |            | Add Mo to HLSA            |
+    | Ferrosilicon        | Si+20%Fe             |            | reduction                 |
+    | Ferrotitanium       | Ti+25%Fe             |            | steel cleaning            |
+    | Ferrovanadium       | Fe+V                 |            | Add V to steel            |
+    | Invar               | Fe+50%Ni             |            |                           |
+    | Grey cast iron      | Fe+10%C+5%Si+.5%Mn   |            | engines, gearboxes, tools |
+    | White cast iron     | Fe+10%C+2%Si+.5%Mn   |            | bearing surfaces          |
+    | Malleable cast iron | white cast iron      | annealed   | axles, shafts             |
+    | Pig iron            |                      |            |                           |
+    | Solder              | Sn+50%Pb             |            | electronics               |
+    |                     | some form: Sn-Ag-Cu  |            |                           |
+    | Type alloy          | Pb+10%Sn+15%Sb       |            | printing                  |
+    |                     |                      |            |                           |
 
-    Properties of steel alloys:
-    * Machinability: MnS, Bi, Pb, Se, Te
-    * Corrosion resistance: Cr, Cu, Ni
-    * Toughness: B, Cr, Mn, Mo, Ni, Cu, Si, V, W, Ti, Nb
-    * Temperature tolerance: W, V
-    
-    Other alloyants: Al, Co, Ce, Sn, Zn, Zr
-    
-    We could model steel alloys by allowing up to 3 non-iron ingots
-    to be included in the smelting. Those non-iron ingots could be
-    all of the same material, or different materials.
-    In addition, there could be "super alloys".
+**** Alloy Steel
+     Properties of steel alloys:
+     * Machinability: MnS, Bi, Pb, Se, Te
+     * Corrosion resistance: Cr, Cu, Ni
+     * Toughness: B, Cr, Mn, Mo, Ni, Cu, Si, V, W, Ti, Nb
+     * Temperature tolerance: W, V
+     
+     Other alloyants: Al, Co, Ce, Sn, Zn, Zr
+     
+     We could model steel alloys by allowing up to 3 non-iron ingots
+     to be included in the smelting. Those non-iron ingots could be
+     all of the same material, or different materials.
+     In addition, there could be "super alloys".
 
-    How to model the different properties? One easy way is higher
-    yield recipes. But what about differentiating the properties?
+     How to model the different properties? One easy way is higher
+     yield recipes, or recipes that require less of one alloy
+     vs. another. But what about differentiating the properties?
 
-    Types of steel alloys:
-    
-    | Alloyants   | Properties                              | Use                                    |
-    |-------------+-----------------------------------------+----------------------------------------|
-    | Mn          | hardened, abrasion (MnS: machinability) | grinders, crushers, tracks             |
-    | Ni          | strengthened, low temperature           | storage tanks, turbines, screws, bolts |
-    | 2Ni+1Cr     | toughened, corrosion resistant          | "  "  "                                |
-    | Mo          | toughened                               | easy to roll, aircraft parts           |
-    | 3Cr+1Mo     | toughened, corrosion resistant          | "  "  "                                |
-    | 3Ni+2Cr+1Mo | more toughened, corrosion resistant     |                                        |
-    | 4Ni+Mo      | more toughened                          |                                        |
-    | Cr          | corrosion resistant                     |                                        |
-    | 3Cr+1V      | toughened, corrosion resistant          | shafts of cars, locomotives, aircraft  |
-    | 2W+1Cr      | HT hardness, corrosion resistant        | cutting tools                          |
-    | Mo+Cr+V     | HT hardness, corrosion resistant        | high temp applications: shafts         |
-    | 2Si+1Mn     | more toughened                          | springs, punches, chisels              |
+     Types of steel alloys:
+     
+     | Alloyants   | Properties                              | Use                                    |
+     |-------------+-----------------------------------------+----------------------------------------|
+     | 2%Mn        | hardened, abrasion (MnS: machinability) | grinders, crushers, tracks             |
+     | 5%Ni        | strengthened, low temperature           | storage tanks, turbines, screws, bolts |
+     | 3%Ni+1%Cr   | toughened, corrosion resistant          | "  "  "                                |
+     | Mo          | toughened                               | easy to roll, aircraft parts           |
+     | 3Cr+1Mo     | toughened, corrosion resistant          | "  "  "                                |
+     | 3Ni+2Cr+1Mo | more toughened, corrosion resistant     |                                        |
+     | 4Ni+Mo      | more toughened                          |                                        |
+     | Cr          | corrosion resistant                     |                                        |
+     | 3Cr+1V      | toughened, corrosion resistant          | shafts of cars, locomotives, aircraft  |
+     | 2W+1Cr      | HT hardness, corrosion resistant        | cutting tools                          |
+     | Mo+Cr+V     | HT hardness, corrosion resistant        | high temp applications: shafts         |
+     | 2Si+1Mn     | more toughened                          | springs, punches, chisels              |
 
-    Stainless steel (Cr, Ni, C, Mn, Si, P, S, N):
+     Stainless steel (Cr, Ni, C, Mn, Si, P, S, N):
 
 *** Hazards
     There are many fun possibilities when it comes to hazards. These
@@ -4225,6 +4259,10 @@
 ** TODO Figure out Thaumcraft aspects for minerals
 ** TODO Think about a saltpeter/KNO3 farming system
 ** TODO Add GT gem generation
+** TODO Glauconite sand no longer grindable by GT, hmm
+** TODO Introduce our own native electrum/silver?
+** DONE Test dropping of tile entities for host textures
+   - State "DONE"       from "TODO"       [2014-11-19 Wed 05:46]
 ** People hate the new overlays
 *** DONE Use a unique overlay for each ore
     - State "DONE"       from "TODO"       [2014-11-07 Fri 08:51]
@@ -4234,7 +4272,8 @@
 
 *** DONE Improve contrast of realgar texture
     - State "DONE"       from "TODO"       [2014-11-07 Fri 17:00]
-*** TODO Test realgar and pyrite generation
+*** DONE Test realgar and pyrite generation
+    - State "DONE"       from "TODO"       [2014-11-09 Sun 18:05]
 *** DONE Add translations for realgar and pyrite
     - State "DONE"       from "TODO"       [2014-11-09 Sun 06:46]
     
