@@ -167,7 +167,7 @@ public enum GeoMaterial implements Mixture {
 	PUMICE(IndustrialMinerals.PUMICE, Strength.STRONG),
 	PYRITE(Ores.PYRITE.mix(Ores.CHALCOPYRITE, 0.05).mix(Ores.SPHALERITE, 0.05), Strength.STRONG, Aggregates.STONE),
 	
-	GOLD(new SimpleVanillaOre(Ores.GOLD).mix(Alloys.ELECTRUM, 1.0), Strength.STRONG, Aggregates.STONE),
+	GOLD(new SimpleVanillaOre(Ores.GOLD.mix(Alloys.ELECTRUM, 1.0)), Strength.STRONG, Aggregates.STONE),
 	LAPIS(new SimpleVanillaOre(IndustrialMinerals.LAZURITE.mix(Ores.CALCITE, 0.4).
 		  mix(IndustrialMinerals.SODALITE, 0.4).mix(Ores.PYRITE, 0.2)), Strength.STRONG, GRANITE),
 	DIAMOND(new SimpleVanillaOre(IndustrialMinerals.DIAMOND), Strength.STRONG, PERIDOTITE),
