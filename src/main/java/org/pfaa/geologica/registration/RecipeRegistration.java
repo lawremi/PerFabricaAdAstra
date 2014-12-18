@@ -41,6 +41,7 @@ import org.pfaa.geologica.integration.IC2Integration;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.integration.TEIntegration;
 import org.pfaa.geologica.processing.Aggregate;
+import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.SmeltingTemperature;
@@ -267,16 +268,13 @@ public class RecipeRegistration {
 	}
 	
 	private static void oreDictify(GeoBlock block) {
-		if (block.hasComposition(Aggregate.class)) {
-			oreDictifyAggregate(block);
-		} else if (block.hasComposition(Ore.class)) {
-			oreDictifyOre(block);
-		}
-	}
-
-	private static void oreDictifyOre(GeoBlock block) {
 		for (GeoMaterial material : block.getGeoMaterials()) {
-			oreDictifyOre(block, material);
+			if (block.hasComposition(Aggregate.class)) {
+				oreDictifyAggregate(block, material);
+			} else if (block.hasComposition(Ore.class) || 
+				(block.hasComposition(Crude.class) && block.getMaterial() == Material.rock)) {
+				oreDictifyOre(block, material);
+			}
 		}
 	}
 
@@ -342,11 +340,10 @@ public class RecipeRegistration {
 		OreDictionary.registerOre(key, new ItemStack((Block)block, 1, OreDictionary.WILDCARD_VALUE));
 	}
 
-	private static void oreDictifyAggregate(GeoBlock block) {
+	private static void oreDictifyAggregate(GeoBlock block, GeoMaterial material) {
 		String key = getAggregateOreDictKey(block);
-		OreDictionary.registerOre(key, new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
-		if (block instanceof BrickGeoBlock) // for recipes that accept any type of stone brick (mossy, etc)
-			OreDictionary.registerOre("stoneBricks", new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
+		ItemStack itemStack = block.getItemStack(material);
+		OreDictionary.registerOre(key, itemStack);
 	}
 	
 	private static void oreDictify(VanillaOreOverrideBlock block) {
