@@ -462,7 +462,14 @@ public class RecipeRegistration {
 			GeoMaterial material, Item item, int quantity, int bonus, float chance, 
 			boolean fortuneMultiplies)
 	{
-		drops.addChanceDrop(material, new ItemStack(item, quantity), bonus, chance, fortuneMultiplies);
+		registerOreDrop(drops, material, new ItemStack(item, quantity), bonus, chance, fortuneMultiplies);
+	}
+
+	private static void registerOreDrop(ChanceDropRegistry drops,
+			GeoMaterial material, ItemStack item, int bonus, float chance, 
+			boolean fortuneMultiplies)
+	{
+		drops.addChanceDrop(material, item, bonus, chance, fortuneMultiplies);
 	}
 
 }
