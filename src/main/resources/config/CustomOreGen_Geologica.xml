@@ -1904,7 +1904,6 @@
         <!-- FIXME: do we want to add peat? (instead of dirt)
              Peat would be generated in:
              - any swamp
-             - fen and moor from BOP, which *should* be swamps => FIXME!
         -->
         <!-- NOTE: we are not actually generating this 'peat'
              distribution, just the bog limonite derivative! -->
