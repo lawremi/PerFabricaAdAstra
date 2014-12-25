@@ -16,11 +16,13 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	private ConditionProperties properties;
 	private Vaporization vaporization;
 	private double sulfurFraction;
+	private double heat;
 
-	public SimpleCrude(ConditionProperties properties, Vaporization vaporization, double sulfurFraction) {
+	public SimpleCrude(ConditionProperties properties, Vaporization vaporization, double sulfurFraction, double heat) {
 		this.properties = properties;
 		this.vaporization = vaporization;
 		this.sulfurFraction = sulfurFraction;
+		this.heat = heat;
 	}
 
 	public SimpleCrude(IndustrialMaterial material, double weight) {
@@ -33,10 +35,10 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	
 	@Override
 	public ConditionProperties getProperties(Condition condition) {
-		if (properties == null) {
+		if (this.properties == null) {
 			return super.getProperties(condition);
 		} else {
-			return properties;
+			return this.properties;
 		}
 	}
 
@@ -51,7 +53,13 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 		return this.vaporization;
 	}
 	
+	@Override
 	public double getSulfurFraction() {
-		return sulfurFraction;
+		return this.sulfurFraction;
+	}
+	
+	@Override
+	public double getHeat() {
+		return this.heat;
 	}
 }
