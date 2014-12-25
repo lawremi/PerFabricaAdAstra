@@ -1768,7 +1768,7 @@
           <Setting name='CloudHeight'
                    avg=':= 48/64 * dimension.groundLevel'
                    range=':= 0.25 * _default_'/>
-          <BiomeType name='sedocean'/>
+          <BiomeSet inherits='sedocean'/>
           <Replaces block='minecraft:sand'/>
           <Replaces block='minecraft:dirt'/>
           <ReplacesOre block='stone'/>
