@@ -26,36 +26,35 @@ import com.google.common.base.CaseFormat;
 
 public enum GeoMaterial implements Mixture {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),
+	CLAYSTONE(Aggregates.HARDENED_CLAY, Strength.WEAK),
 	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.5).mix(Ores.PYROCHLORE, 0.02).mix(Ores.MICROLITE, 0.005), Strength.WEAK),
-	CLAYSTONE(Aggregates.STONE, Strength.WEAK),
 	CONGLOMERATE(Aggregates.SAND.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
-	MUDSTONE(Aggregates.STONE, Strength.WEAK),
+	MUDSTONE(Aggregates.SAND.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK),
 	
 	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.5), Strength.MEDIUM),
-	// TODO: yield mica?
-	SCHIST(Aggregates.STONE, Strength.MEDIUM),
+	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.MEDIUM),
 	SERPENTINITE(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.05)
 			     .mix(IndustrialMinerals.TALC, 0.05).mix(IndustrialMinerals.OLIVINE, 0.05), Strength.MEDIUM),
-	SLATE(Aggregates.STONE, Strength.MEDIUM),
-	SKARN(Aggregates.STONE, Strength.MEDIUM),
+	SLATE(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.05), Strength.MEDIUM),
+	SKARN(Aggregates.STONE.mix(IndustrialMinerals.WOLLASTONITE, 0.05), Strength.MEDIUM),
 	
-	ANDESITE(Aggregates.STONE, Strength.STRONG),
-	BASALT(Aggregates.STONE, Strength.STRONG),
-	GNEISS(Aggregates.STONE, Strength.STRONG),
-	GRANITE(Aggregates.STONE, Strength.STRONG),
-	GREENSCHIST(Aggregates.STONE, Strength.STRONG),
+	ANDESITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG),
+	BASALT(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.STRONG),
+	GNEISS(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG),
+	GRANITE(Aggregates.STONE.mix(IndustrialMinerals.QUARTZ, 0.05), Strength.STRONG),
+	GREENSCHIST(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.1), Strength.STRONG),
 	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG),
 	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.5)
 			  .mix(IndustrialMinerals.QUARTZ, 0.2).mix(IndustrialMinerals.MICA, 0.2).mix(Ores.MICROLITE, 0.02), 
 			  Strength.STRONG),
-	RHYOLITE(Aggregates.STONE, Strength.STRONG),
-	SANDSTONE(Aggregates.STONE, Strength.STRONG),
+	RHYOLITE(Aggregates.STONE.mix(IndustrialMinerals.QUARTZ, 0.05), Strength.STRONG),
+	SANDSTONE(Aggregates.SAND, Strength.STRONG),
 	
-	DIORITE(Aggregates.STONE, Strength.VERY_STRONG),
-	GABBRO(Aggregates.STONE, Strength.VERY_STRONG),
-	HORNFELS(Aggregates.STONE, Strength.VERY_STRONG),
+	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG),
+	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.VERY_STRONG),
+	HORNFELS(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.VERY_STRONG),
 	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.5), Strength.VERY_STRONG),
-	QUARTZITE(Aggregates.SAND, Strength.VERY_STRONG),
+	QUARTZITE(Aggregates.SAND.mix(IndustrialMinerals.QUARTZ, 0.5), Strength.VERY_STRONG),
 
 	LIGHT_OIL(new SimpleCrude(Crudes.FUEL_GAS, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
 			  mix(Crudes.KEROSENE, 0.1).mix(Crudes.LIGHT_GAS_OIL, 0.05).mix(Crudes.HEAVY_GAS_OIL, 0.05).
@@ -107,8 +106,8 @@ public enum GeoMaterial implements Mixture {
 	BENTONITE(IndustrialMinerals.BENTONITE, Strength.WEAK, Material.clay),
 	FULLERS_EARTH(IndustrialMinerals.FULLERS_EARTH, Strength.WEAK, Material.clay),
 	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
-	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, LATERITE),
-	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, LATERITE),
+	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, Aggregates.CLAY),
+	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, Aggregates.CLAY),
 	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
 	BORAX(Ores.BORAX, Strength.WEAK, null, Material.rock),
@@ -307,6 +306,8 @@ public enum GeoMaterial implements Mixture {
             material = Material.sand;
         } else if (host == Aggregates.STONE || host == Aggregates.OBSIDIAN) {
             material = Material.rock;
+        } else if (host == Aggregates.CLAY) {
+        	material = Material.clay;
         } else if (host instanceof GeoMaterial) {
             material = ((GeoMaterial)host).getBlockMaterial();
         }
