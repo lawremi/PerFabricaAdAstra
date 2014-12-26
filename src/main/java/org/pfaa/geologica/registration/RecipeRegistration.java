@@ -439,6 +439,8 @@ public class RecipeRegistration {
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetSilver", 1, 2, 0.05F, true);
 		if (Geologica.getConfiguration().isVanillaOreGemDropEnabled()) {
 			registerOreDrop(drops, GeoMaterial.COAL, Items.coal, 1, 0, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.LIGNITE, Items.coal, 0, 1, 1.0F, true);
+			registerOreDrop(drops, GeoMaterial.ANTHRACITE, Items.coal, 2, 0, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.DIAMOND, Items.diamond, 1, 0, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.LAPIS, "gemLapis", 4, 5, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.EMERALD, Items.emerald, 1, 0, 1.0F, true);
