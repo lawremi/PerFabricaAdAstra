@@ -19,8 +19,9 @@ public interface Aggregate extends Mixture {
 	public enum Aggregates implements Aggregate {
 		SAND(new Color(237, 201, 175), 1.6), 
 		GRAVEL(Color.gray, 1.2), 
-		STONE(Color.gray, 1.4), 
-		CLAY(Color.lightGray, 1.1), 
+		STONE(Color.gray, 1.4),
+		CLAY(Color.lightGray, 1.1),
+		HARDENED_CLAY(Color.lightGray, 1.0),
 		DIRT(new Color(150, 75, 0), 1.1),
 		OBSIDIAN(new Color(16, 16, 25), 2.5);
 
