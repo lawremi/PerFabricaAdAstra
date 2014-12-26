@@ -4,14 +4,12 @@ import net.minecraft.item.Item;
 
 import org.pfaa.ItemCatalog;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
-import org.pfaa.geologica.item.ClayDustItem;
-import org.pfaa.geologica.item.CrudeDustItem;
-import org.pfaa.geologica.item.CrudeLiquidItem;
+import org.pfaa.geologica.item.CrudeChunkItem;
+import org.pfaa.geologica.item.IndustrialMineralItem;
 
 public class GeologicaItems extends ItemCatalog {
-	public static final IndustrialMaterialItem CRUDE_DUST = createItem(CrudeDustItem.class);
-	public static final Item CLAY_DUST = createItem(ClayDustItem.class);
+	public static final IndustrialMaterialItem INDUSTRIAL_MINERAL_DUST = createItem(IndustrialMineralItem.class);
 	
-	public static final IndustrialMaterialItem CRUDE_LIQUID = createItem(CrudeLiquidItem.class);
+	public static final Item CRUDE_CHUNK = createItem(CrudeChunkItem.class);
 }
 

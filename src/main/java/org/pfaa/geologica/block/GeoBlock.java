@@ -65,7 +65,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 			sound = soundTypeStone;
 		} else if (blockMaterial == Material.sand) {
 			sound = soundTypeSand;
-		} else if (blockMaterial == Material.clay) {
+		} else if (blockMaterial == Material.clay || blockMaterial == Material.ground) {
 			sound = soundTypeGravel;
 		}
 		return sound;
@@ -79,6 +79,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 			hardness = determineClayHardness();
 		else if (blockMaterial == Material.sand)
 			hardness = determineSandHardness();
+		else if (blockMaterial == Material.ground)
+			hardness = determineGroundHardness();
 		return hardness;
 	}
  
@@ -94,6 +96,10 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return 0.6F;
 	}
 
+	private float determineGroundHardness() {
+		return 0.7F;
+	}
+	
 	public String determineHarvestTool() {
 		if (blockMaterial == Material.rock)
 			return "pickaxe";
