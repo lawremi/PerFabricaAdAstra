@@ -312,7 +312,7 @@ public class RecipeRegistration {
 	}
 
 	private static String getAggregateOreDictKey(GeoBlock block) {
-		if (block.getMaterial() == Material.clay) {
+		if (block.getMaterial() == Material.clay && block instanceof IntactGeoBlock) {
 			return "clay";
 		} else if (block.getMaterial() == Material.sand) {
 			return "sand";
