@@ -21,6 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.processing.Aggregate;
@@ -30,7 +31,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class IntactGeoBlock extends GeoBlock {
-	private static Set<Block> stoneBlocks;
+	private static Set<Block> stoneBlocks, clayBlocks;
 
 	public IntactGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(strength, composition, material, false);
@@ -76,16 +77,17 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getHostIcon(IndustrialMaterial host, IBlockAccess world, int x, int y, int z) {
-		if (host == Aggregates.STONE) {
-			return getAdjacentStoneIcon(world, x, y, z);
+		if (host == Aggregates.STONE || host == Aggregates.CLAY) {
+			return getAdjacentHostIcon(world, x, y, z);
 		}
 		return null;
 	}
 	
 	@SideOnly(Side.CLIENT)
-	private static IIcon getAdjacentStoneIcon(IBlockAccess world, int x, int y, int z) {
+	private static IIcon getAdjacentHostIcon(IBlockAccess world, int x, int y, int z) {
 		if (stoneBlocks == null) {
-			initStoneBlocks();
+			stoneBlocks = createSetForOre("stone");
+			clayBlocks = createSetForOre("clay");
 		}
 		ItemStack host = getAdjacentStone(world, x, y, z);
 		if (host == null)
@@ -94,23 +96,25 @@ public class IntactGeoBlock extends GeoBlock {
 		return block.getIcon(0, host.getItemDamage());
 	}
 	
-	private static void initStoneBlocks() {
-		stoneBlocks = new HashSet();
-		List<ItemStack> ores = OreDictionary.getOres("stone");
+	private static Set createSetForOre(String key) {
+		Set set = new HashSet();
+		List<ItemStack> ores = OreDictionary.getOres(key);
 		for (ItemStack ore : ores) {
 			Item item = ore.getItem();
 			if (item instanceof ItemBlock) {
-				stoneBlocks.add(((ItemBlock)item).field_150939_a);
+				set.add(((ItemBlock)item).field_150939_a);
 			}
 		}
+		return set;
 	}
-
+	
 	private static ItemStack getAdjacentStone(IBlockAccess world, int x, int y, int z) {
 		for (int ix = x - 1; ix <= x + 1; ix++) {
 			for (int iy = y - 1; iy <= y + 1; iy++) {
 				for (int iz = z - 1; iz <= z + 1; iz++) {
 					Block block = world.getBlock(ix, iy, iz);
-					if (stoneBlocks.contains(block)) {
+					if ((block.getMaterial() == Material.rock && stoneBlocks.contains(block)) ||
+						(block.getMaterial() == Material.clay && clayBlocks.contains(block))) {
 						int meta = world.getBlockMetadata(ix, iy, iz);
 						return new ItemStack(block, 1, meta);
 					}
