@@ -333,7 +333,10 @@ item.liquidExtraHeavyOilBucket.name=Bucket of Extra Heavy Oil
 # Crudes
 tile.crudeSand.oilSand.name=Oil Sand
 tile.crudeRock.oilShale.name=Oil Shale
-tile.crudeRock.coal.name=Coal
+tile.crudeRock.coal.name=Bituminous Coal
+tile.crudeRock.lignite.name=Lignite Coal
+tile.crudeRock.anthracite.name=Anthracite Coal
+tile.crudeGround.peat.name=Peat
 
 # Geologica versions of vanilla ores
 tile.vanillaOreRock.gold.name=Gold Ore

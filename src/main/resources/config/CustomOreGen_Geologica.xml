@@ -1545,15 +1545,11 @@
                  avg=':=20 * _default_'/>
           <Setting name='CloudRadius' avg=':=1.4 * _default_'
                    range=':=1.4 * _default_'/>
-          <OreBlock block='PFAAGeologica:crudeRock:1' weight='0.98'/>
+          <OreBlock block='PFAAGeologica:crudeRock:1' weight='0.78'/>
+          <OreBlock block='PFAAGeologica:crudeRock:2' weight='0.1'/>
+          <OreBlock block='PFAAGeologica:crudeRock:3' weight='0.1'/>
           <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.02'/>
           <BiomeSet inherits='inland' weight='0.5'/>
-          <BiomeType name='swamp' weight='0.5'/>
-          <IfModInstalled name='gregtech'>
-            <IfChoice name='GregtechGenCoal' value='true'>
-              <BiomeType name='swamp' weight='-0.5'/> <!-- lignite instead -->
-            </IfChoice>
-          </IfModInstalled>
         </CloudPreset>
 
         <VeinsPreset name='PresetCoalBedHintVeins'
@@ -1561,6 +1557,19 @@
                      inherits='PresetHintVeinsSed'>
           <Setting name='MotherlodeFrequency' avg=':=1.2 * _default_'
                    range=':=_default_'/> 
+        </VeinsPreset>
+
+        <CloudPreset name='PresetLigniteBeds'
+                     inherits='PresetCoalBeds'
+                     drawWireframe='false'>
+          <OreBlock block='PFAAGeologica:crudeRock:2' weight='0.8'/>
+          <OreBlock block='PFAAGeologica:crudeRock:1' weight='0.2'/>
+          <BiomeType name='swamp'/>
+        </CloudPreset>
+
+        <VeinsPreset name='PresetLigniteBedHintVeins'
+                     inherits='PresetCoalBedHintVeins'
+                     block='PFAAGeologica:crudeRock:2'>
         </VeinsPreset>
 
         <CloudPreset name='PresetCoalBedsOceanic' inherits='PresetCoalBeds'
@@ -1656,6 +1665,10 @@
           <Cloud name='CoalBedsOceanic' inherits='PresetCoalBedsOceanic'>
             <Veins name='CoalBedHintVeinsOceanic'
                    inherits='PresetCoalBedHintVeinsOceanic'/>
+          </Cloud>
+          <Cloud name='LigniteBeds' inherits='PresetLigniteBeds'>
+            <Veins name='LigniteBedHintVeins'
+                   inherits='PresetLigniteBedHintVeins'/>
           </Cloud>
         </IfCondition>
 
@@ -1901,25 +1914,19 @@
           <OreBlock block='PFAAGeologica:weakOreClay:5' weight='0.15'/>
         </CloudPreset>
 
-        <!-- FIXME: do we want to add peat? (instead of dirt)
-             Peat would be generated in:
-             - any swamp
-        -->
-        <!-- NOTE: we are not actually generating this 'peat'
-             distribution, just the bog limonite derivative! -->
-        <CloudPreset name='PresetPeat' block='minecraft:dirt'
+        <CloudPreset name='PresetPeat' block='PFAAGeologica:crudeGround:0'
                      inherits='PresetRichSoil'
                      drawWireframe='false'>
           <WireframeColor>0xFFFF1100</WireframeColor>
-          <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
-          <BiomeType name='swamp'/>
         </CloudPreset>
         
-        <CloudPreset name='PresetBogLimonite' inherits='PresetPeat'>
+        <CloudPreset name='PresetBogLimonite' inherits='PresetRichSoil'>
           <WireframeColor>0xFF1111FF</WireframeColor>
-          <OreBlock block='minecraft:dirt' weight='0.70'/>
+          <OreBlock block='minecraft:clay' weight='0.70'/>
           <OreBlock block='PFAAGeologica:weakOreClay:4' weight='0.15'/>
           <OreBlock block='PFAAGeologica:weakOreClay:5' weight='0.15'/>
+          <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
+          <BiomeType name='swamp'/>
         </CloudPreset>
 
         <CloudPreset name='PresetSerpentiniteUnderLimonite'
@@ -1953,6 +1960,7 @@
               <Cloud name='SerpentiniteUnderLimonite'
                      inherits='PresetSerpentiniteUnderLimonite'/>
             </Cloud>
+            <Cloud name='Peat' inherits='PresetPeat'/>
             <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
           </IfCondition>
         </IfCondition>
@@ -3468,7 +3476,7 @@
           <Setting name='DistributionFrequency' avg=':=0.1 * _default_'/>
           <Setting name='CloudHeight' avg='50' range='5'/>
           <OreBlock block='PFAAGeologica:weakOreRock:10' weight='0.70'/>
-          <OreBlock block='PFAAGeologica:crudeRock:1' weight='0.30'/>
+          <OreBlock block='PFAAGeologica:crudeRock:3' weight='0.30'/>
         </CloudPreset>
         
         <VeinsPreset name='PresetGraphiteVeins'
@@ -3648,7 +3656,7 @@
       <Setting name='CloudHeight' avg='50' range='5'/>
       <Setting name='DistributionFrequency' avg='0.005'/>
       <Setting name='CloudThickness' avg='3' range='1'/>
-      <OreBlock block='PFAAGeologica:crudeRock' weight='0.3'/>
+      <OreBlock block='PFAAGeologica:crudeRock:0' weight='0.3'/>
       <OreBlock block='PFAAGeologica:weakStone:4' weight='0.7'/>
       <ReplacesOre block='stone'/>
     </CloudPreset>
@@ -3669,7 +3677,7 @@
       <Setting name='MotherlodeHeight' avg='50' range='2'/>
       <Setting name='ParentRangeLimit' avg='4' range='2'/>
       <ReplacesOre block='stone'/>
-      <Replaces block='PFAAGeologica:crudeRock'/>
+      <Replaces block='PFAAGeologica:crudeRock:0'/>
     </VeinsPreset>
                  
     <VeinsPreset name='PresetTightOil'

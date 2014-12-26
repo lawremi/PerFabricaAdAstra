@@ -107,6 +107,7 @@ public class GeologicaBlocks {
 	
 	public static final GeoBlock CRUDE_SAND = createCrudeSandBlock();
 	public static final GeoBlock CRUDE_ROCK = createCrudeRockBlock();
+	public static final GeoBlock CRUDE_GROUND = createCrudeGroundBlock();
 	
 	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
 	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
@@ -148,6 +149,9 @@ public class GeologicaBlocks {
 	}
 	private static GeoBlock createCrudeRockBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.rock);
+	}
+	private static GeoBlock createCrudeGroundBlock() {
+		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.ground);
 	}
 	private static GeoBlock createVanillaOreRockBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.STRONG, VanillaOre.class, Material.rock);
