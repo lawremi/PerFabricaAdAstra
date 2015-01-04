@@ -201,7 +201,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		int meta = world.getBlockMetadata(x, y, z);
 		IndustrialMaterial host = this.getGeoMaterial(meta).getHost();
 		if (host != null) {
-			IIcon icon = getHostIcon(host, world, x, y, z);
+			IIcon icon = getHostIcon(world, x, y, z);
 			if (icon != null) {
 				return icon;
 			}
@@ -210,7 +210,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 	
 	@SideOnly(Side.CLIENT)
-	protected IIcon getHostIcon(IndustrialMaterial host, IBlockAccess world, int x, int y, int z) {
+	protected IIcon getHostIcon(IBlockAccess world, int x, int y, int z) {
 		return null;
 	}
 	

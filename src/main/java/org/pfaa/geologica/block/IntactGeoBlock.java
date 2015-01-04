@@ -7,18 +7,13 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.Geologica;
@@ -26,12 +21,13 @@ import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
+import org.pfaa.util.BlockMeta;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class IntactGeoBlock extends GeoBlock {
-	private static Set<Block> stoneBlocks, clayBlocks;
+	private Set<BlockMeta> hosts;
 
 	public IntactGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(strength, composition, material, false);
@@ -76,46 +72,63 @@ public class IntactGeoBlock extends GeoBlock {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getHostIcon(IndustrialMaterial host, IBlockAccess world, int x, int y, int z) {
-		if (host == Aggregates.STONE || host == Aggregates.CLAY) {
-			return getAdjacentHostIcon(world, x, y, z);
-		}
-		return null;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	private static IIcon getAdjacentHostIcon(IBlockAccess world, int x, int y, int z) {
-		if (stoneBlocks == null) {
-			stoneBlocks = createSetForOre("stone");
-			clayBlocks = createSetForOre("clay");
-		}
-		ItemStack host = getAdjacentStone(world, x, y, z);
+	public IIcon getHostIcon(IBlockAccess world, int x, int y, int z) {
+		ItemStack host = this.getAdjacentHost(world, x, y, z);
 		if (host == null)
 			return null;
 		Block block = ((ItemBlock)host.getItem()).field_150939_a;
 		return block.getIcon(0, host.getItemDamage());
 	}
 	
-	private static Set createSetForOre(String key) {
-		Set set = new HashSet();
+	private Set<BlockMeta> getHostBlocks(IBlockAccess world, int x, int y, int z) {
+		String ore = this.getHostOre(world, x, y, z);
+		if (ore == null) {
+			return null;
+		}
+		if (this.hosts == null) {
+			this.hosts = getBlocksForOre(ore);
+		}
+		return this.hosts;
+	}
+	
+	private String getHostOre(IBlockAccess world, int x, int y, int z) {
+		int meta = world.getBlockMetadata(x, y, z);
+		IndustrialMaterial host = this.getGeoMaterial(meta).getHost();
+		if (host == Aggregates.STONE) {
+			return "stone";
+		} else if (host == Aggregates.CLAY) {
+			return "clay";
+		} else return null;
+	}
+
+	private static Set<BlockMeta> getBlocksForOre(String key) {
+		Set<BlockMeta> set = new HashSet();
 		List<ItemStack> ores = OreDictionary.getOres(key);
 		for (ItemStack ore : ores) {
 			Item item = ore.getItem();
 			if (item instanceof ItemBlock) {
-				set.add(((ItemBlock)item).field_150939_a);
+				set.add(new BlockMeta(((ItemBlock) item).field_150939_a, ore.getItemDamage()));
 			}
 		}
 		return set;
 	}
 	
-	private static ItemStack getAdjacentStone(IBlockAccess world, int x, int y, int z) {
+	private ItemStack getAdjacentHost(IBlockAccess world, int x, int y, int z) {
+		Set<BlockMeta> hosts = this.getHostBlocks(world, x, y, z);
+		if (hosts != null) {
+			return getAdjacentBlock(world, x, y, z, hosts);
+		} else {
+			return null;
+		}
+	}
+	
+	private static ItemStack getAdjacentBlock(IBlockAccess world, int x, int y, int z, Set<BlockMeta> allowed) {
 		for (int ix = x - 1; ix <= x + 1; ix++) {
 			for (int iy = y - 1; iy <= y + 1; iy++) {
 				for (int iz = z - 1; iz <= z + 1; iz++) {
 					Block block = world.getBlock(ix, iy, iz);
-					if ((block.getMaterial() == Material.rock && stoneBlocks.contains(block)) ||
-						(block.getMaterial() == Material.clay && clayBlocks.contains(block))) {
-						int meta = world.getBlockMetadata(ix, iy, iz);
+					int meta = world.getBlockMetadata(ix, iy, iz);
+					if (allowed.contains(new BlockMeta(block, meta))) {
 						return new ItemStack(block, 1, meta);
 					}
 				}
@@ -123,11 +136,4 @@ public class IntactGeoBlock extends GeoBlock {
 		}
 		return null;
 	}
-/*
-	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
-		TileEntity entity = world.getTileEntity(x, y, z);
-		return meta;
-	}
-*/
 }
