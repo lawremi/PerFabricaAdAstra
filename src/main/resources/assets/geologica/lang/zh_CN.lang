@@ -17,6 +17,7 @@ tile.strongStone.greenschist.name=绿片岩
 tile.strongStone.pegmatite.name=伟晶岩
 tile.strongStone.marble.name=大理石
 tile.strongStone.rhyolite.name=流纹岩
+tile.strongStone.sandstone.name=沙石
 tile.veryStrongStone.diorite.name=闪长岩
 tile.veryStrongStone.gabbro.name=辉长岩
 tile.veryStrongStone.hornfels.name=角页岩
@@ -37,6 +38,7 @@ tile.strongCobble.greenschist.name=绿片岩圆石
 tile.strongCobble.pegmatite.name=伟晶岩圆石
 tile.strongCobble.marble.name=大理石圆石
 tile.strongCobble.rhyolite.name=流纹岩圆石
+tile.strongCobble.sandstone.name=沙石圆石
 tile.veryStrongCobble.diorite.name=闪长岩圆石
 tile.veryStrongCobble.gabbro.name=辉长岩圆石
 tile.veryStrongCobble.hornfels.name=角页岩圆石
@@ -57,6 +59,7 @@ tile.strongStoneBrick.greenschist.name=绿片岩石砖
 tile.strongStoneBrick.marble.name=大理石砖
 tile.strongStoneBrick.pegmatite.name=伟晶岩石砖
 tile.strongStoneBrick.rhyolite.name=流纹岩石砖
+tile.strongStoneBrick.sandstone.name=沙石石砖
 tile.veryStrongStoneBrick.diorite.name=闪长岩石砖
 tile.veryStrongStoneBrick.gabbro.name=辉长岩石砖
 tile.veryStrongStoneBrick.hornfels.name=角页岩石砖
@@ -77,6 +80,7 @@ tile.strongStoneBrickWall.greenschist.name=绿片岩石砖墙
 tile.strongStoneBrickWall.marble.name=大理石砖墙
 tile.strongStoneBrickWall.pegmatite.name=伟晶岩石砖墙
 tile.strongStoneBrickWall.rhyolite.name=流纹岩石砖墙
+tile.strongStoneBrickWall.sandstone.name=沙石石砖墙
 tile.veryStrongStoneBrickWall.diorite.name=闪长岩石砖墙
 tile.veryStrongStoneBrickWall.gabbro.name=辉长岩石砖墙
 tile.veryStrongStoneBrickWall.hornfels.name=角页岩石砖墙
@@ -102,6 +106,7 @@ tile.strongRubble.greenschist.name=绿片岩碎石
 tile.strongRubble.pegmatite.name=伟晶岩碎石
 tile.strongRubble.marble.name=大理石碎石
 tile.strongRubble.rhyolite.name=流纹岩碎石
+tile.strongRubble.sandstone.name=沙石碎石
 tile.veryStrongRubble.diorite.name=闪长岩碎石
 tile.veryStrongRubble.gabbro.name=辉长岩碎石
 tile.veryStrongRubble.hornfels.name=角页岩碎石
@@ -122,6 +127,7 @@ tile.strongCobbleSlab.greenschist.name=绿片岩圆石板
 tile.strongCobbleSlab.pegmatite.name=伟晶岩圆石板
 tile.strongCobbleSlab.marble.name=大理石圆石板
 tile.strongCobbleSlab.rhyolite.name=流纹岩圆石板
+tile.strongCobbleSlab.sandstone.name=沙石圆石板
 tile.veryStrongCobbleSlab.diorite.name=闪长岩圆石板
 tile.veryStrongCobbleSlab.gabbro.name=辉长岩圆石板
 tile.veryStrongCobbleSlab.hornfels.name=角页岩圆石板
@@ -142,6 +148,7 @@ tile.strongStoneSlab.greenschist.name=绿片岩石板
 tile.strongStoneSlab.pegmatite.name=伟晶岩石板
 tile.strongStoneSlab.marble.name=大理石板
 tile.strongStoneSlab.rhyolite.name=流纹岩石板
+tile.strongStoneSlab.sandstone.name=沙石石板
 tile.veryStrongStoneSlab.diorite.name=闪长岩石板
 tile.veryStrongStoneSlab.gabbro.name=辉长岩石板
 tile.veryStrongStoneSlab.hornfels.name=角页岩石板
@@ -162,6 +169,7 @@ tile.strongStoneBrickSlab.greenschist.name=绿片岩石砖板
 tile.strongStoneBrickSlab.pegmatite.name=伟晶岩石砖板
 tile.strongStoneBrickSlab.marble.name=大理石砖板
 tile.strongStoneBrickSlab.rhyolite.name=流纹岩石砖板
+tile.strongStoneBrickSlab.sandstone.name=沙石石砖板
 tile.veryStrongStoneBrickSlab.diorite.name=闪长岩石砖板
 tile.veryStrongStoneBrickSlab.gabbro.name=辉长岩石砖板
 tile.veryStrongStoneBrickSlab.hornfels.name=角页岩石砖板
@@ -217,6 +225,7 @@ tile.strongCobbleWall.greenschist.name=绿片岩圆石墙
 tile.strongCobbleWall.pegmatite.name=伟晶岩圆石墙
 tile.strongCobbleWall.marble.name=大理石圆石墙
 tile.strongCobbleWall.rhyolite.name=流纹岩圆石墙
+tile.strongCobbleWall.sandstone.name=沙石圆石墙
 tile.veryStrongCobbleWall.diorite.name=闪长岩圆石墙
 tile.veryStrongCobbleWall.gabbro.name=辉长岩圆石墙
 tile.veryStrongCobbleWall.hornfels.name=角页岩圆石墙
@@ -230,6 +239,7 @@ tile.weakOreSand.garnetSand.name=石榴砂
 tile.weakOreSand.graniticMineralSand.name=花岗岩矿砂
 tile.weakOreSand.quartzSand.name=石英砂
 tile.weakOreSand.volcanicAsh.name=火山灰
+tile.weakOreSand.glauconite.name=海绿石砂
 
 # Clays
 tile.weakClay.laterite.name=铁矾土
@@ -298,10 +308,39 @@ tile.strongOreRock.apatite.name=磷灰石
 tile.strongOreRock.kyanite.name=蓝晶石
 tile.strongOreRock.perlite.name=珍珠岩
 tile.strongOreRock.pumice.name=浮石
+tile.strongOreRock.pyrite.name=黄铁矿(铁)
 
 # Vanilla ore overrides
-tile.coalOre.name=煤矿
-tile.diamondOre.name=钻石矿
-tile.emeraldOre.name=绿宝石矿
-tile.lapisOre.name=青金石矿
-tile.redstoneOre.name=红石矿
+tile.coalOre.name=煤矿石
+tile.diamondOre.name=钻石矿石
+tile.emeraldOre.name=绿宝石矿石
+tile.lapisOre.name=青金石矿石
+tile.redstoneOre.name=红石矿石
+
+# Fluids
+tile.lightOil.name=轻油
+tile.mediumOil.name=介质油
+tile.heavyOil.name=重油
+tile.extraHeavyOil.name=超稠油
+tile.naturalGas.name=天然气
+
+# Buckets
+item.liquidLightOilBucket.name=轻油桶
+item.liquidMediumOilBucket.name=介质油桶
+item.liquidHeavyOilBucket.name=重油桶
+item.liquidExtraHeavyOilBucket.name=超稠油桶
+
+# Crudes
+tile.crudeSand.oilSand.name=油砂
+tile.crudeRock.oilShale.name=油页岩
+tile.crudeRock.coal.name=烟煤
+tile.crudeRock.lignite.name=褐煤
+tile.crudeRock.anthracite.name=无烟煤
+tile.crudeGround.peat.name=泥炭
+
+# Geologica versions of vanilla ores
+tile.vanillaOreRock.gold.name=金矿石
+tile.vanillaOreRock.lapis.name=青金石矿石
+tile.vanillaOreRock.diamond.name=钻石矿石
+tile.vanillaOreRock.emerald.name=绿宝石矿石
+tile.vanillaOreRock.redstone.name=红石矿石
