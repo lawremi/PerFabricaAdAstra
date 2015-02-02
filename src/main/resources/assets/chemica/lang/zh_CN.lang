@@ -1,0 +1,13 @@
+# Glass bottles
+item.liquidLightOilBottle.name=轻油瓶
+item.liquidMediumOilBottle.name=介质油瓶
+item.liquidHeavyOilBottle.name=重油瓶
+item.liquidExtraHeavyOilBottle.name=超稠油瓶
+
+# Other blocks
+tile.pollutedSoil.name=污染土壤
+
+# Tooltip labels
+label.hazard.health=健康危害
+label.hazard.flammability=易燃
+label.hazard.instability=不稳定
