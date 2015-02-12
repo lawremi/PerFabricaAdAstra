@@ -1,0 +1,347 @@
+#pt_BR - por: Al-Myr
+# Stone
+tile.weakStone.breccia.name=Brecha
+tile.weakStone.carbonatite.name=Carbonatito
+tile.weakStone.claystone.name=Argilito
+tile.weakStone.conglomerate.name=Conglomerado
+tile.weakStone.mudstone.name=Xisto Limoso
+tile.mediumStone.limestone.name=Calcário
+tile.mediumStone.schist.name=Xisto
+tile.mediumStone.serpentinite.name=Serpentinito
+tile.mediumStone.slate.name=Ardósia
+tile.mediumStone.skarn.name=Escarnito
+tile.strongStone.andesite.name=Andesito
+tile.strongStone.basalt.name=Basalto
+tile.strongStone.gneiss.name=Gnaisse
+tile.strongStone.granite.name=Granito
+tile.strongStone.greenschist.name=Xisto Verde
+tile.strongStone.pegmatite.name=Pegmatito
+tile.strongStone.marble.name=Mármore
+tile.strongStone.rhyolite.name=Riolito
+tile.strongStone.sandstone.name=Arenito
+tile.veryStrongStone.diorite.name=Diorito
+tile.veryStrongStone.gabbro.name=Gabro
+tile.veryStrongStone.hornfels.name=Corneana
+tile.veryStrongStone.peridotite.name=Peridotito
+tile.veryStrongStone.quartzite.name=Quartzito
+
+# Cobblestone
+tile.mediumCobble.limestone.name=Pedregulho de Calcário
+tile.mediumCobble.schist.name=Pedregulho de Xisto
+tile.mediumCobble.serpentinite.name=Pedregulho de Serpentinito
+tile.mediumCobble.slate.name=Pedregulho de Ardósia
+tile.mediumCobble.skarn.name=Pedregulho de Escarnito
+tile.strongCobble.andesite.name=Pedregulho de Andesito
+tile.strongCobble.basalt.name=Pedregulho de Basalto
+tile.strongCobble.gneiss.name=Pedregulho de Gnaisse
+tile.strongCobble.granite.name=Pedregulho de Granito
+tile.strongCobble.greenschist.name=Pedregulho de Xisto verde
+tile.strongCobble.pegmatite.name=Pedregulho de Pegmatito
+tile.strongCobble.marble.name=Pedregulho de Mármore
+tile.strongCobble.rhyolite.name=Pedregulho de Riolito
+tile.strongCobble.sandstone.name=Pedregulho de Arenito
+tile.veryStrongCobble.diorite.name=Pedregulho de Diorito
+tile.veryStrongCobble.gabbro.name=Pedregulho de Gabro
+tile.veryStrongCobble.hornfels.name=Pedregulho de Corneana
+tile.veryStrongCobble.peridotite.name=Pedregulho de Peridotito
+tile.veryStrongCobble.quartzite.name=Pedregulho de Quartzito
+
+# Brick
+tile.mediumStoneBrick.limestone.name=Tijolos de Calcário
+tile.mediumStoneBrick.schist.name=Tijolos de Xisto
+tile.mediumStoneBrick.serpentinite.name=Tijolos de Serpentinito
+tile.mediumStoneBrick.slate.name=Tijolos de Ardósia
+tile.mediumStoneBrick.skarn.name=Tijolos de Escarnito
+tile.strongStoneBrick.andesite.name=Tijolos de Andesito
+tile.strongStoneBrick.basalt.name=Tijolos de Basalto
+tile.strongStoneBrick.gneiss.name=Tijolos de Gnaisse
+tile.strongStoneBrick.granite.name=Tijolos de Granito
+tile.strongStoneBrick.greenschist.name=Tijolos de Xisto verde
+tile.strongStoneBrick.marble.name=Tijolos de Pegmatito
+tile.strongStoneBrick.pegmatite.name=Tijolos de Mármore
+tile.strongStoneBrick.rhyolite.name=Tijolos de Riolito
+tile.strongStoneBrick.sandstone.name=Tijolos de Arenito
+tile.veryStrongStoneBrick.diorite.name=Tijolos de Diorito
+tile.veryStrongStoneBrick.gabbro.name=Tijolos de Gabro
+tile.veryStrongStoneBrick.hornfels.name=Tijolos de Corneana
+tile.veryStrongStoneBrick.peridotite.name=Tijolos de Peridotito
+tile.veryStrongStoneBrick.quartzite.name=Tijolos de Quartzito
+
+# Brick Walls
+tile.mediumStoneBrickWall.limestone.name=Parede de Tijolos de Calcário
+tile.mediumStoneBrickWall.schist.name=Parede de Tijolos de Xisto
+tile.mediumStoneBrickWall.serpentinite.name=Parede de Tijolos de Serpentinito
+tile.mediumStoneBrickWall.slate.name=Parede de Tijolos de Ardósia
+tile.mediumStoneBrickWall.skarn.name=Parede de Tijolos de Escarnito
+tile.strongStoneBrickWall.andesite.name=Parede de Tijolos de Andesito
+tile.strongStoneBrickWall.basalt.name=Parede de Tijolos de Basalto
+tile.strongStoneBrickWall.gneiss.name=Parede de Tijolos de Gnaisse
+tile.strongStoneBrickWall.granite.name=Parede de Tijolos de Granito
+tile.strongStoneBrickWall.greenschist.name=Parede de Tijolos de Xisto verde
+tile.strongStoneBrickWall.marble.name=Parede de Tijolos de Pegmatito
+tile.strongStoneBrickWall.pegmatite.name=Parede de Tijolos de Mármore
+tile.strongStoneBrickWall.rhyolite.name=Parede de Tijolos de Riolito
+tile.strongStoneBrickWall.sandstone.name=Parede de Tijolos de Arenito
+tile.veryStrongStoneBrickWall.diorite.name=Parede de Tijolos de Diorito
+tile.veryStrongStoneBrickWall.gabbro.name=Parede de Tijolos de Gabro
+tile.veryStrongStoneBrickWall.hornfels.name=Parede de Tijolos de Corneana
+tile.veryStrongStoneBrickWall.peridotite.name=Parede de Tijolos de Peridotito
+tile.veryStrongStoneBrickWall.quartzite.name=Parede de Tijolos de Quartzito
+
+# Rubble
+tile.weakRubble.breccia.name=Cascalho de Brecha
+tile.weakRubble.carbonatite.name=Cascalho de Carbonatito
+tile.weakRubble.claystone.name=Cascalho de Argilito
+tile.weakRubble.conglomerate.name=Cascalho de Conglomerado
+tile.weakRubble.mudstone.name=Cascalho de Xisto Limoso
+tile.mediumRubble.limestone.name=Cascalho de Calcário
+tile.mediumRubble.schist.name=Cascalho de Xisto
+tile.mediumRubble.serpentinite.name=Cascalho de Serpentinito
+tile.mediumRubble.slate.name=Cascalho de Ardósia
+tile.mediumRubble.skarn.name=Cascalho de Escarnito
+tile.strongRubble.andesite.name=Cascalho de Andesito
+tile.strongRubble.basalt.name=Cascalho de Basalto
+tile.strongRubble.gneiss.name=Cascalho de Gnaisse
+tile.strongRubble.granite.name=Cascalho de Granito
+tile.strongRubble.greenschist.name=Cascalho de Xisto Verde
+tile.strongRubble.pegmatite.name=Cascalho de Pegmatito
+tile.strongRubble.marble.name=Cascalho de Mármore
+tile.strongRubble.rhyolite.name=Cascalho de Riolito
+tile.strongRubble.sandstone.name=Cascalho de Arenito
+tile.veryStrongRubble.diorite.name=Cascalho de Diorito
+tile.veryStrongRubble.gabbro.name=Cascalho de Gabro
+tile.veryStrongRubble.hornfels.name=Cascalho de Corneana
+tile.veryStrongRubble.peridotite.name=Cascalho de Peridotito
+tile.veryStrongRubble.quartzite.name=Cascalho de Quartzito
+
+# Cobblestone Slab
+tile.mediumCobbleSlab.limestone.name=Laje de Pedregulho de Calcário
+tile.mediumCobbleSlab.schist.name=Laje de Pedregulho de Xisto
+tile.mediumCobbleSlab.serpentinite.name=Laje de Pedregulho de Serpentinito
+tile.mediumCobbleSlab.slate.name=Laje de Pedregulho de Ardósia
+tile.mediumCobbleSlab.skarn.name=Laje de Pedregulho de Escarnito
+tile.strongCobbleSlab.andesite.name=Laje de Pedregulho de Andesito
+tile.strongCobbleSlab.basalt.name=Laje de Pedregulho de Basalto
+tile.strongCobbleSlab.gneiss.name=Laje de Pedregulho de Gnaisse
+tile.strongCobbleSlab.granite.name=Laje de Pedregulho de Granito
+tile.strongCobbleSlab.greenschist.name=Laje de Pedregulho de Xisto verde
+tile.strongCobbleSlab.pegmatite.name=Laje de Pedregulho de Pegmatito
+tile.strongCobbleSlab.marble.name=Laje de Pedregulho de Mármore
+tile.strongCobbleSlab.rhyolite.name=Laje de Pedregulho de Riolito
+tile.strongCobbleSlab.sandstone.name=Laje de Pedregulho de Arenito
+tile.veryStrongCobbleSlab.diorite.name=Laje de Pedregulho de Diorito
+tile.veryStrongCobbleSlab.gabbro.name=Laje de Pedregulho de Gabro
+tile.veryStrongCobbleSlab.hornfels.name=Laje de Pedregulho de Corneana
+tile.veryStrongCobbleSlab.peridotite.name=Laje de Pedregulho de Peridotito
+tile.veryStrongCobbleSlab.quartzite.name=Laje de Pedregulho de Quartzito
+
+# Stone Slab
+tile.mediumStoneSlab.limestone.name=Laje de Calcário
+tile.mediumStoneSlab.schist.name=Laje de Xisto
+tile.mediumStoneSlab.serpentinite.name=Laje de Serpentinito
+tile.mediumStoneSlab.slate.name=Laje de Ardósia
+tile.mediumStoneSlab.skarn.name=Laje de Escarnito
+tile.strongStoneSlab.andesite.name=Laje de Andesito
+tile.strongStoneSlab.basalt.name=Laje de Basalto
+tile.strongStoneSlab.gneiss.name=Laje de Gnaisse
+tile.strongStoneSlab.granite.name=Laje de Granito
+tile.strongStoneSlab.greenschist.name=Laje de Xisto verde
+tile.strongStoneSlab.pegmatite.name=Laje de Pegmatito
+tile.strongStoneSlab.marble.name=Laje de Mármore
+tile.strongStoneSlab.rhyolite.name=Laje de Riolito
+tile.strongStoneSlab.sandstone.name=Laje de Arenito
+tile.veryStrongStoneSlab.diorite.name=Laje de Diorito
+tile.veryStrongStoneSlab.gabbro.name=Laje de Gabro
+tile.veryStrongStoneSlab.hornfels.name=Laje de Corneana
+tile.veryStrongStoneSlab.peridotite.name=Laje de Peridotito
+tile.veryStrongStoneSlab.quartzite.name=Laje de Quartzito
+
+# Brick Slab
+tile.mediumStoneBrickSlab.limestone.name=Laje de Tijolos de Calcário
+tile.mediumStoneBrickSlab.schist.name=Laje de Tijolos de Xisto
+tile.mediumStoneBrickSlab.serpentinite.name=Laje de Tijolos de Serpentinito
+tile.mediumStoneBrickSlab.slate.name=Laje de Tijolos de Ardósia
+tile.mediumStoneBrickSlab.skarn.name=Laje de Tijolos de Escarnito
+tile.strongStoneBrickSlab.andesite.name=Laje de Tijolos de Andesito
+tile.strongStoneBrickSlab.basalt.name=Laje de Tijolos de Basalto
+tile.strongStoneBrickSlab.gneiss.name=Laje de Tijolos de Gnaisse
+tile.strongStoneBrickSlab.granite.name=Laje de Tijolos de Granito
+tile.strongStoneBrickSlab.greenschist.name=Laje de Tijolos de Xisto verde
+tile.strongStoneBrickSlab.pegmatite.name=Laje de Tijolos de Pegmatito
+tile.strongStoneBrickSlab.marble.name=Laje de Tijolos de Mármore
+tile.strongStoneBrickSlab.rhyolite.name=Laje de Tijolos de Riolito
+tile.strongStoneBrickSlab.sandstone.name=Laje de Tijolos de Arenito
+tile.veryStrongStoneBrickSlab.diorite.name=Laje de Tijolos de Diorito
+tile.veryStrongStoneBrickSlab.gabbro.name=Laje de Tijolos de Gabro
+tile.veryStrongStoneBrickSlab.hornfels.name=Laje de Tijolos de Corneana
+tile.veryStrongStoneBrickSlab.peridotite.name=Laje de Tijolos de Peridotito
+tile.veryStrongStoneBrickSlab.quartzite.name=Laje de Tijolos de Quartzito
+
+# Cobblestone Stairs
+tile.mediumCobbleStairs.limestone.name=Escadas de Pedregulho de Calcário
+tile.mediumCobbleStairs.schist.name=Escadas de Pedregulho de Xisto
+tile.mediumCobbleStairs.serpentinite.name=Escadas de Pedregulho de Serpentinito
+tile.mediumCobbleStairs.slate.name=Escadas de Pedregulho de Ardósia
+tile.mediumCobbleStairs.skarn.name=Escadas de Pedregulho de Escarnito
+tile.strongCobbleStairs.andesite.name=Escadas de Pedregulho de Andesito
+tile.strongCobbleStairs.basalt.name=Escadas de Pedregulho de Basalto
+tile.strongCobbleStairs.gneiss.name=Escadas de Pedregulho de Gnaisse
+tile.strongCobbleStairs.granite.name=Escadas de Pedregulho de Granito
+tile.strongCobbleStairs.greenschist.name=Escadas de Pedregulho de Xisto verde
+tile.strongCobbleStairs.pegmatite.name=Escadas de Pedregulho de Pegmatito
+tile.strongCobbleStairs.marble.name=Escadas de Pedregulho de Mármore
+tile.strongCobbleStairs.rhyolite.name=Escadas de Pedregulho de Riolito
+
+# Brick Stairs
+tile.mediumStoneBrickStairs.limestone.name=Escadas de Tijolos de Calcário
+tile.mediumStoneBrickStairs.schist.name=Escadas de Tijolos de Xisto
+tile.mediumStoneBrickStairs.serpentinite.name=Escadas de Tijolos de Serpentinito
+tile.mediumStoneBrickStairs.slate.name=Escadas de Tijolos de Ardósia
+tile.mediumStoneBrickStairs.skarn.name=Escadas de Tijolos de Escarnito
+tile.strongStoneBrickStairs.andesite.name=Escadas de Tijolos de Andesito
+tile.strongStoneBrickStairs.basalt.name=Escadas de Tijolos de Basalto
+tile.strongStoneBrickStairs.gneiss.name=Escadas de Tijolos de Gnaisse
+tile.strongStoneBrickStairs.granite.name=Escadas de Tijolos de Granito
+tile.strongStoneBrickStairs.greenschist.name=Escadas de Tijolos de Xisto verde
+tile.strongStoneBrickStairs.pegmatite.name=Escadas de Tijolos de Pegmatito
+tile.strongStoneBrickStairs.marble.name=Escadas de Tijolos de Mármore
+tile.strongStoneBrickStairs.rhyolite.name=Escadas de Tijolos de Riolito
+tile.veryStrongStoneBrickStairs.diorite.name=Escadas de Tijolos de Diorito
+tile.veryStrongStoneBrickStairs.gabbro.name=Escadas de Tijolos de Gabro
+tile.veryStrongStoneBrickStairs.hornfels.name=Escadas de Tijolos de Corneana
+tile.veryStrongStoneBrickStairs.peridotite.name=Escadas de Tijolos de Peridotito
+tile.veryStrongStoneBrickStairs.quartzite.name=Escadas de Tijolos de Quartzito
+
+# Cobblestone Wall
+tile.mediumCobbleWall.limestone.name=Parede de Pedregulhos de Calcário
+tile.mediumCobbleWall.schist.name=Parede de Pedregulhos de Xisto
+tile.mediumCobbleWall.serpentinite.name=Parede de Pedregulhos de Serpentinito
+tile.mediumCobbleWall.slate.name=Parede de Pedregulhos de Ardósia
+tile.mediumCobbleWall.skarn.name=Parede de Pedregulhos de Escarnito
+tile.strongCobbleWall.andesite.name=Parede de Pedregulhos de Andesito
+tile.strongCobbleWall.basalt.name=Parede de Pedregulhos de Basalto
+tile.strongCobbleWall.gneiss.name=Parede de Pedregulhos de Gnaisse
+tile.strongCobbleWall.granite.name=Parede de Pedregulhos de Granito
+tile.strongCobbleWall.greenschist.name=Parede de Pedregulhos de Xisto verde
+tile.strongCobbleWall.pegmatite.name=Parede de Pedregulhos de Pegmatito
+tile.strongCobbleWall.marble.name=Parede de Pedregulhos de Mármore
+tile.strongCobbleWall.rhyolite.name=Parede de Pedregulhos de Riolito
+tile.strongCobbleWall.sandstone.name=Parede de Pedregulhos de Arenito
+tile.veryStrongCobbleWall.diorite.name=Parede de Pedregulhos de Diorito
+tile.veryStrongCobbleWall.gabbro.name=Parede de Pedregulhos de Gabro
+tile.veryStrongCobbleWall.hornfels.name=Parede de Pedregulhos de Corneana
+tile.veryStrongCobbleWall.peridotite.name=Parede de Pedregulhos de Peridotito
+tile.veryStrongCobbleWall.quartzite.name=Parede de Pedregulhos de Quartzito
+
+# Ore Sands
+tile.weakOreSand.basalticMineralSand.name=Areia de Mineral Basáltico
+tile.weakOreSand.cassiteriteSand.name=Areia de Cassiterita
+tile.weakOreSand.garnetSand.name=Areia de Granada
+tile.weakOreSand.graniticMineralSand.name=Areia de Mineral Granítico
+tile.weakOreSand.quartzSand.name=Areia de Quartzo
+tile.weakOreSand.volcanicAsh.name=Cinzas Vulcânicas
+tile.weakOreSand.glauconite.name=Areia de Glauconita
+
+# Clays
+tile.weakClay.laterite.name=Solo Laterítico
+tile.weakClayBrick.laterite.name=Tijolo de Laterita
+
+# Ore Clays
+tile.weakOreClay.bauxite.name=Bauxita
+tile.weakOreClay.bentonite.name=Bentonita
+tile.weakOreClay.brownLimonite.name=Limonita Marrom
+tile.weakOreClay.yellowLimonite.name=Limonita Amarela
+tile.weakOreClay.vermiculite.name=Vermiculita
+tile.weakOreClay.kaolinite.name=Caulinita
+tile.weakOreClay.fullersEarth.name=Argila Medicinal
+
+# Weak Ore Rocks
+tile.weakOreRock.borax.name=Minério de Bórax (Boro)
+tile.weakOreRock.cinnabar.name=Minério de Cinábrio (Mercúrio)
+tile.weakOreRock.galena.name=Minério de Galena (Chumbo)
+tile.weakOreRock.molybdenite.name=Minério de Molibdenita (Molibdênio)
+tile.weakOreRock.pyrolusite.name=Minério de Pirolusita (Manganês)
+tile.weakOreRock.rockSalt.name=Sal-Gema
+tile.weakOreRock.stibnite.name=Minério de Antimonita(Antimônio)
+tile.weakOreRock.diatomite.name=Diatomito
+tile.weakOreRock.chrysotile.name=Crisotila (Asbesto/Amianto)
+tile.weakOreRock.realgar.name=Realgar (Arsênico)
+tile.weakOreRock.graphite.name=Grafite
+tile.weakOreRock.gypsum.name=Gesso
+tile.weakOreRock.mirabilite.name=Mirabilita
+tile.weakOreRock.mica.name=Folha de Mica
+tile.weakOreRock.soapstone.name=Pedra-Sabão (Talco)
+tile.weakOreRock.trona.name=Trona (Carbonato de Sódio)
+
+# Medium Ore Rocks
+tile.mediumOreRock.barite.name=Minério de Barita (Bário)
+tile.mediumOreRock.bastnasite.name=Minério de Bastnasita (Cério)
+tile.mediumOreRock.chalcopyrite.name=Minério de Calcopirita (Cobre)
+tile.mediumOreRock.celestine.name=Minério de Celestino (Estrôncio)
+tile.mediumOreRock.garnierite.name=Minério de Garnierita (Níquel)
+tile.mediumOreRock.lepidolite.name=Minério de Lepidolite (Lítio)
+tile.mediumOreRock.magnesite.name=Minério de Magnesita (Magnésio)
+tile.mediumOreRock.pentlandite.name=Minério de Pentlandite (Níquel)
+tile.mediumOreRock.scheelite.name=Minério de Xilita (Tungstênio)
+tile.mediumOreRock.sphalerite.name=Minério de Esfalerita (Zinco)
+tile.mediumOreRock.wolframite.name=Minério de Volframita (Tungstênio)
+tile.mediumOreRock.alunite.name=Alunita
+tile.mediumOreRock.dolomite.name=Dolomita
+tile.mediumOreRock.kyanite.name=Cianite
+tile.mediumOreRock.fluorite.name=Fluorita
+tile.mediumOreRock.wollastonite.name=Wollastonita
+tile.mediumOreRock.zeolite.name=Zeólita
+
+# Strong Ore Rocks
+tile.strongOreRock.bandedIron.name=Minério de Ferro Bandado
+tile.strongOreRock.quartz.name=Minério de Quartzo
+tile.strongOreRock.cassiterite.name=Minério de Cassiterita (Estanho)
+tile.strongOreRock.chromite.name=Minério de Cromita (Cromo)
+tile.strongOreRock.ilmenite.name=Minério de Ilmenita (Titânio)
+tile.strongOreRock.magnetite.name=Minério de Magnetita (Ferro)
+tile.strongOreRock.pollucite.name=Minério de Polucita (Césio)
+tile.strongOreRock.pyrolusite.name=Minério de Pirolusita (Manganês)
+tile.strongOreRock.spodumene.name=Minério de Espodúmena (Lítio)
+tile.strongOreRock.tantalite.name=Minério de Tantalita (Tântalo)
+tile.strongOreRock.pitchblende.name=Minério de Pechblenda (Urânio)
+tile.strongOreRock.vanadiumMagnetite.name=Minério de Ferrovanádio
+tile.strongOreRock.apatite.name=Apatita
+tile.strongOreRock.kyanite.name=Cianita
+tile.strongOreRock.perlite.name=Perlita
+tile.strongOreRock.pumice.name=Pedra-Pomes
+tile.strongOreRock.pyrite.name=Pirita (Ferro)
+
+# Vanilla ore overrides
+tile.coalOre.name=Minério de Carvão
+tile.diamondOre.name=Minério de Diamante
+tile.emeraldOre.name=Minério de Esmeralda
+tile.lapisOre.name=Minério de Lápis-Lazúli
+tile.redstoneOre.name=Minério de Redstone
+
+# Fluids
+tile.lightOil.name=Óleo Leve
+tile.mediumOil.name=Óleo Médio
+tile.heavyOil.name=Óleo Pesado
+tile.extraHeavyOil.name=Óleo Extra Pesado
+tile.naturalGas.name=Gáz Natural
+
+# Buckets
+item.liquidLightOilBucket.name=Balde de Óleo Leve
+item.liquidMediumOilBucket.name=Balde de Óleo Médio
+item.liquidHeavyOilBucket.name=Balde de Óleo Pesado
+item.liquidExtraHeavyOilBucket.name=Balde de Óleo Extra Pesado
+
+# Crudes
+tile.crudeSand.oilSand.name=Areia Betuminosa
+tile.crudeRock.oilShale.name=Xisto Betuminoso
+tile.crudeRock.coal.name=Carvão Betuminoso
+tile.crudeRock.lignite.name=Carvão Lignito
+tile.crudeRock.anthracite.name=Carvão Antracito
+tile.crudeGround.peat.name=Turfa
+
+# Geologica versions of vanilla ores
+tile.vanillaOreRock.gold.name=Minério de Ouro
+tile.vanillaOreRock.lapis.name=Minério de Lápis-Lazúli
+tile.vanillaOreRock.diamond.name=Minério de Diamante
+tile.vanillaOreRock.emerald.name=Minério de Esmeralda
+tile.vanillaOreRock.redstone.name=Minério de Redstone
