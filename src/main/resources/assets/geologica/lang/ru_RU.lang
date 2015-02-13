@@ -17,6 +17,7 @@ tile.strongStone.greenschist.name=Зелёный сланцевый камень
 tile.strongStone.pegmatite.name=Пегматитовый камень
 tile.strongStone.marble.name=Мраморный камень
 tile.strongStone.rhyolite.name=Риолитовый камень
+tile.strongStone.sandstone.name=Песчаник
 tile.veryStrongStone.diorite.name=Диоритовый камень
 tile.veryStrongStone.gabbro.name=Габбровый камень
 tile.veryStrongStone.hornfels.name=Роговиковый камень
@@ -37,6 +38,7 @@ tile.strongCobble.greenschist.name=Зелёный сланцевый булыж�
 tile.strongCobble.pegmatite.name=Пегматитовый булыжник
 tile.strongCobble.marble.name=Мраморный булыжник
 tile.strongCobble.rhyolite.name=Риолитовый булыжник
+tile.strongCobble.sandstone.name=Песчаниковый булыжник
 tile.veryStrongCobble.diorite.name=Диоритовый булыжник
 tile.veryStrongCobble.gabbro.name=Габбровый булыжник
 tile.veryStrongCobble.hornfels.name=Роговиковый булыжник
@@ -57,6 +59,7 @@ tile.strongStoneBrick.greenschist.name=Зелёный сланцевый кир�
 tile.strongStoneBrick.marble.name=Мраморный кирпич
 tile.strongStoneBrick.pegmatite.name=Пегматитовый кирпич
 tile.strongStoneBrick.rhyolite.name=Риолитовый кирпич
+tile.strongStoneBrick.sandstone.name=Песчаниковый кирпич
 tile.veryStrongStoneBrick.diorite.name=Диоритовый кирпич
 tile.veryStrongStoneBrick.gabbro.name=Габбровый кирпич
 tile.veryStrongStoneBrick.hornfels.name=Роговиковый кирпич
@@ -77,6 +80,7 @@ tile.strongStoneBrickWall.greenschist.name=Зелёная сланцевая к�
 tile.strongStoneBrickWall.marble.name=Мраморная кирпичная стена
 tile.strongStoneBrickWall.pegmatite.name=Пегматитовая кирпичная стена
 tile.strongStoneBrickWall.rhyolite.name=Риолитовая кирпичная стена
+tile.strongStoneBrickWall.sandstone.name=Песчаниковая кирпичная стена
 tile.veryStrongStoneBrickWall.diorite.name=Диоритовая кирпичная стена
 tile.veryStrongStoneBrickWall.gabbro.name=Габбровая кирпичная стена
 tile.veryStrongStoneBrickWall.hornfels.name=Роговиковая кирпичная стена
@@ -102,6 +106,7 @@ tile.strongRubble.greenschist.name=Зелёный сланцевый бут
 tile.strongRubble.pegmatite.name=Пегматитовый бут
 tile.strongRubble.marble.name=Мраморный бут
 tile.strongRubble.rhyolite.name=Риолитовый бут
+tile.strongRubble.sandstone.name=Песчаниковый бут
 tile.veryStrongRubble.diorite.name=Диоритовый бут
 tile.veryStrongRubble.gabbro.name=Габбровый бут
 tile.veryStrongRubble.hornfels.name=Роговиковый бут
@@ -122,6 +127,7 @@ tile.strongCobbleSlab.greenschist.name=Зелёная сланцевая бул�
 tile.strongCobbleSlab.pegmatite.name=Пегматитовая булыжниковая плита
 tile.strongCobbleSlab.marble.name=Мраморная булыжниковая плита
 tile.strongCobbleSlab.rhyolite.name=Риолитовая булыжниковая плита
+tile.strongCobbleSlab.sandstone.name=Песчаниковая булыжниковая плита
 tile.veryStrongCobbleSlab.diorite.name=Диоритовая булыжниковая плита
 tile.veryStrongCobbleSlab.gabbro.name=Габбровая булыжниковая плита
 tile.veryStrongCobbleSlab.hornfels.name=Роговиковая булыжниковая плита
@@ -142,6 +148,7 @@ tile.strongStoneSlab.greenschist.name=Зелёная сланцевая плит
 tile.strongStoneSlab.pegmatite.name=Пегматитовая плита
 tile.strongStoneSlab.marble.name=Мраморная плита
 tile.strongStoneSlab.rhyolite.name=Риолитовая плита
+tile.strongStoneSlab.sandstone.name=Песчаниковая плита
 tile.veryStrongStoneSlab.diorite.name=Диоритовая плита
 tile.veryStrongStoneSlab.gabbro.name=Габбровая плита
 tile.veryStrongStoneSlab.hornfels.name=Роговиковая плита
@@ -162,6 +169,7 @@ tile.strongStoneBrickSlab.greenschist.name=Зелёная сланцевая к�
 tile.strongStoneBrickSlab.pegmatite.name=Пегматитовая кирпичная плита
 tile.strongStoneBrickSlab.marble.name=Мраморная кирпичная плита
 tile.strongStoneBrickSlab.rhyolite.name=Риолитовая кирпичная плита
+tile.strongStoneBrickSlab.sandstone.name=Песчаниковая кирпичная плита
 tile.veryStrongStoneBrickSlab.diorite.name=Диоритовая кирпичная плита
 tile.veryStrongStoneBrickSlab.gabbro.name=Габбровая кирпичная плита
 tile.veryStrongStoneBrickSlab.hornfels.name=Роговиковая кирпичная плита
@@ -169,19 +177,19 @@ tile.veryStrongStoneBrickSlab.peridotite.name=Перидотитовая кир�
 tile.veryStrongStoneBrickSlab.quartzite.name=Кварцитовая кирпичная плита
 
 # Cobblestone Stairs
-tile.mediumCobbleStairs.limestone.name=Известняковые ступеньки
-tile.mediumCobbleStairs.schist.name=Сланцевые ступеньки
-tile.mediumCobbleStairs.serpentinite.name=Серпентинитовые ступеньки
-tile.mediumCobbleStairs.slate.name=Шиферные ступеньки
-tile.mediumCobbleStairs.skarn.name=Скарновые ступеньки
-tile.strongCobbleStairs.andesite.name=Андезитовые ступеньки
-tile.strongCobbleStairs.basalt.name=Базальтовые ступеньки
-tile.strongCobbleStairs.gneiss.name=Гнейсовые ступеньки
-tile.strongCobbleStairs.granite.name=Гранитные ступеньки
-tile.strongCobbleStairs.greenschist.name=Зелёные сланцевые ступеньки
-tile.strongCobbleStairs.pegmatite.name=Пегматитовые ступеньки
-tile.strongCobbleStairs.marble.name=Мраморные ступеньки
-tile.strongCobbleStairs.rhyolite.name=Риолитовые ступеньки
+tile.mediumCobbleStairs.limestone.name=Известняковые булыжниковые ступеньки
+tile.mediumCobbleStairs.schist.name=Сланцевые булыжниковые ступеньки
+tile.mediumCobbleStairs.serpentinite.name=Серпентинитовые булыжниковые ступеньки
+tile.mediumCobbleStairs.slate.name=Шиферные булыжниковые ступеньки
+tile.mediumCobbleStairs.skarn.name=Скарновые булыжниковые ступеньки
+tile.strongCobbleStairs.andesite.name=Андезитовые булыжниковые ступеньки
+tile.strongCobbleStairs.basalt.name=Базальтовые булыжниковые ступеньки
+tile.strongCobbleStairs.gneiss.name=Гнейсовые булыжниковые ступеньки
+tile.strongCobbleStairs.granite.name=Гранитные булыжниковые ступеньки
+tile.strongCobbleStairs.greenschist.name=Зелёные сланцевые булыжниковые ступеньки
+tile.strongCobbleStairs.pegmatite.name=Пегматитовые булыжниковые ступеньки
+tile.strongCobbleStairs.marble.name=Мраморные булыжниковые ступеньки
+tile.strongCobbleStairs.rhyolite.name=Риолитовые булыжниковые ступеньки
 
 # Brick Stairs
 tile.mediumStoneBrickStairs.limestone.name=Известняковые кирпичные ступеньки
@@ -217,6 +225,7 @@ tile.strongCobbleWall.greenschist.name=Зелёная сланцевая бул�
 tile.strongCobbleWall.pegmatite.name=Пегматитовая булыжниковая стена
 tile.strongCobbleWall.marble.name=Мраморная булыжниковая стена
 tile.strongCobbleWall.rhyolite.name=Риолитовая булыжниковая стена
+tile.strongCobbleWall.sandstone.name=Песчаниковая булыжниковая стена
 tile.veryStrongCobbleWall.diorite.name=Диоритовая булыжниковая стена
 tile.veryStrongCobbleWall.gabbro.name=Габбровая булыжниковая стена
 tile.veryStrongCobbleWall.hornfels.name=Роговиковая булыжниковая стена
@@ -230,6 +239,7 @@ tile.weakOreSand.garnetSand.name=Гранатовый песок
 tile.weakOreSand.graniticMineralSand.name=Гранитовый минеральный песок
 tile.weakOreSand.quartzSand.name=Кварцевый песок
 tile.weakOreSand.volcanicAsh.name=Вулканический пепел
+tile.weakOreSand.glauconite.name=Глауконитовый песок
 
 # Clays
 tile.weakClay.laterite.name=Латеритовая почва
@@ -254,7 +264,7 @@ tile.weakOreRock.rockSalt.name=Каменная соль
 tile.weakOreRock.stibnite.name=Антимонитовая руда (Сурьма)
 tile.weakOreRock.diatomite.name=Диатомовая земля
 tile.weakOreRock.chrysotile.name=Хризотил (Асбест)
-tile.weakOreRock.glauconite.name=Глауконит
+tile.weakOreRock.realgar.name=Реальгар (Мышьяк)
 tile.weakOreRock.graphite.name=Графит
 tile.weakOreRock.gypsum.name=Гипс
 tile.weakOreRock.mirabilite.name=Мирабилит
@@ -283,7 +293,7 @@ tile.mediumOreRock.zeolite.name=Цеолит
 
 # Strong Ore Rocks
 tile.strongOreRock.bandedIron.name=Полосчатая железная руда
-tile.strongOreRock.beryl.name=Берилловая руда (Бериллий)
+tile.strongOreRock.quartz.name=Кварцевая руда
 tile.strongOreRock.cassiterite.name=Касситеритовая руда (Олово)
 tile.strongOreRock.chromite.name=Хромитовая руда (Хром)
 tile.strongOreRock.ilmenite.name=Ильменитовая руда (Титан)
@@ -298,6 +308,7 @@ tile.strongOreRock.apatite.name=Апатит
 tile.strongOreRock.kyanite.name=Кианит
 tile.strongOreRock.perlite.name=Перлит
 tile.strongOreRock.pumice.name=Пемза
+tile.strongOreRock.pyrite.name=Пирит (Железо)
 
 # Vanilla ore overrides
 tile.coalOre.name=Угольная руда
@@ -305,3 +316,31 @@ tile.diamondOre.name=Алмазная руда
 tile.emeraldOre.name=Изумрудная руда
 tile.lapisOre.name=Лазуритовая руда
 tile.redstoneOre.name=Красная руда
+
+# Fluids
+tile.lightOil.name=Лёгкая нефть
+tile.mediumOil.name=Средняя нефть
+tile.heavyOil.name=Тяжёлая нефть
+tile.extraHeavyOil.name=Сверхтяжёлая нефть
+tile.naturalGas.name=Природный газ
+
+# Buckets
+item.liquidLightOilBucket.name=Ведро лёгкой нефти
+item.liquidMediumOilBucket.name=Ведро средней нефти
+item.liquidHeavyOilBucket.name=Ведро тяжёлой нефти
+item.liquidExtraHeavyOilBucket.name=Ведро сверхтяжёлой нефти
+
+# Crudes
+tile.crudeSand.oilSand.name=Нефтяной песок
+tile.crudeRock.oilShale.name=Горючий сланец
+tile.crudeRock.coal.name=Битуминозный уголь
+tile.crudeRock.lignite.name=Бурый уголь
+tile.crudeRock.anthracite.name=Антрацитовый уголь
+tile.crudeGround.peat.name=Торф
+
+# Geologica versions of vanilla ores
+tile.vanillaOreRock.gold.name=Золотая руда
+tile.vanillaOreRock.lapis.name=Лазуритовая руда
+tile.vanillaOreRock.diamond.name=Алмазная руда
+tile.vanillaOreRock.emerald.name=Изумрудная руда
+tile.vanillaOreRock.redstone.name=Красная руда
