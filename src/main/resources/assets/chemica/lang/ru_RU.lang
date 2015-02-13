@@ -1,0 +1,13 @@
+# Glass bottles
+item.liquidLightOilBottle.name=Бутылка лёгкой нефти
+item.liquidMediumOilBottle.name=Бутылка средней нефти
+item.liquidHeavyOilBottle.name=Бутылка тяжёлой нефти
+item.liquidExtraHeavyOilBottle.name=Бутылка сверхтяжёлой нефти
+
+# Other blocks
+tile.pollutedSoil.name=Загрязнённая почва
+
+# Tooltip labels
+label.hazard.health=Опасно для здоровья
+label.hazard.flammability=Опасность воспламенения
+label.hazard.instability=Опасность нестабильности
