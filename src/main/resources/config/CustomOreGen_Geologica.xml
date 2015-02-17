@@ -1878,10 +1878,10 @@
 
         <CloudPreset name='PresetRichSoil' inherits='PresetStratum'>
           <Setting name='DistributionFrequency' avg='0.01'/>
-          <Setting name='CloudThickness' avg='4' range='1'/>
+          <Setting name='CloudThickness' avg='2' range='1'/>
           <Setting name='CloudHeight'
-                   avg=':= 55/64 * dimension.groundLevel'
-                   range='5'/>
+                   avg=':= 59/64 * dimension.groundLevel'
+                   range='2'/>
           <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
