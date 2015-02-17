@@ -3566,20 +3566,20 @@
         <Setting name='MotherlodeFrequency'
                  avg=':= 0.5 * _default_'/> 
         <Setting name='MotherlodeHeight'
-                 avg=':= 20/64 * dimension.groundLevel' range='5'/>
+                 avg=':= 40/64 * dimension.groundLevel' range='5'/>
         <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.1'/>
         <OreBlock block='PFAAGeologica:weakOreRock:11' weight='0.6'/>
         <OreBlock block='PFAAGeologica:weakOreRock:5' weight='0.3'/>
         <BiomeSet inherits='felsic'/>
+        <ReplacesOre block='stone'/>
+        <Replaces block='minecraft:dirt'/>
+        <Replaces block='minecraft:gravel'/>
       </VeinsPreset>
       <VeinsPreset name="PresetFumaroleLava" block='minecraft:lava'
                    inherits='PresetFumarole' seed='0xE222'
                    drawWireframe='false'>
         <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
         <Setting name='SegmentRadius' avg=':= 0.5 * _default_'/>
-        <ReplacesOre block='stone'/>
-        <Replaces block='minecraft:dirt'/>
-        <Replaces block='minecraft:gravel'/>
       </VeinsPreset>
     </ConfigSection>
     <ConfigSection>
@@ -3779,6 +3779,7 @@
                  avg=':= 0.5 * _default_'/> 
         <Setting name='MotherlodeHeight'
                  avg=':= 3/64 * dimension.groundLevel' range='0'/>
+        <Setting name='BranchInclination' avg='1.2' range='0.3' type='normal'/>
         <OreBlock block='PFAAGeologica:vanillaOreRock:2' weight='0.6'/>
         <OreBlock block='PFAAGeologica:veryStrongStone:3' weight='0.4'/>
       </VeinsPreset>
