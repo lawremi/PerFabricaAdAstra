@@ -1934,6 +1934,11 @@
           <BiomeType name='swamp'/>
         </CloudPreset>
 
+         <CloudPreset name='PresetRiverLimonite' inherits='PresetBogLimonite'>
+          <BiomeType name='river'/>
+          <Setting name='CloudRadius' avg='3' range='1'/>
+         </CloudPreset>
+        
         <CloudPreset name='PresetSerpentiniteUnderLimonite'
                      inherits='PresetStratum'
                      drawWireframe='false'
@@ -1967,6 +1972,7 @@
             </Cloud>
             <Cloud name='Peat' inherits='PresetPeat'/>
             <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
+            <Cloud name='RiverLimonite' inherits='PresetRiverLimonite'/>
           </IfCondition>
         </IfCondition>
       </ConfigSection>
