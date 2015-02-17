@@ -1708,6 +1708,7 @@
           <ReplacesRegexp block='.*sand'/>
           <!-- <Replaces block='.*dirt'/> -->
           <Replaces block='minecraft:gravel'/>
+          <Replaces block='minecraft:clay'/>
         </CloudPreset>
         <CloudPreset name='PresetBeachPlacer' inherits='PresetPlacer'>
           <BiomeType name='beach' weight='0.5'/>
@@ -1772,6 +1773,7 @@
           <Replaces block='PFAAGeologica:strongStone:7'/>
           <Replaces block='minecraft:dirt'/>
           <Replaces block='minecraft:sand'/>
+          <Replaces block='minecraft:clay'/>
         </StandardGenPreset>
         <CloudPreset name='PresetGlauconite'
                      inherits='PresetSedStrategicCloud'
@@ -1783,6 +1785,7 @@
                    range=':= 0.25 * _default_'/>
           <BiomeSet inherits='sedocean'/>
           <Replaces block='minecraft:sand'/>
+          <Replaces block='minecraft:clay'/>
           <Replaces block='minecraft:dirt'/>
           <ReplacesOre block='stone'/>
           <OreBlock block='PFAAGeologica:weakOreSand:5' weight='0.8'/>
@@ -1886,6 +1889,7 @@
           <Replaces block='PFAAGeologica:mediumStone:0'/>
           <Replaces block='PFAAGeologica:strongStone:8'/>
           <Replaces block='minecraft:dirt'/>
+          <Replaces block='minecraft:clay'/>
         </CloudPreset>
         
         <CloudPreset name='PresetLaterite' block='PFAAGeologica:weakClay:0'
@@ -2345,6 +2349,7 @@
           <Replaces block='minecraft:stone'/>
           <Replaces block='minecraft:dirt'/>
           <Replaces block='minecraft:sand'/>
+          <Replaces block='minecraft:clay'/>
           <WireframeColor>0xFFFFFF00</WireframeColor>
           <BiomeSet inherits='folded' weight='0.5'/>
           <BiomeType name='ocean'/>
