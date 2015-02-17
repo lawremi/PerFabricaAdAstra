@@ -1756,6 +1756,7 @@
           <Setting name='DistributionFrequency' avg=':=_default_'/>
           <Setting name='CloudRadius' avg='5' range='2' type='normal'/>
           <BiomeType name='sandy'/>
+          <BiomeType name='mesa' weight='-1'/>
           <Setting name='CloudHeight' avg='62' range='2'
                    type='uniform' scaleTo='position'/>
         </CloudPreset>
