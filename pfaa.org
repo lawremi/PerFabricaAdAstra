@@ -207,11 +207,18 @@
     
     The main idea is to follow a phylogenetic tree. The
     player obtains some basic crops (maybe the vanilla ones, or foods
-    found in the wild) in the world. There are two main ways of
-    determining phylogenetic relationships: ultrastructure (comparing
-    structure with electron microscope) and molecular sequence
-    comparison. We focus on the latter for now.
+    found in the wild) in the world.
 
+    We could adopt the Forestry mechanism entirely. It is reasonably
+    derived from Mendelian inheritance. Hybrids between related
+    species will represent the common ancestor, and mutations can form
+    to one of the other descendents. The less related the two species,
+    the less likely for them to breed.
+
+    This design requires that we have the wild forms of the crops
+    (which in the real world are highly localized).
+
+**** Old sequence alignment ideas
     Somehow the player analyzes the genome of two crops and then
     enters a mini-game dimension which involves aligning two
     sequences, where the bases are blocks. An alignment tool (with
@@ -232,22 +239,8 @@
     be cheaper than transversions. One has to figure out the cheapest
     path, given the genetic code.
 
-    It may be that the molecular manipulations are too complex.
-    Instead, we could start with something bee-driven in the way of
-    Forestry trees. In fact, we could adopt the Forestry mechanism
-    entirely. It is reasonably derived from Mendelian
-    inheritance. Hybrids between related species will represent the
-    common ancestor, and mutations can form to one of the other
-    descendents. The less related the two species, the less likely
-    for them to breed.
-
-    This design requires that we have a sufficient diversity of wild
-    edible plants. These could be wild forms of the crops (which in
-    the real world are highly localized) and/or the set of widespread
-    wild edible plants. Or we just take the vanilla set. If we take
-    the wild crop path (along the lines of PHC bushes), then breeding
-    would be about improving crop traits, as well as mutating between
-    species.  Generating realistic, edible, non-crop plants, is also
+*** Wild edible plants
+    Generating realistic, edible, non-crop plants, is also
     interesting: it introduces unconventional (at least for this part
     of the world) foods and makes the world richer. Call it
     ForageCraft or WildCraft.
@@ -264,7 +257,6 @@
     would be nice to be functional independently. Obviously, breeding
     will depend on Forestry.
 
-*** Wild edible plants
    Here is a list of what might be found in the wild:
 
    | Plant               | Phylogenetics                | Mod             | Biome                            | Value | Use                                 | Notes                      |
@@ -372,29 +364,21 @@
    | Yam                 |                              |                 | Tropical, coniferous forests     |     3 | Boil root                           |                            |
    | Yam bean            |                              |                 | Tropical                         |     3 | Eat tuber, better boiled            |                            |
 
-   Hunger key:
+   Hunger key (configurable):
    1 :: Refills 0.5 shank
    2 :: Refills 1.5 shanks
    3 :: Refills 3 shanks (like bread)
    4 :: Refills 4 shanks, high saturation (like steak)
-       
+   
    Currently about 80 plants. Proposals for simplification:
    * Have one palm tree (+coconut); BOP already has them
    * Have one type of wild herb (mint?), instead of all herbs.
-
-   These already exist wild from PHC (? are questionable):
-   * Berries (and BOP, Natura, etc)
-   * Bamboo shoots
-   * Cactus fruit
-   * Grapes
-   * ?Kiwi
-   * ?Rhubarb
-   * ?Rutabaga
-   * Seaweed
-   * Spice leaves
-   * Sunflower
-   * White mushrooms
-
+   
+   PHC now has all of its plants occuring in the wild as
+   "garden blocks". This would be an alternative to generating so many
+   types of plants in the world. But Plant Megapack has already shown
+   that it can be fun.
+   
 *** Forestry
     Wikipedia has some nice references:
     * Wood products: http://en.wikipedia.org/wiki/Wood#Uses (see
@@ -426,18 +410,14 @@
     Improvements that should happen for PHC:
     * PHC juices should be Forge fluids
     * PHC needs to be integrated with Forestry farms and machines
+      See: https://github.com/ForestryMC/ForestryMC/issues/223
       * Farms
       * Squeezer
       * Fermenter
-      * Breeding mechanism
+      * Breeding mechanism [done by Agricraft]
     * PHC crops should have biome-specific growth rates (hunger overhaul)
-    * PHC crops should show up in village fields
-    * PHC tools should have durability
+    * PHC should use machines for cooking [easy via KawaiiCrops]
     * PHC drinks should require a glass bottle
-
-    Some of the recipe tweaks (durability, glass bottle), can be
-    achieved with MineTweaker.
-    http://minetweaker.powerofbytes.com/wiki
 
     Turns out someone has integrated PHC with Forestry-like breeding
     mechanics, and it is totally customizable: Agricraft. In theory,
@@ -1154,11 +1134,10 @@
     | High C Steel        | Fe+5%C               |            | heat treatable            |
     | Stainless steel     | 6Fe+2FeCr+Mn         | blast      | many                      |
     | Galvanized steel    | Fe+Zn                |            |                           |
-    |                     | Mg+Al                |            |                           |
-    |                     | Ca+Pb                |            | batteries                 |
-    |                     | Sb+Pb                |            | batteries                 |
-    | Brass               | Cu+Zn                |            |                           |
-    |                     | Te+Fe/Cu/Pb          |            |                           |
+    | Lead-calcium        | Ca+Pb                |            | batteries                 |
+    | Lead-antimony       | Sb+Pb                |            | batteries                 |
+    | Brass               | 3Cu+Zn               |            |                           |
+    | Tellurium alloys    | Te+Steel/Cu/Pb       |            |                           |
     | Aircraft Al (7075)  | Al+2%Zn+2%Mg+.5%Cu   |            | transport                 |
     | Duralumin (2024)    | Al+1%Cu+1.5%Mg+.5%Mn |            | air, hardware             |
     | Al Li               | Al+10%Li             |            |                           |
@@ -1187,7 +1166,9 @@
     | Solder              | Sn+50%Pb             |            | electronics               |
     |                     | some form: Sn-Ag-Cu  |            |                           |
     | Type alloy          | Pb+10%Sn+15%Sb       |            | printing                  |
-    |                     |                      |            |                           |
+    | Ti-6-4              | Ti+10%Al+4%V         |            |                           |
+    | Zamak               | Zn+8%Al              |            |                           |
+    | Zircaloy            | Zr+1%Sn              |            | nuclear reactors          |
 
 **** Alloy Steel
      Properties of steel alloys:
@@ -1968,10 +1949,8 @@
      
    Furnaces and smelting is central to Minecraft, so we do not want
    to change that dramatically; however, we could add more
-   sophisticated smelting options, with higher yield. Also, it is
-   worth exploring the Foundry mod, as it supports the realistic
-   notion that metals are typically liquids after smelting.
-
+   sophisticated smelting options, with higher yield.
+   
    Some types of furnaces:
    * Electric arc: passes an electric current through the material,
      reaching temperatures of about 2000K, mostly for steel making.
@@ -1991,7 +1970,7 @@
    * Industrial blast furnace *Fe only* (2:1 + 2 slag), requires coke,
      limestone flux and air input; oil, tar, natural gas can be added
      to the coke to lower energy requirements (and increase speed). GT
-     has since added something with this name. Maybe blast smelter?
+     has since added something with this name.
    
    Possible roasting progression:
    * Vanilla furnace and other simple furnaces (1:1)
@@ -2074,7 +2053,67 @@
     with the ore dictionary, so that only crushed ores are valid input
     to smelting. These would be the keys "crushed" and
     "crushedPurified" (eg: crushedTin).
-    
+
+*** Blast furnace details
+    Reference:
+    http://www.steel.org/Making%20Steel/How%20Its%20Made/Processes/How%20a%20Blast%20Furnace%20Works.aspx
+
+**** Design
+     The blast furnace will accept ore, flux (limestone) and fuel
+     (coke) from the top, and accept heated, compressed air (the blast)
+     from the bottom, potentially with oil, natural gas, tar, powdered
+     coal and/or oxygen to increase the heat. 
+     
+     The air is blown, optionally (for higher efficiency) heated by
+     cowper furnances, and enters the furnace via special pipes called
+     /tuyeres/, which are made of copper and cooled with water.
+
+     Methods of blowing the air:
+     * Bellows :: air cavity that is expanded and compressed; typically
+                  manually, perhaps by water wheel
+     * Blowing engine :: steam engine that drives air pumping
+                         cylinders; no longer in use
+     * Centrifugal fan :: fan with impellers that push air; also called
+          turbo blowers
+     
+     The structure will consist of structural blocks, plus these
+     special modules:
+     * Tuyeres :: Bottom, the more tuyere nozzles, the hotter/faster
+     * Iron notch :: Bottom, for releasing the molten iron
+     * Cinder notch :: Bottom, for releasing slag and iron (later
+                       separated by a skimmer unit)
+     * Hoppers :: Top, deposit the "charge" of ore, flux and coke
+     * Uptake valves :: Top, through which dirty gas exits
+     
+     The structure must be cuboid. The larger, the more ore that can be
+     smelted at once. The structural blocks might be bricks, with
+     special "carbon" bricks at the bottom.
+
+     A cowper stove is a simple regenerative heat exchanger, where the
+     dirty, hot gases escaping the top of the furnace heat refractory
+     bricks that then transfer their heat to convert the cold blast to
+     a hot blast. There must be at least two (usually three) stoves,
+     because there is only one gas flow. First, the top gas is passed
+     through to heat the bricks, then the blast air.
+   
+**** Implementation
+     Many existing mods provide the necessary components. While
+     PneumaticCraft is about compressing air, the intent is more about
+     sending signals and energy via air, much like BC kinesis pipes,
+     before the switch to RF.
+     
+     * Centrifugal fan :: PneumaticCraft and RotaryCraft both have an
+          air compressor that generates PC compressed air; those are
+          not mainstream, so we may need our own machine, perhaps
+          based on components from steam turbines.
+     * Steam blower :: Somehow adapt steam turbines to push air with a
+                       fan, instead of generating power
+     * Notches :: For input/output, we could use e.g. Gregtech's
+                  input/output hatches, or Railcraft's valves; their
+                  function would depend on the position within the
+                  multiblock.
+     * Tuyeres :: This may need to be a custom block
+     
 ** Pyrolysis
    Another type of cooking is pyrolysis, thermal decomposition without
    combustion: http://en.wikipedia.org/wiki/Pyrolysis. We could use the
@@ -2178,9 +2217,19 @@
      added, which keeps copper from frothing, thus separating the
      molybdenite, which is processed as normal.
      
-**** Minor: Silver, Gold and Platinum
-     Electrorefining of copper oxide.
+**** Minor: Silver, Gold, Platinum, Selenium, Tellurium
+     Electrorefining of blister copper. The copper gathers at the
+     cathode, while the noble metals are deposited as the "anode
+     slime". The Ag, Au, Pt, and Cu form compounds with Se and Te,
+     which are reduced by roasting at 500C in the presence of Na2CO3
+     and air. So for Te:
 
+     M2Te + O2 + Na2CO3 -> Na2TeO3 + 2M + CO2
+
+     The sodium tellurite is then leached with water, and adding
+     sulfuric acid precipites the tellurite as TeO2, which can be
+     reduced with electrolysis, or by adding SO2 to aqueous TeO2. 
+     
 **** Antimony
 *** Pentlandite
 **** Nickel
@@ -2690,6 +2739,9 @@
 
    Then we can process it:
    http://sophiadacycole.com/wp-content/uploads/2014/04/coal_tree_USGS.jpg
+
+   Good reference for relative heat contents:
+   http://www.euronuclear.org/info/encyclopedia/coalequivalent.htm
    
 ** Oil and natural gas refining
    This is the most complex chemical process. Many materials will be
@@ -4220,6 +4272,16 @@
    much related to the purpose of the ore dictionary. The ore
    dictionary is a fairly rudimentary abstraction, but it works, and
    is something we need anyway.
+  
+** Multiblocks
+   Multiblock structures are essentially crafting but with blocks in
+   the world (and thus in 3D). Could have an API like the crafting
+   API. A component block listens for neighbor updates and, upon an
+   update, it checks for a candidate "master" block (this might be
+   itself, or at some offset to itself, or it simply delegates the
+   request to its neighbors). Once a master is identified, the system
+   initializes a tile entity, which represents a high-level object
+   that models the behavior of the machine as a whole.
    
 * Tasks
 ** DONE Add more minerals
