@@ -103,8 +103,8 @@ public enum GeoMaterial implements Mixture {
 	BAUXITE(Ores.GIBBSITE.mix(Ores.HEMATITE, 0.45).mix(Ores.CALCITE, 0.10)
 			.mix(IndustrialMinerals.KAOLINITE, 0.10).mix(IndustrialMinerals.QUARTZ, 0.05).mix(Ores.ANATASE, 0.05), 
 			Strength.WEAK, LATERITE),
-	BENTONITE(IndustrialMinerals.BENTONITE, Strength.WEAK, Material.clay),
-	FULLERS_EARTH(IndustrialMinerals.FULLERS_EARTH, Strength.WEAK, Material.clay),
+	BENTONITE(IndustrialMinerals.SODIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
+	FULLERS_EARTH(IndustrialMinerals.CALCIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
 	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
 	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, Aggregates.CLAY),
 	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, Aggregates.CLAY),
@@ -160,7 +160,7 @@ public enum GeoMaterial implements Mixture {
 	TRONA(IndustrialMinerals.TRONA
           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	
-	ALUNITE(IndustrialMinerals.ALUNITE.mix(IndustrialMinerals.BENTONITE, 0.1), Strength.MEDIUM),
+	ALUNITE(IndustrialMinerals.ALUNITE.mix(BENTONITE, 0.1), Strength.MEDIUM),
 	CELESTINE(Ores.CELESTINE.mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.MEDIUM, GYPSUM),
 	DOLOMITE(IndustrialMinerals.DOLOMITE.mix(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
 	FLUORITE(Ores.FLUORITE.mix(Ores.SPHALERITE, 0.06).mix(Ores.GALENA, 0.02), Strength.MEDIUM, Aggregates.STONE),
