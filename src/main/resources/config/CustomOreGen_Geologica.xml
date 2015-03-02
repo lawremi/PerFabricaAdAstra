@@ -3790,8 +3790,7 @@
   
   <ConfigSection>
     <ConfigSection>
-      <VeinsPreset name="PresetKimberlitePipes"
-                   inherits='PresetPipeVeins' seed='0xF186'>
+      <VeinsPreset name="PresetKimberlitePipes" inherits='PresetPipeVeins'>
         <WireframeColor>0x40336699</WireframeColor> 
         <Setting name='MotherlodeFrequency'
                  avg=':= 0.5 * _default_'/> 
@@ -3802,7 +3801,7 @@
         <OreBlock block='PFAAGeologica:veryStrongStone:3' weight='0.4'/>
       </VeinsPreset>
       <VeinsPreset name="PresetKimberlitePipesLava" block='minecraft:lava'
-                   inherits='PresetKimberlitePipes' seed='0xF186'
+                   inherits='PresetKimberlitePipes'
                    drawWireframe='false'>
         <Setting name='MotherlodeSize' avg=':= 0.5 * _default_'/>
         <Setting name='SegmentRadius' avg=':= 0.5 * _default_'/>
@@ -3813,10 +3812,11 @@
     </ConfigSection>
     <ConfigSection>
       <IfCondition condition=":=?GeologicaGenDiamond &amp; ?GeologicaActive">
-        <Veins name="KimberlitePipes" inherits='PresetKimberlitePipes'>
-          <Veins name="KimberlitePipesLava"
-                 inherits='PresetKimberlitePipesLava'/>
-        </Veins>
+        <Veins name="KimberlitePipes" inherits='PresetKimberlitePipes'
+               seed='0xF186'/>
+        <Veins name="KimberlitePipesLava"
+               inherits='PresetKimberlitePipesLava'
+               seed='0xF186'/>
       </IfCondition>
     </ConfigSection>
   </ConfigSection>
