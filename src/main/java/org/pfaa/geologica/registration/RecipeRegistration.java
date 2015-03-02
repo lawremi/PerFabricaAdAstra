@@ -253,12 +253,19 @@ public class RecipeRegistration {
 	private static void oreDictifyOre(GeoBlock block, GeoMaterial substance) {
 		ItemStack oreStack = block.getItemStack(substance);
 		String postfix = substance.getOreDictKey();
-		if (postfix != null && !Geologica.isTechnical()) {
+		boolean simpleOre = postfix != null && !Geologica.isTechnical();
+		if (simpleOre) {
 		    oreDictifyOre(postfix, oreStack);
 		}
-		oreDictifyOre(substance.getLowerName(), oreStack);
+		if (!(onlySingleRegistrationAllowed() && simpleOre)) {
+			oreDictifyOre(substance.getLowerName(), oreStack);
+		}
 	}
 	
+	private static boolean onlySingleRegistrationAllowed() {
+		return Loader.isModLoaded("RotaryCraft");
+	}
+
 	private static String oreDictKey(String prefix, String postfix) {
 		return prefix + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
 	}
