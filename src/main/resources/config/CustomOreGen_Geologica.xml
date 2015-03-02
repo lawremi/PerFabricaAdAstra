@@ -1497,6 +1497,7 @@
                  range=':=10/64 * dimension.groundLevel' type='normal'/>
         <Setting name='OreVolumeNoiseCutoff' avg=':=0.6 * _default_'/>
         <Replaces block='minecraft:stone'/>
+        <Replaces block='minecraft:sandstone'/>
         <Replaces block='PFAAGeologica:weakStone:0'/>
         <Replaces block='PFAAGeologica:weakStone:2'/>
         <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -1535,6 +1536,7 @@
         <Replaces block='PFAAGeologica:weakStone:4'/>
         <Replaces block='PFAAGeologica:mediumStone:0'/>
         <Replaces block='PFAAGeologica:strongStone:8'/>
+        <Replaces block='minecraft:sandstone'/>
       </VeinsPreset>
 
       <ConfigSection> <!-- Coal -->
@@ -2255,6 +2257,9 @@
           <BiomeType name='wasteland'/>
           <BiomeType name='wet' weight='-1'/>
           <Replaces block='minecraft:stone'/>
+          <Replaces block='minecraft:sandstone'/>
+          <Replaces block='minecraft:hardened_clay'/>
+          <Replaces block='minecraft:sand'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>
           <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -2948,6 +2953,7 @@
                      avg=':= 55/64 * dimension.groundLevel'
                      range=':= 2/64 * dimension.groundLevel'/>
             <Replaces block='minecraft:stone'/>
+            <Replaces block='minecraft:sandstone'/>
             <Replaces block='PFAAGeologica:weakStone:0'/>
             <Replaces block='PFAAGeologica:weakStone:2'/>
             <Replaces block='PFAAGeologica:weakStone:3'/>
@@ -3359,6 +3365,8 @@
                    avg=':= 5 * _default_'/>
           <BiomeSet inherits='volcanic'/>
           <BiomeType name='sandy'/>
+          <ReplacesOre block='stone'/>
+          <Replaces block='minecraft:sandstone'/>
         </CloudPreset>
         <VeinsPreset name='PresetPerliteVeins'
                      inherits='PresetLayeredVeinsVolcanic'
@@ -3530,6 +3538,12 @@
                      block='PFAAGeologica:weakOreClay:2'
                      drawWireframe='false'
                      wireframeColor='0xFFFF00FF'>
+          <Setting name='CloudHeight' avg=':=60/64 * dimension.groundLevel'
+                   range=':=2/64 * dimension.groundLevel'/>
+          <ReplacesOre block='stone'/>
+          <Replaces block='minecraft:sandstone'/>
+          <Replaces block='minecraft:sand'/>
+          <Replaces block='minecraft:hardened_clay'/>
           <Setting name='DistributionFrequency' avg=':= 6 * _default_'/>
           <Setting name='OreDensity' avg=':=1.5 * _default_'/>
           <BiomeType name='sandy'/>
@@ -3539,6 +3553,10 @@
                      block='PFAAGeologica:weakOreClay:3'
                      drawWireframe='false'
                      wireframeColor='0xFF0000FF'>
+          <Setting name='CloudHeight' avg=':=60/64 * dimension.groundLevel'
+                   range=':=2/64 * dimension.groundLevel'/>
+          <ReplacesOre block='stone'/>
+          <Replaces block='minecraft:dirt'/>
           <Setting name='DistributionFrequency' avg=':= 12 * _default_'/>
           <Setting name='OreDensity' avg=':=1.5 * _default_'/>
           <Biome name='.*' weight='-1'/>
