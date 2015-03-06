@@ -34,6 +34,7 @@ public class FilledGlassBottleItem extends ItemPotion {
     public FilledGlassBottleItem() {
         this.setTextureName("potion");
         this.setMaxStackSize(64);
+        this.setHasSubtypes(true);
     }
     
 	private Fluid getFluidForItemStack(ItemStack itemStack) {
@@ -93,7 +94,7 @@ public class FilledGlassBottleItem extends ItemPotion {
         for (Fluid fluid : fluids) {
             FluidStack fluidStack = new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME);
             ItemStack filledContainer = FluidContainerRegistry.fillFluidContainer(fluidStack, FluidContainerRegistry.EMPTY_BOTTLE);
-            if (filledContainer != null) {
+            if (filledContainer != null && filledContainer.getItem() instanceof FilledGlassBottleItem) {
                 itemStacks.add(filledContainer);
             }
         }
