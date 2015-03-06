@@ -99,8 +99,7 @@
       </BiomeSet>
 
       <BiomeSet name='stratovolcano'>
-        <Biome name='Extreme\s*Hills'/>
-        <Biome name='Extreme\s*Hills\s*Edge'/>
+        <Biome name='Extreme\s*Hills.*'/>
       </BiomeSet>
 
       <BiomeSet name='caldera'>
