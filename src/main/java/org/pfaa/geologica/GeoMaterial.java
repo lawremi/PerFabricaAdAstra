@@ -157,7 +157,7 @@ public enum GeoMaterial implements Mixture {
 	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE, Strength.WEAK, SERPENTINITE),
 	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
 	REALGAR(Ores.REALGAR.mix(Ores.ORPIMENT, 0.1).mix(Ores.STIBNITE, 0.04).mix(Ores.CINNABAR, 0.04), Strength.WEAK, GRANITE),
-	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(COAL, 0.5), Strength.WEAK),
+	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(BITUMINOUS_COAL, 0.5), Strength.WEAK),
 	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MIRABILITE(IndustrialMinerals.MIRABILITE
 	           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
