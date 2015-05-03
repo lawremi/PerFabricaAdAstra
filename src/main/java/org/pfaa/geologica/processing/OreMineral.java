@@ -64,7 +64,7 @@ public interface OreMineral extends Mineral {
 		CUPRITE(Compounds.Cu2O, Color.red),
 		FLUORITE(Compounds.CaF2, new Color(155, 0, 165)),
 		GALENA(Compounds.PbS),
-		GIBBSITE(Compounds.AlOH3, new Substitution(Ga, 0.001)),
+		GIBBSITE(Compounds.AlOH3, new Color(155, 75, 35), new Substitution(Ga, 0.001)),
 		GOETHITE(Compounds.alpha_FeOH3, new Substitution(Ni, 0.05), new Substitution(Co, 0.01)),
 		GREENOCKITE(Compounds.CdS),
 		GYPSUM(Compounds.CaSO4_2H2O),
