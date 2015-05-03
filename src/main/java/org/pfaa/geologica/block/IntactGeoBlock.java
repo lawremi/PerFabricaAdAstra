@@ -110,6 +110,9 @@ public class IntactGeoBlock extends GeoBlock {
 				set.add(new BlockMeta(((ItemBlock) item).field_150939_a, ore.getItemDamage()));
 			}
 		}
+		if (key == "stone") {
+			set.add(new BlockMeta(Blocks.sandstone, 0));
+		}
 		return set;
 	}
 	
