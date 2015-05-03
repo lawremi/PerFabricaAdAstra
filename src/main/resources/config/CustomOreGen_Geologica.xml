@@ -2008,7 +2008,7 @@
           <Setting name='DistributionFrequency' avg='0.01'/>
           <Setting name='CloudThickness' avg='2' range='1'/>
           <Setting name='CloudHeight'
-                   avg=':= 59/64 * dimension.groundLevel'
+                   avg=':= 60/64 * dimension.groundLevel'
                    range='2'/>
           <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
