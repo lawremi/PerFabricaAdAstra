@@ -2100,7 +2100,6 @@
             </Cloud>
             <Cloud name='Peat' inherits='PresetPeat'/>
             <Cloud name='BogLimonite' inherits='PresetBogLimonite'/>
-            <Cloud name='RiverLimonite' inherits='PresetRiverLimonite'/>
           </IfCondition>
         </IfCondition>
       </ConfigSection>
