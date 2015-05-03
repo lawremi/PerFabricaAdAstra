@@ -1,5 +1,6 @@
 package org.pfaa.geologica.block;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -7,20 +8,24 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
+import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
+import org.pfaa.geologica.processing.Ore;
 import org.pfaa.util.BlockMeta;
 
 import cpw.mods.fml.relauncher.Side;
@@ -31,6 +36,29 @@ public class IntactGeoBlock extends GeoBlock {
 
 	public IntactGeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
 		super(strength, composition, material, false);
+	}
+
+	
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		GeoMaterial material = this.getGeoMaterial(metadata);
+		if (material.getBlockMaterial() == Material.clay || material.getBlockMaterial() == Material.ground) {
+			return this.getEarthyDrops(material, fortune);
+		}
+		return super.getDrops(world, x, y, z, metadata, fortune);
+	}
+	
+	private ArrayList<ItemStack> getEarthyDrops(GeoMaterial material, int fortune) {
+		int numOreDrops = material.getComposition() instanceof Ore ? fortune + 1 : 4;
+		ArrayList<ItemStack> drops = new ArrayList();
+		GeoMaterial host = (GeoMaterial)material.getHost();
+		for (int i = 1; i <= 4; i++) {
+			if (i > numOreDrops) {
+				material = host;
+			}
+			drops.add(GeologicaItems.EARTHY_CLUMP.getItemStack(material)); 
+		}
+		return drops;
 	}
 
 	@Override
