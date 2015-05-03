@@ -10,7 +10,7 @@ import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.Phase;
+import org.pfaa.chemica.model.State;
 
 public interface Aggregate extends Mixture {
 	
@@ -28,7 +28,7 @@ public interface Aggregate extends Mixture {
 		private ConditionProperties properties;
 		
 		private Aggregates(Color color, double density) {
-			this.properties = new ConditionProperties(Phase.SOLID, color, density, new Hazard());
+			this.properties = new ConditionProperties(State.SOLID, color, density, new Hazard());
 		}
 		
 		@Override

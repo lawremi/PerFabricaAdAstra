@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pfaa.chemica.model.Chemical;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
 import org.pfaa.chemica.model.CompoundDictionary;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
