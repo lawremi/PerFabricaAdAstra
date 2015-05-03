@@ -34,6 +34,7 @@ public class Vaporization {
 	}
 	
 	public static class AntoineCoefficients {
+		// For coefficients given in celcius, I think we can subtract 273 from 'c'
 		private double a, b, c; // units: temperature=K, pressure=bar (need to convert to kPa (=bar/100))
 		private static int KPA_PER_BAR = 100;
 		public AntoineCoefficients(double a, double b, double c) {

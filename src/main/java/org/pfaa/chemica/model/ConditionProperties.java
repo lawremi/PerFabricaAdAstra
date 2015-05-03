@@ -3,15 +3,15 @@ package org.pfaa.chemica.model;
 import java.awt.Color;
 
 public class ConditionProperties {
-	public final Phase phase;
+	public final State state;
 	public final Color color;
 	public final double density;
 	public final Hazard hazard;
 	public final double viscosity;
 	public final int luminosity;
-	public final boolean opaque;
+	public final boolean opaque; // FIXME: can't we just use the color alpha for this?
 	
-	public ConditionProperties(PhaseProperties properties, Condition condition) {
+	public ConditionProperties(StateProperties properties, Condition condition) {
 		this(properties.getPhase(), 
 			 properties.getColor(condition.temperature), 
 			 properties.getDensity(condition),
@@ -21,10 +21,10 @@ public class ConditionProperties {
 		     properties.getOpaque());
 	}
 	
-	public ConditionProperties(Phase phase, Color color, double density,
+	public ConditionProperties(State phase, Color color, double density,
 			Hazard hazard, double viscosity, int luminosity, boolean opaque) {
 		super();
-		this.phase = phase;
+		this.state = phase;
 		this.color = color;
 		this.hazard = hazard;
 		this.density = density;
@@ -33,12 +33,12 @@ public class ConditionProperties {
 		this.opaque = opaque;
 	}
 	
-	public ConditionProperties(Phase phase, Color color, double density, Hazard hazard) {
-		this(phase, color, density, hazard, phase == Phase.SOLID ? Double.POSITIVE_INFINITY : Double.NaN, 0, false);
+	public ConditionProperties(State phase, Color color, double density, Hazard hazard) {
+		this(phase, color, density, hazard, phase == State.SOLID ? Double.POSITIVE_INFINITY : Double.NaN, 0, false);
 	}
 	
 	private ConditionProperties(ConditionProperties props, Color overrideColor) {
-		this(props.phase, overrideColor, props.density, props.hazard, props.viscosity, props.luminosity, props.opaque);
+		this(props.state, overrideColor, props.density, props.hazard, props.viscosity, props.luminosity, props.opaque);
 	}
 	
 	public ConditionProperties recolor(Color overrideColor) {

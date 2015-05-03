@@ -25,6 +25,7 @@ import static org.pfaa.chemica.model.Element.Elements.Li;
 import static org.pfaa.chemica.model.Element.Elements.Mg;
 import static org.pfaa.chemica.model.Element.Elements.Mn;
 import static org.pfaa.chemica.model.Element.Elements.Mo;
+import static org.pfaa.chemica.model.Element.Elements.N;
 import static org.pfaa.chemica.model.Element.Elements.Na;
 import static org.pfaa.chemica.model.Element.Elements.Nb;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
@@ -46,11 +47,11 @@ import static org.pfaa.chemica.model.Element.Elements.Zr;
 
 import java.awt.Color;
 
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas.Sutherland;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid.Yaws;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
+import org.pfaa.chemica.model.ChemicalStateProperties.Gas.Sutherland;
+import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Liquid.Yaws;
+import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
 import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
 
@@ -72,12 +73,24 @@ public interface Compound extends Chemical {
 			new Vaporization(4.65, 1435, -64.8), 
 			new Gas(new Thermo(30.1, 6.83, 6.79, -2.53, 0.0821, -251, 223)
 			        .addSegment(1700, 42.0, 8.62, -1.50, 0.0981, -11.2, -272, 220), 
-					new Hazard(0, 0, 0), new Sutherland(13, 373, 961))),
+					new Hazard(0, 0, 0), new Sutherland(13, 373, 650))),
+		CO(new Formula(C, O), null, 
+		   new Solid(0.929,
+			    	 new Thermo(112),
+			    	 new Hazard(0, 4, 0)), 
+		   new Fusion(68.1),
+		   new Liquid(0.789,
+	    			  new Thermo(-110, 124, 46.4, 190),
+					  new Hazard(0, 4, 0), new Yaws(-1.12, 57.9, -4.92E-3, 8.22E-6)),
+		   new Vaporization(-269, 292, 268),
+		   new Gas(new Thermo(25.6, 6.10, 4.05, -2.67, 0.131, -118, 227)
+				   .addSegment(1300, 35.2, 1.3, -0.206, 0.0136, -3.28, -128, 232), 
+				   new Hazard(2, 4, 0), new Sutherland(17.2, 288, 118))),
 		CO2(new Formula(C, O._(2)), null, 
 			new Solid(1.56, 
 					  new Thermo(-427, 51.1, 0, 300), 
 					  new Hazard(3, 0, 0)), 
-			null, 
+			null, /* Does exist, but at high pressure, which we are not modeling */
 			null,
 			new Vaporization(6.81, 1301, -3.49), 
 			new Gas(new Thermo(25.0, 55.2, -33.7, 7.95, -0.137, -404, 228)
@@ -178,8 +191,8 @@ public interface Compound extends Chemical {
 		gamma_FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", 
 			  new Solid(new Color(120, 80, 40), 4.25, 
 					    new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
-	    alpha_FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", // yellow, while gamma polymorph is red/brown 
-	    		    new Solid(new Color(207, 189, 33), 4.25, 
+	    alpha_FeOH3(new Formula(Fe, new Part(O, H)._(3)), "iron", // yellow/orange, while gamma polymorph is red/brown 
+	    		    new Solid(new Color(230, 140, 0), 4.25, 
 	    		    		  new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
 		FeCr2O4(new Formula(Fe, Cr._(2), O._(4)), "chromium", 
 				new Solid(new Color(25, 10, 10), 4.7, new Thermo(-1438, 152, 160, 31.8, -6.33, 3.06)),
@@ -201,6 +214,20 @@ public interface Compound extends Chemical {
 		FeWO4(new Formula(Fe, new Part(W, O._(4))), "tungsten",
 			  new Solid(Color.black, 6.64, 
 					    new Thermo(-1155, 132, 114))),
+		H2(new Formula(H._(2)), "hydrogen",
+ 		   new Solid(0.088,
+ 				     new Thermo(2.38),
+ 		    		 new Hazard(0, 4, 0)),
+ 		   new Fusion(14.0),
+ 		   new Liquid(0.071,
+ 					  new Thermo(-7.62, 16.0, 1.76, 0.847),
+ 					  new Hazard(0, 4, 0), new Yaws(-7.02, 40.8, 0.237, -4.08E-3)),
+ 		   new Vaporization(3.54, 99.4, 7.73),
+ 		   new Gas(new Thermo(17.6, 44.9, 92.7, -405, 0.000618, -7.26, 137)
+ 				   .addSegment(298, 33.1, -11.4, 11.4, -2.77, -0.159, -9.98, 173)
+ 			       .addSegment(1000, 18.6, 12.3, -2.86, 0.268, 1.98, -1.15, 156)
+ 			       .addSegment(2500, 43.4, -4.29, 1.27, -0.0969, -20.5, -38.5, 162), 
+ 				   new Hazard(0, 4, 0), new Sutherland(8.76, 294, 72))),
 		H2S(new Formula(H._(2), S), "sulfur",
 			null,
 			null,
@@ -244,6 +271,19 @@ public interface Compound extends Chemical {
 			 new Solid(new Color(26, 26, 26), 5.06, 
 					   new Thermo(71.7, 7.52, -0.0449, 0.00887, -0.921, -301, 142), 
 					   new Hazard(1, 1, 0))),
+		N2(new Formula(N._(2)), "nitrogen", 
+		   new Solid(1.03, 
+				     new Thermo(84.7), 
+		    		 new Hazard(0, 0, 0)), 
+		   new Fusion(63.2), 
+		   new Liquid(0.808, 
+					  new Thermo(-0.966, 79.3, 28), 
+					  new Hazard(0, 0, 0), new Yaws(-15.6, 4.65E2, 1.63E-1, -6.34E-4)), 
+		   new Vaporization(3.74, 265, -6.79),
+		   new Gas(new Thermo(29.0, 1.85, -9.65, 16.6, 0.000117, -8.67, 226)
+			       .addSegment(500, 19.5, 19.9, -8.60, 1.37, 0.528, -4.94, 212)
+			       .addSegment(2000, 35.5, 1.13, -0.196, 0.0147, -4.55, -19.0, 225), 
+				   new Hazard(0, 0, 0), new Sutherland(17.8, 301, 111))),
 		Na2B4O7(new Formula(Na._(2), new Part(B._(4), O._(5), new Part(O, H)._(4))).hydrate(8), "borax",
 				new Solid(Color.WHITE, 1.7, new Thermo(-3276, 189, 614)),
 				new Fusion(1016),
@@ -274,7 +314,7 @@ public interface Compound extends Chemical {
 			new Gas(new Thermo(31.3, -20.2, 57.9, -36.5, -0.00737, -8.90, 247).
 					addSegment(700, 30.03, 8.77, -3.99, 0.788, -0.742, -11.3, 236).
 					addSegment(2000, 20.9, 10.7, -2.02, 0.146, 9.25, 5.34, 238), 
-					new Hazard(3, 0, 0, SpecialCode.OXIDIZER), new Sutherland(127, 292, 20.1))),
+					new Hazard(3, 0, 0, SpecialCode.OXIDIZER), new Sutherland(20.1, 292, 127))),
 		PbS(new Formula(Pb, S), "lead", 
 			new Solid(new Color(26, 26, 26), 7.6, 
 					  new Thermo(47.4, 7.55, 2.01, -0.700, -0.0318, -113, 146), 

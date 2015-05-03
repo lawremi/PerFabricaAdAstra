@@ -6,7 +6,7 @@ public class ChemicalConditionProperties extends ConditionProperties {
 	public final double enthalpy;
 	public final double entropy;
 	
-	public ChemicalConditionProperties(ChemicalPhaseProperties properties, Condition condition) {
+	public ChemicalConditionProperties(ChemicalStateProperties properties, Condition condition) {
 		super(properties, condition);
 		this.heatCapacity = properties.thermo.getHeatCapacity(condition.temperature);
 		this.enthalpy = properties.thermo.getEnthalpy(condition.temperature);

@@ -2,21 +2,19 @@ package org.pfaa.chemica.model;
 
 import java.awt.Color;
 
-public class ChemicalPhaseProperties extends PhaseProperties {
+public class ChemicalStateProperties extends StateProperties {
 	public final Thermo thermo;
 	
-	private static final Color COLORLESS = new Color(230, 230, 245);
-	
-	public ChemicalPhaseProperties(Phase phase, Color color, double density, Thermo thermo, 
+	public ChemicalStateProperties(State state, Color color, double density, Thermo thermo, 
 			Hazard hazard, boolean opaque) {
-		super(phase, color, density, hazard, opaque);
+		super(state, color, density, hazard, opaque);
 		this.thermo = thermo;
 	}
 	
-	public static class Solid extends ChemicalPhaseProperties {
+	public static class Solid extends ChemicalStateProperties {
 		public Solid(Color color, double density, Thermo thermo, Hazard hazard)
 		{
-			super(Phase.SOLID, color, density, thermo, hazard, true);
+			super(State.SOLID, color, density, thermo, hazard, true);
 		}
 		public Solid(Color color, double density, Thermo thermo)
 		{
@@ -39,11 +37,11 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		}
 	}
 	
-	public static class Liquid extends ChemicalPhaseProperties {
+	public static class Liquid extends ChemicalStateProperties {
 		private final Yaws yaws;
 		public Liquid(Color color, double density, Thermo thermo, Hazard hazard, Yaws yaws)
 		{
-			super(Phase.LIQUID, color, density, thermo, hazard, false);
+			super(State.LIQUID, color, density, thermo, hazard, false);
 			this.yaws = yaws;
 		}
 		public Liquid(double density, Thermo thermo, Hazard hazard, Yaws yaws)
@@ -88,7 +86,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		
 	}
 	
-	public static class Gas extends ChemicalPhaseProperties {
+	public static class Gas extends ChemicalStateProperties {
 		private final double molarMass;
 		private final Sutherland sutherland;
 
@@ -98,7 +96,7 @@ public class ChemicalPhaseProperties extends PhaseProperties {
 		
 		public Gas(Color color, Thermo thermo, Hazard hazard, Sutherland sutherland, double molarMass)
 		{
-			super(Phase.GAS, color, Double.NaN, thermo, hazard, false);
+			super(State.GAS, color, Double.NaN, thermo, hazard, false);
 			this.molarMass = molarMass;
 			this.sutherland = sutherland;
 		}

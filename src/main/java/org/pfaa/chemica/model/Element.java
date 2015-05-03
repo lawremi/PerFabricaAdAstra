@@ -2,10 +2,10 @@ package org.pfaa.chemica.model;
 
 import java.awt.Color;
 
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid.Yaws;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
+import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Liquid.Yaws;
+import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
 import org.pfaa.chemica.model.Formula.PartFactory;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
 import org.pfaa.chemica.model.Vaporization.AntoineCoefficients;
@@ -73,6 +73,7 @@ public interface Element extends Chemical, PartFactory {
 		  null, 
 		  new Vaporization(3915),
 		  new Gas(new Thermo(21.2, -0.812, 0.449, -0.0433, -0.0131, 710, 184))),
+		N("nitrogen", 14.0, -3), /* see Compounds.N2 for properties */
 		Na("sodium", 23.0, +1,
 		   new Solid(new Color(212, 216, 220), 0.968, 
 				     new Thermo(72.6, -9.49, -731, 1415, -1.26, -21.8, 155),

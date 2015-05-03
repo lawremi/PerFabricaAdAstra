@@ -1,8 +1,8 @@
 package org.pfaa.chemica.model;
 
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Gas;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Liquid;
-import org.pfaa.chemica.model.ChemicalPhaseProperties.Solid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
+import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
+import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
 
 
 public class SimpleChemical implements Chemical {
@@ -12,9 +12,9 @@ public class SimpleChemical implements Chemical {
 	private Fusion fusion;
 	private Vaporization vaporization;
 	
-	private ChemicalPhaseProperties solid;
-	private ChemicalPhaseProperties liquid;
-	private ChemicalPhaseProperties gas;
+	private ChemicalStateProperties solid;
+	private ChemicalStateProperties liquid;
+	private ChemicalStateProperties gas;
 	
 	public SimpleChemical(Formula formula, String oreDictKey, Solid solid) {
 		this(formula, oreDictKey, solid, null, null, null, null);
@@ -51,24 +51,24 @@ public class SimpleChemical implements Chemical {
 		return formula;
 	}
 
-	private Phase getPhaseForCondition(Condition condition) {
+	private State getStateForCondition(Condition condition) {
 		if (this.vaporization != null && condition.temperature > this.vaporization.getTemperature(condition.pressure)) {
-			return Phase.GAS;
+			return State.GAS;
 		} else if (this.fusion != null && condition.temperature > this.fusion.getTemperature()) {
-			return Phase.LIQUID;
+			return State.LIQUID;
 		} else {
-			return Phase.SOLID;
+			return State.SOLID;
 		}
 	}
 	
 	@Override
 	public ChemicalConditionProperties getProperties(Condition condition) {
-		Phase phase = this.getPhaseForCondition(condition);
-		return new ChemicalConditionProperties(this.getPhaseProperties(phase), condition);
+		State state = this.getStateForCondition(condition);
+		return new ChemicalConditionProperties(this.getStateProperties(state), condition);
 	}
 
-	private ChemicalPhaseProperties getPhaseProperties(Phase phase) {
-		switch(phase) {
+	private ChemicalStateProperties getStateProperties(State state) {
+		switch(state) {
 		case SOLID:
 			return solid;
 		case LIQUID:
@@ -76,7 +76,7 @@ public class SimpleChemical implements Chemical {
 		case GAS:
 			return gas;
 		default:
-			throw new IllegalArgumentException("Unknown phase: " + phase);
+			throw new IllegalArgumentException("Unknown phase: " + state);
 		}
 	}
 	

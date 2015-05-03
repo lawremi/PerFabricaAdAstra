@@ -20,10 +20,15 @@ public class Thermo {
 	public Thermo() { /* uncharacterized */
 		this(Double.NaN);
 	}
-	public Thermo(double S) { /* supports only transitions to this phase, but no heating or reactions */
+	/* 
+	 * this constructor assumes that S is independent of temperature, and we use it only to 
+	 * compute the enthalpy of the transition to this phase. 
+	 * 
+	 * */
+	public Thermo(double S /* J/mol */) { 
 		this(Double.NaN, S, Double.NaN);
 	}
-	public Thermo(double H, double S, double Cp) { /* constant heat capacity */
+	public Thermo(double H /* kJ/mol */, double S, double Cp /* J/mol */) { /* constant heat capacity */
 		this(H, S, Cp, 0);
 	}
 	public Thermo(double H, double S, double a, double b) { /* linear heat capacity */
@@ -105,6 +110,8 @@ public class Thermo {
 		
 		/* Simplified forms for when there are no published Shomate parameters */
 		
+		/* H and S are standard enthalpy and entropy, respectively, at 298 K */
+		
 		public Segment(double H, double S, double a) { // constant
 			this(H, S, a, 0);
 		}
@@ -121,19 +128,23 @@ public class Thermo {
 			this.g = S - this.getEntropy(Constants.STANDARD_TEMPERATURE);
 		}
 		
-		public double getHeatCapacity(double t) {
+		public /* J/(mol*K) */ double getHeatCapacity(double t) {
 			t = t / 1000;
 			return a + b * t + c * Math.pow(t, 2) + d * Math.pow(t, 3) + e / Math.pow(t, 2);
 		}
 		
-		public double getEnthalpy(double t) {
+		public /* kJ/mol */ double getEnthalpy(double t) {
 			t = t / 1000;
 			return a * t + b * Math.pow(t, 2) / 2 + c * Math.pow(t, 3) / 3 + d * Math.pow(t, 4) / 4 - e / t + f;
 		}
 		
-		public double getEntropy(double t) {
+		public /* J/mol */ double getEntropy(double t) {
 			t = t / 1000;
-			return a * Math.log(t) + b * t + c * Math.pow(t, 2) / 2 + d * Math.pow(t, 3) / 3 - e / (2*Math.pow(t, 2)) + g;
+			double delta = a * Math.log(t) + b * t + c * Math.pow(t, 2) / 2 + d * Math.pow(t, 3) / 3 - e / (2*Math.pow(t, 2));
+			if (Double.isNaN(delta)) {
+				delta = 0;
+			}
+			return delta + g;
 		}
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.Chemica;
 import org.pfaa.geologica.Geologica;
 
 import com.google.common.primitives.Doubles;
@@ -30,18 +31,18 @@ public class SimpleMixture implements Mixture {
 		this(new MixtureComponent(material, 1.0));
 	}
 	
-	private double getTotalWeight() {
+	public double getTotalWeight() {
 		double weight = 0;
 		for (MixtureComponent comp : components) {
 			weight += comp.weight;
 		}
 		return weight;
 	}
-	
+
 	private double getTotalFluidWeight(Condition condition) {
 		double weight = 0;
 		for (MixtureComponent comp : components) {
-			if (comp.getMaterial().getProperties(condition).phase != Phase.SOLID)
+			if (comp.getMaterial().getProperties(condition).state != State.SOLID)
 				weight += comp.weight;
 		}
 		return weight;
@@ -71,29 +72,36 @@ public class SimpleMixture implements Mixture {
 			return this.components.get(0).material.getProperties(condition);
 		}
 		double totalWeight = getTotalWeight();
-		int r = 0, g = 0, b = 0, luminosity = 0;
+		double totalAlpha = 0;
+		int a = 0, r = 0, g = 0, b = 0, luminosity = 0;
 		float health = 0, flammability = 0, instability = 0;
 		double density = 0, opaqueWeight = 0;
-		double[] phaseWeight = new double[Phase.values().length];
+		double[] stateWeight = new double[State.values().length];
 		for (MixtureComponent comp : this.components) {
 			ConditionProperties props = comp.material.getProperties(condition);
 			if (props == null)
 				continue;
 			double normWeight = comp.weight / totalWeight;
-			r += props.color.getRed() * normWeight;
-			b += props.color.getBlue() * normWeight;
-			g += props.color.getGreen() * normWeight;
+			double alpha = props.color.getAlpha() / 255.0;
+			totalAlpha += alpha * comp.weight;
+			a += props.color.getAlpha() * comp.weight;
+			r += props.color.getRed() * alpha * comp.weight;
+			b += props.color.getBlue() * alpha * comp.weight;
+			g += props.color.getGreen() * alpha * comp.weight;
 			density += props.density * normWeight;
 			luminosity += props.luminosity * normWeight;
 			health += props.hazard.health * normWeight;
 			flammability += props.hazard.flammability * normWeight;
 			instability += props.hazard.instability * normWeight;
-			phaseWeight[props.phase.ordinal()] += comp.weight;
+			stateWeight[props.state.ordinal()] += comp.weight;
 			if (props.opaque)
 				opaqueWeight += normWeight; 
 		}
-		Phase phase = Phase.values()[Doubles.indexOf(phaseWeight, Doubles.max(phaseWeight))];
-		return new ConditionProperties(phase, new Color(r, g, b), density,
+		if (totalAlpha > 0) {
+			r /= totalAlpha; g /= totalAlpha; b /= totalAlpha; a /= totalAlpha;
+		}
+		State phase = State.values()[Doubles.indexOf(stateWeight, Doubles.max(stateWeight))];
+		return new ConditionProperties(phase, new Color(r, g, b, a), density,
 				                       new Hazard(Math.round(health), Math.round(flammability), Math.round(instability)), 
 				                       this.getViscosity(condition, density), luminosity,
 				                       opaqueWeight > 0.5);
@@ -108,7 +116,7 @@ public class SimpleMixture implements Mixture {
 		// Chevron/Refutas method
 		for (MixtureComponent comp : this.components) {
 			ConditionProperties props = comp.material.getProperties(condition);
-			if (props.phase != Phase.SOLID) {
+			if (props.state != State.SOLID) {
 				double normWeight = comp.weight / fluidWeight;
 				double cSt = props.viscosity / props.density;
 				vbi += normWeight * Math.log(cSt) / Math.log(1000 * cSt);

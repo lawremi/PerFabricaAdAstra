@@ -5,16 +5,13 @@ import java.awt.Color;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
-import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Phase;
-import org.pfaa.chemica.model.PhaseProperties;
-import org.pfaa.geologica.Geologica;
-
-import com.google.common.base.CaseFormat;
+import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.StateProperties;
 
 public class IndustrialFluid extends Fluid {
 
@@ -38,7 +35,7 @@ public class IndustrialFluid extends Fluid {
 	}
 
 	public boolean isSuperHeated() {
-		return this.getTemperature() >= PhaseProperties.MIN_GLOWING_TEMPERATURE;
+		return this.getTemperature() >= StateProperties.MIN_GLOWING_TEMPERATURE;
 	}
 	
 	public IndustrialMaterial getIndustrialMaterial() {
@@ -62,18 +59,18 @@ public class IndustrialFluid extends Fluid {
 		this.pressure = pressure;
 	}
 	
-	public static IndustrialFluid getCanonicalFluidForPhase(IndustrialMaterial material, Condition condition) {
+	public static IndustrialFluid getCanonicalFluidForState(IndustrialMaterial material, Condition condition) {
 		ConditionProperties props = material.getProperties(condition);
-		if (props == null || props.phase == Phase.SOLID) {
+		if (props == null || props.state == State.SOLID) {
 			return null;
 		}
-		String name = (props.phase.name() + "_" + material.name()).toLowerCase();
+		String name = (props.state.name() + "_" + material.name()).toLowerCase();
 		Fluid existingFluid = FluidRegistry.getFluid(name);
 		IndustrialFluid fluid;
 		if (existingFluid instanceof IndustrialFluid) {
 			fluid = (IndustrialFluid)existingFluid;
 		} else {
-			Condition rounded = roundCondition(material, props.phase);
+			Condition rounded = IndustrialMaterialUtils.getCanonicalCondition(material, props.state);
 			fluid = createFluidForCondition(name, material, rounded);
 			FluidRegistry.registerFluid(fluid);
 		}
@@ -84,7 +81,7 @@ public class IndustrialFluid extends Fluid {
 			String name, IndustrialMaterial material, Condition condition) {
 		ConditionProperties props = material.getProperties(condition);
 		IndustrialFluid fluid = new IndustrialFluid(name, material);
-		fluid.setGaseous(props.phase == Phase.GAS);
+		fluid.setGaseous(props.state == State.GAS);
 		fluid.setDensity((int)(convertToForgeDensity(props.density)));
 		fluid.setCondition(condition);
 		if (Double.isNaN(props.viscosity)) {
@@ -102,28 +99,6 @@ public class IndustrialFluid extends Fluid {
 
 	private static double convertToForgeDensity(double density) {
 		return (density <= Constants.AIR_DENSITY ? (density - Constants.AIR_DENSITY) : density) * 1000;
-	}
-
-	private static Condition roundCondition(IndustrialMaterial material, Phase phase) {
-		double temperature = Constants.STANDARD_TEMPERATURE;
-		if (material instanceof Chemical) {
-			Chemical chemical = (Chemical)material;
-			temperature = getTemperatureClosestToStandard(chemical, phase);
-		}
-		return new Condition(temperature, Constants.STANDARD_PRESSURE);
-	}
-
-	private static double getTemperatureClosestToStandard(Chemical chemical, Phase phase) {
-		switch(phase) {
-		case SOLID:
-			return Math.min(chemical.getFusion().getTemperature(), Constants.STANDARD_TEMPERATURE);
-		case LIQUID:
-			return Math.max(chemical.getFusion().getTemperature(), Constants.STANDARD_TEMPERATURE);
-		case GAS:
-			return Math.max(chemical.getVaporization().getTemperature(), Constants.STANDARD_TEMPERATURE);
-		default:
-			return Constants.STANDARD_TEMPERATURE;
-		}
 	}
 
 	public boolean isOpaque() {

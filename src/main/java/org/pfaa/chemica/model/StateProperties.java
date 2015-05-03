@@ -6,14 +6,16 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import org.pfaa.chemica.util.ColorUtils;
 
-public class PhaseProperties {
-	private final Phase phase;
+public class StateProperties {
+	public static final Color COLORLESS = new Color(230, 230, 245, 0);
+	
+	private final State phase;
 	private final Color color; // base color, modified by thermal radiation
 	private final Hazard hazard;
 	private final double density; // g/mL, not relevant for gases
 	private final boolean opaque;
 	
-	public PhaseProperties(Phase phase, Color color, double density, Hazard hazard, boolean opaque) {
+	public StateProperties(State phase, Color color, double density, Hazard hazard, boolean opaque) {
 		this.phase = phase;
 		this.color = color;
 		this.density = density;
@@ -21,7 +23,7 @@ public class PhaseProperties {
 		this.opaque = opaque;
 	}
 	
-	public Phase getPhase() {
+	public State getPhase() {
 		return phase;
 	}
 	
@@ -43,7 +45,7 @@ public class PhaseProperties {
 	
 	/* dynamic (cP (mPa*s)) */
 	public double getViscosity(double temperature) {
-		return this.phase == Phase.SOLID ? Double.POSITIVE_INFINITY : Double.NaN;
+		return this.phase == State.SOLID ? Double.POSITIVE_INFINITY : Double.NaN;
 	}
 	
 	

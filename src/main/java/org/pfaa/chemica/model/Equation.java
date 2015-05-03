@@ -10,12 +10,12 @@ public class Equation {
 	public static class Term {
 		public final Formula formula;
 		public final int stoichiometry;
-		public final Phase phase;
+		public final State state;
 		
-		public Term(Formula formula, int stoichiometry, Phase phase) {
+		public Term(Formula formula, int stoichiometry, State state) {
 			this.formula = formula;
 			this.stoichiometry = stoichiometry;
-			this.phase = phase;
+			this.state = state;
 		}
 	}
 }
