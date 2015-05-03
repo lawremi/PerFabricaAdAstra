@@ -56,10 +56,10 @@ public enum GeoMaterial implements Mixture {
 	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.5), Strength.VERY_STRONG),
 	QUARTZITE(Aggregates.SAND.mix(IndustrialMinerals.QUARTZ, 0.5), Strength.VERY_STRONG),
 
-	LIGHT_OIL(new SimpleCrude(Crudes.FUEL_GAS, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
+	LIGHT_OIL(new SimpleCrude(Crudes.VOLATILES, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
 			  mix(Crudes.KEROSENE, 0.1).mix(Crudes.LIGHT_GAS_OIL, 0.05).mix(Crudes.HEAVY_GAS_OIL, 0.05).
 			  mix(Crudes.BITUMEN, 0.10), Strength.WEAK, Material.water),
-	MEDIUM_OIL(new SimpleCrude(Crudes.FUEL_GAS, 0.05).mix(Crudes.LIGHT_NAPHTHA, 0.15).mix(Crudes.HEAVY_NAPHTHA, 0.30).
+	MEDIUM_OIL(new SimpleCrude(Crudes.VOLATILES, 0.05).mix(Crudes.LIGHT_NAPHTHA, 0.15).mix(Crudes.HEAVY_NAPHTHA, 0.30).
 		 	   mix(Crudes.KEROSENE, 0.15).mix(Crudes.LIGHT_GAS_OIL, 0.1).mix(Crudes.HEAVY_GAS_OIL, 0.05).
 			   mix(Crudes.BITUMEN, 0.2), Strength.MEDIUM, Material.water),
 	HEAVY_OIL(new SimpleCrude(Crudes.LIGHT_NAPHTHA, 0.05).mix(Crudes.HEAVY_NAPHTHA, 0.10).
@@ -71,18 +71,26 @@ public enum GeoMaterial implements Mixture {
 				    
 	OIL_SAND(EXTRA_HEAVY_OIL.mix(Aggregates.SAND, 2.0), Strength.WEAK, Material.sand),
 	
-	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Compounds.PROPANE, 0.002).
-			    mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
+	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Compounds.N2, 0.02).
+			    mix(Compounds.CO2, 0.01).mix(Compounds.H2S, 0.002).
+			    mix(Compounds.PROPANE, 0.002).mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
 			    Strength.WEAK, Material.air),
 			    
-	OIL_SHALE(new SimpleCrude(Crudes.KEROGEN, 0.15).mix(MUDSTONE, 1.0).mix(Crudes.BITUMEN, 0.05), Strength.WEAK),
-	COAL(new SimpleCrude(Crudes.FIXED_CARBON, 0.6).mix(Aggregates.STONE, 0.1). /* really 'bituminous' coal */
-		 mix(EXTRA_HEAVY_OIL, 0.15).mix(Crudes.TRAPPED_MOISTURE, 0.15), Strength.WEAK, Aggregates.STONE),
-	LIGNITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.3).mix(Aggregates.STONE, 0.05).
-			mix(EXTRA_HEAVY_OIL, 0.25).mix(Crudes.TRAPPED_MOISTURE, 0.4), Strength.WEAK, Aggregates.STONE),
-	ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.9).mix(Aggregates.STONE, 0.1), Strength.WEAK, Aggregates.STONE),
+	OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2), Strength.WEAK, MUDSTONE),
+	BITUMINOUS_COAL(new SimpleCrude(Crudes.FIXED_CARBON, 0.7).mix(Aggregates.STONE, 0.15).
+                    mix(Crudes.COAL_TAR, 0.1).mix(Crudes.VOLATILES, 0.05).mix(Compounds.H2O, 0.1).
+                    oreDictify("coal"), 
+                    Strength.WEAK, Aggregates.STONE),
+	LIGNITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.35).mix(Aggregates.STONE, 0.1).
+		    mix(Crudes.COAL_TAR, 0.15).mix(Crudes.VOLATILES, 0.1).mix(Compounds.H2O, 0.3).
+		    oreDictify("coal"), // some mods use 'coal' or 'itemCoal', but should be 'lumpCoal'!
+		    Strength.WEAK, Aggregates.STONE),
+	ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.95).mix(Aggregates.STONE, 0.05).
+			   oreDictify("coal"), Strength.WEAK, Aggregates.STONE),
+	COAL_COKE(Crudes.COKE, Strength.STRONG, GRANITE),
 	
 	PEAT(Crudes.COMPOST, Strength.WEAK, Material.ground),
+	BOG_IRON(Ores.GOETHITE, Strength.WEAK, PEAT),
 
 	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(IndustrialMinerals.GARNET, 0.4)
 					      .mix(Ores.CHROMITE, 0.2).mix(Ores.ILMENITE, 0.6).mix(Ores.RUTILE, 0.2).mix(Ores.ZIRCON, 0.2),
