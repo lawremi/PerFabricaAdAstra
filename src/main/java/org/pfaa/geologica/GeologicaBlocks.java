@@ -106,8 +106,10 @@ public class GeologicaBlocks {
 	public static final IndustrialFluidBlock NATURAL_GAS = createFluidBlock(GeoMaterial.NATURAL_GAS);
 	
 	public static final GeoBlock CRUDE_SAND = createCrudeSandBlock();
-	public static final GeoBlock CRUDE_ROCK = createCrudeRockBlock();
+	public static final GeoBlock CRUDE_ROCK = createCrudeRockBlock(Strength.WEAK);
+	public static final GeoBlock STRONG_CRUDE_ROCK = createCrudeRockBlock(Strength.STRONG);
 	public static final GeoBlock CRUDE_GROUND = createCrudeGroundBlock();
+	public static final GeoBlock WEAK_ORE_GROUND = createOreGroundBlock();
 	
 	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
 	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
@@ -147,11 +149,14 @@ public class GeologicaBlocks {
 	private static GeoBlock createCrudeSandBlock() {
 		return createGeoBlock(LooseGeoBlock.class, Strength.WEAK, Crude.class, Material.sand);
 	}
-	private static GeoBlock createCrudeRockBlock() {
-		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.rock);
+	private static GeoBlock createCrudeRockBlock(Strength strength) {
+		return createGeoBlock(IntactGeoBlock.class, strength, Crude.class, Material.rock);
 	}
 	private static GeoBlock createCrudeGroundBlock() {
-		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.ground);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.ground));
+	}
+	private static GeoBlock createOreGroundBlock() {
+		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.ground);
 	}
 	private static GeoBlock createVanillaOreRockBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.STRONG, VanillaOre.class, Material.rock);
@@ -209,7 +214,7 @@ public class GeologicaBlocks {
 	}
 	
 	private static IndustrialFluidBlock createFluidBlock(GeoMaterial material) {
-		IndustrialFluid fluid = IndustrialFluid.getCanonicalFluidForPhase(material, Condition.STP);
+		IndustrialFluid fluid = IndustrialFluid.getCanonicalFluidForState(material, Condition.STP);
 		return new IndustrialFluidBlock(fluid);
 	}
 }
