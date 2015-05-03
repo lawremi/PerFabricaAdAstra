@@ -1,6 +1,5 @@
 package org.pfaa.chemica.model;
 
-import java.awt.Color;
 
 public interface IndustrialMaterial {
 	public String name();

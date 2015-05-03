@@ -3,8 +3,6 @@ package org.pfaa.geologica.processing;
 import java.awt.Color;
 import java.util.List;
 
-import net.minecraft.block.material.Material;
-
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
@@ -13,11 +11,8 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
-import org.pfaa.geologica.GeoMaterial.Strength;
-import org.pfaa.geologica.processing.Aggregate.Aggregates;
 
 /* Crude mixtures of organic substances */
 public interface Crude extends Mixture, Vaporizable {

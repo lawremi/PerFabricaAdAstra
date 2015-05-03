@@ -14,7 +14,7 @@ import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 
-import scala.actors.threadpool.Arrays;
+import java.util.Arrays;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -22,7 +22,7 @@ import com.google.common.collect.Iterables;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class IndustrialMaterialItem<T extends Enum & IndustrialMaterial> extends Item {
+public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> extends Item {
 	
 	private Form form;
 	private Class<T> enumClass;
@@ -86,9 +86,10 @@ public class IndustrialMaterialItem<T extends Enum & IndustrialMaterial> extends
 		return material.getProperties(canonicalSolid);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs tabs, List itemStacks) {
+	public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List itemStacks) {
 		List<T> materials = Arrays.asList(this.enumClass.getEnumConstants());
 		for (T material : Iterables.filter(materials, this.predicate)) {
 			itemStacks.add(this.getItemStack(material));

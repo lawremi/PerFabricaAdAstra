@@ -8,9 +8,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.pfaa.block.CompositeBlockAccessors;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 public class CompositeBlockItem extends ItemBlock {
 
 	public CompositeBlockItem(Block block) {

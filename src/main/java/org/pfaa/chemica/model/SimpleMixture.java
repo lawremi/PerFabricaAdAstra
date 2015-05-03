@@ -6,9 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.pfaa.chemica.Chemica;
-import org.pfaa.geologica.Geologica;
-
 import com.google.common.primitives.Doubles;
 
 public class SimpleMixture implements Mixture {
@@ -139,7 +136,7 @@ public class SimpleMixture implements Mixture {
 	
 	@Override
 	public Mixture mix(IndustrialMaterial material, double weight) {
-		List<MixtureComponent> components = new ArrayList(this.components);
+		List<MixtureComponent> components = new ArrayList<MixtureComponent>(this.components);
 		components.add(new MixtureComponent(material, weight));
 		return new SimpleMixture(components);
 	}

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Thermo {
 
-	private List<Segment> shomates = new ArrayList();
-	private List<Double> temperatureBreaks = new ArrayList();;
+	private List<Segment> shomates = new ArrayList<Segment>();
+	private List<Double> temperatureBreaks = new ArrayList<Double>();;
 	
 	private Thermo(Thermo thermo) {
 		this.shomates.addAll(thermo.shomates);
@@ -29,10 +29,10 @@ public class Thermo {
 		this(Double.NaN, S, Double.NaN);
 	}
 	public Thermo(double H /* kJ/mol */, double S, double Cp /* J/mol */) { /* constant heat capacity */
-		this(H, S, Cp, 0);
+		this(new Segment(H, S, Cp));
 	}
 	public Thermo(double H, double S, double a, double b) { /* linear heat capacity */
-		this(H, S, a, b, 0, 0);
+		this(new Segment(H, S, a, b));
 	}
 	public Thermo(double H, double S, double a, double b, double c, double e) { /* quadratic heat capacity */
 		this(new Segment(H, S, a, b, c, e));

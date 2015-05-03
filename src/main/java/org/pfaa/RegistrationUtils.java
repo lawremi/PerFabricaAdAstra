@@ -3,7 +3,6 @@ package org.pfaa;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -23,7 +22,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RegistrationUtils {
 
-	public static void registerDeclaredBlocks(Class catalogClass, Class blockClass, Class<? extends ItemBlock> itemClass) {
+	public static void registerDeclaredBlocks(Class<? extends Catalog> catalogClass, Class<? extends Block> blockClass, Class<? extends ItemBlock> itemClass) {
 		Field[] fields = catalogClass.getFields();
 		for (Field field : fields) {
 			try {
@@ -43,7 +42,7 @@ public class RegistrationUtils {
 		}
 	}
 
-	public static void registerDeclaredItems(Class catalogClass) {
+	public static void registerDeclaredItems(Class<? extends Catalog> catalogClass) {
 	    Field[] fields = catalogClass.getFields();
         for (Field field : fields) {
             try {
@@ -63,7 +62,7 @@ public class RegistrationUtils {
 				      to(CaseFormat.LOWER_CAMEL, name.replaceAll("__", "."));
 	}
 	
-	public static void registerContainersForDeclaredFluidBlocks(Class catalogClass) {
+	public static void registerContainersForDeclaredFluidBlocks(Class<? extends Catalog> catalogClass) {
 		Field[] fields = catalogClass.getFields();
 		for (Field field : fields) {
 			try {

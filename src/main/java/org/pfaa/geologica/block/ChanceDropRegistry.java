@@ -13,7 +13,7 @@ import org.pfaa.geologica.GeoMaterial;
 
 public class ChanceDropRegistry {
 	
-	private Map<GeoMaterial, ChanceDropSet> dropsByMaterial = new HashMap();
+	private Map<GeoMaterial, ChanceDropSet> dropsByMaterial = new HashMap<GeoMaterial, ChanceDropSet>();
 	
 	private static final ChanceDropRegistry INSTANCE = new ChanceDropRegistry();
 	
@@ -62,7 +62,7 @@ public class ChanceDropRegistry {
 		private List<ChanceDrop> drops;
 		
 		public ChanceDropSet(ChanceDrop... drops) {
-			this.drops = new ArrayList(Arrays.asList(drops));
+			this.drops = new ArrayList<ChanceDrop>(Arrays.asList(drops));
 		}
 		
 		public void addDrop(ChanceDrop drop) {
@@ -70,7 +70,7 @@ public class ChanceDropRegistry {
 		}
 		
 		public ArrayList<ItemStack> getDrops(Random rand, int fortune) {
-			ArrayList<ItemStack> items = new ArrayList();
+			ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 			for (ChanceDrop drop : this.drops) {
 				if (rand.nextFloat() < drop.chance) {
 					ItemStack itemStack = drop.itemStack.copy();
@@ -84,10 +84,6 @@ public class ChanceDropRegistry {
 				}
 			}
 			return items;
-		}
-		
-		public List<ItemStack> getQuantity(Random rand) {
-			return this.getDrops(rand, 0);
 		}
 	}
 

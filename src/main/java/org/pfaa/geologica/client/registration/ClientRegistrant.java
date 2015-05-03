@@ -8,7 +8,6 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.pfaa.block.CompositeBlockAccessors;
 import org.pfaa.geologica.GeologicaBlocks;
-import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.client.render.CompositeBlockItemRenderer;
 import org.pfaa.geologica.client.render.CompositeBlockRenderer;
 import org.pfaa.geologica.client.render.FallingCompositeBlockRenderer;

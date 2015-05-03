@@ -7,7 +7,6 @@ import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -65,7 +64,7 @@ public class FilledGlassBottleItem extends ItemPotion {
 		if (fluid instanceof IndustrialFluid) {
 			return ((IndustrialFluid)fluid).getProperties().hazard.getIngestionEffects();
 		}
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -86,9 +85,10 @@ public class FilledGlassBottleItem extends ItemPotion {
         return StatCollector.translateToLocal(this.getUnlocalizedName(p_77653_1_) + ".name").trim();
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List itemStacks)
+    public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List itemStacks)
     {
         Collection<Fluid> fluids = FluidRegistry.getRegisteredFluids().values();
         for (Fluid fluid : fluids) {
@@ -100,9 +100,10 @@ public class FilledGlassBottleItem extends ItemPotion {
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List lines, boolean p_77624_4_)
+    public void addInformation(ItemStack itemStack, EntityPlayer player, @SuppressWarnings("rawtypes") List lines, boolean p_77624_4_)
     {
         Fluid fluid = this.getFluidForItemStack(itemStack);
         if (fluid instanceof IndustrialFluid) {

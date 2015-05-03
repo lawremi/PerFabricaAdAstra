@@ -6,8 +6,11 @@ import net.minecraftforge.fluids.FluidStack;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.processing.OreMineral.SmeltingTemperature;
 
+// FIXME: stub, will become a mod integration plugin
+
 public class TEIntegration {
 
+	@SuppressWarnings("unused")
 	private static int getPulverizerEnergy(Strength strength) {
 		switch(strength) {
 		case WEAK:
@@ -22,6 +25,7 @@ public class TEIntegration {
 		return -1;
 	}
 	
+	@SuppressWarnings("unused")
 	private static int getCrucibleEnergy(Strength strength) {
 		switch(strength) {
 		case WEAK:
@@ -36,6 +40,7 @@ public class TEIntegration {
 		return -1;
 	}
 	
+	@SuppressWarnings("unused")
 	private static int getSmeltingEnergy(SmeltingTemperature temperature) {
 		switch(temperature) {
 		case LOW:

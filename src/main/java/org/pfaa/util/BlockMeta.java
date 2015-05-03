@@ -1,9 +1,6 @@
 package org.pfaa.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class BlockMeta {
 	private Block block;

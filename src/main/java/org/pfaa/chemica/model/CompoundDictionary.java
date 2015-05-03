@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CompoundDictionary {
-	private static Map<Formula, Compound> compounds = new HashMap();
+	private static Map<Formula, Compound> compounds = new HashMap<Formula, Compound>();
 	
 	public static Compound lookup(Formula formula) {
 		return compounds.get(formula);

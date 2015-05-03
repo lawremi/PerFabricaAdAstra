@@ -9,10 +9,8 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeoMaterial.Strength;
 
 import cpw.mods.fml.relauncher.Side;

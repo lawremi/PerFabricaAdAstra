@@ -10,7 +10,6 @@ import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.StateProperties;
 
 public interface IndustrialMineral extends Mineral {
 	public enum IndustrialMinerals implements IndustrialMineral {
@@ -71,7 +70,7 @@ public interface IndustrialMineral extends Mineral {
 
 		@Override
 		public List<MixtureComponent> getComponents() {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 
 		@Override

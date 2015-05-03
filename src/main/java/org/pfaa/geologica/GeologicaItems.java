@@ -9,7 +9,7 @@ import org.pfaa.geologica.processing.Crude;
 
 import com.google.common.base.Predicate;
 
-public class GeologicaItems extends ItemCatalog {
+public class GeologicaItems implements ItemCatalog {
 	private static Predicate<GeoMaterial> EarthyMaterial = new Predicate<GeoMaterial>() {
 		public boolean apply(GeoMaterial obj) {
 			return obj.getBlockMaterial() == Material.clay || obj.getBlockMaterial() == Material.ground;

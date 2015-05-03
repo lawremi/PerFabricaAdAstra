@@ -8,10 +8,8 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
+import org.pfaa.BlockCatalog;
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
 import org.pfaa.chemica.fluid.IndustrialFluid;
@@ -20,7 +18,6 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
-import org.pfaa.geologica.block.ChanceDropRegistry;
 import org.pfaa.geologica.block.GeoBlock;
 import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
@@ -35,11 +32,11 @@ import org.pfaa.geologica.processing.VanillaOre;
 
 import cpw.mods.fml.common.LoaderException;
 
-public class GeologicaBlocks {
-	public static final GeoBlock WEAK_STONE = createStoneBlock(Strength.WEAK);
-	public static final GeoBlock MEDIUM_STONE = createStoneBlock(Strength.MEDIUM);
-	public static final GeoBlock STRONG_STONE = createStoneBlock(Strength.STRONG);
-	public static final GeoBlock VERY_STRONG_STONE = createStoneBlock(Strength.VERY_STRONG);
+public class GeologicaBlocks implements BlockCatalog {
+	public static final IntactGeoBlock WEAK_STONE = createStoneBlock(Strength.WEAK);
+	public static final IntactGeoBlock MEDIUM_STONE = createStoneBlock(Strength.MEDIUM);
+	public static final IntactGeoBlock STRONG_STONE = createStoneBlock(Strength.STRONG);
+	public static final IntactGeoBlock VERY_STRONG_STONE = createStoneBlock(Strength.VERY_STRONG);
 	
 	public static final GeoBlock MEDIUM_COBBLE = createCobbleBlock(Strength.MEDIUM);
 	public static final GeoBlock STRONG_COBBLE = createCobbleBlock(Strength.STRONG);
@@ -119,7 +116,7 @@ public class GeologicaBlocks {
 	
 	public static final GeoBlock VANILLA_ORE_ROCK = createVanillaOreRockBlock();
 	
-	private static GeoBlock createStoneBlock(Strength strength) {
+	private static IntactGeoBlock createStoneBlock(Strength strength) {
 		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, strength, Aggregate.class, Material.rock));
 	}
 	private static GeoBlock createCobbleBlock(Strength strength) {
@@ -179,7 +176,6 @@ public class GeologicaBlocks {
 		return createDerivedBlock(WallBlock.class, modelBlock);
 	}
 	private static SlabBlock createSlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
-		String doubleToken = singleSlab == null ? "" : "Double";
 		SlabBlock block = new SlabBlock(modelBlock, singleSlab);
 		return block;
 	}
@@ -189,10 +185,10 @@ public class GeologicaBlocks {
 		return block;
 	}
 	
-	private static GeoBlock createGeoBlock(Class<? extends GeoBlock> blockClass, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
-		GeoBlock block = null;
+	private static <T extends GeoBlock> T createGeoBlock(Class<T> blockClass, Strength strength, Class<? extends IndustrialMaterial> composition, Material material) {
+		T block = null;
 		try {
-			Constructor<? extends GeoBlock> constructor = blockClass.getConstructor(Strength.class, Class.class, Material.class);
+			Constructor<T> constructor = blockClass.getConstructor(Strength.class, Class.class, Material.class);
 			block = constructor.newInstance(strength, composition, material);
 		} catch (Exception e) {
 			Geologica.log.fatal("Failed to construct GeoBlock");

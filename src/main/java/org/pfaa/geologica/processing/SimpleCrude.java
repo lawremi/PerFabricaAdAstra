@@ -8,9 +8,7 @@ import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.model.SimpleMixture;
-import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
 
 public class SimpleCrude extends SimpleMixture implements Crude {

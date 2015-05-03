@@ -1,7 +1,5 @@
 package org.pfaa.chemica.fluid;
 
-import org.pfaa.geologica.Geologica;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;

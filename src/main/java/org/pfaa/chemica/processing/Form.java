@@ -12,6 +12,14 @@ public interface Form {
 		private int numberPerBlock;
 		
 		private Forms(int numberPerBlock) {
+			this.setNumberPerBlock(numberPerBlock);
+		}
+
+		public int getNumberPerBlock() {
+			return numberPerBlock;
+		}
+
+		private void setNumberPerBlock(int numberPerBlock) {
 			this.numberPerBlock = numberPerBlock;
 		}
 	}

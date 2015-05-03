@@ -9,7 +9,6 @@ import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -50,7 +49,7 @@ public class IntactGeoBlock extends GeoBlock {
 	
 	private ArrayList<ItemStack> getEarthyDrops(GeoMaterial material, int fortune) {
 		int numOreDrops = material.getComposition() instanceof Ore ? fortune + 1 : 4;
-		ArrayList<ItemStack> drops = new ArrayList();
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		GeoMaterial host = (GeoMaterial)material.getHost();
 		for (int i = 1; i <= 4; i++) {
 			if (i > numOreDrops) {
@@ -66,26 +65,29 @@ public class IntactGeoBlock extends GeoBlock {
 		Item dropped = super.getItemDropped(meta, random, par3);
 		GeoMaterial material = getGeoMaterial(meta);
 		if (material.getComposition() instanceof Aggregate && blockMaterial == Material.rock) {
-			dropped = dropRock(meta);
+			dropped = dropBrokenRock(meta);
 		}
 		return dropped;
 	}
 	
-	private Item dropRock(int meta) {
-		Item dropped = null;
-		GeoMaterial material = getGeoMaterial(meta);
+	public Item dropBrokenRock(int meta) {
+		return Item.getItemFromBlock(this.getBrokenBlock(getGeoMaterial(meta)));
+	}
+	
+	public GeoBlock getBrokenBlock(GeoMaterial material) {
+		GeoBlock dropped = null;
 		switch(material.getStrength()) {
 		case WEAK:
-			dropped = Item.getItemFromBlock(GeologicaBlocks.WEAK_RUBBLE);
+			dropped = GeologicaBlocks.WEAK_RUBBLE;
 			break;
 		case MEDIUM:
-			dropped = Item.getItemFromBlock(GeologicaBlocks.MEDIUM_COBBLE);
+			dropped = GeologicaBlocks.MEDIUM_COBBLE;
 			break;
 		case STRONG:
-			dropped = Item.getItemFromBlock(GeologicaBlocks.STRONG_COBBLE);
+			dropped = GeologicaBlocks.STRONG_COBBLE;
 			break;
 		case VERY_STRONG:
-			dropped = Item.getItemFromBlock(this);
+			dropped = this;
 			break;
 		default:
 			break;
@@ -130,7 +132,7 @@ public class IntactGeoBlock extends GeoBlock {
 	}
 
 	private static Set<BlockMeta> getBlocksForOre(String key) {
-		Set<BlockMeta> set = new HashSet();
+		Set<BlockMeta> set = new HashSet<BlockMeta>();
 		List<ItemStack> ores = OreDictionary.getOres(key);
 		for (ItemStack ore : ores) {
 			Item item = ore.getItem();

@@ -39,7 +39,6 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.FMPIntegration;
-import org.pfaa.geologica.integration.IC2Integration;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.integration.TEIntegration;
 import org.pfaa.geologica.processing.Aggregate;
@@ -91,6 +90,7 @@ public class RecipeRegistration {
 		ItemStack damaged = new ItemStack(tool, 1, (int)(getInitialStoneToolDamage(block.getStrength()) * tool.getMaxDamage()));
 		ItemStack material = new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE);
 		ItemStack cobblestone = new ItemStack(Blocks.cobblestone, 1, OreDictionary.WILDCARD_VALUE);
+		@SuppressWarnings("unchecked")
 		List<IRecipe> recipes = (List<IRecipe>)CraftingManager.getInstance().getRecipeList();
 		for (IRecipe recipe : recipes) {
 			ItemStack output = recipe.getRecipeOutput();
@@ -101,7 +101,9 @@ public class RecipeRegistration {
 				for (int i = 0; i < ingredients.length; i++) {
 					if (ingredients[i] instanceof List) 
 					{
-						for (ItemStack ingredient : (List<ItemStack>)ingredients[i]) {
+						@SuppressWarnings("unchecked")
+						List<ItemStack> oreIngredient = (List<ItemStack>)ingredients[i];
+						for (ItemStack ingredient : oreIngredient) {
 							if (ingredient.getItem() == cobblestone.getItem()) {
 								ingredients[i] = material;
 								origIngredients[i] = cobblestone;
@@ -160,15 +162,17 @@ public class RecipeRegistration {
 		addStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__MARBLE);
 	}
 
+	// FIXME: should loop over blocks, conditioning on their properties to yield different recipes
+
 	private static void addGrindingRecipes() {
 		addStoneGrindingRecipes();
 	}
-
+	
 	private static void addStoneGrindingRecipes() {
-		addStoneGrindingRecipes(GeologicaBlocks.WEAK_STONE, GeologicaBlocks.WEAK_RUBBLE);
-		addStoneGrindingRecipes(GeologicaBlocks.MEDIUM_STONE, GeologicaBlocks.MEDIUM_COBBLE);
-		addStoneGrindingRecipes(GeologicaBlocks.STRONG_STONE, GeologicaBlocks.STRONG_COBBLE);
-		addStoneGrindingRecipes(GeologicaBlocks.VERY_STRONG_STONE, GeologicaBlocks.VERY_STRONG_COBBLE);
+		addStoneGrindingRecipes(GeologicaBlocks.WEAK_STONE);
+		addStoneGrindingRecipes(GeologicaBlocks.MEDIUM_STONE);
+		addStoneGrindingRecipes(GeologicaBlocks.STRONG_STONE);
+		addStoneGrindingRecipes(GeologicaBlocks.VERY_STRONG_STONE);
 	}
 
 	private static void addMeltingRecipes() {
@@ -336,42 +340,24 @@ public class RecipeRegistration {
 		}
 	}
 	
-	private static GeoBlock getCobbleBlock(Strength strength) {
-		switch(strength) {
-		case WEAK:
-			return GeologicaBlocks.WEAK_RUBBLE;
-		case MEDIUM:
-			return GeologicaBlocks.MEDIUM_COBBLE;
-		case STRONG:
-			return GeologicaBlocks.STRONG_COBBLE;
-		case VERY_STRONG:
-			return GeologicaBlocks.VERY_STRONG_COBBLE;
-		}
-		return null;
-	}
-
-	private static void addCobbleGrindingRecipe(GeoMaterial material) {
-		/* TODO Algorithm:
-		 * If material is pure, it yields two dusts of that composition.
-		 * Otherwise, it yields one dust of its primary/first component, 
-		 *   and additional dusts with chances matching the proportions. 
-		 *   If there are more components than handled by the machine, 
-		 *   start from the first.
-		 */
-	}
-	
-	private static void addStoneGrindingRecipes(GeoBlock intact, GeoBlock broken) {
+	private static void addStoneGrindingRecipes(IntactGeoBlock intact) {
 		for (GeoMaterial material : intact.getGeoMaterials()) {
+			GeoBlock broken = intact.getBrokenBlock(material);
 			addGrindingRecipe(intact.getItemStack(material), broken.getItemStack(material), null, 0, intact.getStrength());
 		}
 	}
-	
+
+	/* TODO Algorithm:
+	 * If material is pure, it yields two dusts of that composition.
+	 * Otherwise, it yields one dust of its primary/first component, 
+	 *   and additional dusts with chances matching the proportions. 
+	 *   If there are more components than handled by the machine, 
+	 *   start from the first.
+	 */
+
 	private static void addGrindingRecipe(ItemStack input, ItemStack output, ItemStack secondaryOutput, 
 			double secondaryChance, Strength strength) {
-		TEIntegration.addPulverizerRecipe(input, output, secondaryOutput, secondaryChance, strength);
-		if (strength == Strength.WEAK || strength == Strength.MEDIUM) {
-			IC2Integration.addMaceratorRecipe(input, output);
-		}
+		// TODO: use plugin framework for mod integration, base on grinding recipe registration abstraction
 	}
 
 	private static void registerMicroblocks() {
@@ -403,7 +389,7 @@ public class RecipeRegistration {
 	}
 
 	private static void registerDropsOfItem(ChanceDropRegistry drops, IndustrialMaterialItem<GeoMaterial> item) {
-		List<ItemStack> itemStacks = new ArrayList();
+		List<ItemStack> itemStacks = new ArrayList<ItemStack>();
 		item.getSubItems(item, null, itemStacks);
 		for (ItemStack itemStack : itemStacks) {
 			registerOreDrop(drops, item.getIndustrialMaterial(itemStack), itemStack, 0, 1.0F, true);

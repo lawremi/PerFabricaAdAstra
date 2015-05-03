@@ -15,7 +15,7 @@ public final class Formula {
 	}
 	
 	private Formula(List<? extends PartFactory> parts) {
-		List<Part> reifiedParts = new ArrayList();
+		List<Part> reifiedParts = new ArrayList<Part>();
 		for (PartFactory part : parts) {
 			reifiedParts.add(part.getPart());
 		}
@@ -23,7 +23,7 @@ public final class Formula {
 	}
 	
 	private Formula(Formula other) {
-		this.parts = new ArrayList(other.parts);
+		this.parts = new ArrayList<Part>(other.parts);
 		this.hydration = other.hydration;
 		this.smiles = other.smiles;
 	}
@@ -91,6 +91,10 @@ public final class Formula {
 		return this;
 	}
 	
+	public Equation plus(Formula... reactants) {
+		return new Equation(Arrays.asList(reactants), Collections.<Formula>emptyList(), null);
+	}
+	
 	public static final class Part implements PartFactory {
 		public final Element element;
 		public final int stoichiometry;
@@ -105,11 +109,11 @@ public final class Formula {
 		public Part(Element element, int stoichiometry) {
 			this.element = element;
 			this.stoichiometry = stoichiometry;
-			this.parts = Collections.EMPTY_LIST;
+			this.parts = Collections.emptyList();
 		}
 		
 		public Part(PartFactory... parts) {
-			List<Part> reifiedParts = new ArrayList();
+			List<Part> reifiedParts = new ArrayList<Part>();
 			for (PartFactory part : parts) {
 				reifiedParts.add(part.getPart());
 			}

@@ -17,16 +17,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Aggregate.Aggregates;
-import org.pfaa.geologica.processing.Crude;
-import org.pfaa.geologica.processing.Ore;
-import org.pfaa.geologica.processing.VanillaOre;
 import org.pfaa.util.BlockWithMeta;
 
 import cpw.mods.fml.relauncher.Side;
@@ -39,7 +35,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	private Strength strength;
 	private Class<? extends IndustrialMaterial> composition;
 
-	private static Map<GeoMaterial, BlockWithMeta<GeoBlock>> materialToNativeBlock = new HashMap();
+	private static Map<GeoMaterial, BlockWithMeta<GeoBlock>> materialToNativeBlock = new HashMap<GeoMaterial, BlockWithMeta<GeoBlock>>();
 	
 	public GeoBlock(Strength strength, Class<? extends IndustrialMaterial> composition, Material material, 
 			boolean defaultRendererEnabled) 
@@ -256,11 +252,11 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return super.registerMetaIcon(registry, i);
 	}
 
-	public static GeoBlock registerNative(GeoBlock block) {
+	public static IntactGeoBlock registerNative(IntactGeoBlock block) {
 		List<GeoMaterial> materials = block.getGeoMaterials();
 		int meta = 0;
 		for (GeoMaterial key : materials) {
-			materialToNativeBlock.put(key, new BlockWithMeta(block, meta++));
+			materialToNativeBlock.put(key, new BlockWithMeta<GeoBlock>(block, meta++));
 		}
 		return block;
 	}

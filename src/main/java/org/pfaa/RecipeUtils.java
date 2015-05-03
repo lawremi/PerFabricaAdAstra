@@ -25,7 +25,8 @@ public class RecipeUtils {
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
         ItemStack[] replaceStacks = replacements.keySet().toArray(new ItemStack[0]);
 
-        List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+        @SuppressWarnings("unchecked")
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
         List<IRecipe> recipesToRemove = new ArrayList<IRecipe>();
         List<IRecipe> recipesToAdd = new ArrayList<IRecipe>();
 
@@ -85,11 +86,6 @@ public class RecipeUtils {
 			}
 		}	
 		return false;
-	}
-	
-	private static boolean hasItem(boolean strict, List<ItemStack> recipe, ItemStack... ingredients)
-	{
-		return hasItem(strict, recipe.toArray(new ItemStack[0]), ingredients);
 	}
 	
 	private static <T extends IRecipe> T createOreRecipe(Class<T> klass, IRecipe recipe, Map<ItemStack, String> replacements) throws Exception {

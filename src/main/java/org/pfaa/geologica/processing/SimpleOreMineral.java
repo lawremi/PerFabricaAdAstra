@@ -54,7 +54,7 @@ public class SimpleOreMineral extends SimpleMineral implements OreMineral {
 	}
 
 	private static List<MixtureComponent> substitute(Chemical concentrate, Substitution[] substitutions) {
-		List<MixtureComponent> components = new ArrayList();
+		List<MixtureComponent> components = new ArrayList<MixtureComponent>();
 		components.add(new MixtureComponent(concentrate, 1.0));
 		for (Substitution substitution : substitutions) {
 			Formula formula = concentrate.getFormula().substituteFirstPart(substitution.getMaterial());

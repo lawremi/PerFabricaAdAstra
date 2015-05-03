@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
 import org.pfaa.chemica.ChemicaBlocks;
@@ -144,6 +143,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 		}
     }
     
+	@SuppressWarnings("unused")
 	private void tryToChangePhase(World world, int x, int y, int z, Random rand) {
 		// TODO: if we have a chemical, check condition at this position and 
 		//       check for phase change, at rate inversely proportional to 
@@ -333,15 +333,6 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
         boolean flowVertically = canDisplace(world, x, y + densityDir, z) && 
         		(rand.nextFloat() < 2*pVertical || laterallyConstrained);
 		return flowVertically;
-	}
-
-	private int getDensityAt(World world, int x, int y, int z) {
-		Block block = world.getBlock(x, y, z);
-		int density = Integer.MAX_VALUE;
-		if (block instanceof BlockFluidBase) {
-			density = ((BlockFluidBase)block).getFluid().getDensity(world, x, y, z);
-		}
-		return density;
 	}
 
 	private boolean hasSmallerQuanta(IBlockAccess world, int x, int y, int z, int quanta) {

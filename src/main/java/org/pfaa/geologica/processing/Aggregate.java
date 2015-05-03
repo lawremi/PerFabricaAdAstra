@@ -43,7 +43,7 @@ public interface Aggregate extends Mixture {
 
 		@Override
 		public List<MixtureComponent> getComponents() {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 
 		@Override

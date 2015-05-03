@@ -13,9 +13,7 @@ import net.minecraft.world.World;
 
 import org.pfaa.block.CompositeBlock;
 import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
-import org.pfaa.geologica.client.registration.ClientRegistrant;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -41,9 +39,10 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 		this.modelBlock = modelBlock;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, @SuppressWarnings("rawtypes") List list)
     {
 		for (int i = 0; i < getMetaCount(); ++i)
         {

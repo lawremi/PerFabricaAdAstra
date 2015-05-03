@@ -1,6 +1,6 @@
 package org.pfaa;
 
 
-public class ItemCatalog {
+public interface ItemCatalog extends Catalog {
 	
 }

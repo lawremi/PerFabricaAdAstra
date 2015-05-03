@@ -2,12 +2,6 @@ package org.pfaa.block;
 
 import java.util.List;
 
-import org.pfaa.chemica.model.Condition;
-import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.Geologica;
-import org.pfaa.geologica.client.registration.ClientRegistrant;
-import org.pfaa.geologica.processing.Aggregate;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,6 +10,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+
+import org.pfaa.geologica.Geologica;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -79,9 +76,10 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	/* (non-Javadoc)
 	 * @see org.pfaa.block.ICompositeBlock#getSubBlocks(int, net.minecraft.creativetab.CreativeTabs, java.util.List)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list)
+	public void getSubBlocks(Item item, CreativeTabs creativeTabs, @SuppressWarnings("rawtypes") List list)
     {
 		for (int i = 0; i < getMetaCount(); ++i)
         {
@@ -131,7 +129,7 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 		if (this.defaultRendererEnabled) {
 			return super.getRenderType();
 		} else {
-			return Geologica.instance.registrant.getCompositeBlockRendererId();
+			return Geologica.registrant.getCompositeBlockRendererId();
 		}
 	}
 
