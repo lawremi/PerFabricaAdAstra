@@ -9,8 +9,8 @@ import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.Phase;
-import org.pfaa.chemica.model.PhaseProperties;
+import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.StateProperties;
 
 public interface IndustrialMineral extends Mineral {
 	public enum IndustrialMinerals implements IndustrialMineral {
@@ -52,7 +52,7 @@ public interface IndustrialMineral extends Mineral {
 		
 		private IndustrialMinerals(String oreDictKey, Color color, double density, Hazard hazard) {
 			this.oreDictKey = oreDictKey;
-			this.properties = new ConditionProperties(Phase.SOLID, color, density, hazard);
+			this.properties = new ConditionProperties(State.SOLID, color, density, hazard);
 		}
 		
 		private IndustrialMinerals(Color color, double density) {
