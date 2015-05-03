@@ -1,5 +1,6 @@
 package org.pfaa.geologica.registration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -20,10 +21,12 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.pfaa.RecipeUtils;
 import org.pfaa.block.CompositeBlock;
+import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
+import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
 import org.pfaa.geologica.block.ChanceDropRegistry;
@@ -391,13 +394,19 @@ public class RecipeRegistration {
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetSilver", 1, 2, 0.05F, true);
 		registerOreDrop(drops, GeoMaterial.LIMESTONE, Items.flint, 1, 0, 0.05F, true);
 		if (Geologica.getConfiguration().isVanillaOreGemDropEnabled()) {
-			registerOreDrop(drops, GeoMaterial.COAL, Items.coal, 1, 0, 1.0F, true);
-			registerOreDrop(drops, GeoMaterial.LIGNITE, Items.coal, 0, 1, 1.0F, true);
-			registerOreDrop(drops, GeoMaterial.ANTHRACITE, Items.coal, 2, 0, 1.0F, true);
+			registerDropsOfItem(drops, GeologicaItems.CRUDE_LUMP);
 			registerOreDrop(drops, GeoMaterial.DIAMOND, Items.diamond, 1, 0, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.LAPIS, "gemLapis", 4, 5, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.EMERALD, Items.emerald, 1, 0, 1.0F, true);
 			registerOreDrop(drops, GeoMaterial.REDSTONE, Items.redstone, 4, 2, 1.0F, false);
+		}
+	}
+
+	private static void registerDropsOfItem(ChanceDropRegistry drops, IndustrialMaterialItem<GeoMaterial> item) {
+		List<ItemStack> itemStacks = new ArrayList();
+		item.getSubItems(item, null, itemStacks);
+		for (ItemStack itemStack : itemStacks) {
+			registerOreDrop(drops, item.getIndustrialMaterial(itemStack), itemStack, 0, 1.0F, true);
 		}
 	}
 
