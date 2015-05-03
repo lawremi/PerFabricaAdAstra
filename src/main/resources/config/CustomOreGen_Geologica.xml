@@ -1668,7 +1668,7 @@
       <ConfigSection> <!-- Coal -->
         <CloudPreset name='PresetCoalBeds'
                      inherits='PresetSedStrategicCloud'
-                     drawWireframe='false'>
+                     drawWireframe='true'>
           <Setting name='DistributionFrequency'
                  avg=':=20 * _default_'/>
           <Setting name='CloudRadius' avg=':=1.4 * _default_'
@@ -1680,6 +1680,26 @@
           <BiomeSet inherits='inland' weight='0.5'/>
         </CloudPreset>
 
+        <VeinsPreset name='PresetCoalBedIntrusion'
+                     inherits='PresetLayeredVeinsLite'
+                     drawWireframe='true'
+                     wireframeColor='0xFFFFFF00'
+                     block='PFAAGeologica:strongStone:3'>
+          <Setting name='DistributionFrequency' avg='0.05'/>
+          <Setting name='MotherlodeHeight'
+                   avg=':= 50/64 * dimension.groundLevel'
+                   range=':= 5/64 * dimension.groundLevel'
+                   type='normal'/>
+        </VeinsPreset>
+
+        <VeinsPreset name='PresetCoalCoke'
+                     inherits='PresetCoalBedIntrusion'
+                     drawWireframe='true'
+                     wireframeColor='0xFFFFFFFF'
+                     block='PFAAGeologica:strongCrudeRock:0'>
+          <Replaces block='PFAAGeologica:crudeRock:1'/>
+        </VeinsPreset>
+        
         <VeinsPreset name='PresetCoalBedHintVeins'
                      block='PFAAGeologica:crudeRock:1'
                      inherits='PresetHintVeinsSed'>
@@ -1788,7 +1808,13 @@
                 
         <IfCondition condition=":=?GeologicaGenCoal &amp; ?GeologicaActive">
           <Cloud name='CoalBeds' inherits='PresetCoalBeds'>
-            <Veins name='CoalBedHintVeins' inherits='PresetCoalBedHintVeins'/>
+            <Veins name='CoalBedHintVeins'
+                   inherits='PresetCoalBedHintVeins'/>
+            <Veins name='CoalBedIntrusion'
+                   inherits='PresetCoalBedIntrusion'
+                   seed='0xF111'/>
+            <Veins name='CoalCoke' inherits='PresetCoalCoke'
+                   seed='0xF111'/>
           </Cloud>
           <Cloud name='CoalBedsOceanic' inherits='PresetCoalBedsOceanic'>
             <Veins name='CoalBedHintVeinsOceanic'
