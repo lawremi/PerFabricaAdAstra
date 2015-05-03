@@ -105,17 +105,15 @@ public enum GeoMaterial implements Mixture {
 	VOLCANIC_ASH(IndustrialMinerals.VOLCANIC_ASH, Strength.WEAK, Material.sand),
 	GLAUCONITE(IndustrialMinerals.GLAUCONITE, Strength.WEAK, Aggregates.SAND),
 	
-	LATERITE(Aggregates.CLAY, Strength.WEAK, Material.clay),
+	LATERITE(Aggregates.CLAY.mix(Ores.GOETHITE, 0.3).mix(Ores.LEPIDOCROCITE, 0.2).mix(Ores.HEMATITE, 0.2).
+			 mix(Ores.GIBBSITE, 0.15).mix(Ores.ANATASE, 0.05), Strength.WEAK, Material.clay),
 	
-	// FIXME: add niter (KNO3)? 
-	BAUXITE(Ores.GIBBSITE.mix(Ores.HEMATITE, 0.45).mix(Ores.CALCITE, 0.10)
-			.mix(IndustrialMinerals.KAOLINITE, 0.10).mix(IndustrialMinerals.QUARTZ, 0.05).mix(Ores.ANATASE, 0.05), 
-			Strength.WEAK, LATERITE),
+	BAUXITE(Ores.GIBBSITE, Strength.WEAK, LATERITE),
 	BENTONITE(IndustrialMinerals.SODIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
 	FULLERS_EARTH(IndustrialMinerals.CALCIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
 	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
-	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, Aggregates.CLAY),
-	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, Aggregates.CLAY),
+	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, LATERITE),
+	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, LATERITE),
 	VERMICULITE(IndustrialMinerals.VERMICULITE, Strength.WEAK, Material.clay),
 	
 	BORAX(Ores.BORAX, Strength.WEAK, null, Material.rock),
