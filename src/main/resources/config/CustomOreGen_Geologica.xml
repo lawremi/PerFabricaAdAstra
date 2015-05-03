@@ -2079,20 +2079,16 @@
           <WireframeColor>0xFFFF1100</WireframeColor>
         </CloudPreset>
         
-        <CloudPreset name='PresetBogLimonite' inherits='PresetRichSoil'>
+        <CloudPreset name='PresetBogLimonite'
+                     inherits='PresetRichSoil'
+                     drawWireframe='false'>
           <WireframeColor>0xFF1111FF</WireframeColor>
-          <OreBlock block='minecraft:clay' weight='0.70'/>
-          <OreBlock block='PFAAGeologica:weakOreClay:4' weight='0.15'/>
-          <OreBlock block='PFAAGeologica:weakOreClay:5' weight='0.15'/>
+          <OreBlock block='PFAAGeologica:crudeGround:0' weight='0.70'/>
+          <OreBlock block='PFAAGeologica:weakOreGround:0' weight='0.30'/>
           <Setting name='DistributionFrequency' avg=':= 0.5 * _default_'/>
           <BiomeType name='swamp'/>
         </CloudPreset>
 
-         <CloudPreset name='PresetRiverLimonite' inherits='PresetBogLimonite'>
-          <BiomeType name='river'/>
-          <Setting name='CloudRadius' avg='3' range='1'/>
-         </CloudPreset>
-        
         <CloudPreset name='PresetSerpentiniteUnderLimonite'
                      inherits='PresetStratum'
                      drawWireframe='false'
