@@ -839,11 +839,22 @@
                             block='PFAAGeologica:strongStone:3'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='41' maxHeight='73'/>
+          <SubstitutePreset name='PresetGraniteVolcanicCobble'
+                            block='PFAAGeologica:strongCobble:3'
+                            inherits='PresetGraniteVolcanic'
+                            maxHeight='75'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetGraniteShield'
                             block='PFAAGeologica:strongStone:3'
                             inherits='PresetPrimaryStratum'
                             minHeight='41' maxHeight='80'>
             <Biome name='shield'/> <!-- BOP -->
+          </SubstitutePreset>
+          <SubstitutePreset name='PresetGraniteShieldCobble'
+                            block='PFAAGeologica:strongCobble:3'
+                            inherits='PresetGraniteShield'>
+            <ReplacesOre block='cobblestone'/>
           </SubstitutePreset>
           <SubstitutePreset name='PresetGraniteDome'
                             block='PFAAGeologica:strongStone:3'
@@ -854,6 +865,11 @@
             <Replaces block='minecraft:dirt'/>
             <Replaces block='minecraft:grass'/>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetGraniteDomeCobble'
+                            block='PFAAGeologica:strongCobble:3'
+                            inherits='PresetGraniteDome'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
 
         <ConfigSection> <!-- Andesite -->
@@ -861,6 +877,12 @@
                             block='PFAAGeologica:strongStone:0'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='76' maxHeight='89'/>
+          <SubstitutePreset name='PresetAndesiteCobble'
+                            block='PFAAGeologica:strongCobble:0'
+                            inherits='PresetAndesite'
+                            maxHeight='91'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Basalt -->
@@ -874,17 +896,32 @@
                             minHeight='40' maxHeight='255'>
             <BiomeSet inherits='shieldVolcano'/>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetBasaltShieldVolcanoCobble'
+                            block='PFAAGeologica:strongCobble:1'
+                            inherits='PresetBasaltShieldVolcano'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetBasaltIsland'
                             block='PFAAGeologica:strongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
                             minHeight='52' maxHeight='80'>
             <BiomeSet inherits='oceanic'/>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetBasaltIslandCobble'
+                            block='PFAAGeologica:strongCobble:1'
+                            inherits='PresetBasaltIsland'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetBasaltMesa'
                             block='PFAAGeologica:strongStone:1'
                             inherits='PresetPrimaryStratumContinental'
                             minHeight='86' maxHeight='110'>
             <BiomeType name='mesa'/>
+          </SubstitutePreset>
+          <SubstitutePreset name='PresetBasaltMesaCobble'
+                            block='PFAAGeologica:strongCobble:1'
+                            inherits='PresetBasaltMesa'>
+            <ReplacesOre block='cobblestone'/>
           </SubstitutePreset>
         </ConfigSection>
         
@@ -893,11 +930,21 @@
                             block='PFAAGeologica:strongStone:7'
                             inherits='PresetPrimaryStratumVolcanic'
                             minHeight='92'/>
+          <SubstitutePreset name='PresetRhyoliteCobble'
+                            block='PFAAGeologica:strongCobble:7'
+                            inherits='PresetRhyolite'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetRhyoliteCaldera'
                             block='PFAAGeologica:strongStone:7'
                             inherits='PresetPrimaryStratum'
                             minHeight='47' maxHeight='90'>
             <BiomeSet inherits='caldera'/>
+          </SubstitutePreset>
+          <SubstitutePreset name='PresetRhyoliteCalderaCobble'
+                            block='PFAAGeologica:strongCobble:7'
+                            inherits='PresetRhyoliteCaldera'>
+            <ReplacesOre block='cobblestone'/>
           </SubstitutePreset>
         </ConfigSection>
         
@@ -991,6 +1038,12 @@
           <!--
               maxHeight=":= if(dimension.generator='ATGLevelSource', 89, 74)"
           -->
+          <SubstitutePreset name='PresetMudstoneCobble'
+                            block='PFAAGeologica:weakRubble:4'
+                            inherits='PresetMudstone'
+                            maxHeight='76'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <CloudPreset name='PresetMudstoneOceanic'
                        block='PFAAGeologica:weakStone:4'
                        inherits='PresetSedimentaryOceanic'>
@@ -1016,10 +1069,21 @@
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='77' maxHeight='110'>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetLimestoneHillsCobble'
+                            block='PFAAGeologica:mediumCobble:0'
+                            inherits='PresetLimestoneHills'
+                            maxHeight='112'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetLimestoneMesa'
                             block='PFAAGeologica:mediumStone:0'
                             inherits='PresetPrimarySedimentaryMesa'
                             minHeight='60' maxHeight='70'/>
+          <SubstitutePreset name='PresetLimestoneMesaCobble'
+                            block='PFAAGeologica:mediumCobble:0'
+                            inherits='PresetLimestoneMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Sandstone -->
@@ -1038,10 +1102,21 @@
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='113' maxHeight='150'>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetSandstoneHillsCobble'
+                            block='PFAAGeologica:strongCobble:8'
+                            inherits='PresetSandstoneHills'
+                            maxHeight='152'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetSandstoneMesa'
                             block='PFAAGeologica:strongStone:8'
                             inherits='PresetPrimarySedimentaryMesa'
                             minHeight='71' maxHeight='80'/>
+          <SubstitutePreset name='PresetSandstoneMesaCobble'
+                            block='PFAAGeologica:strongCobble:8'
+                            inherits='PresetSandstoneMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
       </ConfigSection>  
@@ -1157,6 +1232,11 @@
                             minHeight='153' maxHeight='255'>
             <Biome name='alps'/>
           </SubstitutePreset>
+          <SubstitutePreset name='PresetGneissTopsCobble'
+                            block='PFAAGeologica:strongCobble:2'
+                            inherits='PresetGneissTops'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Greenschist -->
@@ -1215,10 +1295,20 @@
                             block='PFAAGeologica:veryStrongStone:4'
                             inherits='PresetPrimarySedimentaryContinental'
                             minHeight='153' maxHeight='255'/>
+          <SubstitutePreset name='PresetQuartziteTopsCobble'
+                            block='PFAAGeologica:veryStrongCobble:4'
+                            inherits='PresetQuartziteTops'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
           <SubstitutePreset name='PresetQuartziteMesa'
                             block='PFAAGeologica:veryStrongStone:4'
                             inherits='PresetPrimarySedimentaryMesa'
                             minHeight='81' maxHeight='85'/>
+          <SubstitutePreset name='PresetQuartziteMesaCobble'
+                            block='PFAAGeologica:veryStrongCobble:4'
+                            inherits='PresetQuartziteMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
       </ConfigSection>
@@ -1444,6 +1534,43 @@
 
           <Veins name='DioriteVeins' inherits='PresetDioriteVeins'/>
           <Veins name='GabbroVeins' inherits='PresetGabbroVeins'/>
+
+          <IfCondition condition=':= world.type = "RWG"'>
+            <Substitute name='GraniteVolcanicCobble'
+                        inherits='PresetGraniteVolcanicCobble'/>
+            <Substitute name='GraniteShieldCobble'
+                        inherits='PresetGraniteShieldCobble'/>
+            <Substitute name='GraniteDomeCobble'
+                        inherits='PresetGraniteDomeCobble'/>
+            <Substitute name='AndesiteCobble'
+                        inherits='PresetAndesiteCobble'/>
+            <Substitute name='BasaltShieldVolcanoCobble'
+                        inherits='PresetBasaltShieldVolcanoCobble'/>
+            <Substitute name='BasaltIslandCobble'
+                        inherits='PresetBasaltIslandCobble'/>
+            <Substitute name='BasaltMesaCobble'
+                        inherits='PresetBasaltMesaCobble'/>
+            <Substitute name='RhyoliteCobble'
+                        inherits='PresetRhyoliteCobble'/>
+            <Substitute name='RhyoliteCalderaCobble'
+                        inherits='PresetRhyoliteCalderaCobble'/>
+            <Substitute name='MudstoneCobble'
+                        inherits='PresetMudstoneCobble'/>
+            <Substitute name='LimestoneHillsCobble'
+                        inherits='PresetLimestoneHillsCobble'/>
+            <Substitute name='LimestoneMesaCobble'
+                        inherits='PresetLimestoneMesaCobble'/>
+            <Substitute name='SandstoneHillsCobble'
+                        inherits='PresetSandstoneHillsCobble'/>
+            <Substitute name='SandstoneMesa'
+                        inherits='PresetSandstoneMesa'/>
+            <Substitute name='GneissTopsCobble'
+                        inherits='PresetGneissTopsCobble'/>
+            <Substitute name='QuartziteTopsCobble'
+                        inherits='PresetQuartziteTopsCobble'/>
+            <Substitute name='QuartziteMesaCobble'
+                        inherits='PresetQuartziteMesaCobble'/>
+          </IfCondition>
         </IfCondition>
         
       </ConfigSection>
