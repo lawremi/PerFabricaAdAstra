@@ -41,7 +41,7 @@ public interface IndustrialMineral extends Mineral {
 		SODALITE(new Color(0, 35, 100), 2.3),
 		TALC(new Color(220, 245, 225), 2.7),
 		TRONA(new Color(135, 135, 95), 2.14),
-		VERMICULITE(new Color(200, 80, 15), 2.5),
+		VERMICULITE(new Color(210, 200, 170), 2.5),
 		WOLLASTONITE(Color.WHITE, 2.90),
 		VOLCANIC_ASH(Color.gray, 3),
 		ZEOLITE(new Color(240, 230, 230), 2.3)
