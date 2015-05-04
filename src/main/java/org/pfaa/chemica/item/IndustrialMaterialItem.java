@@ -1,5 +1,6 @@
 package org.pfaa.chemica.item;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,10 +15,9 @@ import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 
-import java.util.Arrays;
-
 import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -86,12 +86,16 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		return material.getProperties(canonicalSolid);
 	}
 
+	public List<T> getIndustrialMaterials() {
+		List<T> materials = Arrays.asList(this.enumClass.getEnumConstants());
+		return Lists.newArrayList(Collections2.filter(materials, this.predicate));
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tabs, @SuppressWarnings("rawtypes") List itemStacks) {
-		List<T> materials = Arrays.asList(this.enumClass.getEnumConstants());
-		for (T material : Iterables.filter(materials, this.predicate)) {
+		for (T material : this.getIndustrialMaterials()) {
 			itemStacks.add(this.getItemStack(material));
 		}
 	}

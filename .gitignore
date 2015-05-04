@@ -12,3 +12,5 @@ README.txt
 eclipse
 gradlew.bat
 /libs
+/game/
+/lib/

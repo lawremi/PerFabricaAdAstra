@@ -1,6 +1,5 @@
 package org.pfaa.geologica.registration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -389,10 +388,8 @@ public class RecipeRegistration {
 	}
 
 	private static void registerDropsOfItem(ChanceDropRegistry drops, IndustrialMaterialItem<GeoMaterial> item) {
-		List<ItemStack> itemStacks = new ArrayList<ItemStack>();
-		item.getSubItems(item, null, itemStacks);
-		for (ItemStack itemStack : itemStacks) {
-			registerOreDrop(drops, item.getIndustrialMaterial(itemStack), itemStack, 0, 1.0F, true);
+		for (GeoMaterial material : item.getIndustrialMaterials()) {
+			registerOreDrop(drops, material, item.getItemStack(material), 0, 1.0F, true);
 		}
 	}
 
