@@ -74,7 +74,8 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	
 	/* Some notes on the heat of combustion:
 	 * 
-	 * We will have defined processes (reactions in the case of chemicals) that combine a fuel with O2 
+	 * We will have defined a defined combustion unit process (including a reaction in the case of a chemical) 
+	 * that combines a fuel with O2 
 	 * to produce heat, along with oxidized products. In the interest of modularity, we should specify
 	 * the volatile products in the gaseous state. This means that the heat of combustion corresponds
 	 * to the lower heating value (LHV). A system might eventually condense those gases to recover their
