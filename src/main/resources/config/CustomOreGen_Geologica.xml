@@ -1668,7 +1668,7 @@
       <ConfigSection> <!-- Coal -->
         <CloudPreset name='PresetCoalBeds'
                      inherits='PresetSedStrategicCloud'
-                     drawWireframe='true'>
+                     drawWireframe='false'>
           <Setting name='DistributionFrequency'
                  avg=':=20 * _default_'/>
           <Setting name='CloudRadius' avg=':=1.4 * _default_'
@@ -1682,19 +1682,27 @@
 
         <VeinsPreset name='PresetCoalBedIntrusion'
                      inherits='PresetLayeredVeinsLite'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      wireframeColor='0xFFFFFF00'
                      block='PFAAGeologica:strongStone:3'>
           <Setting name='DistributionFrequency' avg='0.05'/>
           <Setting name='MotherlodeHeight'
-                   avg=':= 50/64 * dimension.groundLevel'
+                   avg=':= 55/64 * dimension.groundLevel'
                    range=':= 5/64 * dimension.groundLevel'
                    type='normal'/>
+	  <Replaces block='minecraft:stone'/>
+          <Replaces block='PFAAGeologica:weakStone:0'/>
+          <Replaces block='PFAAGeologica:weakStone:2'/>
+          <Replaces block='PFAAGeologica:weakStone:3'/>
+          <Replaces block='PFAAGeologica:weakStone:4'/>
+          <Replaces block='PFAAGeologica:mediumStone:0'/>
+          <Replaces block='PFAAGeologica:strongStone:8'/>
+          <Replaces block='minecraft:sandstone'/>
         </VeinsPreset>
 
         <VeinsPreset name='PresetCoalCoke'
                      inherits='PresetCoalBedIntrusion'
-                     drawWireframe='true'
+                     drawWireframe='false'
                      wireframeColor='0xFFFFFFFF'
                      block='PFAAGeologica:strongCrudeRock:0'>
           <Replaces block='PFAAGeologica:crudeRock:1'/>
