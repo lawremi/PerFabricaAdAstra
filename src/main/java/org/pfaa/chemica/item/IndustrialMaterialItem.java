@@ -57,6 +57,10 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		return getItemStack(material, 1);
 	}
 	
+	public ItemStack of(T material) {
+		return getItemStack(material, 1);
+	}
+	
 	public ItemStack getItemStack(T material, int quantity) {
 		return new ItemStack(this, quantity, getDamage(material));
 	}
