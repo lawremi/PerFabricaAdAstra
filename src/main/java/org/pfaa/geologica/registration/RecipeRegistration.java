@@ -58,14 +58,16 @@ public class RecipeRegistration {
 		addGrindingRecipes();
 		addMeltingRecipes();
 		addStoneToolRecipes();
-		addStoneAbstractionRecipesForBrokenMods();
+		addAbstractionRecipes();
 		registerMicroblocks();
 		registerOreDrops();
+		registerFuels();
 	}
 	
-	private static void addStoneAbstractionRecipesForBrokenMods() {
+	private static void addAbstractionRecipes() {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.cobblestone), "cobblestone"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.stone), "stone"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.coal), GeologicaItems.CRUDE_LUMP.of(GeoMaterial.BITUMINOUS_COAL));
 	}
 
 	private static void addStoneToolRecipes() {
