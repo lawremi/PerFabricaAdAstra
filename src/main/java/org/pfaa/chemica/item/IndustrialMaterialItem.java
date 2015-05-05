@@ -15,6 +15,7 @@ import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -77,7 +78,8 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
-		return super.getUnlocalizedName(itemStack) + "." + this.getIndustrialMaterial(itemStack).name().toLowerCase();
+		String materialName = this.getIndustrialMaterial(itemStack).name();
+		return super.getUnlocalizedName(itemStack) + "." + CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, materialName);
 	}
 
 	public ConditionProperties getProperties(ItemStack itemStack) {
