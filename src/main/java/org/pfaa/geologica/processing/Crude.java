@@ -63,7 +63,8 @@ public interface Crude extends Mixture, Vaporizable {
 
 		@Override
 		public Crude mix(IndustrialMaterial material, double weight) {
-			return delegate.mix(material, weight);
+			Crude self = new SimpleCrude(this, 1.0);
+			return self.mix(material, weight);
 		}
 
 		@Override
