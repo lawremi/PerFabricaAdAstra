@@ -30,7 +30,7 @@ public interface Crude extends Mixture, Vaporizable {
 		LIGHT_GAS_OIL(State.LIQUID, new Color(90, 70, 20), 0.9, new Hazard(0, 2, 0), 2.25, 700, 0.02, 43),
 		HEAVY_GAS_OIL(State.LIQUID, new Color(50, 25, 0), 1.0, new Hazard(1, 2, 0), 30, 900, 0.03, 42),
 		BITUMEN(State.LIQUID, Color.black, 1.2, new Hazard(1, 2, 0), 240, 1000, 0.04, 39),
-		KEROGEN(State.SOLID, new Color(55, 50, 30), 1.2, new Hazard(), 0, 20),
+		KEROGEN(State.SOLID, new Color(100, 90, 60), 1.2, new Hazard(), 0, 20),
 		FIXED_CARBON(State.SOLID, new Color(20, 20, 20), 1.1, new Hazard(), 0.006, 33),
 		COAL_TAR(new SimpleCrude(Crudes.HEAVY_NAPHTHA, 0.05).mix(Crudes.KEROSENE, 0.05).
 				 mix(Crudes.LIGHT_GAS_OIL, 0.10).mix(Crudes.HEAVY_GAS_OIL, 0.2).
