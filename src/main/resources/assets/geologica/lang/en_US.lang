@@ -337,6 +337,10 @@ tile.crudeRock.coal.name=Bituminous Coal
 tile.crudeRock.lignite.name=Lignite Coal
 tile.crudeRock.anthracite.name=Anthracite Coal
 tile.crudeGround.peat.name=Peat
+tile.strongCrudeRock.coalCoke.name=Natural Coal Coke
+
+# Soils
+tile.weakOreGround.bogIron.name=Bog Limonite (Iron)
 
 # Geologica versions of vanilla ores
 tile.vanillaOreRock.gold.name=Gold Ore
@@ -344,3 +348,22 @@ tile.vanillaOreRock.lapis.name=Lapis Lazuli Ore
 tile.vanillaOreRock.diamond.name=Diamond Ore
 tile.vanillaOreRock.emerald.name=Emerald Ore
 tile.vanillaOreRock.redstone.name=Redstone Ore
+
+# Lumps
+item.crudeLump.oilShale.name=Lump of Oil Shale
+item.crudeLump.bituminousCoal.name=Lump of Bituminous Coal
+item.crudeLump.lignite.name=Lump of Lignite Coal
+item.crudeLump.anthracite.name=Lump of Anthracite Coal
+item.crudeLump.coalCoke.name=Lump of Coal Coke
+
+# Clumps
+item.earthyClump.peat.name=Clump of Peat
+item.earthyClump.bogIron.name=Clump of Bog Limonite
+item.earthyClump.laterite.name=Clump of Lateritic Soil
+item.earthyClump.bauxite.name=Clump of Bauxite
+item.earthyClump.bentonite.name=Clump of Bentonite Clay
+item.earthyClump.fullersEarth.name=Clump of Fuller's Earth
+item.earthyClump.kaolinite.name=Clump of Kaolinite Clay
+item.earthyClump.brownLimonite.name=Clump of Brown Limonite
+item.earthyClump.yellowLimonite.name=Clump of Yellow Limonite
+item.earthyClump.vermiculite.name=Clump of Vermiculite
