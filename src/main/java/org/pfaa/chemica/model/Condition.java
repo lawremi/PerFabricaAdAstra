@@ -44,4 +44,18 @@ public class Condition {
 	}
 
 	public static Condition STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE);
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Condition)) {
+			return false;
+		}
+		Condition other = (Condition)obj;
+		return this.pressure == other.pressure && this.temperature == other.temperature;
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)(this.pressure) ^ ((int)this.temperature);
+	}
 }

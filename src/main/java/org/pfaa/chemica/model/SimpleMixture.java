@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.primitives.Doubles;
 
 public class SimpleMixture implements Mixture {
 
 	private List<MixtureComponent> components;
+	private Map<Condition,ConditionProperties> propertiesCache = new HashMap<Condition, ConditionProperties>();
 	
 	protected SimpleMixture(List<MixtureComponent> components) {
 		this.components = components;
@@ -68,6 +71,10 @@ public class SimpleMixture implements Mixture {
 		if (this.components.size() == 1) {
 			return this.components.get(0).material.getProperties(condition);
 		}
+		ConditionProperties mixProps = this.propertiesCache.get(condition);
+		if (mixProps != null) {
+			return mixProps;
+		}
 		double totalWeight = getTotalWeight();
 		double totalAlpha = 0;
 		int a = 0, r = 0, g = 0, b = 0, luminosity = 0;
@@ -94,14 +101,17 @@ public class SimpleMixture implements Mixture {
 			if (props.opaque)
 				opaqueWeight += normWeight; 
 		}
+		Color color = StateProperties.COLORLESS;
 		if (totalAlpha > 0) {
-			r /= totalAlpha; g /= totalAlpha; b /= totalAlpha; a /= totalAlpha;
+			color = new Color((int)(r / totalAlpha), (int)(g / totalAlpha), (int)(b / totalAlpha), (int)(a / totalAlpha));
 		}
 		State phase = State.values()[Doubles.indexOf(stateWeight, Doubles.max(stateWeight))];
-		return new ConditionProperties(phase, new Color(r, g, b, a), density,
-				                       new Hazard(Math.round(health), Math.round(flammability), Math.round(instability)), 
-				                       this.getViscosity(condition, density), luminosity,
-				                       opaqueWeight > 0.5);
+		mixProps = new ConditionProperties(phase, color, density,
+                                           new Hazard(Math.round(health), Math.round(flammability), Math.round(instability)), 
+				                           this.getViscosity(condition, density), luminosity,
+				                           opaqueWeight > 0.5);
+		this.propertiesCache.put(condition, mixProps);
+		return mixProps;
 	}
 
 	private static final double THOMAS_A = 0.00273;
