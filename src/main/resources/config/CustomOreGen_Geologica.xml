@@ -1631,7 +1631,6 @@
         <Replaces block='PFAAGeologica:strongStone:8'/>
         <Replaces block='PFAAGeologica:mediumStone:0'/>
         <BiomeSet inherits='continental'/>
-        <BiomeSet inherits='folded'/>
       </CloudPreset>
 
       <CloudPreset name='PresetSedStrategicCloudOceanic'
