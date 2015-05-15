@@ -138,7 +138,7 @@ public class GeologicaBlocks implements BlockCatalog {
 		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay));
 	}
 	private static GeoBlock createOreClayBlock() {
-		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.clay);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.clay));
 	}
 	private static GeoBlock createClayBrickBlock() {
 		return createGeoBlock(BrickGeoBlock.class, Strength.WEAK, Aggregate.class, Material.clay);
@@ -153,7 +153,7 @@ public class GeologicaBlocks implements BlockCatalog {
 		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Crude.class, Material.ground));
 	}
 	private static GeoBlock createOreGroundBlock() {
-		return createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.ground);
+		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, Strength.WEAK, Ore.class, Material.ground));
 	}
 	private static GeoBlock createVanillaOreRockBlock() {
 		return createGeoBlock(IntactGeoBlock.class, Strength.STRONG, VanillaOre.class, Material.rock);
