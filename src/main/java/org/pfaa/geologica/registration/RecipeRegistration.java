@@ -437,6 +437,9 @@ public class RecipeRegistration {
 		public int getBurnTime(ItemStack fuel) {
 			// FIXME: do this based on the chemical model later; for now it is hack city.
 			// Whatever we do, it should probably round to the nearest multiple of 200.
+			if (fuel.getItem() != GeologicaItems.CRUDE_LUMP)
+				return 0;
+			
 			GeoMaterial material = GeologicaItems.CRUDE_LUMP.getIndustrialMaterial(fuel);
 			switch(material) {
 			case OIL_SHALE:
