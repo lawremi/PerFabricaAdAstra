@@ -162,6 +162,7 @@ public class RecipeRegistration {
 		addStairsRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK_STAIRS__LIMESTONE);
 		addStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__GRANITE);
 		addStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__MARBLE);
+		addClumpToBlockRecipe(GeologicaItems.EARTHY_CLUMP);
 	}
 
 	// FIXME: should loop over blocks, conditioning on their properties to yield different recipes
@@ -212,7 +213,15 @@ public class RecipeRegistration {
 			GameRegistry.addRecipe(outputStack, shape, shape[0].charAt(0), inputStack);
 		}
 	}
-
+	
+	private static void addClumpToBlockRecipe(IndustrialMaterialItem<GeoMaterial> input) {
+		for(GeoMaterial material : input.getIndustrialMaterials()) {
+			ItemStack outputStack = GeoBlock.getNative(material).getItemStack(1);
+			ItemStack inputStack = input.getItemStack(material);
+			GameRegistry.addRecipe(outputStack, "##", "##", '#', inputStack);
+		}
+	}
+	
 	private static void addStairsRecipe(StairsBlock output) {
 		ItemStack outputStack = new ItemStack(output, 4, output.getModelBlockMeta());
 		ItemStack inputStack = new ItemStack(output.getModelBlock(), 1, output.getModelBlockMeta());

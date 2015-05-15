@@ -1,4 +1,4 @@
-package org.pfaa.geologica; // FIXME: should probably be in blocks package
+package org.pfaa.geologica;
 
 import java.util.ArrayList;
 import java.util.List;

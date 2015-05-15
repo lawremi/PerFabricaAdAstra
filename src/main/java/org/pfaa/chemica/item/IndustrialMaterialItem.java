@@ -66,7 +66,7 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		return new ItemStack(this, quantity, getDamage(material));
 	}
 	
-	private int getDamage(T material) {
+	public int getDamage(T material) {
 		return material.ordinal();
 	}
 
