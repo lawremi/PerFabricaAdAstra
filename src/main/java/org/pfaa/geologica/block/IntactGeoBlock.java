@@ -48,9 +48,9 @@ public class IntactGeoBlock extends GeoBlock {
 	}
 	
 	private ArrayList<ItemStack> getEarthyDrops(GeoMaterial material, int fortune) {
-		int numOreDrops = material.getComposition() instanceof Ore ? fortune + 1 : 4;
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		GeoMaterial host = (GeoMaterial)material.getHost();
+		int numOreDrops = material.getComposition() instanceof Ore && host != null ? fortune + 1 : 4;
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		for (int i = 1; i <= 4; i++) {
 			if (i > numOreDrops) {
 				material = host;
