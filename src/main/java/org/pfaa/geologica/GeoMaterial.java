@@ -49,6 +49,7 @@ public enum GeoMaterial implements Mixture {
 			  Strength.STRONG),
 	RHYOLITE(Aggregates.STONE.mix(IndustrialMinerals.QUARTZ, 0.05), Strength.STRONG),
 	SANDSTONE(Aggregates.SAND, Strength.STRONG),
+	RED_SANDSTONE(Aggregates.SAND, Strength.STRONG),
 	
 	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG),
 	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.VERY_STRONG),
