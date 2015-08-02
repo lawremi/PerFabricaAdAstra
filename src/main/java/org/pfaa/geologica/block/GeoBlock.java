@@ -184,7 +184,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		GeoMaterial material = this.getGeoMaterial(metadata);
 		ArrayList<ItemStack> drops = ChanceDropRegistry.instance().getDrops(material, world.rand, fortune);
-		if (drops != null) {
+		if (drops != null && drops.size() > 0) {
 			return drops;
 		} else {
 			return super.getDrops(world, x, y, z, metadata, fortune);
