@@ -1564,8 +1564,9 @@
     Important collectors:
     * (K/S)EX (K/Na ethyl xanthate): Cu, Ni, Ag, Au extraction
     
-    Using froth flotation should double ore output. Should be
-    possible to recover the collector.
+    Froth flotation should convert the sulfide ore to the sulfide
+    mineral, which effectively doubles ore output. Should be possible
+    to recover the collector.
     
 *** Drying
     This means removing water from an aqueous solution to yield a
@@ -2284,16 +2285,23 @@
     rubber => isoprene
     compost/plantballs => biochar + NH3
     
+** Roasting
+   Cooking with very hot air, typically to convert sulfide ores to
+   oxide ores.
+   
 ** Ore processing
    More complex chemistry happens when extracting metals from
    ore. Preprocessing of mineral ores involves these unit operations:
-   * Comminution :: Simply grinding/pulverizing
+   * Comminution :: Simply grinding/pulverizing, converting the ore
+                    block to the ore dust
    * Sizing :: Selecting the particles by size; could be simple
                screens or could rely on different settling velocities
                (things like cyclones and trommels). We can probably
                ignore this step.
-   * Concentration :: Concentrating the ore is more complicated, and
-                      there are many methods (see separation section):
+   * Concentration :: Concentrates the mineral in the ore, effectively
+                      converting the ore to the mineral. Concentration
+                      is complicated, and there are many methods (see
+                      separation section):
      * Gravity/density-based
      * Chemical, e.g. froth-flotation
      * Electrostatic (for mineral sands)
@@ -2349,12 +2357,19 @@
      
 *** Chalcopyrite 
 **** Copper
-     Optionally use froth flotation to double the dust. Induction
-     smelting one dust with coal dust will yield 2x copper oxide. The
-     oxide can be again smelted, or electrorefined. Here, there is an
-     investment in the coal, pulverizing the coal and a second
-     smelting step, but it doubles ore output. Can also be smelted
-     directly, with no gains.
+     * 1x :: ore =smelt=> 1*copper_ingot
+     * 2x :: ore =crush=> 2*ore_dust =smelt=> copper_ingot
+     * 3x :: ore =crush=> 2*ore_dust =float=> 1.5*chalcopyrite_dust =smelt=> Cu
+     * 3x+ :: 2*chalcopyrite_dust =smelt+silica=> 
+              chalcocite_dust + Fe-rich slag (1) + SO2 =smelt=> 2*Cu
+     * 4x :: chalcocite_dust =roast=> 1.3*cuprous_oxide_dust + SO2  =smelt=> 2*Cu
+     
+     * (1) :: If ore dust is input, slag is not Fe-rich
+       
+     Like most sulfide ores, we concentrate with froth flotation,
+     roast to oxide, and smelt to the metal. But the iron impurity
+     requires us to smelt with silica to separate the iron in the slag
+     phase.
 
 **** Cobalt
      The copper oxide is dissolved in sulfuric acid, and the cobalt is
@@ -3906,20 +3921,66 @@
   detailed such that any external representation is a reduction of its
   complexity.
 
-  Below is a list of the targeted mods and how we might integrate with
-  them. Most of the integration is implicit, i.e., through the ore
-  dictionary, but we will also need to add custom recipes.
+  For processing, we can interface at two levels: material and
+  recipe. The ore dictionary is the simplest form of material
+  integration. It requires that the mod support a particular type of
+  material. Gregtech has an enumeration of all materials it handles
+  and generates all recipes and items from the material
+  definitions. Recipe-level integration requires explicitly specifying
+  recipes via an API. Except for Gregtech, this is the primary
+  mechanism for mod integration. Below is a table of how abstract
+  processing steps map to machines in specific mods:
+  
+  | Mod           | Communition            |
+  |---------------+------------------------|
+  | IC2           | Macerator (1)          |
+  | Railcraft     | Rock crusher (9,%)     |
+  | AE2           | Grinder (2,%)          |
+  | TE            | Pulverizer (2,%)       |
+  | EnderIO       | SAG Mill (4,%)         |
+  | IE            | Crusher (2,%)          |
+  | RotaryCraft   | Grinder (1)            |
+  | Magneticraft  | Grinder (2,%)          |
+  | Mekanism      | Enrichment chamber (1) |
+  | BC+           | Duster (1)             |
+  | ELN           | ?                      |
+  | Hydraulicraft | Crusher (n -- fluid?)  |
+  | Metallurgy    | Crusher                |
+  | Chemlab       | Centrifugal extractor  |
+
+  The table is roughly in order of prioritization. Of course, GT
+  integration takes precedence over the entire table.
+  
+  Some notes on individual mods:
   
 ** Gregtech
-** Waila
-   While we will endeavor to have blocks that rely on rendering rather
-   than GUIs, clarity will be limited. Thus, Waila tooltips may help.
+   We need to work with the maintainer to add new types of
+   materials. Once a material is added, we can modify traits, such as
+   the composition (including existing materials). These are then
+   automatically mapped to machine recipes. For example, pulverizer
+   support includes the IC2 macerator, TE pulverizer, and Railcraft
+   rock crusher.
+
+** Mekanism
+   The enrichment chamber is the closest thing to a pulverizer, even
+   though it also acts like a compressor or ore washing plant sometimes.
+   
+** Chemlab
+   A somewhat adhoc mod with interesting machines. The centrifugal
+   extractor is closest to dust production, though it depends on
+   crushed ore (from the crusher). 
+   
 ** RailCraft
    * Coke oven could be generalized to any type of pyrolysis.
    * Rock crusher should handle ores via ore dictionary.
+     
 ** Forestry
    * Ore dictionary should allow rocks/ores in backpacks.     
+     
 ** IndustrialCraft
+   Machines:
+   * Grinder :: Macerator
+     
 ** BuildCraft
     The planned distillation tower would be useful, but it seems
     abandoned. Buildcraft Additions adds a multiblock structure, but
@@ -3927,6 +3988,10 @@
     
 ** Applied Energistics
 ** Electrical Age
+** Rotary/Electri/Reactorcraft
+   Series of tech mods based on mechanical, electrical and nuclear
+   energy, respectively.
+   
 ** Mekanism
 ** Binnie's Mods (Genetics, Botany, ExtraBees/Trees)
    The gameplay seems appropriate for any biology we might
@@ -3940,6 +4005,7 @@
 ** Witchery
    The most chemical of all of the magic mods. Uses actual chemicals
    in e.g. distillation.
+   
 ** Thermal Expansion
 *** Induction furnace
     Could potentially support enhanced reduction. Currently, sand is
@@ -3956,36 +4022,28 @@
     | Medium      | 300 |
     | Strong      | 450 |
     | Very Strong | 675 |
+
 ** EnderIO
    Provides TE-like facilities for energy storage, item/liquid/power
    transfer, etc.
 
    Machines:
    * Ore Smelter :: 3 inputs (one more than Induction Smelter), one output.
-   * SAG Mill :: Grinder with 4 outputs   
-** Resonant Induction      
+   * SAG Mill :: Grinder with 4 outputs
+     
 ** Galacticraft
    Obvious base for exploration of other worlds.
    
 ** Thaumcraft
    We should add magical aspects to every item, so that we mesh with
    magic-based gameplay. The ore dictionary should handle this somehow.
-      
-** MineChem?
-   Sort of a scientific mix of EE3 and Thaumcraft. Substances are
-   broken down into chemicals (as revealed by a microscope), and those
-   chemicals can be broken down into their elements. By recombining
-   elements and then combining those compounds, substances are
-   (re)created. Even has BuildCraft and ComputerCraft turtle
-   integration. Models are cool, and the overall concept is as well,
-   but the equivalent exchange mechanic bothers me. Its a lot cooler
-   though than EE itself.
-
-   Presumably we could define our chemicals within this
-   system, but for now we can hopefully rely on the ore dictionary.
-   
-** Electrodynamics
-   Seems too immature right now, but looks like it has potential.
+ 
+** Botania
+** PneumaticCraft   
+** Hydraulicraft
+** Waila
+   While we will endeavor to have blocks that rely on rendering rather
+   than GUIs, clarity will be limited. Thus, Waila tooltips may help.
 
 * Libraries
 ** Enchiridion
