@@ -155,6 +155,11 @@
         <BiomeType name='cold'/>
         <BiomeType name='ocean' weight='-1'/>
       </BiomeSet>
+
+      <BiomeSet name='mesa'>
+	<BiomeType name='mesa'/>
+	<Biome name='Mesa .*M'/> <!-- because Forge misses the mutated mesas -->
+      </BiomeSet>
       
     </ConfigSection>
     
@@ -915,8 +920,11 @@
           <SubstitutePreset name='PresetBasaltMesa'
                             block='PFAAGeologica:strongStone:1'
                             inherits='PresetPrimaryStratumContinental'
-                            minHeight='86' maxHeight='110'>
-            <BiomeType name='mesa'/>
+                            minHeight='91' maxHeight='93'>
+            <BiomeSet inherits='mesa'/>
+	    <Replaces block='minecraft:stone'/>
+	    <Replaces block='minecraft:hardened_clay'/>
+	    <Replaces block='minecraft:stained_hardened_clay'/>
           </SubstitutePreset>
           <SubstitutePreset name='PresetBasaltMesaCobble'
                             block='PFAAGeologica:strongCobble:1'
@@ -982,7 +990,10 @@
 
         <SubstitutePreset name='PresetPrimarySedimentaryMesa'
                           inherits='PresetPrimarySedimentaryContinental'>
-          <BiomeType name='mesa'/>
+          <BiomeSet inherits='mesa'/>
+	  <Replaces block='minecraft:stone'/>
+	  <Replaces block='minecraft:hardened_clay'/>
+	  <Replaces block='minecraft:stained_hardened_clay'/>
         </SubstitutePreset>
         
         <SubstitutePreset name='PresetPrimarySedimentaryOceanic'
@@ -1049,6 +1060,15 @@
                        inherits='PresetSedimentaryOceanic'>
             <Setting name='DistributionFrequency' avg='0.10'/>
           </CloudPreset>
+	  <SubstitutePreset name='PresetMudstoneMesa'
+                            block='PFAAGeologica:weakStone:4'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='78' maxHeight='80'/>
+          <SubstitutePreset name='PresetMudstoneMesaCobble'
+                            block='PFAAGeologica:weakCobble:4'
+                            inherits='PresetMudstoneMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
         </ConfigSection>
         
         <ConfigSection> <!-- Limestone -->
@@ -1078,7 +1098,7 @@
           <SubstitutePreset name='PresetLimestoneMesa'
                             block='PFAAGeologica:mediumStone:0'
                             inherits='PresetPrimarySedimentaryMesa'
-                            minHeight='60' maxHeight='70'/>
+                            minHeight='73' maxHeight='77'/>
           <SubstitutePreset name='PresetLimestoneMesaCobble'
                             block='PFAAGeologica:mediumCobble:0'
                             inherits='PresetLimestoneMesa'>
@@ -1111,10 +1131,37 @@
           <SubstitutePreset name='PresetSandstoneMesa'
                             block='PFAAGeologica:strongStone:8'
                             inherits='PresetPrimarySedimentaryMesa'
-                            minHeight='71' maxHeight='80'/>
+                            minHeight='67' maxHeight='72'/>
           <SubstitutePreset name='PresetSandstoneMesaCobble'
                             block='PFAAGeologica:strongCobble:8'
                             inherits='PresetSandstoneMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
+	  <SubstitutePreset name='PresetSandstoneMesa2'
+                            block='PFAAGeologica:strongStone:8'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='81' maxHeight='83'/>
+          <SubstitutePreset name='PresetSandstoneMesaCobble2'
+                            block='PFAAGeologica:strongCobble:8'
+                            inherits='PresetSandstoneMesa2'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
+	  <SubstitutePreset name='PresetRedSandstoneMesa'
+                            block='PFAAGeologica:strongStone:9'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='84' maxHeight='90'/>
+          <SubstitutePreset name='PresetRedSandstoneMesaCobble'
+                            block='PFAAGeologica:strongCobble:9'
+                            inherits='PresetSandstoneMesa'>
+            <ReplacesOre block='cobblestone'/>
+          </SubstitutePreset>
+	  <SubstitutePreset name='PresetRedSandstoneMesaTop'
+                            block='PFAAGeologica:strongStone:9'
+                            inherits='PresetPrimarySedimentaryMesa'
+                            minHeight='94' maxHeight='105'/>
+          <SubstitutePreset name='PresetRedSandstoneMesaTopCobble'
+                            block='PFAAGeologica:strongCobble:9'
+                            inherits='PresetRedSandstoneMesaTop'>
             <ReplacesOre block='cobblestone'/>
           </SubstitutePreset>
         </ConfigSection>
@@ -1303,7 +1350,7 @@
           <SubstitutePreset name='PresetQuartziteMesa'
                             block='PFAAGeologica:veryStrongStone:4'
                             inherits='PresetPrimarySedimentaryMesa'
-                            minHeight='81' maxHeight='85'/>
+                            minHeight='64' maxHeight='66'/>
           <SubstitutePreset name='PresetQuartziteMesaCobble'
                             block='PFAAGeologica:veryStrongCobble:4'
                             inherits='PresetQuartziteMesa'>
@@ -1509,10 +1556,16 @@
           <Cloud name='GneissVolcanic' inherits='PresetGneissVolcanic'/>
           <Cloud name='GneissShield' inherits='PresetGneissShield'/>
 
-          <Substitute name='LimestoneMesa' inherits='PresetLimestoneMesa'/>
-          <Substitute name='SandstoneMesa' inherits='PresetSandstoneMesa'/>
-          <Substitute name='QuartziteMesa' inherits='PresetQuartziteMesa'/>
-          <Substitute name='BasaltMesa' inherits='PresetBasaltMesa'/>
+	  <Substitute name='QuartziteMesa' inherits='PresetQuartziteMesa'/>
+	  <Substitute name='SandstoneMesa' inherits='PresetSandstoneMesa'/>
+	  <Substitute name='LimestoneMesa' inherits='PresetLimestoneMesa'/>
+	  <Substitute name='MudstoneMesa' inherits='PresetMudstoneMesa'/>
+	  <Substitute name='SandstoneMesa2' inherits='PresetSandstoneMesa2'/>
+	  <Substitute name='RedSandstoneMesa'
+		      inherits='PresetRedSandstoneMesa'/>
+	  <Substitute name='BasaltMesa' inherits='PresetBasaltMesa'/>
+          <Substitute name='RedSandstoneMesaTop'
+		      inherits='PresetRedSandstoneMesaTop'/>
           
           <Substitute name='GabbroOceanic' inherits='PresetGabbroOceanic'/>
           <Substitute name='GabbroBasalt' inherits='PresetGabbroBasalt'/>
@@ -1556,14 +1609,22 @@
                         inherits='PresetRhyoliteCalderaCobble'/>
             <Substitute name='MudstoneCobble'
                         inherits='PresetMudstoneCobble'/>
+	    <Substitute name='MudstoneMesaCobble'
+                        inherits='PresetMudstoneMesaCobble'/>
             <Substitute name='LimestoneHillsCobble'
                         inherits='PresetLimestoneHillsCobble'/>
             <Substitute name='LimestoneMesaCobble'
                         inherits='PresetLimestoneMesaCobble'/>
+	    <Substitute name='SandstoneMesaCobble2'
+                        inherits='PresetSandstoneMesaCobble2'/>
             <Substitute name='SandstoneHillsCobble'
                         inherits='PresetSandstoneHillsCobble'/>
-            <Substitute name='SandstoneMesa'
-                        inherits='PresetSandstoneMesa'/>
+            <Substitute name='SandstoneMesaCobble'
+                        inherits='PresetSandstoneMesaCobble'/>
+	    <Substitute name='RedSandstoneMesaCobble'
+                        inherits='PresetRedSandstoneMesaCobble'/>
+	    <Substitute name='RedSandstoneMesaTopCobble'
+                        inherits='PresetRedSandstoneMesaTopCobble'/>
             <Substitute name='GneissTopsCobble'
                         inherits='PresetGneissTopsCobble'/>
             <Substitute name='QuartziteTopsCobble'
@@ -1571,10 +1632,18 @@
             <Substitute name='QuartziteMesaCobble'
                         inherits='PresetQuartziteMesaCobble'/>
           </IfCondition>
+
+	  <ConfigSection>
+	    <Substitute name='CragToMudstone' block='PFAAGeologica:weakStone:4'>
+	      <Replaces block='BiomesOPlenty:cragRock'/>
+	      <Biome name='crag'/>
+	    </Substitute>
+	  </ConfigSection>
+
         </IfCondition>
         
       </ConfigSection>
-      
+
     </ConfigSection> <!-- /Rocks -->
 
     <ConfigSection> <!-- Common ore presets -->
@@ -1629,6 +1698,7 @@
         <Replaces block='PFAAGeologica:weakStone:3'/>
         <Replaces block='PFAAGeologica:weakStone:4'/>
         <Replaces block='PFAAGeologica:strongStone:8'/>
+	<Replaces block='PFAAGeologica:strongStone:9'/>
         <Replaces block='PFAAGeologica:mediumStone:0'/>
         <BiomeSet inherits='continental'/>
       </CloudPreset>
@@ -1661,6 +1731,7 @@
         <Replaces block='PFAAGeologica:weakStone:4'/>
         <Replaces block='PFAAGeologica:mediumStone:0'/>
         <Replaces block='PFAAGeologica:strongStone:8'/>
+	<Replaces block='PFAAGeologica:strongStone:9'/>
         <Replaces block='minecraft:sandstone'/>
       </VeinsPreset>
 
