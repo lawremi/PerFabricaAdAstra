@@ -146,7 +146,7 @@ public enum GeoMaterial implements Mixture {
 	QUARTZ(IndustrialMinerals.QUARTZ, Strength.STRONG, GRANITE),
 	CASSITERITE(Ores.CASSITERITE.mix(Ores.FLUORITE, 0.1).mix(Ores.WOLFRAMITE, 0.1)
 			    .mix(IndustrialMinerals.APATITE, 0.05).mix(Ores.MOLYBDENITE, 0.05), Strength.STRONG, Aggregates.STONE),
-	CHROMITE(Ores.CHROMITE.mix(SERPENTINITE, 0.5).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, SERPENTINITE),
+	CHROMITE(Ores.CHROMITE.mix(Ores.MAGNETITE, 0.1), Strength.STRONG, SERPENTINITE),
 	ILMENITE(Ores.ILMENITE.mix(Ores.RUTILE, 0.2).mix(Ores.MAGNETITE, 0.1), Strength.STRONG, DIORITE),
 	MAGNETITE(Ores.MAGNETITE, Strength.STRONG, GRANITE),
 	POLLUCITE(Ores.POLLUCITE.mix(Ores.SPODUMENE, 0.1), Strength.STRONG, PEGMATITE),
