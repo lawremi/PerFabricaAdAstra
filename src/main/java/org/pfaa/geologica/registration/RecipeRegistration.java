@@ -358,16 +358,7 @@ public class RecipeRegistration {
 		}
 	}
 
-	/* TODO Algorithm:
-	 * The primary component of an aggregate should yield a block. If
-	 * that is the only component, yield 2 blocks.
-	 * 
-	 * Ore materials should yield two dusts of primary composition.
-	 * 
-	 * And additional dusts with chances matching the proportions. 
-	 *   If there are more components than handled by the machine, 
-	 *   start from the first.
-	 *  
+	/* TODO: Need an algorithm.  
 	 */
 
 	private static void addGrindingRecipe(ItemStack input, ItemStack output, ItemStack secondaryOutput, 

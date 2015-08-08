@@ -1932,6 +1932,40 @@
     This is Langmuir's approximation:
     dn/dt = (pv - p)*sqrt(1/(2*pi*R*T))
     
+** Communition
+   This is breaking down the ore and performing simple, typically
+   gravity-based separations. It corresponds to the crusher/pulverizer
+   steps in most mod processing chains.
+
+*** Single stage design
+    * The primary component of an aggregate should yield a block. If
+      that is the only component, yield 2 blocks.
+    * Ore materials should yield two dusts of primary composition. And
+      additional dusts with chances matching the proportions.  
+    * If there are more components than handled by the machine, start
+      from the first.
+      
+*** Two-stage design
+    * The first stage is crushing, while the second is
+      pulverizing. Many mods already make this distinction. Even if
+      the machine is called a pulverizer (or crusher), it is the input
+      that determines the operation. 
+      * Raw ore =crush=> crushed ore =pulverize=> dust.
+    * Crushing ore yields 2 crushed ore, and the host rubble/gravel is
+      kept if the machine supports more outputs.
+    * Crushed ore is pulverized to 1 primary dust + others according
+      to weight, limited by the machine outputs.
+    * Crushing cobblestone is same, but rubble instead of crushed ore,
+      and primary dust is sand. A pure crusher will yield gravel from
+      the rubble.
+
+    Since the crushed ore is smeltable just like the dust, this means
+    that the first step effectively doubles ore production, while the
+    second step allows access to additional components. One concern is
+    that machines with more outputs have greater yield. This may not
+    be balanced, since the cost of machines is likely not correlated
+    with number of outputs. But there is no way we can address that.
+
 ** Electrolysis
    Electrolysis will reduce just about anything. If we know the
    chemical formula of the substance, we can easily calculate the
@@ -3931,7 +3965,7 @@
   mechanism for mod integration. Below is a table of how abstract
   processing steps map to machines in specific mods:
   
-  | Mod           | Communition            |
+  | Mod           | Crusher                |
   |---------------+------------------------|
   | IC2           | Macerator (1)          |
   | Railcraft     | Rock crusher (9,%)     |
@@ -3940,8 +3974,8 @@
   | EnderIO       | SAG Mill (4,%)         |
   | IE            | Crusher (2,%)          |
   | RotaryCraft   | Grinder (1)            |
-  | Magneticraft  | Grinder (2,%)          |
-  | Mekanism      | Enrichment chamber (1) |
+  | Magneticraft  | Crusher, Grinder (2,%) |
+  | Mekanism      | Crusher, E-chamber (1) |
   | BC+           | Duster (1)             |
   | ELN           | ?                      |
   | Hydraulicraft | Crusher (n -- fluid?)  |
