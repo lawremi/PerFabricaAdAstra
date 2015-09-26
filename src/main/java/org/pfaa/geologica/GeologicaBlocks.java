@@ -162,16 +162,7 @@ public class GeologicaBlocks implements BlockCatalog {
 	}
 	
 	public static List<Block> getBlocks() {
-		List<Block> blocks = new ArrayList<Block>(); 
-		for (Field field : GeologicaBlocks.class.getFields()) {
-			try {
-				blocks.add((Block)field.get(null));
-			} catch (Exception e) {
-				Geologica.log.fatal("Failed to get block from field '" + field.getName() + "'");
-				throw new LoaderException(e);
-			}
-		}
-		return blocks;
+		return CatalogUtils.getEntries(GeologicaBlocks.class, Block.class);
 	}
 	
 	private static Block createWallBlock(CompositeBlock modelBlock) {
