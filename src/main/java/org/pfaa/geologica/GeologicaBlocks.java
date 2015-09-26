@@ -81,6 +81,9 @@ public class GeologicaBlocks implements BlockCatalog {
 	public static final StairsBlock STRONG_STONE_BRICK_STAIRS__MARBLE = createStairsBlock(STRONG_STONE_BRICK, GeoMaterial.MARBLE);
 	
 	public static final GeoBlock WEAK_RUBBLE = createRubbleBlock(Strength.WEAK);
+	public static final GeoBlock MEDIUM_RUBBLE = createRubbleBlock(Strength.MEDIUM);
+	public static final GeoBlock STRONG_RUBBLE = createRubbleBlock(Strength.STRONG);
+	public static final GeoBlock VERY_STRONG_RUBBLE = createRubbleBlock(Strength.VERY_STRONG);
 	
 	public static final GeoBlock WEAK_ORE_SAND = createOreSandBlock();
 	
