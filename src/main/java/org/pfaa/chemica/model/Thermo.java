@@ -6,7 +6,7 @@ import java.util.List;
 public class Thermo {
 
 	private List<Segment> shomates = new ArrayList<Segment>();
-	private List<Double> temperatureBreaks = new ArrayList<Double>();;
+	private List<Double> temperatureBreaks = new ArrayList<Double>();
 	
 	private Thermo(Thermo thermo) {
 		this.shomates.addAll(thermo.shomates);
@@ -43,7 +43,7 @@ public class Thermo {
 	
 	private Segment findSegment(double t) {
 		int si = this.temperatureBreaks.size() - 1;
-		while(si >= 0 && this.temperatureBreaks.get(si) < t)
+		while(si >= 0 && this.temperatureBreaks.get(si) <= t)
 			si--;
 		return shomates.get(si + 1);
 	}
@@ -88,7 +88,15 @@ public class Thermo {
 	}
 	
 	public Thermo addSegment(double t0, double a, double b, double transition) {
-		return addSegment(t0, new Segment(this.getStandardEnthalpy() + transition, this.getStandardEntropy(), a, b));
+		return addSegment(t0, a, b, 0, 0, transition);
+	}
+	
+	public Thermo addSegment(double t0, double a, double b, double c, double e, double transition) {
+		Segment segment = new Segment(a, b, c, 0, e, 0, 0);
+		segment.offsetEnthalpy(this.getEnthalpy(t0) - segment.getEnthalpy(t0) + transition);
+		segment.offsetEntropy(this.getEntropy(t0) - segment.getEntropy(t0));
+		this.addSegment(t0, segment);
+		return this;
 	}
 	
 	public Thermo addSegment(double t0, double a, double b, double c, double d, double e, double f, double g) {
@@ -96,7 +104,7 @@ public class Thermo {
 	}
 	
 	private static class Segment {
-		public final double a, b, c, d, e, f, g;
+		private double a, b, c, d, e, f, g;
 		
 		public Segment(double a, double b, double c, double d, double e, double f, double g) { // full form
 			this.a = a;
@@ -145,6 +153,17 @@ public class Thermo {
 				delta = 0;
 			}
 			return delta + g;
+		}
+		
+
+		public Segment offsetEntropy(double offset) {
+			this.f += offset;
+			return this;
+		}
+
+		public Segment offsetEnthalpy(double offset) {
+			this.g += offset;
+			return this;
 		}
 	}
 }
