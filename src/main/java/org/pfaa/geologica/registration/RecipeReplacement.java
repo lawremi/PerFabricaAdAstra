@@ -3,12 +3,12 @@ package org.pfaa.geologica.registration;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.pfaa.chemica.registration.RecipeUtils;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-
-import org.pfaa.RecipeUtils;
 
 public class RecipeReplacement {
 	public static void init() {

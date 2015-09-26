@@ -1,4 +1,4 @@
-package org.pfaa.geologica.fluid;
+package org.pfaa.chemica.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;

@@ -2,19 +2,18 @@ package org.pfaa.geologica.block;
 
 import java.util.Random;
 
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Strength;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSand;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class LooseGeoBlock extends GeoBlock {
 

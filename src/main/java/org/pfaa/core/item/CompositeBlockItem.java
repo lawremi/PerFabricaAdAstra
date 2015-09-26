@@ -1,12 +1,12 @@
-package org.pfaa.item;
+package org.pfaa.core.item;
+
+import org.pfaa.core.block.CompositeBlockAccessors;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.OreDictionary;
-
-import org.pfaa.block.CompositeBlockAccessors;
 
 public class CompositeBlockItem extends ItemBlock {
 

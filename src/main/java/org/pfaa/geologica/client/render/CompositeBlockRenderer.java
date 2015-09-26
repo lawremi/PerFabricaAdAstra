@@ -1,15 +1,14 @@
 package org.pfaa.geologica.client.render;
 
+import org.lwjgl.opengl.GL11;
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.block.CompositeBlockAccessors;
+
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 

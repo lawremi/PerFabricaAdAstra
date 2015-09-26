@@ -1,14 +1,13 @@
 package org.pfaa.geologica.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.util.IIcon;
-
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.block.CompositeBlockAccessors;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.util.IIcon;
 
 public class StairsBlock extends BlockStairs implements ProxyBlock, CompositeBlockAccessors {
 

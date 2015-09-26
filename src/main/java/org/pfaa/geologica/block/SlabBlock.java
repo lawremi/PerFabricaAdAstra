@@ -3,6 +3,11 @@ package org.pfaa.geologica.block;
 import java.util.List;
 import java.util.Random;
 
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.block.CompositeBlockAccessors;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,12 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, ProxyBlock {
 

@@ -1,4 +1,4 @@
-package org.pfaa.util;
+package org.pfaa.core.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

@@ -3,8 +3,8 @@ package org.pfaa.geologica.integration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import org.pfaa.geologica.GeoMaterial.Strength;
-import org.pfaa.geologica.processing.OreMineral.SmeltingTemperature;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.TemperatureLevel;
 
 // FIXME: stub, will become a mod integration plugin
 

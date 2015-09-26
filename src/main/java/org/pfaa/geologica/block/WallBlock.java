@@ -2,6 +2,11 @@ package org.pfaa.geologica.block;
 
 import java.util.List;
 
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.block.CompositeBlockAccessors;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;

@@ -5,10 +5,10 @@ import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.chemica.model.Strength;
 import org.pfaa.geologica.integration.GTIntegration;
-import org.pfaa.geologica.processing.Aggregate;
 
 public class GeologicaConfiguration {
 

@@ -1,16 +1,8 @@
-package org.pfaa.geologica.processing;
+package org.pfaa.chemica.model;
 
 import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
-
-import org.pfaa.chemica.model.Condition;
-import org.pfaa.chemica.model.ConditionProperties;
-import org.pfaa.chemica.model.Hazard;
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.State;
 
 public interface Aggregate extends Mixture {
 	

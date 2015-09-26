@@ -1,4 +1,4 @@
-package org.pfaa.chemica.item;
+package org.pfaa.core.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

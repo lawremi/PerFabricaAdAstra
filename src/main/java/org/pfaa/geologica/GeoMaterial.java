@@ -3,16 +3,16 @@ package org.pfaa.geologica;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.material.Material;
-
+import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
+import org.pfaa.chemica.model.Element.Elements;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.geologica.processing.Aggregate.Aggregates;
+import org.pfaa.chemica.model.Strength;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
@@ -23,6 +23,8 @@ import org.pfaa.geologica.processing.SimpleOre;
 import org.pfaa.geologica.processing.SimpleVanillaOre;
 
 import com.google.common.base.CaseFormat;
+
+import net.minecraft.block.material.Material;
 
 public enum GeoMaterial implements Mixture {
 	BRECCIA(Aggregates.GRAVEL, Strength.WEAK),

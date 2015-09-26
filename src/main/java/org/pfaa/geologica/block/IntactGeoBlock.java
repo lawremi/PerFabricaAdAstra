@@ -3,12 +3,12 @@ package org.pfaa.geologica.block;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Strength;
 import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
-import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Ore;
 
 import cpw.mods.fml.relauncher.Side;

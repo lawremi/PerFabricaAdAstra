@@ -1,4 +1,4 @@
-package org.pfaa;
+package org.pfaa.chemica.registration;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

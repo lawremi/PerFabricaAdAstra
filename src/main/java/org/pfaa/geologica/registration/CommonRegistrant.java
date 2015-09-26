@@ -1,6 +1,6 @@
 package org.pfaa.geologica.registration;
 
-import org.pfaa.Registrant;
+import org.pfaa.core.registration.Registrant;
 
 public class CommonRegistrant implements Registrant {
 

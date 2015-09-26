@@ -1,6 +1,6 @@
 package org.pfaa.geologica.integration;
 
-import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.chemica.model.Strength;
 
 import cpw.mods.fml.common.Loader;
 

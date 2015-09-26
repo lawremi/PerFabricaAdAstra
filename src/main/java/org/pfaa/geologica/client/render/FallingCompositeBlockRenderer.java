@@ -1,10 +1,10 @@
 package org.pfaa.geologica.client.render;
 
+import org.pfaa.core.block.CompositeBlock;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.RenderFallingBlock;
 import net.minecraft.entity.item.EntityFallingBlock;
-
-import org.pfaa.block.CompositeBlock;
 
 public class FallingCompositeBlockRenderer extends RenderFallingBlock {
 	@Override

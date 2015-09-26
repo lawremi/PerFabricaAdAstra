@@ -1,4 +1,4 @@
-package org.pfaa;
+package org.pfaa.core.registration;
 
 public interface Registrant {
 

@@ -1,4 +1,4 @@
-package org.pfaa.block;
+package org.pfaa.core.block;
 
 
 public interface CompositeBlockAccessors {

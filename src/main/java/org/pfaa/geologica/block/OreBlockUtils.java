@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.pfaa.util.BlockMeta;
+import org.pfaa.core.block.BlockWithMeta;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

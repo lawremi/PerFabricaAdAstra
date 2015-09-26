@@ -1,36 +1,33 @@
 package org.pfaa.geologica;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-
-import org.pfaa.BlockCatalog;
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.block.IndustrialFluidBlock;
-import org.pfaa.chemica.fluid.IndustrialFluid;
-import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.catalog.BlockCatalog;
+import org.pfaa.core.catalog.CatalogUtils;
 import org.pfaa.geologica.block.BrickGeoBlock;
 import org.pfaa.geologica.block.BrokenGeoBlock;
 import org.pfaa.geologica.block.GeoBlock;
 import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.SlabBlock;
+import org.pfaa.geologica.block.SpringBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
-import org.pfaa.geologica.processing.Aggregate;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.VanillaOre;
 
 import cpw.mods.fml.common.LoaderException;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 
 public class GeologicaBlocks implements BlockCatalog {
 	public static final IntactGeoBlock WEAK_STONE = createStoneBlock(Strength.WEAK);

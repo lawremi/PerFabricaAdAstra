@@ -1,6 +1,6 @@
 package org.pfaa.geologica;
 
-import org.pfaa.RegistrationUtils;
+import org.pfaa.core.registration.RegistrationUtils;
 
 public class GeologicaTextures extends RegistrationUtils {
 	private static final String TEXTURE_DIR = Geologica.RESOURCE_DIR + "/textures";

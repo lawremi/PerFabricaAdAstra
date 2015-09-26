@@ -1,9 +1,4 @@
-package org.pfaa.geologica.processing;
-
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.SimpleMixture;
+package org.pfaa.chemica.model;
 
 public class SimpleAggregate extends SimpleMixture implements Aggregate {
 

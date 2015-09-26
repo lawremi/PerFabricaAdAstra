@@ -1,6 +1,6 @@
 package org.pfaa.chemica.registration;
 
-import org.pfaa.Registrant;
+import org.pfaa.core.registration.Registrant;
 
 public class CommonRegistrant implements Registrant {
 

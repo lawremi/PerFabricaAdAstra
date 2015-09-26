@@ -1,10 +1,9 @@
 package org.pfaa.geologica.registration;
 
-import net.minecraft.item.ItemBlock;
-
-import org.pfaa.RegistrationUtils;
 import org.pfaa.chemica.block.IndustrialFluidBlock;
-import org.pfaa.chemica.item.ColoredItemBlock;
+import org.pfaa.core.item.ColoredBlockItem;
+import org.pfaa.core.item.CompositeBlockItem;
+import org.pfaa.core.registration.RegistrationUtils;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.block.GeoBlock;
@@ -13,7 +12,8 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.item.SlabItem;
-import org.pfaa.item.CompositeBlockItem;
+
+import net.minecraft.item.ItemBlock;
 
 public class BlockRegistration  {
 

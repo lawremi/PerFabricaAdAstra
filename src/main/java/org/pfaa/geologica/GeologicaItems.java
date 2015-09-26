@@ -1,13 +1,19 @@
 package org.pfaa.geologica;
 
-import net.minecraft.block.material.Material;
+import java.util.List;
 
-import org.pfaa.ItemCatalog;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.core.catalog.CatalogUtils;
+import org.pfaa.core.catalog.ItemCatalog;
 import org.pfaa.geologica.processing.Crude;
+import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.OreMineral.Ores;
 
 import com.google.common.base.Predicate;
+
+import net.minecraft.block.material.Material;
 
 public class GeologicaItems implements ItemCatalog {
 	private static Predicate<GeoMaterial> EarthyMaterial = new Predicate<GeoMaterial>() {

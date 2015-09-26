@@ -1,7 +1,8 @@
 package org.pfaa.chemica;
 
 import org.apache.logging.log4j.Logger;
-import org.pfaa.Registrant;
+import org.pfaa.chemica.integration.ModIntegration;
+import org.pfaa.core.registration.Registrant;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;

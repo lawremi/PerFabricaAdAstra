@@ -6,27 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pfaa.chemica.ChemicaBlocks;
+import org.pfaa.chemica.model.Aggregate;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.core.block.BlockWithMeta;
+import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.geologica.GeoMaterial;
+import org.pfaa.geologica.Geologica;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.GeoMaterial.Strength;
-import org.pfaa.geologica.Geologica;
-import org.pfaa.geologica.processing.Aggregate;
-import org.pfaa.geologica.processing.Aggregate.Aggregates;
-import org.pfaa.util.BlockWithMeta;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
 
