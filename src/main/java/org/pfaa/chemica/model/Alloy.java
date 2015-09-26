@@ -9,6 +9,8 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 
+import com.google.common.base.CaseFormat;
+
 import static org.pfaa.chemica.model.Element.Elements.Ag;
 import static org.pfaa.chemica.model.Element.Elements.Al;
 import static org.pfaa.chemica.model.Element.Elements.Au;
@@ -112,7 +114,7 @@ public interface Alloy extends Mixture, Metal {
 
 		@Override
 		public String getOreDictKey() {
-			return delegate.getOreDictKey();
+			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 
 		@Override
