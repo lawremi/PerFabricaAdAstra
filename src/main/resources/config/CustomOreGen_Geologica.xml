@@ -3643,7 +3643,7 @@
           <Replaces block='PFAAGeologica:strongStone:7'/>
           <Replaces block='PFAAGeologica:strongStone:0'/>
         </VeinsPreset>
-        <CloudPreset name='PresetDiatomite' block='PFAAGeologica:weakOreRock:8'
+        <CloudPreset name='PresetDiatomite' block='PFAAGeologica:weakOreSand:7'
                      inherits='PresetSedStrategicCloud'
                      drawWireframe='false'
                      wireframeColor='0xFFFFFFFF'>
