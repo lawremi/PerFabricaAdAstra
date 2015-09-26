@@ -7,6 +7,7 @@ import static org.pfaa.chemica.model.Element.Elements.B;
 import static org.pfaa.chemica.model.Element.Elements.Ba;
 import static org.pfaa.chemica.model.Element.Elements.Be;
 import static org.pfaa.chemica.model.Element.Elements.Bi;
+import static org.pfaa.chemica.model.Element.Elements.Br;
 import static org.pfaa.chemica.model.Element.Elements.C;
 import static org.pfaa.chemica.model.Element.Elements.Ca;
 import static org.pfaa.chemica.model.Element.Elements.Cd;
@@ -20,6 +21,7 @@ import static org.pfaa.chemica.model.Element.Elements.F;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
 import static org.pfaa.chemica.model.Element.Elements.H;
 import static org.pfaa.chemica.model.Element.Elements.Hg;
+import static org.pfaa.chemica.model.Element.Elements.I;
 import static org.pfaa.chemica.model.Element.Elements.K;
 import static org.pfaa.chemica.model.Element.Elements.Li;
 import static org.pfaa.chemica.model.Element.Elements.Mg;
@@ -96,23 +98,23 @@ public interface Compound extends Chemical {
 			new Gas(new Thermo(25.0, 55.2, -33.7, 7.95, -0.137, -404, 228)
 					.addSegment(1200, 58.2, 2.72, -0.492, 0.0388, -6.45, -426, 264), 
 					new Hazard(2, 0, 0), new Sutherland(14.8, 293, 240))),
-		Ag2S(new Formula(Ag._(2), S), "silver", 
-			 new Solid(Color.black, 7.23, new Thermo(-32.6, 144, 55.4, 77.9).addSegment(452, 91.2, 0, 5.86)),
+		Ag2S(new Formula(Ag._(2), S), null, 
+			 new Solid(Color.black, 7.23, new Thermo(-32.6, 144, 55.4, 77.9).addSegment(450, 91.2, 0, 5.86)),
 			 new Fusion(1098),
 			 new Liquid(new Thermo(157))),
-		AlOH3(new Formula(Al, new Part(O, H)._(3)), "aluminum", 
+		AlOH3(new Formula(Al, new Part(O, H)._(3)), null, 
 			  new Solid(2.42, new Thermo(-1277, 71, 25.7, 155, -98.6, 0.690))),
-		As2S3(new Formula(As._(2), S._(3)), "arsenic", 
+		As2S3(new Formula(As._(2), S._(3)), null, 
 		      new Solid(new Color(245, 210, 15), 3.43, new Thermo(-169, 164, 116)),
 			  new Fusion(583),
 			  new Liquid(new Thermo(213)),
 			  new Vaporization(980)),
-	    AsS(new Formula(As, S), "arsenic", 
+	    AsS(new Formula(As, S), null, 
 	        new Solid(Color.red, 3.56, new Thermo()),
 	        new Fusion(633),
 	        new Liquid(new Thermo()),
 	        new Vaporization(838)),
-		BaSO4(new Formula(Ba, S, O._(4)), "barium", 
+		BaSO4(new Formula(Ba, S, O._(4)), null, 
 			  new Solid(4.5, new Thermo(-1465, 132, 141, 0.595, 0, 3.49), new Hazard(0, 0, 0)),
 			  new Fusion(1618), 
 			  new Liquid(new Thermo(157))),
@@ -228,7 +230,7 @@ public interface Compound extends Chemical {
  			       .addSegment(1000, 18.6, 12.3, -2.86, 0.268, 1.98, -1.15, 156)
  			       .addSegment(2500, 43.4, -4.29, 1.27, -0.0969, -20.5, -38.5, 162), 
  				   new Hazard(0, 4, 0), new Sutherland(8.76, 294, 72))),
-		H2S(new Formula(H._(2), S), "sulfur",
+		H2S(new Formula(H._(2), S), null,
 			null,
 			null,
 			new Liquid(0.949, new Thermo(122)),
@@ -315,7 +317,7 @@ public interface Compound extends Chemical {
 					addSegment(700, 30.03, 8.77, -3.99, 0.788, -0.742, -11.3, 236).
 					addSegment(2000, 20.9, 10.7, -2.02, 0.146, 9.25, 5.34, 238), 
 					new Hazard(3, 0, 0, SpecialCode.OXIDIZER), new Sutherland(20.1, 292, 127))),
-		PbS(new Formula(Pb, S), "lead", 
+		PbS(new Formula(Pb, S), null, 
 			new Solid(new Color(26, 26, 26), 7.6, 
 					  new Thermo(47.4, 7.55, 2.01, -0.700, -0.0318, -113, 146), 
 					  new Hazard(2, 0, 0)),
@@ -323,24 +325,24 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(-98.3, 101, 66.9)),
 			new Vaporization(1554),
 			new Gas(new Thermo(77.9, -29.8, 7.55, -0.510, -25.1, 68.6, 311))),
-		Pb5V3O12Cl(new Formula(Pb._(5), new Part(V, O._(4))._(3), Cl), "vanadium",
+		Pb5V3O12Cl(new Formula(Pb._(5), new Part(V, O._(4))._(3), Cl), null,
 				   new Solid(new Color(210, 0, 0), 6.90, new Thermo())),
-		Sb2S3(new Formula(Sb._(2), S._(3)), "antimony", 
+		Sb2S3(new Formula(Sb._(2), S._(3)), null, 
 			  new Solid(new Color(100, 100, 100), 4.64, 
 					    new Thermo(-175, 182, 101, 55.2), 
 					    new Hazard(2, 1, 0)),
 			  new Fusion(823),
 			  new Liquid(new Thermo(231))),
 		//SiO2("quartz", new Fusion(1900, 14), new Solid(Color.WHITE, 2.6, -911, 42)),
-		SnO2(new Formula(Sn, O._(2)), "tin",
+		SnO2(new Formula(Sn, O._(2)), null,
 			 new Solid(Color.WHITE, 7.0, new Thermo(-581, 52, 60), new Hazard(2, 0, 0)),
 			 new Fusion(1903),
 			 new Liquid()),
-	    SrSO4(new Formula(Sr, new Part(S, O._(4))), "strontium",
+	    SrSO4(new Formula(Sr, new Part(S, O._(4))), null,
 	    	  new Solid(Color.WHITE, 3.96, new Thermo(-1453, 117, 91.7, 55.4), new Hazard(1, 0, 0)),
 	    	  new Fusion(1879),
 	    	  new Liquid(new Thermo(136))),
-		TiO2(new Formula(Ti, O._(2)), "titanium", 
+		TiO2(new Formula(Ti, O._(2)), null, 
 		     new Solid(4.23, 
 		    		   new Thermo(67, 18.7, -11.6, 2.45, -1.49, -965, 117), 
 		    		   new Hazard(1, 0, 0)), 
@@ -348,23 +350,22 @@ public interface Compound extends Chemical {
 		     new Liquid(new Thermo(78.0)),
 		     new Vaporization(3245),
 		     new Gas(new Thermo(285))),
-		UO2(new Formula(U, O._(2)), "uranium", 
+		UO2(new Formula(U, O._(2)), null, 
 			new Solid(Color.black, 11.0, 
 					  new Thermo(70, 40, -37.5, 12.7, -1.45, -1111, 144), 
 					  new Hazard(1, 0, 0)), 
 		    new Fusion(3140),
 		    new Liquid(new Thermo(100))),
-		ZnS(new Formula(Zn, S), "zinc", 
+		ZnS(new Formula(Zn, S), null, 
 			new Solid(4.09, 
 					  new Thermo(-206, 201, 53.6, 3.97, 0, 0.814), 
 					  new Hazard(1, 0, 0))),
-		//ZnS("zinc", new Solid(Color.WHITE, 4.1, -206, 58))
-		ZrSiO4(new Formula(Zr, Si, O._(4)), "zirconium",
+		ZrSiO4(new Formula(Zr, Si, O._(4)), null,
 			   new Solid(new Color(210, 210, 210), 4.56,
 					     new Thermo(85.2, 137, -94.6, 21.7, -1.74, -2061, 140)
 			                        .addSegment(1700, 151, 0, 0, 0, 0, -2082, 238),
 			             new Hazard(1, 0, 1))),
-		METHANE(new Formula(C, H._(4)).setSmiles("c"), "methane", 
+		METHANE(new Formula(C, H._(4)).setSmiles("c"), null, 
 				new Solid(0.494, new Thermo(104)),
 				new Fusion(90),
 				new Liquid(new Thermo(-74, 116, 52.9)),
@@ -373,7 +374,7 @@ public interface Compound extends Chemical {
 						.addSegment(1300, 85.8, 11.2, -2.11, 0.138, -26.4, -154, 224),
 						new Hazard(1, 4, 0), new Sutherland(11.6, 311, 165))
 				),
-		ETHANE(new Formula(C._(2), H._(6)).setSmiles("cc"), "ethane", 
+		ETHANE(new Formula(C._(2), H._(6)).setSmiles("cc"), null, 
 			   null,
 			   new Fusion(90.4),
 			   new Liquid(new Thermo(127)),
@@ -381,7 +382,7 @@ public interface Compound extends Chemical {
 			   new Gas(new Thermo(6.16, 173, -0.683, 9.07, 0.126, -93.1, 186),
 					   new Hazard(1, 4, 0), new Sutherland(9.1, 298, 272))
 				),
-		PROPANE(new Formula(C._(3), H._(8)).setSmiles("ccc"), "propane", 
+		PROPANE(new Formula(C._(3), H._(8)).setSmiles("ccc"), null, 
 				new Solid(new Thermo(130)),
 				new Fusion(85.5),
 				new Liquid(new Thermo(-119, 171, 98.4)),
