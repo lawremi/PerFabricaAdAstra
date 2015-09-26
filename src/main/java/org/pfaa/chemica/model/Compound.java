@@ -477,31 +477,31 @@ public interface Compound extends Chemical {
 		
 		private Chemical delegate;
 		
-		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+		private Compounds(Formula formula, String commonName, Solid solid, Fusion fusion, 
 				Liquid liquid,	Vaporization vaporization, Gas gas) 
 		{
-			this.delegate = new SimpleChemical(formula, oreDictKey, solid, fusion, liquid, vaporization, gas);
+			this.delegate = new SimpleChemical(formula, commonName, solid, fusion, liquid, vaporization, gas);
 			CompoundDictionary.register(formula, this);
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+		private Compounds(Formula formula, String commonName, Solid solid, Fusion fusion, 
 				Liquid liquid,	Vaporization vaporization) 
 		{
-			this(formula, oreDictKey, solid, fusion, liquid, vaporization, new Gas());
+			this(formula, commonName, solid, fusion, liquid, vaporization, new Gas());
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+		private Compounds(Formula formula, String commonName, Solid solid, Fusion fusion, 
 				Liquid liquid) 
 		{
-			this(formula, oreDictKey, solid, fusion, liquid, null);
+			this(formula, commonName, solid, fusion, liquid, null);
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, Solid solid, Fusion fusion) {
-			this(formula, oreDictKey, solid, fusion, new Liquid());
+		private Compounds(Formula formula, String commonName, Solid solid, Fusion fusion) {
+			this(formula, commonName, solid, fusion, new Liquid());
 		}
 		
-		private Compounds(Formula formula, String oreDictKey, Solid solid) {
-			this(formula, oreDictKey, solid, null);
+		private Compounds(Formula formula, String commonName, Solid solid) {
+			this(formula, commonName, solid, null);
 		}
 	
 		@Override
