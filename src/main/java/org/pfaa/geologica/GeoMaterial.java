@@ -99,7 +99,7 @@ public enum GeoMaterial implements Mixture {
 					      .mix(Ores.CHROMITE, 0.2).mix(Ores.ILMENITE, 0.6).mix(Ores.RUTILE, 0.2).mix(Ores.ZIRCON, 0.2),
 	                      Strength.WEAK, Aggregates.SAND),
 	CASSITERITE_SAND(Ores.CASSITERITE.mix(Ores.SCHEELITE, 0.2), Strength.WEAK, Aggregates.SAND),
-	GARNET_SAND(IndustrialMinerals.GARNET, Strength.WEAK, Material.sand),
+	GARNET_SAND(IndustrialMinerals.GARNET.mix(Ores.PLATINUM, 0.05), Strength.WEAK, Material.sand),
 	GRANITIC_MINERAL_SAND(Ores.MAGNETITE.mix(IndustrialMinerals.QUARTZ, 0.4).mix(IndustrialMinerals.KYANITE, 0.2)
 			              .mix(Ores.ILMENITE, 0.4).mix(Ores.RUTILE, 0.6).mix(Ores.ZIRCON, 0.4).
 			              mix(Ores.MONAZITE, 0.4), 
@@ -139,7 +139,7 @@ public enum GeoMaterial implements Mixture {
 	GARNIERITE(Ores.NEPOUITE, Strength.MEDIUM, SERPENTINITE),
 	LEPIDOLITE(Ores.LEPIDOLITE.mix(Ores.SPODUMENE, 0.2), Strength.MEDIUM, PEGMATITE),
 	MAGNESITE(Ores.MAGNESITE.mix(IndustrialMinerals.TALC, 0.2), Strength.MEDIUM, Aggregates.STONE),
-	PENTLANDITE(Ores.PENTLANDITE.mix(Ores.PYRITE, 0.1), Strength.MEDIUM, SERPENTINITE),
+	PENTLANDITE(Ores.PENTLANDITE.mix(Ores.PYRITE, 0.1).mix(Ores.PLATINUM, 0.01), Strength.MEDIUM, SERPENTINITE),
 	SCHEELITE(Ores.SCHEELITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.WOLFRAMITE, 0.2), Strength.MEDIUM, Aggregates.STONE),
 	SPHALERITE(Ores.SPHALERITE.mix(Ores.GALENA, 0.2).mix(Ores.PYRITE, 0.1), Strength.MEDIUM, Aggregates.STONE),
 	WOLFRAMITE(Ores.WOLFRAMITE.mix(Ores.CASSITERITE, 0.2).mix(Ores.SCHEELITE, 0.2), Strength.MEDIUM, PEGMATITE),
