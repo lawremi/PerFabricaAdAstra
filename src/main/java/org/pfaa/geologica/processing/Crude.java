@@ -14,6 +14,8 @@ import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
 
+import com.google.common.base.CaseFormat;
+
 /* Crude mixtures of organic substances */
 public interface Crude extends Mixture, Vaporizable {
 	public Crude mix(IndustrialMaterial material, double weight);
@@ -69,7 +71,9 @@ public interface Crude extends Mixture, Vaporizable {
 
 		@Override
 		public String getOreDictKey() {
-			return delegate.getOreDictKey();
+			return delegate.getOreDictKey() == null ? 
+					CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name()) : 
+					delegate.getOreDictKey();
 		}
 
 		@Override
