@@ -3872,8 +3872,9 @@
         <Setting name='MotherlodeHeight'
                  avg=':= 40/64 * dimension.groundLevel' range='5'/>
         <OreBlock block='PFAAGeologica:weakOreRock:9' weight='0.1'/>
-        <OreBlock block='PFAAGeologica:weakOreRock:11' weight='0.6'/>
-        <OreBlock block='PFAAGeologica:weakOreRock:5' weight='0.3'/>
+	<OreBlock block='PFAAGeologica:weakOreSand:8' weight='0.2'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:11' weight='0.5'/>
+        <OreBlock block='PFAAGeologica:weakOreRock:5' weight='0.2'/>
         <BiomeSet inherits='felsic'/>
         <ReplacesOre block='stone'/>
         <Replaces block='minecraft:dirt'/>
