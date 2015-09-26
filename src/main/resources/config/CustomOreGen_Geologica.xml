@@ -1997,7 +1997,7 @@
           <Replaces block='minecraft:clay'/>
           <Replaces block='minecraft:dirt'/>
           <ReplacesOre block='stone'/>
-          <OreBlock block='PFAAGeologica:weakOreSand:5' weight='0.8'/>
+          <OreBlock block='PFAAGeologica:weakOreSand:6' weight='0.8'/>
           <OreBlock block='minecraft:sand' weight='0.2'/>
         </CloudPreset>
       </ConfigSection>
