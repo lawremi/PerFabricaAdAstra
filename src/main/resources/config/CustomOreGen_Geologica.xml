@@ -909,7 +909,7 @@
           <SubstitutePreset name='PresetBasaltIsland'
                             block='PFAAGeologica:strongStone:1'
                             inherits='PresetPrimaryStratumOceanic'
-                            minHeight='52' maxHeight='80'>
+                            minHeight='52' maxHeight='120'>
             <BiomeSet inherits='oceanic'/>
           </SubstitutePreset>
           <SubstitutePreset name='PresetBasaltIslandCobble'
