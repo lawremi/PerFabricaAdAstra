@@ -46,6 +46,10 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		this.setHasSubtypes(true);
 	}
 
+	public Form getForm() {
+		return this.form;
+	}
+	
 	public T getIndustrialMaterial(int damage) {
 		return enumClass.getEnumConstants()[damage];
 	}
