@@ -136,5 +136,10 @@ public interface Alloy extends Mixture, Metal {
 		public Alloy alloy(Element material, double weight) {
 			return delegate.alloy(material, weight);
 		}
+
+		@Override
+		public Strength getStrength() {
+			return delegate.getStrength();
+		}
 	}
 }
