@@ -13,4 +13,8 @@ public class MixtureComponent {
 	public IndustrialMaterial getMaterial() {
 		return this.material;
 	}
+	
+	public MixtureComponent concentrate(int factor) {
+		return new MixtureComponent(this.material, this.weight * factor);
+	}
 }
