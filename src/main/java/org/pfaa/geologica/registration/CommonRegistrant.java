@@ -8,12 +8,14 @@ public class CommonRegistrant implements Registrant {
 	public void preregister() {
 		BlockRegistration.init();
 		ItemRegistration.init();
-		EntityRegistration.init();
 	}
 
 	@Override
 	public void register() {
+		OreRegistration.init();
 		RecipeRegistration.init();
+		DropRegistration.init();
+		FuelRegistration.init();
 	}
 	
 	@Override

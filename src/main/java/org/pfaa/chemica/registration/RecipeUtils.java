@@ -6,6 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.pfaa.chemica.Chemica;
+import org.pfaa.chemica.model.Aggregate.Aggregates;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.util.ChanceStack;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -16,11 +28,47 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import org.pfaa.geologica.Geologica;
-
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-
 public class RecipeUtils {
+
+	public static ItemStack getPrimaryGrindingOutput(Mixture mixture) {
+		List<MixtureComponent> comps = mixture.getComponents();
+		MixtureComponent input;
+		if (comps.size() > 0) {
+			input = comps.get(0);
+		} else {
+			input = new MixtureComponent(mixture, 1.0); 
+		}
+		return getGrindingOutput(input).itemStack;	
+	}
+	
+	public static List<ChanceStack> getSecondaryGrindingOutputs(Mixture mixture) {
+		List<MixtureComponent> components = mixture.getComponents();
+		List<MixtureComponent> secondaries = components.subList(components.size() > 0 ? 1 : 0, components.size());
+		return Lists.transform(secondaries, new MixtureComponentToGrindingOutput());
+	}
+
+	private static final double MIN_DUST_WEIGHT = 0.1;
+	
+	public static ChanceStack getGrindingOutput(MixtureComponent input) {
+		ItemStack itemStack;
+		double weight = input.weight;
+		Form form = Forms.DUST;
+		if (input.material == Aggregates.SAND || input.material == Aggregates.GRAVEL) {
+			form = Forms.PILE;
+		} else if (weight < MIN_DUST_WEIGHT) {
+			form = Forms.TINY_DUST;
+			weight *= 10;
+		}
+		itemStack = OreDictUtils.lookupBest(form, input.material);
+		return new ChanceStack(itemStack, weight);
+	}
+	
+	private static class MixtureComponentToGrindingOutput implements Function<MixtureComponent,ChanceStack> {
+		@Override
+		public ChanceStack apply(MixtureComponent input) {
+			return getGrindingOutput(input);
+		}
+	}
 	
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
         ItemStack[] replaceStacks = replacements.keySet().toArray(new ItemStack[0]);
@@ -46,7 +94,7 @@ public class RecipeUtils {
         			recipesToAdd.add(createOreRecipe(recipe, replacements));
 					recipesToRemove.add(recipe);
 				} catch (Exception e) {
-					Geologica.log.warn("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
+					Chemica.log.warn("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
 				}
         	}
         }
