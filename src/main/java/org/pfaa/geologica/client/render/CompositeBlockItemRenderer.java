@@ -1,12 +1,12 @@
 package org.pfaa.geologica.client.render;
 
+import org.lwjgl.opengl.GL11;
+import org.pfaa.core.block.CompositeBlockAccessors;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
-
-import org.lwjgl.opengl.GL11;
-import org.pfaa.block.CompositeBlockAccessors;
 
 public class CompositeBlockItemRenderer implements IItemRenderer {
 
