@@ -187,8 +187,9 @@ public interface UnitOperation extends Step {
 		
 		LIQUID_ADSORPTION(SeparationAxis.ADSORPTIVITY, State.LIQUID, State.LIQUID, State.LIQUID, State.LIQUID),
 		GAS_ADSORPTION(SeparationAxis.ADSORPTIVITY, State.GAS, State.LIQUID, State.LIQUID, State.GAS),
-		LIQUID_CHROMATOGRAPHY(SeparationAxis.ADSORPTIVITY, State.LIQUID, State.LIQUID),
-		GAS_CHROMATOGRAPHY(SeparationAxis.ADSORPTIVITY, State.GAS, State.GAS),
+		LIQUID_CHROMATOGRAPHY(SeparationAxis.ADSORPTIVITY, State.LIQUID, State.LIQUID, State.LIQUID, State.LIQUID),
+		GAS_CHROMATOGRAPHY(SeparationAxis.ADSORPTIVITY, State.GAS, State.GAS, State.GAS, State.GAS),
+		PRESSURE_SWING_ADSPORTION(SeparationAxis.ADSORPTIVITY, State.GAS, State.GAS),
 		
 		/* Molecular filters via pressure differential across membrane */
 		REVERSE_OSMOSIS(SeparationAxis.MOLECULAR_SIZE, State.LIQUID, State.LIQUID),
