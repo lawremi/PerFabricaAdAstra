@@ -1065,7 +1065,7 @@
                             inherits='PresetPrimarySedimentaryMesa'
                             minHeight='78' maxHeight='80'/>
           <SubstitutePreset name='PresetMudstoneMesaCobble'
-                            block='PFAAGeologica:weakCobble:4'
+                            block='PFAAGeologica:weakRubble:4'
                             inherits='PresetMudstoneMesa'>
             <ReplacesOre block='cobblestone'/>
           </SubstitutePreset>
