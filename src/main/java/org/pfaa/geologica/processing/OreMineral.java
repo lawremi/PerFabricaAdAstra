@@ -77,6 +77,7 @@ public interface OreMineral extends Mineral {
 		GREENOCKITE(Compounds.CdS),
 		GYPSUM(Compounds.CaSO4_2H2O),
 		HALITE(Compounds.NaCl),
+		LAUTARITE(Compounds.CaI2O6),
 		LEPIDOCROCITE(Compounds.gamma_FeOH3),
 		HEMATITE(Compounds.Fe2O3),
 		ILMENITE(Compounds.FeTiO3),
