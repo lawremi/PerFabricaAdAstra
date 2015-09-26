@@ -519,6 +519,28 @@
         <Choice value='false' displayValue='Off'/>
       </OptionChoice>
 
+      <OptionChoice name='GeologicaGenBrines' default='true'
+                      displayState='shown'
+                      displayGroup='groupGeologica'>
+        <Description>
+           Generate pools of water concentrated with salts.
+        </Description>
+        <DisplayName>Brines</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
+      <OptionChoice name='GeologicaGenBrineWells' default=':=?GeologicaGenBrines'
+                      displayState=':=if(?GeologicaGenBrines, "shown", "hidden")'
+                      displayGroup='groupGeologica'>
+        <Description>
+          Generate renewing wells of brine.
+        </Description>
+        <DisplayName>Evaporite deposits</DisplayName>
+        <Choice value='true' displayValue='On'/>
+        <Choice value='false' displayValue='Off'/>
+      </OptionChoice>
+
       <OptionChoice name='GeologicaGenVMS' default=':=?GeologicaGenOres'
                     displayState=':=if(?GeologicaGenOres, "shown", "hidden")'
                     displayGroup='groupGeologica'>
@@ -2511,6 +2533,52 @@
           <OreBlock block='PFAAGeologica:weakOreRock:12' weight='0.15'/>
           <OreBlock block='PFAAGeologica:weakOreRock:0' weight='0.15'/>
         </CloudPreset>
+	
+	<CloudPreset name='PresetBrinePool' inherits='PresetStratum'
+		     block='PFAAGeologica:brine'>
+          <Setting name='DistributionFrequency' avg=':= 0.01'/>
+	  <Setting name='CloudHeight' avg='64' range='2'/>
+          <Setting name='CloudThickness' avg='2' range='1'/>
+          <Setting name='CloudRadius' avg='4' range='2'/>
+          <Setting name='OreDensity' avg='1' range='0'/>
+	  <BiomeType name='sandy'/>
+          <BiomeType name='wasteland'/>
+          <BiomeType name='wet' weight='-1'/>
+	  <Replaces block='sand'/>
+	  <PlacesBeside block='minecraft:air' weight='-1'/>
+        </CloudPreset>
+
+	<VeinsPreset name='PresetBrineWell'
+                     drawWireframe='false'
+		     block='PFAAGeologica:spring:7'>
+          <Setting name='MotherlodeHeight' avg='61' range='1'/>
+	  <Setting name='MotherlodeSize' avg='0.6' range='0'/>
+	  <Setting name='BranchFrequency' avg='0' range='0'/> 
+          <Setting name='OreDensity' avg='1' range='0'/>
+          <Setting name='OreRadiusMult' avg='1.0' range='0'/> 
+          <Setting name='DistributionFrequency' avg='2'/>
+	  <Setting name='MotherlodeRangeLimit' avg='4' range='2'/>
+          <BiomeType name='sandy'/>
+          <BiomeType name='wasteland'/>
+          <BiomeType name='wet' weight='-1'/>
+          <ReplacesOre block='stone'/>
+          <Replaces block='minecraft:sandstone'/>
+          <Replaces block='minecraft:hardened_clay'/>
+          <Replaces block='minecraft:sand'/>
+	  <Replaces block='PFAAGeologica:brine'/>
+	  <PlacesAbove block='PFAAGeologica:brine' weight='-1'/>
+	  <PlacesBelow block='minecraft:sand'/>
+	  <PlacesBelow block='PFAAGeologica:brine'/>
+          <WireframeColor>0xFF11FF00</WireframeColor>
+        </VeinsPreset>
+
+	<SubstitutePreset name='PresetBrineWasteland' block='PFAAGeologica:brine'
+			  minHeight = ':= 50/64 * dimension.groundLevel'
+			  maxHeight=':= 80/64 * dimension.groundLevel'>
+          <Replaces block='minecraft:water'/>
+	  <BiomeType name='wasteland'/>
+        </SubstitutePreset>
+
       </ConfigSection>
 
       <ConfigSection>
@@ -2533,6 +2601,15 @@
                    inherits='PresetEvaporiteRockSalt'/>
           </Cloud>
         </IfCondition>
+	<IfCondition condition=":=?GeologicaGenBrines &amp; ?GeologicaActive">
+	  <Cloud name='BrinePool' inherits='PresetBrinePool'>
+	    <IfCondition condition=":=?GeologicaGenBrineWells &amp;
+				    ?GeologicaActive">
+	      <Veins name='BrineWell' inherits='PresetBrineWell'/>
+	    </IfCondition>
+	  </Cloud>
+	  <Substitute name='BrineWasteland' inherits='PresetBrineWasteland'/>
+	</IfCondition>
       </ConfigSection>
 
     </ConfigSection>
