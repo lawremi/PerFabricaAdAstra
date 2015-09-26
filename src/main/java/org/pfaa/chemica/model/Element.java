@@ -53,8 +53,16 @@ public interface Element extends Chemical, PartFactory, Metal {
 		 * http://www.periodictable.com/Properties/A/NFPALabel.html
 		 */
 		
-		H("hydrogen", 1.00, +1), /* See Molecules.H2 for properties */
-		Li("lithium", 6.94, +1,
+		H("hydrogen", Category.DIATOMIC_NONMETAL, null, 1.00, +1), /* See Molecules.H2 for properties */
+		He("helium", Category.NOBLE_GAS, null, 4.00, 0,
+		   new Solid(0.187,
+				     new Thermo(9.85)), // artificial, He is weird
+		   new Fusion(0.95),
+		   new Liquid(0.13,
+				     new Thermo(-8.33, 18.4E3, -7.72E6, 1.18E9, 3.89E-6, 0.047, 11.8)),
+		   new Vaporization(4.22),
+		   new Gas(new Thermo(20.8, 0, 0, 0, 0, -6.2, 151))),
+		Li("lithium", Category.ALKALI_METAL, Strength.WEAK, 6.94, +1,
 		   new Solid(new Color(240, 240, 240), 0.534,
 				     new Thermo(170, -883, 1977, -1487, -1.61, -31.2, 414),
 		             new Hazard(3, 2, 2, SpecialCode.WATER_REACTIVE)),
