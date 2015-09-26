@@ -270,14 +270,14 @@ public enum GeoMaterial implements Mixture {
 	}
 
 	public String getOreDictKey() {
-		return composition.getOreDictKey();
+		return this.getLowerName();
 	}
 	
 	public static GeoMaterial getForId(int id) {
 		return values()[id];
 	}
 	
-	public IndustrialMaterial getComposition() {
+	public Mixture getComposition() {
 		return this.composition;
 	}
 
