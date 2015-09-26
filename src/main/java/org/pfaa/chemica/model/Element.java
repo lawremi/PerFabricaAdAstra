@@ -588,47 +588,51 @@ public interface Element extends Chemical, PartFactory, Metal {
 		private Chemical delegate;
 		private double atomicWeight;
 		private int defaultOxidationState;
+		private Category category;
+		private Strength strength;
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid, Fusion fusion, 
 						 Liquid liquid, Vaporization vaporization, 
-						 Gas gas) 
+						 Gas gas)
 		{
 			Formula formula = new Formula(this._(1));
-			this.delegate = new SimpleChemical(formula, oreDictKey, solid, fusion, liquid, 
+			this.delegate = new SimpleChemical(formula, name, solid, fusion, liquid, 
 					                           vaporization, gas);
 			this.atomicWeight = atomicWeight;
 			this.defaultOxidationState = defaultOxidationState;
+			this.category = category;
+			this.strength = strength;
 		}
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid, Fusion fusion, 
 					     Liquid liquid, Vaporization vaporization) 
 		{
-			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, liquid, 
+			this(name, category, strength, atomicWeight, defaultOxidationState, solid, fusion, liquid, 
 				 vaporization, null);
 		}
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState,
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
 				         Solid solid, Fusion fusion, 
 				         Liquid liquid) 
 		{
-			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, liquid, null);
+			this(name, category, strength, atomicWeight, defaultOxidationState, solid, fusion, liquid, null);
 		}
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState,
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
 				         Solid solid, Fusion fusion) 
 		{
-			this(oreDictKey, atomicWeight, defaultOxidationState, solid, fusion, null);
+			this(name, category, strength, atomicWeight, defaultOxidationState, solid, fusion, null);
 		}
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState, 
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid) {
-			this(oreDictKey, atomicWeight, defaultOxidationState, solid, null);
+			this(name, category, strength, atomicWeight, defaultOxidationState, solid, null);
 		}
 	
-		private Elements(String oreDictKey, double atomicWeight, int defaultOxidationState) {
-			this(oreDictKey, atomicWeight, defaultOxidationState, null);
+		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState) {
+			this(name, category, strength, atomicWeight, defaultOxidationState, null);
 		}
 		
 		@Override
@@ -683,6 +687,16 @@ public interface Element extends Chemical, PartFactory, Metal {
 		@Override
 		public Alloy alloy(Element solute, double weight) {
 			return new SimpleAlloy(this, solute, weight);
+		}
+
+		@Override
+		public Category getCategory() {
+			return this.category;
+		}
+
+		@Override
+		public Strength getStrength() {
+			return this.strength;
 		}
 	}
 }
