@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.item.ItemStack;
-
+import org.pfaa.chemica.util.ChanceStack;
 import org.pfaa.geologica.GeoMaterial;
+
+import net.minecraft.item.ItemStack;
 
 public class ChanceDropRegistry {
 	
@@ -43,16 +44,12 @@ public class ChanceDropRegistry {
 		return drops != null ? drops.getDrops(rand, fortune) : null;
 	}
 	
-	private static class ChanceDrop {
-		public final ItemStack itemStack;
-		public final float chance;
+	private static class ChanceDrop extends ChanceStack {
 		public final int bonus;
 		public final boolean fortuneMultiplies;
 		
 		public ChanceDrop(ItemStack itemStack, int bonus, float chance, boolean fortuneMultiplies) {
-			super();
-			this.itemStack = itemStack;
-			this.chance = chance;
+			super(itemStack, chance);
 			this.bonus = bonus;
 			this.fortuneMultiplies = fortuneMultiplies;
 		}
