@@ -158,10 +158,12 @@ public enum GeoMaterial implements Mixture {
 	VANADIUM_MAGNETITE(Ores.TITANO_MAGNETITE, Strength.STRONG, PERIDOTITE),
 		
 	CHRYSOTILE(IndustrialMinerals.CHRYSOTILE, Strength.WEAK, SERPENTINITE),
-	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK),
+	SALITRE(Ores.NITRATINE.mix(Ores.NITER, 0.3).mix(Ores.GYPSUM, 0.1).
+			mix(Ores.HALITE, 0.05).mix(Ores.LAUTARITE, 0.05), Strength.WEAK),
 	REALGAR(Ores.REALGAR.mix(Ores.ORPIMENT, 0.1).mix(Ores.STIBNITE, 0.04).mix(Ores.CINNABAR, 0.04), Strength.WEAK, GRANITE),
 	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(BITUMINOUS_COAL, 0.5), Strength.WEAK),
-	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05), Strength.WEAK),
+	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05).mix(Ores.SULFUR, 0.05).
+		   mix(Ores.BARITE, 0.05).mix(Ores.EPSOMITE, 0.01), Strength.WEAK),
 	MIRABILITE(IndustrialMinerals.MIRABILITE
 	           .mix(IndustrialMinerals.GYPSUM, 0.2).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MICA(IndustrialMinerals.MICA, Strength.WEAK, PEGMATITE),
