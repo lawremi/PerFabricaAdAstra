@@ -39,10 +39,6 @@ import org.pfaa.chemica.model.MixtureComponent;
 public interface OreMineral extends Mineral {
 	public Chemical getConcentrate();
 	
-	public static enum SmeltingTemperature {
-		LOW, MEDIUM, HIGH, VERY_HIGH
-	}
-	
 	public enum Ores implements OreMineral {
 		ACANTHITE(Compounds.Ag2S),
 		ANATASE(Compounds.TiO2),
