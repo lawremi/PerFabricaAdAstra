@@ -74,7 +74,7 @@ public enum GeoMaterial implements Mixture {
 				    
 	OIL_SAND(EXTRA_HEAVY_OIL.mix(Aggregates.SAND, 2.0), Strength.WEAK, Material.sand),
 	
-	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Compounds.N2, 0.02).
+	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Elements.He, 0.03).mix(Compounds.N2, 0.02).
 			    mix(Compounds.CO2, 0.01).mix(Compounds.H2S, 0.002).
 			    mix(Compounds.PROPANE, 0.002).mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
 			    Strength.WEAK, Material.air),
