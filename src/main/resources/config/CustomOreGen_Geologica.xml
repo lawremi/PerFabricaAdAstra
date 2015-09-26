@@ -2501,15 +2501,16 @@
         </CloudPreset>
         <CloudPreset name='PresetEvaporiteGypsum'
                      inherits='PresetEvaporiteStratum'>
-          <OreBlock block='PFAAGeologica:mediumOreRock:0' weight='0.05'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:8' weight='0.05'/>
           <OreBlock block='PFAAGeologica:mediumOreRock:11' weight='0.05'/>
           <OreBlock block='PFAAGeologica:weakOreRock:11' weight='0.90'/>
           <Setting name='CloudHeight' avg='58' range='0'/>
           <Setting name='CloudThickness' avg='2' range='0'/>
         </CloudPreset>
         <CloudPreset name='PresetEvaporiteRockSalt'
-                     block='PFAAGeologica:weakOreRock:5'
                      inherits='PresetEvaporiteStratum'>
+	  <OreBlock block='PFAAGeologica:weakOreRock:8' weight='0.05'/>
+          <OreBlock block='PFAAGeologica:weakOreRock:5' weight='0.95'/>
           <Setting name='CloudHeight' avg='60' range='0'/>
           <Setting name='CloudThickness' avg='1' range='0'/>
         </CloudPreset>
