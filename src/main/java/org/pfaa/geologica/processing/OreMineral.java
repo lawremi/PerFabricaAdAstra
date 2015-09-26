@@ -90,6 +90,8 @@ public interface OreMineral extends Mineral {
 		MONAZITE(Compounds.CePO4, new Substitution(La, 0.5), new Substitution(Nd, 0.3),
 				 new Substitution(Pr, 0.15), new Substitution(Th, 0.5)),
 		NEPOUITE(Compounds.Ni3Si2O5OH4),
+		NITER(Compounds.KNO3),
+		NITRATINE(Compounds.NaNO3),
 		ORPIMENT(Compounds.As2S3),
 		PENTLANDITE(Compounds.Ni9S8, new Substitution(Fe, 1.0), new Substitution(Co, 0.01)),
 		POLLUCITE(Compounds.Cs2Al2Si4O12, new Substitution(Rb, 0.05)),
