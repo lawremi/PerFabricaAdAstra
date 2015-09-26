@@ -18,13 +18,6 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	private double heat;
 	private String oreDictKey;
 
-	/*
-	 * There is a tension between specifying properties on the material (like vaporization, sulfurFraction, heat) and
-	 * specifying properties on the processes that transform materials. We could declare processes and derive
-	 * properties from those. For example, the combustion process would provide the heat of combustion. Alternatively,
-	 * the heat of combustion could provide the process of combustion, as long as we can rely on a heuristic, e.g.,
-	 * CO2 is produced. So in many cases it is probably cleaner to declare properties centrally at the material.
-	 */
 	public SimpleCrude(ConditionProperties properties, Vaporization vaporization, double sulfurFraction, double heat) 
 	{
 		this.properties = properties;
