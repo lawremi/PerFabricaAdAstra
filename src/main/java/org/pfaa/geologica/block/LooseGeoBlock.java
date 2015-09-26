@@ -53,11 +53,11 @@ public class LooseGeoBlock extends GeoBlock {
      */
     private void tryToFall(World par1World, int par2, int par3, int par4)
     {
-        if (BlockSand.func_149831_e(par1World, par2, par3 - 1, par4) && par3 >= 0)
+        if (BlockFalling.func_149831_e(par1World, par2, par3 - 1, par4) && par3 >= 0)
         {
             byte var8 = 32;
 
-            if (!BlockSand.fallInstantly && par1World.checkChunksExist(par2 - var8, par3 - var8, par4 - var8, par2 + var8, par3 + var8, par4 + var8))
+            if (!BlockFalling.fallInstantly && par1World.checkChunksExist(par2 - var8, par3 - var8, par4 - var8, par2 + var8, par3 + var8, par4 + var8))
             {
                 if (!par1World.isRemote)
                 {
@@ -69,7 +69,7 @@ public class LooseGeoBlock extends GeoBlock {
             {
                 par1World.setBlockToAir(par2, par3, par4);
 
-                while (BlockSand.func_149831_e(par1World, par2, par3 - 1, par4) && par3 > 0)
+                while (BlockFalling.func_149831_e(par1World, par2, par3 - 1, par4) && par3 > 0)
                 {
                     --par3;
                 }
