@@ -16,22 +16,13 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import org.pfaa.block.CompositeBlock;
-import org.pfaa.block.CompositeBlockAccessors;
-import org.pfaa.geologica.GeologicaBlocks;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 public class WallBlock extends BlockWall implements CompositeBlockAccessors, ProxyBlock {
 
 	@Override
 	public boolean canConnectWallTo(IBlockAccess par1iBlockAccess, int par2,
 			int par3, int par4) {
 		Block block = par1iBlockAccess.getBlock(par2, par3, par4);
-		if (block == GeologicaBlocks.MEDIUM_STONE_BRICK_WALL ||
-			block == GeologicaBlocks.STRONG_STONE_BRICK_WALL || 
-			block == GeologicaBlocks.VERY_STRONG_STONE_BRICK_WALL) {
+		if (block instanceof BlockWall) {
 			return true;
 		}
 		return super.canConnectWallTo(par1iBlockAccess, par2, par3, par4);
