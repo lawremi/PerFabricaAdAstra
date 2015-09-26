@@ -22,7 +22,8 @@ import static org.pfaa.chemica.model.Element.Elements.Co;
 import static org.pfaa.chemica.model.Element.Elements.Cr;
 import static org.pfaa.chemica.model.Element.Elements.Cu;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
-//import static org.pfaa.chemica.model.Element.Elements.Ge;
+import static org.pfaa.chemica.model.Element.Elements.Ge;
+import static org.pfaa.chemica.model.Element.Elements.Ir;
 import static org.pfaa.chemica.model.Element.Elements.Pb;
 import static org.pfaa.chemica.model.Element.Elements.La;
 import static org.pfaa.chemica.model.Element.Elements.Li;
@@ -32,18 +33,22 @@ import static org.pfaa.chemica.model.Element.Elements.Mo;
 import static org.pfaa.chemica.model.Element.Elements.Nb;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
+import static org.pfaa.chemica.model.Element.Elements.Os;
+import static org.pfaa.chemica.model.Element.Elements.Pt;
 import static org.pfaa.chemica.model.Element.Elements.Pr;
 import static org.pfaa.chemica.model.Element.Elements.Sb;
 import static org.pfaa.chemica.model.Element.Elements.Si;
 import static org.pfaa.chemica.model.Element.Elements.Sn;
-//import static org.pfaa.chemica.model.Element.Elements.Te;
+import static org.pfaa.chemica.model.Element.Elements.Te;
 import static org.pfaa.chemica.model.Element.Elements.Ti;
 import static org.pfaa.chemica.model.Element.Elements.V;
 import static org.pfaa.chemica.model.Element.Elements.W;
 import static org.pfaa.chemica.model.Element.Elements.Zn;
 import static org.pfaa.chemica.model.Element.Elements.Zr;
 
-public interface Alloy extends Mixture {
+// TODO: set strengths where the alloy differs from the base metal
+
+public interface Alloy extends Mixture, Metal {
 	public Element getBase();
 	public Alloy alloy(Element material, double weight);
 	
@@ -75,7 +80,9 @@ public interface Alloy extends Mixture {
 		NICHROME(Ni.alloy(Cr, 0.3)),
 		NICKEL_SILVER(Cu.alloy(Zn, 0.25).alloy(Ni, 0.25)),
 		NICKEL_STELLITE(Co.alloy(Cr, 0.3).alloy(Ni, 0.2).alloy(W, 0.05).alloy(C, 0.02)),
-//		SILICON_GERMANIUM(Si.alloy(Ge, 1.0)),
+		PLATINUM_IRIDIUM(Pt.alloy(Ir, 0.1)),
+		IRIDOSMINE(Ir.alloy(Os, 1.0)),
+		SILICON_GERMANIUM(Si.alloy(Ge, 1.0)),
 		SOLDER(Sn.alloy(Pb, 0.5)),
 		STAINLESS_STEEL(Fe.alloy(Cr, 0.25).alloy(Ni, 0.1)),
 		STEEL(Fe.alloy(C, 0.01)),
