@@ -100,8 +100,18 @@ public interface Element extends Chemical, PartFactory, Metal {
 		  null, 
 		  new Vaporization(3915),
 		  new Gas(new Thermo(21.2, -0.812, 0.449, -0.0433, -0.0131, 710, 184))),
-		N("nitrogen", 14.0, -3), /* see Compounds.N2 for properties */
-		Na("sodium", 23.0, +1,
+		N("nitrogen", Category.DIATOMIC_NONMETAL, null, 14.0, -3), /* see Compounds.N2 for properties */
+		O("oxygen", Category.DIATOMIC_NONMETAL, null, 16.0, -2), /* See Compounds.O2 for properties */
+		F("fluorine", Category.DIATOMIC_NONMETAL, null, 19.0, -1), /* See Compounds.F2 for properties, solid density 1.7 */
+		Ne("neon", Category.NOBLE_GAS, null, 20.2, 0,
+		   new Solid(1.44,
+				     new Thermo(14.3)),
+		   new Fusion(24.6),
+		   new Liquid(1.21,
+				      new Thermo(27.9)),
+		   new Vaporization(3.76, 95.6, -1.50),
+		   new Gas(new Thermo(20.8, 0, 0, 0, 0, -6.2, 171))),
+		Na("sodium", Category.ALKALI_METAL, Strength.WEAK, 23.0, +1,
 		   new Solid(new Color(212, 216, 220), 0.968, 
 				     new Thermo(72.6, -9.49, -731, 1415, -1.26, -21.8, 155),
 				     new Hazard(3, 3, 2, SpecialCode.WATER_REACTIVE)),
