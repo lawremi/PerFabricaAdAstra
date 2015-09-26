@@ -41,7 +41,7 @@ public class TEIntegration {
 	}
 	
 	@SuppressWarnings("unused")
-	private static int getSmeltingEnergy(SmeltingTemperature temperature) {
+	private static int getSmeltingEnergy(TemperatureLevel temperature) {
 		switch(temperature) {
 		case LOW:
 			return 80;
@@ -63,7 +63,7 @@ public class TEIntegration {
 		
 	}
 
-	public static void addFurnaceRecipe(ItemStack itemStack, ItemStack outputStack, SmeltingTemperature temperature) {
+	public static void addFurnaceRecipe(ItemStack itemStack, ItemStack outputStack, TemperatureLevel temperature) {
 		// TODO Auto-generated method stub
 		
 	}
