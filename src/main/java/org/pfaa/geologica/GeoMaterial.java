@@ -191,24 +191,24 @@ public enum GeoMaterial implements Mixture {
 	EMERALD(new SimpleVanillaOre(Ores.BERYL), Strength.STRONG, PEGMATITE), 
 	REDSTONE(new SimpleVanillaOre(Ores.CUPRITE.mix(Ores.CHALCOPYRITE, 0.25).
 			 mix(IndustrialMinerals.AZURITE, 0.1).mix(Ores.MALACHITE, 0.1)),
-			 Strength.STRONG, Aggregates.STONE)
+			 Strength.STRONG, Aggregates.STONE),
+	
+	DIATOMITE(IndustrialMinerals.DIATOMITE, Strength.WEAK, Aggregates.SAND),
+	SULFUR(Ores.SULFUR, Strength.WEAK, Aggregates  .SAND),
+	
+	BRINE(Compounds.H2O.mix(Compounds.NaCl, 0.3).
+		  mix(Compounds.MgCl2_6H2O, 0.03).mix(Compounds.MgSO4_7H2O, 0.01).
+		  mix(Compounds.CaSO4_2H2O, 0.05).mix(Compounds.KCl, 0.02).
+		  mix(Compounds.NaBr, 0.005).mix(Compounds.SrSO4, 0.005).
+		  mix(Compounds.Na2B4O7, 0.001).mix(Compounds.LiCl, 0.001).mix(Compounds.CaI2O6, 0.001), 
+		  Strength.WEAK, Material.water)
 	;
     
-	public enum Strength { 
-		WEAK, MEDIUM, STRONG, VERY_STRONG;
-		
-		public String getCamelName() {
-			if (this == VERY_STRONG)
-				return "veryStrong";
-			else return name().toLowerCase();
-		}
-	}
-
 	private Strength strength;
 	private Material blockMaterial;
 	private Mixture composition;
     private IndustrialMaterial host;
-		
+	
 	GeoMaterial(Mixture composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
 	    this.composition = composition;
 		this.strength = strength;
