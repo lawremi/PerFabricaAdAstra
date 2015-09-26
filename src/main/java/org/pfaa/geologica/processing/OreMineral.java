@@ -102,9 +102,10 @@ public interface OreMineral extends Mineral {
 		PYROLUSITE(Compounds.MnO2),
 		REALGAR(Compounds.AsS),
 		RUTILE(Compounds.TiO2, new Color(130, 60, 5)),
-		SCHEELITE(Compounds.CaWO4, new Color(240, 200, 150)), // TODO: Mo can substitute for W (powellite)
+		SCHEELITE(Compounds.CaWO4, new Color(240, 200, 150)),
 		SPHALERITE(Compounds.ZnS, new Color(30, 75, 50), 
-				   new Substitution(Cd, 0.01), new Substitution(Ga, 0.001)), // TODO: Ge, In @ 0.0005?
+				   new Substitution(Cd, 0.01), new Substitution(Ga, 0.005), 
+				   new Substitution(Ge, 0.002), new Substitution(In, 0.002)),
 		SPODUMENE(Compounds.LiAlSiO32),
 		STIBNITE(Compounds.Sb2S3),
 		SYLVITE(Compounds.KCl),
