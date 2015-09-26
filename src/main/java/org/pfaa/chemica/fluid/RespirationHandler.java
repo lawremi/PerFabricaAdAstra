@@ -2,6 +2,18 @@ package org.pfaa.chemica.fluid;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.MixtureComponent;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -20,19 +32,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-
-import org.lwjgl.opengl.GL11;
-import org.pfaa.chemica.block.IndustrialFluidBlock;
-import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.MixtureComponent;
-
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /* Ways to manage the air state:
  * 1) Implement IExtendedEntityProperties to manage our own air property, which is a lot of work and redundant
@@ -179,12 +178,13 @@ public class RespirationHandler {
 
     private static float getOxygenContentAtEyeLevel(EntityLivingBase entity) {
     	IndustrialFluidBlock block = IndustrialFluidBlock.atEyeLevel(entity);
-    	return block != null ? getBreathableOxygenContent(block.getFluid()) : ATMOSPHERIC_OXYGEN_CONTENT;  
+    	return block != null ? getBreathableOxygenContent(block) : 
+    		ATMOSPHERIC_OXYGEN_CONTENT;  
 	}
 
-	private static float getBreathableOxygenContent(IndustrialFluid fluid) {
-		if (!fluid.isGaseous()) return 0; 
-		IndustrialMaterial material = fluid.getIndustrialMaterial();
+	private static float getBreathableOxygenContent(IndustrialFluidBlock block) {
+		if (!block.getFluid().isGaseous()) return 0;
+		IndustrialMaterial material = block.getIndustrialMaterial();
 		if (material == Compounds.O2) {
 			return 1.0F;
 		} else if (material instanceof Mixture) {
@@ -197,7 +197,7 @@ public class RespirationHandler {
 	}
 	
 	private static float getBreathableOxygenContent(IndustrialFluidBlock block, EntityLivingBase entity) {
-    	float oxygenContent = getBreathableOxygenContent(block.getFluid());
+    	float oxygenContent = getBreathableOxygenContent(block);
     	if (block.getFluid().isGaseous()) {
     		double j0 = entity.posY + (entity.worldObj.isRemote ? 0 : entity.getEyeHeight());
     		int i = MathHelper.floor_double(entity.posX);

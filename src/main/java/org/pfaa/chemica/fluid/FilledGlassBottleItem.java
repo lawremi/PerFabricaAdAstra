@@ -1,9 +1,15 @@
 package org.pfaa.chemica.fluid;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.ConditionProperties;
+import org.pfaa.chemica.model.Hazard;
+
+import com.google.common.base.CaseFormat;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +23,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
-import com.google.common.base.CaseFormat;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /* Alternative design:
  * Use a brewing API to define a custom potion for every fluid. Then, the FluidContainerRegistry
@@ -39,6 +40,12 @@ public class FilledGlassBottleItem extends ItemPotion {
 	private Fluid getFluidForItemStack(ItemStack itemStack) {
 		FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(itemStack);
 		return fluidStack.getFluid();
+	}
+	
+	private Hazard getHazardForItemStack(ItemStack itemStack) {
+		Fluid fluid = this.getFluidForItemStack(itemStack);
+		ConditionProperties props = IndustrialFluids.getProperties(fluid);
+		return props == null ? new Hazard(0, 0, 0) : props.hazard;
 	}
 	
 	@Override
@@ -60,11 +67,8 @@ public class FilledGlassBottleItem extends ItemPotion {
 
     @Override
 	public List<PotionEffect> getEffects(ItemStack itemStack) {
-		Fluid fluid = this.getFluidForItemStack(itemStack);
-		if (fluid instanceof IndustrialFluid) {
-			return ((IndustrialFluid)fluid).getProperties().hazard.getIngestionEffects();
-		}
-		return Collections.emptyList();
+    	Hazard hazard = this.getHazardForItemStack(itemStack);
+		return hazard.getIngestionEffects();
 	}
 
 	@Override
@@ -105,11 +109,7 @@ public class FilledGlassBottleItem extends ItemPotion {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemStack, EntityPlayer player, @SuppressWarnings("rawtypes") List lines, boolean p_77624_4_)
     {
-        Fluid fluid = this.getFluidForItemStack(itemStack);
-        if (fluid instanceof IndustrialFluid) {
-            IndustrialFluid industrialFluid = (IndustrialFluid)fluid;
-            lines.add(EnumChatFormatting.BLUE + I18n.format("label.hazard.health") + ": " + 
-                      industrialFluid.getProperties().hazard.health);
-        }
+        Hazard hazard = this.getHazardForItemStack(itemStack);
+        lines.add(EnumChatFormatting.BLUE + I18n.format("label.hazard.health") + ": " + hazard.health);
     }
 }

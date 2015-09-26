@@ -96,11 +96,13 @@ public class GeologicaBlocks implements BlockCatalog {
 	public static final GeoBlock WEAK_ORE_CLAY = createOreClayBlock();
 	public static final GeoBlock WEAK_CLAY_BRICK = createClayBrickBlock();
 	
-	public static final IndustrialFluidBlock LIGHT_OIL = createFluidBlock(GeoMaterial.LIGHT_OIL);
-	public static final IndustrialFluidBlock MEDIUM_OIL = createFluidBlock(GeoMaterial.MEDIUM_OIL);
-	public static final IndustrialFluidBlock HEAVY_OIL = createFluidBlock(GeoMaterial.HEAVY_OIL);
-	public static final IndustrialFluidBlock EXTRA_HEAVY_OIL = createFluidBlock(GeoMaterial.EXTRA_HEAVY_OIL);
-	public static final IndustrialFluidBlock NATURAL_GAS = createFluidBlock(GeoMaterial.NATURAL_GAS);
+	public static final Block LIGHT_OIL = IndustrialFluids.getBlock(GeoMaterial.LIGHT_OIL);
+	public static final Block MEDIUM_OIL = IndustrialFluids.getBlock(GeoMaterial.MEDIUM_OIL);
+	public static final Block HEAVY_OIL = IndustrialFluids.getBlock(GeoMaterial.HEAVY_OIL);
+	public static final Block EXTRA_HEAVY_OIL = IndustrialFluids.getBlock(GeoMaterial.EXTRA_HEAVY_OIL);
+	public static final Block NATURAL_GAS = IndustrialFluids.getBlock(GeoMaterial.NATURAL_GAS);
+	
+	public static final Block BRINE = IndustrialFluids.getBlock(GeoMaterial.BRINE);
 	
 	public static final GeoBlock CRUDE_SAND = createCrudeSandBlock();
 	public static final GeoBlock CRUDE_ROCK = createCrudeRockBlock(Strength.WEAK);
@@ -200,10 +202,5 @@ public class GeologicaBlocks implements BlockCatalog {
 			throw new LoaderException(e);
 		}
 		return block;
-	}
-	
-	private static IndustrialFluidBlock createFluidBlock(GeoMaterial material) {
-		IndustrialFluid fluid = IndustrialFluid.getCanonicalFluidForState(material, Condition.STP);
-		return new IndustrialFluidBlock(fluid);
 	}
 }
