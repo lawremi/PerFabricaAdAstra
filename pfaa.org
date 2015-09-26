@@ -34,6 +34,7 @@
    sensor stations on every planet in order to triangulate the position
    of the exoplanet. As an alternative to travel, the player may decide
    to settle down and terraform.
+   
 * Concepts
 ** Science
 *** Physics
@@ -79,10 +80,6 @@
      inspired by how the element was discovered according to
      history. The book of the elements will convey hints.
 
-     The Book of Elements slowly reveals those secrets. It is created
-     by sending a book into a 1x1 portal and having it reappear as the
-     Book of Elements. This is to simulate a trip to the future.
-     
 *** Biology
     High-level biological concepts like plant growth, ecology, etc,
     are already modeled in the game. Perhaps those models could be
@@ -108,10 +105,6 @@
 *** Electrical
     Already exists to some extent with red stone cicuits. Good enough.
 
-*** Computer Science
-    The key direction would be robotics. ComputerCraft already offers
-    that, and we should integrate with it.
-
 ** Economics/trade
    Production is motivated by the economy, and trade would enhance
    gameplay by encouraging specialization, investment in
@@ -124,59 +117,11 @@
    produce the appropriate crops (like Millenaire).
     
 ** History
-   In terms of the history of the Earth, Minecraft is situated
-   somewhere in the agricultural age, with some industrial
-   aspects. The technical mods place the game firmly in the industrial
-   age. The Millenaire mod brings real world cultures to Minecraft,
-   although these are limited to those of the Middle Ages. We could
-   extend Millenaire to model the industrial age. We could also target
-   pre-human time periods, such as the age of the dinosaurs. This
-   would mostly require a mod in the vein of ExtraBiomes and Mo'
-   Creatures that presents prehistoric flora and fauna. That would be
-   fun, but the artwork would be challenging. The wildlife would be
-   located in separate dimensions, perhaps accessible through
-   Mystcraft.
-
-   In the next sections, we have started outlining the main
-   periods of history. It is not clear whether this will generate
-   interesting gameplay; what would the different plants and animals
-   offer compared to the existing game? Perhaps we should focus on
-   recent (human) history and work our way backwards.
-
-*** Mesozoic: Age of Reptiles
-**** Triassic
-     Hot and dry, with no ice, jungle or swamp biomes. Instead, more
-     deserts, plains and temperate forests.
-     
-**** Jurassic
-**** Cretaceous
-     
-*** Cenozoic: Age of Mammals
-**** Paleocene
-    
-**** Eocene
-
-**** Oligocene
-
-**** Miocene
-
-**** Pliocene
-
-*** Modern Era
-**** Modern Age (1900-now)
-**** Age of Empires (1500-1900)
-**** Middle Ages (600-1500)
-     This is the setting of base Millenaire. Important cultures
-     missed by Millenaire:
-     * Pueblos
-     * Mississippians
-     * Arabs
-     * Chinese (Song)
-     * Korean
-       
-**** Classical Age (700 BC - 600 AD)
-     Like the roman empire...
-     
+   It is probably best to convey historical events through an
+   adventure format, where the player experiences events first hand
+   and moves through history as the game progresses. Perhaps best
+   achieved through a mod pack.
+   
 ** Agriculture and Forestry 
    We could add some aspects to agriculture:
 
@@ -204,19 +149,48 @@
     http://en.wikipedia.org/wiki/Crop_wild_relative
     http://en.wikipedia.org/wiki/Center_of_origin
     
-    The main idea is to follow a phylogenetic tree. The
-    player obtains some basic crops (maybe the vanilla ones, or foods
-    found in the wild) in the world.
-
-    We could adopt the Forestry mechanism entirely. It is reasonably
-    derived from Mendelian inheritance. Hybrids between related
-    species will represent the common ancestor, and mutations can form
-    to one of the other descendents. The less related the two species,
-    the less likely for them to breed.
+    The main idea is to follow a phylogenetic tree. The player obtains
+    some basic crops (maybe the vanilla ones, or foods found in the
+    wild) in the world.
+    
+    The more closely related the species, the faster they cross. There
+    is a trade-off between investing the effort in finding two closely
+    related species vs. waiting longer for two unrelated species to
+    generate a hybrid.
 
     This design requires that we have the wild forms of the crops
     (which in the real world are highly localized).
+    
+    Consider corn as an example. The crop came about from crossing
+    sub-species of /Zea mays/. It is part of the Andropogoneae tribe,
+    which also includes sugar cane (/Saccharum/) and sorghum
+    (/Sorghum/). The sub-family is /Panicoideae/ and family is
+    /Poaceae/, basically grass. PMP offers several types of grass in
+    that family:
+    
+    | Name            | Species               | Tribe        | Subfamily     | Clade  |
+    |-----------------+-----------------------+--------------+---------------+--------|
+    | Blue wheatgrass | Elymus magellanicus   | Triticeae    | Pooidae       | BOP    |
+    | Meadow          | Poa annua             | Poeae        | Pooidae       | BOP    |
+    | Meadow foxtail  | Alopecurus pratensis  | Aveneae      | Pooidae       | BOP    |
+    | Silver moor     | Sesleria argentea     | Seslerieae   | Pooidae       | BOP    |
+    | Cord            | Spartina cynosuroides | Zoysieae     | Chloridoideae | PACMAD |
+    | Fountain        | Pennisetum setaceum   | Paniceae     | Panicoideae   | PACMAD |
+    | Switch          | Panicum virgatum      | Paniceae     | Panicoideae   | PACMAD |
+    | Maiden          | Miscanthus sinensis   | Andropogonea | Panicoideae   | PACMAD |
+    | Prairie         | Sorghastrum nutans    | Andropogonea | Panicoideae   | PACMAD |
+    
+   So the maiden and prairie grasses are the closest, being in the
+   same tribe as corn. Perhaps we could require that at least one
+   parent be a "close" relative, like maiden or prairie. Then, the
+   chance of successful speciation depends on the proximity of the
+   second parent. Best cross would be maiden and prairie, one step
+   down for one of those crossed with fountain or switch, one more
+   down for cord, and the rest are very unlikely.
 
+   Similarly, for wheat, blue wheatgrass is obviously closest, but
+   prairie brome is in the same group (between tribe and subfamily).
+   
 **** Old sequence alignment ideas
     Somehow the player analyzes the genome of two crops and then
     enters a mini-game dimension which involves aligning two
@@ -242,7 +216,8 @@
     Generating realistic, edible, non-crop plants, is also
     interesting: it introduces unconventional (at least for this part
     of the world) foods and makes the world richer. Call it
-    ForageCraft or WildCraft.
+    ForageCraft or WildCraft. The main hurdle is the need to create
+    textures. We hate making textures.
 
     The wild plants are not cultivatable. Trees do not yield
     saplings, plants do not yield seeds, but they can be replanted
@@ -254,7 +229,7 @@
     Mod integration: if a mod like ET is loaded, we should use the
     blocks from that mod. We *could* require certain mods, but it
     would be nice to be functional independently. Obviously, breeding
-    will depend on Forestry.
+    will depend on Forestry and Agricraft.
 
    Here is a list of what might be found in the wild:
 
@@ -263,9 +238,9 @@
    | Berries             |                              | Nat,PHC,BOP,PMP | Temperate                        |     2 | Eat fruit                           |                            |
    | Mushrooms           |                              | Vanilla,PHC,PMP | -                                |     - | Eat whole                           |                            |
    | Dandelions          | asterid/asterales            | Vanilla,PMP     | -                                |     1 | Eat; white juice as glue            |                            |
-   | Acacia tree         | rosid/fabaceae               | BOP,Forestry    | -                                |     1 | Eat leaves                          |                            |
+   | Acacia tree         | rosid/fabaceae               | Vanilla,BOP,For | Savannah                         |     1 | Eat leaves                          |                            |
    | Agave               | monocot/asparagales          |                 | Desert                           |     1 | Eat, string                         | BOP has inedible bromeliad |
-   | Alfalfa             |                              |                 |                                  |       |                                     |                            |
+   | Alfalfa             | rosid/fabaceae/faboideae     |                 |                                  |       |                                     |                            |
    | Almond tree         | rosid/rosaceae/prunus        | ET              | Tropics, desert, evergreen scrub |     3 | Eat nuts                            |                            |
    | Amaranth  (Pigweed) | caryophyllales/amaranthaceae |                 | Widespread                       |     1 | Eat leaves, seeds                   | Weed                       |
    | Arctic willow       | rosid/malpighiales           |                 | Tundra                           |     1 | Eat raw shoots                      |                            |
@@ -349,7 +324,7 @@
    | Wild caper          |                              |                 | Dry scrub, desert                |     2 | Eat fruit                           |                            |
    | Wild carrot         |                              | BOP,PMP         | -                                |     ? | Eat tuber                           |                            |
    | Wild desert gourd   |                              |                 | Desert                           |     2 | Eat seeds from gourd                |                            |
-   | Wild sorrel         |                              |                 | Fields                           |     1 | Eat leaves                          |                            |
+   | Wild sorrel         |                              | PMP             | Fields                           |     1 | Eat leaves                          |                            |
    | Wild fig            |                              | PHC             | Tropical forest                  |     2 | Eat fruit                           |                            |
    | Wild gourd          |                              |                 | Rainforest                       |     2 | Boil fruit                          |                            |
    | Wild grape          |                              |                 | Forest                           |     2 | Eat fruit                           |                            |
@@ -385,9 +360,7 @@
     * Non-wood forest products: http://en.wikipedia.org/wiki/Non-timber_forest_product
     
 *** Biofuels
-
 *** Fibers 
-    
 *** Balanced diet
     If we have lots of plants, then we have lots of food. To make
     things more interesting, we should encourage balanced diets. Use
@@ -401,26 +374,25 @@
     * Sweets: temporary buff, long term detriment
     
     Balanced diets give buffs, imbalanced have negative effects.
+
+    TFC has this feature now. Seems worth porting.
     
 *** Adapting existing mods
-    PHC provides many interesting crops, and Forestry brings fun
-    automation and breeding.
-
-    Improvements that should happen for PHC:
-    * PHC juices should be Forge fluids
-    * PHC needs to be integrated with Forestry farms and machines
-      See: https://github.com/ForestryMC/ForestryMC/issues/223
-      * Farms
-      * Squeezer
-      * Fermenter
-      * Breeding mechanism [done by Agricraft]
-    * PHC crops should have biome-specific growth rates (hunger overhaul)
+    PHC provides many interesting crops. Improvements that should
+    happen for PHC:
+    * PHC tools should have durability
+    * PHC crops should have biome-specific growth rates
+      * In theory achievable via custom soil or base blocks that
+        change/specify themselves when placed, depending on biome
     * PHC should use machines for cooking [easy via KawaiiCrops]
-    * PHC drinks should require a glass bottle
-
+      * Some of these exist now
+    
     Turns out someone has integrated PHC with Forestry-like breeding
     mechanics, and it is totally customizable: Agricraft. In theory,
-    we could have Plant Mega Pack plants mutate to PHC crops.
+    we could have Plant Mega Pack plants mutate to PHC and PMP
+    crops. Agricraft has a bit of that, but it lacks realism. For
+    example, one can cross wheat and white tulips to yield PMP
+    celery. Wheat and while tulips are monocots. Celery is a eudicot.
     
 * Blocks
 ** Rocks
@@ -478,10 +450,6 @@
     | Quartzite    | MM/contact | vhard | sandstone                           |                                      |
     | *Amphibolite |            |       |                                     |                                      |
     
-   We could drop pegmatite and serpentinite, because they are already
-   so enriched for minerals. Tough call. They do serve a purpose:
-   indicating that ores are nearby.
-
    Placement of the rocks during world generation will be
    complex. Lets focus first on the bottom layer, which will consist
    of rock formed by cooling magma, i.e., igneous intrusive
@@ -554,21 +522,12 @@
     of mudrock will typically consist of a mixture of layers from
     these rocks. Claystone and siltstone are two ends of the mudstone
     spectrum. There is currently no "silt" in the game, and it would
-    probably not add much, so we might have siltstone just drop dirt,
-    or just get rid of it altogether. Then we have claystone=>clay,
-    and conglomerate/breccia=>gravel when harvested. Clay is
-    somewhat of a limiting resource in minecraft, so we should limit
-    claystone distribution. The beach and desert will be largely
-    sandstone. The ocean bottom will be limestone, and limestone could
-    also dominate hill biomes. Outside of the hills, lets say 65%
-    mudstone, 10% sandstone, 10% conglomerate/breccia, 10% limestone,
-    and 5% claystone.
-
-    Breccia should replace much of the gravel at depth.
-
-    What about mudstone? It consists of a mixture of silt and
-    clay. It could drop a mixture of clay and sand, or should that
-    require further processing?
+    probably not add much, so we might just get rid of it altogether.
+    The beach and desert will be largely sandstone. The ocean bottom
+    will be limestone, and limestone could also dominate hill
+    biomes. Outside of the hills, lets say 65% mudstone, 10%
+    sandstone, 10% conglomerate/breccia, 10% limestone, and 5%
+    claystone.
     
     Now for metamorphosis.
     
@@ -601,31 +560,10 @@
     processed? The debris would be similar to gravel, but distinct
     from it. Or it could be a type of gravel, but then what of the
     existing gravel? Either way, the debris would act much like
-    gravel/sand. Maybe just coarser than gravel. Then, we have the
-    following grinding recipes (for the broken/loose form):
-    * Andesite: sand + (10%) feldspar
-    * Breccia: 2 gravel
-    * Carbonatite: sand + (20%) CaO
-    * Conglomerate: sand + gravel
-    * Claystone: 2 clay dust, each hydrates to 4 clays
-    * Diorite: sand + (10%) feldspar
-    * Gabbro: sand + (20%) feldspar
-    * Gneiss: sand + (10%) feldspar
-    * Granite: sand + (10%) quartz
-    * Greenschist: sand + (10%) chrysotile
-    * Hornfels: sand + (20%) mica
-    * Limestone: sand + (50%) CaCO3
-    * Marble: sand + (100%) CaCO3
-    * Mudstone: sand + clay dust
-    * Pegmatite: feldspar + (50%) quartz
-    * Peridotite: sand + (50%) olivine
-    * Rhyolite: sand + (10%) quartz
-    * Schist: sand + (20%) mica
-    * Serpentinite: sand + (10%) chrysotile
-    * Slate: sand + (10%) mica
-    * Skarn: sand + (10%) wollastonite
-    * Quartzite: 2 sand
-      
+    gravel/sand. Maybe just coarser than gravel.
+
+    See the code (GeoMaterial) for rock compositions.
+    
 *** Stone variants
     How do we handle variants of stone? These include:
     * Moss stone (moss form of cobblestone)
@@ -642,7 +580,7 @@
       
     For now, it seems we could add recipes targeting the vanilla
     variants. Adding custom chiseled or mossy stone would probably
-    not be very attractive in general. And craked stone brick? In
+    not be very attractive in general. And cracked stone brick? In
     general, these seem to have limited utility.
     
 ** Metal Ore Minerals
@@ -704,20 +642,7 @@
    
    By changing the ore distributions to such an extent, gameplay is
    greatly affected. For example, a quarry might only gather one or
-   two types of ore. Perhaps all generation could occur in a Mystcraft
-   age. There could be a symbol for each type of ore, and one for
-   adding the new rocks. Modifiers would also be supported, but they
-   would add instability. Obtaining each symbol would involve some
-   challenge. Many could be found in mineshaft chests, temples or
-   villages (possibly specific villages from Millenaire?). Need to
-   wait for COG to support the new Mystcraft API.
-   
-   TE has the induction smelter which allows for complex smelting (two
-   inputs, and a primary/secondary output), and EIO has something
-   similar. The Foundry mod will likely have interesting options.
-    
-   See this as a way to prioritize:
-   http://www.theodoregray.com/periodictable/Elements/PopularInCollections/index.html
+   two types of ore.
 
    Getting balance from production levels is complicated. The ore
    production levels are confounded with the purity of the ore, while
@@ -789,6 +714,9 @@
    * Basaltic :: 10% quartz, 35% garnet, 25% magnetite, 5% chromite,
                  15% ilmenite, 5% zircon, 5% rutile
 
+   Note that we actually model diatomite and sulfur as sands, due to
+   the form in which they typically occur.
+    
 ** Clays
 
    | Type                  | Occurrence                       | Prod | Use                                               |
@@ -819,27 +747,29 @@
                      Na2CO3, NaCl, NaF, Na2PO4, Na2SO4
    * Silver Peak :: Li2CO3, KCl
    
-   Do we really want these four, somewhat arbitrary, types? Probably
-   not. Just take the union. Chemical processing will separate.
-
    List of chemicals/minerals:
    * Borax
    * *NaCl* (halite)
    * NaBr
    * NaF
    * Na2CO3 (soda ash)
-   * Na2SO4 (salt cake, mirabilite when hydrous)
+   * Na2SO4 (mirabilite)
    * Na3PO4
    * *LiCl*
    * Li2CO3 (also from spodumene)
    * *KCl* (sylvite)
    * *MgCl2*
+   * MgSO4 (epsom salt)
+   * CaSO4
    * Mg(OH)2
    * CaCl2
-   * *Bromine*
-   * *Iodine*
+   * *NaBr*
+   * *Ca(IO3)2*
      
    Only the ones in *bold* are commericially extracted.
+   
+   Do we really want these four, somewhat arbitrary, types? Probably
+   not. Just take the union. Chemical processing will separate.
    
 ** Sea water
    There are many minerals in sea water. But how to model those? We
@@ -857,24 +787,6 @@
    the initial processing (could be some filter or something) must
    occur in the ocean biome. This more or less achieves the desired
    effect.
-
-** Machines
-   There are three tiers of crafting complexity: manual, single-block
-   machines and multi-block machines. Single block machines are
-   cheap, compact but limited in terms of features and performance
-   compared to the multi-block machines. These are mostly inspired by
-   the notes in the Chemical Processing section.
-
-*** Single-block
-**** Solid-fluid Mixer
-     Mixes a solid and a fluid (stored in a liquid buffer). Has a
-     temperature gauge and accepts steam input for heating. The mixing
-     energy is provided by redstone. One liquid output, with
-     buffer. Pressurized version permits boiling point elevation.
-     
-**** Fluid-fluid Mixer
-
-*** Multi-block
     
 ** Concrete
    Minecraft needs concrete. One of the cool things about concrete
@@ -883,15 +795,11 @@
    hook it up to a pipe (via some adjacent machine) and pump concrete
    into it. The machine will then, after some time, yield an item of
    the desired shape, consuming some amount of concrete.
+   
 ** Crystals
-   For the ore textures, we should indicate the mineral by its crystal
-   habit, color, luster, and cleavage. Perhaps we can have a canonical
-   crystal rendered in high resolution, and that is sampled multiple
-   times to draw a number of crystals as an overlay on the rock. Since
-   these are simple triangles, we could even consider direct
-   rendering, which actually might be faster than drawing multiple
-   textures. We will sketch up prototypes first, of course.
-
+   Not sure if we will ever delve into crystals, but here are some
+   notes:
+   
    | Mineral      | Habit       | Cleavage | Color        | Luster   |
    |--------------+-------------+----------+--------------+----------|
    | sphalerite   | euhedral    |      110 | yellow-brown | resinous |
@@ -925,10 +833,6 @@
 
    Tabular cleavage can have a sloping edge on one side, like BDcraft
    lapis lazuli.
-
-   Other textures to fix:
-   * Pegmatite should be a mixture of various crystals.
-   * Banded iron should be redone as overlay
       
 * Items
 ** Chemicals
@@ -1100,23 +1004,35 @@
 
 *** Non-metal elements
     
-    | Element | Source                                   | Prod | Use               |
-    |---------+------------------------------------------+------+-------------------|
-    | H2      | steam over coke (-CO2), H2O electrolysis |      |                   |
-    | O2      | H2O electrolysis                         |      |                   |
-    | N2      | cryogenic fractionation of atmosphere    |      |                   |
-    | S       | processing gypsum, oil by-product (H2S)  |      | fertilizer, H2SO4 |
-    | P       | apatite                                  |      |                   |
-    | I       | brines                                   | 0.03 |                   |
-    | F       | flourite (CaF2)                          |    5 |                   |
-    | Cl      | electrolysis of NaCl, etc                |      |                   |
-    | Br      | brines                                   |      |                   |
-    | He      | natural gas                              |      |                   |
-    | Ar      | cryogenic fractionation of atmosphere    |      |                   |
-    | Ne      | cryogenic fractionation of atmosphere    |      |                   |
-    | Kr      | cryogenic fractionation of atmosphere    |      |                   |
-    | Xe      | cryogenic fractionation of atmosphere    |      |                   |
-    
+    | Element | Source                                  | Prod | Use               |
+    |---------+-----------------------------------------+------+-------------------|
+    | H2      | [[Hydrogen sources][see here]]                                |      |                   |
+    | O2      | H2O electrolysis                        |      |                   |
+    | N2      | cryogenic fractionation of atmosphere   |      |                   |
+    | S       | processing gypsum, oil by-product (H2S) |      | fertilizer, H2SO4 |
+    | P       | apatite                                 |      |                   |
+    | I       | brines                                  | 0.03 |                   |
+    | F       | flourite (CaF2)                         |    5 |                   |
+    | Cl      | electrolysis of NaCl, etc               |      |                   |
+    | Br      | brines                                  |      |                   |
+    | He      | natural gas                             |      |                   |
+    | Ar      | cryogenic fractionation of atmosphere   |      |                   |
+    | Ne      | cryogenic fractionation of atmosphere   |      |                   |
+    | Kr      | cryogenic fractionation of atmosphere   |      |                   |
+    | Xe      | cryogenic fractionation of atmosphere   |      |                   |
+
+**** Hydrogen sources
+     There are many ways to produce hydrogen. The most prevalent is
+     [[Steam reforming]], but there is also:
+     * Brine electrolysis during Cl production
+     * H2O electrolysis
+     * Partial oxidation of coal or CH4 (2CH4 + O2 => 2CO + 4H2)
+       * Pt/Al2O3, Pt/ZrO2, (preferably) Pt/Ce-ZrO2 catalysts lower
+         required temperature from 1200C to 800C.
+     * Dissociation of NH3 to yield forming gas
+       * Heat NH3 to 920 C in presence of Ni catalyst, then 
+	 2NH3 => N2 + 3H2 (forming gas)
+	 
 *** Elements too rare
     * Sc: 2 tons / yr production
     * Tc: almost non-existant in nature
@@ -1320,14 +1236,6 @@
     Colored lighting is possible:
     http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/1446134-1-7-2-beta-colored-light-api-mod-writers-can
     
-*** Chemicals from other mods
-    Some chemicals are obtained from other mods:
-
-    | Mod           | Chemicals                                                                    |
-    |---------------+------------------------------------------------------------------------------|
-    | Factorization | H2SO4                                                                        |
-    | Gregtech      | Be, Ca, CaCO3, C, Cl, D, H2, He, Th, W, U, Si, Na, Na2(SO4)2, CH4, K, N2, Pu |
-    |               |                                                                              |
 ** Tools
 ** Batteries
    In increasing order of cost and energy density:
@@ -1339,7 +1247,7 @@
    Plastics could serve as alternative to metal in many items. Would
    be produced from petroleum processing.
    
-* Chemical Processing
+* Processing
 ** Unit Operations
    These are the physical units of chemical engineering. Many of these
    involve automatic transport of a material, separation of mixture
@@ -1818,22 +1726,11 @@
    a reaction (a phase change). Then we just have to worry about
    reactions.
 
-   Also, what about concentrations? Simplest would be to have one,
-   fixed concentration. Slightly more complicated would be two levels:
-   dilute and concentrated. Dilute might be one pile of dust in a
-   bucket, while concentrated would be 10 piles.
-
    Interestingly, one can approximate the temperature dependence on
    solubility via the Arrhenius equation, where the heat of fusion
    (the latent heat) is the activation energy.
    See: http://en.wikipedia.org/wiki/Enthalpy_of_fusion
-   But since we are not modeling concentrations, how is the
-   solubility meaningful? Perhaps as the rate? Technically no, the
-   solubility only indicates the equilibrium point in terms of the
-   amount of solute, relative to the amount of solvent. In other
-   words, it decides whether a dilute and perhaps concentrated
-   solution is feasible.
-
+   
    Also, we are ignoring boiling point elevation and melting point
    depression in solutions.
    
@@ -1868,52 +1765,12 @@
    (steam would become water, water steam). Heat exchangers are
    typically made from stainless steel, as well as Cu/Ni and Ti.
 
-   Does the reaction mixing chamber itself require temperature
-   control? In real life, this is the case, but how to model it? The
-   device already has 3/4 material connections, plus power. This would
-   be two more connections. May be workable. The simple electric
-   heating chamber is also an option. Or a separate block. Multiblock
-   structures sound the most attractive.
-
-   In fact, heating/cooling of fluids outside of the chamber may
-   present technical complications: each "temperature" of each liquid
-   would need to be registered. Or maybe we could analyze the network
-   to determine what the temperature should be? That *might* work
-   since the temperature is not an inherent property of the substance
-   (like its composition). To store a chemical at a temperature, a
-   heated/insulated tank is necessary. Wait for use cases.
+   Internally, we can model any temperature. But externally, we should
+   model substances at two temperature levels: ambient and
+   "hot". Might also need "cold".
 
    The reaction chamber would need some temperature limit. If the
    temperature exceeds the limit, bad things happen.
-
-   
-*** Heat Capacity
-    We will mostly get this from the Shomate equation (Cp is
-    temperature dependent), but here is a simple table for common
-    substances (J/gK):
-    
-    | Cellulose      |           1.34 |
-    | Clay           |           0.94 |
-    | Coal           |   1.09 to 1.55 |
-    | Concrete       |           0.65 |
-    | Diamond        |           0.61 |
-    | Fireclay brick | 1.25 (1500° C) |
-    | Glass (pyrex)  |            0.8 |
-    | Limestone      |           0.91 |
-    | Rubber         |           1.74 |
-    | Sand           |            0.8 |
-    | Silk           |           1.38 |
-    | Steel          |           0.50 |
-    | Wood           |     1.9 to 2.7 |
-    | Wool           |           1.36 |
-
-    More:
-    http://www.engineeringtoolbox.com/specific-heat-solids-d_154.html
-
-    See here for CaCO3 (function of T):
-    http://www.eng-tips.com/viewthread.cfm?qid=61961
-
-    Ice: 146.3+(7.253*T)
     
 ** Pressure
    Modeling pressure means modeling the atmosphere inside the
@@ -1950,14 +1807,8 @@
       pulverizing. Many mods already make this distinction. Even if
       the machine is called a pulverizer (or crusher), it is the input
       that determines the operation. 
-      * Raw ore =crush=> crushed ore =pulverize=> dust.
-    * Crushing ore yields 2 crushed ore, and the host rubble/gravel is
-      kept if the machine supports more outputs.
-    * Crushed ore is pulverized to 1 primary dust + others according
-      to weight, limited by the machine outputs.
-    * Crushing cobblestone is same, but rubble instead of crushed ore,
-      and primary dust is sand. A pure crusher will yield gravel from
-      the rubble.
+    * ore =crush=> 2 x crushed_ore + host_dust =pulverize=> dust + extras.
+    * cobble =crush=> 1 x rubble =pulverize=> sand + extras.
 
     Since the crushed ore is smeltable just like the dust, this means
     that the first step effectively doubles ore production, while the
@@ -1969,10 +1820,7 @@
 ** Electrolysis
    Electrolysis will reduce just about anything. If we know the
    chemical formula of the substance, we can easily calculate the
-   product of redox reactions. IC2 has an electrolyzer for making
-   energy cells, or something. GT has a much more interesting
-   one. But we probably need a smelting electrolyzer to deal with
-   e.g. bauxite processing.
+   product of redox reactions.
    
 *** Chloralkali process
     Produces NaOH (aq) and Cl2 (g) from NaCl (aq). This happens in a
@@ -1986,9 +1834,8 @@
     anodes would be need to be transferred to a grinder for recovery
     of the metals. This means that electrodes need to be continually
     manufactured and replaced; perhaps every 10 buckets of
-    electrolyte. Partial yields from grinding partially mature
-    electrodes should be allowed. A number of minor outputs are
-    possible from grinding the dust.
+    electrolyte. A number of minor outputs are possible from grinding
+    the dust.
 
 ** Smelting
    Types of smelting:
@@ -2008,8 +1855,8 @@
      through the furnace; with a pre-heated blast, can reach
      temperatures up to 2500K; can also produce rock wool from diabase
      rock.
-   * Induction furnace: induces current in metal using an electomagnet
-     magnet; used for melting metals.
+   * Induction furnace: induces current in metal using an
+     electromagnet; used for melting metals.
    * Bath smelting: blows O2-enriched air into a bath of slag at the
      bottom; useful for smelting sulfide ores.
    * Flash smelting: sulfide ore is mixed with O2, ignited, sulfur is
@@ -2084,27 +1931,6 @@
 
    Smelting energy depends on the necessary temperature.
 
-*** Mod integration
-    Many mods add basic furnaces. Those are integrated via the ore
-    dictionary. But we also need realistic smelting with reductants. 
-
-    Possible machines for reduction:
-    * Multi-smelter [Engineer's Toolbox]
-    * Induction smelter [Thermal Expansion] : 2=>1(+1)
-    * High oven [Tinker's Steelworks] : 1(+3 modifiers)=>liquid
-      
-    One problem is that mods tend to conflate metal dusts with crushed
-    metal ores. Obviously, the metal dust is already reduced (and
-    might result from grinding an ingot), while the ore still requires
-    processing. Even mods that distinguish metal dusts from ores do so
-    only with regard to purity, not chemistry. Tinker's Steelworks is
-    the only one that pretends to do chemistry (but has no idea what
-    it is doing). The player will get whatever the
-    grinder/pulverizer/macerator/etc produces.  We need to be careful
-    with the ore dictionary, so that only crushed ores are valid input
-    to smelting. These would be the keys "crushed" and
-    "crushedPurified" (eg: crushedTin).
-
 *** Blast furnace details
     Reference:
     http://www.steel.org/Making%20Steel/How%20Its%20Made/Processes/How%20a%20Blast%20Furnace%20Works.aspx
@@ -2117,15 +1943,13 @@
      accumulates at the bottom of the furnace, where air is blown,
      optionally (for higher efficiency) heated by cowper furnances,
      through special pipes called /tuyeres/, which are made of copper
-     and cooled with water. The tuyeres are located one (or two, to
-     keep slag separate?) block above the base of the furnace. Coke at
-     the same level as the tuyeres, or 1 above, 2 below, is ignited,
-     producing heat and CO. The heat and CO rises up through the stack
-     of limestone and ore, converting the limestone to slag and the
-     ore to liquid iron, which settles in the space below the
-     tuyeres. About 40% of the CO is converted to CO2 by the reactions
-     on the way out of the furnace. This "dirty gas" exits the furnace
-     at the top.
+     and cooled with water. The tuyeres are located at the base of the
+     furnace. Coke near the tuyeres is ignited, producing heat and
+     CO. The heat and CO rises up through the stack of limestone and
+     ore, converting the limestone to slag and the ore to liquid iron,
+     which settles in the space below the tuyeres. About 40% of the CO
+     is converted to CO2 by the reactions on the way out of the
+     furnace. This "dirty gas" exits the furnace at the top.
 
      A cowper stove is a simple regenerative heat exchanger via
      convective heat transfer, where the dirty, hot gases escaping the
@@ -2172,7 +1996,9 @@
      
 **** Structure
      The typical overall shape is something like 3x10, up to 5x15, but
-     any size is supported as long as there is room for the process.
+     any size is supported as long as there is room for the
+     process. The more blocks, the more ore is processed at once, and
+     the more blast that is required.
      
      The structure will consist of structural blocks, plus these
      special modules:
@@ -2247,59 +2073,9 @@
           turbo blowers
 
 **** Implementation
-     Many existing mods provide the necessary components. While
-     PneumaticCraft is about compressing air, the intent is more about
-     sending signals and energy via air, much like BC kinesis pipes,
-     before the switch to RF.
-     
-     * Centrifugal fan :: The centrifugal fan can be implemented as a
-          simple, single-block machine. It accepts air input from any
-          side except the output side, which pushes entities and
-          outputs compressed air into fluid pipes. We should also
-          support PneumaticCraft air.
-     * Notches :: Closest thing is TiC's smeltery drains, but these
-                  would need to be carbon-based, instead.
-     * Tuyeres :: Needs to be a custom block that accepts compressed
-                  air and releases it into the furnace, based on
-                  refactory bricks,
-     * Firebricks :: Specific types of brick, as described above, at
-                     least for the process to actually work.
-                     
-     The overall idea is for the tuyere blocks to drive the
-     process. Whether it actually succeeds or not depends on how the
-     furnace is constructed, which ingredients are added, etc.
-
-     Outline of the process:
-     * Dropper/dispenser/whatever drops items into furnace. Tuyere
-       blocks capture those items and cause them to stack up, from the
-       bottom to top, in a 3x3x3 arrangement within the air blocks. It
-       does not matter which tuyere block captures the item; the items
-       are arranged consistently.
-     * Each tuyere block ignites coke within some radius of itself,
-       and the coke releases CO gas, i.e., the bosh becomes filled
-       with CO source blocks. The tuyere block does this by finding a
-       reaction between the coke (C) and compressed air (O2): 2C + O2
-       => 2CO + heat. Somehow we also have to track the "heat", which
-       is really the temperature of the gas, so we expect the gas
-       (which is actually a mixture of CO, CO2 and N) to model
-       the temperature. Some of that heat is absorbed by later
-       reactions, while the rest is lost through the structure
-       (depending on the heat transfer coefficients). As the coke is
-       consumed, items higher in the stack fall down.
-     * As the gas diffuses, it reacts with the ore and limestone, and
-       the products of earlier reactions. Product items replace
-       reactant items.
-     * Eventually pig iron is produced, which melts in the bosh to
-       produce liquid pig iron, which settles in the bottom. Slag also
-       accumulates.
-     * There is a drain block that extracts whatever fluid is on the
-       other side of it, either iron or slag, depending on height.
-     * There is a vent block that captures the gas and pipes it out.
-     
-     The gas could be a fixed mixture, or we could use tile entities
-     to track the individual component concentrations, in addition to
-     the temperature.
-     
+     Implementation is dependent on the currently loaded mods, see
+     mod integration section.
+    
 ** Pyrolysis
    Another type of cooking is pyrolysis, thermal decomposition without
    combustion: http://en.wikipedia.org/wiki/Pyrolysis. We could use the
@@ -3072,12 +2848,18 @@
 **** Steam reforming
      Produces H2 from hydrocarbons:
      At 700-1100 C, endothermic, via Ni catalyst,
-     CH4 + H2O => CO + 3H2
+     
+     CH4 + H2O(g) => CO + 3H2 (syngas)
 
-**** Gas-shift
+     The syngas is separated using PSA (pressure swing
+     adsorption). The left-over CO can extract more H2 from steam
+     using a gas-shift reaction (see below).
+     
+**** (Low-temperature) Gas-shift
      Produces H2 from the CO left over from steam reforming.
-     At 300 C, with magnetite catalyst,       
-     CO + H2O => CO2 + H2
+     At 300 C, with CuO+ZnO+Al2O3 (equal parts) catalyst,
+     
+     CO + H2O(g) => CO2 + H2
      
 *** Streams
 **** Light naphta
@@ -3905,9 +3687,7 @@
    satellites to build tools and fight aliens.
 
 ** Solar System Mod [1.2.5]
-   Implements all planets in the solar system,
-   semi-realisically. Probably the best one out there, and may
-   actually be updated for 1.3.2.
+   Implements all planets in the solar system, semi-realisically.
 
 ** Night Sky + Space Mod [1.2.5]
    Similar to Solar System Craft. Adds some goofy planets. Revives the
@@ -3948,6 +3728,13 @@
    IC2/GT addon that adds industrial chemistry. More similar than
    MineChem, but we want to be more principled/comprehensive and
    independent of GT.   
+
+** Galacticraft
+   Travel to the moon, other planets, and beyond.
+   
+** Starminer
+   Japanese mod, "realistic" gravity in orbit.
+   
 * Mod Integration
   We define a complex chemical model and programmatically manifest it
   through integration with other mods. Eventually, we might have our
@@ -3965,9 +3752,8 @@
   mechanism for mod integration. Below is a table of how abstract
   processing steps map to machines in specific mods:
   
-  | Mod           | Crusher                |
+  | Mod           | Crusher + pulverizer   |
   |---------------+------------------------|
-  | IC2           | Macerator (1)          |
   | Railcraft     | Rock crusher (9,%)     |
   | AE2           | Grinder (2,%)          |
   | TE            | Pulverizer (2,%)       |
@@ -3981,20 +3767,72 @@
   | Hydraulicraft | Crusher (n -- fluid?)  |
   | Metallurgy    | Crusher                |
   | Chemlab       | Centrifugal extractor  |
-
-  The table is roughly in order of prioritization. Of course, GT
-  integration takes precedence over the entire table.
   
   Some notes on individual mods:
+     
+** IndustrialCraft
+   We may not support this directly, because Gregtech already handles
+   it, and no one really plays IC2 without GT. Support would be
+   complicated, since IC2 adds concepts like impure, purified and
+   centrifuged ores.
   
 ** Gregtech
-   We need to work with the maintainer to add new types of
-   materials. Once a material is added, we can modify traits, such as
-   the composition (including existing materials). These are then
-   automatically mapped to machine recipes. For example, pulverizer
-   support includes the IC2 macerator, TE pulverizer, and Railcraft
-   rock crusher.
+   We will let GT manage the processing when it is present.  We will
+   work with the maintainer to add new types of materials. Once a
+   material is added, we can modify traits, such as the composition
+   (including existing materials). These are then automatically mapped
+   to machine recipes. For example, pulverizer support includes the
+   IC2 macerator, TE pulverizer, and Railcraft rock crusher.
 
+   | Machine                | (Ideal) Purpose                             |
+   |------------------------+---------------------------------------------|
+   | Alloy Smelter          | Alloying two metals                         |
+   | Arc Furnace            | Steel from scrap, CaC2, alloys, phosphorous |
+   | Autoclave              | Crystal production, pressurized cooking     |
+   | Chemical bath          | Ore leaching                                |
+   | Centrifuge             | Gravity separation                          |
+   | Chemical reactor       | Reactions                                   |
+   | Fluid extractor        | Items to fluid, like melting metals         |
+   | Fluid heater           | Heating fluids                              |
+   | Fluid solidifier       | Cooling, precipitation                      |
+   | Mixer                  | Combines two fluids                         |
+   | Electric blast furnace | 2 in, 2 out, 1 gas in, 1 gas out            |
+   | Distillation tower     | Distills one fluid into five                |
+   | Heat exchanger         | Heats one fluid, cools the other            |
+   | Electric furnace       | Just a basic furnace                        |
+   | Electric oven          | Could use for roasting?                     |
+   | Distillery             | Separates a phase from a solution           |
+   | Electromagnetic Sep    | Separating iron sands                       |
+   | Electrolyzer           | Electrolysis                                |
+   
+   The EBF is just not realistic enough to serve our
+   purposes. Instead, we introduce the "hot blast furnace" based on
+   the Gregtech API. We consider the EBF as a "basic oxygen furnace"
+   for converting pig iron to steel. Note that calcite triples steel
+   output from pig iron.
+   
+   Design of 3x3x5 multiblock:
+   * Three inputs: (iron) ore, charcoal/coke, calcite. All at the top.
+   * Fluid input of compressed air, or hot air heated by cowper
+     stoves, a low-tech version of the titanium heat exchanger.
+   * Require four fluid (air) inputs, called tuyeres, at the second
+     from bottom layer, one on every side.
+   * Gas output should be CO2 (at top, in the middle).
+   * By-product should be (cooled) slag (CaSiO3), released from hatch
+     at the bottom.
+   * Molten pig iron is released through hatch at the bottom.
+
+   The heat exchanger is currently hard-coded to heating water and
+   cooling lava (and coolant). We might try to generalize it.
+
+   The electric oven is currently redundant with the electric
+   furnace. Technically, a furnace is just a type of oven applied to
+   metallurgy. But there is also the concept of "industrial oven",
+   which might be a:
+   * Curing oven :: Coating metals
+   * Drying oven :: But not as hot as a "kiln" (pottery making)
+   So perhaps we could apply it to roasting sulfide ores.
+   
 ** Mekanism
    The enrichment chamber is the closest thing to a pulverizer, even
    though it also acts like a compressor or ore washing plant sometimes.
@@ -4004,16 +3842,12 @@
    extractor is closest to dust production, though it depends on
    crushed ore (from the crusher). 
    
-** RailCraft
+** Railcraft
    * Coke oven could be generalized to any type of pyrolysis.
    * Rock crusher should handle ores via ore dictionary.
      
 ** Forestry
    * Ore dictionary should allow rocks/ores in backpacks.     
-     
-** IndustrialCraft
-   Machines:
-   * Grinder :: Macerator
      
 ** BuildCraft
     The planned distillation tower would be useful, but it seems
