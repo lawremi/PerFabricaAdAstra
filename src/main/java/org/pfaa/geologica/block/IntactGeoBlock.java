@@ -91,6 +91,6 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getHostIcon(IBlockAccess world, int x, int y, int z) {
-		return BlockUtils.getHostIcon(world, x, y, z);
+		return OreBlockUtils.getHostIcon(world, x, y, z);
 	}
 }
