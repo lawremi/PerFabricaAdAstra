@@ -115,7 +115,11 @@ public interface OreMineral extends Mineral {
 		VANADINITE(Compounds.Pb5V3O12Cl),
 		WOLFRAMITE(Compounds.FeWO4),
 		ZIRCON(Compounds.ZrSiO4, new Color(130, 60, 5)),
-		GOLD(Elements.Au)
+		
+		GOLD(Au),
+		PLATINUM(Pt.mix(Pd, 1.0).mix(Ru, 0.25).mix(Rh, 0.2)
+				.mix(Ir, 0.01).mix(Alloys.IRIDOSMINE, 0.01)),
+		SULFUR(S)
 		;
 
 		private OreMineral delegate;
