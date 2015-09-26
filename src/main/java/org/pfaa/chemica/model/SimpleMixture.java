@@ -50,6 +50,9 @@ public class SimpleMixture implements Mixture {
 	
 	@Override
 	public String name() {
+		if (this.components.size() == 0) {
+			return "Unspecified mixture";
+		}
 		String name = "Mixture of ";
 		double totalWeight = getTotalWeight();
 		for (MixtureComponent comp : components) {
