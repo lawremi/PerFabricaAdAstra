@@ -113,6 +113,8 @@ public class GeologicaBlocks implements BlockCatalog {
 	
 	public static final GeoBlock VANILLA_ORE_ROCK = createVanillaOreRockBlock();
 	
+	public static final SpringBlock SPRING = new SpringBlock();
+	
 	private static IntactGeoBlock createStoneBlock(Strength strength) {
 		return GeoBlock.registerNative(createGeoBlock(IntactGeoBlock.class, strength, Aggregate.class, Material.rock));
 	}

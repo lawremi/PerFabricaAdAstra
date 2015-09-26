@@ -22,7 +22,8 @@ public class BlockRegistration  {
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, WallBlock.class, CompositeBlockItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, SlabBlock.class, SlabItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, StairsBlock.class, ItemBlock.class);
-		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, IndustrialFluidBlock.class, ColoredItemBlock.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, IndustrialFluidBlock.class, ColoredBlockItem.class);
+		RegistrationUtils.registerBlock(GeologicaBlocks.SPRING, ItemBlock.class, "spring");
 		
 		if (Geologica.getConfiguration().isVanillaOreOverrideEnabled()) {
 			RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, VanillaOreOverrideBlock.class, ItemBlock.class);
