@@ -1,5 +1,6 @@
 package org.pfaa.geologica.processing;
 
+import static org.pfaa.chemica.model.Element.Elements.Au;
 import static org.pfaa.chemica.model.Element.Elements.Ba;
 import static org.pfaa.chemica.model.Element.Elements.Cd;
 import static org.pfaa.chemica.model.Element.Elements.Ce;
@@ -7,13 +8,23 @@ import static org.pfaa.chemica.model.Element.Elements.Co;
 import static org.pfaa.chemica.model.Element.Elements.Cs;
 import static org.pfaa.chemica.model.Element.Elements.Fe;
 import static org.pfaa.chemica.model.Element.Elements.Ga;
+import static org.pfaa.chemica.model.Element.Elements.Ge;
+import static org.pfaa.chemica.model.Element.Elements.In;
+import static org.pfaa.chemica.model.Element.Elements.Ir;
 import static org.pfaa.chemica.model.Element.Elements.La;
 import static org.pfaa.chemica.model.Element.Elements.Nd;
 import static org.pfaa.chemica.model.Element.Elements.Ni;
+import static org.pfaa.chemica.model.Element.Elements.Pd;
 import static org.pfaa.chemica.model.Element.Elements.Pr;
+import static org.pfaa.chemica.model.Element.Elements.Pt;
 import static org.pfaa.chemica.model.Element.Elements.Rb;
 import static org.pfaa.chemica.model.Element.Elements.Re;
+import static org.pfaa.chemica.model.Element.Elements.Rh;
+import static org.pfaa.chemica.model.Element.Elements.Ru;
+import static org.pfaa.chemica.model.Element.Elements.S;
+import static org.pfaa.chemica.model.Element.Elements.Se;
 import static org.pfaa.chemica.model.Element.Elements.Sr;
+import static org.pfaa.chemica.model.Element.Elements.Te;
 import static org.pfaa.chemica.model.Element.Elements.Th;
 import static org.pfaa.chemica.model.Element.Elements.U;
 import static org.pfaa.chemica.model.Element.Elements.Y;
@@ -21,12 +32,12 @@ import static org.pfaa.chemica.model.Element.Elements.Y;
 import java.awt.Color;
 import java.util.List;
 
+import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
-import org.pfaa.chemica.model.Element.Elements;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
@@ -48,16 +59,17 @@ public interface OreMineral extends Mineral {
 		BISMUTHINITE(Compounds.Bi2S3),
 		BORAX(Compounds.Na2B4O7),
 		CALCITE(Compounds.CaCO3),
-		CARNALLITE(Compounds.KCl.mix(Compounds.MgCl2, 1.0)),
+		CARNALLITE(Compounds.KCl.mix(Compounds.MgCl2_6H2O, 1.0)),
 		CARNOTITE(Compounds.K2U2V2O12),
 		CASSITERITE(Compounds.SnO2, new Color(30, 20, 0)),
 		CELESTINE(Compounds.SrSO4, new Color(200, 200, 250), new Substitution(Ba, 0.2)),
-		CHALCOPYRITE(Compounds.CuFeS2), // TODO: Se and Te can substitute for S
+		CHALCOPYRITE(Compounds.CuFeS2, new Substitution(Se, 0.01), new Substitution(Te, 0.001)),
 		CHROMITE(Compounds.FeCr2O4),
 		CINNABAR(Compounds.HgS),
 		COBALTITE(Compounds.CoAsS),
 		COLUMBITE(Compounds.FeNb2O6),
 		CUPRITE(Compounds.Cu2O, Color.red),
+		EPSOMITE(Compounds.MgSO4_7H2O),
 		FLUORITE(Compounds.CaF2, new Color(155, 0, 165)),
 		GALENA(Compounds.PbS),
 		GIBBSITE(Compounds.AlOH3, new Color(155, 75, 35), new Substitution(Ga, 0.001)),
