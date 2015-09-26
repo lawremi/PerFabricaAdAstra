@@ -46,6 +46,7 @@ public class Chemica {
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
+		ModIntegration.init();
 		registrant.register();
 	}
 	
