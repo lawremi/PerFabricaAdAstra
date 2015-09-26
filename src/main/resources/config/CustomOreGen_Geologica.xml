@@ -3358,15 +3358,22 @@
             <Veins name='SkarnMagnesite'
                    inherits='PresetSkarnMagnesite'/>
             <IfModInstalled name="gregtech">
-              <IfCondition condition=":=?GregtechGenLapis">
-                <Veins name='SkarnLazurite' inherits='PresetSkarnLazurite'/>
-              </IfCondition>
+              <IfChoice name="GregtechGenLapis" value="true">
+		<Then>
+                  <Veins name='SkarnLazurite' inherits='PresetSkarnLazurite'/>
+		</Then>
+		<Else>
+		  <IfCondition condition=":=?GeologicaGenLapis">
+                    <Veins name='SkarnLapis' inherits='PresetSkarnLapis'/>
+		  </IfCondition>
+		</Else>
+              </IfChoice>
             </IfModInstalled>
-            <IfNotModInstalled name="gregtech">
-              <IfCondition condition=":=?GeologicaGenLapis">
+	    <IfNotModInstalled name="gregtech">
+	      <IfCondition condition=":=?GeologicaGenLapis">
                 <Veins name='SkarnLapis' inherits='PresetSkarnLapis'/>
               </IfCondition>
-            </IfNotModInstalled>
+	    </IfNotModInstalled>
             <IfCondition condition=":=?GeologicaGenLeadZinc">
               <Veins name='SkarnSphaleriteGalena'
                      inherits='PresetSkarnSphaleriteGalena'/>
