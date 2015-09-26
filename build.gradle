@@ -15,13 +15,6 @@ buildscript {
     }
 }
 
-repositories {
-    maven {
-        name 'CB Maven FS'
-        url "http://chickenbones.net/maven/"
-    }
-}
-
 apply plugin: 'forge'
 
 def getVersionName()
@@ -44,11 +37,23 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
+repositories {
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    ivy {
+        name 'Railcraft'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.rc_cf}/[module]_[revision].[ext]"
+    }
+}
+
 dependencies {
      compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
      compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.FMP_version}:dev"
      compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
      compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
+     compile name: 'Railcraft', version: config.rc_version, ext: 'jar'
 }
 
 minecraft {
