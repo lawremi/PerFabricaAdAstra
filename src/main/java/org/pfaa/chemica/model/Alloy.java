@@ -95,8 +95,8 @@ public interface Alloy extends Mixture, Metal {
 		WIRE_ALUMINUM(Al.alloy(Fe, 0.01)),
 		WOODS_METAL(Bi.alloy(Pb, 0.5).alloy(Sn, 0.4).alloy(Cd, 0.3)),
 		ZAMAK(Zn.alloy(Al, 0.08).alloy(Mg, 0.001)),
-		ZIRCALOY(Zr.alloy(Sn, 0.01))
-		//TELLURIUM_COPPER(Cu.alloy(Te, 0.005)),
+		ZIRCALOY(Zr.alloy(Sn, 0.01)),
+		TELLURIUM_COPPER(Cu.alloy(Te, 0.005)),
 		;
 
 		private Alloy delegate;
