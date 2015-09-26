@@ -1,97 +1,51 @@
-package org.pfaa;
+package org.pfaa.core.registration;
 
-import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-
-import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.geologica.Geologica;
-import org.pfaa.geologica.fluid.ColoredBucketItem;
+import org.pfaa.core.catalog.BlockCatalog;
+import org.pfaa.core.catalog.CatalogUtils;
+import org.pfaa.core.catalog.ItemCatalog;
 
 import com.google.common.base.CaseFormat;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.LoaderException;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 
 public class RegistrationUtils {
 
-	public static void registerDeclaredBlocks(Class<? extends Catalog> catalogClass, Class<? extends Block> blockClass, Class<? extends ItemBlock> itemClass) {
-		Field[] fields = catalogClass.getFields();
-		for (Field field : fields) {
-			try {
-				Object value = field.get(null);
-				if (value instanceof Block && blockClass.isAssignableFrom(value.getClass())) {
-					Block block = (Block)value;
-					String name = fieldNameToUnlocalizedName(field.getName());
-					block.setBlockName(name);
-					String prefix = Loader.instance().activeModContainer().getModId().replaceFirst("PFAA", "");
-					block.setBlockTextureName(prefix + ":" + name);
-					GameRegistry.registerBlock(block, itemClass, name);
-				}
-			} catch (Exception e) {
-				Geologica.log.fatal("Failed to register field '" + field.getName() + "' as block");
-				throw new LoaderException(e);
-			}
+	public static void registerDeclaredBlocks(Class<? extends BlockCatalog> catalogClass, Class<? extends Block> blockClass, Class<? extends ItemBlock> itemClass) {
+		Map<String, ? extends Block> blocks = CatalogUtils.getNamedEntries(catalogClass, blockClass);
+		for (Entry<String,? extends Block> entry : blocks.entrySet()) {
+			Block block = entry.getValue();
+			String name = fieldNameToUnlocalizedName(entry.getKey());
+			registerBlock(block, itemClass, name);
 		}
 	}
+	
+	public static void registerBlock(Block block, Class<? extends ItemBlock> itemClass, String name) {
+		block.setBlockName(name);
+		String prefix = Loader.instance().activeModContainer().getModId().replaceFirst("PFAA", "");
+		block.setBlockTextureName(prefix + ":" + name);
+		GameRegistry.registerBlock(block, itemClass, name);
+	}
 
-	public static void registerDeclaredItems(Class<? extends Catalog> catalogClass) {
-	    Field[] fields = catalogClass.getFields();
-        for (Field field : fields) {
-            try {
-                Item item = (Item)field.get(null);
-                String name = fieldNameToUnlocalizedName(field.getName());
-                item.setUnlocalizedName(name);
-                GameRegistry.registerItem(item, name);
-            } catch (Exception e) {
-                Geologica.log.fatal("Failed to register field '" + field.getName() + "' as item");
-                throw new LoaderException(e);
-            }
+	public static void registerDeclaredItems(Class<? extends ItemCatalog> catalogClass) {
+		Map<String, Item> items = CatalogUtils.getNamedEntries(catalogClass, Item.class);
+		for (Entry<String,Item> entry : items.entrySet()) {
+			Item item = (Item)entry.getValue();
+			String name = fieldNameToUnlocalizedName(entry.getKey());
+			item.setUnlocalizedName(name);
+			GameRegistry.registerItem(item, name);
         }
 	}
 	
-	private static String fieldNameToUnlocalizedName(String name) {
+	public static String fieldNameToUnlocalizedName(String name) {
 		return CaseFormat.UPPER_UNDERSCORE.
 				      to(CaseFormat.LOWER_CAMEL, name.replaceAll("__", "."));
 	}
 	
-	public static void registerContainersForDeclaredFluidBlocks(Class<? extends Catalog> catalogClass) {
-		Field[] fields = catalogClass.getFields();
-		for (Field field : fields) {
-			try {
-				Object value = field.get(null);
-				if (value instanceof BlockFluidBase) {
-					BlockFluidBase block = (BlockFluidBase)value;
-					if (!block.getFluid().isGaseous()) {
-						registerBucketForFluid(block);
-						registerFlaskForFluid(block.getFluid());
-					}
-				}
-			} catch (Exception e) {
-				Geologica.log.fatal("Failed to register bucket for fluid block '" + field.getName());
-				throw new LoaderException(e);
-			}
-		}
-	}
-
-	private static void registerBucketForFluid(BlockFluidBase block) {
-		String name = fieldNameToUnlocalizedName(block.getFluid().getName()) + "Bucket";
-		Item item = new ColoredBucketItem(block);
-		item.setUnlocalizedName(name);
-		GameRegistry.registerItem(item, name);
-		FluidContainerRegistry.registerFluidContainer(block.getFluid(), 
-				new ItemStack(item), FluidContainerRegistry.EMPTY_BUCKET);
-	}
-	
-	private static void registerFlaskForFluid(Fluid fluid) {
-	    FluidContainerRegistry.registerFluidContainer(fluid, 
-                new ItemStack(ChemicaItems.FILLED_GLASS_BOTTLE, 1, fluid.getID()), FluidContainerRegistry.EMPTY_BOTTLE);
-	}
 }
