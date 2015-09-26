@@ -214,24 +214,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 
 	private boolean needsHost() {
-		return !Aggregate.class.isAssignableFrom(this.getComposition());
-	}
-	
-	private static Block getBlockForAggregate(Aggregate host) {
-		if (host == Aggregates.STONE) {
-			return Blocks.stone;
-		} else if (host == Aggregates.SAND) {
-			return Blocks.sand;
-		} else if (host == Aggregates.CLAY) {
-			return Blocks.clay;
-		} else if (host == Aggregates.GRAVEL) {
-			return Blocks.gravel;
-		} else if (host == Aggregates.DIRT) {
-			return Blocks.dirt;
-		} else if (host == Aggregates.OBSIDIAN) {
-			return Blocks.obsidian;
-		}
-		return null;
+		return !this.hasComposition(Aggregate.class);
 	}
 	
 	@Override
@@ -242,7 +225,7 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 			BlockWithMeta<GeoBlock> blockWithMeta = getNative(material);
 			return blockWithMeta.block.registerMetaIcon(registry, blockWithMeta.meta);
 		} else if (host instanceof Aggregate) {
-			Block block = getBlockForAggregate((Aggregate)host);
+			Block block = ChemicaBlocks.getBlock((Aggregate)host);
 			if (block != null) {
 				return block.getIcon(0, 0);
 			}
