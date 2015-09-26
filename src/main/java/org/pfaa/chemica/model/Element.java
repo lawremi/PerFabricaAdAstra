@@ -167,8 +167,16 @@ public interface Element extends Chemical, PartFactory, Metal {
 		  new Gas(new Thermo(27.5, -13.3, 10.1, -2.66, -0.00558, 269, 204)
 		  		  .addSegment(1400, 16.6, 2.40, -0.256, 0.00582, 3.56, 278, 195))
 		),
-		Cl("chlorine", 34.5, -1), /* See Compounds.Cl2 for properties */
-		K("potassium", 39.1, +1, 
+		Cl("chlorine", Category.DIATOMIC_NONMETAL, null, 34.5, -1), /* See Compounds.Cl2 for properties */
+		Ar("argon", Category.NOBLE_GAS, null, 39.9, 0,
+				   new Solid(1.62,
+						     new Thermo(38)),
+				   new Fusion(83.8),
+				   new Liquid(1.21,
+						      new Thermo(128)),
+				   new Vaporization(3.30, 215, -22.3),
+				   new Gas(new Thermo(20.8, 0, 0, 0, 0, -6.2, 180))),
+		K("potassium", Category.ALKALI_METAL, Strength.WEAK, 39.1, +1, 
 		   new Solid(new Color(219, 219, 219), 0.862, 
 				     new Thermo(-63.5, -3226, 14644, -16229, 16.3, 120, 534), 
 				     new Hazard(3, 3, 2, SpecialCode.WATER_REACTIVE)), 
