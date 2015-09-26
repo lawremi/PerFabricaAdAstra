@@ -6,9 +6,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ColoredItemBlock extends ItemBlock {
+public class ColoredBlockItem extends ItemBlock {
 
-	public ColoredItemBlock(Block block) {
+	public ColoredBlockItem(Block block) {
 		super(block);
 	}
 
