@@ -30,5 +30,10 @@ public interface Form {
 		private void setNumberPerBlock(int numberPerBlock) {
 			this.numberPerBlock = numberPerBlock;
 		}
+
+		@Override
+		public String oreDictKey() {
+			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
+		}
 	}
 }
