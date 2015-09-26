@@ -18,11 +18,11 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class BlockUtils {
-	private static Map<String,Set<BlockMeta>> oreCache = new HashMap<String,Set<BlockMeta>>();
+public class OreBlockUtils {
+	private static Map<String,Set<BlockWithMeta<?>>> oreCache = new HashMap<String,Set<BlockWithMeta<?>>>();
 	
-	private static Set<BlockMeta> getBlocksForOre(String key) {
-		Set<BlockMeta> set = oreCache.get(key);
+	private static Set<BlockWithMeta<?>> getBlocksForOre(String key) {
+		Set<BlockWithMeta<?>> set = oreCache.get(key);
 		if (set == null) {
 			set = getBlocksForNewOre(key);
 			oreCache.put(key, set);
@@ -30,28 +30,28 @@ public class BlockUtils {
 		return set;
 	}
 	
-	private static Set<BlockMeta> getBlocksForNewOre(String key) {
-		Set<BlockMeta> set = new HashSet<BlockMeta>();
+	private static Set<BlockWithMeta<?>> getBlocksForNewOre(String key) {
+		Set<BlockWithMeta<?>> set = new HashSet<BlockWithMeta<?>>();
 		List<ItemStack> ores = OreDictionary.getOres(key);
 		for (ItemStack ore : ores) {
 			Item item = ore.getItem();
 			if (item instanceof ItemBlock) {
-				set.add(new BlockMeta(((ItemBlock) item).field_150939_a, ore.getItemDamage()));
+				set.add(new BlockWithMeta<Block>(((ItemBlock) item).field_150939_a, ore.getItemDamage()));
 			}
 		}
 		if (key == "stone") {
-			set.add(new BlockMeta(Blocks.sandstone, 0));
+			set.add(new BlockWithMeta<Block>(Blocks.sandstone, 0));
 		}
 		return set;
 	}
 
-	private static ItemStack getAdjacentBlock(IBlockAccess world, int x, int y, int z, Set<BlockMeta> allowed) {
+	private static ItemStack getAdjacentBlock(IBlockAccess world, int x, int y, int z, Set<BlockWithMeta<?>> allowed) {
 		for (int ix = x - 1; ix <= x + 1; ix++) {
 			for (int iy = y - 1; iy <= y + 1; iy++) {
 				for (int iz = z - 1; iz <= z + 1; iz++) {
 					Block block = world.getBlock(ix, iy, iz);
 					int meta = world.getBlockMetadata(ix, iy, iz);
-					if (allowed.contains(new BlockMeta(block, meta))) {
+					if (allowed.contains(new BlockWithMeta<Block>(block, meta))) {
 						return new ItemStack(block, 1, meta);
 					}
 				}
@@ -69,13 +69,13 @@ public class BlockUtils {
 		return null;
 	}
 	
-	private static Set<BlockMeta> getHostBlocks(Block block) {
+	private static Set<BlockWithMeta<?>> getHostBlocks(Block block) {
 		return getBlocksForOre(getHostOreForMaterial(block.getMaterial()));	
 	}
 	
 	public static ItemStack getHost(IBlockAccess world, int x, int y, int z) {
 		Block block = world.getBlock(x, y, z);
-		Set<BlockMeta> hosts = getHostBlocks(block);
+		Set<BlockWithMeta<?>> hosts = getHostBlocks(block);
 		if (hosts != null) {
 			return getAdjacentBlock(world, x, y, z, hosts);
 		} else {
