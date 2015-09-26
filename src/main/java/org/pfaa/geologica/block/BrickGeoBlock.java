@@ -38,4 +38,9 @@ public class BrickGeoBlock extends GeoBlock {
 	public boolean useMultipassRendering() {
 		return true;
 	}
+
+	@Override
+	public GeoBlock getBrokenRockBlock() {
+		return IntactGeoBlock.getBrokenRockBlock(this.getStrength());
+	}
 }

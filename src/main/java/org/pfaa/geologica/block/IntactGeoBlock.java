@@ -52,19 +52,25 @@ public class IntactGeoBlock extends GeoBlock {
 	public Item getItemDropped(int meta, Random random, int par3) {
 		Item dropped = super.getItemDropped(meta, random, par3);
 		GeoMaterial material = getGeoMaterial(meta);
-		if (material.getComposition() instanceof Aggregate && blockMaterial == Material.rock) {
-			dropped = dropBrokenRock(meta);
+		GeoBlock broken = this.getBrokenRockBlock();
+		if (broken != null && material.getStrength() != Strength.VERY_STRONG) 
+		{
+			dropped = Item.getItemFromBlock(broken);
 		}
 		return dropped;
 	}
 	
-	public Item dropBrokenRock(int meta) {
-		return Item.getItemFromBlock(this.getBrokenBlock(getGeoMaterial(meta)));
+	@Override
+	public GeoBlock getBrokenRockBlock() {
+		if (this.hasComposition(Aggregate.class) && this.blockMaterial == Material.rock) {
+			return getBrokenRockBlock(this.getStrength());
+		}
+		return null;
 	}
 	
-	public GeoBlock getBrokenBlock(GeoMaterial material) {
+	public static GeoBlock getBrokenRockBlock(Strength strength) {
 		GeoBlock dropped = null;
-		switch(material.getStrength()) {
+		switch(strength) {
 		case WEAK:
 			dropped = GeologicaBlocks.WEAK_RUBBLE;
 			break;
@@ -75,7 +81,7 @@ public class IntactGeoBlock extends GeoBlock {
 			dropped = GeologicaBlocks.STRONG_COBBLE;
 			break;
 		case VERY_STRONG:
-			dropped = this;
+			dropped = GeologicaBlocks.VERY_STRONG_COBBLE;
 			break;
 		default:
 			break;

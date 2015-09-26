@@ -250,9 +250,8 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return super.registerMetaIcon(registry, i);
 	}
 
-	// FIXME: Generalize beyond GeoBlock to any IndustrialMaterial. BlockWithMeta would need to gain
-	//        NBT, since we will probably need a TileEntity to handle arbitrary materials. Such a
-	//        registry would then be wrapped in one that returns an ItemStack for a given material and Form.
+	public abstract GeoBlock getBrokenRockBlock();
+	
 	public static <T extends GeoBlock> T registerNative(T block) {
 		List<GeoMaterial> materials = block.getGeoMaterials();
 		int meta = 0;

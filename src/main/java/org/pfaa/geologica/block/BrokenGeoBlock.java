@@ -37,4 +37,25 @@ public class BrokenGeoBlock extends GeoBlock {
 		return registry.registerIcon("geologica:cobbleOverlay");
 	}
 
+	@Override
+	public GeoBlock getBrokenRockBlock() {
+		GeoBlock dropped = null;
+		switch(this.getStrength()) {
+		case WEAK:
+			dropped = GeologicaBlocks.WEAK_RUBBLE;
+			break;
+		case MEDIUM:
+			dropped = GeologicaBlocks.MEDIUM_RUBBLE;
+			break;
+		case STRONG:
+			dropped = GeologicaBlocks.STRONG_RUBBLE;
+			break;
+		case VERY_STRONG:
+			dropped = GeologicaBlocks.VERY_STRONG_RUBBLE;
+			break;
+		default:
+			break;
+		}
+		return dropped;
+	}
 }

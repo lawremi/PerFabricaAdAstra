@@ -126,4 +126,9 @@ public class LooseGeoBlock extends GeoBlock {
 		return registry.registerIcon("geologica:rubbleOverlay");
 	}
 
+	@Override
+	public GeoBlock getBrokenRockBlock() {
+		return null;
+	}
+
 }
