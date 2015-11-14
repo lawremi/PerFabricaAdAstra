@@ -42,21 +42,126 @@ repositories {
         name 'CB Maven FS'
         url "http://chickenbones.net/maven/"
     }
+    maven {
+        name "ChickenBones"
+        url "http://chickenbones.net/maven/"
+    }
+
+    maven {
+        name "Mobius"
+        url "http://mobiusstrip.eu/maven"
+    }
+
+    // maven {
+    //     name "FireBall API Depot"
+    //     url "http://dl.tsr.me/artifactory/libs-release-local"
+    // }
+
+    maven {
+        name = "Player"
+        url = "http://maven.ic2.player.to/"
+    }
+
+    maven {
+        name = "Tterrag"
+        url = "http://maven.tterrag.com/"
+    }
+
+    maven  {
+        name = "RX14 Proxy"
+        url = "http://mvn.rx14.co.uk/repo/"
+    }
+
+    maven {
+        name "OpenComputers Repo"
+        url = "http://maven.cil.li/"
+    }
+    
+    maven {
+        name = "MM repo"
+        url = "http://maven.k-4u.nl/"
+    }
+    
     ivy {
         name 'Railcraft'
         artifactPattern "http://addons-origin.cursecdn.com/files/${config.rc_cf}/[module]_[revision].[ext]"
     }
+    
+    ivy {
+        name "BuildCraft"
+        artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'CoFHLib'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.cofhlib_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'EnderIO'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.eio_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'ImmersiveEngineering'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.ie_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'RotaryCraft'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.rotarycraft_cf}/[module]%20[revision].[ext]"
+    }
+
+    ivy {
+        name 'DragonAPI'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.dragonapi_cf}/[module]%20[revision].[ext]"
+    }
+
+    ivy {
+        name 'Eureka'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.eureka_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'BuildcraftAdditions'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.bca_cf}/[module]-[revision].[ext]"
+    }
+
 }
 
 dependencies {
+     compile ("appeng:appliedenergistics2:${config.ae2_version}:dev") {
+        exclude module: 'railcraft'
+	exclude module: 'buildcraft'
+	exclude module: 'RotaryCraft'
+	exclude module: 'EnderIO'
+	exclude module: 'rf'
+	exclude module: 'mfr'
+	exclude module: 'mekanism'
+	exclude module: 'immibis'
+	exclude module: 'coloredlightscore'
+	exclude module: 'craftguide'
+	exclude module: 'InventoryTweaks'
+	exclude module: 'Waila'
+     }
      compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
      compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.FMP_version}:dev"
      compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
      compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
+     // no direct dependency, but need to ensure BC comes before Railcraft
+     compile name: 'buildcraft', version: config.bc_version, ext: 'jar'
      compile name: 'Railcraft', version: config.rc_version, ext: 'jar'
+     compile name: 'CoFHLib', version: config.cofhlib_version, ext: 'jar'
+     compile name: 'EnderIO', version: config.eio_version, ext: 'jar'
+     compile name: 'ImmersiveEngineering', version: config.ie_version, ext: 'jar'
+     compile name: 'DragonAPI', version: config.rotarycraft_version, ext: 'jar'
+     compile name: 'RotaryCraft', version: config.rotarycraft_version, ext: 'jar'
+     compile name: 'Eureka', version: config.eureka_version, ext: 'jar'
+     compile name: 'BuildcraftAdditions', version: config.bca_version, ext: 'jar'
 }
 
 minecraft {
+// in order to update forge, modify build.properties and ./gradlew cleanCache
     version = config.minecraft_version + "-" + config.forge_version
     runDir = "eclipse/assets"
 }
