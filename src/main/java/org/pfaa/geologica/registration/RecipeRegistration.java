@@ -183,6 +183,8 @@ public class RecipeRegistration {
 				registerGrindingRecipes((GeoBlock)block);
 			} else if (Ore.class.isAssignableFrom(geoBlock.getComposition())) {
 				registerOreCommunitionRecipes((GeoBlock)block);
+			} else if (Crude.class.isAssignableFrom(geoBlock.getComposition())) {
+				registerCrudeCommunitionRecipes((GeoBlock)block);
 			}
 		}
 	}
@@ -225,11 +227,26 @@ public class RecipeRegistration {
 
 	private static void registerGrindingRecipes(ItemStack input, GeoMaterial material) {
 		ItemStack primary = RecipeUtils.getPrimaryGrindingOutput(material.getComposition());
-		List<ChanceStack> secondaries = RecipeUtils.getSecondaryGrindingOutputs(material.getComposition());
-		if (secondaries.size() == 0) {
-			primary.stackSize = 2;
+		List<ChanceStack> secondaries = RecipeUtils.getSecondaryGrindingOutputs(material.getComposition(), false);
+		IndustrialMaterial host = material.getHost();
+		if (host instanceof GeoMaterial) {
+			List<ChanceStack> hostSecondaries = 
+					RecipeUtils.getSecondaryGrindingOutputs(((GeoMaterial)host).getComposition(), true);
+			for (ChanceStack hostSecondary : hostSecondaries) {
+				secondaries.add(hostSecondary.weightChance(0.2F));
+			}
 		}
 		registry.registerGrindingRecipe(input, primary, secondaries, material.getStrength());
+	}
+
+	private static void registerCrudeCommunitionRecipes(GeoBlock input) {
+		for(GeoMaterial material : input.getGeoMaterials()) {
+			ItemStack lump = GeologicaItems.CRUDE_LUMP.getItemStack(material, 2);
+			registry.registerCrushingRecipe(input.getItemStack(material), lump, input.getStrength());
+			ItemStack dust = GeologicaItems.CRUDE_DUST.getItemStack(material);
+			registry.registerGrindingRecipe(lump.copy().splitStack(1), dust, 
+					Collections.<ChanceStack> emptyList(), input.getStrength());
+		}
 	}
 
 	private static void registerSlabRecipe(CompositeBlock input, Block output) {
