@@ -21,7 +21,7 @@ public class ChemicaItems implements ItemCatalog {
 	
 	private static Predicate<Aggregate> StoneAndHardenedClay = new Predicate<Aggregate>() {
 		public boolean apply(Aggregate obj) {
-			return obj == Aggregates.STONE || obj == Aggregates.HARDENED_CLAY;
+			return obj == Aggregates.STONE || obj == Aggregates.HARDENED_CLAY || obj == Aggregates.OBSIDIAN;
 		}
 	};
 	private static Predicate<Aggregate> SandAndGravel = new Predicate<Aggregate>() {
