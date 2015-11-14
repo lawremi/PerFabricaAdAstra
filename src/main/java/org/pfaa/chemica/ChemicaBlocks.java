@@ -8,7 +8,7 @@ import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Element.Elements;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.core.catalog.BlockCatalog;
@@ -23,10 +23,10 @@ public class ChemicaBlocks implements BlockCatalog {
     
     public static final Block STEAM = IndustrialFluids.getBlock(Compounds.H2O, State.GAS, "steam");
     
-    public static final Block WEAK_METAL = new ConstructionMaterialBlock(Strength.WEAK, Elements.class);
-    public static final Block MEDIUM_METAL = new ConstructionMaterialBlock(Strength.MEDIUM, Elements.class);
-    public static final Block STRONG_METAL = new ConstructionMaterialBlock(Strength.STRONG, Elements.class);
-    public static final Block VERY_STRONG_METAL = new ConstructionMaterialBlock(Strength.VERY_STRONG, Elements.class);
+    public static final Block WEAK_METAL = new ConstructionMaterialBlock(Strength.WEAK, Element.class);
+    public static final Block MEDIUM_METAL = new ConstructionMaterialBlock(Strength.MEDIUM, Element.class);
+    public static final Block STRONG_METAL = new ConstructionMaterialBlock(Strength.STRONG, Element.class);
+    public static final Block VERY_STRONG_METAL = new ConstructionMaterialBlock(Strength.VERY_STRONG, Element.class);
     
     public static Block getBlock(Aggregate aggregate) {
 		if (aggregate == Aggregates.STONE) {

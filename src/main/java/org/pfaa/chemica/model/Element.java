@@ -10,32 +10,8 @@ import org.pfaa.chemica.model.Formula.PartFactory;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
 import org.pfaa.chemica.model.Vaporization.AntoineCoefficients;
 
-public interface Element extends Chemical, PartFactory, Metal {
-	public double getAtomicWeight();
-	public int getDefaultOxidationState();
-	public Formula.Part _(int quantity);
-	public Alloy alloy(Element solute, double weight);
-	public Category getCategory();
+public enum Element implements Chemical, PartFactory, Metal {
 	
-	public static enum Category {
-		ALKALI_METAL,
-		ALKALINE_EARTH_METAL,
-		LANTHANIDE,
-		ACTINIDE,
-		TRANSITION_METAL,
-		POST_TRANSITION_METAL,
-		METALLOID,
-		POLYATOMIC_NONMETAL,
-		DIATOMIC_NONMETAL,
-		NOBLE_GAS,
-		UNKNOWN;
-		
-		public boolean isMetal() {
-			return this.ordinal() < METALLOID.ordinal();
-		}
-	}
-	
-	public static enum Elements implements Element {
 		/*
 			H                                                  He 
 			Li Be                               B  C  N  O  F  Ne 
@@ -584,28 +560,49 @@ public interface Element extends Chemical, PartFactory, Metal {
 		  new Vaporization(4404),
 		  new Gas(new Thermo(200)))
 		   ;
+	
+	public static enum Category {
+		ALKALI_METAL,
+		ALKALINE_EARTH_METAL,
+		LANTHANIDE,
+		ACTINIDE,
+		TRANSITION_METAL,
+		POST_TRANSITION_METAL,
+		METALLOID,
+		POLYATOMIC_NONMETAL,
+		DIATOMIC_NONMETAL,
+		NOBLE_GAS,
+		UNKNOWN;
 		
+		public boolean isMetal() {
+			return this.ordinal() < METALLOID.ordinal();
+		}
+		
+		public boolean isMetallic() {
+			return this.ordinal() <= METALLOID.ordinal();
+		}
+	}
+	
 		private Chemical delegate;
 		private double atomicWeight;
 		private int defaultOxidationState;
 		private Category category;
 		private Strength strength;
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid, Fusion fusion, 
 						 Liquid liquid, Vaporization vaporization, 
 						 Gas gas)
 		{
-			Formula formula = new Formula(this._(1));
-			this.delegate = new SimpleChemical(formula, name, solid, fusion, liquid, 
-					                           vaporization, gas);
 			this.atomicWeight = atomicWeight;
 			this.defaultOxidationState = defaultOxidationState;
 			this.category = category;
 			this.strength = strength;
+			this.delegate = new SimpleChemical(new Formula(this._(1)), name, solid, fusion, liquid, 
+					                           vaporization, gas);
 		}
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid, Fusion fusion, 
 					     Liquid liquid, Vaporization vaporization) 
 		{
@@ -613,25 +610,25 @@ public interface Element extends Chemical, PartFactory, Metal {
 				 vaporization, null);
 		}
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
 				         Solid solid, Fusion fusion, 
 				         Liquid liquid) 
 		{
 			this(name, category, strength, atomicWeight, defaultOxidationState, solid, fusion, liquid, null);
 		}
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState,
 				         Solid solid, Fusion fusion) 
 		{
 			this(name, category, strength, atomicWeight, defaultOxidationState, solid, fusion, null);
 		}
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState, 
 				         Solid solid) {
 			this(name, category, strength, atomicWeight, defaultOxidationState, solid, null);
 		}
 	
-		private Elements(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState) {
+		private Element(String name, Category category, Strength strength, double atomicWeight, int defaultOxidationState) {
 			this(name, category, strength, atomicWeight, defaultOxidationState, null);
 		}
 		
@@ -674,22 +671,18 @@ public interface Element extends Chemical, PartFactory, Metal {
 			return this._(1);
 		}
 
-		@Override
 		public double getAtomicWeight() {
 			return this.atomicWeight;
 		}
 
-		@Override
 		public int getDefaultOxidationState() {
 			return this.defaultOxidationState;
 		}
 
-		@Override
 		public Alloy alloy(Element solute, double weight) {
 			return new SimpleAlloy(this, solute, weight);
 		}
 
-		@Override
 		public Category getCategory() {
 			return this.category;
 		}
