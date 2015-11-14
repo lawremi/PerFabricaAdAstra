@@ -96,4 +96,9 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
 		return true;
 	}
+
+	@Override
+	public int colorMultiplier(int meta) {
+		return modelBlock.colorMultiplier(meta);
+	}
 }

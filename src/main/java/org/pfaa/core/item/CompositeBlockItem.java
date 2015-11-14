@@ -2,6 +2,8 @@ package org.pfaa.core.item;
 
 import org.pfaa.core.block.CompositeBlockAccessors;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -20,7 +22,6 @@ public class CompositeBlockItem extends ItemBlock {
 		return this.field_150939_a.getIcon(0, getMetadata(damage));
 	}
 
-	// FIXME: turns out meta and damage need to be the same (see RenderBlocks.renderBlockAsItem)
 	@Override
 	public int getMetadata(int damage) {
 		return damage;
@@ -31,5 +32,12 @@ public class CompositeBlockItem extends ItemBlock {
 		CompositeBlockAccessors block = (CompositeBlockAccessors)this.field_150939_a;
 		String suffix = itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? "*" : block.getBlockNameSuffix(itemStack.getItemDamage());
 		return super.getUnlocalizedName() + "." + suffix;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack itemStack, int par2) {
+		CompositeBlockAccessors block = (CompositeBlockAccessors)this.field_150939_a;
+		return block.colorMultiplier(itemStack.getItemDamage());
 	}
 }

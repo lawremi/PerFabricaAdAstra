@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.pfaa.chemica.ChemicaBlocks;
+import org.pfaa.core.block.CompositeBlockAccessors;
 import org.pfaa.geologica.GeologicaBlocks;
+
+import com.google.common.base.CaseFormat;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,12 +29,13 @@ import net.minecraft.world.World;
  * https://github.com/jakimfett/MMPLv2/blob/master/LICENSE.md
  */
 
-public class SpringBlock extends Block {
+public class SpringBlock extends Block implements CompositeBlockAccessors {
 
 	public interface Spring {
 		public int getTickRate();
 		public int getChance();
 		public Block getFluidBlock();
+		public String getName();
 	}
 	
 	public enum Springs implements Spring {
@@ -68,6 +72,11 @@ public class SpringBlock extends Block {
 		@Override
 		public Block getFluidBlock() {
 			return this.fluidBlock;
+		}
+
+		@Override
+		public String getName() {
+			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 	}
 
@@ -159,5 +168,29 @@ public class SpringBlock extends Block {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		blockIcon = par1IconRegister.registerIcon("bedrock");
+	}
+
+	@Override
+	public String getBlockNameSuffix(int meta) {
+		return this.springs[meta].getName();
+	}
+
+	@Override
+	public int getMetaCount() {
+		return this.springs.length; 
+	}
+
+	@Override
+	public boolean enableOverlay() {
+		return false;
+	}
+
+	@Override
+	public void disableOverlay() {
+	}
+
+	@Override
+	public int colorMultiplier(int meta) {
+		return this.springs[meta].getFluidBlock().getBlockColor();
 	}
 }

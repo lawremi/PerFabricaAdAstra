@@ -37,6 +37,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
+// FIXME: need a fluid-specific MapColor... how to pick?
 public class IndustrialFluidBlock extends BlockFluidClassic {
 
 	private ConditionProperties properties;
@@ -81,6 +82,11 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
+		return this.getBlockColor();
+	}
+
+	@Override
+	public int getBlockColor() {
 		return this.properties.color.getRGB();
 	}
 

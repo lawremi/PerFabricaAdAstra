@@ -67,4 +67,9 @@ public class StairsBlock extends BlockStairs implements ProxyBlock, CompositeBlo
 		return modelBlock.getRenderBlockPass();
 	}
 
+	@Override
+	public int colorMultiplier(int meta) {
+		return modelBlock.colorMultiplier(meta);
+	}
+
 }

@@ -9,4 +9,6 @@ public interface CompositeBlockAccessors {
 	
 	public abstract boolean enableOverlay();
 	public abstract void disableOverlay();
+	
+	public abstract int colorMultiplier(int meta);
 }

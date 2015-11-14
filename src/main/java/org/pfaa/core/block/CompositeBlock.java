@@ -45,6 +45,9 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 	
 	@SideOnly(Side.CLIENT)
 	protected IIcon getUnderlayIcon(int side, int meta) {
+		if (this.underlayIcons.length == 0) {
+			Geologica.log.info("empty block: " + this.getUnlocalizedName());
+		}
 		return this.underlayIcons[damageDropped(meta)];
 	}
 	
@@ -173,4 +176,9 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
 		return false;
 	}
 
+	@Override
+	public int colorMultiplier(int meta) {
+		return this.getBlockColor();
+	}
+	
 }

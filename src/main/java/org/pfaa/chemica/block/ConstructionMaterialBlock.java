@@ -8,6 +8,9 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.core.block.CompositeBlockAccessors;
+
+import com.google.common.base.CaseFormat;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,7 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 
-public class ConstructionMaterialBlock extends Block {
+public class ConstructionMaterialBlock extends Block implements CompositeBlockAccessors {
 
 	private List<ConstructionMaterial> materials;
 	
@@ -75,6 +78,11 @@ public class ConstructionMaterialBlock extends Block {
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x, y, z);
+		return this.colorMultiplier(meta);
+	}
+	
+	@Override
+	public int colorMultiplier(int meta) {
 		return this.materials.get(meta).getProperties(Condition.STP).color.getRGB();
 	}
 	
@@ -110,6 +118,30 @@ public class ConstructionMaterialBlock extends Block {
 
 	private int getMeta(ConstructionMaterial material) {
 		return this.materials.indexOf(material);
+	}
+
+	@Override
+	public String getBlockNameSuffix(int meta) {
+		String name = this.getConstructionMaterial(meta).name();
+		return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name);
+	}
+
+	private ConstructionMaterial getConstructionMaterial(int meta) {
+		return this.materials.get(meta);
+	}
+
+	@Override
+	public int getMetaCount() {
+		return this.materials.size();
+	}
+
+	@Override
+	public boolean enableOverlay() {
+		return false;
+	}
+
+	@Override
+	public void disableOverlay() {
 	}
 	
 }

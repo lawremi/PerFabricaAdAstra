@@ -137,4 +137,9 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 		return modelBlock.getRenderBlockPass();
 	}
 
+	@Override
+	public int colorMultiplier(int meta) {
+		return modelBlock.colorMultiplier(meta);
+	}
+
 }
