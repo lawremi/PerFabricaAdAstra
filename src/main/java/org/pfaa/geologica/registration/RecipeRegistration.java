@@ -165,6 +165,9 @@ public class RecipeRegistration {
 	}
 	
 	private static void registerCommunitionRecipes(Block block) {
+		if (block.getMaterial() != Material.rock) {
+			return;
+		}
 		if (block instanceof StairsBlock) {
 			registerCrushingRecipes((StairsBlock)block);
 			return;
