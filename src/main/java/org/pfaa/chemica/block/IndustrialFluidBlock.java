@@ -73,7 +73,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	private static Material getBlockMaterial(Fluid fluid) {
 		ConditionProperties props = IndustrialFluids.getProperties(fluid);
 		boolean flammable = props.hazard.flammability > 0;
-		return fluid.isGaseous() ? new FluidMaterial(MapColor.airColor, flammable, false) :
+		return fluid.isGaseous() ? new FluidMaterial(MapColor.silverColor, flammable, false) :
 			fluid.getTemperature() > Constants.FLESH_IGNITION_TEMPERATURE ? Material.lava :
 				Material.water;
 	}
