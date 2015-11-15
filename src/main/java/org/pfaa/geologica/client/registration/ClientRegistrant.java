@@ -1,8 +1,8 @@
 package org.pfaa.geologica.client.registration;
 
 import org.pfaa.core.block.CompositeBlockAccessors;
+import org.pfaa.core.client.render.CompositeBlockItemRenderer;
 import org.pfaa.geologica.GeologicaBlocks;
-import org.pfaa.geologica.client.render.CompositeBlockItemRenderer;
 import org.pfaa.geologica.client.render.CompositeBlockRenderer;
 import org.pfaa.geologica.client.render.FallingCompositeBlockRenderer;
 import org.pfaa.geologica.registration.CommonRegistrant;

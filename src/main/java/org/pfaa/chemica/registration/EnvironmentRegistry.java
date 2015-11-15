@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Element.Elements;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.SimpleMixture;
 
@@ -16,9 +16,9 @@ public abstract class EnvironmentRegistry {
 	
 	public static Mixture OVERWORLD_ATMOSPHERE = 
 			new SimpleMixture(Compounds.N2, 0.78).mix(Compounds.O2,	0.21)
-				.mix(Elements.Ar, 0.01).mix(Elements.Ne, 0.00182)
-				.mix(Elements.He, 0.000524).mix(Compounds.METHANE, 0.00018)
-				.mix(Elements.Kr, 0.000114);
+				.mix(Element.Ar, 0.01).mix(Element.Ne, 0.00182)
+				.mix(Element.He, 0.000524).mix(Compounds.METHANE, 0.00018)
+				.mix(Element.Kr, 0.000114);
 	
 	public static Mixture OVERWORLD_OCEAN = 
 			new SimpleMixture(Compounds.H2O).mix(Compounds.NaCl, 0.03)

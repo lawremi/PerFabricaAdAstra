@@ -1,16 +1,16 @@
 package org.pfaa.chemica.model;
 
-import static org.pfaa.chemica.model.Element.Elements.H;
-import static org.pfaa.chemica.model.Element.Elements.Br;
-import static org.pfaa.chemica.model.Element.Elements.C;
-import static org.pfaa.chemica.model.Element.Elements.Cl;
-import static org.pfaa.chemica.model.Element.Elements.F;
-import static org.pfaa.chemica.model.Element.Elements.I;
-import static org.pfaa.chemica.model.Element.Elements.N;
-import static org.pfaa.chemica.model.Element.Elements.O;
-import static org.pfaa.chemica.model.Element.Elements.P;
-import static org.pfaa.chemica.model.Element.Elements.S;
-import static org.pfaa.chemica.model.Element.Elements.W;
+import static org.pfaa.chemica.model.Element.H;
+import static org.pfaa.chemica.model.Element.Br;
+import static org.pfaa.chemica.model.Element.C;
+import static org.pfaa.chemica.model.Element.Cl;
+import static org.pfaa.chemica.model.Element.F;
+import static org.pfaa.chemica.model.Element.I;
+import static org.pfaa.chemica.model.Element.N;
+import static org.pfaa.chemica.model.Element.O;
+import static org.pfaa.chemica.model.Element.P;
+import static org.pfaa.chemica.model.Element.S;
+import static org.pfaa.chemica.model.Element.W;
 
 import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.Formula.PartFactory;
