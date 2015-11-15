@@ -2,7 +2,6 @@ package org.pfaa.chemica.registration;
 
 import java.util.List;
 
-import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.ConstructionMaterial;
@@ -18,7 +17,11 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public abstract class OreDictUtils {
 	public static ItemStack lookupBest(Form form, IndustrialMaterial material) {
-		List<ItemStack> hits = lookup(form, material);
+		return lookupBest(makeKey(form, material));
+	}
+	
+	public static ItemStack lookupBest(String key) {
+		List<ItemStack> hits = OreDictionary.getOres(key);
 		for (ItemStack hit : hits) {
 			if (hit.getItem() instanceof IndustrialMaterialItem || (hit.getItem() instanceof CompositeBlockItem)) {
 				return hit;
