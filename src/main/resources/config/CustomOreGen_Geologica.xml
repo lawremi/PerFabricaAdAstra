@@ -2969,10 +2969,11 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.015'/>
-          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.93'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.91'/>
           <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/>
-          <OreBlock block='PFAAGeologica:verystrongStone:4' weight='0.02'/>
-        </VeinsPreset>
+          <OreBlock block='PFAAGeologica:veryStrongStone:4' weight='0.02'/>
+	  <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.02'/>
+	</VeinsPreset>
         
         <VeinsPreset name='PresetGraniteVeinsVolcanic'
                      inherits='PresetLayeredVeinsVolcanic'>
@@ -3023,10 +3024,11 @@
                      drawWireframe='false'
                      wireframeColor='0xFFFF0055'>
           <Setting name='DistributionFrequency' avg='0.02'/>
-          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.93'/>
+          <OreBlock block='PFAAGeologica:strongOreRock:1' weight='0.91'/>
           <OreBlock block='PFAAGeologica:strongOreRock:12' weight='0.05'/>
           <OreBlock block='PFAAGeologica:verystrongStone:4' weight='0.02'/>
-        </VeinsPreset>
+	  <OreBlock block='PFAAGeologica:strongOreRock:15' weight='0.02'/>
+	</VeinsPreset>
         <VeinsPreset name='PresetGraniteFluoriteVolcanic'
                      inherits='PresetGraniteVeinsVolcanic'
                      drawWireframe='false'
