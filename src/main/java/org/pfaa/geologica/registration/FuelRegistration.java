@@ -32,7 +32,7 @@ public class FuelRegistration {
 				return 1600;
 			case ANTHRACITE:
 				return 2400;
-			case COAL_COKE:
+			case COKE:
 				return 3200;
 			default:
 				return 0;
