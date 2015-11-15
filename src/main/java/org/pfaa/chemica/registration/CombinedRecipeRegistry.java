@@ -33,9 +33,16 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, ItemStack output, TemperatureLevel temp) {
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
 		for (RecipeRegistry registry : registries) {
-			registry.registerSmeltingRecipe(input, output, temp);
+			registry.registerSmeltingRecipe(input, output, flux, temp);
+		}
+	}
+
+	@Override
+	public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {
+		for (RecipeRegistry registry : registries) {
+			registry.registerCastingRecipe(input, output, temp);
 		}
 	}
 
