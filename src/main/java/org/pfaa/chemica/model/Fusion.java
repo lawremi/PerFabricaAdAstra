@@ -1,13 +1,13 @@
 package org.pfaa.chemica.model;
 
 public class Fusion {
-	private double temperature;
+	private int temperature;
 	
-	public Fusion(double temperature) {
+	public Fusion(int temperature) {
 		this.temperature = temperature;
 	}
 
-	public double getTemperature() {
+	public int getTemperature() {
 		return temperature;
 	}
 }
