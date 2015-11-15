@@ -218,7 +218,7 @@ public class RecipeRegistration {
 			ItemStack crushed = GeologicaItems.ORE_CRUSHED.getItemStack(material, 2);
 			registry.registerCrushingRecipe(input.getItemStack(material),
 					crushed, input.getStrength());
-			registerGrindingRecipes(crushed.splitStack(1), material);
+			registerGrindingRecipes(crushed.copy().splitStack(1), material);
 		}
 	}
 
