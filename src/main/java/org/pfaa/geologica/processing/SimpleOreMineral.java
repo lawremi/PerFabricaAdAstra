@@ -39,23 +39,13 @@ public class SimpleOreMineral extends SimpleMineral implements OreMineral {
 	}
 	
 	@Override
-	public String name() {
-		return getOreDictKey() + "Ore";
-	}
-
-	@Override
-	public String getOreDictKey() {
-		return getConcentrate().getOreDictKey();
-	}
-
-	@Override
 	public Chemical getConcentrate() {
 		return (Chemical)this.getComponents().get(0).material;
 	}
 
 	private static List<MixtureComponent> substitute(Chemical concentrate, Substitution[] substitutions) {
 		List<MixtureComponent> components = new ArrayList<MixtureComponent>();
-		components.add(new MixtureComponent(concentrate, 1.0));
+		components.add(new MixtureComponent(concentrate, 1.0F));
 		for (Substitution substitution : substitutions) {
 			Formula formula = concentrate.getFormula().substituteFirstPart(substitution.getMaterial());
 			Chemical compound = CompoundDictionary.lookup(formula);

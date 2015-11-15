@@ -39,6 +39,9 @@ import java.util.List;
 import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
+
+import com.google.common.base.CaseFormat;
+
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
@@ -159,7 +162,7 @@ public interface OreMineral extends Mineral {
 		}
 		
 		public String getOreDictKey() {
-			return delegate.getOreDictKey();
+			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 
 		@Override

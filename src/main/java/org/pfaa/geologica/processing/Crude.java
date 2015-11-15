@@ -72,7 +72,7 @@ public interface Crude extends Mixture, Vaporizable {
 		@Override
 		public String getOreDictKey() {
 			return delegate.getOreDictKey() == null ? 
-					CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, this.name()) : 
+					CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name()) : 
 					delegate.getOreDictKey();
 		}
 
