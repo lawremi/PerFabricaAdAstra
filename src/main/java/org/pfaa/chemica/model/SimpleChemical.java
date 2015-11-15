@@ -52,9 +52,9 @@ public class SimpleChemical implements Chemical {
 	}
 
 	private State getStateForCondition(Condition condition) {
-		if (this.vaporization != null && condition.temperature > this.vaporization.getTemperature(condition.pressure)) {
+		if (this.vaporization != null && condition.temperature >= this.vaporization.getTemperature(condition.pressure)) {
 			return State.GAS;
-		} else if (this.fusion != null && condition.temperature > this.fusion.getTemperature()) {
+		} else if (this.fusion != null && condition.temperature >= this.fusion.getTemperature()) {
 			return State.LIQUID;
 		} else {
 			return State.SOLID;
