@@ -153,4 +153,8 @@ public class SimpleMixture implements Mixture {
 		components.add(new MixtureComponent(material, weight));
 		return new SimpleMixture(components);
 	}
+	
+	public String toString() {
+		return this.name();
+	}
 }
