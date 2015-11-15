@@ -69,7 +69,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 				   new Vaporization(4200),
 				   new Gas(new Thermo(20.7, 0.226, -0.112, 0.0169, 0.00871, 554, 178))),
 		C("carbon", Category.POLYATOMIC_NONMETAL, Strength.WEAK /* graphite */, 12.0, +4, 
-		  new Solid(Color.black, 2.27, 
+		  new Solid(new Color(38, 33, 33), 2.27, 
 				    new Thermo(0, 6.0, 9.25).addSegment(300, 10.7), 
 				    new Hazard(0, 1, 0)), 
 		  null,
@@ -206,7 +206,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Vaporization(2334),
 		   new Gas(new Thermo(188, -97.8, 20.2, -1.27, -177, 1.55, 220))),
 		Fe("iron", Category.TRANSITION_METAL, Strength.STRONG, 55.8, +3, 
-		   new Solid(Color.gray, 7.87, 
+		   new Solid(Color.lightGray, 7.87, 
 				     new Thermo(24.0, 8.37, 0.000277, -8.60E-5, -5.00E-6, 0.268, 62.1), 
 				     new Hazard(1, 1, 0)), 
 		   new Fusion(1811), 
@@ -214,7 +214,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Vaporization(3134),
 		   new Gas(new Thermo(11.3, 6.99, -1.11, 0.122, 5.69, 424, 206))),
 		Co("cobalt", Category.TRANSITION_METAL, Strength.STRONG, 58.9, +2,
-		   new Solid(Color.gray, 8.90, 
+		   new Solid(Color.lightGray, 8.90, 
 				     new Thermo(11.0, 54.4, -55.5, 25.8, 0.165, -4.70, 30.3)
 		             .addSegment(700, -205, 516, -422, 130, 18.0, 94.6, -273)
 		             .addSegment(1394, -12418, 15326, -7087, 1167, 3320, 10139, -10473)), 
