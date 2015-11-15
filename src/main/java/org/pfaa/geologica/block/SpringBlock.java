@@ -135,9 +135,6 @@ public class SpringBlock extends Block implements CompositeBlockAccessors {
 		int meta = world.getBlockMetadata(x, y, z);
 		Spring spring = this.getSpring(meta);
 		world.scheduleBlockUpdate(x, y, z, this, spring.getTickRate());
-		if (!world.isAirBlock(x, y + 1, z)) {
-			return;
-		}
 		if (spring.getChance() != -1 && random.nextInt(spring.getChance()) != 0) {
 			return;
 		}
@@ -145,8 +142,9 @@ public class SpringBlock extends Block implements CompositeBlockAccessors {
 		int nextY;
 		for (nextY = y + 1; nextY < world.getActualHeight() && world.getBlock(x, nextY, z) == fluid; nextY++) { }
 		int curY = nextY - 1;
-		boolean seepable = nextY < world.getActualHeight() && world.getBlock(x, nextY, z) == Blocks.air ||
-				world.getBlock(x, nextY, z) instanceof BlockFalling;
+		Block block = world.getBlock(x, nextY, z);
+		boolean seepable = nextY < world.getActualHeight() && 
+				(block.getMaterial() == Material.air || block instanceof BlockFalling);
 		boolean canSpring = seepable && 
 								(y == curY || 
 									(world.getBlock(x+1, curY, z).getMaterial().isSolid() &&
