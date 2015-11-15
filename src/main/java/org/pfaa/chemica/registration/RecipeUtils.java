@@ -231,4 +231,12 @@ public class RecipeUtils {
 			}
 		}
 	}
+
+	public static ItemStack getSmeltingOutput(MaterialStack<Compounds> input) {
+		Element metal = input.getMaterial().getFormula().getFirstPart().element;
+		if (metal.getProperties(Condition.STP).state == State.SOLID) {
+			return OreDictUtils.lookupBest(input.getForm() == Forms.TINY_DUST ? Forms.NUGGET : Forms.INGOT, metal);
+		}
+		return null;
+	}
 }
