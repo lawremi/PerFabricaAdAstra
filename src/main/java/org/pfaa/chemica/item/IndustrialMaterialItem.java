@@ -3,16 +3,14 @@ package org.pfaa.chemica.item;
 import java.util.Arrays;
 import java.util.List;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
+import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 
 import com.google.common.base.CaseFormat;
@@ -22,6 +20,9 @@ import com.google.common.collect.Lists;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> extends Item {
 	
@@ -122,5 +123,21 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	@SideOnly(Side.CLIENT)
 	protected String getIconString() {
 		return "chemica:" + form.toString().toLowerCase();
+	}
+
+	@Override
+	public float getSmeltingExperience(ItemStack item) {
+		T material = this.getIndustrialMaterial(item);
+		float exp = 0;
+		if (material instanceof ConstructionMaterial) {
+			Strength strength = ((ConstructionMaterial)material).getStrength();
+			switch(strength) {
+				case WEAK: exp = 0.25F;
+				case MEDIUM: exp = 0.50F;
+				case STRONG: exp = 0.75F;
+				case VERY_STRONG: exp = 1.0F;
+			}
+		}
+		return exp;
 	}
 }
