@@ -21,7 +21,6 @@ import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.Ore;
-import org.pfaa.geologica.processing.OreMineral;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
 import net.minecraft.block.Block;
@@ -33,45 +32,31 @@ import net.minecraftforge.oredict.OreDictionary;
 public class OreRegistration {
 	
 	public static void init() {
-		oreDictifyGeoBlocks();
+		oreDictifyBlocks();
 		oreDictifyMaterialItems();
 		oreDictifyStoneBrick();
 		registerDyes();
+		oreDictifyFuels();
 	}
 
 	private static void registerDyes() {
-		registerDyes(Ores.values());
-		registerDyes(GeoMaterial.values());
+		for (Ores material : GeologicaItems.ORE_MINERAL_DUST.getIndustrialMaterials()) {
+			registerDye(GeologicaItems.ORE_MINERAL_DUST.getItemStack(material), material.getConcentrate());
+		}
+		for (GeoMaterial material : GeologicaItems.ORE_CRUSHED.getIndustrialMaterials()) {
+			registerDye(GeologicaItems.ORE_CRUSHED.getItemStack(material), material.getOreConcentrate());
+		}
 		OreDictUtils.registerDye("blue", IndustrialMinerals.AZURITE);
 		OreDictUtils.registerDye("blue", IndustrialMinerals.LAZURITE);
 		OreDictUtils.registerDye("gray", IndustrialMinerals.GRAPHITE);
 	}
 
-	private static void registerDyes(Ores[] ores) {
-		for (OreMineral ore : ores) {
-			registerDye(ore.getConcentrate(), ore);
-		}
-	}
-
-	private static void registerDyes(GeoMaterial[] materials) {
-		for (GeoMaterial material : materials) {
-			IndustrialMaterial composition = material.getComposition();
-			if (composition instanceof Ore) {
-				registerDye(((Ore)composition).getConcentrate(), material);
-			}
-		}
-	}
-	
-	private static void registerDye(IndustrialMaterial concentrate, IndustrialMaterial material) {
+	private static void registerDye(ItemStack dye, IndustrialMaterial concentrate) {
 		ItemStack itemStack = OreDictUtils.lookupBest(Forms.DUST, concentrate);
 		for (int id : OreDictionary.getOreIDs(itemStack)) {
 			String name = OreDictionary.getOreName(id);
 			if (name.startsWith("dye")) {
-				ItemStack materialStack = OreDictUtils.lookupBest(Forms.DUST, material);
-				if (materialStack == null) {
-					materialStack = OreDictUtils.lookupBest(Forms.CLUMP, material);
-				}
-				OreDictionary.registerOre(name, materialStack);
+				OreDictionary.registerOre(name, dye);
 			}
 		}
 	}
@@ -87,7 +72,7 @@ public class OreRegistration {
 		OreDictionary.registerOre("stoneBricks", Blocks.stonebrick);
 	}
 
-	private static void oreDictifyGeoBlocks() {
+	private static void oreDictifyBlocks() {
 		for (Block block : GeologicaBlocks.getBlocks()) {
 			oreDictify(block);
 		}
