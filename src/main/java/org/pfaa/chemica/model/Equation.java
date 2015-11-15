@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Arrays;
 
 public class Equation {
-	private List<Formula> reactants;
-	private List<Formula> products;
+	private List<Term> reactants;
+	private List<Term> products;
 	private Formula catalyst;
 
-	public Equation(List<Formula> reactants, List<Formula> products,
+	public Equation(List<Term> reactants, List<Term> products,
 			Formula catalyst) {
 		super();
 		this.setReactants(reactants);
@@ -19,23 +19,23 @@ public class Equation {
 		this.setCatalyst(catalyst);
 	}
 
-	public List<Formula> getReactants() {
+	public List<Term> getReactants() {
 		return Collections.unmodifiableList(reactants);
 	}
 
-	public void setReactants(List<Formula> reactants) {
-		this.reactants = new ArrayList<Formula>(reactants);
+	public void setReactants(List<Term> reactants) {
+		this.reactants = new ArrayList<Term>(reactants);
 	}
 
-	public List<Formula> getProducts() {
+	public List<Term> getProducts() {
 		return Collections.unmodifiableList(products);
 	}
 
-	public void setProducts(List<Formula> products) {
-		this.products = new ArrayList<Formula>(products);
+	public void setProducts(List<Term> products) {
+		this.products = new ArrayList<Term>(products);
 	}
 
-	public Equation yields(Formula... products) {
+	public Equation yields(Term... products) {
 		this.setProducts(Arrays.asList(products));
 		return this;
 	}
@@ -57,6 +57,10 @@ public class Equation {
 		public final Formula formula;
 		public final int stoichiometry;
 		public final State state;
+		
+		public Term(Formula formula) {
+			this(formula, 1, State.SOLID); // FIXME: should be the standard state
+		}
 		
 		public Term(Formula formula, int stoichiometry, State state) {
 			this.formula = formula;

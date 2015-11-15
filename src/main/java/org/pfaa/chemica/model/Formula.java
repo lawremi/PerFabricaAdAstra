@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.Equation.Term;
+
 public final class Formula {
 	private List<Part> parts;
 	private int hydration;
@@ -92,7 +94,11 @@ public final class Formula {
 	}
 	
 	public Equation plus(Formula... reactants) {
-		return new Equation(Arrays.asList(reactants), Collections.<Formula>emptyList(), null);
+		List<Term> terms = new ArrayList<Term>(reactants.length);
+		for (Formula reactant : reactants) {
+			terms.add(new Term(reactant));
+		}
+		return new Equation(terms, Collections.<Term>emptyList(), null);
 	}
 	
 	public static final class Part implements PartFactory {

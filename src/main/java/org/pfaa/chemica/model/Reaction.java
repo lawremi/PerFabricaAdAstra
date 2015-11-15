@@ -1,11 +1,10 @@
 package org.pfaa.chemica.model;
 
+import java.util.List;
 
 public class Reaction {
-	private Equation equation;
 
-	public Reaction(Equation equation) {
-		this.equation = equation;
+	public Reaction() {
 	}
 	
 	public double getEnthalpy() {
@@ -16,7 +15,23 @@ public class Reaction {
 		return 0; // TODO
 	}
 	
-	public Equation getEquation() {
-		return equation;
+	public List<Chemical> getProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<Chemical> getReactants() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public double getEquilibriumTemperature() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public static Reaction reduce(Chemical chemical) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
