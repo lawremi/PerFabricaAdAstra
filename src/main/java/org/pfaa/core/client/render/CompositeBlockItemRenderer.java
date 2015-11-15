@@ -1,7 +1,8 @@
-package org.pfaa.geologica.client.render;
+package org.pfaa.core.client.render;
 
 import org.lwjgl.opengl.GL11;
 import org.pfaa.core.block.CompositeBlockAccessors;
+import org.pfaa.geologica.client.render.CompositeBlockRenderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -28,6 +29,8 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 		renderer.useInventoryTint = false;
 		if (type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON) {
 			this.translateToHand();
+		} else if (type == ItemRenderType.ENTITY) {
+			this.useColorMultiplier(item);
 		}
 		CompositeBlockAccessors compositeBlock = (CompositeBlockAccessors)block;
 		compositeBlock.disableOverlay();
@@ -39,6 +42,14 @@ public class CompositeBlockItemRenderer implements IItemRenderer {
 			compositeBlock.disableOverlay();
 		}
 		renderer.useInventoryTint = true;
+	}
+
+	private void useColorMultiplier(ItemStack item) {
+		int c = item.getItem().getColorFromItemStack(item, 0);
+		float r = (float)(c >> 16 & 255) / 255.0F;
+		float g = (float)(c >> 8 & 255) / 255.0F;
+		float b = (float)(c & 255) / 255.0F;
+		GL11.glColor4f(r, g, b, 1.0F);
 	}
 
 	private void translateToHand() {
