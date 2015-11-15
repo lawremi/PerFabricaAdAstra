@@ -118,7 +118,7 @@ public interface Compound extends Chemical {
 			  new Solid(4.5, new Thermo(-1465, 132, 141, 0.595, 0, 3.49), new Hazard(0, 0, 0)),
 			  new Fusion(1618), 
 			  new Liquid(new Thermo(157))),
-	    Be3Al2SiO36(new Formula(Be._(3), Al._(2), new Part(Si, O._(3))._(6)), "beryl", 
+	    Be3Al2SiO36(new Formula(Be._(3), Al._(2), new Part(Si, O._(3))._(6)), null, 
 				    new Solid(new Color(190, 255, 200), 2.7, new Thermo(-9000, 347, 593, 132, 17.1, -20.5)),
 				    new Fusion(1700),
 				    new Liquid(new Thermo(495))), // just made up the liquid entropy 
