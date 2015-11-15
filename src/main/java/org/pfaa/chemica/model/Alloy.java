@@ -83,6 +83,7 @@ public interface Alloy extends Mixture, Metal {
 		NICHROME(Ni.alloy(Cr, 0.3)),
 		NICKEL_SILVER(Cu.alloy(Zn, 0.25).alloy(Ni, 0.25)),
 		NICKEL_STELLITE(Co.alloy(Cr, 0.3).alloy(Ni, 0.2).alloy(W, 0.05).alloy(C, 0.02)),
+		PEWTER(Sn.alloy(Sb, 0.05).alloy(Cu, 0.01)),
 		PLATINUM_IRIDIUM(Pt.alloy(Ir, 0.1)),
 		IRIDOSMINE(Ir.alloy(Os, 1.0)),
 		SILICON_GERMANIUM(Si.alloy(Ge, 1.0)),
