@@ -9,28 +9,27 @@ import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
+import blusunrize.immersiveengineering.api.crafting.BlastFurnaceRecipe;
+import blusunrize.immersiveengineering.api.crafting.CrusherRecipe;
 import cpw.mods.fml.common.Loader;
-import mods.railcraft.api.crafting.IRockCrusherRecipe;
-import mods.railcraft.api.crafting.RailcraftCraftingManager;
 import net.minecraft.item.ItemStack;
 
-public class RailcraftIntegration {
-	
+public class ImmersiveEngineeringIntegration {
 	public static void init() {
-		if (Loader.isModLoaded(ModIds.RAILCRAFT)) {
-			RecipeRegistration.getTarget().addRegistry(new RailcraftRecipeRegistry());
+		if (Loader.isModLoaded(ModIds.IMMERSIVE_ENGINEERING)) {
+			RecipeRegistration.getTarget().addRegistry(new ImmersiveEngineeringRecipeRegistry());
 		}
 	}
 	
-	public static class RailcraftRecipeRegistry implements RecipeRegistry {
+	public static class ImmersiveEngineeringRecipeRegistry implements RecipeRegistry {
 
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
 				Strength strength) {
-			IRockCrusherRecipe recipe = RailcraftCraftingManager.rockCrusher.createNewRecipe(input, true, false);
-			recipe.addOutput(output, 1.0F);
+			int energy = RecipeCostUtils.grindingEnergyForStrength(strength);
+			CrusherRecipe recipe = CrusherRecipe.addRecipe(output, input, energy);
 			for (ChanceStack secondary : secondaries) {
-				recipe.addOutput(secondary.itemStack, secondary.chance);
+				recipe.addToSecondaryOutput(secondary.itemStack, secondary.chance);	
 			}
 		}
 
@@ -41,14 +40,13 @@ public class RailcraftIntegration {
 
 		@Override
 		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			int ticks = RecipeCostUtils.blastTicksForTemperatureLevel(temp);
-			RailcraftCraftingManager.blastFurnace.addRecipe(input, true, false, ticks, output);
+			BlastFurnaceRecipe.addRecipe(output, input, RecipeCostUtils.blastTicksForTemperatureLevel(temp));
 		}
 
 		@Override
 		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {}
 
-		// Other machines: coke oven
+		// Other machines: coke oven, arc furnace (alloying)
 	}
 
 }

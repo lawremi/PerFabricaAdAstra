@@ -9,29 +9,22 @@ import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
+import buildcraftAdditions.api.recipe.BCARecipeManager;
 import cpw.mods.fml.common.Loader;
-import mods.railcraft.api.crafting.IRockCrusherRecipe;
-import mods.railcraft.api.crafting.RailcraftCraftingManager;
 import net.minecraft.item.ItemStack;
 
-public class RailcraftIntegration {
-	
+public class BuildcraftAdditionsIntegration {
 	public static void init() {
-		if (Loader.isModLoaded(ModIds.RAILCRAFT)) {
-			RecipeRegistration.getTarget().addRegistry(new RailcraftRecipeRegistry());
+		if (Loader.isModLoaded(ModIds.BUILDCRAFT_ADDITIONS)) {
+			RecipeRegistration.getTarget().addRegistry(new BuildcraftAdditionsRecipeRegistry());
 		}
 	}
 	
-	public static class RailcraftRecipeRegistry implements RecipeRegistry {
-
+	public static class BuildcraftAdditionsRecipeRegistry implements RecipeRegistry {
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
 				Strength strength) {
-			IRockCrusherRecipe recipe = RailcraftCraftingManager.rockCrusher.createNewRecipe(input, true, false);
-			recipe.addOutput(output, 1.0F);
-			for (ChanceStack secondary : secondaries) {
-				recipe.addOutput(secondary.itemStack, secondary.chance);
-			}
+			BCARecipeManager.duster.addRecipe(input, output);
 		}
 
 		@Override
@@ -40,15 +33,11 @@ public class RailcraftIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			int ticks = RecipeCostUtils.blastTicksForTemperatureLevel(temp);
-			RailcraftCraftingManager.blastFurnace.addRecipe(input, true, false, ticks, output);
-		}
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {}
 
 		@Override
 		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {}
 
-		// Other machines: coke oven
+		// Other machines: cooling tower (condenser), refinery (simple one output)
 	}
-
 }
