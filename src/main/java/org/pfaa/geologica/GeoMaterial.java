@@ -327,7 +327,15 @@ public enum GeoMaterial implements Mixture {
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return composition.mix(material, weight);
 	}
-        
+	
+	public Mineral getOreConcentrate() {
+		Mixture composition = this.getComposition();
+		if (composition instanceof Ore) {
+			return ((Ore)composition).getConcentrate();
+		}
+		return null;
+	}
+    
 	private static Material blockMaterialFromHost(IndustrialMaterial host)
     {
         Material material = Material.rock;

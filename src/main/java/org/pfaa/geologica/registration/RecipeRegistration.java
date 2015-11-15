@@ -1,8 +1,10 @@
 package org.pfaa.geologica.registration;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistry;
@@ -14,16 +16,19 @@ import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.GeoBlock;
+import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.ProxyBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
+import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,9 +43,9 @@ public class RecipeRegistration {
 	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getTarget();
 	
 	public static void init() {
-		registerSmeltingRecipes();
-		registerCraftingRecipes();
+		registerRockCastingRecipes();
 		registerCommunitionRecipes();
+		registerCraftingRecipes();
 		registerStoneToolRecipes();
 		registerCompatibilityRecipes();
 	}
@@ -60,13 +65,6 @@ public class RecipeRegistration {
 			TCIntegration.addStoneMaterials(); // TODO: implement this
 	}
 
-	// TODO (chemica): add metal tool recipes, once we have ingots
-	// - Valid metals/alloys: all types of steel, magnesium
-	// - When GT loaded, tools are automatic, based on material system
-	// - Should probably try to make tools balanced with Metallurgy/Railcraft tools
-	// - No need for a plain steel pickaxe when those mods are loaded
-	//   - Perhaps we could just check if the oredict-based recipe already exists?
-	// - When Tinker's Construct is loaded, we skip this (but our materials are registered)
 	private static void registerStoneToolRecipes(GeoBlock block) {
 		registerStoneToolRecipe(block, Items.stone_pickaxe);
 		registerStoneToolRecipe(block, Items.stone_axe);
@@ -114,19 +112,14 @@ public class RecipeRegistration {
 		return Geologica.getConfiguration().getInitialStoneToolDamage(strength);
 	}
 	
-	private static void registerSmeltingRecipes() {
+	private static void registerRockCastingRecipes() {
 		for (Block block : GeologicaBlocks.getBlocks()) {
-			if (block instanceof GeoBlock) {
-				registerSmeltingRecipes((GeoBlock)block);
+			if (block instanceof IntactGeoBlock) {
+				GeoBlock broken = ((GeoBlock)block).getBrokenRockBlock();
+				if (broken != null) {
+					registerRockCastingRecipes(broken, block);
+				}
 			}
-		}
-	}
-
-	private static void registerSmeltingRecipes(GeoBlock output) {
-		TemperatureLevel temp = TemperatureLevel.values()[output.getStrength().ordinal()];
-		GeoBlock input = output.getBrokenRockBlock();
-		if (input != null) {
-			registerSmeltingRecipesByMeta(input, output, temp);
 		}
 	}
 
@@ -284,11 +277,12 @@ public class RecipeRegistration {
 		GameRegistry.addRecipe(outputStack, "#  ", "## ", "###", '#', inputStack);
 	}
 	
-	private static void registerSmeltingRecipesByMeta(CompositeBlock input, Block output, TemperatureLevel temp) {
+	private static void registerRockCastingRecipes(GeoBlock input, Block output) {
+		TemperatureLevel temp = TemperatureLevel.values()[input.getStrength().ordinal()];
 		for(int meta = 0; meta < input.getMetaCount(); meta++) {
 			ItemStack outputStack = new ItemStack(output, 1, meta);
 			ItemStack inputStack = new ItemStack(input, 1, meta);
-			registry.registerSmeltingRecipe(inputStack, outputStack, temp);
+			registry.registerCastingRecipe(inputStack, outputStack, temp.getReferenceTemperature());
 		}
 	}	
 }
