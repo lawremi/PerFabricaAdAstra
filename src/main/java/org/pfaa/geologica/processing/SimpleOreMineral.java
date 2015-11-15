@@ -26,7 +26,11 @@ public class SimpleOreMineral extends SimpleMineral implements OreMineral {
 	}
 	
 	public SimpleOreMineral(Mixture mixture) {
-		this(mixture.getComponents());
+		this(mixture, null);
+	}
+	
+	public SimpleOreMineral(Mixture mixture, Color color) {
+		this(mixture.getComponents(), color);
 	}
 	
 	public SimpleOreMineral(List<MixtureComponent> components, Color overrideColor) {
