@@ -5,6 +5,7 @@ public class SimpleAlloy extends SimpleMixture implements Alloy {
 
 	private Element base;
 	private Strength strength;
+	private Fusion fusion;
 	
 	public SimpleAlloy(Element base, Element solute, double weight) {
 		super(new MixtureComponent(base, 1.0), new MixtureComponent(solute, weight));
@@ -36,6 +37,17 @@ public class SimpleAlloy extends SimpleMixture implements Alloy {
 	
 	public Alloy setStrength(Strength strength) {
 		this.strength = strength;
+		return this;
+	}
+	
+	@Override
+	public Fusion getFusion() {
+		return this.fusion;
+	}
+
+	@Override
+	public Alloy fuse(int temperature) {
+		this.fusion = new Fusion(temperature);
 		return this;
 	}
 }
