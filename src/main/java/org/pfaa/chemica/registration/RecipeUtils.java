@@ -7,14 +7,22 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.pfaa.chemica.Chemica;
+import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
+import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.util.ChanceStack;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
@@ -36,38 +44,59 @@ public class RecipeUtils {
 		if (comps.size() > 0) {
 			input = comps.get(0);
 		} else {
-			input = new MixtureComponent(mixture, 1.0); 
+			input = new MixtureComponent(mixture, 1.0F); 
 		}
-		return getGrindingOutput(input).itemStack;	
+		return getGrindingOutputItemStack(input);	
 	}
 	
-	public static List<ChanceStack> getSecondaryGrindingOutputs(Mixture mixture) {
+	public static List<ChanceStack> getSecondaryGrindingOutputs(Mixture mixture, boolean excludeAggregates) {
 		List<MixtureComponent> components = mixture.getComponents();
-		List<MixtureComponent> secondaries = components.subList(components.size() > 0 ? 1 : 0, components.size());
-		return Lists.transform(secondaries, new MixtureComponentToGrindingOutput());
+		Iterable<MixtureComponent> secondaries = components.subList(components.size() > 0 ? 1 : 0, components.size());
+		if (excludeAggregates) {
+			secondaries = Iterables.filter(secondaries, notAggregate);
+		}
+		return Lists.newArrayList(Iterables.transform(secondaries, mixtureComponentToGrindingOutput));
 	}
 
-	private static final double MIN_DUST_WEIGHT = 0.1;
-	
-	public static ChanceStack getGrindingOutput(MixtureComponent input) {
-		ItemStack itemStack;
-		double weight = input.weight;
+	public static ItemStack getGrindingOutputItemStack(MixtureComponent input) {
 		Form form = Forms.DUST;
 		if (input.material == Aggregates.SAND || input.material == Aggregates.GRAVEL) {
 			form = Forms.PILE;
-		} else if (weight < MIN_DUST_WEIGHT) {
+		} else if (input.weight < 1.0F) {
 			form = Forms.TINY_DUST;
-			weight *= 10;
 		}
-		itemStack = OreDictUtils.lookupBest(form, input.material);
-		return new ChanceStack(itemStack, weight);
+		return OreDictUtils.lookupBest(form, input.material);
 	}
 	
-	private static class MixtureComponentToGrindingOutput implements Function<MixtureComponent,ChanceStack> {
+	private static final float TINY_DUST_WEIGHT = 0.1F;
+	
+	private static Function<MixtureComponent,ChanceStack> mixtureComponentToGrindingOutput = new Function<MixtureComponent,ChanceStack>() {
 		@Override
 		public ChanceStack apply(MixtureComponent input) {
 			return getGrindingOutput(input);
 		}
+	};
+	
+	private static Predicate<MixtureComponent> notAggregate = new Predicate<MixtureComponent>() {
+		public boolean apply(MixtureComponent obj) {
+			return !(obj.material instanceof Aggregate); 
+		}
+	};
+
+	public static ChanceStack getGrindingOutput(MixtureComponent input) {
+		float weight = (float)input.weight;
+		ItemStack itemStack = getGrindingOutputItemStack(input);
+		if (weight < 1.0F) {
+			int ntiny = (int)(weight / TINY_DUST_WEIGHT);
+			if (ntiny > 0) {
+				itemStack = itemStack.copy();
+				itemStack.stackSize = ntiny;
+				weight = 1.0F;
+			} else {
+				weight = weight / TINY_DUST_WEIGHT;
+			}
+		}
+		return new ChanceStack(itemStack, weight);
 	}
 	
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
