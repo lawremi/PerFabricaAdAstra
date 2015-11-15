@@ -11,52 +11,53 @@ import org.pfaa.chemica.model.MixtureComponent;
 
 import com.google.common.base.CaseFormat;
 
-import static org.pfaa.chemica.model.Element.Elements.Ag;
-import static org.pfaa.chemica.model.Element.Elements.Al;
-import static org.pfaa.chemica.model.Element.Elements.Au;
-import static org.pfaa.chemica.model.Element.Elements.Be;
-import static org.pfaa.chemica.model.Element.Elements.Bi;
-import static org.pfaa.chemica.model.Element.Elements.C;
-import static org.pfaa.chemica.model.Element.Elements.Ca;
-import static org.pfaa.chemica.model.Element.Elements.Cd;
-import static org.pfaa.chemica.model.Element.Elements.Ce;
-import static org.pfaa.chemica.model.Element.Elements.Co;
-import static org.pfaa.chemica.model.Element.Elements.Cr;
-import static org.pfaa.chemica.model.Element.Elements.Cu;
-import static org.pfaa.chemica.model.Element.Elements.Fe;
-import static org.pfaa.chemica.model.Element.Elements.Ge;
-import static org.pfaa.chemica.model.Element.Elements.Ir;
-import static org.pfaa.chemica.model.Element.Elements.Pb;
-import static org.pfaa.chemica.model.Element.Elements.La;
-import static org.pfaa.chemica.model.Element.Elements.Li;
-import static org.pfaa.chemica.model.Element.Elements.Mg;
-import static org.pfaa.chemica.model.Element.Elements.Mn;
-import static org.pfaa.chemica.model.Element.Elements.Mo;
-import static org.pfaa.chemica.model.Element.Elements.Nb;
-import static org.pfaa.chemica.model.Element.Elements.Nd;
-import static org.pfaa.chemica.model.Element.Elements.Ni;
-import static org.pfaa.chemica.model.Element.Elements.Os;
-import static org.pfaa.chemica.model.Element.Elements.Pt;
-import static org.pfaa.chemica.model.Element.Elements.Pr;
-import static org.pfaa.chemica.model.Element.Elements.Sb;
-import static org.pfaa.chemica.model.Element.Elements.Si;
-import static org.pfaa.chemica.model.Element.Elements.Sn;
-import static org.pfaa.chemica.model.Element.Elements.Te;
-import static org.pfaa.chemica.model.Element.Elements.Ti;
-import static org.pfaa.chemica.model.Element.Elements.V;
-import static org.pfaa.chemica.model.Element.Elements.W;
-import static org.pfaa.chemica.model.Element.Elements.Zn;
-import static org.pfaa.chemica.model.Element.Elements.Zr;
+import static org.pfaa.chemica.model.Element.Ag;
+import static org.pfaa.chemica.model.Element.Al;
+import static org.pfaa.chemica.model.Element.Au;
+import static org.pfaa.chemica.model.Element.Be;
+import static org.pfaa.chemica.model.Element.Bi;
+import static org.pfaa.chemica.model.Element.C;
+import static org.pfaa.chemica.model.Element.Ca;
+import static org.pfaa.chemica.model.Element.Cd;
+import static org.pfaa.chemica.model.Element.Ce;
+import static org.pfaa.chemica.model.Element.Co;
+import static org.pfaa.chemica.model.Element.Cr;
+import static org.pfaa.chemica.model.Element.Cu;
+import static org.pfaa.chemica.model.Element.Fe;
+import static org.pfaa.chemica.model.Element.Ge;
+import static org.pfaa.chemica.model.Element.Ir;
+import static org.pfaa.chemica.model.Element.Pb;
+import static org.pfaa.chemica.model.Element.La;
+import static org.pfaa.chemica.model.Element.Li;
+import static org.pfaa.chemica.model.Element.Mg;
+import static org.pfaa.chemica.model.Element.Mn;
+import static org.pfaa.chemica.model.Element.Mo;
+import static org.pfaa.chemica.model.Element.Nb;
+import static org.pfaa.chemica.model.Element.Nd;
+import static org.pfaa.chemica.model.Element.Ni;
+import static org.pfaa.chemica.model.Element.Os;
+import static org.pfaa.chemica.model.Element.Pt;
+import static org.pfaa.chemica.model.Element.Pr;
+import static org.pfaa.chemica.model.Element.Sb;
+import static org.pfaa.chemica.model.Element.Si;
+import static org.pfaa.chemica.model.Element.Sn;
+import static org.pfaa.chemica.model.Element.Te;
+import static org.pfaa.chemica.model.Element.Ti;
+import static org.pfaa.chemica.model.Element.V;
+import static org.pfaa.chemica.model.Element.W;
+import static org.pfaa.chemica.model.Element.Zn;
+import static org.pfaa.chemica.model.Element.Zr;
 
 // TODO: set strengths where the alloy differs from the base metal
 
 public interface Alloy extends Mixture, Metal {
 	public Element getBase();
 	public Alloy alloy(Element material, double weight);
+	public Alloy fuse(int temperature);
 	
 	public enum Alloys implements Alloy {
-		AIRCRAFT_ALUMINUM(Al.alloy(Zn, 0.02).alloy(Mg, 0.02).alloy(Cu, 0.005)),
-		ALNICO(Fe.alloy(Al, 0.4).alloy(Ni, 0.3).alloy(Co, 0.2)),
+		AIRCRAFT_ALUMINUM(Al.alloy(Zn, 0.02).alloy(Mg, 0.02).alloy(Cu, 0.005).fuse(800)),
+		ALNICO(Fe.alloy(Al, 0.4).alloy(Ni, 0.3).alloy(Co, 0.2).fuse(1600)),
 		ALUMINUM_BRONZE(Cu.alloy(Al, 0.2)),
 		ALUMINUM_LITHIUM(Al.alloy(Li, 0.1)),
 		ALUMINUM_6061(Al.alloy(Mg, 0.01).alloy(Si, 0.005)),
@@ -140,6 +141,16 @@ public interface Alloy extends Mixture, Metal {
 		@Override
 		public Strength getStrength() {
 			return delegate.getStrength();
+		}
+
+		@Override
+		public Fusion getFusion() {
+			return delegate.getFusion();
+		}
+		
+		@Override
+		public Alloy fuse(int temperature) {
+			return delegate.fuse(temperature);
 		}
 	}
 }
