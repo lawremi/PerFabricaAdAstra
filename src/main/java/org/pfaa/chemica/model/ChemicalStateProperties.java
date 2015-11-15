@@ -20,6 +20,10 @@ public class ChemicalStateProperties extends StateProperties {
 		{
 			this(color, density, thermo, new Hazard());
 		}
+		public Solid(Color color, double density)
+		{
+			this(color, density, new Thermo());
+		}
 		public Solid(double density, Thermo thermo, Hazard hazard)
 		{
 			this(Color.WHITE, density, thermo, hazard);
