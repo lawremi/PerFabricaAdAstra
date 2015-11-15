@@ -5,10 +5,13 @@ import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import org.pfaa.chemica.integration.ModIds;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.geologica.integration.GTIntegration;
+import org.pfaa.geologica.integration.GregtechIntegration;
+
+import cpw.mods.fml.common.Loader;
 
 public class GeologicaConfiguration {
 
@@ -64,8 +67,8 @@ public class GeologicaConfiguration {
 	
 	private static float getDefaultInitialStoneToolDamage(Strength strength) {
 		float damage;
-		if (GTIntegration.isGregtechInstalled()) {
-			return GTIntegration.getDefaultInitialStoneToolDamage(strength);
+		if (Loader.isModLoaded(ModIds.GREGTECH)) {
+			return GregtechIntegration.getDefaultInitialStoneToolDamage(strength);
 		}
 		switch(strength) {
 		case WEAK:
