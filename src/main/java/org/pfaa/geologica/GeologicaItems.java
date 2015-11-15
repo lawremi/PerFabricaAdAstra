@@ -34,17 +34,23 @@ public class GeologicaItems implements ItemCatalog {
 
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_LUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, CrudeRock);
+	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, CrudeRock);
+	public static final IndustrialMaterialItem<GeoMaterial> TINY_CRUDE_DUST = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.TINY_DUST, GeoMaterial.class, CrudeRock);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, EarthyMaterial);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, OreRock);
-	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, OreRock);
 	
 	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST = 
 			new IndustrialMaterialItem<Ores>(Forms.DUST, Ores.class);
+	public static final IndustrialMaterialItem<Ores> TINY_ORE_MINERAL_DUST = 
+			new IndustrialMaterialItem<Ores>(Forms.TINY_DUST, Ores.class);
 	public static final IndustrialMaterialItem<IndustrialMinerals> INDUSTRIAL_MINERAL_DUST = 
 			new IndustrialMaterialItem<IndustrialMinerals>(Forms.DUST, IndustrialMinerals.class);
+	public static final IndustrialMaterialItem<IndustrialMinerals> TINY_INDUSTRIAL_MINERAL_DUST = 
+			new IndustrialMaterialItem<IndustrialMinerals>(Forms.TINY_DUST, IndustrialMinerals.class);
 	
 	@SuppressWarnings("rawtypes")
 	public static List<IndustrialMaterialItem> getIndustrialMaterialItems() {
