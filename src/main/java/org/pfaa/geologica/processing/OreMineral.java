@@ -182,7 +182,7 @@ public interface OreMineral extends Mineral {
 
 		@Override
 		public Ore mix(IndustrialMaterial material, double weight) {
-			return delegate.mix(material, weight);
+			return new SimpleOre(this).mix(material, weight);
 		}
 	}
 	
