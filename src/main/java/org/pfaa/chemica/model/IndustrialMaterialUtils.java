@@ -14,7 +14,12 @@ public class IndustrialMaterialUtils {
 	private static double getTemperatureClosestToStandard(Chemical chemical, State state) {
 		switch(state) {
 		case SOLID:
-			return Math.min(chemical.getFusion().getTemperature(), Constants.STANDARD_TEMPERATURE);
+			return Math.min(chemical.getFusion() != null ? 
+								chemical.getFusion().getTemperature() - 1: 
+									chemical.getVaporization() != null ?
+											chemical.getVaporization().getTemperature() - 1: 
+												Constants.STANDARD_TEMPERATURE,
+							Constants.STANDARD_TEMPERATURE);
 		case LIQUID:
 			return Math.max(chemical.getFusion().getTemperature(), Constants.STANDARD_TEMPERATURE);
 		case GAS:
