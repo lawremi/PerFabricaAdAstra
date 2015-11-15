@@ -17,4 +17,8 @@ public class MixtureComponent {
 	public MixtureComponent concentrate(int factor) {
 		return new MixtureComponent(this.material, this.weight * factor);
 	}
+	
+	public String toString() {
+		return this.weight + " * " + this.material.name();
+	}
 }
