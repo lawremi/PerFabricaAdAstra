@@ -2545,7 +2545,8 @@
 	  <BiomeType name='sandy'/>
           <BiomeType name='wasteland'/>
           <BiomeType name='wet' weight='-1'/>
-	  <Replaces block='sand'/>
+	  <Replaces block='minecraft:sand'/>
+	  <PlacesBesideRegexp block='.*'/>
 	  <PlacesBeside block='minecraft:air' weight='-1'/>
         </CloudPreset>
 
@@ -2567,6 +2568,7 @@
           <Replaces block='minecraft:hardened_clay'/>
           <Replaces block='minecraft:sand'/>
 	  <Replaces block='PFAAGeologica:brine'/>
+	  <PlacesAboveRegexp block='.*'/>
 	  <PlacesAbove block='PFAAGeologica:brine' weight='-1'/>
 	  <PlacesBelow block='minecraft:sand'/>
 	  <PlacesBelow block='PFAAGeologica:brine'/>
