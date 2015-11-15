@@ -148,4 +148,12 @@ public class OreRegistration {
 		}
 	}
 
+	private static void oreDictifyFuels() {
+		IndustrialMaterialItem<GeoMaterial> fuel = GeologicaItems.CRUDE_LUMP;
+		for (GeoMaterial material : fuel.getIndustrialMaterials()) {
+			String key = OreDictUtils.makeKey("fuel", material.getOreDictKey());
+			OreDictionary.registerOre(key, fuel.getItemStack(material));
+		}
+	}
+
 }
