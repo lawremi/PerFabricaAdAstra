@@ -124,14 +124,14 @@ public enum Element implements Chemical, PartFactory, Metal {
 		  new Solid(Color.white, 1.82,
 				    new Thermo(16.5, 43.3, -58.7, 25.6, -0.0867, -6.66, 50.0),
 				    new Hazard(4, 4, 2)),
-		  new Fusion(317.2),
+		  new Fusion(317),
 		  new Liquid(1.74, 
 				     new Thermo(26.3, 1.04, -6.12, 1.09, 3.00, -7.23, 74.9)),
 		  new Vaporization(553),
 		  new Gas(new Thermo(20.4, 1.05, -1.10, 0.378, 0.011, 310, 188)
 		          .addSegment(2200, -2.11, 9.31, -0.558, -0.020, 29.3, 354, 190))
 		  ),
-		S("sulfur", Category.POLYATOMIC_NONMETAL, Strength.WEAK, 32.1, +4, 
+		S("sulfur", Category.POLYATOMIC_NONMETAL, null, 32.1, +4, 
 		  new Solid(new Color(230, 230, 25), 2,
 				    new Thermo(21.2, 3.87, 22.3, -10.3, -0.0123, -7.09, 55.5),
 				    new Hazard()),
@@ -223,7 +223,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 				      new Thermo(45.6, -3.81, 1.03, -0.0967, -3.33, -8.14, 78.0)), 
 		   new Vaporization(3200),
 		   new Gas(new Thermo(40.7, -8.46, 1.54, -0.0652, -11.1, 397, 213))),
-		Ni("nickel", Category.TRANSITION_METAL, Strength.MEDIUM, 58.7, +2,
+		Ni("nickel", Category.TRANSITION_METAL, Strength.STRONG, 58.7, +2,
 		   new Solid(new Color(160, 160, 140), 8.91, 
 				     new Thermo(13.7, 82.5, -175, 162, -0.0924, -6.83, 27.7)
 		             .addSegment(600, 1248, -1258, 0, 0, -165, -789, 1213)
@@ -306,7 +306,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Vaporization(1650),
 		   new Gas(new Thermo(19.4, 3.74, -3.19, 0.871, 0.0540, 158, 187)
 				   .addSegment(2700, -39.0, -1.70, 7.99, -0.852, 188, 355, 243))),
-	    Y("yttrium", Category.TRANSITION_METAL, null, 88.9, +3,
+	    Y("yttrium", Category.TRANSITION_METAL, Strength.STRONG, 88.9, +3,
 	      new Solid(new Color(212, 216, 220), 4.47,
 	    		    new Thermo(0, 44.4, 24.4, 6.99)),
 	      new Fusion(1799),
@@ -353,7 +353,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Fusion(2237),
 		   new Liquid(10.7, new Thermo(107)),
 		   new Vaporization(3968)),
-		Pd("palladium", Category.TRANSITION_METAL, Strength.MEDIUM, 106, +2, 
+		Pd("palladium", Category.TRANSITION_METAL, Strength.STRONG, 106, +2, 
 		   new Solid(new Color(213, 213, 213), 12.0,
 				     new Thermo(0, 37.6, 22.5, 10.0, -2.63, 0.0622)),
 		   new Fusion(1828),
@@ -438,7 +438,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Gas(new Thermo(-623, 430, -97.0, 7.47, 488, 1077, 19.0)
 		           .addSegment(4000, 770, -284, 41.4, -2.13, -1693, -1666, -26.3))),
 		// Skipped Lu and Hf
-		Ta("tantalum", Category.TRANSITION_METAL, Strength.STRONG, 181, +5, 
+		Ta("tantalum", Category.TRANSITION_METAL, Strength.VERY_STRONG, 181, +5, 
 		   new Solid(new Color(185, 190, 200), 16.7,
 				     new Thermo(20.7, 17.3, -15.7, 5.61, 0.0616, -6.60, 62.4)
 		   			 .addSegment(1300, -43.9, 73.0, -27.4, 4.00, 26.3, 60.2, 25.7),
@@ -466,7 +466,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 	 				     new Thermo(0, 32.6, 23.6, 3.88)),
 	 		   new Fusion(3306),
 	 		   new Liquid(20, new Thermo(119))),
-	    Ir("iridium", Category.TRANSITION_METAL, Strength.STRONG, 190, +4, 
+	    Ir("iridium", Category.TRANSITION_METAL, Strength.VERY_STRONG, 190, +4, 
 	       new Solid(new Color(212, 216, 220), 25.6,
 	    		     new Thermo(0, 35.5, 25.1)),
 	       new Fusion(2719),
@@ -484,7 +484,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(17.3, new Thermo(57.8)), // FIXME: better thermodynamics for liquid gold!
 		   new Vaporization(5.47, 17292, -71),
 		   new Gas(new Thermo(366, 180, 20.8))),
-		Hg("mercury", Category.TRANSITION_METAL, null, 201, +2, 
+		Hg("mercury", Category.TRANSITION_METAL, Strength.WEAK, 201, +2, 
 		   new Solid(new Color(155, 155, 155), 14.25,
 				     new Thermo(-2.18, 66.1, 21.5, 29.2)),
 		   new Fusion(234),
@@ -511,7 +511,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Vaporization(1837),
 		   new Gas(new Thermo(175))),
 		// Skipped Po, At, and many others...
-		Ce("cerium", Category.LANTHANIDE, null, 140, +3,
+		Ce("cerium", Category.LANTHANIDE, Strength.MEDIUM, 140, +3,
 		   new Solid(new Color(212, 216, 220), 6.77, 
 				     new Thermo(0, 72.0, 24.6, 0.005),
 				     new Hazard(2, 3, 2)),
@@ -519,7 +519,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(6.55, new Thermo(77.1)),
 		   new Vaporization(3716),
 		   new Gas(new Thermo(184))),
-		La("lanthanum", Category.LANTHANIDE, null, 139, +3,
+		La("lanthanum", Category.LANTHANIDE, Strength.MEDIUM, 139, +3,
 		   new Solid(new Color(212, 216, 220), 6.16, 
 				     new Thermo(0, 56.9, 24.7, 4),
 				     new Hazard(2, 3, 2)),
@@ -527,7 +527,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(5.94, new Thermo(62.1)),
 		   new Vaporization(3737),
 		   new Gas(new Thermo(169))),
-		Nd("neodynium", Category.LANTHANIDE, null, 144, +3,
+		Nd("neodynium", Category.LANTHANIDE, Strength.MEDIUM, 144, +3,
 		   new Solid(new Color(212, 216, 220), 7.01, 
 				     new Thermo(0, 71.6, 26.2, 4),
 				     new Hazard(2, 3, 2)),
@@ -535,7 +535,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(6.89, new Thermo(77.1)),
 		   new Vaporization(3347),
 		   new Gas(new Thermo(163))),
-		Pr("praseodynium", Category.LANTHANIDE, null, 141, +3,
+		Pr("praseodynium", Category.LANTHANIDE, Strength.MEDIUM, 141, +3,
 		   new Solid(new Color(212, 216, 220), 6.77, 
 				     new Thermo(0, 73.2, 26.0, 4),
 				     new Hazard(2, 3, 2)),
@@ -691,5 +691,4 @@ public enum Element implements Chemical, PartFactory, Metal {
 		public Strength getStrength() {
 			return this.strength;
 		}
-	}
 }
