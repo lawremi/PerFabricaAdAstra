@@ -2,13 +2,7 @@ package org.pfaa.geologica.integration;
 
 import org.pfaa.chemica.model.Strength;
 
-import cpw.mods.fml.common.Loader;
-
-public class GTIntegration {
-	public static boolean isGregtechInstalled() {
-		return Loader.isModLoaded("gregtech");
-	}
-
+public class GregtechIntegration {
 	public static float getDefaultInitialStoneToolDamage(Strength strength) {
 		float damage;
 		switch(strength) {
