@@ -2,6 +2,8 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
@@ -19,12 +21,20 @@ public class VanillaIntegration {
 	public static class VanillaRecipeRegistry implements RecipeRegistry {
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, TemperatureLevel temp) {
-			if (temp != TemperatureLevel.VERY_HIGH) {
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+			if (flux == null && temp != TemperatureLevel.VERY_HIGH) {
 				FurnaceRecipes.smelting().func_151394_a(input, output, 0);
 			}
 		}
 
+		@Override
+		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {
+			int ironFusionTemp = Element.Fe.getFusion().getTemperature();
+			if (temp > Constants.STANDARD_TEMPERATURE && temp <= ironFusionTemp) {
+				FurnaceRecipes.smelting().func_151394_a(input, output, 0);
+			}
+		}
+		
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
 				Strength strength) {
