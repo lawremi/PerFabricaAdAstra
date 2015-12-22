@@ -273,7 +273,7 @@ tile.weakOreRock.rockSalt.name=礦鹽
 tile.weakOreRock.stibnite.name=輝銻礦(銻)
 tile.weakOreRock.diatomite.name=硅藻土
 tile.weakOreRock.chrysotile.name=溫石棉(石棉)
-tile.weakOreRock.glauconite.name=海綠石
+tile.weakOreRock.realgar.name=雄黃(砷)
 tile.weakOreRock.graphite.name=石墨
 tile.weakOreRock.gypsum.name=石膏
 tile.weakOreRock.mirabilite.name=芒硝
@@ -302,7 +302,7 @@ tile.mediumOreRock.zeolite.name=沸石
 
 # Strong Ore Rocks
 tile.strongOreRock.bandedIron.name=帶狀鐵礦
-tile.strongOreRock.beryl.name=綠柱石礦(鈹)
+tile.strongOreRock.quartz.name=石英礦
 tile.strongOreRock.cassiterite.name=錫石礦(錫)
 tile.strongOreRock.chromite.name=鉻鐵礦(鉻)
 tile.strongOreRock.ilmenite.name=鈦鐵礦(鈦)
