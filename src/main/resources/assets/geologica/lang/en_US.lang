@@ -261,7 +261,7 @@ tile.weakOreClay.brownLimonite.name=Brown Limonite
 tile.weakOreClay.yellowLimonite.name=Yellow Limonite
 tile.weakOreClay.vermiculite.name=Vermiculite
 tile.weakOreClay.kaolinite.name=Kaolinite
-tile.weakOreClay.fullersEarth.name=Fuller\'s Earth
+tile.weakOreClay.fullersEarth.name=Fuller's Earth
 
 # Weak Ore Rocks
 tile.weakOreRock.borax.name=Borax Ore (Boron)
