@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.logging.log4j.Logger;
-import org.pfaa.geologica.integration.ModIntegration;
 import org.pfaa.geologica.registration.CommonRegistrant;
 
 import com.google.common.io.ByteStreams;
@@ -56,7 +55,6 @@ public class Geologica {
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
-		ModIntegration.init();
 		registrant.register();
 		exportCOGConfig();
 	}
