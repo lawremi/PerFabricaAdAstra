@@ -44,13 +44,13 @@ public interface Crude extends Mixture, Vaporizable {
 		private Crude delegate;
 		
 		private Crudes(State state, Color color, double density, Hazard hazard, double sulfurFraction, double heat) {
-			this(state, color, density, hazard, Double.NaN, Double.NaN, sulfurFraction, heat);
+			this(state, color, density, hazard, Double.NaN, Integer.MIN_VALUE, sulfurFraction, heat);
 		}
 		
 		private Crudes(State state, Color color, double density, Hazard hazard, double viscosity, 
-				       double boilingTemperature, double sulfurFraction, double heat) {
+				       int boilingTemperature, double sulfurFraction, double heat) {
 			this(new SimpleCrude(new ConditionProperties(state, color, density, hazard, viscosity, 0, true), 
-				 Double.isNaN(boilingTemperature) ? null : new Vaporization(boilingTemperature), 
+				 boilingTemperature == Integer.MIN_VALUE ? null : new Vaporization(boilingTemperature), 
 				 sulfurFraction, heat));
 		}
 		
