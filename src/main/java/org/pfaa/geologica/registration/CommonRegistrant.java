@@ -1,6 +1,7 @@
 package org.pfaa.geologica.registration;
 
 import org.pfaa.core.registration.Registrant;
+import org.pfaa.geologica.integration.BuildcraftIntegration;
 import org.pfaa.geologica.integration.ChemicaIntegration;
 import org.pfaa.geologica.integration.FMPIntegration;
 
@@ -12,6 +13,7 @@ public class CommonRegistrant implements Registrant {
 		ItemRegistration.init();
 		OreRegistration.init();
 		ChemicaIntegration.init();
+		BuildcraftIntegration.init();
 	}
 
 	@Override
