@@ -19,6 +19,13 @@ public class FuelRegistration {
 		public int getBurnTime(ItemStack fuel) {
 			// FIXME: do this based on the chemical model later; for now it is hack city.
 			// Whatever we do, it should probably round to the nearest multiple of 200.
+			
+			if (fuel.getItem() == GeologicaItems.EARTHY_CLUMP) {
+				if (GeologicaItems.EARTHY_CLUMP.getIndustrialMaterial(fuel) == GeoMaterial.PEAT) {
+					return 400;
+				}
+			}
+			
 			if (fuel.getItem() != GeologicaItems.CRUDE_LUMP)
 				return 0;
 			
