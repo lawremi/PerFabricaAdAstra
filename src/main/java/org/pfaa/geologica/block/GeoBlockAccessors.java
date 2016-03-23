@@ -1,9 +1,9 @@
 package org.pfaa.geologica.block;
 
-import org.pfaa.core.block.CompositeBlockAccessors;
+import org.pfaa.chemica.block.IndustrialBlockAccessors;
 import org.pfaa.geologica.GeoMaterial;
 
-public interface GeoBlockAccessors extends CompositeBlockAccessors {
+public interface GeoBlockAccessors extends IndustrialBlockAccessors {
 
 	public abstract GeoMaterial getGeoMaterial(int meta);
 

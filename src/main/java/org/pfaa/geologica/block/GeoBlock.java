@@ -133,6 +133,11 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		int meta = world.getBlockMetadata(x, y, z);
 		return this.getGeoMaterial(meta);
 	}
+
+	@Override
+	public IndustrialMaterial getIndustrialMaterial(int meta) {
+		return this.getGeoMaterial(meta);
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#containsSubstance(org.pfaa.geologica.GeoSubstance)
