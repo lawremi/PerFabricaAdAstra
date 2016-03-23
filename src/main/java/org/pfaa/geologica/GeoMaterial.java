@@ -174,17 +174,17 @@ public enum GeoMaterial implements Mixture {
 	REALGAR(Ores.REALGAR.mix(Ores.ORPIMENT, 0.1).mix(Ores.STIBNITE, 0.02).mix(Ores.CINNABAR, 0.02), 
 			Strength.WEAK, GRANITE),
 	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(BITUMINOUS_COAL, 0.3), Strength.WEAK),
-	GYPSUM(IndustrialMinerals.GYPSUM.mix(Ores.HALITE, 0.05).mix(Ores.SULFUR, 0.05).
+	GYPSUM(Ores.GYPSUM.mix(Ores.HALITE, 0.05).mix(Ores.SULFUR, 0.05).
 		   mix(Ores.BARITE, 0.05).mix(Ores.EPSOMITE, 0.01), Strength.WEAK),
 	MIRABILITE(IndustrialMinerals.MIRABILITE
-	           .mix(IndustrialMinerals.GYPSUM, 0.3).mix(Ores.HALITE, 0.05), Strength.WEAK),
+	           .mix(Ores.GYPSUM, 0.3).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MICA(IndustrialMinerals.MICA, Strength.WEAK, PEGMATITE),
 	SOAPSTONE(IndustrialMinerals.TALC, Strength.WEAK, SERPENTINITE),
 	TRONA(IndustrialMinerals.TRONA
-          .mix(IndustrialMinerals.GYPSUM, 0.3).mix(Ores.HALITE, 0.05), Strength.WEAK),
+          .mix(Ores.GYPSUM, 0.3).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	
 	ALUNITE(IndustrialMinerals.ALUNITE.mix(Ores.GYPSUM, 0.1), Strength.MEDIUM),
-	CELESTINE(Ores.CELESTINE.mix(Ores.BARITE, 0.3).mix(IndustrialMinerals.GYPSUM, 0.1), 
+	CELESTINE(Ores.CELESTINE.mix(Ores.BARITE, 0.3).mix(Ores.GYPSUM, 0.1), 
 			  Strength.MEDIUM, GYPSUM),
 	DOLOMITE(IndustrialMinerals.DOLOMITE.mix(Ores.CALCITE, 0.1).mix(Ores.MAGNESITE, 0.05), Strength.MEDIUM),
 	FLUORITE(Ores.FLUORITE.mix(Ores.BARITE, 0.05).mix(Ores.GALENA, 0.05).

@@ -28,7 +28,6 @@ public interface IndustrialMineral extends Mineral {
 		GARNET(new Color(227, 154, 38), 4.0),
 		GLAUCONITE(new Color(130, 180, 60), 2.6),
 		GRAPHITE(new Color(45, 45, 45), 2.15),
-		GYPSUM(new Color(230, 230, 250), 2.3),
 		KAOLINITE(new Color(245, 235, 235), 2.63),
 		KYANITE(new Color(110, 110, 250), 3.60),
 		LAZURITE(new Color(0, 85, 175), 2.4),
