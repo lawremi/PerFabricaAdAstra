@@ -676,6 +676,7 @@
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenAluminum">
             <ReplacesOre block='oreBauxite'/>
+	    <ReplacesOre block='oreAluminum'/>
           </IfCondition>
           <IfCondition condition=":=?GeologicaGenMercury">
             <ReplacesOre block='oreCinnabar'/>
