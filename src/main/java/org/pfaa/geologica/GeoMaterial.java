@@ -95,14 +95,14 @@ public enum GeoMaterial implements Mixture {
 	PEAT(Crudes.COMPOST, Strength.WEAK, Material.ground),
 	BOG_IRON(Ores.GOETHITE, Strength.WEAK, PEAT),
 
-	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(IndustrialMinerals.GARNET, 0.4)
-					      .mix(Ores.CHROMITE, 0.2).mix(Ores.ILMENITE, 0.6).mix(Ores.RUTILE, 0.2).mix(Ores.ZIRCON, 0.2),
+	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.ILMENITE, 0.6).mix(IndustrialMinerals.GARNET, 0.4)
+					      .mix(Ores.CHROMITE, 0.2).mix(Ores.RUTILE, 0.2).mix(Ores.ZIRCON, 0.2),
 	                      Strength.WEAK, Aggregates.SAND),
 	CASSITERITE_SAND(Ores.CASSITERITE.mix(Ores.SCHEELITE, 0.2), Strength.WEAK, Aggregates.SAND),
 	GARNET_SAND(IndustrialMinerals.GARNET.mix(Ores.PLATINUM, 0.05), Strength.WEAK, Material.sand),
-	GRANITIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.QUARTZ, 0.4).mix(IndustrialMinerals.KYANITE, 0.2)
-			              .mix(Ores.ILMENITE, 0.4).mix(Ores.RUTILE, 0.6).mix(Ores.ZIRCON, 0.4).
-			              mix(Ores.MONAZITE, 0.4), 
+	GRANITIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.RUTILE, 0.6).mix(Ores.QUARTZ, 0.4)
+			              .mix(Ores.ILMENITE, 0.4).mix(Ores.ZIRCON, 0.4)
+			              .mix(Ores.MONAZITE, 0.4).mix(IndustrialMinerals.KYANITE, 0.2), 
 			              Strength.WEAK, Aggregates.SAND),
 	QUARTZ_SAND(Ores.QUARTZ, Strength.WEAK, Aggregates.SAND, Material.sand),
 	VOLCANIC_ASH(IndustrialMinerals.VOLCANIC_ASH, Strength.WEAK, Material.sand),
