@@ -1,6 +1,7 @@
 package org.pfaa.geologica.registration;
 
 import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.item.IndustrialBlockItem;
 import org.pfaa.core.item.ColoredBlockItem;
 import org.pfaa.core.item.CompositeBlockItem;
 import org.pfaa.core.registration.RegistrationUtils;
@@ -18,7 +19,7 @@ import net.minecraft.item.ItemBlock;
 public class BlockRegistration  {
 
 	public static void init() {
-		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, GeoBlock.class, CompositeBlockItem.class);
+		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, GeoBlock.class, IndustrialBlockItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, WallBlock.class, CompositeBlockItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, SlabBlock.class, SlabItem.class);
 		RegistrationUtils.registerDeclaredBlocks(GeologicaBlocks.class, StairsBlock.class, ItemBlock.class);
