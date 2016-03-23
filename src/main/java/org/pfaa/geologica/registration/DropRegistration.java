@@ -21,7 +21,7 @@ public class DropRegistration {
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, Items.gold_nugget, 4, 4, 0.1F, true);
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetElectrum", 2, 2, 0.05F, true);
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetSilver", 1, 2, 0.05F, true);
-		registerOreDrop(drops, GeoMaterial.LIMESTONE, Items.flint, 1, 0, 0.05F, true);
+		registerOreDrop(drops, GeoMaterial.CHALK, Items.flint, 2, 5, 0.1F, true);
 		if (Geologica.getConfiguration().isVanillaOreGemDropEnabled()) {
 			registerDropsOfItem(drops, GeologicaItems.CRUDE_LUMP);
 			registerOreDrop(drops, GeoMaterial.DIAMOND, Items.diamond, 1, 0, 1.0F, true);
