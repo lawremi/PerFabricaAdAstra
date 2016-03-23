@@ -24,7 +24,7 @@
   <ConfigSection>
 
     <OptionChoice name='GeologicaActive'
-                  default=':= dimension.generator = "RandomLevelSource" | dimension.generator = "ATGLevelSource"'
+                  default=':= dimension.generator = "RandomLevelSource" | dimension.generator =	"ATGLevelSource" | dimension.generator = "ChunkProviderRTG"'
                   displayGroup='groupInternal'>
       <Choice value='true' displayValue='On'/>
       <Choice value='false' displayValue='Off'/>
