@@ -138,6 +138,9 @@ public class OreRegistration {
 		String key = getAggregateOreDictKey(block);
 		ItemStack itemStack = block.getItemStack(material);
 		OreDictionary.registerOre(key, itemStack);
+		if (block instanceof BrickGeoBlock) {
+			OreDictionary.registerOre("bricksStone", itemStack);
+		}
 	}
 	
 	private static void oreDictify(VanillaOreOverrideBlock block) {
