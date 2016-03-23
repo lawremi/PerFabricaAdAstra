@@ -2494,11 +2494,12 @@
           <WireframeColor>0xFF11FF00</WireframeColor>
         </CloudPreset>
         <CloudPreset name='PresetEvaporiteLimestone'
-                     block='PFAAGeologica:mediumStone:0'
                      inherits='PresetEvaporiteStratum'>
           <Setting name='DistributionFrequency' avg='0.01'/>
           <Setting name='CloudHeight' avg='55' range='0'/>
           <Setting name='CloudThickness' avg='3'/>
+	  <OreBlock block='PFAAGeologica:mediumStone:0' weight='0.9'/>
+	  <OreBlock block='PFAAGeologica:mediumStone:5' weight='0.1'/>
         </CloudPreset>
         <CloudPreset name='PresetEvaporiteGypsum'
                      inherits='PresetEvaporiteStratum'>
@@ -3296,7 +3297,8 @@
 
         <ConfigSection>
           <CloudPreset name='PresetCarbonateDeposit'
-                       inherits='PresetLimestoneLower'>
+                       inherits='PresetLimestoneLower'
+		       block='PFAAGeologica:mediumStone:5'>
             <Setting name='DistributionFrequency' avg='0.003'/>
             <Setting name='CloudThickness' avg='6'/>
             <Setting name='CloudHeight'
@@ -3312,7 +3314,7 @@
                      avg=':= 55/64 * dimension.groundLevel'
                      range=':= 2/64 * dimension.groundLevel'/>
             <Setting name='ParentRangeLimit' avg='4' range='2'/>
-            <Replaces block='PFAAGeologica:mediumStone:0'/>
+            <Replaces block='PFAAGeologica:mediumStone:5'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:8' weight='0.60'/>
             <OreBlock block='PFAAGeologica:weakOreRock:2' weight='0.20'/>
             <OreBlock block='PFAAGeologica:mediumOreRock:0' weight='0.20'/>
