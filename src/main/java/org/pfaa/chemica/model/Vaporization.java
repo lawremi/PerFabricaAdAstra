@@ -1,7 +1,7 @@
 package org.pfaa.chemica.model;
 
 public class Vaporization {
-	private double temperature;
+	private int temperature;
 	private AntoineCoefficients antoineCoefficients;
 	
 	public Vaporization(AntoineCoefficients antoineCoefficients) {
@@ -13,16 +13,16 @@ public class Vaporization {
 		this(new AntoineCoefficients(a, b, c));
 	}
 	
-	public Vaporization(double temperature) {
+	public Vaporization(int temperature) {
 		super();
 		this.temperature = temperature;
 	}
 	
-	public double getTemperature() {
+	public int getTemperature() {
 		return this.getTemperature(Constants.STANDARD_PRESSURE);
 	}
 	
-	public double getTemperature(double pressure) {
+	public int getTemperature(double pressure) {
 		if (antoineCoefficients != null) {
 			return antoineCoefficients.getBoilingTemperature(pressure);
 		}
@@ -45,8 +45,8 @@ public class Vaporization {
 		public double getVaporPressure(double temperature) {
 			return Math.pow(a - b / (c + temperature), 10) * KPA_PER_BAR;
 		}
-		public double getBoilingTemperature(double pressure) {
-			return b / (a - Math.log10(pressure / KPA_PER_BAR)) - c;
+		public int getBoilingTemperature(double pressure) {
+			return (int)(b / (a - Math.log10(pressure / KPA_PER_BAR)) - c);
 		}
 		// Langmuir's equation
 		public double getEvaporationRate(double temperature, double pressure, double molecularWeight) {
