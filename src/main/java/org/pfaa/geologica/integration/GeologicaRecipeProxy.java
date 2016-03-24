@@ -1,35 +1,35 @@
 package org.pfaa.geologica.integration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pfaa.chemica.integration.AbstractRecipeRegistry;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
-import org.pfaa.chemica.util.ChanceStack;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.processing.Mineral;
 import org.pfaa.geologica.processing.OreMineral;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
-public class GeologicaRecipeProxy implements RecipeRegistry {
+public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 
 	private Map<Chemical,OreMineral> oreCompoundToMineral;
-	private Map<OreMineral,GeoMaterial> oreMineralToGeoMaterial;
+	private Map<OreMineral,List<GeoMaterial>> oreMineralToGeoMaterials;
 	
 	public GeologicaRecipeProxy() {
 		this.oreCompoundToMineral = makeOreCompoundToMineral();
-		this.oreMineralToGeoMaterial = makeOreMineralToGeoMaterial();
+		this.oreMineralToGeoMaterials = makeOreMineralToGeoMaterials();
 	}
 	
 	private Map<Chemical, OreMineral> makeOreCompoundToMineral() {
@@ -41,22 +41,28 @@ public class GeologicaRecipeProxy implements RecipeRegistry {
 		return map;
 	}
 
-	private static Map<OreMineral,GeoMaterial> makeOreMineralToGeoMaterial() {
-		Map<OreMineral,GeoMaterial> map = new HashMap<OreMineral,GeoMaterial>();
+	private static Map<OreMineral,List<GeoMaterial>> makeOreMineralToGeoMaterials() {
+		Map<OreMineral,List<GeoMaterial>> map = new HashMap<OreMineral,List<GeoMaterial>>();
 		for (GeoMaterial material : GeoMaterial.values()) {
 			Mineral concentrate = material.getOreConcentrate();
 			if (concentrate instanceof OreMineral) {
-				map.put((OreMineral) concentrate, material);
+				OreMineral mineral = (OreMineral) concentrate;
+				List<GeoMaterial> materials = map.get(mineral);
+				if (materials == null) {
+					materials = new ArrayList<GeoMaterial>();
+					map.put(mineral, materials);
+				}
+				materials.add(material);
 			}
 		}
 		return map;
 	}
 
-	@Override
-	public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) { }
-
-	@Override
-	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+	private static abstract class Registrant {
+		public abstract void register(ItemStack input);
+	}
+	
+	private void mapRecipe(ItemStack input, Registrant registrant) {
 		if (input.getItem() instanceof IndustrialMaterialItem) {
 			IndustrialMaterialItem<?> item = (IndustrialMaterialItem<?>)input.getItem();
 			IndustrialMaterial compound = item.getIndustrialMaterial(input);
@@ -65,25 +71,71 @@ public class GeologicaRecipeProxy implements RecipeRegistry {
 				if (oreMineral != null) {
 					ItemStack oreMineralStack = OreDictUtils.lookupBest(item.getForm(), oreMineral);
 					if (oreMineralStack != null) {
-						RecipeRegistration.getTarget().registerSmeltingRecipe(oreMineralStack, output, flux, temp);
-						GeoMaterial geoMaterial = this.oreMineralToGeoMaterial.get(oreMineral);
-						if (geoMaterial != null && item.getForm() == Forms.DUST) {
-							ItemStack crushedStack = OreDictUtils.lookupBest(Forms.CRUSHED, geoMaterial);
-							RecipeRegistration.getTarget().registerSmeltingRecipe(crushedStack, output, flux, temp);
-							ItemStack blockStack = OreDictUtils.lookupBest(Forms.BLOCK, geoMaterial);
-							RecipeRegistration.getTarget().registerSmeltingRecipe(blockStack, output, flux, temp);
+						registrant.register(oreMineralStack);
+						List<GeoMaterial> geoMaterials = this.oreMineralToGeoMaterials.get(oreMineral);
+						if (geoMaterials != null) {
+							for (GeoMaterial geoMaterial : geoMaterials) {
+								if (item.getForm() == Forms.DUST) {
+									ItemStack crushedStack = OreDictUtils.lookupBest(Forms.CRUSHED, geoMaterial);
+									if (crushedStack == null) {
+										crushedStack = OreDictUtils.lookupBest(Forms.CLUMP, geoMaterial);
+									}
+									if (crushedStack != null) {
+										registrant.register(crushedStack);
+									}
+									ItemStack dustStack = OreDictUtils.lookupBest(Forms.DUST_IMPURE, geoMaterial);
+									if (dustStack != null) {
+										registrant.register(dustStack);
+									}
+									ItemStack blockStack = OreDictUtils.lookupBest("ore", geoMaterial);
+									registrant.register(blockStack);
+								} else if (item.getForm() == Forms.DUST_TINY) {
+									ItemStack dustStack = OreDictUtils.lookupBest(Forms.DUST_IMPURE_TINY, geoMaterial);
+									if (dustStack != null) {
+										registrant.register(dustStack);
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
 	}
+	
+	@Override
+	public void registerSmeltingRecipe(ItemStack input, final ItemStack output, final ItemStack flux, final TemperatureLevel temp) {
+		mapRecipe(input, new Registrant() {
+			@Override
+			public void register(ItemStack input) {
+				RecipeRegistration.getTarget().registerSmeltingRecipe(input, output, flux, temp);
+			}
+		});
+	}
+
+	
+	@Override
+	public void registerSmeltingRecipe(ItemStack input, final FluidStack output, final ItemStack flux, final TemperatureLevel temp) {
+		mapRecipe(input, new Registrant() {
+			@Override
+			public void register(ItemStack input) {
+				RecipeRegistration.getTarget().registerSmeltingRecipe(input, output, flux, temp);
+			}
+		});
+	}
 
 	@Override
-	public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
-			Strength strength) { }
-
-	@Override
-	public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) { }
+	public void registerRoastingRecipe(final List<ItemStack> inputs, final ItemStack output, final int temp) {
+		for (final ItemStack oldInput : inputs) {
+			mapRecipe(oldInput, new Registrant() {
+				@Override
+				public void register(ItemStack input) {
+					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
+					localInputs.set(localInputs.indexOf(oldInput), input);
+					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, output, temp);
+				}
+			});
+		}
+	}
 
 }

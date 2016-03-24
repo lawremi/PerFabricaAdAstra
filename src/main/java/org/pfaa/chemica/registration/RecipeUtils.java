@@ -37,43 +37,42 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeUtils {
-
-	public static ItemStack getPrimaryGrindingOutput(Mixture mixture) {
-		List<MixtureComponent> comps = mixture.getComponents();
-		MixtureComponent input;
-		if (comps.size() > 0) {
-			input = comps.get(0);
-		} else {
-			input = new MixtureComponent(mixture, 1.0F); 
-		}
-		return getGrindingOutputItemStack(input);	
-	}
 	
-	public static List<ChanceStack> getSecondaryGrindingOutputs(Mixture mixture, boolean excludeAggregates) {
-		List<MixtureComponent> components = mixture.getComponents();
-		Iterable<MixtureComponent> secondaries = components.subList(components.size() > 0 ? 1 : 0, components.size());
+	public static List<ChanceStack> getSeparationOutputs(Form form, Mixture mixture, boolean excludeAggregates) {
+		Iterable<MixtureComponent> components = mixture.getComponents();
 		if (excludeAggregates) {
-			secondaries = Iterables.filter(secondaries, notAggregate);
+			components = Iterables.filter(components, notAggregate);
 		}
-		return Lists.newArrayList(Iterables.transform(secondaries, mixtureComponentToGrindingOutput));
+		if (form == Forms.DUST_IMPURE_TINY) {
+			components = Iterables.transform(components, scaleToTinyDust);
+		}
+		Iterable<ChanceStack> chanceStacks = Iterables.transform(components, mixtureComponentToSeparationOutput); 
+		return Lists.newArrayList(Iterables.filter(chanceStacks, significantChance));
 	}
 
-	public static ItemStack getGrindingOutputItemStack(MixtureComponent input) {
+	public static ItemStack getSeparationOutputItemStack(MixtureComponent input) {
 		Form form = Forms.DUST;
 		if (input.material == Aggregates.SAND || input.material == Aggregates.GRAVEL) {
 			form = Forms.PILE;
 		} else if (input.weight < 1.0F) {
-			form = Forms.TINY_DUST;
+			form = Forms.DUST_TINY;
 		}
 		return OreDictUtils.lookupBest(form, input.material);
 	}
 	
 	private static final float TINY_DUST_WEIGHT = 0.1F;
 	
-	private static Function<MixtureComponent,ChanceStack> mixtureComponentToGrindingOutput = new Function<MixtureComponent,ChanceStack>() {
+	private static Function<MixtureComponent,MixtureComponent> scaleToTinyDust = new Function<MixtureComponent,MixtureComponent>() {
+		@Override
+		public MixtureComponent apply(MixtureComponent input) {
+			return new MixtureComponent(input.material, input.weight * TINY_DUST_WEIGHT);
+		}
+	};
+	
+	private static Function<MixtureComponent,ChanceStack> mixtureComponentToSeparationOutput = new Function<MixtureComponent,ChanceStack>() {
 		@Override
 		public ChanceStack apply(MixtureComponent input) {
-			return getGrindingOutput(input);
+			return getSeparationOutput(input);
 		}
 	};
 	
@@ -83,9 +82,17 @@ public class RecipeUtils {
 		}
 	};
 
-	public static ChanceStack getGrindingOutput(MixtureComponent input) {
+	public static final float MIN_SIGNIFICANT_COMPONENT_WEIGHT = 0.05F;
+	
+	private static Predicate<ChanceStack> significantChance = new Predicate<ChanceStack>() {
+		public boolean apply(ChanceStack obj) {
+			return obj.chance >= MIN_SIGNIFICANT_COMPONENT_WEIGHT; 
+		}
+	};
+	
+	public static ChanceStack getSeparationOutput(MixtureComponent input) {
 		float weight = (float)input.weight;
-		ItemStack itemStack = getGrindingOutputItemStack(input);
+		ItemStack itemStack = getSeparationOutputItemStack(input);
 		if (weight < 1.0F) {
 			int ntiny = (int)(weight / TINY_DUST_WEIGHT);
 			if (ntiny > 0) {
@@ -123,7 +130,8 @@ public class RecipeUtils {
         			recipesToAdd.add(createOreRecipe(recipe, replacements));
 					recipesToRemove.add(recipe);
 				} catch (Exception e) {
-					Chemica.log.warn("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "'");
+					Chemica.log.warn("Failed to ore dictify recipe for '" + output.getUnlocalizedName() + "' of class '" + 
+							recipe.getClass().getName() + "'");
 				}
         	}
         }
@@ -161,7 +169,7 @@ public class RecipeUtils {
 					}
 				}
 			}
-		}	
+		}
 		return false;
 	}
 	
@@ -187,7 +195,7 @@ public class RecipeUtils {
 		}
 		throw new IllegalArgumentException("Unknown recipe type");
 	}
-
+	
 	private static IRecipe recreateOreRecipe(ShapelessOreRecipe recipe,	Map<ItemStack, String> replacements) {
 		Object[] ingredients = recipe.getInput().toArray();
 		replaceIngredients(ingredients, replacements);
@@ -215,7 +223,7 @@ public class RecipeUtils {
 		ObfuscationReflectionHelper.setPrivateValue(ShapedOreRecipe.class, recipe, height, "height", "height");
 		return recipe;
 	}
-	
+		
 	private static void replaceIngredients(Object[] ingredients, Map<ItemStack, String> replacements) {
 		for (int i = 0; i < ingredients.length; i++) {
 			if (ingredients[i] instanceof ItemStack) {
@@ -235,8 +243,32 @@ public class RecipeUtils {
 	public static ItemStack getSmeltingOutput(MaterialStack<Compounds> input) {
 		Element metal = input.getMaterial().getFormula().getFirstPart().element;
 		if (metal.getProperties(Condition.STP).state == State.SOLID) {
-			return OreDictUtils.lookupBest(input.getForm() == Forms.TINY_DUST ? Forms.NUGGET : Forms.INGOT, metal);
+			return OreDictUtils.lookupBest(input.getForm() == Forms.DUST_TINY ? Forms.NUGGET : Forms.INGOT, metal);
 		}
 		return null;
+	}
+
+	public static List<ItemStack> getMixtureInputs(Form form, Mixture mixture) {
+		List<ItemStack> inputs = new ArrayList<ItemStack>(mixture.getComponents().size());
+		for (MixtureComponent component : mixture.getComponents()) {
+			int amount = (int)component.weight;
+			if (amount == 0) {
+				amount = (int)(component.weight / TINY_DUST_WEIGHT);
+			}
+			if (amount == 0) {
+				throw new IllegalArgumentException("Cannot mix components with weight < 0.1");
+			}
+			ItemStack itemStack = OreDictUtils.lookupBest(form, component.material);
+			if (itemStack == null) {
+				itemStack = OreDictUtils.lookupBest(Forms.DUST, component.material);
+			}
+			if (itemStack == null) {
+				throw new IllegalArgumentException("No mixable item for " + component.material);
+			}
+			itemStack = itemStack.copy();
+			itemStack.stackSize = amount;
+			inputs.add(itemStack);
+		}
+		return inputs;
 	}
 }

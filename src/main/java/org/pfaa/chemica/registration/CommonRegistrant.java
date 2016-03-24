@@ -9,11 +9,11 @@ public class CommonRegistrant implements Registrant {
 		HandlerRegistration.init();
 		BlockRegistration.init();
 		ItemRegistration.init();
+		OreRegistration.init();
 	}
 
 	@Override
 	public void register() {
-		OreRegistration.init();
 		RecipeRegistration.init();
 	}
 	

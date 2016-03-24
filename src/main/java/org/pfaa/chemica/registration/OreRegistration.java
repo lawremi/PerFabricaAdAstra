@@ -6,11 +6,21 @@ import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Compound.Compounds;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
 public class OreRegistration {
 	public static void init() {
+		oreDictifyMiscBlocks();
 		oreDictifyMaterialItems();
 		oreDictifyMaterialBlocks();
+		oreDictifyHardenedClay();
 		registerDyes();
+	}
+
+	private static void oreDictifyMiscBlocks() {
+		OreDictionary.registerOre("dirtPolluted", ChemicaBlocks.POLLUTED_SOIL);
 	}
 
 	private static void oreDictifyMaterialBlocks() {
@@ -23,6 +33,12 @@ public class OreRegistration {
 		for (IndustrialMaterialItem<?> item : ChemicaItems.getIndustrialMaterialItems()) {
 			OreDictUtils.register(item);
 		}
+	}
+
+	private static void oreDictifyHardenedClay() {
+		String KEY = "blockHardenedClay";
+		OreDictionary.registerOre(KEY, Blocks.hardened_clay);
+		OreDictionary.registerOre(KEY, new ItemStack(Blocks.stained_hardened_clay, 1, OreDictionary.WILDCARD_VALUE));
 	}
 
 	private static void registerDyes() {
