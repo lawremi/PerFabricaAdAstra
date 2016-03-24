@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConstructionMaterial;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.core.block.CompositeBlockAccessors;
 
 import com.google.common.base.CaseFormat;
 
@@ -22,7 +22,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 
-public class ConstructionMaterialBlock extends Block implements CompositeBlockAccessors {
+public class ConstructionMaterialBlock extends Block implements IndustrialBlockAccessors {
 
 	private List<ConstructionMaterial> materials;
 	
@@ -129,6 +129,11 @@ public class ConstructionMaterialBlock extends Block implements CompositeBlockAc
 	private ConstructionMaterial getConstructionMaterial(int meta) {
 		return this.materials.get(meta);
 	}
+	
+	@Override
+	public IndustrialMaterial getIndustrialMaterial(int meta) {
+		return this.getConstructionMaterial(meta);
+	}
 
 	@Override
 	public int getMetaCount() {
@@ -142,6 +147,5 @@ public class ConstructionMaterialBlock extends Block implements CompositeBlockAc
 
 	@Override
 	public void disableOverlay() {
-	}
-	
+	}	
 }
