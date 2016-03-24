@@ -25,7 +25,7 @@ public class BrickGeoBlock extends GeoBlock {
 
 	@Override
 	protected IIcon registerOverlayIcon(IIconRegister registry, int i) {
-		return registry.registerIcon("geologica:brickOverlay");
+		return this.metaIconExists(i) ? this.registerMetaIcon(registry, i) : registry.registerIcon("geologica:brickOverlay");
 	}
 	
 	@Override

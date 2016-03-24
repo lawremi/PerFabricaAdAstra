@@ -1,20 +1,22 @@
 package org.pfaa.core.block;
 
+import java.io.File;
 import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 
 import org.pfaa.geologica.Geologica;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 
 public abstract class CompositeBlock extends Block implements CompositeBlockAccessors {
 
@@ -111,10 +113,30 @@ public abstract class CompositeBlock extends Block implements CompositeBlockAcce
         }
 	}
 
+	private String getMetaIconResource(int i) {
+		return this.getTextureName() + "_" + getBlockNameSuffix(i);
+	}
+
 	protected IIcon registerMetaIcon(IIconRegister registry, int i) {
-		return registry.registerIcon(this.getTextureName() + "_" + getBlockNameSuffix(i));
+		return registry.registerIcon(getMetaIconResource(i));
 	}
 	
+	private boolean resourceExists(String base, String name, String ext) {
+		ResourceLocation location = new ResourceLocation(name);
+		try {
+			String path = base + File.separator + location.getResourcePath() + "." + ext;
+			ResourceLocation complete = new ResourceLocation(location.getResourceDomain(), path);
+			Minecraft.getMinecraft().getResourceManager().getResource(complete);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	protected boolean metaIconExists(int i) {
+		return resourceExists("blocks/textures", getMetaIconResource(i), "png");
+	}
+
 	protected IIcon registerUnderlayIcon(IIconRegister registry, int i) {
 		return this.registerMetaIcon(registry, i);
 	}
