@@ -1,34 +1,63 @@
 package org.pfaa.chemica.item;
 
+import java.util.List;
+import java.util.Set;
+
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.registration.OreDictUtils;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import net.minecraft.item.ItemStack;
 
-// FIXME: empirically useless -- perhaps should bind a form, material and size?
-//        getItemStack() would become getItemStacks() and rely on the ore dictionary.
-
-public class MaterialStack<T extends Enum<?> & IndustrialMaterial> {
-	private IndustrialMaterialItem<T> item;
-	private T material;
+public class MaterialStack {
+	private Form form;
+	private IndustrialMaterial material;
 	private int size;
 	
-	public MaterialStack(IndustrialMaterialItem<T> item, T material, int size) {
+	public MaterialStack(Form form, IndustrialMaterial material, int size) {
 		super();
-		this.item = item;
+		this.form = form;
 		this.material = material;
 		this.size = size;
 	}
+	
+	public MaterialStack(Forms form, IndustrialMaterial material) {
+		this(form, material, 1);
+	}
 
 	public Form getForm() {
-		return this.item.getForm();
+		return this.form;
 	}
 	
-	public T getMaterial() {
+	public IndustrialMaterial getMaterial() {
 		return this.material;
 	}
 
-	public ItemStack getItemStack() {
-		return this.item.getItemStack(this.material, this.size);
+	private Function<ItemStack, ItemStack> resizeItemStack = new Function<ItemStack, ItemStack>() {
+		@Override
+		public ItemStack apply(ItemStack input) {
+			input = input.copy();
+			input.stackSize = MaterialStack.this.size;
+			return input;
+		}
+	};
+	
+	public String getOreDictKey() {
+		return OreDictUtils.makeKey(this.form, this.material);
+	}
+	
+	public Set<ItemStack> getItemStacks() {
+		List<ItemStack> itemStacks = OreDictUtils.lookup(this.form, this.material);
+		itemStacks = Lists.transform(itemStacks, resizeItemStack);
+		return Sets.newHashSet(itemStacks);
+	}
+	
+	public boolean hasItemStack() {
+		return !this.getItemStacks().isEmpty();
 	}
 }

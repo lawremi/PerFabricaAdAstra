@@ -10,12 +10,8 @@ import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
-import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Condition;
-import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.util.ChanceStack;
@@ -240,16 +236,8 @@ public class RecipeUtils {
 		}
 	}
 
-	public static ItemStack getSmeltingOutput(MaterialStack<Compounds> input) {
-		Element metal = input.getMaterial().getFormula().getFirstPart().element;
-		if (metal.getProperties(Condition.STP).state == State.SOLID) {
-			return OreDictUtils.lookupBest(input.getForm() == Forms.DUST_TINY ? Forms.NUGGET : Forms.INGOT, metal);
-		}
-		return null;
-	}
-
-	public static List<ItemStack> getMixtureInputs(Form form, Mixture mixture) {
-		List<ItemStack> inputs = new ArrayList<ItemStack>(mixture.getComponents().size());
+	public static List<MaterialStack> getMixtureInputs(Form form, Mixture mixture) {
+		List<MaterialStack> inputs = new ArrayList<MaterialStack>(mixture.getComponents().size());
 		for (MixtureComponent component : mixture.getComponents()) {
 			int amount = (int)component.weight;
 			if (amount == 0) {
@@ -258,16 +246,14 @@ public class RecipeUtils {
 			if (amount == 0) {
 				throw new IllegalArgumentException("Cannot mix components with weight < 0.1");
 			}
-			ItemStack itemStack = OreDictUtils.lookupBest(form, component.material);
-			if (itemStack == null) {
-				itemStack = OreDictUtils.lookupBest(Forms.DUST, component.material);
+			MaterialStack materialStack = new MaterialStack(form, component.material, amount);
+			if (!materialStack.hasItemStack()) {
+				materialStack = new MaterialStack(Forms.DUST, component.material);
 			}
-			if (itemStack == null) {
+			if (!materialStack.hasItemStack()) {
 				throw new IllegalArgumentException("No mixable item for " + component.material);
 			}
-			itemStack = itemStack.copy();
-			itemStack.stackSize = amount;
-			inputs.add(itemStack);
+			inputs.add(materialStack);
 		}
 		return inputs;
 	}

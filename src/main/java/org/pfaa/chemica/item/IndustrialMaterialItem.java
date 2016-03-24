@@ -71,11 +71,11 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		return material == null ? null : new ItemStack(this, quantity, getDamage(material));
 	}
 	
-	public MaterialStack<T> getMaterialStack(T material, int quantity) {
-		return new MaterialStack<T>(this, material, quantity);
+	public MaterialStack getMaterialStack(T material, int quantity) {
+		return new MaterialStack(this.getForm(), material, quantity);
 	}
 	
-	public MaterialStack<T> getMaterialStack(T material) {
+	public MaterialStack getMaterialStack(T material) {
 		return this.getMaterialStack(material, 1);
 	}
 	

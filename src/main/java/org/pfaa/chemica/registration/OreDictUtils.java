@@ -50,7 +50,7 @@ public abstract class OreDictUtils {
 		return makeKey(prefix, material.getOreDictKey());
 	}
 	
-	private static String makeKey(Form form, IndustrialMaterial material) {
+	public static String makeKey(Form form, IndustrialMaterial material) {
 		return makeKey(form.oreDictKey(), material);
 	}
 	
