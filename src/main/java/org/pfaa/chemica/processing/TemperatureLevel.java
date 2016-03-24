@@ -1,7 +1,7 @@
 package org.pfaa.chemica.processing;
 
 public enum TemperatureLevel {
-	LOW(800), MEDIUM(1200), HIGH(1600), VERY_HIGH(2000);
+	LOW(1000), MEDIUM(1400), HIGH(1800), VERY_HIGH(2200);
 	
 	private int referenceTemperature;
 	
