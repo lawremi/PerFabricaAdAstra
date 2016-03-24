@@ -56,16 +56,16 @@ public interface Alloy extends Mixture, Metal {
 	public Alloy fuse(int temperature);
 	
 	public enum Alloys implements Alloy {
-		AIRCRAFT_ALUMINUM(Al.alloy(Zn, 0.02).alloy(Mg, 0.02).alloy(Cu, 0.005).fuse(800)),
+		AIRCRAFT_ALUMINUM(Al.alloy(Zn, 0.02).alloy(Mg, 0.02).alloy(Cu, 0.005).fuse(800)), // 7075
 		ALNICO(Fe.alloy(Al, 0.4).alloy(Ni, 0.3).alloy(Co, 0.2).fuse(1600)),
-		ALUMINUM_BRONZE(Cu.alloy(Al, 0.2)),
-		ALUMINUM_LITHIUM(Al.alloy(Li, 0.1)),
-		ALUMINUM_6061(Al.alloy(Mg, 0.01).alloy(Si, 0.005)),
-		BERYLLIUM_COPPER(Cu.alloy(Be, 0.1)),
-		BRASS(Cu.alloy(Zn, 0.33)),
-		CUPRONICKEL(Cu.alloy(Ni, 0.1).alloy(Fe, 0.01)),
+		ALUMINUM_BRONZE(Cu.alloy(Al, 0.2).alloy(Fe, 0.02).fuse(1300)),
+		ALUMINUM_LITHIUM(Al.alloy(Li, 0.1).alloy(Mg, 0.01).alloy(Cu, 0.005).fuse(900)), // 8090
+		ALUMINUM_6061(Al.alloy(Mg, 0.01).alloy(Si, 0.005).fuse(880)),
+		BERYLLIUM_COPPER(Cu.alloy(Be, 0.1).alloy(Co, 0.005).fuse(1250)),
+		BRASS(Cu.alloy(Zn, 0.33).fuse(1200)),
+		CUPRONICKEL(Cu.alloy(Ni, 0.1).alloy(Fe, 0.01).fuse(1425)),
 		ELECTRUM(Au.alloy(Ag, 1.0)),
-		DURALUMIN(Al.alloy(Mg, 0.015).alloy(Zn, 0.01).alloy(Mn, 0.005)),
+		DURALUMIN(Al.alloy(Mg, 0.015).alloy(Zn, 0.01).alloy(Mn, 0.005).fuse(825)), // 2024
 		FERROCERIUM(Ce.alloy(Fe, 0.7).alloy(La, 0.6).alloy(Nd, 0.1).alloy(Pr, 0.1).alloy(Mg, 0.1)),
 		FERROCHROME(Fe.alloy(Cr, 1.0)),
 		FERROMOLYBDENUM(Fe.alloy(Mo, 0.5)),
