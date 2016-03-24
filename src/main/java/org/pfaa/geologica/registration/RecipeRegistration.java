@@ -1,6 +1,5 @@
 package org.pfaa.geologica.registration;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,10 +25,7 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
-import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.Ore;
-import org.pfaa.geologica.processing.OreMineral.Ores;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -58,7 +54,6 @@ public class RecipeRegistration {
 		registerCraftingRecipes();
 		registerStoneToolRecipes();
 		registerCompatibilityRecipes();
-		registerFabricationRecipes();
 	}
 	
 	private static void registerCompatibilityRecipes() {
@@ -166,7 +161,6 @@ public class RecipeRegistration {
 		for (Block block : GeologicaBlocks.getBlocks()) {
 			registerCommunitionRecipes(block);
 		}
-		registerIntermediateGrindingRecipes();
 	}
 	
 	private static void registerCommunitionRecipes(Block block) {
@@ -298,14 +292,6 @@ public class RecipeRegistration {
 		// TODO: Interact with ChanceDropRegistry to add separation recipes for LooseGeoBlocks
 	}
 	
-	private static void registerIntermediateGrindingRecipes() {
-		for (Intermediates material : Intermediates.values()) {
-			ItemStack input = GeologicaItems.INTERMEDIATE_CRUSHED.getItemStack(material);
-			ItemStack output = GeologicaItems.INTERMEDIATE_DUST.getItemStack(material);
-			registry.registerGrindingRecipe(input, output, Collections.<ChanceStack>emptyList(), Strength.WEAK);
-		}
-	}
-
 	private static void registerSlabRecipe(CompositeBlock input, Block output) {
 		registerCraftingRecipesByMeta(input, output, 6, "###");
 	}
@@ -348,36 +334,4 @@ public class RecipeRegistration {
 			registry.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature());
 		}
 	}
-	
-	private static void registerFabricationRecipes() {
-		useFeldsparAsFlux();
-		makePortlandCement();
-	}
-
-	private static void mixIntermediate(IndustrialMaterialItem<Intermediates> item, Intermediates material) {
-		List<ItemStack> inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
-		registry.registerMixingRecipe(inputs, item.getItemStack(material));
-	}
-
-	private static void makePortlandCement() {
-		ItemStack clinker = GeologicaItems.INTERMEDIATE_CRUSHED.getItemStack(Intermediates.PORTLAND_CLINKER, 4);	
-		List<ItemStack> inputs = Arrays.asList(
-				GeologicaItems.ORE_MINERAL_DUST.getItemStack(Ores.CALCITE, 3),
-				new ItemStack(Items.clay_ball));
-		registry.registerRoastingRecipe(inputs, clinker, 1700);
-		mixIntermediate(GeologicaItems.INTERMEDIATE_CRUSHED, Intermediates.PORTLAND_CEMENT);
-	}
-
-	private static void useFeldsparAsFlux() {
-		ItemStack output = new ItemStack(Blocks.glass);
-		ItemStack input = new ItemStack(Blocks.sand);
-		ItemStack feldspar = GeologicaItems.INDUSTRIAL_MINERAL_DUST_TINY.getItemStack(IndustrialMinerals.FELDSPAR);
-		registry.registerCastingRecipe(input, output, feldspar, 1500);
-		
-		output = new ItemStack(Items.brick);
-		input = new ItemStack(Items.clay_ball);
-		registry.registerCastingRecipe(input, output, feldspar, 1500);
-	}
-
-
 }

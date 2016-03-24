@@ -8,7 +8,6 @@ import org.pfaa.core.catalog.CatalogUtils;
 import org.pfaa.core.catalog.ItemCatalog;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
@@ -56,11 +55,6 @@ public class GeologicaItems implements ItemCatalog {
 			new IndustrialMaterialItem<IndustrialMinerals>(Forms.DUST, IndustrialMinerals.class);
 	public static final IndustrialMaterialItem<IndustrialMinerals> INDUSTRIAL_MINERAL_DUST_TINY = 
 			new IndustrialMaterialItem<IndustrialMinerals>(Forms.DUST_TINY, IndustrialMinerals.class);
-	
-	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_CRUSHED = 
-			new IndustrialMaterialItem<Intermediates>(Forms.CRUSHED, Intermediates.class);
-	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_DUST = 
-			new IndustrialMaterialItem<Intermediates>(Forms.DUST, Intermediates.class);
 	
 	@SuppressWarnings("rawtypes")
 	public static List<IndustrialMaterialItem> getIndustrialMaterialItems() {
