@@ -35,6 +35,8 @@ public class ChemicaBlocks implements BlockCatalog {
 			return Blocks.sand;
 		} else if (aggregate == Aggregates.CLAY) {
 			return Blocks.clay;
+		} else if (aggregate == Aggregates.HARDENED_CLAY) {
+			return Blocks.hardened_clay;
 		} else if (aggregate == Aggregates.GRAVEL) {
 			return Blocks.gravel;
 		} else if (aggregate == Aggregates.DIRT) {
