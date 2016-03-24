@@ -5,17 +5,20 @@ import com.google.common.base.CaseFormat;
 public interface Form {
 	public String name();
 	public String oreDictKey();
+	public int getNumberPerBlock();
 	
 	public enum Forms implements Form {
 		BLOCK(1), // intact solid placeable as block, constructed from 9 ingots/lumps, 4 clumps, or cast directly
 		CLUMP(4), // a compact lump, typically from a malleable solid like dirt or clay
-		CRUSHED(2), // the result of crushing a block, further crushing yields powder
+		CRUSHED(9), // the result of crushing a block, further crushing yields powder
 		DUST(9), // dry solid as fine particles, from pulverizing ingots and lumps, precipitation
 		INGOT(9), // intact solid in regular shape, from sintering powder or casting, or dismantling blocks
 		LUMP(9), // intact solid in irregular shape, found naturally
 		NUGGET(9*9), // metal in irregular, natural form; can be combined into (or broken down from) ingot
 		PILE(4), // like a clump, except loose
-		TINY_DUST(9*9); // dust from pulverizing nugget
+		DUST_TINY(9*9), // dust from pulverizing nugget
+		DUST_IMPURE(9),
+		DUST_IMPURE_TINY(9*9); 
 		
 		private int numberPerBlock;
 		
@@ -23,6 +26,7 @@ public interface Form {
 			this.setNumberPerBlock(numberPerBlock);
 		}
 
+		@Override
 		public int getNumberPerBlock() {
 			return numberPerBlock;
 		}
