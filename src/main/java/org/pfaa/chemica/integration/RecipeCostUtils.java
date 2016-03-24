@@ -35,4 +35,16 @@ public class RecipeCostUtils {
 		}
 	}
 	
+	public static int arcTicksForTemperature(int temp) {
+		return temp / 16;
+	}
+	
+	public static int rfFromTemperatureLevel(TemperatureLevel temp) {
+		return temp.getReferenceTemperature();
+	}
+
+	public static int rfFromTemperature(int temp) {
+		return temp - temp / 3;
+	}
+
 }

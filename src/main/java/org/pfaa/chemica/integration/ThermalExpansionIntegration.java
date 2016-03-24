@@ -1,17 +1,19 @@
 package org.pfaa.chemica.integration;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ThermalExpansionIntegration {
 	public static void init() {
@@ -20,12 +22,12 @@ public class ThermalExpansionIntegration {
 		}
 	}
 	
-	public static class ThermalExpansionRecipeRegistry implements RecipeRegistry {
+	public static class ThermalExpansionRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
 				Strength strength) {
-			int energy = energyFromStrength(strength);
+			int energy = RecipeCostUtils.grindingEnergyForStrength(strength);
 			if (secondaries.size() > 0) {
 				ChanceStack secondary = secondaries.get(0);
 				ThermalExpansionHelper.addPulverizerRecipe(energy, input, output, secondary.itemStack, (int)(secondary.chance * 100));
@@ -35,44 +37,67 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) {
-			this.registerGrindingRecipe(input, output, Collections.<ChanceStack>emptyList(), strength);
-		}
-
-		private static int energyFromStrength(Strength strength) {
-			switch(strength) {
-			case WEAK:
-				return 2400;
-			case MEDIUM:
-				return 4000;
-			case STRONG:
-				return 5600;
-			case VERY_STRONG:
-				return 7200;
-			default:
-				throw new IllegalArgumentException("unhandled strength: " + strength);
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+			int energy = RecipeCostUtils.rfFromTemperatureLevel(temp);
+			if (flux != null) {
+				Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
+				ItemStack slag = new ItemStack(teMaterial, 1, 514);
+				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, slag);
+			} else {
+				ThermalExpansionHelper.addFurnaceRecipe(energy, input.copy(), output);
 			}
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			// TODO: if flux != null, use induction smelter instead
-			ThermalExpansionHelper.addFurnaceRecipe(energyFromTemperatureLevel(temp), input, output);
+		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+			int energy = RecipeCostUtils.rfFromTemperature(temp);
+			if (flux != null) {
+				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, null);
+			} else {
+				ThermalExpansionHelper.addFurnaceRecipe(energy, input, output);
+			}
 		}
 
-		private static int energyFromTemperatureLevel(TemperatureLevel temp) {
-			return energyFromTemperature(temp.getReferenceTemperature());
-		}
-		
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {
-			ThermalExpansionHelper.addFurnaceRecipe(energyFromTemperature(temp), input, output);
+		public void registerCastingRecipe(FluidStack input, ItemStack output) {
+			// TODO: fluid transposer with the TCon ingot cast? Will need a filled cast item.
 		}
 
-		private static int energyFromTemperature(int temp) {
-			return temp;
+		@Override
+		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
+			int energy = RecipeCostUtils.rfFromTemperature(temp);
+			if (output.getFluid() == FluidRegistry.LAVA) {
+				energy *= 300;
+			}
+			ThermalExpansionHelper.addCrucibleRecipe(energy, input, output);
 		}
-		
-		// Other machines: crucible, induction smelter
+
+		@Override
+		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {
+			if (solutes.size() > 1) {
+				return;
+			}
+			int energy = RecipeCostUtils.rfFromTemperature(temp) * output.stackSize;
+			ThermalExpansionHelper.addSmelterRecipe(energy, base, solutes.get(0), output, null);
+		}
+
+		@Override
+		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp) {
+			int energy = RecipeCostUtils.rfFromTemperature(temp);
+			if (inputs.size() == 2) {
+				ThermalExpansionHelper.addSmelterRecipe(energy, inputs.get(0), inputs.get(1), output);
+			} else {
+				ThermalExpansionHelper.addFurnaceRecipe(energy, inputs.get(0), output);
+			}
+		}
+
+		@Override
+		public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
+			if (inputs.size() > 1) {
+				return;
+			}
+			int energy = RecipeCostUtils.rfFromTemperature(temp);
+			ThermalExpansionHelper.addTransposerFill(energy, inputs.get(0), output, additive, false);
+		}
 	}
 }

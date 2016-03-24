@@ -2,15 +2,10 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
-import org.pfaa.chemica.fluid.IndustrialFluids;
-import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
-import org.pfaa.chemica.util.ChanceStack;
 import org.pfaa.core.block.BlockWithMeta;
 
 import cpw.mods.fml.common.Loader;
@@ -33,14 +28,7 @@ public class TConstructIntegration {
 		}
 	}
 	
-	public static class TConstructRecipeRegistry implements RecipeRegistry {
-
-		@Override
-		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
-				Strength strength) { }
-
-		@Override
-		public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) { }
+	public static class TConstructRecipeRegistry extends AbstractRecipeRegistry {
 
 		private BlockWithMeta<Block> getBlockWithMeta(ItemStack itemStack) {
 			int meta;
@@ -64,55 +52,61 @@ public class TConstructIntegration {
 			return new BlockWithMeta<Block>(block, meta);
 		}
 		
-		private FluidStack addMelting(ItemStack input, int temp) {
-			return this.addMelting(input, input, temp);
-		}
+		private static final int SEARED_STONE_FOR_BLOCK = 18;
 		
-		// FIXME: rendering of fluids is always white; we think this is fixed in TCon 2.0
-		private FluidStack addMelting(ItemStack input, ItemStack output, int temp) {
-			FluidStack fluid;
-			if (OreDictUtils.hasPrefix(output, "stone") || OreDictUtils.hasPrefix(output, "rubble") ||
-					OreDictUtils.hasPrefix(output, "cobblestone")) {
-				fluid = FluidRegistry.getFluidStack("stone.seared", IndustrialFluids.getAmount(Forms.BLOCK));
-			} else {
-				fluid = IndustrialFluids.toFluidStack(output, State.LIQUID);
+		private void addMelting(ItemStack input, FluidStack output, int temp) {
+			if (output.getFluid() == FluidRegistry.LAVA) {
+				output = FluidRegistry.getFluidStack("stone.seared", SEARED_STONE_FOR_BLOCK);
 			}
 			BlockWithMeta<Block> render = getBlockWithMeta(input);
 			if (render != null) {
-				Smeltery.addMelting(input, render.block, render.meta, temp / 2, fluid);
+				temp /= 2;
+				if (!(input.getItem() instanceof ItemBlock)) {
+					temp -= temp / 3;
+				}
+				Smeltery.addMelting(input, render.block, render.meta, temp, output);
 			}
-			return fluid;
 		}
 		
-		private void addCasting(FluidStack fluid, ItemStack output, int temp) {
-			ItemStack cast = TConstructRegistry.getItemStack("ingotCast");
-			LiquidCasting casting; 
+		private void addCasting(FluidStack fluid, ItemStack output) {
+			ItemStack cast = null;
+			LiquidCasting casting;
 			if (output.getItem() instanceof ItemBlock) {
 				casting = TConstructRegistry.getBasinCasting();
 			} else {
 				casting = TConstructRegistry.getTableCasting();
+				cast = TConstructRegistry.getItemStack("ingotCast");
 			}
-			casting.addCastingRecipe(output, fluid, cast, temp / 200);
+			casting.addCastingRecipe(output, fluid, cast, fluid.getFluid().getTemperature() / 200);
 		}
 		
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+		public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {
 			if (flux != null) {
 				return;
 			}
 			if (OreDictUtils.hasPrefix(input, "ore")) {
 				output = output.copy();
-				output.stackSize *= 2;
+				output.amount *= 2;
 			}
 			this.addMelting(input, output, temp.getReferenceTemperature());
 		}
 		
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {
-			FluidStack fluid = this.addMelting(input, temp);
-			this.addCasting(fluid, output, temp);
-			this.addMelting(output, temp);
+		public void registerCastingRecipe(FluidStack input, ItemStack output) {
+			this.addCasting(input, output);
 		}
+
+		@Override
+		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
+			this.addMelting(input, output, output.getFluid().getTemperature());
+		}
+		
+		@Override
+		public void registerAlloyingRecipe(FluidStack output, List<FluidStack> inputs) {
+			Smeltery.addAlloyMixing(output, inputs.toArray(new FluidStack[0]));
+		}
+
 	}
 
 }

@@ -1,11 +1,10 @@
 package org.pfaa.chemica.integration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
 import appeng.api.features.IGrinderRegistry;
@@ -22,7 +21,7 @@ public class AppliedEnergistics2Integration {
 		}
 	}
 	
-	public static class AppliedEnergistics2RecipeRegistry implements RecipeRegistry {
+	public static class AppliedEnergistics2RecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
@@ -44,16 +43,17 @@ public class AppliedEnergistics2Integration {
 		}
 		
 		@Override
-		public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) {
-			IGrinderRegistry grinder = Api.INSTANCE.registries().grinder();
-			int cost = costFromStrength(strength);
+		public void registerCrushingRecipe(ItemStack input, ItemStack output, ChanceStack dust, Strength strength) {
+			List<ChanceStack> secondaries = new ArrayList<ChanceStack>(2);
 			if (output.stackSize > 1) {
 				output = output.copy();
-				ItemStack extra = output.splitStack(output.stackSize / 2);
-				grinder.addRecipe(input, output, extra, (float) ( AEConfig.instance.oreDoublePercentage / 100.0 ), cost);
-			} else {
-				grinder.addRecipe(input, output, cost);
+				secondaries.add(new ChanceStack(output.splitStack(output.stackSize / 2),
+					(float) ( AEConfig.instance.oreDoublePercentage / 100.0 )));
 			}
+			if (dust != null) {
+				secondaries.add(dust);
+			}
+			this.registerGrindingRecipe(input, output, secondaries, strength);
 		}
 
 		private static int costFromStrength(Strength strength) {
@@ -70,12 +70,5 @@ public class AppliedEnergistics2Integration {
 				throw new IllegalArgumentException("unhandled strength: " + strength);
 			}
 		}
-		
-		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {}
-
-		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {}
-
 	}
 }

@@ -1,12 +1,10 @@
 package org.pfaa.chemica.integration;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
@@ -22,7 +20,7 @@ public class RailcraftIntegration {
 		}
 	}
 	
-	public static class RailcraftRecipeRegistry implements RecipeRegistry {
+	public static class RailcraftRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
@@ -35,18 +33,10 @@ public class RailcraftIntegration {
 		}
 
 		@Override
-		public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) {
-			this.registerGrindingRecipe(input, output, Collections.<ChanceStack>emptyList(), strength);
-		}
-
-		@Override
 		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
 			int ticks = RecipeCostUtils.blastTicksForTemperatureLevel(temp);
 			RailcraftCraftingManager.blastFurnace.addRecipe(input, true, false, ticks, output);
 		}
-
-		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {}
 
 		// Other machines: coke oven
 	}

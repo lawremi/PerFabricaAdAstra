@@ -12,4 +12,8 @@ public abstract class ModIds {
 	public static final String MAGNETICRAFT = "Magneticraft";
 	public static final String BUILDCRAFT_ADDITIONS = "bcadditions";
 	public static final String HYDRAULICRAFT = "HydCraft";
+	public static final String TCONSTRUCT = "TConstruct";
+	public static final String FORESTRY = "Forestry";
+	public static final String MARICULTURE = "Mariculture";
+	public static final String BUILDCRAFT_TRANSPORT = "BuildCraft|Transport";
 }

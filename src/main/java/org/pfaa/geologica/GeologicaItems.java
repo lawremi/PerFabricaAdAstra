@@ -8,6 +8,7 @@ import org.pfaa.core.catalog.CatalogUtils;
 import org.pfaa.core.catalog.ItemCatalog;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
@@ -36,21 +37,30 @@ public class GeologicaItems implements ItemCatalog {
 			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, CrudeRock);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, CrudeRock);
-	public static final IndustrialMaterialItem<GeoMaterial> TINY_CRUDE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.TINY_DUST, GeoMaterial.class, CrudeRock);
+	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST_TINY = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, CrudeRock);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, EarthyMaterial);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, OreRock);
+	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, OreRock);
+	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST_TINY = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, OreRock);
 	
 	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST = 
 			new IndustrialMaterialItem<Ores>(Forms.DUST, Ores.class);
-	public static final IndustrialMaterialItem<Ores> TINY_ORE_MINERAL_DUST = 
-			new IndustrialMaterialItem<Ores>(Forms.TINY_DUST, Ores.class);
+	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST_TINY = 
+			new IndustrialMaterialItem<Ores>(Forms.DUST_TINY, Ores.class);
 	public static final IndustrialMaterialItem<IndustrialMinerals> INDUSTRIAL_MINERAL_DUST = 
 			new IndustrialMaterialItem<IndustrialMinerals>(Forms.DUST, IndustrialMinerals.class);
-	public static final IndustrialMaterialItem<IndustrialMinerals> TINY_INDUSTRIAL_MINERAL_DUST = 
-			new IndustrialMaterialItem<IndustrialMinerals>(Forms.TINY_DUST, IndustrialMinerals.class);
+	public static final IndustrialMaterialItem<IndustrialMinerals> INDUSTRIAL_MINERAL_DUST_TINY = 
+			new IndustrialMaterialItem<IndustrialMinerals>(Forms.DUST_TINY, IndustrialMinerals.class);
+	
+	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_CRUSHED = 
+			new IndustrialMaterialItem<Intermediates>(Forms.CRUSHED, Intermediates.class);
+	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_DUST = 
+			new IndustrialMaterialItem<Intermediates>(Forms.DUST, Intermediates.class);
 	
 	@SuppressWarnings("rawtypes")
 	public static List<IndustrialMaterialItem> getIndustrialMaterialItems() {

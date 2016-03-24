@@ -3,10 +3,10 @@ package org.pfaa.chemica.integration;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
+
+import com.cout970.magneticraft.api.access.MgRecipeRegister;
 
 import cpw.mods.fml.common.Loader;
 import net.minecraft.item.ItemStack;
@@ -18,26 +18,46 @@ public class MagneticraftIntegration {
 		}
 	}
 	
-	public static class MagneticraftRecipeRegistry implements RecipeRegistry {
+	public static class MagneticraftRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
 		public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,
 				Strength strength) {
-			// TODO: grinder
+			ItemStack extra1 = null, extra2 = null;
+			float prob1 = 0, prob2 = 0;
+			if (secondaries.size() > 0) {
+				extra1 = secondaries.get(0).itemStack;
+				prob1 = secondaries.get(0).chance;
+			}
+			if (secondaries.size() > 1) {
+				extra2 = secondaries.get(1).itemStack;
+				prob2 = secondaries.get(1).chance;
+			}
+			MgRecipeRegister.registerGrinderRecipe(input, output, extra1, prob1, extra2, prob2);
 		}
 
 		@Override
-		public void registerCrushingRecipe(ItemStack input, ItemStack output, Strength strength) {
-			// TODO: crusher and crushing table
+		public void registerCrushingRecipe(ItemStack input, ItemStack output, ChanceStack dust, Strength strength) {
+			if (dust != null) {
+				MgRecipeRegister.registerCrusherRecipe(input, output, dust.itemStack, dust.chance, null, 0);
+			} else {
+				MgRecipeRegister.registerCrusherRecipe(input, output, null, 0, null, 0);
+			}
+			MgRecipeRegister.registerHammerTableRecipe(input, output);
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {}
-
-		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, int temp) {}
-
-		// Other machines: sifter (separate solids by density), distillery (just one output), refinery (3 outputs)
+		public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+			ItemStack extra = null;
+			float prob = 0F;
+			if (outputs.size() > 1) {
+				extra = outputs.get(1).itemStack;
+				prob = outputs.get(1).chance;
+			}
+			MgRecipeRegister.registerSifterRecipe(input, outputs.get(0).itemStack, extra, prob);
+		}
+		
+		// Other machines: distillery (just one output), refinery (3 outputs)
 	}
 
 }

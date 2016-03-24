@@ -14,8 +14,13 @@ public abstract class ModIntegration {
 		ThermalExpansionIntegration.init();
 		EnderIOIntegration.init();
 		ImmersiveEngineeringIntegration.init();
-		RotaryCraftIntegration.init();
+		// FIXME: No properly distributed API: RotaryCraftIntegration.init(); // can restore from git
 		BuildcraftAdditionsIntegration.init();
+		TConstructIntegration.init();
+		// TODO: TinkersSteelworksIntegration.init();
+		MagneticraftIntegration.init();
+		ForestryIntegration.init();
+		MaricultureIntegration.init();
 	}
 	
 }
