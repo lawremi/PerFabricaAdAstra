@@ -89,12 +89,13 @@ public class IndustrialFluids {
 		registerFluidMaterial(fluid, material);
 		return fluid;
 	}
-
+	
 	private static Fluid createFluidForCondition(
 			String name, IndustrialMaterial material, Condition condition) {
 		ConditionProperties props = material.getProperties(condition);
-		Fluid fluid = new Fluid(name);
+		Fluid fluid = new ColoredFluid(name, props.color);
 		fluid.setGaseous(props.state == State.GAS);
+		fluid.setTemperature((int)condition.temperature);
 		fluid.setDensity((int)(convertToForgeDensity(props.density)));
 		if (!Double.isNaN(props.viscosity)) {
 			fluid.setViscosity((int)(props.viscosity / props.density * 1000)); // Forge fluids are in cSt/1000
