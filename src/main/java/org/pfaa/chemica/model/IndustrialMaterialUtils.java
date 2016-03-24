@@ -3,30 +3,52 @@ package org.pfaa.chemica.model;
 public class IndustrialMaterialUtils {
 
 	public static Condition getCanonicalCondition(IndustrialMaterial material, State state) {
-		double temperature = Constants.STANDARD_TEMPERATURE;
-		if (material instanceof Chemical) {
-			Chemical chemical = (Chemical)material;
-			temperature = getTemperatureClosestToStandard(chemical, state);
+		Integer temp = getCanonicalTemperature(material, state);
+		if (temp == null) {
+			return null;
 		}
-		return new Condition(temperature, Constants.STANDARD_PRESSURE);
+		return new Condition(temp, Constants.STANDARD_PRESSURE);
 	}
 
-	private static double getTemperatureClosestToStandard(Chemical chemical, State state) {
+	private static Integer getCanonicalTemperature(IndustrialMaterial material, State state) {
 		switch(state) {
 		case SOLID:
-			return Math.min(chemical.getFusion() != null ? 
-								chemical.getFusion().getTemperature() - 1: 
-									chemical.getVaporization() != null ?
-											chemical.getVaporization().getTemperature() - 1: 
-												Constants.STANDARD_TEMPERATURE,
-							Constants.STANDARD_TEMPERATURE);
+			if (material instanceof Fusible) {
+				Fusion fusion = ((Fusible)material).getFusion();
+				if (fusion != null) {
+					return Math.min(fusion.getTemperature() - 1, Constants.STANDARD_TEMPERATURE);
+				}
+			}
+			if (material instanceof Vaporizable) {
+				Vaporization vaporization = ((Vaporizable)material).getVaporization();
+				if (vaporization != null) {
+					return Math.min(vaporization.getTemperature() - 1, Constants.STANDARD_TEMPERATURE);
+				}
+			}
+			break;
 		case LIQUID:
-			return Math.max(chemical.getFusion().getTemperature(), Constants.STANDARD_TEMPERATURE);
+			if (material instanceof Fusible) {
+				Fusion fusion = ((Fusible)material).getFusion();
+				if (fusion != null) {
+					return Math.max(fusion.getTemperature(), Constants.STANDARD_TEMPERATURE);
+				} else {
+					return null;
+				}
+			}
+			break;
 		case GAS:
-			return Math.max(chemical.getVaporization().getTemperature(), Constants.STANDARD_TEMPERATURE);
+			if (material instanceof Vaporizable) {
+				Vaporization vaporization = ((Vaporizable)material).getVaporization();
+				if (vaporization != null) {
+					return Math.max(vaporization.getTemperature(), Constants.STANDARD_TEMPERATURE);
+				} else {
+					return null;
+				}
+			}
+			break;
 		default:
-			return Constants.STANDARD_TEMPERATURE;
 		}
+		return Constants.STANDARD_TEMPERATURE;
 	}
 
 }
