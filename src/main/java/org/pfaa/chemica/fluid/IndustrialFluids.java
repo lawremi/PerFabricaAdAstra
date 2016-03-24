@@ -60,11 +60,19 @@ public class IndustrialFluids {
 			 return null;
 		}
 		Condition condition = IndustrialMaterialUtils.getCanonicalCondition(material, state);
+		if (condition == null) {
+			return null;
+		}
 		if (name == null) {
 			name = material.getOreDictKey();
 			boolean standardState = condition.equals(Condition.STP);
 			if (!standardState) {
-				name = OreDictUtils.makeKey(state.name(), name);
+				String stateName = state == State.GAS ? "vaporized" : "molten";
+				// Greg likes "molten.iron", but we prefer "iron.molten".
+				String gtName = stateName + "." + name;
+				if (FluidRegistry.getFluid(gtName) != null)
+					name = gtName;
+				else name = name + "." + stateName;
 			}
 		}
 		Fluid fluid = FluidRegistry.getFluid(name);
