@@ -108,6 +108,15 @@ public class IndustrialFluids {
 		return (density <= Constants.AIR_DENSITY ? (density - Constants.AIR_DENSITY) : density) * 1000;
 	}
 	
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, int amount) {
+		Fluid fluid = getCanonicalFluid(material, state);
+		return fluid == null ? null : new FluidStack(fluid, amount);
+	}
+	
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, Form form) {
+		return getCanonicalFluidStack(material, state, getAmount(form));
+	}
+	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
 		Fluid fluid = IndustrialFluids.getCanonicalFluid(material, state, name);
 		return getBlock(fluid);
