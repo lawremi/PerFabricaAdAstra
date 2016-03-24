@@ -24,7 +24,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> extends Item {
+public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> extends Item implements IndustrialItemAccessors {
 	
 	private Form form;
 	private Class<T> enumClass;
