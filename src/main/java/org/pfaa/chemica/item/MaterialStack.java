@@ -5,6 +5,9 @@ import org.pfaa.chemica.processing.Form;
 
 import net.minecraft.item.ItemStack;
 
+// FIXME: empirically useless -- perhaps should bind a form, material and size?
+//        getItemStack() would become getItemStacks() and rely on the ore dictionary.
+
 public class MaterialStack<T extends Enum<?> & IndustrialMaterial> {
 	private IndustrialMaterialItem<T> item;
 	private T material;

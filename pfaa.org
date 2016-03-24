@@ -1235,6 +1235,50 @@
 
     Colored lighting is possible:
     http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/1446134-1-7-2-beta-colored-light-api-mod-writers-can
+
+** Industrial Minerals
+*** Feldspar
+    Technically two types based on the cation: Ca/Na (plagioclase) or
+    K (orthoclase). We group them together. Feldspar is useful
+    as a strengthening agent and flux in glass and ceramic making. It
+    also serves as a filler in paints.
+
+    Could have feldspar (tiny dust) combine with ordinary clay to
+    produce bricks for half the energy. Same for sand to glass.
+
+*** Calcite
+    Uses include:
+    * Cement
+      * Portland cement (concrete and mortar): 
+	* Clinker from roasting limestone and clay: 3CaCO3+clay@1700K
+	* Gypsum added to clinker (10%), 1 tiny dust per clinker dust
+	* Gypsum + clinker mixture is ground to cement
+      * Concrete:
+	* Railcraft and Chisel have concrete, but not cement
+	* Need to mix 2x gravel + 1x sand + 1x cement + water
+      * Thut's Mods adds liquid concrete that dries but noone uses it
+      * May need to introduce notion of "synthetic mixture"
+      * Can also produce cement by grinding slag, or by burning oil shale
+      * Natural sources include volcanic ash, diatomite, calcined zeolite
+      * Geopolymer cement: slag + coal fly ash + sodium silicate with
+        >1.4 SiO2:NaO molar ratio; no cooking required
+    * Quicklime (Witchery...) by roasting in a furnace
+      * Should be required flux for steel making in arc furnace.
+      * Roast with coke to form CaC, used for making acetylene.
+      * Convert to Ca(OH)2 by boiling in water (Forestry carpenter?)
+	* Solvay process
+	* NaOH production
+	* Metallurgy (froth flotation, etc)
+	* Sewage treatment
+	* Removing SO2 from flue gas (=> CaSO4)
+	* Sugar from beets
+	* Sand-lime bricks
+	* Alkaline soil for farming
+    * Alkaline soil for farming
+      * Best if integrated with Agricraft
+    * Flux for iron blast smelting
+      * No mod blast furnances handle flux, issue filed with IE
+    * Removing SO2 from flue gas (=> CaSO4)
     
 ** Tools
 ** Batteries
@@ -1462,8 +1506,9 @@
     
 *** Froth Flotation
     Desired ore is derivatized (via a collector) to become more
-    hydrophobic. It is mixed into a water bath, and air bubbles rise
-    through the bath, capturing the hydrophobic ore
+    hydrophobic. It is mixed into a bath of water (treated with lime
+    and a surfactant like methylisobutyle carbinol), and air bubbles
+    rise through the bath, capturing the hydrophobic ore
     constituents. This is mostly used for sulfide ores.
 
     The machine would accept air (from a compressor) and the ore
@@ -2166,17 +2211,13 @@
 **** Copper
      * 1x :: ore =smelt=> 1*copper_ingot
      * 2x :: ore =crush=> 2*ore_crushed =smelt=> copper_ingot
-     * 3x :: ore =crush=> 2*ore_crushed =float=> 1.5*chalcopyrite_dust =smelt=> Cu
-     * 3x+ :: 2*chalcopyrite_dust =smelt+silica=> 
-              chalcocite_dust + Fe-rich slag (1) + SO2 =smelt=> 2*Cu
-     * 4x :: chalcocite_dust =roast=> 1.3*cuprous_oxide_dust + SO2  =smelt=> 2*Cu
+     * 2x :: ore_crushed =grind=> ore_dust =smelt=> copper_ingot
+     * 4x :: ore_dust =float=> 2*chalcopyrite_dust =smelt=> copper_ingot
      
-     * (1) :: If ore dust is input, slag is not Fe-rich
-       
-     Like most sulfide ores, we concentrate with froth flotation,
-     roast to oxide, and smelt to the metal. But the iron impurity
-     requires us to smelt with silica to separate the iron in the slag
-     phase.
+     The iron impurity requires us to smelt with silica to separate
+     the iron in the slag phase. The output of smelting is then
+     copper, iron-rich slag, and SO2. Like most sulfide ores,
+     concentrating by froth flotation enables 6X efficiency.
 
 **** Cobalt
      The copper oxide is dissolved in sulfuric acid, and the cobalt is
@@ -2512,7 +2553,11 @@
        temperature.
      * Thermal decomposition of diborane.
      
-*** TODO Pyrolusite
+*** Pyrolusite
+**** Manganese
+     Reduction with sodium, magnesium, or aluminum.
+     Electrolysis.
+     
 *** Pollucite
 **** Caesium
      Caesium is highly reactive, with both water and air. Seems like
@@ -3846,7 +3891,10 @@
     The planned distillation tower would be useful, but it seems
     abandoned. Buildcraft Additions adds a multiblock structure, but
     the cooling tower just produces fuel.
-    
+
+** Advanced Generators
+   Has an interesting multiblock heat exchanger.
+   
 ** Applied Energistics
 ** Electrical Age
 ** Rotary/Electri/Reactorcraft
