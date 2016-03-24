@@ -11,7 +11,6 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.render.EntityDropParticleFX;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -99,12 +98,7 @@ public class IndustrialFluidBlock extends BlockFluidClassic {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		Fluid fluid = this.getFluid();
-		boolean molten = fluid.getTemperature() >= StateProperties.MIN_GLOWING_TEMPERATURE;
-		String prefix = fluid.isGaseous() ? "gas" : molten ? "molten" : "fluid";
-		String postfix = this.lightOpacity == 255 ? "_opaque" : "";
-		fluid.setStillIcon(register.registerIcon("chemica:" + prefix + "_still" + postfix));
-		fluid.setFlowingIcon(register.registerIcon("chemica:" + prefix + "_flow" + postfix));
+		// assumed to already be registered with the fluid
 	}
 	
 	@Override

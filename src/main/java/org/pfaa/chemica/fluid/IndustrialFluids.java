@@ -9,13 +9,19 @@ import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.registration.OreDictUtils;
+import org.pfaa.chemica.model.StateProperties;
+import org.pfaa.chemica.processing.Form;
 
 import com.google.common.base.CaseFormat;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public class IndustrialFluids {
 	private static HashMap<Fluid,IndustrialMaterial> fluidToMaterial = new HashMap<Fluid, IndustrialMaterial>();
@@ -109,5 +115,38 @@ public class IndustrialFluids {
 			block = new IndustrialFluidBlock(fluid); 
 		}
 		return block;
+	}
+	
+	private static int MB_PER_BLOCK = 1296;
+	
+	public static int getAmount(Form form) {
+		return MB_PER_BLOCK / form.getNumberPerBlock();
+	}
+	
+	private static String getIconName(Fluid fluid, boolean flowing, boolean opaque) {
+		boolean molten = fluid.getTemperature() >= StateProperties.MIN_GLOWING_TEMPERATURE;
+		return "chemica:" + 
+				(fluid.isGaseous() ? "gas" : molten ? "molten" : "fluid") + "_" + 
+				(flowing ? "flow" : "still") + 
+				(!molten && opaque ? "_opaque" : "");
+	}
+
+	public static class TextureHook {
+		@SubscribeEvent
+        @SideOnly(Side.CLIENT)
+        public void textureHook(TextureStitchEvent.Pre event) {
+            if (event.map.getTextureType() == 0)
+                for (Fluid fluid : fluidToMaterial.keySet()) {
+                	boolean opaque = getProperties(fluid).opaque;
+                	if (fluid.getStillIcon() == null)
+                		fluid.setStillIcon(event.map.registerIcon(getIconName(fluid, false, opaque)));
+                	if (fluid.getFlowingIcon() == null)
+                		fluid.setFlowingIcon(event.map.registerIcon(getIconName(fluid, true, opaque)));
+                }
+        }
+	}
+	
+	public static Object getTextureHook() {
+		return new TextureHook();
 	}
 }
