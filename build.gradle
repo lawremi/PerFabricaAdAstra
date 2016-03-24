@@ -103,6 +103,11 @@ repositories {
     }
 
     ivy {
+        name 'endercore'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.endercore_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
         name 'ImmersiveEngineering'
         artifactPattern "http://addons-origin.cursecdn.com/files/${config.ie_cf}/[module]-[revision].[ext]"
     }
@@ -127,6 +132,30 @@ repositories {
         artifactPattern "http://addons-origin.cursecdn.com/files/${config.bca_cf}/[module]-[revision].[ext]"
     }
 
+    ivy {
+        name 'TConstruct'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.tconstruct_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'Mantle'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.mantle_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'magneticraft'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.magneticraft_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'Mariculture'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.mariculture_cf}/[module]-Deluxe-[revision].[ext]"
+    }
+
+    ivy {
+        name 'Enchiridion'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.enchiridion_cf}/[module]%20[revision].[ext]"
+    }
 }
 
 dependencies {
@@ -143,6 +172,10 @@ dependencies {
 	exclude module: 'craftguide'
 	exclude module: 'InventoryTweaks'
 	exclude module: 'Waila'
+	exclude module: 'OpenComputers'
+	exclude module: 'industrialcraft-2'
+	exclude module: 'BetterStorage'
+	exclude module: 'PneumaticCraft-1.7.10'
      }
      compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
      compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.FMP_version}:dev"
@@ -153,11 +186,16 @@ dependencies {
      compile name: 'Railcraft', version: config.rc_version, ext: 'jar'
      compile name: 'CoFHLib', version: config.cofhlib_version, ext: 'jar'
      compile name: 'EnderIO', version: config.eio_version, ext: 'jar'
+     compile name: 'endercore', version: config.endercore_version, ext: 'jar'
      compile name: 'ImmersiveEngineering', version: config.ie_version, ext: 'jar'
-     compile name: 'DragonAPI', version: config.rotarycraft_version, ext: 'jar'
-     compile name: 'RotaryCraft', version: config.rotarycraft_version, ext: 'jar'
      compile name: 'Eureka', version: config.eureka_version, ext: 'jar'
      compile name: 'BuildcraftAdditions', version: config.bca_version, ext: 'jar'
+     compile name: 'Mantle', version: config.mantle_version, ext: 'jar'
+     compile name: 'TConstruct', version: config.tconstruct_version, ext: 'jar'
+     compile "net.sengir.forestry:forestry_1.7.10:${config.forestry_version}:dev"
+     compile name: 'magneticraft', version: config.magneticraft_version, ext: 'jar'
+     compile name: 'Mariculture', version: config.mariculture_version, ext: 'jar'
+     compile name: 'Enchiridion', version: config.enchiridion_version, ext: 'jar'
 }
 
 minecraft {
