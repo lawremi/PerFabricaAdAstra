@@ -36,7 +36,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Fusion(1),
 		   new Liquid(0.13,
 				     new Thermo(-8.33, 18.4E3, -7.72E6, 1.18E9, 3.89E-6, 0.047, 11.8)),
-		   new Vaporization(4.22),
+		   new Vaporization(4),
 		   new Gas(new Thermo(20.8, 0, 0, 0, 0, -6.2, 151))),
 		Li("lithium", Category.ALKALI_METAL, Strength.WEAK, 6.94, +1,
 		   new Solid(new Color(240, 240, 240), 0.534,
