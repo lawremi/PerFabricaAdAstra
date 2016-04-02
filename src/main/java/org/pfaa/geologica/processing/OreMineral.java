@@ -26,6 +26,7 @@ import static org.pfaa.chemica.model.Element.Rh;
 import static org.pfaa.chemica.model.Element.Ru;
 import static org.pfaa.chemica.model.Element.S;
 import static org.pfaa.chemica.model.Element.Se;
+import static org.pfaa.chemica.model.Element.Sm;
 import static org.pfaa.chemica.model.Element.Sr;
 import static org.pfaa.chemica.model.Element.Ta;
 import static org.pfaa.chemica.model.Element.Te;
@@ -62,7 +63,7 @@ public interface OreMineral extends Mineral {
 		ANATASE(Compounds.TiO2),
 		ARSENOPYRITE(Compounds.FeAsS),
 		BARITE(Compounds.BaSO4, new Color(250, 250, 170), new Substitution(Sr, 0.05)),
-		BASTNASITE(Compounds.CeCO3F, new Substitution(La, 0.2), new Substitution(Y, 0.1)),
+		BASTNASITE(Compounds.CeCO3F, new Substitution(La, 0.2), new Substitution(Y, 0.1), new Substitution(Sm, 0.01)),
 		BERYL(Compounds.Be3Al2SiO36),
 		BISMUTHINITE(Compounds.Bi2S3),
 		BORAX(Compounds.Na2B4O7),
@@ -100,7 +101,7 @@ public interface OreMineral extends Mineral {
 		          new Substitution(Th, 0.01), new Substitution(U, 0.005)),
 		MOLYBDENITE(Compounds.MoS2, new Substitution(Re, 0.01)),
 		MONAZITE(Compounds.CePO4, new Substitution(La, 0.5), new Substitution(Nd, 0.3),
-				 new Substitution(Pr, 0.15), new Substitution(Th, 0.5)),
+				 new Substitution(Pr, 0.15), new Substitution(Th, 0.5), new Substitution(Sm, 0.05)),
 		NEPOUITE(Compounds.Ni3Si2O5OH4),
 		NITER(Compounds.KNO3),
 		NITRATINE(Compounds.NaNO3, new Color(222, 184, 135)),

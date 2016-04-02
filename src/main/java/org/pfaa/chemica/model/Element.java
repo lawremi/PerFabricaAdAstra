@@ -20,7 +20,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 			R  Sr Y  Zr Nb Mo Tc Rb Rh Pd Ag Cd In Sn Sb Te I  Xe
 			Cs Ba Lu Hf Ta W  Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn
 			
-			Ce La Pr Nd ...
+			Ce La Pr Nd ... Sm ...
 			.. Th .. U  ...
 		*/
 		
@@ -399,7 +399,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(6.53, new Thermo(67.6)),
 		   new Vaporization(2.26, 4475, -152),
 		   new Gas(new Thermo(168))),
-		Te("tellurium", Category.METALLOID, Strength.MEDIUM, 128, +4, 
+		Te("tellurium", Category.METALLOID, Strength.WEAK, 128, +4, 
 		   new Solid(new Color(212, 216, 220), 6.24,
 				     new Thermo(0, 49.7, 19.2, 21.8),
 				     new Hazard(2, 0, 0)),
@@ -535,6 +535,14 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(6.89, new Thermo(77.1)),
 		   new Vaporization(3347),
 		   new Gas(new Thermo(163))),
+		Sm("samarium", Category.LANTHANIDE, Strength.MEDIUM, 150, +3,
+		   new Solid(new Color(212, 216, 220), 7.52, 
+				     new Thermo(0, 69.6, 25, 24.9, -0.354, -0.256),
+				     new Hazard(1, 1, 1)),
+		   new Fusion(1345),
+		   new Liquid(7.16, new Thermo(76.0)),
+		   new Vaporization(2173),
+		   new Gas(new Thermo(164))),
 		Pr("praseodynium", Category.LANTHANIDE, Strength.MEDIUM, 141, +3,
 		   new Solid(new Color(212, 216, 220), 6.77, 
 				     new Thermo(0, 73.2, 26.0, 4),
