@@ -11,7 +11,7 @@ public class RailcraftIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.RAILCRAFT)) {
 			oredictifyItems();
-		}	
+		}
 	}
 
 	private static void oredictifyItems() {
