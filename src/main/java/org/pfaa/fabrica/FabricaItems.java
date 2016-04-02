@@ -5,10 +5,10 @@ import java.util.List;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.catalog.CatalogUtils;
+import org.pfaa.core.catalog.ItemCatalog;
 import org.pfaa.fabrica.model.Intermediate.Intermediates;
-import org.pfaa.geologica.GeologicaItems;
 
-public class FabricaItems {
+public class FabricaItems implements ItemCatalog {
 	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_CRUSHED = 
 			new IndustrialMaterialItem<Intermediates>(Forms.CRUSHED, Intermediates.class);
 	public static final IndustrialMaterialItem<Intermediates> INTERMEDIATE_DUST = 
@@ -16,6 +16,6 @@ public class FabricaItems {
 	
 	@SuppressWarnings("rawtypes")
 	public static List<IndustrialMaterialItem> getIndustrialMaterialItems() {
-		return CatalogUtils.getEntries(GeologicaItems.class, IndustrialMaterialItem.class);
+		return CatalogUtils.getEntries(FabricaItems.class, IndustrialMaterialItem.class);
 	}
 }
