@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form;
-import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.OreDictUtils;
 
 import com.google.common.base.Function;
@@ -26,10 +25,18 @@ public class MaterialStack {
 		this.size = size;
 	}
 	
-	public MaterialStack(Forms form, IndustrialMaterial material) {
+	public MaterialStack(Form form, IndustrialMaterial material) {
 		this(form, material, 1);
 	}
 
+	public MaterialStack(IndustrialMaterial material) {
+		this(null, material, 1);
+	}
+	
+	public MaterialStack(IndustrialMaterial material, int size) {
+		this(null, material, size);
+	}
+	
 	public Form getForm() {
 		return this.form;
 	}

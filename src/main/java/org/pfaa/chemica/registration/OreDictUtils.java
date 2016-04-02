@@ -5,6 +5,7 @@ import java.util.List;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.item.IndustrialItemAccessors;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form;
@@ -51,12 +52,15 @@ public abstract class OreDictUtils {
 	}
 	
 	public static String makeKey(Form form, IndustrialMaterial material) {
-		return makeKey(form.oreDictKey(), material);
+		return makeKey(form == null ? null : form.oreDictKey(), material);
 	}
 	
 	public static String makeKey(String prefix, String postfix) {
 		if (postfix == null) {
 			throw new IllegalArgumentException("a material lacks an ore dict key");
+		}
+		if (prefix == null) {
+			return postfix;
 		}
 		return prefix + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
 	}
@@ -109,5 +113,9 @@ public abstract class OreDictUtils {
 			}
 		}
 		return null;
+	}
+
+	public static void register(MaterialStack materialStack, ItemStack itemStack) {
+		OreDictionary.registerOre(materialStack.getOreDictKey(), itemStack);
 	}
 }
