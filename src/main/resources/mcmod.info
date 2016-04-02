@@ -3,7 +3,7 @@
   "modList": [{
     "modid": "PFAAChemica",
     "name": "Chemica",
-    "description": "A realistic chemical model for Minecraft, manifested in the game through vanilla-like mechanics and a distinct lack of GUIs",
+    "description": "A realistic chemical model for Minecraft, manifested in the game through various technical mods",
     "version": "$version",
     "mcversion": "$mcversion",
     "url": "http://www.minecraftforum.net/topic/2363832-172-per-fabrica-ad-astra-geologica/",
@@ -19,6 +19,16 @@
     "authorList": [ "noogenesis" ],
     "credits": "Inspired by TerraFirmaCraft",
     "requiredMods": [ "Forge", "PFAAChemica", "CustomOreGen" ],
+    "useDependencyInformation": true
+  }, {
+    "modid": "PFAAFabrica",
+    "name": "Fabrica",
+    "description": "Craft useful things from raw materials",
+    "version": "$version",
+    "mcversion": "$mcversion",
+    "url": "http://www.minecraftforum.net/topic/2363832-172-per-fabrica-ad-astra-geologica/",
+    "authorList": [ "noogenesis" ],
+    "requiredMods": [ "Forge", "PFAAChemica", "PFAAGeologica" ],
     "useDependencyInformation": true
   }]
 }
