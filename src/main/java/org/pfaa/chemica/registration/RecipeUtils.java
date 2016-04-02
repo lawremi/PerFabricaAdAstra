@@ -241,17 +241,15 @@ public class RecipeUtils {
 		for (MixtureComponent component : mixture.getComponents()) {
 			int amount = (int)component.weight;
 			if (amount == 0) {
-				amount = (int)(component.weight / TINY_DUST_WEIGHT);
+				amount = (int)Math.rint(component.weight / TINY_DUST_WEIGHT);
+				form = Forms.DUST_TINY;
 			}
 			if (amount == 0) {
-				throw new IllegalArgumentException("Cannot mix components with weight < 0.1");
+				throw new IllegalArgumentException("Cannot mix components with weight < 0.05");
 			}
 			MaterialStack materialStack = new MaterialStack(form, component.material, amount);
 			if (!materialStack.hasItemStack()) {
-				materialStack = new MaterialStack(Forms.DUST, component.material);
-			}
-			if (!materialStack.hasItemStack()) {
-				throw new IllegalArgumentException("No mixable item for " + component.material);
+				throw new IllegalArgumentException("Mixing: No item stack for " + materialStack.getOreDictKey());
 			}
 			inputs.add(materialStack);
 		}
