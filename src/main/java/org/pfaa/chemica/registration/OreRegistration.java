@@ -4,9 +4,13 @@ import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -15,7 +19,7 @@ public class OreRegistration {
 		oreDictifyMiscBlocks();
 		oreDictifyMaterialItems();
 		oreDictifyMaterialBlocks();
-		oreDictifyHardenedClay();
+		oreDictifyClay();
 		registerDyes();
 	}
 
@@ -35,12 +39,14 @@ public class OreRegistration {
 		}
 	}
 
-	private static void oreDictifyHardenedClay() {
-		String KEY = "blockHardenedClay";
-		OreDictionary.registerOre(KEY, Blocks.hardened_clay);
-		OreDictionary.registerOre(KEY, new ItemStack(Blocks.stained_hardened_clay, 1, OreDictionary.WILDCARD_VALUE));
+	private static void oreDictifyClay() {
+		OreDictUtils.register(new MaterialStack(Forms.CLUMP, Aggregates.CLAY), new ItemStack(Items.clay_ball));
+		OreDictUtils.register(new MaterialStack(Forms.BLOCK, Aggregates.CLAY), new ItemStack(Blocks.clay));
+		MaterialStack hardenedClay = new MaterialStack(Forms.BLOCK, Aggregates.HARDENED_CLAY);
+		OreDictUtils.register(hardenedClay, new ItemStack(Blocks.hardened_clay));
+		OreDictUtils.register(hardenedClay, new ItemStack(Blocks.stained_hardened_clay, 1, OreDictionary.WILDCARD_VALUE));
 	}
-
+	
 	private static void registerDyes() {
 		OreDictUtils.registerDye("black", Compounds.MnO2);
 		OreDictUtils.registerDye("gray", Compounds.PbS);
