@@ -1,6 +1,7 @@
 package org.pfaa.fabrica;
 
 import org.apache.logging.log4j.Logger;
+import org.pfaa.fabrica.integration.ModIntegration;
 import org.pfaa.core.registration.Registrant;
 
 import cpw.mods.fml.common.Mod;
@@ -45,6 +46,7 @@ public class Fabrica {
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
+		ModIntegration.init();
 		registrant.register();
 	}
 	
