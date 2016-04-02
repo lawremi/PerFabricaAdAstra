@@ -1,4 +1,4 @@
-package org.pfaa.fabrica.registration;
+package org.pfaa.fabrica.client.registration;
 
 import org.pfaa.fabrica.registration.CommonRegistrant;
 
