@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class MagneticraftIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.MAGNETICRAFT)) {
-			RecipeRegistration.getTarget().addRegistry(new MagneticraftRecipeRegistry());
+			RecipeRegistration.addRegistry(ModIds.MAGNETICRAFT, new MagneticraftRecipeRegistry());
 		}
 	}
 	

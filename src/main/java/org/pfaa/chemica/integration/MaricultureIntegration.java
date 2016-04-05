@@ -25,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class MaricultureIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.MARICULTURE)) {
-			RecipeRegistration.getTarget().addRegistry(new MaricultureRecipeRegistry());
+			RecipeRegistration.addRegistry(ModIds.MARICULTURE, new MaricultureRecipeRegistry());
 		}
 	}
 

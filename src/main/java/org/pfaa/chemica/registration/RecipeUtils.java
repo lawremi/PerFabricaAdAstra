@@ -15,6 +15,7 @@ import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.fabrica.registration.MaterialStackList;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -236,7 +237,7 @@ public class RecipeUtils {
 		}
 	}
 
-	public static List<MaterialStack> getMixtureInputs(Form form, Mixture mixture) {
+	public static MaterialStackList getMixtureInputs(Form form, Mixture mixture) {
 		List<MaterialStack> inputs = new ArrayList<MaterialStack>(mixture.getComponents().size());
 		for (MixtureComponent component : mixture.getComponents()) {
 			int amount = (int)component.weight;
@@ -253,6 +254,6 @@ public class RecipeUtils {
 			}
 			inputs.add(materialStack);
 		}
-		return inputs;
+		return new MaterialStackList(inputs);
 	}
 }

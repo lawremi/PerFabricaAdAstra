@@ -12,14 +12,12 @@ import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -27,25 +25,31 @@ import org.pfaa.chemica.util.ChanceStack;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class RecipeRegistration {
 	
 	private static final CombinedRecipeRegistry target = new CombinedRecipeRegistry();
-
-	public static CombinedRecipeRegistry getTarget() {
+	private static final CombinedMaterialRecipeRegistry materialTarget = new CombinedMaterialRecipeRegistry();
+	
+	public static void addRegistry(String key, RecipeRegistry registry) {
+		target.addRegistry(key, registry);
+		materialTarget.addRegistry(key, registry.getMaterialRecipeRegistry());
+	}
+	
+	public static RecipeRegistry getTarget() {
 		return target;
+	}
+	
+	public static MaterialRecipeRegistry getMaterialTarget() {
+		return materialTarget;
 	}
 	
 	public static void init() {
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
 		registerAgglomerationRecipes();
-		registerCommunitionRecipes();
-		registerAbsorptionRecipes();
 		
 		// TODO: add metal tool recipes
 		// - Valid metals/alloys: all types of steel, magnesium
@@ -262,25 +266,5 @@ public class RecipeRegistration {
 	
 	private static void registerAlloyingRecipes() {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
-	}
-
-	private static void registerCommunitionRecipes() {
-		registerCrushingRecipe(Aggregates.HARDENED_CLAY);
-	}
-
-	private static void registerCrushingRecipe(Aggregates aggregate) {
-		List<ItemStack> inputs = OreDictUtils.lookup(Forms.BLOCK, aggregate);
-		ItemStack output = ChemicaItems.AGGREGATE_DUST.getItemStack(aggregate, 4);
-		for (ItemStack input : inputs) {
-			target.registerCrushingRecipe(input, output, null, Strength.WEAK);
-		}
-	}
-	
-	private static void registerAbsorptionRecipes() {
-		target.registerAbsorptionRecipe(
-				Collections.singletonList(ChemicaItems.AGGREGATE_DUST.getItemStack(Aggregates.HARDENED_CLAY)), 
-				new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST)),
-				new ItemStack(Items.clay_ball),
-				Constants.STANDARD_TEMPERATURE);
 	}
 }

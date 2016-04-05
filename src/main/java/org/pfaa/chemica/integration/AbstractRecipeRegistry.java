@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.MaterialRecipeRegistry;
+import org.pfaa.chemica.registration.MaterialRecipeRegistryProxy;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -12,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class AbstractRecipeRegistry implements RecipeRegistry {
+	
 	@Override
 	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {}
 
@@ -63,5 +66,10 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 		this.registerGrindingRecipe(input, outputs.get(0).itemStack, outputs.subList(1, outputs.size()), 
 				strengthFromOutputs(outputs));
+	}
+	
+	@Override
+	public MaterialRecipeRegistry getMaterialRecipeRegistry() {
+		return new MaterialRecipeRegistryProxy(this);
 	}
 }

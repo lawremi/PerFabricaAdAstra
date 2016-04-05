@@ -17,7 +17,8 @@ import net.minecraft.item.ItemStack;
 public class ImmersiveEngineeringIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.IMMERSIVE_ENGINEERING)) {
-			RecipeRegistration.getTarget().addRegistry(new ImmersiveEngineeringRecipeRegistry());
+			RecipeRegistration.addRegistry(ModIds.IMMERSIVE_ENGINEERING,
+					new ImmersiveEngineeringRecipeRegistry());
 		}
 	}
 	
