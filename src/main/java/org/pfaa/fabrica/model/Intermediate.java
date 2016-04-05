@@ -49,7 +49,7 @@ public interface Intermediate extends Mixture {
 
 		@Override
 		public Mixture mix(IndustrialMaterial material, double weight) {
-			return this.mixture.mix(material, weight);
+			return new SimpleMixture(this).mix(material, weight);
 		}
 	}
 }
