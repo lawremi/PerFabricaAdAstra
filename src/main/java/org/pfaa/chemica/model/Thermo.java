@@ -43,7 +43,7 @@ public class Thermo {
 	
 	private Segment findSegment(double t) {
 		int si = this.temperatureBreaks.size() - 1;
-		while(si >= 0 && this.temperatureBreaks.get(si) <= t)
+		while(si >= 0 && this.temperatureBreaks.get(si) > t)
 			si--;
 		return shomates.get(si + 1);
 	}
