@@ -16,9 +16,11 @@ import net.minecraftforge.fluids.FluidStack;
 public class CombinedRecipeRegistry implements RecipeRegistry {
 
 	private Map<String,RecipeRegistry> registries = new HashMap<String,RecipeRegistry>();
+	private CombinedMaterialRecipeRegistry materialRegistry = new CombinedMaterialRecipeRegistry();
 	
 	public void addRegistry(String key, RecipeRegistry registry) {
 		registries.put(key, registry);
+		materialRegistry.addRegistry(key, registry.getMaterialRecipeRegistry());
 	}
 	
 	public RecipeRegistry getRegistry(String key) {
@@ -130,6 +132,6 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	
 	@Override
 	public MaterialRecipeRegistry getMaterialRecipeRegistry() {
-		return new MaterialRecipeRegistryProxy(this);
+		return this.materialRegistry;
 	}
 }
