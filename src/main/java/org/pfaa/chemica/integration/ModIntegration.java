@@ -21,6 +21,8 @@ public abstract class ModIntegration {
 		MagneticraftIntegration.init();
 		ForestryIntegration.init();
 		MaricultureIntegration.init();
+		// TODO: Engineer's Toolbox (grinder, centrifuge, mixer [solid=>fluid], multi-smelter [alloys])   
+		
 	}
 	
 }
