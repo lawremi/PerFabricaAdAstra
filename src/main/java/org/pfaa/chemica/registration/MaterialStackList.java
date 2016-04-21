@@ -71,5 +71,13 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 	public List<String> getOreDictKeys() {
 		return Lists.transform(this.delegate, getOreDictKey);
 	}
+	
+	public List<String> getRepeatedOreDictKeys() {
+		List<String> keys = new ArrayList<String>();
+		for (MaterialStack stack : this.delegate) {
+			keys.addAll(Collections.nCopies(stack.getSize(), stack.getOreDictKey()));	
+		}
+		return keys;
+	}
 
 }

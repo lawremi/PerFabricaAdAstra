@@ -256,4 +256,58 @@ public class RecipeUtils {
 		}
 		return new MaterialStackList(inputs);
 	}
+
+	@SuppressWarnings("unchecked")
+	public static void addShapelessRecipe(ItemStack output, Object... inputs) {
+		boolean containsOre = false;
+		List<Object> inputList = new ArrayList<Object>(inputs.length);
+		for (Object input : inputs) {
+			if (input instanceof IndustrialMaterial) {
+				input = new MaterialStack((IndustrialMaterial) input);
+			}
+			if (input instanceof ItemStack) {
+				ItemStack stack = (ItemStack)input;
+				inputList.addAll(Collections.nCopies(stack.stackSize, stack.copy().splitStack(1)));
+			} else if (input instanceof MaterialStack) {
+				MaterialStack stack = (MaterialStack)input;
+				inputList.addAll(Collections.nCopies(stack.getSize(), stack.getOreDictKey()));
+				containsOre = true;
+			} else {
+				if (input instanceof String) {
+					containsOre = true;
+				}
+				inputList.add(input);
+			}
+		}
+		inputs = inputList.toArray();
+		if (containsOre) {
+			CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(output, inputs));
+		} else {
+			GameRegistry.addShapelessRecipe(output, inputs);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void addShapedRecipe(ItemStack output, Object... inputs) {
+		boolean containsOre = false;
+		List<Object> inputList = new ArrayList<Object>(inputs.length);
+		for (Object input : inputs) {
+			if (input instanceof IndustrialMaterial) {
+				input = new MaterialStack((IndustrialMaterial) input);
+			}
+			if (input instanceof MaterialStack) {
+				input = ((MaterialStack) input).getOreDictKey();
+			}
+			if (input instanceof String) {
+				containsOre = true;
+			}
+			inputList.add(input);
+		}
+		inputs = inputList.toArray();
+		if (containsOre) {
+			CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, inputs));
+		} else {
+			GameRegistry.addShapedRecipe(output, inputs);
+		}
+	}
 }

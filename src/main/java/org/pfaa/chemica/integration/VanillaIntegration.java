@@ -7,12 +7,12 @@ import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.MaterialRecipeRegistry;
 import org.pfaa.chemica.registration.MaterialRecipeRegistryProxy;
+import org.pfaa.chemica.registration.MaterialStackList;
 import org.pfaa.chemica.registration.RecipeRegistration;
-import org.pfaa.fabrica.registration.MaterialStackList;
+import org.pfaa.chemica.registration.RecipeUtils;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -58,7 +58,7 @@ public class VanillaIntegration {
 			ItemStack filledBucket = FluidContainerRegistry.fillFluidContainer(bucketFluidStack, new ItemStack(Items.bucket));
 			inputs = Arrays.copyOf(inputs, inputs.length + 1);
 			inputs[inputs.length - 1] = filledBucket;
-			CraftingManager.getInstance().addShapelessRecipe(output, inputs);
+			RecipeUtils.addShapelessRecipe(output, inputs);
 		}
 		
 		@Override
@@ -67,7 +67,7 @@ public class VanillaIntegration {
 		}
 
 		protected void registerMixingRecipe(Object[] inputs, ItemStack output) {
-			CraftingManager.getInstance().addShapelessRecipe(output, inputs);
+			RecipeUtils.addShapelessRecipe(output, inputs);
 		}
 		
 		@Override
@@ -89,12 +89,13 @@ public class VanillaIntegration {
 			@Override
 			public void registerAbsorptionRecipe(MaterialStackList inputs, FluidStack additive, ItemStack output,
 					int temp) {
-				VanillaRecipeRegistry.this.registerAbsorptionRecipe(inputs.getOreDictKeys().toArray(), additive, output, temp);
+				VanillaRecipeRegistry.this.registerAbsorptionRecipe(
+						inputs.getRepeatedOreDictKeys().toArray(), additive, output, temp);
 			}
 
 			@Override
 			public void registerMixingRecipe(MaterialStackList inputs, ItemStack output) {
-				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getOreDictKeys().toArray(), output);
+				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getRepeatedOreDictKeys().toArray(), output);
 			}
 			
 		}
