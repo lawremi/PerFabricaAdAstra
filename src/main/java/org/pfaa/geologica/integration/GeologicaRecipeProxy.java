@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.integration.AbstractRecipeRegistry;
+import org.pfaa.chemica.item.IndustrialItemAccessors;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
@@ -108,18 +110,28 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getTarget().registerSmeltingRecipe(input, output, flux, temp);
+				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
 			}
 		});
 	}
-
+	
+	private static ItemStack restrictOutput(ItemStack output) {
+		return output.copy().splitStack(1);
+	}
+	
+	private static FluidStack restrictOutput(FluidStack output, ItemStack input) {
+		FluidStack oneOutput = output.copy();
+		oneOutput.amount = Math.min(IndustrialFluids.getAmount(((IndustrialItemAccessors)input.getItem()).getForm()),
+				IndustrialFluids.getAmount(Forms.DUST));
+		return oneOutput;
+	}
 	
 	@Override
 	public void registerSmeltingRecipe(ItemStack input, final FluidStack output, final ItemStack flux, final TemperatureLevel temp) {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getTarget().registerSmeltingRecipe(input, output, flux, temp);
+				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
 			}
 		});
 	}
@@ -132,7 +144,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, output, temp);
+					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, restrictOutput(output), temp);
 				}
 			});
 		}
