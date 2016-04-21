@@ -22,6 +22,11 @@ public class ThermalExpansionIntegration {
 		}
 	}
 	
+	public static ItemStack findSlag() {
+		Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
+		return new ItemStack(teMaterial, 1, 514);
+	}
+	
 	public static class ThermalExpansionRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
@@ -40,9 +45,7 @@ public class ThermalExpansionIntegration {
 		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
 			int energy = RecipeCostUtils.rfFromTemperatureLevel(temp);
 			if (flux != null) {
-				Item teMaterial = GameRegistry.findItem("ThermalExpansion", "material");
-				ItemStack slag = new ItemStack(teMaterial, 1, 514);
-				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, slag);
+				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, findSlag());
 			} else {
 				ThermalExpansionHelper.addFurnaceRecipe(energy, input.copy(), output);
 			}
