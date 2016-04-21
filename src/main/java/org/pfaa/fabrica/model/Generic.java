@@ -4,12 +4,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.fabrica.model.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.OreMineral.Ores;
 
 import com.google.common.base.CaseFormat;
 
@@ -19,8 +22,15 @@ public interface Generic extends IndustrialMaterial {
 	
 	public enum Generics implements Generic {
 		POZZOLAN(IndustrialMinerals.VOLCANIC_ASH, IndustrialMinerals.PUMICE, IndustrialMinerals.ZEOLITE,
-				 Intermediates.CALCINED_DIATOMITE),
-		CEMENT(Intermediates.PORTLAND_CEMENT, Intermediates.POZZOLANIC_CEMENT);
+				 Intermediates.CALCINED_DIATOMITE, Intermediates.METAKAOLIN, Intermediates.FIRED_CLAY,
+				 Intermediates.ASH, Intermediates.SLAG),
+		CEMENT(Intermediates.PORTLAND_CEMENT, Intermediates.POZZOLANIC_CEMENT),
+		BINDER(Compounds.CaOH2, Intermediates.GYPSUM_PLASTER),
+		FILLER(IndustrialMinerals.MICA, IndustrialMinerals.DIATOMITE, IndustrialMinerals.PERLITE,
+			   IndustrialMinerals.VERMICULITE, IndustrialMinerals.TALC, Ores.CALCITE, IndustrialMinerals.KAOLINITE,
+			   Ores.BARITE),
+		JOINT_COMPOUND_FILLER(Ores.GYPSUM, Ores.CALCITE),
+		FULLERS_EARTH(IndustrialMinerals.CALCIUM_MONTMORILLONITE, IndustrialMinerals.PALYGORSKITE);
 
 		private List<IndustrialMaterial> specifics;
 		
