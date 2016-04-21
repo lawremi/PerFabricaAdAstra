@@ -31,9 +31,15 @@ prepareVars <- function(fit, t) {
     c(vars, list(f = 0, g = 0, d = 0, t = t/1000))
 }
 
-computeH <- function(vars) {
+doH <- function(vars) {
     with(vars, a * t + b * t^2 / 2 + c * t^3 / 3 + d * t^4 / 4 - e / t + f)
 }
+
+H <- function(a, b, c, d, e, f, g, t = 298) {
+    t <- t/1000
+    doH(mget(names(formals(sys.function()))))
+}
+
 
 enthalpy <- function(fit, t, H = 0) {
     vars <- prepareVars(fit, t)
@@ -44,8 +50,13 @@ enthalpy <- function(fit, t, H = 0) {
     computeH(vars)
 }
 
-computeS <- function(vars) {
+doS <- function(vars) {
     with(vars, a * log(t) + b * t + c * t^2 / 2 + d * t^3 / 3 - e / (2*t^2) + g)
+}
+
+S <- function(a, b, c, d, e, f, g, t = 298) {
+    t <- t/1000
+    doS(mget(names(formals(sys.function()))))
 }
 
 entropy <- function(fit, t, S, tref = 298) {
@@ -64,6 +75,10 @@ langeDf <- function(Cp, t = head(langeT, length(Cp))) {
 
 entropyFromEnthalpyDown <- function(S0, Hf, T) {
     S0 - Hf * 1000 / T
+}
+
+enthalpyFusionFromEntropyChange <- function(S0, S1, T) {
+    (S1-S0)*T
 }
 
 entropyFromEnthalpyUp <- function(S0, Hf, T) {
