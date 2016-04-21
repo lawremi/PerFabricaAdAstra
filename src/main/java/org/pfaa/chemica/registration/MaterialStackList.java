@@ -1,11 +1,13 @@
-package org.pfaa.fabrica.registration;
+package org.pfaa.chemica.registration;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.IndustrialMaterial;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -24,6 +26,14 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 	
 	public MaterialStackList(List<MaterialStack> materialStacks) {
 		this.delegate = new ArrayList<MaterialStack>(materialStacks);
+	}
+	
+	public MaterialStackList(IndustrialMaterial... materials) {
+		List<MaterialStack> stacks = new ArrayList<MaterialStack>(materials.length);
+		for (IndustrialMaterial material : materials) {
+			stacks.add(new MaterialStack(material));
+		}
+		this.delegate = stacks;
 	}
 	
 	@Override
