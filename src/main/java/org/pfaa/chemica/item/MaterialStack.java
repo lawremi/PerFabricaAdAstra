@@ -3,8 +3,10 @@ package org.pfaa.chemica.item;
 import java.util.List;
 import java.util.Set;
 
+import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.OreDictUtils;
 
 import com.google.common.base.Function;
@@ -30,11 +32,15 @@ public class MaterialStack {
 	}
 
 	public MaterialStack(IndustrialMaterial material) {
-		this(null, material, 1);
+		this(material, 1);
 	}
 	
 	public MaterialStack(IndustrialMaterial material, int size) {
-		this(null, material, size);
+		this(Forms.DUST, material, size);
+	}
+	
+	public MaterialStack(Form form, Term term) {
+		this(form, term.chemical, term.stoichiometry);
 	}
 	
 	public Form getForm() {
@@ -66,5 +72,19 @@ public class MaterialStack {
 	
 	public boolean hasItemStack() {
 		return !this.getItemStacks().isEmpty();
+	}
+	
+	public int getSize() {
+		return this.size;
+	}
+
+	public ItemStack getBestItemStack() {
+		Set<ItemStack> itemStacks = this.getItemStacks();
+		for (ItemStack itemStack : itemStacks) {
+			if (itemStack.getItem() instanceof IndustrialMaterialItem) {
+				return itemStack;
+			}
+		}
+		return itemStacks.size() > 0 ? itemStacks.iterator().next() : null;
 	}
 }
