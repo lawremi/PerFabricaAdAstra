@@ -888,14 +888,15 @@
     * Critical temperatures (relatively easy to find),
     * Shomate (or other function) parameters for heat capacity (tough
       to find, NIST), or perhaps an average value when not available,
-      note that Shomate parameters additionally provide the entropy
+      note that Shomate parameters additionally provide the enthalpy
+      of formation, standard entropy
       and (through some solving) the critical temperatures,
     * Antoine coefficients (tough to find, NIST),
     * Enthalpy of formation (not easy),
     * Standard molar entropy (not easy),
     * Rough solubility in different solvents (cold/standard/hot) (easy),
     * Density (easy),
-    * Viscosity (easy for typical liquids, molten we assume lava-like),
+    * Viscosity (easy for typical liquids, gases),
     * Magnetic susceptibility (probably on an adhoc basis),
     * Atomic weight (elements only, easy),
     * Default oxidation state (elements only, easy),
@@ -1248,21 +1249,18 @@
 
 *** Calcite
     Uses include:
-    * Cement
       * Portland cement (concrete and mortar): 
 	* Clinker from roasting limestone and clay: 3CaCO3+clay@1700K
 	* Gypsum added to clinker (10%), 1 tiny dust per clinker dust
 	* Gypsum + clinker mixture is ground to cement
       * Concrete:
-	* Railcraft and Chisel have concrete, but not cement
+	* Railcraft, IE and Chisel have concrete, but not cement
 	* Need to mix 2x gravel + 1x sand + 1x cement + water
-      * Thut's Mods adds liquid concrete that dries but noone uses it
-      * May need to introduce notion of "synthetic mixture"
-      * Can also produce cement by grinding slag, or by burning oil shale
       * Natural sources include volcanic ash, diatomite, calcined zeolite
-      * Geopolymer cement: slag + coal fly ash + sodium silicate with
+      * Geopolymer cement: slag + coal fly ash + sodi1um silicate with
         >1.4 SiO2:NaO molar ratio; no cooking required
-    * Quicklime (Witchery...) by roasting in a furnace
+    * Quicklime (Witchery, Eng. Toolbox, ReactorCraft) 
+      by roasting in a furnace
       * Should be required flux for steel making in arc furnace.
       * Roast with coke to form CaC, used for making acetylene.
       * Convert to Ca(OH)2 by boiling in water (Forestry carpenter?)
@@ -1554,6 +1552,11 @@
    A key question is whether these tasks are performed by separate
    machines or one monolithic reactor. The most fun would be separate
    machines. See next sections for further discussion.
+
+   Balancing:
+   L.R.Thorne, An innovative approach to balancing chemical - reaction
+   equations : a simplified matrix - inverse technique for determining
+   the matrix null space. Chem.Educator, 2010, 15, 304 - 308.
    
 *** Model
     We want to model the following aspects of reactions:
@@ -2656,6 +2659,7 @@
 *** Malachite
 **** Copper
      Smelt it.
+     
 *** Glauconite
 **** Fertilizer
      Smelt, and leach with HCl to make KCl.
