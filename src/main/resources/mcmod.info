@@ -19,6 +19,7 @@
     "authorList": [ "noogenesis" ],
     "credits": "Inspired by TerraFirmaCraft",
     "requiredMods": [ "Forge", "PFAAChemica", "CustomOreGen" ],
+    "dependencies": [ "PFAAChemica" ],
     "useDependencyInformation": true
   }, {
     "modid": "PFAAFabrica",
@@ -29,6 +30,7 @@
     "url": "http://www.minecraftforum.net/topic/2363832-172-per-fabrica-ad-astra-geologica/",
     "authorList": [ "noogenesis" ],
     "requiredMods": [ "Forge", "PFAAChemica", "PFAAGeologica" ],
+    "dependencies": [ "PFAAChemica", "PFAAGeologica" ],
     "useDependencyInformation": true
   }]
 }
