@@ -30,6 +30,8 @@ public class Fabrica {
 	public static Logger log;
 	
 	private static FabricaConfiguration configuration;
+
+	public static int renderIdFull;
 	
 	public static FabricaConfiguration getConfiguration() {
 		return configuration;

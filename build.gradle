@@ -156,6 +156,16 @@ repositories {
         name 'Enchiridion'
         artifactPattern "http://addons-origin.cursecdn.com/files/${config.enchiridion_cf}/[module]%20[revision].[ext]"
     }
+
+    ivy {
+        name 'OpenBlocks'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.openblocks_cf}/[module]-[revision].[ext]"
+    }
+
+    ivy {
+        name 'OpenModsLib'
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.openmodslib_cf}/[module]-[revision].[ext]"
+    }
 }
 
 dependencies {
@@ -196,6 +206,8 @@ dependencies {
      compile name: 'magneticraft', version: config.magneticraft_version, ext: 'jar'
      compile name: 'Mariculture', version: config.mariculture_version, ext: 'jar'
      compile name: 'Enchiridion', version: config.enchiridion_version, ext: 'jar'
+     compile name: 'OpenBlocks', version: config.openblocks_version, ext: 'jar'
+     compile name: 'OpenModsLib', version: config.openmodslib_version, ext: 'jar'
 }
 
 minecraft {
