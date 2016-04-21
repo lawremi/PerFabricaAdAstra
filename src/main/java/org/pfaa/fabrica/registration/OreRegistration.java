@@ -22,8 +22,7 @@ public class OreRegistration {
 		for (Generic generic : Generics.values()) {
 			for (Forms form : Forms.values()) {
 				for (IndustrialMaterial specific : generic.getSpecifics()) {
-					ItemStack itemStack = OreDictUtils.lookupBest(form, specific);
-					if (itemStack != null) {
+					for (ItemStack itemStack : OreDictUtils.lookup(form, specific)) {
 						OreDictUtils.register(new MaterialStack(form, generic), itemStack);
 					}
 				}
