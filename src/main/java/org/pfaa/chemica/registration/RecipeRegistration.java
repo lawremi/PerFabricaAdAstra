@@ -11,12 +11,17 @@ import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
+import org.pfaa.chemica.model.Chemical;
+import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
+import org.pfaa.chemica.model.Formula;
+import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
@@ -50,6 +55,8 @@ public class RecipeRegistration {
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
 		registerAgglomerationRecipes();
+		registerDecompositionRecipes();
+		registerSynthesisRecipes();
 		
 		// TODO: add metal tool recipes
 		// - Valid metals/alloys: all types of steel, magnesium
@@ -147,12 +154,13 @@ public class RecipeRegistration {
 		registerSmeltingRecipes(TemperatureLevel.LOW, 
 				Compounds.Ag2S, Compounds.Bi2S3, Compounds.SnO2, Compounds.PbS);
 		registerSmeltingRecipes(TemperatureLevel.MEDIUM,
-				Compounds.Cu2O, Compounds.Cu2CO3OH2, Compounds.Cu2S, Compounds.Cu12As4S13, Compounds.Cu12Sb4S13);
+				Compounds.CuO, Compounds.Cu2O, 
+				Compounds.Cu2S, Compounds.Cu12As4S13, Compounds.Cu12Sb4S13);
 		registerSmeltingRecipes(TemperatureLevel.HIGH,
 				Compounds.CoO,  Compounds.Fe2O3, Compounds.Fe3O4, 
 				Compounds.alpha_FeOH3, Compounds.gamma_FeOH3,
 				Compounds.NiO, Compounds.Sb2S3);
-		registerSmeltingRecipes(TemperatureLevel.VERY_HIGH, Compounds.Ni9S8);
+		registerSmeltingRecipes(TemperatureLevel.VERY_HIGH, Compounds.Ni9S8, Compounds.SiO2);
 		registerFluxedSmeltingRecipes(TemperatureLevel.HIGH, Compounds.SiO2, Compounds.CuFeS2);
 	}
 	
@@ -260,5 +268,91 @@ public class RecipeRegistration {
 	
 	private static void registerAlloyingRecipes() {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
+	}
+
+	/* 
+	 * Decomposition of salts:
+	 *    * Hydroxide => oxide + water vapor
+	 *    * Carbonate => oxide + carbon dioxide
+	 *    * Nitrate => oxide + NO2 
+	 *              => nitrite for alkali metals (except Li) 
+	 *    * Nitrite => complex, special case
+	 *  TODO:
+	 *    * Chlorate => chloride + oxygen
+	 *    * Bromate => bromide + oxygen
+	 *    * Iodate => iodide + oxygen
+	 *    * Sulfate => oxide + SO3
+	 *    * Sulfite => oxide + SO2 ?
+	 *    
+	 * Easy to figure out the product, but tricky to balance the equation.
+	 * Is it worth creating an equation solver? Or can we use adhoc approaches for now? 
+	 */
+	
+	private static Reaction makeStandardSaltDecompositionReaction(Compound compound) {
+		Part CO3 = new Part(Element.C, Element.O._(3)),
+		     OH2 = new Part(Element.O, Element.H)._(2),
+		     OH = new Part(Element.O, Element.H),
+		     NO3 = new Part(Element.N, Element.O._(3)),
+		     NO32 = new Part(Element.N, Element.O._(3))._(2),
+		     NO2 = new Part(Element.N, Element.O._(2));
+		Formula formula = compound.getFormula();
+		boolean secondaryCarbonate = 
+				formula.getParts().size() == 3 && 
+				formula.getParts().get(1).hasComposition(CO3);
+		if (!secondaryCarbonate && formula.getParts().size() > 2) {
+			return null;
+		}
+		Part last = formula.getLastPart();
+		Reaction reaction = null;
+		if (last.equals(CO3)) {
+			reaction = Reaction.of(compound).yields(oxide(formula)).and(Compounds.CO2);
+		} else if (last.equals(NO3)) {
+			if (formula.getFirstPart().element == Element.Li) {
+				reaction = Reaction.of(4, compound).yields(2, oxide(formula)).and(4, Compounds.NO2).and(Compounds.O2);
+			} else {
+				Formula metalNitriteFormula = formula.withLastPart(NO2);
+				Compound metalNitrite = Compounds.valueOf(metalNitriteFormula.toString());
+				reaction = Reaction.of(2, compound).yields(2, metalNitrite).and(Compounds.O2);
+			}
+		} else if (last.equals(NO32)) {
+			reaction = Reaction.of(2, compound).yields(2, oxide(formula)).and(4, Compounds.NO2).and(Compounds.O2);
+		} else if (last.equals(OH2)) {
+			int oxideStoich = formula.getFirstPart().stoichiometry;
+			reaction = Reaction.of(compound).yields(oxideStoich, oxide(formula)).and(1, Compounds.H2O, State.GAS);
+		} else if (last.equals(OH)) {
+			reaction = Reaction.of(2, compound).yields(oxide(formula)).and(1, Compounds.H2O, State.GAS);
+		}
+		if (reaction != null && secondaryCarbonate) {
+			reaction = reaction.and(formula.getParts().get(1).stoichiometry, Compounds.CO2);
+		}
+		return reaction;
+	}
+	
+	private static Chemical oxide(Formula formula) {
+		int ratio = Math.abs(Element.O.getDefaultOxidationState()) / formula.getFirstPart().element.getDefaultOxidationState();
+		Formula oxideFormula = new Formula(formula.getFirstPart()._(ratio), Element.O);
+		return Compounds.valueOf(oxideFormula.toString());
+	}
+	
+	private static void registerDecompositionRecipes() {
+		registerStandardSaltDecompositionRecipes();
+		reactionTarget.registerThermalDecomposition(
+				Reaction.of(4, Compounds.KNO2).yields(2, Compounds.K2O).and(2, Compounds.N2).and(3, Compounds.O2));
+		reactionTarget.registerThermalDecomposition(
+				Reaction.of(2, Compounds.NaNO2).yields(Compounds.Na2O).and(Compounds.NO).and(Compounds.NO2));
+	}
+
+	private static void registerStandardSaltDecompositionRecipes() {
+		for (Compounds compound : Compounds.values()) {
+			Reaction reaction = makeStandardSaltDecompositionReaction(compound);
+			if (reaction == null) {
+				continue;
+			}
+			reactionTarget.registerThermalDecomposition(reaction);
+		}
+	}
+	
+	private static void registerSynthesisRecipes() {
+		reactionTarget.registerSynthesis(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
 	}
 }
