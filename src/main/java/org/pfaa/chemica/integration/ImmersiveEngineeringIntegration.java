@@ -57,7 +57,7 @@ public class ImmersiveEngineeringIntegration {
 			if (solutes.size() > 4) {
 				return;
 			}
-			int time = RecipeCostUtils.arcTicksForTemperature(temp) * output.stackSize;  	 	 
+			int time = RecipeCostUtils.arcTicksForTemperature(temp) * output.stackSize;
 			ArcFurnaceRecipe recipe = ArcFurnaceRecipe.addRecipe(output, base, null, time, ARC_ENERGY_PER_TICK, 
 					solutes.toArray(new Object[0]));
 			recipe.setSpecialRecipeType("Alloying");
