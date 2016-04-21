@@ -112,8 +112,8 @@ public enum GeoMaterial implements Mixture {
 			 mix(Ores.GIBBSITE, 0.15).mix(Ores.ANATASE, 0.05), Strength.WEAK, Material.clay),
 	
 	BAUXITE(Ores.GIBBSITE, Strength.WEAK, LATERITE),
-	BENTONITE(IndustrialMinerals.SODIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
-	FULLERS_EARTH(IndustrialMinerals.CALCIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
+	SODIUM_BENTONITE(IndustrialMinerals.SODIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
+	CALCIUM_BENTONITE(IndustrialMinerals.CALCIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
 	KAOLINITE(IndustrialMinerals.KAOLINITE, Strength.WEAK, Material.clay),
 	BROWN_LIMONITE(Ores.LEPIDOCROCITE, Strength.WEAK, LATERITE),
 	YELLOW_LIMONITE(Ores.GOETHITE, Strength.WEAK, LATERITE),
