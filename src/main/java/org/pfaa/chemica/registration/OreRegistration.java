@@ -54,6 +54,7 @@ public class OreRegistration {
 		OreDictUtils.registerDye("red", Compounds.Fe2O3);
 		OreDictUtils.registerDye("red", Compounds.HgS);
 		OreDictUtils.registerDye("green", Compounds.Cu2CO3OH2);
+		OreDictUtils.registerDye("blue", Compounds.Cu3CO32OH2);
 		OreDictUtils.registerDye("brown", Compounds.gamma_FeOH3);
 		OreDictUtils.registerDye("yellow", Compounds.alpha_FeOH3);
 		OreDictUtils.registerDye("yellow", Compounds.As2S3);

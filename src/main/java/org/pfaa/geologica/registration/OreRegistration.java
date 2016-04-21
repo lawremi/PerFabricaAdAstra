@@ -46,7 +46,6 @@ public class OreRegistration {
 		for (GeoMaterial material : GeologicaItems.ORE_CRUSHED.getIndustrialMaterials()) {
 			registerDye(GeologicaItems.ORE_DUST.getItemStack(material), material.getOreConcentrate());
 		}
-		OreDictUtils.registerDye("blue", IndustrialMinerals.AZURITE);
 		OreDictUtils.registerDye("blue", IndustrialMinerals.LAZURITE);
 		OreDictUtils.registerDye("gray", IndustrialMinerals.GRAPHITE);
 	}
