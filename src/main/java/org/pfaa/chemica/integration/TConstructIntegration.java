@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.OreDictUtils;
@@ -30,7 +31,7 @@ public class TConstructIntegration {
 	
 	public static class TConstructRecipeRegistry extends AbstractRecipeRegistry {
 
-		private BlockWithMeta<Block> getBlockWithMeta(ItemStack itemStack) {
+		private BlockWithMeta<Block> getRenderBlock(ItemStack itemStack, FluidStack fluid) {
 			int meta;
 			ItemBlock itemBlock;
 			if (itemStack.getItem() instanceof ItemBlock) {
@@ -40,6 +41,9 @@ public class TConstructIntegration {
 				ItemStack blockStack = OreDictUtils.lookupBest(Forms.BLOCK, itemStack);
 				if (blockStack == null) {
 					blockStack = OreDictUtils.lookupBest("ore", itemStack);
+				}
+				if (blockStack == null) {
+					blockStack = OreDictUtils.lookupBest(Forms.BLOCK, IndustrialFluids.getMaterial(fluid.getFluid()));
 				}
 				if (blockStack != null) {
 					itemBlock = (ItemBlock)blockStack.getItem();
@@ -58,7 +62,7 @@ public class TConstructIntegration {
 			if (output.getFluid() == FluidRegistry.LAVA) {
 				output = FluidRegistry.getFluidStack("stone.seared", SEARED_STONE_FOR_BLOCK);
 			}
-			BlockWithMeta<Block> render = getBlockWithMeta(input);
+			BlockWithMeta<Block> render = getRenderBlock(input, output);
 			if (render != null) {
 				temp /= 2;
 				if (!(input.getItem() instanceof ItemBlock)) {
