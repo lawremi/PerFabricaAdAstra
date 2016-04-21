@@ -33,6 +33,7 @@ public interface IndustrialMineral extends Mineral {
 		MICA(Color.white, 2.82),
 		MIRABILITE(new Color(240, 250, 210), 1.49),
 		OLIVINE(new Color(155, 230, 40), 3.30),
+		PALYGORSKITE(new Color(205, 215, 110), 2),
 		PERLITE(new Color(255, 255, 245), 1.1),
 		PUMICE(new Color(230, 185, 185), 0.64),
 		SEPIOLITE(new Color(230, 220, 220), 2),

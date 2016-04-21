@@ -139,7 +139,7 @@ public enum GeoMaterial implements Mixture {
 		   Strength.MEDIUM, Aggregates.STONE),
 	BASTNASITE(Ores.BASTNASITE.mix(Ores.PYROCHLORE, 0.05).mix(Ores.ZIRCON, 0.01), Strength.MEDIUM, CARBONATITE),
 	CHALCOPYRITE(Ores.CHALCOPYRITE.mix(Ores.PYRITE, 0.10).mix(Ores.CHALCOCITE, 0.10).
-				 mix(Ores.MALACHITE, 0.02).mix(IndustrialMinerals.AZURITE, 0.01).
+				 mix(Ores.MALACHITE, 0.02).mix(Ores.AZURITE, 0.01).
 			     mix(Ores.TETRAHEDRITE, 0.02).mix(Ores.TENNANTITE, 0.01).
 			     mix(Ores.SPHALERITE, 0.02).mix(Ores.COBALTITE, 0.01), Strength.MEDIUM, Aggregates.STONE),
 	GARNIERITE(Ores.NEPOUITE.mix(Ores.GOETHITE, 0.05), Strength.MEDIUM, SERPENTINITE),
@@ -207,13 +207,15 @@ public enum GeoMaterial implements Mixture {
 	DIAMOND(new SimpleVanillaOre(IndustrialMinerals.DIAMOND), Strength.STRONG, PERIDOTITE),
 	EMERALD(new SimpleVanillaOre(Ores.BERYL), Strength.STRONG, PEGMATITE), 
 	REDSTONE(new SimpleVanillaOre(Ores.CUPRITE.mix(Ores.CHALCOPYRITE, 0.3).
-			 mix(IndustrialMinerals.AZURITE, 0.1).mix(Ores.MALACHITE, 0.1)),
+			 mix(Ores.AZURITE, 0.1).mix(Ores.MALACHITE, 0.1)),
 			 Strength.STRONG, Aggregates.STONE),
 	
 	DIATOMITE(IndustrialMinerals.DIATOMITE.mix(Ores.QUARTZ, 0.05), Strength.WEAK, Aggregates.SAND),
 	SULFUR(Ores.SULFUR.mix(Ores.GYPSUM, 0.1).mix(Ores.BARITE, 0.05).
 		   mix(Ores.REALGAR, 0.02).mix(Ores.CELESTINE, 0.01),
 		   Strength.WEAK, Aggregates.SAND),
+	ATTAPULGITE(IndustrialMinerals.CALCIUM_MONTMORILLONITE.mix(IndustrialMinerals.PALYGORSKITE, 0.2), 
+			Strength.WEAK, Material.clay),
 	
 	BRINE(Compounds.H2O.mix(Compounds.NaCl, 0.3).
 		  mix(Compounds.MgCl2_6H2O, 0.03).mix(Compounds.MgSO4_7H2O, 0.01).
