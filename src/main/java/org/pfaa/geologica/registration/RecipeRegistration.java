@@ -3,12 +3,18 @@ package org.pfaa.geologica.registration;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.MaterialRecipeRegistry;
+import org.pfaa.chemica.registration.MaterialStackList;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -26,6 +32,8 @@ import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
+
+import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -46,10 +54,15 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeRegistration {
 	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getTarget();
+	private static final MaterialRecipeRegistry materialRegistry = 
+			org.pfaa.chemica.registration.RecipeRegistration.getMaterialTarget();
 	
 	public static void init() {
 		registerRockCastingRecipes();
+		registerClayProcessingRecipes();
+		registerPeatDryingRecipe();
 		registerCommunitionRecipes();
+		registerPartitionRecipes();
 		registerSiftingRecipes();
 		registerCraftingRecipes();
 		registerStoneToolRecipes();
@@ -239,7 +252,10 @@ public class RecipeRegistration {
 	}
 	
 	private static void registerOreSeparationRecipes(ItemStack input, Form form, GeoMaterial material) {	
-		List<ChanceStack> secondaries = RecipeUtils.getSeparationOutputs(form, material.getComposition(), false);
+		List<ChanceStack> outputs = RecipeUtils.getSeparationOutputs(form, material.getComposition(), false);
+		if (outputs.size() == 0) {
+			return;
+		}
 		IndustrialMaterial host = material.getHost();
 		if (host instanceof GeoMaterial) {
 			List<ChanceStack> hostSecondaries = 
@@ -247,10 +263,10 @@ public class RecipeRegistration {
 			for (ChanceStack hostSecondary : hostSecondaries) {
 				ChanceStack downWeighted = hostSecondary.weightChance(0.2F);
 				if (downWeighted.chance >= RecipeUtils.MIN_SIGNIFICANT_COMPONENT_WEIGHT)
-					secondaries.add(downWeighted);
+					outputs.add(downWeighted);
 			}
 		}
-		registry.registerPhysicalSeparationRecipe(input, secondaries);
+		registry.registerPhysicalSeparationRecipe(input, outputs);
 	}
 
 	private static void registerOreCommunitionRecipes(GeoBlock input) {
@@ -333,5 +349,52 @@ public class RecipeRegistration {
 			FluidStack fluid = new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME);
 			registry.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature());
 		}
+	}
+	
+	private static void registerPartitionRecipes() {
+		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+				GeologicaItems.INDUSTRIAL_MINERAL_DUST, 
+				GeologicaItems.INDUSTRIAL_MINERAL_DUST_TINY);
+		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+				GeologicaItems.CRUDE_DUST, 
+				GeologicaItems.CRUDE_DUST_TINY);
+		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+				GeologicaItems.ORE_MINERAL_DUST, 
+				GeologicaItems.ORE_MINERAL_DUST_TINY);
+		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+				GeologicaItems.ORE_DUST, 
+				GeologicaItems.ORE_DUST_TINY);
+	}
+	
+	private static void registerStandardClayProcessingRecipes() {
+		for (GeoMaterial geoMaterial : GeologicaItems.CLAY_LUMP.getIndustrialMaterials()) {
+			ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(geoMaterial);
+			ItemStack lump =  GeologicaItems.CLAY_LUMP.getItemStack(geoMaterial);
+			ItemStack dust =  GeologicaItems.ORE_DUST.getItemStack(geoMaterial);
+			registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, 400);
+			registry.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
+			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
+			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
+			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+			registry.registerAbsorptionRecipe(Lists.newArrayList(dust), water, clump, Constants.STANDARD_TEMPERATURE);
+		}
+	}
+	
+	private static void registerClayProcessingRecipes() {
+		registerStandardClayProcessingRecipes();
+		convertBentonite();
+	}
+	
+	private static void convertBentonite() {
+		MaterialStackList inputs = new MaterialStackList(
+				new MaterialStack(Forms.CLUMP, GeoMaterial.CALCIUM_BENTONITE),
+				new MaterialStack(Compounds.Na2CO3));
+		materialRegistry.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
+	}
+	
+	private static void registerPeatDryingRecipe() {
+		ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.PEAT);
+		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(GeoMaterial.PEAT);
+		registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, 400);
 	}
 }

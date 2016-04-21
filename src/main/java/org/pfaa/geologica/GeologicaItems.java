@@ -21,25 +21,33 @@ public class GeologicaItems implements ItemCatalog {
 			return obj.getBlockMaterial() == Material.clay || obj.getBlockMaterial() == Material.ground;
 		}
 	};
-	private static Predicate<GeoMaterial> CrudeRock = new Predicate<GeoMaterial>() {
+	private static Predicate<GeoMaterial> OreClay = new Predicate<GeoMaterial>() {
 		public boolean apply(GeoMaterial obj) {
-			return obj.getComposition() instanceof Crude && obj.getBlockMaterial() == Material.rock;
+			return obj.getBlockMaterial() == Material.clay && obj.getComposition() instanceof Ore;
+		}
+	};
+	private static Predicate<GeoMaterial> CrudeSolid = new Predicate<GeoMaterial>() {
+		public boolean apply(GeoMaterial obj) {
+			return obj.getComposition() instanceof Crude && obj.getBlockMaterial() != Material.water;
 		}
 	};
 	private static Predicate<GeoMaterial> OreRock = new Predicate<GeoMaterial>() {
 		public boolean apply(GeoMaterial obj) {
-			return obj.getComposition() instanceof Ore && obj.getBlockMaterial() == Material.rock;
+			return obj.getComposition() instanceof Ore && 
+					(obj.getBlockMaterial() == Material.rock || obj.getBlockMaterial() == Material.clay);
 		}
 	};
 
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, CrudeRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, CrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, CrudeRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, CrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, CrudeRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, CrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, EarthyMaterial);
+	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, OreClay);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, OreRock);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
