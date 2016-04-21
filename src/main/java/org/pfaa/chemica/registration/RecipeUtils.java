@@ -2,6 +2,7 @@ package org.pfaa.chemica.registration;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,12 +11,12 @@ import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.util.ChanceStack;
-import org.pfaa.fabrica.registration.MaterialStackList;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -23,6 +24,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -40,10 +42,11 @@ public class RecipeUtils {
 		if (excludeAggregates) {
 			components = Iterables.filter(components, notAggregate);
 		}
-		if (form == Forms.DUST_IMPURE_TINY) {
-			components = Iterables.transform(components, scaleToTinyDust);
+		WeightScale scale = getScaleForForm(form);
+		if (scale != null) {
+			components = Iterables.transform(components, scale);
 		}
-		Iterable<ChanceStack> chanceStacks = Iterables.transform(components, mixtureComponentToSeparationOutput); 
+		Iterable<ChanceStack> chanceStacks = Iterables.transform(components, mixtureComponentToSeparationOutput);
 		return Lists.newArrayList(Iterables.filter(chanceStacks, significantChance));
 	}
 
@@ -58,11 +61,25 @@ public class RecipeUtils {
 	}
 	
 	private static final float TINY_DUST_WEIGHT = 0.1F;
+	private static final float BLOCK_WEIGHT = 2.0F;
 	
-	private static Function<MixtureComponent,MixtureComponent> scaleToTinyDust = new Function<MixtureComponent,MixtureComponent>() {
+	private static WeightScale getScaleForForm(Form form) {
+		if (form == Forms.DUST_TINY) {
+			return new WeightScale(TINY_DUST_WEIGHT);
+		} else if (form == Forms.BLOCK) {
+			return new WeightScale(BLOCK_WEIGHT);
+		}
+		return null;
+	}
+	
+	private static class WeightScale implements Function<MixtureComponent,MixtureComponent> {
+		private float scale;
+		public WeightScale(float scale) {
+			this.scale = scale;
+		}
 		@Override
 		public MixtureComponent apply(MixtureComponent input) {
-			return new MixtureComponent(input.material, input.weight * TINY_DUST_WEIGHT);
+			return new MixtureComponent(input.material, input.weight * this.scale);
 		}
 	};
 	
