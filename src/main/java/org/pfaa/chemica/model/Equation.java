@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import java.util.Arrays;
-
 public class Equation {
 	private List<Term> reactants;
 	private List<Term> products;
-	private Formula catalyst;
+	private Chemical catalyst;
 
 	public Equation(List<Term> reactants, List<Term> products,
-			Formula catalyst) {
+			Chemical catalyst) {
 		super();
 		this.setReactants(reactants);
 		this.setProducts(products);
@@ -20,7 +18,7 @@ public class Equation {
 	}
 
 	public List<Term> getReactants() {
-		return Collections.unmodifiableList(reactants);
+		return Collections.unmodifiableList(this.reactants);
 	}
 
 	public void setReactants(List<Term> reactants) {
@@ -28,44 +26,66 @@ public class Equation {
 	}
 
 	public List<Term> getProducts() {
-		return Collections.unmodifiableList(products);
+		return Collections.unmodifiableList(this.products);
 	}
 
 	public void setProducts(List<Term> products) {
 		this.products = new ArrayList<Term>(products);
 	}
 
-	public Equation yields(Term... products) {
-		this.setProducts(Arrays.asList(products));
-		return this;
+	public void addReactant(Term reactant) {
+		this.reactants.add(reactant);
 	}
 	
-	public Formula getCatalyst() {
+	public void addProduct(Term product) {
+		this.products.add(product);
+	}
+	
+	public Chemical getCatalyst() {
 		return catalyst;
 	}
 
-	public void setCatalyst(Formula catalyst) {
+	public void setCatalyst(Chemical catalyst) {
 		this.catalyst = catalyst;
 	}
 	
-	public Equation via(Formula catalyst) {
-		this.setCatalyst(catalyst);
-		return this;
+	public String toString() {
+		String str = this.reactants.get(0).toString();
+		for (Term reactant : this.reactants.subList(1, this.reactants.size())) {
+			str += "+" + reactant;
+		}
+		str += " => " + this.products.get(0).toString();
+		for (Term product : this.products.subList(1, this.products.size())) {
+			str += "+" + product;
+		}
+		return str;
 	}
-
+	
 	public static class Term {
-		public final Formula formula;
+		public final Chemical chemical;
 		public final int stoichiometry;
 		public final State state;
 		
-		public Term(Formula formula) {
-			this(formula, 1, State.SOLID); // FIXME: should be the standard state
+		public Term(Chemical chemical) {
+			this(1, chemical);
 		}
 		
-		public Term(Formula formula, int stoichiometry, State state) {
-			this.formula = formula;
+		public Term(int stoichiometry, Chemical chemical) {
+			this(stoichiometry, chemical, chemical.getProperties(Condition.STP).state);
+		}
+		
+		public Term(int stoichiometry, Chemical chemical, State state) {
 			this.stoichiometry = stoichiometry;
+			this.chemical = chemical;
 			this.state = state;
+		}
+		
+		public String toString() {
+			String str = this.chemical.toString() + "(" + this.state.name().substring(0, 1).toLowerCase() + ")";
+			if (this.stoichiometry > 1) {
+				str = this.stoichiometry + str;
+			}
+			return str;
 		}
 	}
 }

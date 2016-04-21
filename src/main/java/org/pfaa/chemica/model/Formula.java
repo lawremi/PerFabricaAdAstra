@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.pfaa.chemica.model.Equation.Term;
-
 public final class Formula {
 	private List<Part> parts;
 	private int hydration;
@@ -42,25 +40,31 @@ public final class Formula {
 		return parts.get(parts.size()-1);
 	}
 	
-	public Formula setFirstPart(Part newPart) {
+	public Formula withFirstPart(Part newPart) {
 		Formula copy = new Formula(this);
 		copy.parts.set(0, newPart);
 		return copy;
 	}
 	
 	public Formula substituteFirstPart(Element substitute) {
-		return this.setFirstPart(substitute._(this.getFirstPart().stoichiometry));
+		return this.withFirstPart(substitute._(this.getFirstPart().stoichiometry));
 	}
 	
-	public Formula setLastPart(Part newPart) {
+	public Formula withLastPart(Part newPart) {
 		Formula copy = new Formula(this);
 		copy.parts.set(copy.parts.size()-1, newPart);
+		return copy;
+	}
+
+	public Formula withoutLastPart() {
+		Formula copy = new Formula(this);
+		copy.parts.remove(copy.parts.size()-1);
 		return copy;
 	}
 	
 	public String toString() {
 		String name = "";
-		for (Part part : parts) {
+		for (Part part : this.parts) {
 			name += part.toString();
 		}
 		return name;
@@ -68,7 +72,7 @@ public final class Formula {
 
 	public double getMolarMass() {
 		double mass = 0;
-		for (Part part : parts) {
+		for (Part part : this.parts) {
 			mass += part.getMolarMass();
 		}
 		return mass;
@@ -81,24 +85,22 @@ public final class Formula {
 	}
 
 	public List<Part> getParts() {
-		return parts;
+		return Collections.unmodifiableList(this.parts);
+	}
+	
+	public Formula appendPart(Part part) {
+		Formula copy = new Formula(this);
+		copy.parts.add(part);
+		return copy;
 	}
 	
 	public int getHydration() {
-		return hydration;
+		return this.hydration;
 	}
 	
 	public Formula setSmiles(String smiles) {
 		this.smiles = smiles;
 		return this;
-	}
-	
-	public Equation plus(Formula... reactants) {
-		List<Term> terms = new ArrayList<Term>(reactants.length);
-		for (Formula reactant : reactants) {
-			terms.add(new Term(reactant));
-		}
-		return new Equation(terms, Collections.<Term>emptyList(), null);
 	}
 	
 	public static final class Part implements PartFactory {
@@ -153,21 +155,26 @@ public final class Formula {
 				for (Part part : parts) {
 					name += part.toString();
 				}
+			}
+			if (stoichiometry > 1) {
 				if (parts.size() > 1)
 					name = "(" + name + ")";
-			}
-			if (stoichiometry > 1)
 				name += stoichiometry;
+			}
 			return name;
 		}
 		
 		public boolean equals(Object other) {
-			return other instanceof Part && other.toString() == this.toString();
+			return other instanceof Part && other.toString().equals(this.toString());
 		}
 		
 		@Override
 		public Part getPart() {
 			return this;
+		}
+		
+		public boolean hasComposition(Part part) {
+			return this.equals(part._(this.stoichiometry));
 		}
 	}
 	

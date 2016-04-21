@@ -6,6 +6,7 @@ import org.pfaa.chemica.block.IndustrialFluidBlock;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
@@ -115,6 +116,10 @@ public class IndustrialFluids {
 	
 	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, Form form) {
 		return getCanonicalFluidStack(material, state, getAmount(form));
+	}
+	
+	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
+		return getCanonicalFluidStack(term.chemical, term.state, term.stoichiometry * getAmount(form));
 	}
 	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
