@@ -1,10 +1,12 @@
 package org.pfaa.chemica.registration;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.fabrica.registration.MaterialStackList;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.util.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -49,6 +51,14 @@ public class CombinedMaterialRecipeRegistry implements MaterialRecipeRegistry {
 	public void registerMixingRecipe(MaterialStackList inputs, ItemStack output) {
 		for (MaterialRecipeRegistry registry : this.registries.values()) {
 			registry.registerMixingRecipe(inputs, output);
+		}
+	}
+
+	@Override
+	public void registerGrindingRecipe(MaterialStack input, ItemStack output, List<ChanceStack> secondaries,
+			Strength strength) {
+		for (MaterialRecipeRegistry registry : this.registries.values()) {
+			registry.registerGrindingRecipe(input, output, secondaries, strength);
 		}
 	}
 
