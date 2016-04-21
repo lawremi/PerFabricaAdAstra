@@ -628,7 +628,7 @@
                     displayGroup='groupGeologica'>
         <Description>
           Generate Geologica mineral clay deposits, including
-          bentonite, Fuller's earth and kaolinite.
+          bentonite, palygorskite and kaolinite.
         </Description>
         <DisplayName>Mineral clay deposits</DisplayName>
         <Choice value='true' displayValue='On'/>
@@ -3820,15 +3820,14 @@
 
     <ConfigSection> <!-- Various Mineral Clays -->
       <ConfigSection>
-        <StandardGenPreset name='PresetBentonite'
+        <StandardGenPreset name='PresetSodiumBentonite'
                            inherits='PresetVolcanicAsh'>
           <OreBlock block='PFAAGeologica:weakOreSand:5' weight='0.05'/>
           <OreBlock block='PFAAGeologica:weakOreClay:1' weight='0.95'/>
           <Setting name='Frequency' avg=':=4 * _default_' range='0'/>
         </StandardGenPreset>
-        <CloudPreset name='PresetFullersEarth'
+        <CloudPreset name='PresetCalciumBentonite'
                      inherits='PresetSedStrategicCloud'
-                     block='PFAAGeologica:weakOreClay:2'
                      drawWireframe='false'
                      wireframeColor='0xFFFF00FF'>
           <Setting name='CloudHeight' avg=':=60/64 * dimension.groundLevel'
@@ -3840,6 +3839,8 @@
           <Setting name='DistributionFrequency' avg=':= 6 * _default_'/>
           <Setting name='OreDensity' avg=':=1.5 * _default_'/>
           <BiomeType name='sandy'/>
+	  <OreBlock block='PFAAGeologica:weakOreClay:7' weight='0.20'/>
+	  <OreBlock block='PFAAGeologica:weakOreClay:2' weight='0.80'/>
         </CloudPreset>
         <CloudPreset name='PresetKaolinite'
                      inherits='PresetSedStrategicCloud'
@@ -3862,8 +3863,8 @@
         
         <IfCondition condition=":=?GeologicaGenClay &amp;
                                 ?GeologicaActive">
-          <StandardGen name='Bentonite' inherits='PresetBentonite'/>
-          <Cloud name='FullersEarth' inherits='PresetFullersEarth'/>
+          <StandardGen name='SodiumBentonite' inherits='PresetSodiumBentonite'/>
+          <Cloud name='CalciumBentonite' inherits='PresetCalciumBentonite'/>
           <Cloud name='Kaolinite' inherits='PresetKaolinite'/>
         </IfCondition>
       </ConfigSection>
