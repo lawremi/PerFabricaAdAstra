@@ -31,11 +31,11 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeRegistration {
 	
 	private static final CombinedRecipeRegistry target = new CombinedRecipeRegistry();
-	private static final CombinedMaterialRecipeRegistry materialTarget = new CombinedMaterialRecipeRegistry();
+	private static final MaterialRecipeRegistry materialTarget = target.getMaterialRecipeRegistry();
+	private static final ReactionRegistry reactionTarget = new ReactionRegistry(materialTarget);
 	
 	public static void addRegistry(String key, RecipeRegistry registry) {
 		target.addRegistry(key, registry);
-		materialTarget.addRegistry(key, registry.getMaterialRecipeRegistry());
 	}
 	
 	public static RecipeRegistry getTarget() {
