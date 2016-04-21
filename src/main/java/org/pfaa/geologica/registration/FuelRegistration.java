@@ -26,7 +26,7 @@ public class FuelRegistration {
 				}
 			}
 			
-			if (fuel.getItem() != GeologicaItems.CRUDE_LUMP)
+			if (fuel.getItem() != GeologicaItems.CRUDE_LUMP && fuel.getItem() != GeologicaItems.CRUDE_DUST)
 				return 0;
 			
 			GeoMaterial material = GeologicaItems.CRUDE_LUMP.getIndustrialMaterial(fuel);
