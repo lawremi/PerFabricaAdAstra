@@ -30,17 +30,17 @@ public interface Generic extends IndustrialMaterial {
 		
 		@Override
 		public String getOreDictKey() {
-			return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, this.name());
+			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
 		}
 
 		@Override
 		public ConditionProperties getProperties(Condition condition) {
-			return null;
+			return this.specifics.get(0).getProperties(condition);
 		}
 
 		@Override
 		public Mixture mix(IndustrialMaterial material, double weight) {
-			return null;
+			return new SimpleMixture(this).mix(material, weight);
 		}
 
 		@Override
