@@ -8,13 +8,17 @@ import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.MaterialRecipeRegistry;
+import org.pfaa.chemica.registration.MaterialStackList;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.fabrica.FabricaBlocks;
 import org.pfaa.fabrica.FabricaItems;
 import org.pfaa.fabrica.model.Generic.Generics;
 import org.pfaa.fabrica.model.Intermediate.Intermediates;
@@ -36,10 +40,18 @@ public class RecipeRegistration {
 	
 	public static void init() {
 		grindIntermediates();
+		grindBricks();
+		grindSlag();
 		hydrateHardenedClay();
 		useFeldsparAsFlux();
+		calcineMaterials();
+		makeAsh();
 		makePortlandCement();
+		makePozzolanicCement();
 		makeConcrete();
+		makeDrywall();
+		makeDrywallJointCompound();
+		fillPigments();
 	}
 
 	private static void registerCrushingRecipe(Aggregates aggregate) {
@@ -52,57 +64,104 @@ public class RecipeRegistration {
 
 	private static void hydrateHardenedClay() {
 		registerCrushingRecipe(Aggregates.HARDENED_CLAY);
+		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
 		materialRecipes.registerAbsorptionRecipe(
-				new MaterialStackList(new MaterialStack(Forms.DUST, Aggregates.HARDENED_CLAY)),
-				new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST)),
+				new MaterialStackList(Aggregates.HARDENED_CLAY),
+				water,
 				new ItemStack(Items.clay_ball),
 				Constants.STANDARD_TEMPERATURE);
 	}
 
 	private static void grindIntermediates() {
-		for (Intermediates material : Intermediates.values()) {
-			ItemStack input = FabricaItems.INTERMEDIATE_CRUSHED.getItemStack(material);
+		for (Intermediates material : FabricaItems.INTERMEDIATE_LUMP.getIndustrialMaterials()) {
+			ItemStack input = FabricaItems.INTERMEDIATE_LUMP.getItemStack(material);
 			ItemStack output = FabricaItems.INTERMEDIATE_DUST.getItemStack(material);
 			recipes.registerGrindingRecipe(input, output, Collections.<ChanceStack>emptyList(), Strength.WEAK);
 		}
 	}
 
+	private static void grindBricks() {
+		ItemStack output = FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.FIRED_CLAY);
+		recipes.registerGrindingRecipe(new ItemStack(Items.brick), output, 
+				Collections.<ChanceStack>emptyList(), Strength.MEDIUM);
+	}
+
+	private static void grindSlag() {
+		ItemStack output = FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.SLAG);
+		materialRecipes.registerGrindingRecipe(new MaterialStack(Forms.LUMP, Intermediates.SLAG), output, 
+				Collections.<ChanceStack>emptyList(), Strength.STRONG);
+	}
+	
+	private static void calcineMaterial(IndustrialMaterial mineral, IndustrialMaterial calcined, int temp) {
+		MaterialStackList inputs = new MaterialStackList(new MaterialStack(mineral));
+		ItemStack output = new MaterialStack(calcined).getBestItemStack();
+		materialRecipes.registerRoastingRecipe(inputs, output, temp);
+	}
+	
+	private static void calcineMaterials() {
+		calcineMaterial(IndustrialMinerals.DIATOMITE, Intermediates.CALCINED_DIATOMITE, 1300);
+		calcineMaterial(IndustrialMinerals.KAOLINITE, Intermediates.METAKAOLIN, 1000);
+		calcineMaterial(Intermediates.METAKAOLIN, Intermediates.SPINEL, 1200);
+		calcineMaterial(Intermediates.SPINEL, Intermediates.MULLITE, 1600);
+		calcineMaterial(Ores.GYPSUM, Intermediates.GYPSUM_PLASTER, 600);
+		// TODO: Na2CO3 also produced by Solvay process
+		calcineMaterial(IndustrialMinerals.TRONA, Compounds.Na2CO3, 600);
+	}
+
 	private static void makePortlandCement() {
-		ItemStack clinker = FabricaItems.INTERMEDIATE_CRUSHED.getItemStack(Intermediates.PORTLAND_CLINKER, 4);	
+		ItemStack clinker = FabricaItems.INTERMEDIATE_LUMP.getItemStack(Intermediates.PORTLAND_CLINKER, 4);	
 		MaterialStackList inputs = new MaterialStackList(
-				new MaterialStack(Forms.DUST, Ores.CALCITE, 3),
+				new MaterialStack(Ores.CALCITE, 3),
 				new MaterialStack(Forms.CLUMP, Aggregates.CLAY));
 		materialRecipes.registerRoastingRecipe(inputs, clinker, 1700);
-		mixIntermediate(FabricaItems.INTERMEDIATE_CRUSHED, Intermediates.PORTLAND_CEMENT);
+		mixIntermediate(FabricaItems.INTERMEDIATE_LUMP, Intermediates.PORTLAND_CEMENT);
+	}
+
+	private static void makePozzolanicCement() {
+		mixIntermediate(FabricaItems.INTERMEDIATE_DUST, Intermediates.POZZOLANIC_CEMENT);
 	}
 
 	private static void makeConcrete() {
 		/*
-		 * We will support two types of cement:
-		 * - Portland
-		 * - Pozzolanic: mixing one of the below materials with Ca(OH)2 and water
-		 *   - Volcanic ash, pumice, zeolite 
-		 *   - Calcined diatomite
-		 *   - Ground clay bricks (need clay dust!), calcined kaolinite
-		 *   - Ground slag
-		 *   - Organic ash from coal and bone (need a way to obtain fly ash!)
-		 *     - Could detect furnace output by registering a handler via Container.addCraftingToCrafters()
-		 *   - Silica fume (SiO) released during silicon production in arc furnace
+		 * TODO: 
+		 * - Support coal fly ash and silica fume as pozzalans, once we can capture them
+		 * - Support geopolymer concrete
 		 */
 		List<ItemStack> concretes = OreDictionary.getOres("concrete");
 		if (concretes.size() > 0) {
 			ItemStack concrete = concretes.get(0).copy();
 			concrete.stackSize = 8;
 			MaterialStackList inputs = new MaterialStackList(
-					new MaterialStack(Aggregates.GRAVEL, 2),
-					new MaterialStack(Aggregates.SAND),
-					new MaterialStack(Forms.DUST, Generics.CEMENT));
+					new MaterialStack(null, Aggregates.GRAVEL),
+					new MaterialStack(null, Aggregates.SAND),
+					new MaterialStack(Generics.CEMENT));
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
 			materialRecipes.registerAbsorptionRecipe(inputs, water, concrete, Constants.STANDARD_TEMPERATURE);
 		}
-		// TODO: geopolymer concrete
 	}
 
+	private static void makeDrywall() {
+		RecipeUtils.addShapedRecipe(new ItemStack(FabricaBlocks.DRYWALL, 8),
+				"pgp",
+				"pwp",
+				"pgp",
+				'p', Items.paper,
+				'g', Intermediates.GYPSUM_PLASTER,
+				'w', Items.water_bucket);
+	}
+	
+	private static void makeDrywallJointCompound() {
+		MaterialStackList jointCompoundSolids = new MaterialStackList(
+				new MaterialStack(Forms.DUST, Generics.JOINT_COMPOUND_FILLER),
+				new MaterialStack(Forms.DUST_TINY, Generics.BINDER),
+				new MaterialStack(Forms.DUST_TINY, IndustrialMinerals.PALYGORSKITE),
+				new MaterialStack(Forms.DUST_TINY, Generics.FILLER)
+		);
+		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+		materialRecipes.registerAbsorptionRecipe(jointCompoundSolids, water, 
+				new ItemStack(FabricaItems.JOINT_COMPOUND, 4), Constants.STANDARD_TEMPERATURE);
+	}
+	
 	private static void useFeldsparAsFlux() {
 		ItemStack output = new ItemStack(Blocks.glass);
 		ItemStack input = new ItemStack(Blocks.sand);
@@ -117,5 +176,20 @@ public class RecipeRegistration {
 	private static void mixIntermediate(IndustrialMaterialItem<Intermediates> item, Intermediates material) {
 		MaterialStackList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
 		materialRecipes.registerMixingRecipe(inputs, item.getItemStack(material));
+	}
+	
+	private static void makeAsh() {
+		ItemStack bonemeal = new ItemStack(Items.dye, 1, 15);
+		recipes.registerRoastingRecipe(Collections.singletonList(bonemeal), 
+				FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.ASH), 1000);
+	}
+	
+	private static void fillPigments() {
+		for (ItemStack dye : OreDictionary.getOres("dye")) {
+			ItemStack doubleDye = dye.copy();
+			doubleDye.stackSize = 2;
+			// TODO: need a more generic recipe registry
+			//materialRecipes.registerMixingRecipe(new MaterialStackList(dye, Generics.FILLER), doubleDye);	
+		}
 	}
 }
