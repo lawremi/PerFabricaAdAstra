@@ -41,6 +41,8 @@ public class FuelRegistration {
 				return 2400;
 			case COKE:
 				return 3200;
+			case PEAT:
+				return 800;
 			default:
 				return 0;
 			}
