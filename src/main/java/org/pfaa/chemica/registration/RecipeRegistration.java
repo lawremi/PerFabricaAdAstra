@@ -59,46 +59,40 @@ public class RecipeRegistration {
 	
 	private static void registerAgglomerationRecipes() {
 		registerBlockAndQuarterRecipes(ChemicaItems.AGGREGATE_PILE);
-		registerItemAndNinthRecipes(ChemicaItems.AGGREGATE_DUST, ChemicaItems.AGGREGATE_TINY_DUST);
-		registerItemAndNinthRecipes(ChemicaItems.COMPOUND_DUST, ChemicaItems.COMPOUND_TINY_DUST);
-		registerItemAndNinthRecipes(ChemicaItems.ELEMENT_DUST, ChemicaItems.ELEMENT_TINY_DUST);
-		registerItemAndNinthRecipes(ChemicaItems.ALLOY_DUST, ChemicaItems.ALLOY_TINY_DUST);
-		registerItemAndNinthRecipes(ChemicaItems.ELEMENT_INGOT, ChemicaItems.ELEMENT_NUGGET);
-		registerItemAndNinthRecipes(ChemicaItems.ALLOY_INGOT, ChemicaItems.ALLOY_NUGGET);
+		registerPartitionRecipes(ChemicaItems.AGGREGATE_DUST, ChemicaItems.AGGREGATE_TINY_DUST);
+		registerPartitionRecipes(ChemicaItems.COMPOUND_DUST, ChemicaItems.COMPOUND_TINY_DUST);
+		registerPartitionRecipes(ChemicaItems.ELEMENT_DUST, ChemicaItems.ELEMENT_TINY_DUST);
+		registerPartitionRecipes(ChemicaItems.ALLOY_DUST, ChemicaItems.ALLOY_TINY_DUST);
+		registerPartitionRecipes(ChemicaItems.ELEMENT_INGOT, ChemicaItems.ELEMENT_NUGGET);
+		registerPartitionRecipes(ChemicaItems.ALLOY_INGOT, ChemicaItems.ALLOY_NUGGET);
 		registerBlockAndIngotRecipes();
 		registerCastingAndGrindingRecipes();
 	}
 
-	private static <T extends Enum<?> & IndustrialMaterial> void registerItemAndNinthRecipes(IndustrialMaterialItem<T> item, 
-			IndustrialMaterialItem<T> ninth) {
-		for(T material : ninth.getIndustrialMaterials()) {
+	public static <T extends Enum<?> & IndustrialMaterial> void registerPartitionRecipes(IndustrialMaterialItem<T> item, 
+			IndustrialMaterialItem<T> partition) {
+		int numPartitions = partition.getForm().getNumberPerBlock() / item.getForm().getNumberPerBlock();
+		for(T material : partition.getIndustrialMaterials()) {
 			ItemStack itemStack = item.getItemStack(material);
-			ItemStack ninthStack = ninth.getItemStack(material);
-			registerItemAndNinthRecipe(itemStack, ninthStack);
+			ItemStack partitionStack = partition.getItemStack(material);
+			registerPartitionRecipes(itemStack, partitionStack, numPartitions);
 			registerFluidCastingRecipes(itemStack, material, item.getForm());
-			registerFluidCastingRecipes(ninthStack, material, ninth.getForm());
+			registerFluidCastingRecipes(partitionStack, material, partition.getForm());
 		}
 	}
 
-	private static void registerItemAndNinthRecipe(ItemStack itemStack, ItemStack ninthStack) {
-		GameRegistry.addRecipe(itemStack, "###", "###", "###", '#', ninthStack);
-		ninthStack = ninthStack.copy();
-		ninthStack.stackSize = 9;
-		GameRegistry.addShapelessRecipe(ninthStack, itemStack);
-	}
-
-	private static void registerItemAndQuarterRecipe(ItemStack blockStack, ItemStack quarterStack) {
-		GameRegistry.addRecipe(blockStack, "##", "##", '#', quarterStack);
-		quarterStack = quarterStack.copy();
-		quarterStack.stackSize = 4;
-		GameRegistry.addShapelessRecipe(quarterStack, blockStack);
+	private static void registerPartitionRecipes(ItemStack itemStack, ItemStack partitionStack, int numPartitions) {
+		partitionStack = partitionStack.copy();
+		partitionStack.stackSize = numPartitions;
+		target.registerMixingRecipe(Collections.singletonList(partitionStack), itemStack);
+		GameRegistry.addShapelessRecipe(partitionStack, itemStack);
 	}
 
 	private static void registerBlockAndQuarterRecipes(IndustrialMaterialItem<Aggregates> input) {
 		for(Aggregates material : input.getIndustrialMaterials()) {
 			ItemStack blockStack = new ItemStack(ChemicaBlocks.getBlock(material));
 			ItemStack quarterStack = input.getItemStack(material);
-			registerItemAndQuarterRecipe(blockStack, quarterStack);
+			registerPartitionRecipes(blockStack, quarterStack, input.getForm().getNumberPerBlock());
 		}
 	}
 
@@ -108,10 +102,10 @@ public class RecipeRegistration {
 				ItemStack blockStack = block.getItemStack(material);
 				ItemStack ingotStack = OreDictUtils.lookupBest(Forms.INGOT, material);	
 				if (material instanceof Metal) {
-					registerItemAndNinthRecipe(blockStack, ingotStack);
+					registerPartitionRecipes(blockStack, ingotStack, Forms.INGOT.getNumberPerBlock());
 					registerFluidCastingRecipes(blockStack, material, Forms.BLOCK);
 				} else {
-					registerItemAndQuarterRecipe(blockStack, ingotStack);
+					registerPartitionRecipes(blockStack, ingotStack, 4);
 				}
 			}
 		}
