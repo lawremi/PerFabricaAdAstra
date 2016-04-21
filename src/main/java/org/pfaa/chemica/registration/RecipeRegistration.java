@@ -179,16 +179,18 @@ public class RecipeRegistration {
 	private static void registerFluxedSmeltingRecipes(TemperatureLevel temp, ItemStack flux, Compounds... compounds) {
 		for (Compounds compound : compounds) {
 			Element metal = compound.getFormula().getFirstPart().element;
+			int amount = compound.getFormula().getFirstPart().stoichiometry;
 			target.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_DUST.getItemStack(compound), 
-					ChemicaItems.ELEMENT_INGOT.getItemStack(metal), flux, temp);
+					ChemicaItems.ELEMENT_INGOT.getItemStack(metal, amount), flux, temp);
 			target.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), 
-					ChemicaItems.ELEMENT_NUGGET.getItemStack(metal), flux, temp);
-			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, Forms.INGOT);
+					ChemicaItems.ELEMENT_NUGGET.getItemStack(metal, amount), flux, temp);
+			int fluidAmount = IndustrialFluids.getAmount(Forms.INGOT) * amount;
+			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, fluidAmount);
 			target.registerSmeltingRecipe(ChemicaItems.COMPOUND_DUST.getItemStack(compound), molten, flux, temp);
 			molten = molten.copy();
-			molten.amount = IndustrialFluids.getAmount(Forms.NUGGET);
+			molten.amount = IndustrialFluids.getAmount(Forms.NUGGET) * amount;
 			target.registerSmeltingRecipe(ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), molten, flux, temp);
 		}
 	}
