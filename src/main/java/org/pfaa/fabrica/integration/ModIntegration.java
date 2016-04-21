@@ -4,5 +4,6 @@ public class ModIntegration {
 
 	public static void init() {
 		RailcraftIntegration.init();
+		ThermalExpansionIntegration.init();
 	}
 }
