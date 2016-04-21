@@ -13,6 +13,7 @@ public class CommonRegistrant implements Registrant {
 
 	@Override
 	public void register() {
+		OreMapping.init();
 		RecipeRegistration.init();
 	}
 	
