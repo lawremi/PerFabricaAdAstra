@@ -268,12 +268,13 @@ tile.weakClayBrick.laterite.name=Laterite Brick
 
 # Ore Clays
 tile.weakOreClay.bauxite.name=Bauxite
-tile.weakOreClay.bentonite.name=Bentonite
+tile.weakOreClay.sodiumBentonite.name=Sodium Bentonite
 tile.weakOreClay.brownLimonite.name=Brown Limonite
 tile.weakOreClay.yellowLimonite.name=Yellow Limonite
 tile.weakOreClay.vermiculite.name=Vermiculite
 tile.weakOreClay.kaolinite.name=Kaolinite
-tile.weakOreClay.fullersEarth.name=Fuller's Earth
+tile.weakOreClay.calciumBentonite.name=Calcium Bentonite
+tile.weakOreClay.attapulgite.name=Attapulgite
 
 # Weak Ore Rocks
 tile.weakOreRock.borax.name=Borax Ore
@@ -384,12 +385,26 @@ item.earthyClump.peat.name=Clump of Peat
 item.earthyClump.bogIron.name=Clump of Bog Limonite
 item.earthyClump.laterite.name=Clump of Lateritic Soil
 item.earthyClump.bauxite.name=Clump of Bauxite
-item.earthyClump.bentonite.name=Clump of Bentonite Clay
-item.earthyClump.fullersEarth.name=Clump of Fuller's Earth
+item.earthyClump.sodiumBentonite.name=Clump of Sodium Bentonite Clay
+item.earthyClump.calciumBentonite.name=Clump of Calcium Bentonite Clay
 item.earthyClump.kaolinite.name=Clump of Kaolinite Clay
+item.earthyClump.attapulgite.name=Clump of Attapulgite Clay
 item.earthyClump.brownLimonite.name=Clump of Brown Limonite
 item.earthyClump.yellowLimonite.name=Clump of Yellow Limonite
 item.earthyClump.vermiculite.name=Clump of Vermiculite
+
+# Lumps of clay
+item.earthyLump.peat.name=Lump of Peat
+item.earthyLump.bogIron.name=Lump of Bog Limonite
+item.earthyLump.laterite.name=Lump of Lateritic Soil
+item.earthyLump.bauxite.name=Lump of Bauxite
+item.earthyLump.sodiumBentonite.name=Lump of Sodium Bentonite Clay
+item.earthyLump.calciumBentonite.name=Lump of Calcium Bentonite Clay
+item.earthyLump.kaolinite.name=Lump of Kaolinite Clay
+item.earthyLump.attapulgite.name=Lump of Attapulgite Clay
+item.earthyLump.brownLimonite.name=Lump of Brown Limonite
+item.earthyLump.yellowLimonite.name=Lump of Yellow Limonite
+item.earthyLump.vermiculite.name=Lump of Vermiculite
 
 # Crushed Ores
 item.oreCrushed.borax.name=Crushed Borax Ore
@@ -565,7 +580,8 @@ item.oreDustTiny.gold.name=Tiny Gold Ore Dust
 # Tiny Ore Mineral Dusts
 item.oreMineralDustTiny.acanthite.name=Tiny Acanthite Dust
 item.oreMineralDustTiny.anatase.name=Tiny Anatase Dust
-item.oreMineralDustTiny.arsenpyrite.name=Tiny Arsenopyrite Dust
+item.oreMineralDustTiny.arsenopyrite.name=Tiny Arsenopyrite Dust
+item.oreMineralDustTiny.azurite.name=Tiny Azurite Dust
 item.oreMineralDustTiny.barite.name=Tiny Barite Dust
 item.oreMineralDustTiny.bastnasite.name=Tiny Bastnasite Dust
 item.oreMineralDustTiny.beryl.name=Tiny Beryl Dust
@@ -636,7 +652,8 @@ item.oreMineralDustTiny.sulfur.name=Tiny Sulfur Dust
 
 item.oreMineralDust.acanthite.name=Acanthite Dust
 item.oreMineralDust.anatase.name=Anatase Dust
-item.oreMineralDust.arsenpyrite.name=Arsenopyrite Dust
+item.oreMineralDust.arsenopyrite.name=Arsenopyrite Dust
+item.oreMineralDust.azurite.name=Azurite Dust
 item.oreMineralDust.barite.name=Barite Dust
 item.oreMineralDust.bastnasite.name=Bastnasite Dust
 item.oreMineralDust.beryl.name=Beryl Dust
@@ -706,7 +723,6 @@ item.oreMineralDust.sulfur.name=Sulfur Dust
 # Tiny Industrial Mineral Dusts
 item.industrialMineralDustTiny.alunite.name=Tiny Alunite Dust
 item.industrialMineralDustTiny.apatite.name=Tiny Apatite Dust
-item.industrialMineralDustTiny.azurite.name=Tiny Azurite Dust
 item.industrialMineralDustTiny.sodiumMontmorillonite.name=Tiny Sodium Montmorillonite Dust
 item.industrialMineralDustTiny.chrysotile.name=Tiny Chrysotile Dust
 item.industrialMineralDustTiny.diamond.name=Tiny Diamond Dust
@@ -738,7 +754,6 @@ item.industrialMineralDustTiny.zeolite.name=Tiny Zeolite Dust
 # Industrial Mineral Dusts
 item.industrialMineralDust.alunite.name=Alunite Dust
 item.industrialMineralDust.apatite.name=Apatite Dust
-item.industrialMineralDust.azurite.name=Azurite Dust
 item.industrialMineralDust.sodiumMontmorillonite.name=Sodium Montmorillonite Dust
 item.industrialMineralDust.chrysotile.name=Chrysotile Dust
 item.industrialMineralDust.diamond.name=Diamond Dust
