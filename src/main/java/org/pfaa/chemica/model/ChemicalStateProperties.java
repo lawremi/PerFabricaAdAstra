@@ -69,6 +69,7 @@ public class ChemicalStateProperties extends StateProperties {
 			return this.yaws == null ? super.getViscosity(temperature) : this.yaws.getViscosity(temperature);
 		}
 		
+		// We can also get gas viscosities from Yaws (but they are in micropoise, not centipoise)
 		public static class Yaws {
 			private double A;
 			private double B;
