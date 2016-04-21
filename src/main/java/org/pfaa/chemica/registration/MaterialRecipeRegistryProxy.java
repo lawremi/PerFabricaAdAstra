@@ -3,7 +3,8 @@ package org.pfaa.chemica.registration;
 import java.util.List;
 
 import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.fabrica.registration.MaterialStackList;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.util.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,8 +47,17 @@ public class MaterialRecipeRegistryProxy implements MaterialRecipeRegistry {
 
 	@Override
 	public void registerMixingRecipe(MaterialStackList inputs, ItemStack output) {
-		// TODO Auto-generated method stub
+		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
+			delegate.registerMixingRecipe(itemStacks, output);
+		}
+	}
 
+	@Override
+	public void registerGrindingRecipe(MaterialStack input, ItemStack output, List<ChanceStack> secondaries,
+			Strength strength) {
+		for (ItemStack itemStack : input.getItemStacks()) {
+			delegate.registerGrindingRecipe(itemStack, output, secondaries, strength);
+		}
 	}
 
 }
