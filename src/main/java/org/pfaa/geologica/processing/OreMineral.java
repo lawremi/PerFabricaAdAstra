@@ -62,6 +62,7 @@ public interface OreMineral extends Mineral {
 		ACANTHITE(Compounds.Ag2S),
 		ANATASE(Compounds.TiO2),
 		ARSENOPYRITE(Compounds.FeAsS),
+		AZURITE(Compounds.Cu3CO32OH2),
 		BARITE(Compounds.BaSO4, new Color(250, 250, 170), new Substitution(Sr, 0.05)),
 		BASTNASITE(Compounds.CeCO3F, new Substitution(La, 0.2), new Substitution(Y, 0.1), new Substitution(Sm, 0.01)),
 		BERYL(Compounds.Be3Al2SiO36),
