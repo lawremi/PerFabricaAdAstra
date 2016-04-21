@@ -17,7 +17,6 @@ public interface IndustrialMineral extends Mineral {
 	public enum IndustrialMinerals implements IndustrialMineral {
 		ALUNITE(new Color(225, 180, 65), 2.7),
 		APATITE(new Color(160, 190, 160), 3.1),
-		AZURITE(new Color(20, 20, 200), 3.8),
 		SODIUM_MONTMORILLONITE(new Color(245, 215, 210), 0.593),
 		CHRYSOTILE(new Color(110, 140, 110), 2.53),
 		DIAMOND(new Color(215, 240, 255), 3.51),
