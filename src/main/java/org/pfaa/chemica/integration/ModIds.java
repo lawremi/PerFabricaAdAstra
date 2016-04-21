@@ -17,4 +17,5 @@ public abstract class ModIds {
 	public static final String FORESTRY = "Forestry";
 	public static final String MARICULTURE = "Mariculture";
 	public static final String BUILDCRAFT_TRANSPORT = "BuildCraft|Transport";
+	public static final String OPEN_BLOCKS = "OpenBlocks";
 }
