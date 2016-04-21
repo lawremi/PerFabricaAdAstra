@@ -89,18 +89,19 @@ public class RecipeUtils {
 	
 	public static ChanceStack getSeparationOutput(MixtureComponent input) {
 		float weight = (float)input.weight;
-		ItemStack itemStack = getSeparationOutputItemStack(input);
+		ItemStack itemStack = getSeparationOutputItemStack(input).copy();
 		if (weight < 1.0F) {
 			int ntiny = (int)(weight / TINY_DUST_WEIGHT);
 			if (ntiny > 0) {
-				itemStack = itemStack.copy();
 				itemStack.stackSize = ntiny;
 				weight = 1.0F;
 			} else {
 				weight = weight / TINY_DUST_WEIGHT;
 			}
+		} else {
+			itemStack.stackSize = (int)weight;
 		}
-		return new ChanceStack(itemStack, weight);
+		return new ChanceStack(itemStack, Math.min(weight, 1));
 	}
 	
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
