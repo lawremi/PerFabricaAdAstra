@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.pfaa.chemica.model.Constants;
-import org.pfaa.chemica.registration.MaterialRecipeRegistry;
-import org.pfaa.chemica.registration.MaterialRecipeRegistryProxy;
-import org.pfaa.chemica.registration.MaterialStackList;
+import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
+import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -69,18 +69,18 @@ public class ForestryIntegration {
 		}
 
 		@Override
-		public MaterialRecipeRegistry getMaterialRecipeRegistry() {
+		public GenericRecipeRegistry getGenericRecipeRegistry() {
 			return new ForestryMaterialRecipeRegistry();
 		}
 		
-		public class ForestryMaterialRecipeRegistry extends MaterialRecipeRegistryProxy {
+		public class ForestryMaterialRecipeRegistry extends GenericRecipeRegistryProxy {
 
 			public ForestryMaterialRecipeRegistry() {
 				super(ForestryRecipeRegistry.this);
 			}
 
 			@Override
-			public void registerAbsorptionRecipe(MaterialStackList inputs, FluidStack additive, ItemStack output,
+			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
 					int temp) {
 				ForestryRecipeRegistry.this.registerAbsorptionRecipe(
 						inputs.getRepeatedOreDictKeys().toArray(), 

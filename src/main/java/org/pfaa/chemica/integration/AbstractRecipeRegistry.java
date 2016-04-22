@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.MaterialRecipeRegistry;
-import org.pfaa.chemica.registration.MaterialRecipeRegistryProxy;
+import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -69,7 +69,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	}
 	
 	@Override
-	public MaterialRecipeRegistry getMaterialRecipeRegistry() {
-		return new MaterialRecipeRegistryProxy(this);
+	public GenericRecipeRegistry getGenericRecipeRegistry() {
+		return new GenericRecipeRegistryProxy(this);
 	}
 }

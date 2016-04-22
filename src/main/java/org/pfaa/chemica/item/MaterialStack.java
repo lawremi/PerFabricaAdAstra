@@ -15,7 +15,7 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.item.ItemStack;
 
-public class MaterialStack {
+public class MaterialStack implements IngredientStack {
 	private Form form;
 	private IndustrialMaterial material;
 	private int size;
@@ -73,7 +73,8 @@ public class MaterialStack {
 	public boolean hasItemStack() {
 		return !this.getItemStacks().isEmpty();
 	}
-	
+
+	@Override
 	public int getSize() {
 		return this.size;
 	}

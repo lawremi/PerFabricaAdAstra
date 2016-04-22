@@ -13,8 +13,8 @@ import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.MaterialRecipeRegistry;
-import org.pfaa.chemica.registration.MaterialStackList;
+import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -54,8 +54,8 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeRegistration {
 	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getTarget();
-	private static final MaterialRecipeRegistry materialRegistry = 
-			org.pfaa.chemica.registration.RecipeRegistration.getMaterialTarget();
+	private static final GenericRecipeRegistry genericRegistry = 
+			org.pfaa.chemica.registration.RecipeRegistration.getGenericTarget();
 	
 	public static void init() {
 		registerRockCastingRecipes();
@@ -386,10 +386,10 @@ public class RecipeRegistration {
 	}
 	
 	private static void convertBentonite() {
-		MaterialStackList inputs = new MaterialStackList(
+		IngredientList inputs = new IngredientList(
 				new MaterialStack(Forms.CLUMP, GeoMaterial.CALCIUM_BENTONITE),
 				new MaterialStack(Compounds.Na2CO3));
-		materialRegistry.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
+		genericRegistry.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
 	}
 	
 	private static void registerPeatDryingRecipe() {

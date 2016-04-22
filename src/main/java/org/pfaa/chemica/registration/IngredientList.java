@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.IndustrialMaterial;
 
@@ -15,21 +16,21 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.item.ItemStack;
 
-public class MaterialStackList extends AbstractList<MaterialStack> {
+public class IngredientList extends AbstractList<IngredientStack> {
 
-	private List<MaterialStack> delegate;
+	private List<IngredientStack> delegate;
 	private Set<List<ItemStack>> itemStackLists;
 	
-	public MaterialStackList(MaterialStack... materialStacks) {
+	public IngredientList(IngredientStack... materialStacks) {
 		this.delegate = Lists.newArrayList(materialStacks);
 	}
 	
-	public MaterialStackList(List<MaterialStack> materialStacks) {
-		this.delegate = new ArrayList<MaterialStack>(materialStacks);
+	public IngredientList(List<IngredientStack> materialStacks) {
+		this.delegate = new ArrayList<IngredientStack>(materialStacks);
 	}
 	
-	public MaterialStackList(IndustrialMaterial... materials) {
-		List<MaterialStack> stacks = new ArrayList<MaterialStack>(materials.length);
+	public IngredientList(IndustrialMaterial... materials) {
+		List<IngredientStack> stacks = new ArrayList<IngredientStack>(materials.length);
 		for (IndustrialMaterial material : materials) {
 			stacks.add(new MaterialStack(material));
 		}
@@ -37,7 +38,7 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 	}
 	
 	@Override
-	public MaterialStack get(int arg0) {
+	public IngredientStack get(int arg0) {
 		return delegate.get(arg0);
 	}
 
@@ -46,9 +47,9 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 		return delegate.size();
 	}
 	
-	private Function<MaterialStack, Set<ItemStack>> getItemStacks = new Function<MaterialStack, Set<ItemStack>>() {
+	private Function<IngredientStack, Set<ItemStack>> getItemStacks = new Function<IngredientStack, Set<ItemStack>>() {
 		@Override
-		public Set<ItemStack> apply(MaterialStack input) {
+		public Set<ItemStack> apply(IngredientStack input) {
 			return input.getItemStacks();
 		}
 	};
@@ -61,9 +62,9 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 		return this.itemStackLists;
 	}
 	
-	private Function<MaterialStack, String> getOreDictKey = new Function<MaterialStack, String>() {
+	private Function<IngredientStack, String> getOreDictKey = new Function<IngredientStack, String>() {
 		@Override
-		public String apply(MaterialStack input) {
+		public String apply(IngredientStack input) {
 			return input.getOreDictKey();
 		}
 	};
@@ -74,7 +75,7 @@ public class MaterialStackList extends AbstractList<MaterialStack> {
 	
 	public List<String> getRepeatedOreDictKeys() {
 		List<String> keys = new ArrayList<String>();
-		for (MaterialStack stack : this.delegate) {
+		for (IngredientStack stack : this.delegate) {
 			keys.addAll(Collections.nCopies(stack.getSize(), stack.getOreDictKey()));	
 		}
 		return keys;

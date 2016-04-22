@@ -36,8 +36,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeRegistration {
 	
 	private static final CombinedRecipeRegistry target = new CombinedRecipeRegistry();
-	private static final MaterialRecipeRegistry materialTarget = target.getMaterialRecipeRegistry();
-	private static final ReactionRegistry reactionTarget = new ReactionRegistry(materialTarget);
+	private static final GenericRecipeRegistry genericTarget = target.getGenericRecipeRegistry();
+	private static final ReactionRegistry reactionTarget = new ReactionRegistry(genericTarget);
 	
 	public static void addRegistry(String key, RecipeRegistry registry) {
 		target.addRegistry(key, registry);
@@ -47,8 +47,8 @@ public class RecipeRegistration {
 		return target;
 	}
 	
-	public static MaterialRecipeRegistry getMaterialTarget() {
-		return materialTarget;
+	public static GenericRecipeRegistry getGenericTarget() {
+		return genericTarget;
 	}
 	
 	public static void init() {

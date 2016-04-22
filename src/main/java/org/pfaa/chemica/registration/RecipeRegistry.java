@@ -25,5 +25,5 @@ public interface RecipeRegistry {
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output);
 	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs);
 	
-	public MaterialRecipeRegistry getMaterialRecipeRegistry();
+	public GenericRecipeRegistry getGenericRecipeRegistry();
 }

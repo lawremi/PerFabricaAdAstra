@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.Reaction;
@@ -15,9 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ReactionRegistry {
-	private MaterialRecipeRegistry delegate;
+	private GenericRecipeRegistry delegate;
 	
-	public ReactionRegistry(MaterialRecipeRegistry delegate) {
+	public ReactionRegistry(GenericRecipeRegistry delegate) {
 		this.delegate = delegate;
 	}
 	
@@ -32,18 +33,18 @@ public class ReactionRegistry {
 		if (output == null) {
 			return;
 		}
-		MaterialStackList inputs = this.getReactantMaterials(form, reaction);
+		IngredientList inputs = this.getReactantMaterials(form, reaction);
 		int temp = reaction.getSpontaneousTemperature();
 		delegate.registerRoastingRecipe(inputs, output, temp);
 	}
 	
-	private MaterialStackList getReactantMaterials(Form form, Reaction reaction) {
+	private IngredientList getReactantMaterials(Form form, Reaction reaction) {
 		List<Term> reactants = reaction.getReactants();
-		List<MaterialStack> stacks = new ArrayList<MaterialStack>(reactants.size());
+		List<IngredientStack> stacks = new ArrayList<IngredientStack>(reactants.size());
 		for (Term reactant : reactants) {
 			stacks.add(new MaterialStack(form, reactant.chemical, reactant.stoichiometry));
 		}
-		return new MaterialStackList(stacks);
+		return new IngredientList(stacks);
 	}
 	
 	private ItemStack getSolidProductItemStack(Form form, Reaction reaction, float scale) {
@@ -73,7 +74,7 @@ public class ReactionRegistry {
 		Term product = synthesis.getProducts().get(0);
 		
 		if (a.state == State.SOLID && b.state != State.SOLID && product.state == State.SOLID) {
-			MaterialStackList inputs = new MaterialStackList(new MaterialStack(form, a));
+			IngredientList inputs = new IngredientList(new MaterialStack(form, a));
 			FluidStack additive = IndustrialFluids.getCanonicalFluidStack(b, form);
 			ItemStack output = new MaterialStack(form, product).getBestItemStack();
 			delegate.registerAbsorptionRecipe(inputs, additive, output, synthesis.getSpontaneousTemperature());

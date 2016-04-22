@@ -5,9 +5,9 @@ import java.util.List;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.MaterialRecipeRegistry;
-import org.pfaa.chemica.registration.MaterialRecipeRegistryProxy;
-import org.pfaa.chemica.registration.MaterialStackList;
+import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
+import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.registration.RecipeUtils;
 
@@ -76,25 +76,25 @@ public class VanillaIntegration {
 		}
 
 		@Override
-		public MaterialRecipeRegistry getMaterialRecipeRegistry() {
+		public GenericRecipeRegistry getGenericRecipeRegistry() {
 			return new VanillaMaterialRecipeRegistry();
 		}
 		
-		public class VanillaMaterialRecipeRegistry extends MaterialRecipeRegistryProxy {
+		public class VanillaMaterialRecipeRegistry extends GenericRecipeRegistryProxy {
 
 			public VanillaMaterialRecipeRegistry() {
 				super(VanillaRecipeRegistry.this);
 			}
 
 			@Override
-			public void registerAbsorptionRecipe(MaterialStackList inputs, FluidStack additive, ItemStack output,
+			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
 					int temp) {
 				VanillaRecipeRegistry.this.registerAbsorptionRecipe(
 						inputs.getRepeatedOreDictKeys().toArray(), additive, output, temp);
 			}
 
 			@Override
-			public void registerMixingRecipe(MaterialStackList inputs, ItemStack output) {
+			public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
 				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getRepeatedOreDictKeys().toArray(), output);
 			}
 			

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.pfaa.chemica.Chemica;
+import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
@@ -255,8 +256,8 @@ public class RecipeUtils {
 		}
 	}
 
-	public static MaterialStackList getMixtureInputs(Form form, Mixture mixture) {
-		List<MaterialStack> inputs = new ArrayList<MaterialStack>(mixture.getComponents().size());
+	public static IngredientList getMixtureInputs(Form form, Mixture mixture) {
+		List<IngredientStack> inputs = new ArrayList<IngredientStack>(mixture.getComponents().size());
 		for (MixtureComponent component : mixture.getComponents()) {
 			int amount = (int)component.weight;
 			if (amount == 0) {
@@ -266,13 +267,13 @@ public class RecipeUtils {
 			if (amount == 0) {
 				throw new IllegalArgumentException("Cannot mix components with weight < 0.05");
 			}
-			MaterialStack materialStack = new MaterialStack(form, component.material, amount);
-			if (!materialStack.hasItemStack()) {
+			IngredientStack materialStack = new MaterialStack(form, component.material, amount);
+			if (materialStack.getItemStacks().size() == 0) {
 				throw new IllegalArgumentException("Mixing: No item stack for " + materialStack.getOreDictKey());
 			}
 			inputs.add(materialStack);
 		}
-		return new MaterialStackList(inputs);
+		return new IngredientList(inputs);
 	}
 
 	@SuppressWarnings("unchecked")

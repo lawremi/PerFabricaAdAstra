@@ -6,6 +6,7 @@ import java.util.List;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.item.ItemIngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
@@ -13,8 +14,8 @@ import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.registration.MaterialRecipeRegistry;
-import org.pfaa.chemica.registration.MaterialStackList;
+import org.pfaa.chemica.registration.IngredientList;
+import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -35,8 +36,8 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RecipeRegistration {
 	private static final RecipeRegistry recipes = 
 			org.pfaa.chemica.registration.RecipeRegistration.getTarget();
-	private static final MaterialRecipeRegistry materialRecipes = 
-			org.pfaa.chemica.registration.RecipeRegistration.getMaterialTarget();;
+	private static final GenericRecipeRegistry genericRecipes = 
+			org.pfaa.chemica.registration.RecipeRegistration.getGenericTarget();;
 	
 	public static void init() {
 		grindIntermediates();
@@ -65,8 +66,8 @@ public class RecipeRegistration {
 	private static void hydrateHardenedClay() {
 		registerCrushingRecipe(Aggregates.HARDENED_CLAY);
 		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-		materialRecipes.registerAbsorptionRecipe(
-				new MaterialStackList(Aggregates.HARDENED_CLAY),
+		genericRecipes.registerAbsorptionRecipe(
+				new IngredientList(Aggregates.HARDENED_CLAY),
 				water,
 				new ItemStack(Items.clay_ball),
 				Constants.STANDARD_TEMPERATURE);
@@ -88,14 +89,14 @@ public class RecipeRegistration {
 
 	private static void grindSlag() {
 		ItemStack output = FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.SLAG);
-		materialRecipes.registerGrindingRecipe(new MaterialStack(Forms.LUMP, Intermediates.SLAG), output, 
+		genericRecipes.registerGrindingRecipe(new MaterialStack(Forms.LUMP, Intermediates.SLAG), output, 
 				Collections.<ChanceStack>emptyList(), Strength.STRONG);
 	}
 	
 	private static void calcineMaterial(IndustrialMaterial mineral, IndustrialMaterial calcined, int temp) {
-		MaterialStackList inputs = new MaterialStackList(new MaterialStack(mineral));
+		IngredientList inputs = new IngredientList(new MaterialStack(mineral));
 		ItemStack output = new MaterialStack(calcined).getBestItemStack();
-		materialRecipes.registerRoastingRecipe(inputs, output, temp);
+		genericRecipes.registerRoastingRecipe(inputs, output, temp);
 	}
 	
 	private static void calcineMaterials() {
@@ -110,10 +111,10 @@ public class RecipeRegistration {
 
 	private static void makePortlandCement() {
 		ItemStack clinker = FabricaItems.INTERMEDIATE_LUMP.getItemStack(Intermediates.PORTLAND_CLINKER, 4);	
-		MaterialStackList inputs = new MaterialStackList(
+		IngredientList inputs = new IngredientList(
 				new MaterialStack(Ores.CALCITE, 3),
 				new MaterialStack(Forms.CLUMP, Aggregates.CLAY));
-		materialRecipes.registerRoastingRecipe(inputs, clinker, 1700);
+		genericRecipes.registerRoastingRecipe(inputs, clinker, 1700);
 		mixIntermediate(FabricaItems.INTERMEDIATE_LUMP, Intermediates.PORTLAND_CEMENT);
 	}
 
@@ -131,12 +132,12 @@ public class RecipeRegistration {
 		if (concretes.size() > 0) {
 			ItemStack concrete = concretes.get(0).copy();
 			concrete.stackSize = 8;
-			MaterialStackList inputs = new MaterialStackList(
+			IngredientList inputs = new IngredientList(
 					new MaterialStack(null, Aggregates.GRAVEL),
 					new MaterialStack(null, Aggregates.SAND),
 					new MaterialStack(Generics.CEMENT));
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-			materialRecipes.registerAbsorptionRecipe(inputs, water, concrete, Constants.STANDARD_TEMPERATURE);
+			genericRecipes.registerAbsorptionRecipe(inputs, water, concrete, Constants.STANDARD_TEMPERATURE);
 		}
 	}
 
@@ -151,14 +152,14 @@ public class RecipeRegistration {
 	}
 	
 	private static void makeDrywallJointCompound() {
-		MaterialStackList jointCompoundSolids = new MaterialStackList(
+		IngredientList jointCompoundSolids = new IngredientList(
 				new MaterialStack(Forms.DUST, Generics.JOINT_COMPOUND_FILLER),
 				new MaterialStack(Forms.DUST_TINY, Generics.BINDER),
 				new MaterialStack(Forms.DUST_TINY, IndustrialMinerals.PALYGORSKITE),
 				new MaterialStack(Forms.DUST_TINY, Generics.FILLER)
 		);
 		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-		materialRecipes.registerAbsorptionRecipe(jointCompoundSolids, water, 
+		genericRecipes.registerAbsorptionRecipe(jointCompoundSolids, water, 
 				new ItemStack(FabricaItems.JOINT_COMPOUND, 4), Constants.STANDARD_TEMPERATURE);
 	}
 	
@@ -166,16 +167,16 @@ public class RecipeRegistration {
 		ItemStack output = new ItemStack(Blocks.glass);
 		ItemStack input = new ItemStack(Blocks.sand);
 		MaterialStack feldspar = new MaterialStack(Forms.DUST_TINY, IndustrialMinerals.FELDSPAR);
-		materialRecipes.registerCastingRecipe(input, output, feldspar, 1500);
+		genericRecipes.registerCastingRecipe(input, output, feldspar, 1500);
 		
 		output = new ItemStack(Items.brick);
 		input = new ItemStack(Items.clay_ball);
-		materialRecipes.registerCastingRecipe(input, output, feldspar, 1500);
+		genericRecipes.registerCastingRecipe(input, output, feldspar, 1500);
 	}
 
 	private static void mixIntermediate(IndustrialMaterialItem<Intermediates> item, Intermediates material) {
-		MaterialStackList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
-		materialRecipes.registerMixingRecipe(inputs, item.getItemStack(material));
+		IngredientList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
+		genericRecipes.registerMixingRecipe(inputs, item.getItemStack(material));
 	}
 	
 	private static void makeAsh() {
@@ -189,7 +190,9 @@ public class RecipeRegistration {
 			ItemStack doubleDye = dye.copy();
 			doubleDye.stackSize = 2;
 			// TODO: need a more generic recipe registry
-			//materialRecipes.registerMixingRecipe(new MaterialStackList(dye, Generics.FILLER), doubleDye);	
+			genericRecipes.registerMixingRecipe(
+					new IngredientList(new ItemIngredientStack(dye), new MaterialStack(Generics.FILLER)), 
+					doubleDye);	
 		}
 	}
 }
