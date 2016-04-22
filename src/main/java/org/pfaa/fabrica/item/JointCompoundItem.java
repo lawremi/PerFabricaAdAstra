@@ -2,7 +2,7 @@ package org.pfaa.fabrica.item;
 
 import java.awt.Color;
 
-import org.pfaa.fabrica.block.IDrywallBlock;
+import org.pfaa.fabrica.block.DrywallBlock;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,10 +19,10 @@ public class JointCompoundItem extends Item {
 			float hitX, float hitY, float hitZ)
     {
 		Block block = world.getBlock(x, y, z);
-		if (block instanceof IDrywallBlock) {
-			((IDrywallBlock) block).fillJoints(world, x, y, z);
+		if (block instanceof DrywallBlock) {
+			boolean changed = ((DrywallBlock) block).fillJoints(world, x, y, z);
 			item.stackSize--;
-			return true;
+			return changed;
 		}
 		return false;
     }
