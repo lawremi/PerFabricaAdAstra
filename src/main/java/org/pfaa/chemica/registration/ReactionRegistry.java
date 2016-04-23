@@ -29,11 +29,12 @@ public class ReactionRegistry {
 	
 	public void registerThermalDecomposition(Form form, Reaction reaction) {
 		float scale = 1F / reaction.getReactants().get(0).stoichiometry;
-		ItemStack output = this.getSolidProductItemStack(form, reaction, scale);
+		reaction = reaction.scale(scale);
+		ItemStack output = this.getSolidProductItemStack(form, reaction);
 		if (output == null) {
 			return;
 		}
-		FluidStack gas = this.getGaseousProductItemStack(form, reaction, scale);
+		FluidStack gas = this.getGaseousProductItemStack(form, reaction);
 		IngredientList inputs = this.getReactantMaterials(form, reaction);
 		int temp = reaction.getSpontaneousTemperature();
 		delegate.registerRoastingRecipe(inputs, output, gas, temp);
@@ -43,15 +44,15 @@ public class ReactionRegistry {
 		List<Term> reactants = reaction.getReactants();
 		List<IngredientStack> stacks = new ArrayList<IngredientStack>(reactants.size());
 		for (Term reactant : reactants) {
-			stacks.add(new MaterialStack(form, reactant.chemical, reactant.stoichiometry));
+			stacks.add(new MaterialStack(form, reactant.chemical, (int)reactant.stoichiometry));
 		}
 		return new IngredientList(stacks);
 	}
 	
-	private ItemStack getSolidProductItemStack(Form form, Reaction reaction, float scale) {
+	private ItemStack getSolidProductItemStack(Form form, Reaction reaction) {
 		for (Term product : reaction.getProducts()) {
 			if (product.state == State.SOLID) {
-				float amount = scale * product.stoichiometry;
+				float amount = product.stoichiometry;
 				if (amount < 1) {
 					if (form == Forms.DUST) {
 						form = Forms.DUST_TINY;
@@ -64,10 +65,9 @@ public class ReactionRegistry {
 		return null;
 	}
 
-	private FluidStack getGaseousProductItemStack(Form form, Reaction reaction, float scale) {
+	private FluidStack getGaseousProductItemStack(Form form, Reaction reaction) {
 		for (Term product : reaction.getProducts()) {
 			if (product.state == State.GAS) {
-				float amount = scale * product.stoichiometry;
 				return IndustrialFluids.getCanonicalFluidStack(product, form);
 			}
 		}

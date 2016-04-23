@@ -119,7 +119,7 @@ public class IndustrialFluids {
 	}
 	
 	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
-		return getCanonicalFluidStack(term.chemical, term.state, term.stoichiometry * getAmount(form));
+		return getCanonicalFluidStack(term.chemical, term.state, (int)(term.stoichiometry * getAmount(form)));
 	}
 	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {

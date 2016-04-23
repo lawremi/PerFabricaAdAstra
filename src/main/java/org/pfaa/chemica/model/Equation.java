@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
 public class Equation {
 	private List<Term> reactants;
 	private List<Term> products;
@@ -60,30 +63,55 @@ public class Equation {
 		}
 		return str;
 	}
+
+	private static class ScaleTerm implements Function<Term,Term> {
+		private float scale;
+		
+		public ScaleTerm(float scale) {
+			this.scale = scale;
+		}
+		
+		@Override
+		public Term apply(Term input) {
+			return input.scale(this.scale);
+		}
+	}
 	
+	public Equation scale(float scale) {
+		Function<Term,Term> scaleTerm = new ScaleTerm(scale);
+		return new Equation(
+				Lists.transform(this.reactants, scaleTerm),
+				Lists.transform(this.products, scaleTerm),
+				this.catalyst);
+	}
+
 	public static class Term {
 		public final Chemical chemical;
-		public final int stoichiometry;
+		public final float stoichiometry;
 		public final State state;
 		
 		public Term(Chemical chemical) {
 			this(1, chemical);
 		}
 		
-		public Term(int stoichiometry, Chemical chemical) {
+		public Term(float stoichiometry, Chemical chemical) {
 			this(stoichiometry, chemical, chemical.getProperties(Condition.STP).state);
 		}
 		
-		public Term(int stoichiometry, Chemical chemical, State state) {
+		public Term(float stoichiometry, Chemical chemical, State state) {
 			this.stoichiometry = stoichiometry;
 			this.chemical = chemical;
 			this.state = state;
 		}
 		
+		public Term scale(float scale) {
+			return new Term(this.stoichiometry * scale, this.chemical, this.state);
+		}
+
 		public String toString() {
 			String str = this.chemical.toString() + "(" + this.state.name().substring(0, 1).toLowerCase() + ")";
 			if (this.stoichiometry > 1) {
-				str = this.stoichiometry + str;
+				str = (int)(this.stoichiometry) + str;
 			}
 			return str;
 		}

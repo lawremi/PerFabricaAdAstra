@@ -112,7 +112,11 @@ public class Reaction {
 	public String toString() {
 		return this.equation.toString();
 	}
-	
+
+	public Reaction scale(float scale) {
+		return new Reaction(this.equation.scale(scale));
+	}
+
 	public static Reaction of(Chemical reactant) {
 		return of(1, reactant);
 	}
