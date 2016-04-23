@@ -1,6 +1,7 @@
 package org.pfaa.fabrica.registration;
 
 import org.pfaa.core.registration.Registrant;
+import org.pfaa.fabrica.integration.ChemicaIntegration;
 
 public class CommonRegistrant implements Registrant {
 
@@ -10,6 +11,7 @@ public class CommonRegistrant implements Registrant {
 		ItemRegistration.init();
 		OreRegistration.init();
 		EntityRegistration.init();
+		ChemicaIntegration.init();
 	}
 
 	@Override
