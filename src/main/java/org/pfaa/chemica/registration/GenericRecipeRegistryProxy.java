@@ -25,9 +25,9 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, int temp) {
+	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp) {
 		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
-			delegate.registerRoastingRecipe(itemStacks, output, temp);
+			delegate.registerRoastingRecipe(itemStacks, output, gas, temp);
 		}
 	}
 

@@ -137,14 +137,14 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 	}
 
 	@Override
-	public void registerRoastingRecipe(final List<ItemStack> inputs, final ItemStack output, final int temp) {
+	public void registerRoastingRecipe(final List<ItemStack> inputs, final ItemStack output, final FluidStack gas, final int temp) {
 		for (final ItemStack oldInput : inputs) {
 			mapRecipe(oldInput, new Registrant() {
 				@Override
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, restrictOutput(output), temp);
+					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
 				}
 			});
 		}

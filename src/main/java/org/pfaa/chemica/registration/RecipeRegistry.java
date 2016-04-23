@@ -19,7 +19,7 @@ public interface RecipeRegistry {
 	public void registerCrushingRecipe(ItemStack input, ItemStack output, ChanceStack dust, Strength strength);
 	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp);
 	public void registerAlloyingRecipe(FluidStack output, List<FluidStack> inputs);
-	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp);
+	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp);
 	public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp);
 	public void registerMixingRecipe(FluidStack input, List<ItemStack> additives, FluidStack output, int temp);
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output);

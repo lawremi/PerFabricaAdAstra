@@ -371,7 +371,7 @@ public class RecipeRegistration {
 			ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(geoMaterial);
 			ItemStack lump =  GeologicaItems.CLAY_LUMP.getItemStack(geoMaterial);
 			ItemStack dust =  GeologicaItems.ORE_DUST.getItemStack(geoMaterial);
-			registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, 400);
+			registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
 			registry.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
@@ -395,6 +395,6 @@ public class RecipeRegistration {
 	private static void registerPeatDryingRecipe() {
 		ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.PEAT);
 		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(GeoMaterial.PEAT);
-		registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, 400);
+		registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
 	}
 }

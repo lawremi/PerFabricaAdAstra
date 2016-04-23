@@ -104,7 +104,7 @@ public class EnderIOIntegration {
 		}
 
 		@Override
-		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp) {
+		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {
 			this.registerAlloyFurnaceRecipe(inputs, output, temp);
 		}
 		

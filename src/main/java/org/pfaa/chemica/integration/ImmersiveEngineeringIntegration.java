@@ -13,6 +13,7 @@ import blusunrize.immersiveengineering.api.crafting.CrusherRecipe;
 import blusunrize.immersiveengineering.common.IEContent;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ImmersiveEngineeringIntegration {
 	public static void init() {
@@ -64,7 +65,7 @@ public class ImmersiveEngineeringIntegration {
 		}
 
 		@Override
-		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp) {
+		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {
 			int time = RecipeCostUtils.arcTicksForTemperature(temp);
 			Object[] additives = inputs.subList(1, inputs.size()).toArray();
 			ArcFurnaceRecipe.addRecipe(output, inputs.get(0), null, time, ARC_ENERGY_PER_TICK, additives);

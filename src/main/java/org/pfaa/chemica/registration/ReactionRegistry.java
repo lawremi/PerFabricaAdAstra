@@ -33,9 +33,10 @@ public class ReactionRegistry {
 		if (output == null) {
 			return;
 		}
+		FluidStack gas = this.getGaseousProductItemStack(form, reaction, scale);
 		IngredientList inputs = this.getReactantMaterials(form, reaction);
 		int temp = reaction.getSpontaneousTemperature();
-		delegate.registerRoastingRecipe(inputs, output, temp);
+		delegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
 	private IngredientList getReactantMaterials(Form form, Reaction reaction) {
@@ -58,6 +59,16 @@ public class ReactionRegistry {
 					} else continue;
 				}
 				return new MaterialStack(form, product.chemical, (int)amount).getBestItemStack();
+			}
+		}
+		return null;
+	}
+
+	private FluidStack getGaseousProductItemStack(Form form, Reaction reaction, float scale) {
+		for (Term product : reaction.getProducts()) {
+			if (product.state == State.GAS) {
+				float amount = scale * product.stoichiometry;
+				return IndustrialFluids.getCanonicalFluidStack(product, form);
 			}
 		}
 		return null;

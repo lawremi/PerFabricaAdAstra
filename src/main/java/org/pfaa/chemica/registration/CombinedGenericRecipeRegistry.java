@@ -27,9 +27,9 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, int temp) {
+	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
-			registry.registerRoastingRecipe(inputs, output, temp);
+			registry.registerRoastingRecipe(inputs, output, gas, temp);
 		}
 	}
 

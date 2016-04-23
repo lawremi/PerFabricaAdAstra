@@ -96,7 +96,7 @@ public class RecipeRegistration {
 	private static void calcineMaterial(IndustrialMaterial mineral, IndustrialMaterial calcined, int temp) {
 		IngredientList inputs = new IngredientList(new MaterialStack(mineral));
 		ItemStack output = new MaterialStack(calcined).getBestItemStack();
-		genericRecipes.registerRoastingRecipe(inputs, output, temp);
+		genericRecipes.registerRoastingRecipe(inputs, output, null, temp);
 	}
 	
 	private static void calcineMaterials() {
@@ -114,7 +114,7 @@ public class RecipeRegistration {
 		IngredientList inputs = new IngredientList(
 				new MaterialStack(Ores.CALCITE, 3),
 				new MaterialStack(Forms.CLUMP, Aggregates.CLAY));
-		genericRecipes.registerRoastingRecipe(inputs, clinker, 1700);
+		genericRecipes.registerRoastingRecipe(inputs, clinker, null, 1700);
 		mixIntermediate(FabricaItems.INTERMEDIATE_LUMP, Intermediates.PORTLAND_CEMENT);
 	}
 
@@ -182,7 +182,7 @@ public class RecipeRegistration {
 	private static void makeAsh() {
 		ItemStack bonemeal = new ItemStack(Items.dye, 1, 15);
 		recipes.registerRoastingRecipe(Collections.singletonList(bonemeal), 
-				FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.ASH), 1000);
+				FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.ASH), null, 1000);
 	}
 	
 	private static void fillPigments() {

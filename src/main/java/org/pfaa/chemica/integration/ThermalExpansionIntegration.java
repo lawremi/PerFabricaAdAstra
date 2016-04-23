@@ -85,7 +85,7 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp) {
+		public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {
 			int energy = RecipeCostUtils.rfFromTemperature(temp);
 			if (inputs.size() == 2) {
 				ThermalExpansionHelper.addSmelterRecipe(energy, inputs.get(0), inputs.get(1), output);

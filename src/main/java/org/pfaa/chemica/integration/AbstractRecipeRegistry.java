@@ -47,7 +47,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerAlloyingRecipe(FluidStack output, List<FluidStack> inputs) {}
 
 	@Override
-	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, int temp) {}
+	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {}
 
 	@Override
 	public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {}
