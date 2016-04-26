@@ -12,7 +12,7 @@ public class FabricaRecipeRegistry extends AbstractRecipeRegistry {
 
 	@Override
 	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {
-		if (inputs.size() == 1) {
+		if (inputs.size() == 1 && gas != null) {
 			HoodRecipes.addRecipe(inputs.get(0), gas);
 		}
 	}
