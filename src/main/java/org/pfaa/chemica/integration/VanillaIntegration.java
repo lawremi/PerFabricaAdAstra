@@ -90,12 +90,12 @@ public class VanillaIntegration {
 			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
 					int temp) {
 				VanillaRecipeRegistry.this.registerAbsorptionRecipe(
-						inputs.getRepeatedOreDictKeys().toArray(), additive, output, temp);
+						inputs.getCraftingIngredients().toArray(), additive, output, temp);
 			}
 
 			@Override
 			public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
-				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getRepeatedOreDictKeys().toArray(), output);
+				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getCraftingIngredients().toArray(), output);
 			}
 			
 		}

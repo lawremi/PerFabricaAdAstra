@@ -88,4 +88,9 @@ public class MaterialStack implements IngredientStack {
 		}
 		return itemStacks.size() > 0 ? itemStacks.iterator().next() : null;
 	}
+
+	@Override
+	public Object getCraftingIngredient() {
+		return this.getOreDictKey();
+	}
 }

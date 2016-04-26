@@ -9,4 +9,5 @@ public interface IngredientStack {
 	public ItemStack getBestItemStack();
 	public Set<ItemStack> getItemStacks();
 	public int getSize();
+	public Object getCraftingIngredient();
 }

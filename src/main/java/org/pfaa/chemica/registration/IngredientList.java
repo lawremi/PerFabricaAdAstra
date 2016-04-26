@@ -2,7 +2,6 @@ package org.pfaa.chemica.registration;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -73,12 +72,14 @@ public class IngredientList extends AbstractList<IngredientStack> {
 		return Lists.transform(this.delegate, getOreDictKey);
 	}
 	
-	public List<String> getRepeatedOreDictKeys() {
-		List<String> keys = new ArrayList<String>();
-		for (IngredientStack stack : this.delegate) {
-			keys.addAll(Collections.nCopies(stack.getSize(), stack.getOreDictKey()));	
+	private Function<IngredientStack, Object> getCraftingIngredient = new Function<IngredientStack, Object>() {
+		@Override
+		public Object apply(IngredientStack input) {
+			return input.getCraftingIngredient();
 		}
-		return keys;
+	};
+	
+	public List<Object> getCraftingIngredients() {
+		return Lists.transform(this.delegate, getCraftingIngredient);
 	}
-
 }

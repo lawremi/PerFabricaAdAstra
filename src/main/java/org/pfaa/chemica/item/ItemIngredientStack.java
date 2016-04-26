@@ -33,4 +33,9 @@ public class ItemIngredientStack implements IngredientStack {
 		return this.itemStack.stackSize;
 	}
 
+	@Override
+	public Object getCraftingIngredient() {
+		return this.getBestItemStack();
+	}
+
 }

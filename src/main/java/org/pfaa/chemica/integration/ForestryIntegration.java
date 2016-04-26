@@ -83,7 +83,7 @@ public class ForestryIntegration {
 			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
 					int temp) {
 				ForestryRecipeRegistry.this.registerAbsorptionRecipe(
-						inputs.getRepeatedOreDictKeys().toArray(), 
+						inputs.getCraftingIngredients().toArray(), 
 						additive, output, temp);
 			}
 
