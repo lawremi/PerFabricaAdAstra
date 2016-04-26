@@ -115,11 +115,11 @@ public class IndustrialFluids {
 	}
 	
 	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, Form form) {
-		return getCanonicalFluidStack(material, state, getAmount(form));
+		return getCanonicalFluidStack(material, state, getAmount(state, form));
 	}
 	
 	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
-		return getCanonicalFluidStack(term.chemical, term.state, (int)(term.stoichiometry * getAmount(form)));
+		return getCanonicalFluidStack(term.chemical, term.state, (int)(term.stoichiometry * getAmount(term.state, form)));
 	}
 	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
@@ -143,7 +143,11 @@ public class IndustrialFluids {
 	private static int MB_PER_BLOCK = 1296;
 	
 	public static int getAmount(Form form) {
-		return MB_PER_BLOCK / form.getNumberPerBlock();
+		return getAmount(State.LIQUID, form);
+	}
+	
+	public static int getAmount(State state, Form form) {
+		return MB_PER_BLOCK / form.getNumberPerBlock() * (state == State.GAS ? 100 : 1);
 	}
 	
 	private static String getIconName(Fluid fluid, boolean flowing, boolean opaque) {
