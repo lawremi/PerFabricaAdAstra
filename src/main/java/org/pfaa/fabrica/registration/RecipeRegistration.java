@@ -26,6 +26,7 @@ import org.pfaa.fabrica.model.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -53,6 +54,7 @@ public class RecipeRegistration {
 		makeDrywall();
 		makeDrywallJointCompound();
 		fillPigments();
+		makeHood();
 	}
 
 	private static void registerCrushingRecipe(Aggregates aggregate) {
@@ -189,10 +191,19 @@ public class RecipeRegistration {
 		for (ItemStack dye : OreDictionary.getOres("dye")) {
 			ItemStack doubleDye = dye.copy();
 			doubleDye.stackSize = 2;
-			// TODO: need a more generic recipe registry
 			genericRecipes.registerMixingRecipe(
 					new IngredientList(new ItemIngredientStack(dye), new MaterialStack(Generics.FILLER)), 
 					doubleDye);	
 		}
+	}
+	
+	private static void makeHood() {
+		GameRegistry.addShapedRecipe(new ItemStack(FabricaBlocks.HOOD), 
+				"sss",
+				"sts",
+				"sgs",
+				's', Blocks.cobblestone,
+				't', Blocks.trapdoor,
+				'g', Blocks.glass);
 	}
 }
