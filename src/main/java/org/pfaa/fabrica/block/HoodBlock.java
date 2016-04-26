@@ -6,14 +6,18 @@ import org.pfaa.fabrica.entity.TileEntityHood;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 public class HoodBlock extends Block implements ITileEntityProvider {
+
+	private IIcon topBottomIcon;
 
 	public HoodBlock() {
 		super(Material.rock);
@@ -48,5 +52,16 @@ public class HoodBlock extends Block implements ITileEntityProvider {
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		this.tryToAdoptFurnace(world, x, y, z);
+	}
+	
+	@Override
+	public void registerBlockIcons(IIconRegister register) {
+		this.blockIcon = register.registerIcon("fabrica:hood");
+		this.topBottomIcon = register.registerIcon("furnace_top");
+	}
+
+	@Override
+	public IIcon getIcon(int side, int meta) {
+		return (side == 0 || side == 1) ? this.topBottomIcon : this.blockIcon;
 	}
 }
