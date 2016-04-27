@@ -94,6 +94,9 @@ public class MaricultureIntegration {
 			if (temp != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
+			if (additive.getFluid().isGaseous()) {
+				return;
+			}
 			RecipeVat recipe = new RecipeVat(inputs.get(0), additive, output, 1);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
@@ -104,6 +107,9 @@ public class MaricultureIntegration {
 				return;
 			}
 			if (temp != Constants.STANDARD_TEMPERATURE) {
+				return;
+			}
+			if (input.getFluid().isGaseous()) {
 				return;
 			}
 			RecipeVat recipe = new RecipeVat(additives.get(0), input, output, 1);
