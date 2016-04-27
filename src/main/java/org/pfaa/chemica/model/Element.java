@@ -670,6 +670,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 			return delegate.getFormula();
 		}
 		
+		@Override
 		public Formula.Part _(int quantity) {
 			return new Formula.Part(this, quantity);
 		}

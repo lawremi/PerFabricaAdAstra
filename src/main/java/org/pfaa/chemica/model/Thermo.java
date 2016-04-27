@@ -26,7 +26,10 @@ public class Thermo {
 	 * 
 	 * */
 	public Thermo(double S /* J/mol */) { 
-		this(Double.NaN, S, Double.NaN);
+		this(Double.NaN, S);
+	}
+	public Thermo(double H, double S) {
+		this(H, S, Double.NaN);
 	}
 	public Thermo(double H /* kJ/mol */, double S, double Cp /* J/mol */) { /* constant heat capacity */
 		this(new Segment(H, S, Cp));

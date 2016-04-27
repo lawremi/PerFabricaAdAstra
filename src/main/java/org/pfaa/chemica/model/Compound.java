@@ -1,51 +1,60 @@
 package org.pfaa.chemica.model;
 
-import static org.pfaa.chemica.model.Element.Ag;
-import static org.pfaa.chemica.model.Element.Al;
-import static org.pfaa.chemica.model.Element.As;
-import static org.pfaa.chemica.model.Element.B;
-import static org.pfaa.chemica.model.Element.Ba;
-import static org.pfaa.chemica.model.Element.Be;
-import static org.pfaa.chemica.model.Element.Bi;
-import static org.pfaa.chemica.model.Element.Br;
-import static org.pfaa.chemica.model.Element.C;
-import static org.pfaa.chemica.model.Element.Ca;
-import static org.pfaa.chemica.model.Element.Cd;
-import static org.pfaa.chemica.model.Element.Ce;
-import static org.pfaa.chemica.model.Element.Cl;
-import static org.pfaa.chemica.model.Element.Co;
-import static org.pfaa.chemica.model.Element.Cr;
-import static org.pfaa.chemica.model.Element.Cs;
-import static org.pfaa.chemica.model.Element.Cu;
-import static org.pfaa.chemica.model.Element.F;
-import static org.pfaa.chemica.model.Element.Fe;
-import static org.pfaa.chemica.model.Element.H;
-import static org.pfaa.chemica.model.Element.Hg;
-import static org.pfaa.chemica.model.Element.I;
-import static org.pfaa.chemica.model.Element.K;
-import static org.pfaa.chemica.model.Element.Li;
-import static org.pfaa.chemica.model.Element.Mg;
-import static org.pfaa.chemica.model.Element.Mn;
-import static org.pfaa.chemica.model.Element.Mo;
-import static org.pfaa.chemica.model.Element.N;
-import static org.pfaa.chemica.model.Element.Na;
-import static org.pfaa.chemica.model.Element.Nb;
-import static org.pfaa.chemica.model.Element.Ni;
-import static org.pfaa.chemica.model.Element.O;
-import static org.pfaa.chemica.model.Element.P;
-import static org.pfaa.chemica.model.Element.Pb;
-import static org.pfaa.chemica.model.Element.S;
-import static org.pfaa.chemica.model.Element.Sb;
-import static org.pfaa.chemica.model.Element.Si;
-import static org.pfaa.chemica.model.Element.Sn;
-import static org.pfaa.chemica.model.Element.Sr;
-import static org.pfaa.chemica.model.Element.Ta;
-import static org.pfaa.chemica.model.Element.Ti;
-import static org.pfaa.chemica.model.Element.U;
-import static org.pfaa.chemica.model.Element.V;
-import static org.pfaa.chemica.model.Element.W;
-import static org.pfaa.chemica.model.Element.Zn;
-import static org.pfaa.chemica.model.Element.Zr;
+import static org.pfaa.chemica.model.Ion.Ions.Ag;
+import static org.pfaa.chemica.model.Ion.Ions.Al;
+import static org.pfaa.chemica.model.Ion.Ions.As;
+import static org.pfaa.chemica.model.Ion.Ions.B4O5OH2;
+import static org.pfaa.chemica.model.Ion.Ions.Ba;
+import static org.pfaa.chemica.model.Ion.Ions.Be;
+import static org.pfaa.chemica.model.Ion.Ions.Bi;
+import static org.pfaa.chemica.model.Ion.Ions.Br;
+import static org.pfaa.chemica.model.Ion.Ions.Ca;
+import static org.pfaa.chemica.model.Ion.Ions.Cd;
+import static org.pfaa.chemica.model.Ion.Ions.Ce;
+import static org.pfaa.chemica.model.Ion.Ions.Cl;
+import static org.pfaa.chemica.model.Ion.Ions.Co;
+import static org.pfaa.chemica.model.Ion.Ions.CrO4;
+import static org.pfaa.chemica.model.Ion.Ions.Cs;
+import static org.pfaa.chemica.model.Ion.Ions.Cu;
+import static org.pfaa.chemica.model.Ion.Ions.CO3;
+import static org.pfaa.chemica.model.Ion.Ions.F;
+import static org.pfaa.chemica.model.Ion.Ions.Fe_2;
+import static org.pfaa.chemica.model.Ion.Ions.Fe_3;
+import static org.pfaa.chemica.model.Ion.Ions.H;
+import static org.pfaa.chemica.model.Ion.Ions.Hg;
+import static org.pfaa.chemica.model.Ion.Ions.IO3;
+import static org.pfaa.chemica.model.Ion.Ions.K;
+import static org.pfaa.chemica.model.Ion.Ions.Li;
+import static org.pfaa.chemica.model.Ion.Ions.Mg;
+import static org.pfaa.chemica.model.Ion.Ions.Mn;
+import static org.pfaa.chemica.model.Ion.Ions.Mo;
+import static org.pfaa.chemica.model.Ion.Ions.NO3;
+import static org.pfaa.chemica.model.Ion.Ions.Na;
+import static org.pfaa.chemica.model.Ion.Ions.NbO3;
+import static org.pfaa.chemica.model.Ion.Ions.Ni;
+import static org.pfaa.chemica.model.Ion.Ions.O;
+import static org.pfaa.chemica.model.Ion.Ions.OH;
+import static org.pfaa.chemica.model.Ion.Ions.PO4;
+import static org.pfaa.chemica.model.Ion.Ions.Pb;
+import static org.pfaa.chemica.model.Ion.Ions.S;
+import static org.pfaa.chemica.model.Ion.Ions.S2;
+import static org.pfaa.chemica.model.Ion.Ions.Sb;
+import static org.pfaa.chemica.model.Ion.Ions.SiO3;
+import static org.pfaa.chemica.model.Ion.Ions.SiO4;
+import static org.pfaa.chemica.model.Ion.Ions.Si2O5;
+import static org.pfaa.chemica.model.Ion.Ions.SO4;
+import static org.pfaa.chemica.model.Ion.Ions.Sn;
+import static org.pfaa.chemica.model.Ion.Ions.Sr;
+import static org.pfaa.chemica.model.Ion.Ions.Ta2O6;
+import static org.pfaa.chemica.model.Ion.Ions.Ti;
+import static org.pfaa.chemica.model.Ion.Ions.U;
+import static org.pfaa.chemica.model.Ion.Ions.VO4;
+import static org.pfaa.chemica.model.Ion.Ions.V2O5;
+import static org.pfaa.chemica.model.Ion.Ions.WO4;
+import static org.pfaa.chemica.model.Ion.Ions.Zn;
+import static org.pfaa.chemica.model.Ion.Ions.Zr;
+
+import static org.pfaa.chemica.model.Ion.Ions;
 
 import java.awt.Color;
 
@@ -54,7 +63,6 @@ import org.pfaa.chemica.model.ChemicalStateProperties.Gas.Sutherland;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
-import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
 
 /* A compound is a type of chemical resulting from the combination of different 
@@ -64,7 +72,7 @@ import org.pfaa.chemica.model.Hazard.SpecialCode;
  */
 public interface Compound extends Chemical {
 	public static enum Compounds implements Compound {
-		H2O(new Formula(H, O._(2)), "water", 
+		H2O(new Formula(Element.H, Element.O._(2)), "water", 
 		    new Solid(0.917, 
 		    		  new Thermo(-291, 41, 2.79, 128), 
 		    		  new Hazard(0, 0, 0)), 
@@ -76,7 +84,7 @@ public interface Compound extends Chemical {
 			new Gas(new Thermo(30.1, 6.83, 6.79, -2.53, 0.0821, -251, 223)
 			        .addSegment(1700, 42.0, 8.62, -1.50, 0.0981, -11.2, -272, 220), 
 					new Hazard(0, 0, 0), new Sutherland(13, 373, 650))),
-		CO(new Formula(C, O), null, 
+		CO(new Formula(Element.C, Element.O), null, 
 		   new Solid(0.929,
 			    	 new Thermo(112),
 			    	 new Hazard(0, 4, 0)), 
@@ -88,7 +96,7 @@ public interface Compound extends Chemical {
 		   new Gas(new Thermo(25.6, 6.10, 4.05, -2.67, 0.131, -118, 227)
 				   .addSegment(1300, 35.2, 1.3, -0.206, 0.0136, -3.28, -128, 232), 
 				   new Hazard(2, 4, 0), new Sutherland(17.2, 288, 118))),
-		CO2(new Formula(C, O._(2)), null, 
+		CO2(new Formula(Element.C, Element.O._(2)), null, 
 			new Solid(1.56, 
 					  new Thermo(-427, 51.1, 0, 300), 
 					  new Hazard(3, 0, 0)), 
@@ -103,7 +111,7 @@ public interface Compound extends Chemical {
 					   new Thermo(-32.6, 144, 55.4, 77.9).addSegment(450, 91.2, 0, 5.86)),
 			 new Fusion(1098),
 			 new Liquid(new Thermo(157))),
-		AlOH3(new Formula(Al, new Part(O, H)._(3)), null, 
+		AlOH3(new Formula(Al, OH._(3)), null, 
 			  new Solid(2.42, new Thermo(-1277, 71, 25.7, 155, -98.6, 0.690))),
 		As2S3(new Formula(As._(2), S._(3)), null, 
 		      new Solid(new Color(245, 210, 15), 3.43, new Thermo(-169, 164, 116)),
@@ -115,11 +123,11 @@ public interface Compound extends Chemical {
 	        new Fusion(633),
 	        new Liquid(new Thermo()),
 	        new Vaporization(838)),
-		BaSO4(new Formula(Ba, S, O._(4)), null, 
+		BaSO4(new Formula(Ba, SO4), null, 
 			  new Solid(4.5, new Thermo(-1465, 132, 141, 0.595, 0, 3.49), new Hazard(0, 0, 0)),
 			  new Fusion(1618), 
 			  new Liquid(new Thermo(157))),
-	    Be3Al2SiO36(new Formula(Be._(3), Al._(2), new Part(Si, O._(3))._(6)), null, 
+	    Be3Al2SiO36(new Formula(Be._(3), Al._(2), SiO3._(6)), null, 
 				    new Solid(new Color(190, 255, 200), 2.7, new Thermo(-9000, 347, 593, 132, 17.1, -20.5)),
 				    new Fusion(1700),
 				    new Liquid(new Thermo(495))), // just made up the liquid entropy 
@@ -127,7 +135,7 @@ public interface Compound extends Chemical {
 			  new Solid(new Color(160, 106, 0), 6.78, new Thermo(-143, 200, 155, -43.2, 36.2, 2.08), new Hazard(0, 0, 0)),
 			  new Fusion(1123), 
 			  new Liquid(new Thermo(274))),
-		Br2(new Formula(Br._(2)), "bromine",
+		Br2(new Formula(Element.Br._(2)), "bromine",
 			new Solid(new Color(112, 112, 112), 4.05, 
 					  new Thermo(56.4)), 
 				   new Fusion(265), 
@@ -147,7 +155,7 @@ public interface Compound extends Chemical {
 			  new Liquid(2.09, new Thermo(103, 0, 0, 0, 0, -815, 226)),
 			  new Vaporization(2208),
 			  new Gas(new Thermo(62.2, 0.156, -0.0422, 0.00360, -0.260, -491, 364))),
-		CaCO3(new Formula(Ca, new Part(C, O._(3))), null, 
+		CaCO3(new Formula(Ca, CO3), null, 
 			  new Solid(2.7, 
 					    new Thermo(-1207, 93, 82.3, 49.8, 0, 1.29))),
 		CaF2(new Formula(Ca, F._(2)), null, 
@@ -160,13 +168,13 @@ public interface Compound extends Chemical {
 					    new Thermo(-1186, 92.6, 99.9)),
 			 new Vaporization(2806),
 			 new Gas(new Thermo(57.4, 0.718, -0.194, 0.0166, -0.571, -804, 340))),
-		CaI2O6(new Formula(Ca, new Part(I, O._(3))._(2)), null,
+		CaI2O6(new Formula(Ca, IO3._(2)), null,
 			   new Solid(4.51, new Thermo(230)),
 			   new Fusion(813),
 			   new Liquid(new Thermo()),
 			   new Vaporization(1200),
 			   null),
-		CaOH2(new Formula(Ca, new Part(O, H)._(2)), "slakedLime",
+		CaOH2(new Formula(Ca, OH._(2)), "slakedLime",
 			  new Solid(2.21, 
 					    new Thermo(131, -82.7, 123, -50.4, -2.51, -1031, 247),
 					    new Hazard(3, 0, 0))),
@@ -178,14 +186,14 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(62.8, 0, 0, 0, 0, -592, 117)),
 			new Vaporization(4120),
 			new Gas(new Thermo(358, -118, 16.7, -0.832, -615, -714, 172))),
-	    CaSO4_2H2O(new Formula(Ca, new Part(S, O._(4))).hydrate(2), null, 
+	    CaSO4_2H2O(new Formula(Ca, SO4).hydrate(2), null, 
 			       new Solid(2.32, 
 				 	         new Thermo(-1433, 107, 186))),
-		CaWO4(new Formula(Ca, new Part(W, O._(4))), null, 
+		CaWO4(new Formula(Ca, WO4), null, 
 			  new Solid(4.7, 
 					    new Thermo(-1645, 126, 133, 21.8, 0, 2.29)),
 			  new Fusion(1893)),
-		Cs2Al2Si4O12(new Formula(Cs._(2), Al._(2), new Part(Si, O._(3))._(4)).hydrate(2), null,
+		Cs2Al2Si4O12(new Formula(Cs._(2), Al._(2), SiO3._(4)).hydrate(2), null,
 				     new Solid(Color.white, 2.9, new Thermo())),
 	    CdS(new Formula(Cd, S), null, 
 	    	new Solid(new Color(244, 208, 10), 4.83, 
@@ -193,11 +201,11 @@ public interface Compound extends Chemical {
 	    	 	      new Hazard(3, 0, 0)),
 			null, null,
 			new Vaporization(1250)),
-		CeCO3F(new Formula(Ce, new Part(C, O._(3), F)), null, 
+		CeCO3F(new Formula(Ce, CO3, F), null, 
 			   new Solid(new Color(177, 81, 39), 4.95, new Thermo())),
-		CePO4(new Formula(Ce, new Part(P, O._(4))), null,
+		CePO4(new Formula(Ce, PO4), null,
 			   new Solid(new Color(184, 83, 43), 5.22, new Thermo())),
-		Cl2(new Formula(Cl._(2)), "chlorine",
+		Cl2(new Formula(Element.Cl._(2)), "chlorine",
 		    new Solid(new Color(255, 220, 120), 1.72, // density guessed from F2
 		    		  new Thermo(101)),
 		    new Fusion(172),
@@ -220,13 +228,13 @@ public interface Compound extends Chemical {
 			          .addSegment(1600, 36.0, 14.1, 1.16, -0.116, 5.16, -238, 106),
 					  new Hazard(2, 0, 0)),
 					  new Fusion(2103)),
-		Cu2CO3OH2(new Formula(Cu._(2), new Part(C, O._(3)), new Part(O, H)._(2)), null,
+		Cu2CO3OH2(new Formula(Cu._(2), CO3, OH._(2)), null,
 				  new Solid(Color.green, 3.8, new Thermo(-1067, 166, 154))),
-		Cu3CO32OH2(new Formula(Cu._(3), new Part(C, O._(3))._(2), new Part(O, H)._(2)), null,
+		Cu3CO32OH2(new Formula(Cu._(3), CO3._(2), OH._(2)), null,
 				   new Solid(new Color(20, 20, 200), 3.8, new Thermo(-1675, 254, 229))),
 		Cu12As4S13(new Formula(Cu._(12), As._(4), S._(13)), null,
 				  new Solid(new Color(130, 136, 132), 4.65, new Thermo())),
-		CuFeS2(new Formula(Cu, Fe, S._(2)), null, 
+		CuFeS2(new Formula(Cu, Fe_2, S._(2)), null, 
 			   new Solid(new Color(195, 163, 104), 4.2, new Thermo(-194, 125, 100)), 
 			   new Fusion(1223),
 			   new Liquid(new Thermo(133))),
@@ -249,7 +257,7 @@ public interface Compound extends Chemical {
 	    	 new Solid(new Color(135, 0, 20), 6.1, new Thermo(-169, 93.1, 59.6, 27.4, -5.11, 0.325)), 
 	         new Fusion(1505),
 	         new Liquid(new Thermo(136))),
-	    F2(new Formula(F._(2)), "fluorine",
+	    F2(new Formula(Element.F._(2)), "fluorine",
 		   new Solid(Color.yellow, 1.70, 
 				     new Thermo(116),
 				     new Hazard(4, 0, 4, SpecialCode.OXIDIZER)), 
@@ -263,47 +271,47 @@ public interface Compound extends Chemical {
 				   new Thermo(31.4, 8.41, -2.78, 0.22, -0.21, -10.4, 237),
 				   new Hazard(4, 0, 4, SpecialCode.OXIDIZER),
 				   null)),
-		Fe2O3(new Formula(Fe._(2), O._(3)), null, 
+		Fe2O3(new Formula(Fe_3._(2), O._(3)), null, 
 			  new Solid(new Color(200, 42, 42), 5.2, 
 					    new Thermo(93.4, 108, 50.9, 25.6, -1.61, -863, 161)
 			            .addSegment(950, 151, 0, 0, 0, 0, -876, 253)
 			            .addSegment(1050, 111, 32, -9.19, 0.902, 5.43, -843, 228))),
-		Fe3O4(new Formula(Fe._(3), O._(4)), null, 
+		Fe3O4(new Formula(Fe_2, Fe_3._(2), O._(4)), null, 
 			  new Solid(Color.BLACK, 5.17, 
 					    new Thermo(104, 179, 10.6, 1.13, -0.994, -1163, 212)
 			  			.addSegment(900, 201, 1.59, -6.66, 9.45, 3.19, -1174, 388)), 
 			  new Fusion(1870),
 			  new Liquid(new Thermo(164))),
-		gamma_FeOH3(new Formula(Fe, new Part(O, H)._(3)), null, 
+		gamma_FeOH3(new Formula(Fe_3, OH._(3)), null, 
 			  new Solid(new Color(120, 80, 40), 4.25, 
 					    new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
-	    alpha_FeOH3(new Formula(Fe, new Part(O, H)._(3)), null, 
+	    alpha_FeOH3(new Formula(Fe_3, OH._(3)), null, 
 	    		    new Solid(new Color(230, 140, 0), 4.25, 
 	    		    		  new Thermo(65.1, 182, -101, 19, -0.825, -862, 128))),
-	    FeAsS(new Formula(Fe, As, S), null, 
+	    FeAsS(new Formula(Fe_3, Ions.AsS), null, 
 			  new Solid(new Color(123, 144, 149), 6.0,
 					    new Thermo(-121, 68.5, 75.5, 4.78, 0, -0.754))),
-		FeCr2O4(new Formula(Fe, Cr._(2), O._(4)), null, 
+		FeCr2O4(new Formula(Fe_2, CrO4), null, 
 				new Solid(new Color(25, 10, 10), 4.7, new Thermo(-1438, 152, 160, 31.8, -6.33, 3.06)),
 				new Fusion(2500)),
-		FeNb2O6(new Formula(Fe, Nb._(2), O._(6)), null, 
+		FeNb2O6(new Formula(Fe_2, NbO3._(2)), null, 
 				new Solid(new Color(40, 20, 20), 6.0, new Thermo())),
-		FeS2(new Formula(Fe, S._(2)), null, 
+		FeS2(new Formula(Fe_2, S2), null, 
 			 new Solid(new Color(204, 154, 0), 4.9, 
 		   		       new Thermo(82.3, -23.7, 35.1, -9.60, -1.40, -196, 151))),
-		FeTa2O6(new Formula(Fe, Ta._(2), O._(6)), null, 
+		FeTa2O6(new Formula(Fe_2, Ta2O6), null, 
 				new Solid(new Color(40, 20, 20), 7.94, new Thermo())),
-		FeTiO3(new Formula(Fe, Ti, O._(3)), null, 
+		FeTiO3(new Formula(Fe_2, Ti, O._(3)), null, 
 			   new Solid(new Color(25, 10, 10), 4.6, 
 					     new Thermo(-1234, 106, 110, 38.8, -10.3, 1.91),
 					     new Hazard(1, 0, 0)), 
 			   new Fusion(1638),
 			   new Liquid(new Thermo(161))),
-		FeV2O4(new Formula(Fe, V._(2), O._(4)), null, new Solid()),
-		FeWO4(new Formula(Fe, new Part(W, O._(4))), null,
+		FeV2O5(new Formula(Fe_2, V2O5), null, new Solid()),
+		FeWO4(new Formula(Fe_2, WO4), null,
 			  new Solid(Color.black, 6.64, 
 					    new Thermo(-1155, 132, 114))),
-		H2(new Formula(H._(2)), "hydrogen",
+		H2(new Formula(Element.H._(2)), "hydrogen",
  		   new Solid(0.088,
  				     new Thermo(2.38),
  		    		 new Hazard(0, 4, 0)),
@@ -330,7 +338,7 @@ public interface Compound extends Chemical {
 					  new Thermo(-58, 78, 43.9, 15.3), 
 					  new Hazard(2, 1, 0))),
 		// NOTE: Iodine has a high solid vapor pressure, so it evaporates as heated, but it *does* melt
-		I2(new Formula(I._(2)), "iodine",
+		I2(new Formula(Element.I._(2)), "iodine",
 		   new Solid(new Color(70, 65, 70), 4.93, 
 				   	 new Thermo(-196, 919, -1079, 534, 5.16, 43.3, -322),
 				   	 new Hazard(3, 0, 0)), 
@@ -358,19 +366,19 @@ public interface Compound extends Chemical {
 					  new Thermo(-363, 94, 83.6),
 					  new Hazard(3, 0, 2, SpecialCode.WATER_REACTIVE)),
 			new Fusion(1010)),
-		KNO2(new Formula(K, new Part(N, O._(2))), null,
+		KNO2(new Formula(K, Ions.NO2), null,
 			 new Solid(new Color(255, 255, 140), 1.91, 
 					   new Thermo(-371, 152, 107),
 					   new Hazard(2, 0, 2, SpecialCode.OXIDIZER))),
-		KNO3(new Formula(K, new Part(N, O._(3))), "saltpeter",
+		KNO3(new Formula(K, NO3), "saltpeter",
 			 new Solid(2.11, 
 					   new Thermo(-495, 133, 43.3, 226, -161, 0),
 					   new Hazard(1, 0, 0, SpecialCode.OXIDIZER)),
 			 new Fusion(607),
 			 new Liquid(1.86, new Thermo(-451, 149, 142))),
-		K2U2V2O12(new Formula(K._(2), new Part(U, O._(2))._(2), new Part(V, O._(4))._(2)).hydrate(3), null,
+		K2U2V2O12_3H2O(new Formula(K._(2), Ions.UO2._(2), VO4._(2)).hydrate(3), null,
 				  new Solid(new Color(250, 250, 35), 4.70, new Thermo())),
-		LiAlSiO32(new Formula(Li, Al, new Part(Si, O._(3))._(2)), null,
+		LiAlSiO32(new Formula(Li, Al, SiO3._(2)), null,
 				  new Solid(new Color(190, 170, 170), 3.1, new Thermo())),
 		LiCl(new Formula(Li, Cl), null, 
 			 new Solid(2.07, 
@@ -379,7 +387,7 @@ public interface Compound extends Chemical {
 			 new Liquid(1.50, new Thermo(63., -9.05, -0.316, 0.0796, 0.0136, -417, 158)),
 			 new Vaporization(1655),
 			 new Gas(new Thermo(37.3, 0.668, -0.0222, 0.00171, -0.496, -208, 255))),
-		Li3KSi4O10OH2(new Formula(Li._(3), K, new Part(Si._(4), O._(10)), new Part(O, H)._(2)), null,
+		Li3KSi4O10OH2(new Formula(Li._(3), K, Si2O5._(2), OH._(2)), null,
 				      new Solid(new Color(240, 50, 140), 2.8, new Thermo())),
 	    MgCl2_6H2O(new Formula(Mg, Cl._(2)).hydrate(6), null,
 	    		   new Solid(1.57, new Thermo(78.3, 2.44, 6.86, -1.73, -0.730, -668, 179)),
@@ -387,7 +395,7 @@ public interface Compound extends Chemical {
 	    		   new Liquid(2.11, new Thermo(-602, 130, 92.0)),
 	    		   new Vaporization(1685),
 	    		   new Gas(new Thermo(61.7, 0.573, -0.155, 0.0132, -0.431, -412, 349))),
-		MgCO3(new Formula(Mg, new Part(C, O._(3))), null,
+		MgCO3(new Formula(Mg, CO3), null,
 			  new Solid(2.96, new Thermo(44.9, 150, -74.2, 12.0, -0.629, -1133, 75.2))),
 		MgO(new Formula(Mg, O), null,
 			new Solid(3.58, new Thermo(47.3, 5.68, -0.873, 0.104, -1.05, -619, 76.5),
@@ -396,7 +404,7 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(-532, 48.3, 66.9)),
 			new Vaporization(3870),
 			new Gas(new Thermo(33.2, 1.94, -0.207, 0.0209, 33.9, 86.6, 277))),
-	    MgSO4_7H2O(new Formula(Mg, new Part(S, O._(4))).hydrate(7), "epsomSalt",
+	    MgSO4_7H2O(new Formula(Mg, SO4).hydrate(7), "epsomSalt",
 	     	       new Solid(1.68, new Thermo(-3389, 372, 203, 669, 0, -4.47)),
 	    	       new Fusion(423)),
 	    MnO2(new Formula(Mn, O._(2)), null,
@@ -405,7 +413,7 @@ public interface Compound extends Chemical {
 			 new Solid(new Color(26, 26, 26), 5.06, 
 					   new Thermo(71.7, 7.52, -0.0449, 0.00887, -0.921, -301, 142), 
 					   new Hazard(1, 1, 0))),
-		N2(new Formula(N._(2)), "nitrogen", 
+		N2(new Formula(Element.N._(2)), "nitrogen", 
 		   new Solid(1.03, 
 				     new Thermo(84.7), 
 		    		 new Hazard(0, 0, 0)), 
@@ -418,7 +426,7 @@ public interface Compound extends Chemical {
 			       .addSegment(500, 19.5, 19.9, -8.60, 1.37, 0.528, -4.94, 212)
 			       .addSegment(2000, 35.5, 1.13, -0.196, 0.0147, -4.55, -19.0, 225), 
 				   new Hazard(0, 0, 0), new Sutherland(17.8, 301, 111))),
-		NO(new Formula(N, O), null, 
+		NO(new Formula(Element.N, Element.O), null, 
 		   new Solid(new Color(180, 225, 255), Double.NaN, new Thermo(45.9)), 
 		   new Fusion(109),
 		   new Liquid(new Color(45, 100, 135), 1.27,
@@ -428,7 +436,7 @@ public interface Compound extends Chemical {
 		   new Gas(new Thermo(23.8, 12.6, -1.14, -1.50, 0.214, 83.4, 237)
 				   .addSegment(1200, 36.0, 0.957, -0.148, 0.00997, -3.00, 73.1, 246), 
 				   new Hazard(3, 0, 3, SpecialCode.OXIDIZER), null)),
-		NO2(new Formula(N, O._(2)), null, 
+		NO2(new Formula(Element.N, Element.O._(2)), null, 
 			new Solid(new Thermo(54)), 
 			new Fusion(262),
 			new Liquid(new Color(150, 20, 20), 1.45,
@@ -439,13 +447,13 @@ public interface Compound extends Chemical {
 		    		new Thermo(16, 76, -54.4, 14.3, 0.239, 26.2, 241)
 		    		.addSegment(1200, 56.8, 0.738, -0.145, 0.00978, -5.46, 2.85, 291), 
 		    		new Hazard(3, 0, 0, SpecialCode.OXIDIZER), null)),
-		Na2B4O7(new Formula(Na._(2), new Part(B._(4), O._(5), new Part(O, H)._(4))).hydrate(8), null,
+		Na2B4O7(new Formula(Na._(2), B4O5OH2).hydrate(8), null,
 				new Solid(Color.WHITE, 1.7, new Thermo(-3276, 189, 614)),
 				new Fusion(1016),
 				new Liquid(new Thermo(265))),
-		NaCaNb2O6OH(new Formula(Na, Ca, Nb._(2), O._(6), new Part(O, H)), null, 
+		NaCaNb2O6OH(new Formula(Na, Ca, NbO3._(2), OH), null, 
 				new Solid(new Color(78, 46, 40), 4.75)),
-	    NaCaTa2O6OH(new Formula(Na, Ca, Ta._(2), O._(6), new Part(O, H)), null, 
+	    NaCaTa2O6OH(new Formula(Na, Ca, Ta2O6, OH), null, 
 	    		new Solid(new Color(255, 255, 150), 6.33)),
 	    NaBr(new Formula(Na, Br), null,
 	    	 new Solid(3.21, new Thermo(50.2, 10.1, 0.963, -0.0284, -0.166, -377, 144)),
@@ -459,14 +467,14 @@ public interface Compound extends Chemical {
 		     new Liquid(1.56, new Thermo(-42.4, 114, -43.6, 5.90, 39.1, -306, 91.1)),
 		     new Vaporization(5.07, 8388, -82.6),
 		     new Gas(new Thermo(37.3, 0.792, -0.0270, 0.00231, -0.157, -193, 274))),
-		Na2CO3(new Formula(Na._(2), new Part(C, O._(3))), null,
+		Na2CO3(new Formula(Na._(2), CO3), null,
 			   new Solid(2.54, new Thermo(190, 0, 0, 0, 0, -1183, 343),
 					     new Hazard(2, 0, 0))),
-		NaNO2(new Formula(Na, new Part(N, O._(2))), null,
+		NaNO2(new Formula(Na, Ions.NO2), null,
 			  new Solid(new Color(255, 255, 150), 2.17,
 					    new Thermo(-359, 106, 237, -1128, 2100, 0).
 					               addSegment(463, 1469, -5750, 6170, 0, 8.71E-3))),
-		NaNO3(new Formula(Na, new Part(N, O._(3))), "saltpeter",
+		NaNO3(new Formula(Na, NO3), "saltpeter",
 			  new Solid(2.26, 
 					    new Thermo(-467, 116, 93.1)),
 			  new Fusion(581),
@@ -480,14 +488,14 @@ public interface Compound extends Chemical {
 			new Solid(Color.GREEN, 2.7, new Thermo(-240, 38, 47.3, 9.00), 
 				      new Hazard(2, 0, 0)), 
 		    new Fusion(2228)),
-		NiOH2(new Formula(Ni, new Part(O, H)._(2)), null, 
+		NiOH2(new Formula(Ni, OH._(2)), null, 
 			  new Solid(Color.GREEN, 4.10, new Thermo(-538, 79, 81), 
 					    new Hazard(2, 0, 0))),
 	    Ni9S8(new Formula(Ni._(9), S._(8)), null,
 			  new Solid(new Color(165, 150, 5), 4.8, new Thermo(-847, 475, 443))),
-		Ni3Si2O5OH4(new Formula(Ni._(3), new Part(Si._(2), O._(5)), new Part(O, H)._(4)), null,
+		Ni3Si2O5OH4(new Formula(Ni._(3), Si2O5, OH._(4)), null,
 				    new Solid(new Color(100, 150, 100), 3.2, new Thermo())),
-	    O2(new Formula(O._(2)), "oxygen",
+	    O2(new Formula(Element.O._(2)), "oxygen",
 			new Solid(),
 			new Fusion(54),
 			new Liquid(1.14, new Thermo(129)),
@@ -504,7 +512,7 @@ public interface Compound extends Chemical {
 			new Liquid(new Thermo(-98.3, 101, 66.9)),
 			new Vaporization(1554),
 			new Gas(new Thermo(77.9, -29.8, 7.55, -0.510, -25.1, 68.6, 311))),
-		Pb5V3O12Cl(new Formula(Pb._(5), new Part(V, O._(4))._(3), Cl), null,
+		Pb5V3O12Cl(new Formula(Pb._(5), VO4._(3), Cl), null,
 				   new Solid(new Color(210, 0, 0), 6.90, new Thermo())),
 		Sb2S3(new Formula(Sb._(2), S._(3)), null, 
 			  new Solid(new Color(100, 100, 100), 4.64, 
@@ -512,7 +520,7 @@ public interface Compound extends Chemical {
 					    new Hazard(2, 1, 0)),
 			  new Fusion(823),
 			  new Liquid(new Thermo(231))),
-		SiO2(new Formula(Si, O._(2)), "silica", 
+		SiO2(new Formula(Element.Si, Element.O._(2)), "silica", 
 			 new Solid(Color.WHITE, 2.6, 
 					   new Thermo(72.8, 1.29, -0.004, 0.0008, -4.14, -941, 114),
 					   new Hazard(0, 0, 0)),
@@ -522,7 +530,7 @@ public interface Compound extends Chemical {
 			 new Solid(Color.WHITE, 7.0, new Thermo(-581, 52, 60), new Hazard(2, 0, 0)),
 			 new Fusion(1903),
 			 new Liquid()),
-	    SrSO4(new Formula(Sr, new Part(S, O._(4))), null,
+	    SrSO4(new Formula(Sr, SO4), null,
 	    	  new Solid(Color.WHITE, 3.96, new Thermo(-1453, 117, 91.7, 55.4), new Hazard(1, 0, 0)),
 	    	  new Fusion(1879),
 	    	  new Liquid(new Thermo(136))),
@@ -544,12 +552,12 @@ public interface Compound extends Chemical {
 			new Solid(4.09, 
 					  new Thermo(-206, 201, 53.6, 3.97, 0, 0.814), 
 					  new Hazard(1, 0, 0))),
-		ZrSiO4(new Formula(Zr, Si, O._(4)), null,
+		ZrSiO4(new Formula(Zr, SiO4), null,
 			   new Solid(new Color(210, 210, 210), 4.56,
 					     new Thermo(85.2, 137, -94.6, 21.7, -1.74, -2061, 140)
 			                        .addSegment(1700, 151, 0, 0, 0, 0, -2082, 238),
 			             new Hazard(1, 0, 1))),
-		METHANE(new Formula(C, H._(4)).setSmiles("c"), null, 
+		METHANE(new Formula(Element.C, Element.H._(4)).setSmiles("c"), null, 
 				new Solid(0.494, new Thermo(104)),
 				new Fusion(90),
 				new Liquid(new Thermo(-74, 116, 52.9)),
@@ -558,7 +566,7 @@ public interface Compound extends Chemical {
 						.addSegment(1300, 85.8, 11.2, -2.11, 0.138, -26.4, -154, 224),
 						new Hazard(1, 4, 0), new Sutherland(11.6, 311, 165))
 				),
-		ETHANE(new Formula(C._(2), H._(6)).setSmiles("cc"), null, 
+		ETHANE(new Formula(Element.C._(2), Element.H._(6)).setSmiles("cc"), null, 
 			   new Solid(),
 			   new Fusion(90),
 			   new Liquid(new Thermo(127)),
@@ -566,7 +574,7 @@ public interface Compound extends Chemical {
 			   new Gas(new Thermo(6.16, 173, -0.683, 9.07, 0.126, -93.1, 186),
 					   new Hazard(1, 4, 0), new Sutherland(9.1, 298, 272))
 				),
-		PROPANE(new Formula(C._(3), H._(8)).setSmiles("ccc"), null, 
+		PROPANE(new Formula(Element.C._(3), Element.H._(8)).setSmiles("ccc"), null, 
 				new Solid(new Thermo(130)),
 				new Fusion(86),
 				new Liquid(new Thermo(-119, 171, 98.4)),
@@ -574,7 +582,7 @@ public interface Compound extends Chemical {
 				new Gas(new Thermo(-105, 270, 12.8, 231, -0.689, -0.00266),
 						new Hazard(1, 4, 0), new Sutherland(8.0, 289, 338))
 				),
-		N_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cccc"), "butane", 
+		N_BUTANE(new Formula(Element.C._(4), Element.H._(10)).setSmiles("cccc"), "butane", 
 				 new Solid(),
 			  	 new Fusion(135),
 			  	 new Liquid(new Thermo(-148, 230, 132)),
@@ -582,7 +590,7 @@ public interface Compound extends Chemical {
 			  	 new Gas(new Thermo(-126, 310, 21.9, 294, -0.829, -0.00695),
 			  			 new Hazard(1, 4, 0), new Sutherland(8.4, 289, 400))
 				),
-		ISO_BUTANE(new Formula(C._(4), H._(10)).setSmiles("cc(c)c"), "butane", 
+		ISO_BUTANE(new Formula(Element.C._(4), Element.H._(10)).setSmiles("cc(c)c"), "butane", 
 				   new Solid(),
 				   new Fusion(113),
 				   new Liquid(new Thermo(201)),

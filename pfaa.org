@@ -770,7 +770,12 @@
    
    Do we really want these four, somewhat arbitrary, types? Probably
    not. Just take the union. Chemical processing will separate.
-   
+
+*** NaCl
+    Need to remove MgSO4, MgCl2 and CaSO4.
+    * Ca(OH)2 or NaOH removes Mg2+ as Mg(OH)2.
+    * Na2CO3 or CO2 removes Ca2+ as CaCO3.
+    
 ** Sea water
    There are many minerals in sea water. But how to model those? We
    cannot replace the blocks, because that would break other mods. One
@@ -1214,7 +1219,7 @@
     | Slightly Soluble      | 100 to 1000         |
     | Very Slightly Soluble | 1000 to 10,000      |
     | Practically Insoluble | Greater than 10,000 |
-    
+
 *** Temperature
     We will not model arbitrary temperatures of materials, except
     within machines. Instead, we assume room temperature or the
@@ -1236,7 +1241,7 @@
 
     Colored lighting is possible:
     http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/1446134-1-7-2-beta-colored-light-api-mod-writers-can
-
+    
 ** Industrial Minerals
 *** Feldspar
     Technically two types based on the cation: Ca/Na (plagioclase) or
@@ -4168,6 +4173,25 @@
     be OK. It would be neat to have liquid and gas blocks for
     every chemical, with pumps and fans moving them around. Not just
     in pipes. NBT here we come on that one.
+    
+*** Ions
+    Compounds will dissolve into their ions when added to a solvent,
+    typically water. The properties of dissolved (aqueous) compounds
+    are obviously different from those of the undissolved phases. We
+    can add a new Ion material that refers to the base chemical and the
+    charge (default taken from default oxidation state). It will yield
+    a Thermo object, given a solvent.
+
+    We could autogenerate salt metathesis reactions by iterating over
+    the compounds and finding the salts. We get the cation and anion
+    from the compound and exchange the ions. For the reaction to
+    happen, it needs to be driven by a phase change (one of the
+    products is not an aqueous salt). Solubility will inform most
+    cases. We could store a solubility chart:
+    https://en.wikipedia.org/wiki/Solubility_chart. An enumeration
+    will contain a chart for each solvent of interest, starting with
+    water. The cations on the rows, anions on the columns. Or, we just
+    guess solubility from the free energy of solvation.
     
 ** Processing of crude materials
    

@@ -62,6 +62,14 @@ public final class Formula {
 		return copy;
 	}
 	
+	public Ion getAnion() {
+		return this.getLastPart().ion;
+	}
+
+	public Ion getCation() {
+		return this.getFirstPart().ion;
+	}
+	
 	public String toString() {
 		String name = "";
 		for (Part part : this.parts) {
@@ -105,17 +113,27 @@ public final class Formula {
 	
 	public static final class Part implements PartFactory {
 		public final Element element;
+		public final Ion ion;
 		public final int stoichiometry;
 		public final List<Part> parts;
 		
-		private Part(Element element, int stoichiometry, List<Part> parts) {
+		private Part(Element element, Ion ion, int stoichiometry, List<Part> parts) {
 			this.parts = Collections.unmodifiableList(parts);
 			this.stoichiometry = stoichiometry;
 			this.element = element;
+			this.ion = ion;
 		}
 		
 		public Part(Element element, int stoichiometry) {
 			this.element = element;
+			this.ion = null;
+			this.stoichiometry = stoichiometry;
+			this.parts = Collections.emptyList();
+		}
+		
+		public Part(Ion ion, int stoichiometry) {
+			this.element = ion.getFormula().getFirstPart().element;
+			this.ion = ion;
 			this.stoichiometry = stoichiometry;
 			this.parts = Collections.emptyList();
 		}
@@ -128,16 +146,19 @@ public final class Formula {
 			this.parts = Collections.unmodifiableList(reifiedParts);
 			this.stoichiometry = 1;
 			this.element = null;
+			this.ion = null;
 		}
 		
 		public Part _(int stoichiometry) {
-			return new Part(element, stoichiometry, parts); 
+			return new Part(this.element, this.ion, stoichiometry, this.parts); 
 		}
 		
 		public double getMolarMass() {
 			double mass = 0;
 			if (element != null) {
 				mass = element.getAtomicWeight();
+			} else if (this.ion != null) {
+				mass = this.ion.getFormula().getMolarMass();
 			} else {
 				for (Part part : parts) {
 					mass += part.getMolarMass();
@@ -151,7 +172,9 @@ public final class Formula {
 			String name = "";
 			if (element != null)
 				name = element.name();
-			else {
+			else if (this.ion != null) {
+				name = this.ion.getFormula().toString();
+			} else {
 				for (Part part : parts) {
 					name += part.toString();
 				}
@@ -180,5 +203,6 @@ public final class Formula {
 	
 	public static interface PartFactory {
 		public Part getPart();
+		public Part _(int stoichiometry);
 	}
 }

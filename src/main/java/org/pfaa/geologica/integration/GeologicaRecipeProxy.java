@@ -34,7 +34,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		this.oreMineralToGeoMaterials = makeOreMineralToGeoMaterials();
 	}
 	
-	private Map<Chemical, OreMineral> makeOreCompoundToMineral() {
+	private static Map<Chemical, OreMineral> makeOreCompoundToMineral() {
 		Map<Chemical, OreMineral> map = new HashMap<Chemical, OreMineral>();
 		for (OreMineral mineral : Ores.values()) {
 			Chemical concentrate = mineral.getConcentrate();

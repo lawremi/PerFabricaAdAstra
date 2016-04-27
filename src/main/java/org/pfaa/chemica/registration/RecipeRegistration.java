@@ -19,6 +19,7 @@ import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Ion.Ions;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
@@ -309,7 +310,7 @@ public class RecipeRegistration {
 		if (last.equals(CO3)) {
 			reaction = Reaction.of(compound).yields(oxide(formula)).and(Compounds.CO2);
 		} else if (last.equals(NO3)) {
-			if (formula.getFirstPart().element == Element.Li) {
+			if (formula.getCation() == Ions.Li) {
 				reaction = Reaction.of(4, compound).yields(2, oxide(formula)).and(4, Compounds.NO2).and(Compounds.O2);
 			} else {
 				Formula metalNitriteFormula = formula.withLastPart(NO2);
@@ -331,7 +332,7 @@ public class RecipeRegistration {
 	}
 	
 	private static Chemical oxide(Formula formula) {
-		int ratio = Math.abs(Element.O.getDefaultOxidationState()) / formula.getFirstPart().element.getDefaultOxidationState();
+		int ratio = Math.abs(Element.O.getDefaultOxidationState()) / formula.getCation().getCharge();
 		Formula oxideFormula = new Formula(formula.getFirstPart()._(ratio), Element.O);
 		return Compounds.valueOf(oxideFormula.toString());
 	}
