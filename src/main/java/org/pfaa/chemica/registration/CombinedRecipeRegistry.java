@@ -103,16 +103,17 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
+	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput,
+			ItemStack solidOutput, FluidStack fluidOutput, int temp) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerAbsorptionRecipe(inputs, additive, output, temp);
+			registry.registerMixingRecipe(solidInputs, fluidInput, solidOutput, fluidOutput, temp);
 		}
 	}
-
+	
 	@Override
-	public void registerMixingRecipe(FluidStack input, List<ItemStack> additives, FluidStack output, int temp) {
+	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerMixingRecipe(input, additives, output, temp);
+			registry.registerMixingRecipe(inputs, output);
 		}
 	}
 
@@ -123,13 +124,6 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 		}
 	}
 
-	@Override
-	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) {
-		for (RecipeRegistry registry : registries.values()) {
-			registry.registerMixingRecipe(inputs, output);
-		}
-	}
-	
 	@Override
 	public GenericRecipeRegistry getGenericRecipeRegistry() {
 		return this.materialRegistry;

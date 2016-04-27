@@ -32,16 +32,18 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output, int temp) {
-		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
-			delegate.registerAbsorptionRecipe(itemStacks, additive, output, temp);
+	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries,
+			Strength strength) {
+		for (ItemStack itemStack : input.getItemStacks()) {
+			delegate.registerGrindingRecipe(itemStack, output, secondaries, strength);
 		}
 	}
 
 	@Override
-	public void registerMixingRecipe(FluidStack input, IngredientList additives, FluidStack output, int temp) {
-		for (List<ItemStack> itemStacks : additives.getItemStackLists()) {
-			delegate.registerMixingRecipe(input, itemStacks, output, temp);
+	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, ItemStack solidOutput,
+			FluidStack fluidOutput, int temp) {
+		for (List<ItemStack> itemStacks : solidInputs.getItemStackLists()) {
+			delegate.registerMixingRecipe(itemStacks, fluidInput, solidOutput, fluidOutput, temp);
 		}
 	}
 
@@ -49,14 +51,6 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
 		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
 			delegate.registerMixingRecipe(itemStacks, output);
-		}
-	}
-
-	@Override
-	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries,
-			Strength strength) {
-		for (ItemStack itemStack : input.getItemStacks()) {
-			delegate.registerGrindingRecipe(itemStack, output, secondaries, strength);
 		}
 	}
 

@@ -95,12 +95,16 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
+				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
 			if (inputs.size() > 1) {
 				return;
 			}
+			if (solidOutput == null) {
+				return;
+			}
 			int energy = RecipeCostUtils.rfFromTemperature(temp);
-			ThermalExpansionHelper.addTransposerFill(energy, inputs.get(0), output, additive, false);
+			ThermalExpansionHelper.addTransposerFill(energy, inputs.get(0), solidOutput, additive, false);
 		}
 	}
 }

@@ -87,32 +87,18 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
-			if (inputs.size() > 1) {
+		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, 
+				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+			if (solidInputs.size() > 1) {
 				return;
 			}
 			if (temp != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			if (additive.getFluid().isGaseous()) {
+			if (fluidInput.getFluid().isGaseous()) {
 				return;
 			}
-			RecipeVat recipe = new RecipeVat(inputs.get(0), additive, output, 1);
-			MaricultureHandlers.vat.addRecipe(recipe);
-		}
-
-		@Override
-		public void registerMixingRecipe(FluidStack input, List<ItemStack> additives, FluidStack output, int temp) {
-			if (additives.size() > 1) {
-				return;
-			}
-			if (temp != Constants.STANDARD_TEMPERATURE) {
-				return;
-			}
-			if (input.getFluid().isGaseous()) {
-				return;
-			}
-			RecipeVat recipe = new RecipeVat(additives.get(0), input, output, 1);
+			RecipeVat recipe = new RecipeVat(solidInputs.get(0), fluidInput, null, fluidOutput, solidOutput, 1);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
 		

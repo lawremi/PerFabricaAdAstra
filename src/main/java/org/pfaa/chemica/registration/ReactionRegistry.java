@@ -88,7 +88,7 @@ public class ReactionRegistry {
 			IngredientList inputs = new IngredientList(new MaterialStack(form, a));
 			FluidStack additive = IndustrialFluids.getCanonicalFluidStack(b, form);
 			ItemStack output = new MaterialStack(form, product).getBestItemStack();
-			delegate.registerAbsorptionRecipe(inputs, additive, output, synthesis.getSpontaneousTemperature());
+			delegate.registerMixingRecipe(inputs, additive, output, null, synthesis.getSpontaneousTemperature());
 		} else {
 			throw new IllegalArgumentException("unhandled synthesis type");
 		}

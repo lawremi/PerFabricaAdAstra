@@ -49,19 +49,17 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	@Override
 	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp) {}
 
-	@Override
-	public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {}
-
-	@Override
-	public void registerMixingRecipe(FluidStack input, List<ItemStack> additives, FluidStack output, int temp) {}
-	
 	private static Strength strengthFromOutputs(List<ChanceStack> outputs) {
 		return Strength.values()[Math.min(Math.max(outputs.size() - 1, 1), Strength.values().length) - 1];
 	}
 	
 	@Override
-	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) {}
-
+	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput,
+			ItemStack solidOutput, FluidStack fluidOutput, int temp) { }
+	
+	@Override
+	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) { }
+	
 	@Override
 	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 		this.registerGrindingRecipe(input, outputs.get(0).itemStack, outputs.subList(1, outputs.size()), 

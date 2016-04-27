@@ -34,16 +34,18 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output, int temp) {
+	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries,
+			Strength strength) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
-			registry.registerAbsorptionRecipe(inputs, additive, output, temp);
+			registry.registerGrindingRecipe(input, output, secondaries, strength);
 		}
 	}
 
 	@Override
-	public void registerMixingRecipe(FluidStack input, IngredientList additives, FluidStack output, int temp) {
+	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, ItemStack solidOutput,
+			FluidStack fluidOutput, int temp) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
-			registry.registerMixingRecipe(input, additives, output, temp);
+			registry.registerMixingRecipe(solidInputs, fluidInput, solidOutput, fluidOutput, temp);
 		}
 	}
 
@@ -51,14 +53,6 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerMixingRecipe(inputs, output);
-		}
-	}
-
-	@Override
-	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries,
-			Strength strength) {
-		for (GenericRecipeRegistry registry : this.registries.values()) {
-			registry.registerGrindingRecipe(input, output, secondaries, strength);
 		}
 	}
 

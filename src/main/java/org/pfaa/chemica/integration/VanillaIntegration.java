@@ -48,22 +48,29 @@ public class VanillaIntegration {
 			}
 		}
 
-		protected void registerAbsorptionRecipe(Object[] inputs, FluidStack additive, ItemStack output, int temp) {
+		protected void registerMixingRecipe(Object[] inputs, FluidStack fluidInput, 
+				ItemStack output, FluidStack fluidOutput, int temp) {
 			if (temp != Constants.STANDARD_TEMPERATURE)
 				return;
-			if (additive.amount > FluidContainerRegistry.BUCKET_VOLUME) {
+			if (fluidInput.amount > FluidContainerRegistry.BUCKET_VOLUME) {
 				return;
 			}
-			FluidStack bucketFluidStack = new FluidStack(additive.getFluid(), FluidContainerRegistry.BUCKET_VOLUME);
+			FluidStack bucketFluidStack = new FluidStack(fluidInput.getFluid(), FluidContainerRegistry.BUCKET_VOLUME);
 			ItemStack filledBucket = FluidContainerRegistry.fillFluidContainer(bucketFluidStack, new ItemStack(Items.bucket));
 			inputs = Arrays.copyOf(inputs, inputs.length + 1);
 			inputs[inputs.length - 1] = filledBucket;
+			if (output == null && fluidOutput.amount >= FluidContainerRegistry.BUCKET_VOLUME) {
+				inputs = Arrays.copyOf(inputs, inputs.length + 1);
+				inputs[inputs.length - 1] = new ItemStack(Items.bucket);
+				output = FluidContainerRegistry.fillFluidContainer(fluidOutput, new ItemStack(Items.bucket));
+			}
 			RecipeUtils.addShapelessRecipe(output, inputs);
 		}
 		
 		@Override
-		public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
-			this.registerAbsorptionRecipe(inputs.toArray(), additive, output, temp);
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
+				ItemStack output, FluidStack fluidOutput, int temp) {
+			this.registerMixingRecipe(inputs.toArray(), additive, output, fluidOutput, temp);
 		}
 
 		protected void registerMixingRecipe(Object[] inputs, ItemStack output) {
@@ -87,10 +94,10 @@ public class VanillaIntegration {
 			}
 
 			@Override
-			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
-					int temp) {
-				VanillaRecipeRegistry.this.registerAbsorptionRecipe(
-						inputs.getCraftingIngredients().toArray(), additive, output, temp);
+			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, 
+					ItemStack output, FluidStack fluidOutput, int temp) {
+				VanillaRecipeRegistry.this.registerMixingRecipe(
+						inputs.getCraftingIngredients().toArray(), additive, output, fluidOutput, temp);
 			}
 
 			@Override

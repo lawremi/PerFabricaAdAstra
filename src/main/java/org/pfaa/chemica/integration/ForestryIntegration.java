@@ -29,11 +29,12 @@ public class ForestryIntegration {
 	public static class ForestryRecipeRegistry extends AbstractRecipeRegistry {
 	
 		@Override
-		public void registerAbsorptionRecipe(List<ItemStack> inputs, FluidStack additive, ItemStack output, int temp) {
-			this.registerAbsorptionRecipe(inputs.toArray(), additive, output, temp);
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
+				ItemStack output, FluidStack fluidOutput, int temp) {
+			this.registerMixingRecipe(inputs.toArray(), additive, output, temp);
 		}
 
-		protected void registerAbsorptionRecipe(Object[] inputs, FluidStack additive, ItemStack output, int temp) {
+		protected void registerMixingRecipe(Object[] inputs, FluidStack additive, ItemStack output, int temp) {
 			if (inputs.length > 9) {
 				return;
 			}
@@ -80,9 +81,9 @@ public class ForestryIntegration {
 			}
 
 			@Override
-			public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output,
-					int temp) {
-				ForestryRecipeRegistry.this.registerAbsorptionRecipe(
+			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, 
+					ItemStack output, FluidStack fluidOutput, int temp) {
+				ForestryRecipeRegistry.this.registerMixingRecipe(
 						inputs.getCraftingIngredients().toArray(), 
 						additive, output, temp);
 			}

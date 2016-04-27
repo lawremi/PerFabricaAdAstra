@@ -68,10 +68,11 @@ public class RecipeRegistration {
 	private static void hydrateHardenedClay() {
 		registerCrushingRecipe(Aggregates.HARDENED_CLAY);
 		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-		genericRecipes.registerAbsorptionRecipe(
+		genericRecipes.registerMixingRecipe(
 				new IngredientList(Aggregates.HARDENED_CLAY),
 				water,
 				new ItemStack(Items.clay_ball),
+				null,
 				Constants.STANDARD_TEMPERATURE);
 	}
 
@@ -139,7 +140,7 @@ public class RecipeRegistration {
 					new MaterialStack(null, Aggregates.SAND),
 					new MaterialStack(Generics.CEMENT));
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-			genericRecipes.registerAbsorptionRecipe(inputs, water, concrete, Constants.STANDARD_TEMPERATURE);
+			genericRecipes.registerMixingRecipe(inputs, water, concrete, null, Constants.STANDARD_TEMPERATURE);
 		}
 	}
 
@@ -161,8 +162,8 @@ public class RecipeRegistration {
 				new MaterialStack(Forms.DUST_TINY, Generics.FILLER)
 		);
 		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-		genericRecipes.registerAbsorptionRecipe(jointCompoundSolids, water, 
-				new ItemStack(FabricaItems.JOINT_COMPOUND, 4), Constants.STANDARD_TEMPERATURE);
+		genericRecipes.registerMixingRecipe(jointCompoundSolids, water, 
+				new ItemStack(FabricaItems.JOINT_COMPOUND, 4), null, Constants.STANDARD_TEMPERATURE);
 	}
 	
 	private static void useFeldsparAsFlux() {

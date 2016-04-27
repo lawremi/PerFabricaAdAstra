@@ -13,7 +13,7 @@ public interface GenericRecipeRegistry {
 	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries, Strength strength);
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
 	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp);
-	public void registerAbsorptionRecipe(IngredientList inputs, FluidStack additive, ItemStack output, int temp);
-	public void registerMixingRecipe(FluidStack input, IngredientList additives, FluidStack output, int temp);
+	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput /* or List<FluidStack> fluidInputs */,
+			ItemStack solidOutput, FluidStack fluidOutput, int temp);
 	public void registerMixingRecipe(IngredientList inputs, ItemStack output);
 }

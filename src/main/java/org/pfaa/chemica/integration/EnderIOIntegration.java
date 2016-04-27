@@ -111,18 +111,22 @@ public class EnderIOIntegration {
 		private static int VAT_BOILING_ENERGY = 10000;
 		
 		@Override
-		public void registerMixingRecipe(FluidStack input, List<ItemStack> additives, FluidStack output, int temp) {
-			if (additives.size() > 2) {
+		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, 
+				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+			if (solidInputs.size() > 2) {
 				return;
 			}
-			List<RecipeInput> recipeInputs = new ArrayList<RecipeInput>(additives.size() + 1);
-			recipeInputs.add(new RecipeInput(input));
-			for (ItemStack solute : additives) {
+			if (fluidOutput == null) {
+				return;
+			}
+			List<RecipeInput> recipeInputs = new ArrayList<RecipeInput>(solidInputs.size() + 1);
+			recipeInputs.add(new RecipeInput(fluidInput));
+			for (ItemStack solute : solidInputs) {
 				recipeInputs.add(new RecipeInput(solute, true));
 			}
 			int energy = VAT_BOILING_ENERGY * temp / Compounds.H2O.getFusion().getTemperature();
 			RecipeInput[] inputArray = recipeInputs.toArray(new RecipeInput[0]);
-			RecipeOutput[] outputArray = new RecipeOutput[] { new RecipeOutput(output) };
+			RecipeOutput[] outputArray = new RecipeOutput[] { new RecipeOutput(fluidOutput) };
 			Recipe recipe = new Recipe(inputArray, outputArray, energy, RecipeBonusType.NONE);
 			VatRecipeManager.getInstance().addRecipe(recipe);
 		}
