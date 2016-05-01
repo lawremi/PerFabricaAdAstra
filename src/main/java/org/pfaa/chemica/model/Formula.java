@@ -8,6 +8,7 @@ import java.util.List;
 public final class Formula {
 	private List<Part> parts;
 	private int hydration;
+	private int charge;
 	private String smiles;
 	
 	public Formula(PartFactory... parts) {
@@ -25,6 +26,7 @@ public final class Formula {
 	private Formula(Formula other) {
 		this.parts = new ArrayList<Part>(other.parts);
 		this.hydration = other.hydration;
+		this.charge = other.charge;
 		this.smiles = other.smiles;
 	}
 	
@@ -70,10 +72,23 @@ public final class Formula {
 		return this.getFirstPart().ion;
 	}
 	
+	public Formula ionize(int charge) {
+		Formula copy = new Formula(this);
+		copy.charge = charge;
+		return copy;
+	}
+	
+	public int getCharge() {
+		return this.getCharge();
+	}
+	
 	public String toString() {
 		String name = "";
 		for (Part part : this.parts) {
 			name += part.toString();
+		}
+		if (this.charge != 0) {
+			name += charge + this.charge > 0 ? "+" : "-";
 		}
 		return name;
 	}
