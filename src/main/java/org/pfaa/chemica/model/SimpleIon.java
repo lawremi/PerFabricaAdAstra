@@ -1,49 +1,22 @@
 package org.pfaa.chemica.model;
 
-import java.util.Map;
+import org.pfaa.chemica.model.ChemicalStateProperties.Aqueous;
+import org.pfaa.chemica.model.Formula.Part;
 
-import org.pfaa.chemica.model.Compound.Compounds;
+public class SimpleIon extends SimpleChemical implements Ion {
 
-import com.google.common.collect.Maps;
-
-public class SimpleIon implements Ion {
-
-	private Formula formula;
-	private int charge;
-	private Map<Chemical,Thermo> thermoForChemical = Maps.newHashMap();
-	
-	public SimpleIon(Formula formula, int charge, Thermo waterThermo) {
-		this.formula = formula;
-		this.charge = charge;
-		this.putThermo(Compounds.H2O, waterThermo);
-	}
-	
-	public void putThermo(Chemical chemical, Thermo thermo) {
-		this.thermoForChemical.put(chemical, thermo);
+	public SimpleIon(Formula formula, Aqueous aqueous) {
+		super(formula, aqueous);
 	}
 
 	@Override
-	public Formula getFormula() {
-		return this.formula;
-	}
-
-	@Override
-	public int getCharge() {
-		return this.charge;
-	}
-
-	@Override
-	public Thermo getThermo(Chemical solvent) {
-		return this.thermoForChemical.get(solvent);
-	}
-
-	@Override
-	public Formula.Part _(int quantity) {
-		return new Formula.Part(this, quantity);
-	}
-
-	@Override
-	public Formula.Part getPart() {
+	public Part getPart() {
 		return this._(1);
 	}
+
+	@Override
+	public Part _(int stoichiometry) {
+		return new Formula.Part(this, stoichiometry);
+	}
+
 }

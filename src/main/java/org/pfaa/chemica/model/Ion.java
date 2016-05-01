@@ -1,11 +1,11 @@
 package org.pfaa.chemica.model;
 
+import java.awt.Color;
+
+import org.pfaa.chemica.model.ChemicalStateProperties.Aqueous;
 import org.pfaa.chemica.model.Formula.PartFactory;
 
-public interface Ion extends PartFactory {
-	public Formula getFormula();
-	public int getCharge();
-	public Thermo getThermo(Chemical solvent);
+public interface Ion extends PartFactory, Chemical {
 	
 	public enum Ions implements Ion {
 		/* cations */
@@ -70,27 +70,25 @@ public interface Ion extends PartFactory {
 
 		private Ion delegate;
 		
-		private Ions(Element element, int charge, Thermo waterThermo) {
-			this(new Formula(element), charge, waterThermo);
+		private Ions(Element element, int charge, Color color, Thermo aqueousThermo) {
+			this(new Formula(element), charge, color, aqueousThermo);
 		}
 		
-		private Ions(Formula formula, int charge, Thermo waterThermo) {
-			this.delegate = new SimpleIon(formula, charge, waterThermo);
+		private Ions(Element element, int charge, Thermo aqueousThermo) {
+			this(new Formula(element), charge, null, aqueousThermo);
+		}
+		
+		private Ions(Formula formula, int charge, Thermo aqueousThermo) {
+			this(formula, charge, null, aqueousThermo);
+		}
+		
+		private Ions(Formula formula, int charge, Color color, Thermo aqueousThermo) {
+			this.delegate = new SimpleIon(formula.ionize(charge), new Aqueous(color, aqueousThermo));
 		}
 		
 		@Override
 		public Formula getFormula() {
 			return this.delegate.getFormula();
-		}
-
-		@Override
-		public int getCharge() {
-			return this.delegate.getCharge();
-		}
-
-		@Override
-		public Thermo getThermo(Chemical solvent) {
-			return this.delegate.getThermo(solvent);
 		}
 
 		public Formula.Part _(int quantity) {
@@ -100,6 +98,31 @@ public interface Ion extends PartFactory {
 		@Override
 		public Formula.Part getPart() {
 			return this.delegate.getPart();
+		}
+
+		@Override
+		public ChemicalConditionProperties getProperties(Condition condition) {
+			return this.delegate.getProperties(condition);
+		}
+
+		@Override
+		public String getOreDictKey() {
+			return this.delegate.getOreDictKey();
+		}
+
+		@Override
+		public Mixture mix(IndustrialMaterial material, double weight) {
+			return this.delegate.mix(material, weight);
+		}
+
+		@Override
+		public Vaporization getVaporization() {
+			return this.delegate.getVaporization();
+		}
+
+		@Override
+		public Fusion getFusion() {
+			return this.delegate.getFusion();
 		}
 	}
 }
