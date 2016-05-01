@@ -164,7 +164,7 @@ public class ChemicalStateProperties extends StateProperties {
 	
 	public static class Aqueous extends ChemicalStateProperties {
 
-		private static final Color WATER_COLOR = Compounds.H2O.getProperties(Condition.STP).color;
+		private static final Color WATER_COLOR = Compounds.H2O.getProperties(Condition.STP, State.LIQUID).color;
 		
 		public Aqueous(Color color, Thermo thermo, Hazard hazard) {
 			super(State.AQUEOUS, 

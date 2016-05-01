@@ -19,10 +19,10 @@ public class Reaction {
 	public double getEnthalpyChange(Condition condition) {
 		double enthalpy = 0;
 		for (Term product : this.getProducts()) {
-			enthalpy += product.stoichiometry * product.chemical.getProperties(condition).enthalpy;
+			enthalpy += product.stoichiometry * product.chemical.getProperties(condition, product.state).enthalpy;
 		}
 		for (Term reactant : this.getReactants()) {
-			enthalpy -= reactant.stoichiometry * reactant.chemical.getProperties(condition).enthalpy;
+			enthalpy -= reactant.stoichiometry * reactant.chemical.getProperties(condition, reactant.state).enthalpy;
 		}
 		return enthalpy;
 	}
@@ -30,10 +30,10 @@ public class Reaction {
 	public double getEntropyChange(Condition condition) {
 		double entropy = 0;
 		for (Term product : this.getProducts()) {
-			entropy += product.stoichiometry * product.chemical.getProperties(condition).entropy;
+			entropy += product.stoichiometry * product.chemical.getProperties(condition, product.state).entropy;
 		}
 		for (Term reactant : this.getReactants()) {
-			entropy -= reactant.stoichiometry * reactant.chemical.getProperties(condition).entropy;
+			entropy -= reactant.stoichiometry * reactant.chemical.getProperties(condition, reactant.state).entropy;
 		}
 		return entropy;
 	}
