@@ -77,6 +77,11 @@ public class SimpleChemical implements Chemical {
 	@Override
 	public ChemicalConditionProperties getProperties(Condition condition) {
 		State state = this.getStateForCondition(condition);
+		return this.getProperties(condition, state);
+	}
+	
+	@Override
+	public ChemicalConditionProperties getProperties(Condition condition, State state) {
 		return new ChemicalConditionProperties(this.getStateProperties(state), condition);
 	}
 

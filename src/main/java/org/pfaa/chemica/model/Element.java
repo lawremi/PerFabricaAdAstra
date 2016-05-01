@@ -661,6 +661,11 @@ public enum Element implements Chemical, PartFactory, Metal {
 		}
 
 		@Override
+		public ChemicalConditionProperties getProperties(Condition condition, State state) {
+			return delegate.getProperties(condition, state);
+		}
+
+		@Override
 		public Mixture mix(IndustrialMaterial material, double weight) {
 			return this.delegate.mix(material, weight);
 		}

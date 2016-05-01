@@ -658,5 +658,10 @@ public interface Compound extends Chemical {
 		public Mixture mix(IndustrialMaterial material, double weight) {
 			return delegate.mix(material, weight);
 		}
+
+		@Override
+		public ChemicalConditionProperties getProperties(Condition condition, State state) {
+			return delegate.getProperties(condition, state);
+		}
 	}
 }
