@@ -1,5 +1,8 @@
 package org.pfaa.chemica.model;
 
+import java.awt.Color;
+
+import org.pfaa.chemica.model.ChemicalStateProperties.Aqueous;
 import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
@@ -15,12 +18,21 @@ public class SimpleChemical implements Chemical {
 	private ChemicalStateProperties solid;
 	private ChemicalStateProperties liquid;
 	private ChemicalStateProperties gas;
+	private ChemicalStateProperties aqueous;
 	
 	public SimpleChemical(Formula formula, String oreDictKey, Solid solid) {
-		this(formula, oreDictKey, solid, null, null, null, null);
+		this(formula, oreDictKey, solid, null, null, null, null, null);
+	}
+	public SimpleChemical(Formula formula, Aqueous aqueous) {
+		this(formula, null, null, null, null, null, null, aqueous);
 	}
 	public SimpleChemical(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
-			Liquid liquid,	Vaporization vaporization, Gas gas) 
+			Liquid liquid,	Vaporization vaporization, Gas gas) {
+		this(formula, oreDictKey, solid, fusion, liquid, vaporization, gas, null);
+	}
+	
+	public SimpleChemical(Formula formula, String oreDictKey, Solid solid, Fusion fusion, 
+			Liquid liquid,	Vaporization vaporization, Gas gas, Aqueous aqueous) 
 	{
 		this.formula = formula;
 		this.oreDictKey = oreDictKey == null ? formula.toString() : oreDictKey;
@@ -29,6 +41,7 @@ public class SimpleChemical implements Chemical {
 		this.liquid = liquid;
 		this.vaporization = vaporization;
 		this.gas = gas == null ? null : new Gas(gas, formula.getMolarMass());
+		this.aqueous = aqueous == null ? this.inferAqueous() : aqueous;
 	}
 	
 	@Override
@@ -75,8 +88,10 @@ public class SimpleChemical implements Chemical {
 			return liquid;
 		case GAS:
 			return gas;
+		case AQUEOUS:
+			return aqueous;
 		default:
-			throw new IllegalArgumentException("Unknown phase: " + state);
+			throw new IllegalArgumentException("Unknown state: " + state);
 		}
 	}
 	
@@ -88,5 +103,24 @@ public class SimpleChemical implements Chemical {
 	@Override
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return new SimpleMixture(this).mix(material, weight);
+	}
+	
+	private Aqueous inferAqueous() {
+		Ion cation = this.getFormula().getCation();
+		Ion anion = this.getFormula().getAnion();
+		boolean simpleSalt = cation != null && anion != null && this.getFormula().getParts().size() == 2;
+		if (!simpleSalt) {
+			return null;
+		}
+		ChemicalConditionProperties cationProps = cation.getProperties(Condition.STP);
+		ChemicalConditionProperties anionProps = anion.getProperties(Condition.STP);
+		Color color = cationProps.color;
+		if (color == null) 
+			color = anionProps.color;
+		double enthalpy = cationProps.enthalpy + anionProps.enthalpy;
+		double entropy = cationProps.entropy + anionProps.entropy;
+		Thermo thermo = new Thermo(enthalpy, entropy);
+		Hazard hazard = this.getStateProperties(State.SOLID).getHazard();
+		return new Aqueous(color, thermo, hazard);
 	}
 }

@@ -2,6 +2,8 @@ package org.pfaa.chemica.model;
 
 import java.awt.Color;
 
+import org.pfaa.chemica.model.Compound.Compounds;
+
 public class ChemicalStateProperties extends StateProperties {
 	public final Thermo thermo;
 	
@@ -156,6 +158,25 @@ public class ChemicalStateProperties extends StateProperties {
 						((refTemperature + constant) / (temperature + constant) * 
 						Math.pow(temperature / refTemperature, 1.5)); 
 			}
+		}
+
+	}
+	
+	public static class Aqueous extends ChemicalStateProperties {
+
+		private static final Color WATER_COLOR = Compounds.H2O.getProperties(Condition.STP).color;
+		
+		public Aqueous(Color color, Thermo thermo, Hazard hazard) {
+			super(State.AQUEOUS, 
+					color == null ? WATER_COLOR : color, 
+					Double.NaN,
+					thermo == null ? new Thermo() : thermo, 
+					hazard,
+					false);
+		}
+		
+		public Aqueous(Color color, Thermo thermo) {
+			this(color, thermo, new Hazard());
 		}
 
 	}
