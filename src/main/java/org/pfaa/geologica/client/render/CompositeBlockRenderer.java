@@ -35,6 +35,7 @@ public class CompositeBlockRenderer implements ISimpleBlockRenderingHandler {
 		compositeBlock.disableOverlay();
 		flag = this.renderWorldBlockPass(x, y, z, block, renderer);
 		if (flag && compositeBlock.enableOverlay()) {
+			enableAlphaBlending();
 			this.renderWorldBlockPass(x, y, z, block, renderer);
 			compositeBlock.disableOverlay();
 		}
