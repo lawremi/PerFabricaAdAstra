@@ -126,7 +126,7 @@ public enum GeoMaterial implements Mixture {
 	MOLYBDENITE(Ores.MOLYBDENITE.mix(Ores.PYRITE, 0.05).mix(Ores.CHALCOPYRITE, 0.05)
 			    .mix(Ores.FLUORITE, 0.02), Strength.WEAK, BRECCIA),
 	PYROLUSITE(Ores.PYROLUSITE.mix(Ores.GOETHITE, 0.1), Strength.WEAK, Aggregates.STONE),
-	ROCK_SALT(Ores.HALITE.mix(Ores.SYLVITE, 0.5).mix(Ores.CARNALLITE, 0.1).mix(Ores.GYPSUM, 0.05), Strength.WEAK),
+	SALT(Ores.HALITE.mix(Ores.SYLVITE, 0.5).mix(Ores.CARNALLITE, 0.1).mix(Ores.GYPSUM, 0.05), Strength.WEAK),
 	STIBNITE(Ores.STIBNITE.mix(Ores.PYRITE, 0.05).mix(Ores.GALENA, 0.05).mix(Ores.REALGAR, 0.04).mix(Ores.CINNABAR, 0.02), 
 			 Strength.WEAK, GRANITE),
 	
