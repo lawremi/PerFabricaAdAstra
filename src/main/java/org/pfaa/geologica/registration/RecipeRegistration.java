@@ -262,7 +262,7 @@ public class RecipeRegistration {
 			if (block.hasComposition(Aggregate.class)) {
 				oreDictifyAggregate(block, material);
 			} else if (block.hasComposition(Ore.class) || 
-				(block.hasComposition(Crude.class) && block.getMaterial() == Material.rock)) {
+				(block.hasComposition(Crude.class) && block.getMaterial().isSolid())) {
 				oreDictifyOre(block, material);
 			}
 		}
