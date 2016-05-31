@@ -14,3 +14,9 @@ gradlew.bat
 /libs
 /game/
 /lib/
+/asm/
+/config/
+/logs/
+/options.txt
+/saves/
+/usernamecache.json
