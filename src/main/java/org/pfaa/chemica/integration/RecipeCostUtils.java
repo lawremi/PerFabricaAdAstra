@@ -1,5 +1,7 @@
 package org.pfaa.chemica.integration;
 
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 
@@ -44,7 +46,14 @@ public class RecipeCostUtils {
 	}
 
 	public static int rfFromTemperature(int temp) {
-		return temp - temp / 3;
+		return (int)Math.pow(Math.abs(temp - Constants.STANDARD_TEMPERATURE) / 10, 1.5);
 	}
 
+	public static int rfFromPressure(double pressure) {
+		return (int)Math.pow(Math.abs(pressure - Constants.STANDARD_PRESSURE) / 100, 1.5);
+	}
+	
+	public static int rfFromCondition(Condition condition) {
+		return rfFromTemperature(condition.temperature) + rfFromPressure(condition.pressure);
+	}
 }

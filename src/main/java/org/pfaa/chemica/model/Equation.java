@@ -10,10 +10,10 @@ import com.google.common.collect.Lists;
 public class Equation {
 	private List<Term> reactants;
 	private List<Term> products;
-	private Chemical catalyst;
+	private IndustrialMaterial catalyst;
 
 	public Equation(List<Term> reactants, List<Term> products,
-			Chemical catalyst) {
+			IndustrialMaterial catalyst) {
 		super();
 		this.setReactants(reactants);
 		this.setProducts(products);
@@ -44,11 +44,11 @@ public class Equation {
 		this.products.add(product);
 	}
 	
-	public Chemical getCatalyst() {
+	public IndustrialMaterial getCatalyst() {
 		return catalyst;
 	}
 
-	public void setCatalyst(Chemical catalyst) {
+	public void setCatalyst(IndustrialMaterial catalyst) {
 		this.catalyst = catalyst;
 	}
 	
