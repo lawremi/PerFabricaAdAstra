@@ -6,6 +6,7 @@ import org.pfaa.chemica.model.ChemicalStateProperties.Aqueous;
 import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
+import org.pfaa.chemica.model.Compound.Compounds;
 
 
 public class SimpleChemical implements Chemical {
@@ -65,7 +66,9 @@ public class SimpleChemical implements Chemical {
 	}
 
 	private State getStateForCondition(Condition condition) {
-		if (this.vaporization != null && condition.temperature >= this.vaporization.getTemperature(condition.pressure)) {
+		if (condition.aqueous && this.isWaterSoluble(condition)) {
+			return State.AQUEOUS;
+		} else if (this.vaporization != null && condition.temperature >= this.vaporization.getTemperature(condition.pressure)) {
 			return State.GAS;
 		} else if (this.fusion != null && condition.temperature >= this.fusion.getTemperature()) {
 			return State.LIQUID;
@@ -110,13 +113,43 @@ public class SimpleChemical implements Chemical {
 		return new SimpleMixture(this).mix(material, weight);
 	}
 	
-	private Aqueous inferAqueous() {
-		Ion cation = this.getFormula().getCation();
-		Ion anion = this.getFormula().getAnion();
-		boolean simpleSalt = cation != null && anion != null && this.getFormula().getParts().size() == 2;
+	private boolean isWaterSoluble(Condition condition) {
+		Reaction dissolution = this.getDissolution();
+		return dissolution != null && dissolution.isSpontaneous(condition);
+	}
+	
+	public Reaction getDissolution() {
+		return this.aqueous == null ? null :  
+				Reaction.inWaterOf(1, this, State.SOLID).yields(1, this, State.AQUEOUS);
+	}
+	
+	private Reaction getDissociation() {
+		Formula.Part cation = this.getFormula().getFirstPart();
+		Formula.Part anion = this.getFormula().getLastPart();
+		boolean simpleSalt = cation.ion != null && anion.ion != null && this.getFormula().getParts().size() == 2;
 		if (!simpleSalt) {
 			return null;
 		}
+		return Reaction.inWaterOf(1, this, State.SOLID).
+				yields(cation.stoichiometry, cation.ion).
+				and(anion.stoichiometry, anion.ion);
+	}
+	
+	private boolean isWaterSolubleSalt() {
+		Reaction dissolution = this.getDissociation();
+		if (dissolution == null) {
+			return false;
+		}
+		int et = dissolution.getEquilibriumTemperature();
+		return et > Compounds.H2O.getFusion().getTemperature() && et < Compounds.H2O.getVaporization().getTemperature();
+	}
+	
+	private Aqueous inferAqueous() {
+		if (!isWaterSolubleSalt()) {
+			return null;
+		}
+		Ion cation = this.getFormula().getCation();
+		Ion anion = this.getFormula().getAnion();
 		ChemicalConditionProperties cationProps = cation.getProperties(Condition.STP);
 		ChemicalConditionProperties anionProps = anion.getProperties(Condition.STP);
 		Color color = cationProps.color;

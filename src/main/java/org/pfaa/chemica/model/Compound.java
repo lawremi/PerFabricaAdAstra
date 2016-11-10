@@ -663,5 +663,18 @@ public interface Compound extends Chemical {
 		public ChemicalConditionProperties getProperties(Condition condition, State state) {
 			return delegate.getProperties(condition, state);
 		}
+
+		@Override
+		public Reaction getDissolution() {
+			return delegate.getDissolution();
+		}
+
+		public static Compounds forFormula(Formula formula) {
+			Compounds compound = valueOf(formula.toString());
+			if (compound == null) {
+				throw new IllegalArgumentException("Compound not found: " + formula);
+			}
+			return compound;
+		}
 	}
 }

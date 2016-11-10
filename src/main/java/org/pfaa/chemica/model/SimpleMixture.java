@@ -14,17 +14,35 @@ public class SimpleMixture implements Mixture {
 
 	private List<MixtureComponent> components;
 	private Map<Condition,ConditionProperties> propertiesCache = new HashMap<Condition, ConditionProperties>();
+	private String name;
+	
+	protected SimpleMixture(String name, List<MixtureComponent> components) {
+		this.components = components;
+		this.name = name;
+	}
 	
 	protected SimpleMixture(List<MixtureComponent> components) {
-		this.components = components;
+		this(null, components);
 	}
 
+	public SimpleMixture(String name, MixtureComponent... components) {
+		this(name, Arrays.asList(components));
+	}
+	
 	public SimpleMixture(MixtureComponent... components) {
-		this(Arrays.asList(components));
+		this(null, components);
+	}
+	
+	public SimpleMixture(String name, IndustrialMaterial material, double weight) {
+		this(name, new MixtureComponent(material, weight));
 	}
 	
 	public SimpleMixture(IndustrialMaterial material, double weight) {
-		this(new MixtureComponent(material, weight));
+		this(null, material, weight);
+	}
+	
+	public SimpleMixture(String name, IndustrialMaterial material) {
+		this(name, new MixtureComponent(material, 1.0));
 	}
 	
 	public SimpleMixture(IndustrialMaterial material) {
@@ -50,6 +68,9 @@ public class SimpleMixture implements Mixture {
 	
 	@Override
 	public String name() {
+		if (this.name != null) {
+			return this.name;
+		}
 		if (this.components.size() == 0) {
 			return "Unspecified mixture";
 		}
@@ -63,7 +84,7 @@ public class SimpleMixture implements Mixture {
 
 	@Override
 	public String getOreDictKey() {
-		return null;
+		return name();
 	}
 
 	@Override

@@ -48,11 +48,7 @@ public class IndustrialFluids {
 	}
 	
 	public static Fluid getCanonicalFluid(IndustrialMaterial material) {
-		ConditionProperties props = material.getProperties(Condition.STP);
-		if (props == null) {
-			return null;
-		}
-		return getCanonicalFluid(material, props.state);
+		return getCanonicalFluid(material, null);
 	}
 	
 	public static Fluid getCanonicalFluid(IndustrialMaterial material, State state) {
@@ -60,6 +56,13 @@ public class IndustrialFluids {
 	}
 	
 	public static Fluid getCanonicalFluid(IndustrialMaterial material, State state, String name) {
+		if (state == null) {
+			ConditionProperties props = material.getProperties(Condition.STP);
+			if (props == null) {
+				return null;
+			}
+			state = props.state;
+		}
 		if (state == State.SOLID) {
 			 return null;
 		}
@@ -119,12 +122,27 @@ public class IndustrialFluids {
 		return fluid == null ? null : new FluidStack(fluid, amount);
 	}
 	
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, int amount) {
+		return getCanonicalFluidStack(material, null, amount);
+	}
+
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material) {
+		return getCanonicalFluidStack(material, getAmount(Forms.DUST));
+	}
+	
 	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, Form form) {
 		return getCanonicalFluidStack(material, state, getAmount(state, form));
 	}
 	
 	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
-		return getCanonicalFluidStack(term.chemical, term.state, (int)(term.stoichiometry * getAmount(term.state, form)));
+		IndustrialMaterial solute = term.chemical;
+		State state = term.state;
+		if (state == State.AQUEOUS && term.concentration != 1.0F) {
+			solute = new SimpleMixture(Compounds.H2O).mix(solute, term.concentration);
+			state = State.LIQUID;
+		}
+		int amount = (int)(term.stoichiometry / term.concentration * getAmount(state, form));
+		return getCanonicalFluidStack(solute, state, amount);
 	}
 	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
@@ -152,7 +170,20 @@ public class IndustrialFluids {
 	}
 	
 	public static int getAmount(State state, Form form) {
-		return MB_PER_BLOCK / form.getNumberPerBlock() * (state == State.GAS ? 100 : 1);
+		int nPerBlock = form.getNumberPerBlock(); 
+		if (state == State.AQUEOUS) {
+			// Dilution: 1 dust (mol) / bucket (L) => 1 M solution
+			nPerBlock /= Forms.DUST.getNumberPerBlock();
+		}
+		return MB_PER_BLOCK / nPerBlock * (state == State.GAS ? 100 : 1);
+	}
+	
+	public static State getState(Fluid fluid) {
+		return fluid.isGaseous() ? State.GAS : State.LIQUID;
+	}
+	
+	public static State getState(FluidStack fluidStack) {
+		return getState(fluidStack.getFluid());
 	}
 	
 	private static String getIconName(Fluid fluid, boolean flowing, boolean opaque) {

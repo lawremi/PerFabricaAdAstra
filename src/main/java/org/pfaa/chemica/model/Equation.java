@@ -89,6 +89,7 @@ public class Equation {
 		public final Chemical chemical;
 		public final float stoichiometry;
 		public final State state;
+		public final float concentration;
 		
 		public Term(Chemical chemical) {
 			this(1, chemical);
@@ -99,13 +100,18 @@ public class Equation {
 		}
 		
 		public Term(float stoichiometry, Chemical chemical, State state) {
+			this(stoichiometry, chemical, state, 1.0F);
+		}
+		
+		public Term(float stoichiometry, Chemical chemical, State state, float concentration) {
 			this.stoichiometry = stoichiometry;
 			this.chemical = chemical;
 			this.state = state;
+			this.concentration = concentration;
 		}
 		
 		public Term scale(float scale) {
-			return new Term(this.stoichiometry * scale, this.chemical, this.state);
+			return new Term(this.stoichiometry * scale, this.chemical, this.state, this.concentration);
 		}
 
 		public String toString() {

@@ -649,7 +649,12 @@ public enum Element implements Chemical, PartFactory, Metal {
 		public Vaporization getVaporization() {
 			return delegate.getVaporization();
 		}
-	
+
+		@Override
+		public Reaction getDissolution() {
+			return delegate.getDissolution();
+		}
+
 		@Override
 		public String getOreDictKey() {
 			return delegate.getOreDictKey();

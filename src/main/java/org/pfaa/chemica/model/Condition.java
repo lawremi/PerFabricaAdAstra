@@ -7,15 +7,25 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class Condition {
 	public int temperature;
 	public double pressure;
+	public boolean aqueous;
 	
 	public Condition(int temperature, double pressure) {
+		this(temperature, pressure, false);
+	}
+	
+	public Condition(int temperature, double pressure, boolean aqueous) {
 		super();
 		this.temperature = temperature;
 		this.pressure = pressure;
+		this.aqueous = aqueous;
 	}
 	
 	public Condition(int temperature) {
 		this(temperature, Constants.STANDARD_PRESSURE);
+	}
+	
+	public Condition() {
+		this(Constants.STANDARD_TEMPERATURE);
 	}
 	
 	public static Condition ofWorldCoordinates(World world, int x, int y, int z) {
@@ -47,7 +57,8 @@ public class Condition {
 	}
 
 	public static Condition STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE);
-
+	public static Condition AQUEOUS_STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE, true);
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Condition)) {

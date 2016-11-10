@@ -126,6 +126,17 @@ public final class Formula {
 		return this;
 	}
 	
+	public Formula balanceSalt() {
+		int plusCharge = this.getCation().getFormula().getCharge();
+		int negativeCharge = this.getAnion().getFormula().getCharge();
+		if (-negativeCharge > plusCharge) {
+			return this.withFirstPart(new Part(this.getCation(), -(plusCharge + negativeCharge)));
+		} else {
+			return this.withLastPart(new Part(this.getAnion(), plusCharge + negativeCharge));
+		}
+	}
+
+	
 	public static final class Part implements PartFactory {
 		public final Element element;
 		public final Ion ion;
@@ -165,6 +176,8 @@ public final class Formula {
 		}
 		
 		public Part _(int stoichiometry) {
+			if (stoichiometry == 1)
+				return this;
 			return new Part(this.element, this.ion, stoichiometry, this.parts); 
 		}
 		
