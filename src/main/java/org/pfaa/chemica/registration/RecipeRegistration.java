@@ -12,15 +12,14 @@ import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
 import org.pfaa.chemica.model.Chemical;
-import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Formula;
-import org.pfaa.chemica.model.Formula.Part;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Ion.Ions;
 import org.pfaa.chemica.model.Metal;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
@@ -58,6 +57,8 @@ public class RecipeRegistration {
 		registerAgglomerationRecipes();
 		registerDecompositionRecipes();
 		registerSynthesisRecipes();
+		registerRedoxRecipes();
+		registerDoubleDisplacementRecipes();
 		
 		// TODO: add metal tool recipes
 		// - Valid metals/alloys: all types of steel, magnesium
@@ -281,6 +282,7 @@ public class RecipeRegistration {
 	 *              => nitrite for alkali metals (except Li) 
 	 *    * Nitrite => complex, special case
 	 *  TODO:
+	 *    * Bicarbonate => carbonate + H2O + CO2
 	 *    * Chlorate => chloride + oxygen
 	 *    * Bromate => bromide + oxygen
 	 *    * Iodate => iodide + oxygen
@@ -291,47 +293,7 @@ public class RecipeRegistration {
 	 * Is it worth creating an equation solver? Or can we use adhoc approaches for now? 
 	 */
 	
-	private static Reaction makeStandardSaltDecompositionReaction(Compound compound) {
-		Part CO3 = new Part(Element.C, Element.O._(3)),
-		     OH2 = new Part(Element.O, Element.H)._(2),
-		     OH = new Part(Element.O, Element.H),
-		     NO3 = new Part(Element.N, Element.O._(3)),
-		     NO32 = new Part(Element.N, Element.O._(3))._(2),
-		     NO2 = new Part(Element.N, Element.O._(2));
-		Formula formula = compound.getFormula();
-		boolean secondaryCarbonate = 
-				formula.getParts().size() == 3 && 
-				formula.getParts().get(1).hasComposition(CO3);
-		if (!secondaryCarbonate && formula.getParts().size() > 2) {
-			return null;
-		}
-		Part last = formula.getLastPart();
-		Reaction reaction = null;
-		if (last.equals(CO3)) {
-			reaction = Reaction.of(compound).yields(oxide(formula)).and(Compounds.CO2);
-		} else if (last.equals(NO3)) {
-			if (formula.getCation() == Ions.Li) {
-				reaction = Reaction.of(4, compound).yields(2, oxide(formula)).and(4, Compounds.NO2).and(Compounds.O2);
-			} else {
-				Formula metalNitriteFormula = formula.withLastPart(NO2);
-				Compound metalNitrite = Compounds.valueOf(metalNitriteFormula.toString());
-				reaction = Reaction.of(2, compound).yields(2, metalNitrite).and(Compounds.O2);
-			}
-		} else if (last.equals(NO32)) {
-			reaction = Reaction.of(2, compound).yields(2, oxide(formula)).and(4, Compounds.NO2).and(Compounds.O2);
-		} else if (last.equals(OH2)) {
-			int oxideStoich = formula.getFirstPart().stoichiometry;
-			reaction = Reaction.of(compound).yields(oxideStoich, oxide(formula)).and(1, Compounds.H2O, State.GAS);
-		} else if (last.equals(OH)) {
-			reaction = Reaction.of(2, compound).yields(oxide(formula)).and(1, Compounds.H2O, State.GAS);
-		}
-		if (reaction != null && secondaryCarbonate) {
-			reaction = reaction.and(formula.getParts().get(1).stoichiometry, Compounds.CO2);
-		}
-		return reaction;
-	}
-	
-	private static Chemical oxide(Formula formula) {
+	public static Chemical oxide(Formula formula) {
 		int ratio = Math.abs(Element.O.getDefaultOxidationState()) / formula.getCation().getFormula().getCharge();
 		Formula oxideFormula = new Formula(formula.getFirstPart()._(ratio), Element.O);
 		return Compounds.valueOf(oxideFormula.toString());
@@ -347,15 +309,67 @@ public class RecipeRegistration {
 
 	private static void registerStandardSaltDecompositionRecipes() {
 		for (Compounds compound : Compounds.values()) {
-			Reaction reaction = makeStandardSaltDecompositionReaction(compound);
+			Reaction reaction = ReactionFactory.makeStandardSaltDecompositionReaction(compound);
 			if (reaction == null) {
 				continue;
 			}
 			reactionTarget.registerThermalDecomposition(reaction);
 		}
 	}
-	
+
 	private static void registerSynthesisRecipes() {
-		reactionTarget.registerSynthesis(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
+		reactionTarget.registerReaction(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
+		reactionTarget.registerReaction(Reaction.of(Compounds.N2).with(3, Compounds.H2).yields(2, Compounds.NH3, State.GAS).
+				at(725, 101*Constants.STANDARD_PRESSURE).via(Element.Fe));
+		reactionTarget.registerReaction(Reaction.of(Compounds.SO3).with(Compounds.H2SO4).yields(2, Compounds.H2S2O7));
+		reactionTarget.registerReaction(Reaction.of(Compounds.H2S2O7).with(Compounds.H2O).yields(2, Compounds.H2SO4));
+		/* An alternative to reacting SO3 with water:
+		 * Absorb SO2 into H2O2 (tricky to make) or HNO3 (nitric acid).
+		 * SO2 + 2 HNO3 => H2SO4 + NO 
+		 */
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.ETHENE).with(Compounds.O2).
+				yields(2, Compounds.ETHENE_OXIDE)).via(Element.Ag);
+		
 	}
+	
+	private static void registerRedoxRecipes() {
+		makeHydrogen();
+		makeOxidationRecipes();
+	}
+	
+	private static void makeOxidationRecipes() {
+		makeCombustionRecipes();
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.SO2).with(Compounds.O2).
+				yields(2, Compounds.SO3).via(Compounds.V2O5).at(650));
+	}
+
+	private static void makeCombustionRecipes() {
+		// TODO: Should a sulfur ore block ignite like netherack?
+		reactionTarget.registerReaction(Reaction.of(1, Element.S, State.LIQUID).with(Compounds.O2).yields(Compounds.SO2).at(480));
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.H2S).with(3, Compounds.O2).
+				yields(2, Compounds.SO2).and(2, Compounds.H2O).at(505));
+	}
+
+	private static void makeHydrogen() {
+		reactionTarget.registerReaction(Reaction.of(Compounds.METHANE).with(Compounds.H2O, State.GAS).
+				yields(Compounds.CO).and(3, Compounds.H2).via(Element.Ni));
+		Mixture htsCatalyst = Compounds.Fe2O3.mix(Compounds.Cr2O3, 0.1);
+		reactionTarget.registerReaction(Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
+				yields(Compounds.CO2).and(Compounds.H2).via(htsCatalyst));
+	}
+
+	private static void registerDoubleDisplacementRecipes() {
+		registerHydrolysisRecipes();
+	}
+
+	private static void registerHydrolysisRecipes() {
+		/*
+		 * To make HNO3:
+		 * 3 NO2 + H2O → 2 HNO3 + NO
+		 * 
+		 * This means supporting two fluid outputs (in different states) when mixing. 
+		*/
+		reactionTarget.registerReaction(Reaction.of(3, Compounds.NO2).with(Compounds.H2O).yields(2, Compounds.HNO3).and(Compounds.NO));
+	}
+	
 }
