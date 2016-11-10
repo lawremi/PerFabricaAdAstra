@@ -6,15 +6,25 @@ import java.util.List;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.Chemical;
+import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.Reaction;
+import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.IngredientList;
+import org.pfaa.chemica.registration.OreDictUtils;
+import org.pfaa.chemica.registration.ReactionFactory;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -32,6 +42,7 @@ import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.Solutions;
 
 import com.google.common.collect.Lists;
 
@@ -64,6 +75,7 @@ public class RecipeRegistration {
 		registerCommunitionRecipes();
 		registerPartitionRecipes();
 		registerSiftingRecipes();
+		registerBrineProcessingRecipes();
 		registerCraftingRecipes();
 		registerStoneToolRecipes();
 		registerCompatibilityRecipes();
@@ -396,5 +408,80 @@ public class RecipeRegistration {
 		ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.PEAT);
 		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(GeoMaterial.PEAT);
 		registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
+	}
+	
+	private static void registerBrineProcessingRecipes() {
+		purifyBrine(treatBrine(GeoMaterial.BRINE.getComposition(), Compounds.NaOH));
+		purifyBrine(treatBrine(GeoMaterial.BRINE.getComposition(), Compounds.CaOH2));
+	}
+
+	private static void purifyBrine(Mixture brine) {
+		treatBrine(brine, Compounds.Na2CO3, Solutions.PURIFIED_BRINE);
+	}
+	
+	private static Mixture treatBrine(Mixture brine, Compound salt) {
+		return treatBrine(brine, salt, null);
+	}
+	
+	private static Mixture treatBrine(Mixture brine, Compound salt, Mixture product) {
+		List<MixtureComponent> resultComps = Lists.newArrayList();
+		Chemical solid = null;
+		float reactedMoles = 0;
+		for (MixtureComponent comp : brine.getComponents().subList(1, brine.getComponents().size())) {
+			Reaction r = ReactionFactory.makeSaltMetathesisReaction(salt, (Compound)comp.material);
+			if (r == null) {
+				continue;
+			}
+			Term productA = r.getProducts().get(0);
+			Term productB = r.getProducts().get(1);
+			Chemical aqueous = null;
+			if (productA.state == State.SOLID) {
+				if (solid != null) solid = productA.chemical;
+			} else {
+				aqueous = productA.chemical;
+			}
+			if (productB.state == State.SOLID) {
+				if (solid != null) solid = productB.chemical;
+			} else {
+				aqueous = productB.chemical;
+			}
+			if (aqueous != null)
+				resultComps.add(new MixtureComponent(aqueous, comp.weight));
+			reactedMoles += comp.weight * 1000 / ((Compound)comp.material).getFormula().getMolarMass();
+		}
+		
+		int brineAmount = FluidContainerRegistry.BUCKET_VOLUME;
+		Form inputForm = Forms.DUST;
+		int inputAmount = 1;
+		if (reactedMoles < 1) {
+			inputForm = Forms.DUST_TINY;
+			inputAmount = (int)Math.rint(reactedMoles * 10);
+			if (inputAmount == 0) {
+				brineAmount *= reactedMoles * 10;
+				inputAmount = 1;
+			}
+		}
+		MaterialStack solidInput = new MaterialStack(salt, inputAmount);
+		FluidStack fluidInput = IndustrialFluids.getCanonicalFluidStack(brine, State.LIQUID, brineAmount);
+		ItemStack solidOutput = null;
+		if (solid != null) {
+			solidOutput = OreDictUtils.lookupBest(inputForm, solid).copy();
+			solidOutput.stackSize = inputAmount;
+		}
+		if (product == null){
+			product = new SimpleMixture("brine.treated." + salt.name(), resultComps.toArray(new MixtureComponent[0]));
+		}
+		FluidStack fluidOutput = IndustrialFluids.getCanonicalFluidStack(product, State.LIQUID, brineAmount);
+		genericRegistry.registerMixingRecipe(new IngredientList(solidInput), fluidInput, 
+				null, solidOutput, fluidOutput, null, Condition.AQUEOUS_STP, null);
+		
+		return product;
+	}
+	
+	private static void processNaturalGas() {
+	}
+	
+	private static void steamCrack() {
+		// see notes in pfaa.org
 	}
 }
