@@ -2,6 +2,7 @@ package org.pfaa.chemica.registration;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,10 @@ public class IngredientList extends AbstractList<IngredientStack> {
 
 	private List<IngredientStack> delegate;
 	private Set<List<ItemStack>> itemStackLists;
+	
+	public IngredientList() {
+		this.delegate = Collections.emptyList();
+	}
 	
 	public IngredientList(IngredientStack... materialStacks) {
 		this.delegate = Lists.newArrayList(materialStacks);
