@@ -3,15 +3,18 @@ package org.pfaa.chemica.fluid;
 import java.util.HashMap;
 
 import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
+import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import com.google.common.base.CaseFormat;
 

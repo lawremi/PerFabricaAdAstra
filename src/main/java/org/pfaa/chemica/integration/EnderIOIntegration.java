@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
@@ -111,12 +112,19 @@ public class EnderIOIntegration {
 		private static int VAT_BOILING_ENERGY = 10000;
 		
 		@Override
-		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, 
-				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
+				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput,
+				Condition condition, ItemStack catalyst) {
 			if (solidInputs.size() > 2) {
 				return;
 			}
-			if (fluidOutput == null) {
+			if (fluidInput2 != null) {
+				return;
+			}
+			if (liquidOutput == null) {
+				return;
+			}
+			if (catalyst != null) {
 				return;
 			}
 			List<RecipeInput> recipeInputs = new ArrayList<RecipeInput>(solidInputs.size() + 1);
@@ -124,9 +132,9 @@ public class EnderIOIntegration {
 			for (ItemStack solute : solidInputs) {
 				recipeInputs.add(new RecipeInput(solute, true));
 			}
-			int energy = VAT_BOILING_ENERGY * temp / Compounds.H2O.getFusion().getTemperature();
+			int energy = VAT_BOILING_ENERGY * condition.temperature / Compounds.H2O.getFusion().getTemperature();
 			RecipeInput[] inputArray = recipeInputs.toArray(new RecipeInput[0]);
-			RecipeOutput[] outputArray = new RecipeOutput[] { new RecipeOutput(fluidOutput) };
+			RecipeOutput[] outputArray = new RecipeOutput[] { new RecipeOutput(liquidOutput) };
 			Recipe recipe = new Recipe(inputArray, outputArray, energy, RecipeBonusType.NONE);
 			VatRecipeManager.getInstance().addRecipe(recipe);
 		}

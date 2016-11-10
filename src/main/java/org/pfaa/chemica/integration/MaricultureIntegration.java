@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.OreDictUtils;
@@ -87,18 +88,23 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, 
-				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
+				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
+				Condition condition, ItemStack catalyst) {
 			if (solidInputs.size() > 1) {
 				return;
 			}
-			if (temp != Constants.STANDARD_TEMPERATURE) {
+			if (condition.temperature != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			if (fluidInput.getFluid().isGaseous()) {
+			if (fluidInput != null && fluidInput.getFluid().isGaseous() || 
+				fluidInput2 != null && fluidInput2.getFluid().isGaseous()) {
 				return;
 			}
-			RecipeVat recipe = new RecipeVat(solidInputs.get(0), fluidInput, null, fluidOutput, solidOutput, 1);
+			if (catalyst != null) {
+				return;
+			}
+			RecipeVat recipe = new RecipeVat(solidInputs.get(0), fluidInput, fluidInput2, liquidOutput, solidOutput, 1);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
 		

@@ -10,6 +10,7 @@ import com.cout970.magneticraft.api.access.MgRecipeRegister;
 
 import cpw.mods.fml.common.Loader;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 public class MagneticraftIntegration {
 	public static void init() {
@@ -56,8 +57,20 @@ public class MagneticraftIntegration {
 			}
 			MgRecipeRegister.registerSifterRecipe(input, outputs.get(0).itemStack, extra, prob);
 		}
+
+		@Override
+		public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {
+			/* Two steps: 
+			 * 1) Heat in distillery to "Boiling <fluid>"
+			 * 2) Separate in refinery to three outputs
+			 *    - Top fraction (LPG + light/heavy naphtha)
+			 *    - Middle fraction (kerosene + light/heavy gas oil)
+			 *    - Bottom fraction (bitumen)
+			 *    
+			 * Secondary columns separate the top and middle fractions.
+			 */
+		}
 		
-		// Other machines: distillery (just one output), refinery (3 outputs)
 	}
 
 }

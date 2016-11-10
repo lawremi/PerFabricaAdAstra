@@ -3,6 +3,7 @@ package org.pfaa.chemica.integration;
 import java.util.Collections;
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
@@ -55,7 +56,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	
 	@Override
 	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput,
-			ItemStack solidOutput, FluidStack fluidOutput, int temp) { }
+			FluidStack fluidInput2, ItemStack solidOutput, FluidStack fluidOutput, FluidStack fluidOutput2, Condition condition, ItemStack catalyst) { }
 	
 	@Override
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) { }
@@ -66,6 +67,9 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 				strengthFromOutputs(outputs));
 	}
 	
+	@Override
+	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {}
+
 	@Override
 	public GenericRecipeRegistry getGenericRecipeRegistry() {
 		return new GenericRecipeRegistryProxy(this);

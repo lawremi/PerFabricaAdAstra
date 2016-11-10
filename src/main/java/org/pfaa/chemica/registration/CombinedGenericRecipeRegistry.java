@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.pfaa.chemica.item.IngredientStack;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -42,10 +43,11 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, ItemStack solidOutput,
-			FluidStack fluidOutput, int temp) {
+	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, ItemStack catalyst) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
-			registry.registerMixingRecipe(solidInputs, fluidInput, solidOutput, fluidOutput, temp);
+			registry.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
+					solidOutput, liquidOutput, gasOutput, condition, catalyst);
 		}
 	}
 

@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -48,29 +49,46 @@ public class VanillaIntegration {
 			}
 		}
 
-		protected void registerMixingRecipe(Object[] inputs, FluidStack fluidInput, 
-				ItemStack output, FluidStack fluidOutput, int temp) {
-			if (temp != Constants.STANDARD_TEMPERATURE)
+		private ItemStack toBucket(FluidStack fluidInput) {
+			FluidStack bucketFluidStack = new FluidStack(fluidInput.getFluid(), FluidContainerRegistry.BUCKET_VOLUME);
+			ItemStack filledBucket = FluidContainerRegistry.fillFluidContainer(bucketFluidStack, new ItemStack(Items.bucket));
+			return filledBucket;
+		}
+		
+		protected void registerMixingRecipe(Object[] inputs, FluidStack fluidInput, FluidStack fluidInput2,
+				ItemStack output, FluidStack liquidOutput, Condition condition, ItemStack catalyst) {
+			if (condition.temperature != Constants.STANDARD_TEMPERATURE) {
 				return;
+			}
+			if (fluidInput != null && fluidInput.getFluid().isGaseous() || 
+				fluidInput2 != null && fluidInput2.getFluid().isGaseous()) {
+				return;
+			}
 			if (fluidInput.amount > FluidContainerRegistry.BUCKET_VOLUME) {
 				return;
 			}
-			FluidStack bucketFluidStack = new FluidStack(fluidInput.getFluid(), FluidContainerRegistry.BUCKET_VOLUME);
-			ItemStack filledBucket = FluidContainerRegistry.fillFluidContainer(bucketFluidStack, new ItemStack(Items.bucket));
-			inputs = Arrays.copyOf(inputs, inputs.length + 1);
-			inputs[inputs.length - 1] = filledBucket;
-			if (output == null && fluidOutput.amount >= FluidContainerRegistry.BUCKET_VOLUME) {
+			if (catalyst != null) {
+				return;
+			}
+			int offset = fluidInput2 != null ? 1 : 0;
+			inputs = Arrays.copyOf(inputs, inputs.length + 1 + offset);
+			inputs[inputs.length - 1 - offset] = toBucket(fluidInput);
+			if (fluidInput2 != null) {
+				inputs[inputs.length - 1] = toBucket(fluidInput2);
+			}
+			if (output == null && liquidOutput.amount >= FluidContainerRegistry.BUCKET_VOLUME) {
 				inputs = Arrays.copyOf(inputs, inputs.length + 1);
 				inputs[inputs.length - 1] = new ItemStack(Items.bucket);
-				output = FluidContainerRegistry.fillFluidContainer(fluidOutput, new ItemStack(Items.bucket));
+				output = FluidContainerRegistry.fillFluidContainer(liquidOutput, new ItemStack(Items.bucket));
 			}
 			RecipeUtils.addShapelessRecipe(output, inputs);
 		}
 		
 		@Override
-		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
-				ItemStack output, FluidStack fluidOutput, int temp) {
-			this.registerMixingRecipe(inputs.toArray(), additive, output, fluidOutput, temp);
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, FluidStack fluidInput2, 
+				ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
+				Condition condition, ItemStack catalyst) {
+			this.registerMixingRecipe(inputs.toArray(), additive, fluidInput2, output, liquidOutput, condition, catalyst);
 		}
 
 		protected void registerMixingRecipe(Object[] inputs, ItemStack output) {
@@ -94,10 +112,11 @@ public class VanillaIntegration {
 			}
 
 			@Override
-			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, 
-					ItemStack output, FluidStack fluidOutput, int temp) {
+			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
+					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
+					Condition condition, ItemStack catalyst) {
 				VanillaRecipeRegistry.this.registerMixingRecipe(
-						inputs.getCraftingIngredients().toArray(), additive, output, fluidOutput, temp);
+						inputs.getCraftingIngredients().toArray(), additive, fluidInput2, output, liquidOutput, condition, catalyst);
 			}
 
 			@Override

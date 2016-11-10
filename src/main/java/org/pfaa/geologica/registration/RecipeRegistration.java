@@ -388,7 +388,7 @@ public class RecipeRegistration {
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-			registry.registerMixingRecipe(Collections.singletonList(dust), water, clump, null, Constants.STANDARD_TEMPERATURE);
+			registry.registerMixingRecipe(Collections.singletonList(dust), water, null, clump, null, null, Condition.STP, null);
 		}
 	}
 	

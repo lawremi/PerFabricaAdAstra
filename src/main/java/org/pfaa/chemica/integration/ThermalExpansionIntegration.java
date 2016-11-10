@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.RecipeRegistration;
@@ -95,15 +96,22 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
-				ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, FluidStack fluidInput2, 
+				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
+				Condition condition, ItemStack catalyst) {
 			if (inputs.size() > 1) {
 				return;
 			}
 			if (solidOutput == null) {
 				return;
 			}
-			int energy = RecipeCostUtils.rfFromTemperature(temp);
+			if (fluidInput2 != null || liquidOutput != null) {
+				return;
+			}
+			if (catalyst != null) {
+				return;
+			}
+			int energy = RecipeCostUtils.rfFromCondition(condition);
 			ThermalExpansionHelper.addTransposerFill(energy, inputs.get(0), solidOutput, additive, false);
 		}
 	}

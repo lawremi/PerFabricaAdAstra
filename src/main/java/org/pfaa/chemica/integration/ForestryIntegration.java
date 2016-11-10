@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
@@ -29,16 +30,28 @@ public class ForestryIntegration {
 	public static class ForestryRecipeRegistry extends AbstractRecipeRegistry {
 	
 		@Override
-		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, 
-				ItemStack output, FluidStack fluidOutput, int temp) {
-			this.registerMixingRecipe(inputs.toArray(), additive, output, temp);
+		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack fluidInput, FluidStack fluidInput2, 
+				ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
+				Condition condition, ItemStack catalyst) {
+			if (liquidOutput != null || gasOutput != null) {
+				return;
+			}
+			this.registerMixingRecipe(inputs.toArray(), fluidInput, fluidInput2, output, condition, catalyst);
 		}
 
-		protected void registerMixingRecipe(Object[] inputs, FluidStack additive, ItemStack output, int temp) {
+		protected void registerMixingRecipe(Object[] inputs, FluidStack additive, FluidStack additive2, 
+				ItemStack output, Condition condition, ItemStack catalyst) 
+		{
 			if (inputs.length > 9) {
 				return;
 			}
-			int time = 5 + (temp / Constants.STANDARD_TEMPERATURE - 1) * 100;
+			if (additive2 != null) {
+				return;
+			}
+			if (catalyst != null) {
+				return;
+			}
+			int time = 5 + (condition.temperature / Constants.STANDARD_TEMPERATURE - 1) * 100;
 			Object[] ingredients = ingredientsForInputs(inputs);
 			RecipeManagers.carpenterManager.addRecipe(time, additive, null, output, ingredients);
 		}
@@ -81,11 +94,14 @@ public class ForestryIntegration {
 			}
 
 			@Override
-			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, 
-					ItemStack output, FluidStack fluidOutput, int temp) {
+			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
+					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
+					Condition condition, ItemStack catalyst) {
+				if (liquidOutput != null)
+					return;
 				ForestryRecipeRegistry.this.registerMixingRecipe(
 						inputs.getCraftingIngredients().toArray(), 
-						additive, output, temp);
+						additive, fluidInput2, output, condition, catalyst);
 			}
 
 		}

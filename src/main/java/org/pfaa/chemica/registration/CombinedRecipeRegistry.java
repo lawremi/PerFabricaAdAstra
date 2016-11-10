@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.util.ChanceStack;
@@ -103,10 +104,12 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput,
-			ItemStack solidOutput, FluidStack fluidOutput, int temp) {
+	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
+			Condition condition, ItemStack catalyst) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerMixingRecipe(solidInputs, fluidInput, solidOutput, fluidOutput, temp);
+			registry.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
+					solidOutput, liquidOutput, gasOutput, condition, catalyst);
 		}
 	}
 	
@@ -124,6 +127,13 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 		}
 	}
 
+	@Override
+	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {
+		for (RecipeRegistry registry : registries.values()) {
+			registry.registerDistillationRecipe(input, outputs);
+		}
+	}
+	
 	@Override
 	public GenericRecipeRegistry getGenericRecipeRegistry() {
 		return this.materialRegistry;
