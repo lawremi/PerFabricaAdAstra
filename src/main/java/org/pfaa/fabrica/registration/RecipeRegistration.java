@@ -10,12 +10,20 @@ import org.pfaa.chemica.item.ItemIngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.Reaction;
+import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.IngredientList;
+import org.pfaa.chemica.registration.OreDictUtils;
+import org.pfaa.chemica.registration.ReactionRegistry;
 import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -23,8 +31,10 @@ import org.pfaa.fabrica.FabricaBlocks;
 import org.pfaa.fabrica.FabricaItems;
 import org.pfaa.fabrica.model.Generic.Generics;
 import org.pfaa.fabrica.model.Intermediate.Intermediates;
+import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
+import org.pfaa.geologica.processing.Solutions;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
@@ -39,6 +49,7 @@ public class RecipeRegistration {
 			org.pfaa.chemica.registration.RecipeRegistration.getTarget();
 	private static final GenericRecipeRegistry genericRecipes = 
 			org.pfaa.chemica.registration.RecipeRegistration.getGenericTarget();;
+	private static final ReactionRegistry reactionRecipes = new ReactionRegistry(genericRecipes);
 	
 	public static void init() {
 		grindIntermediates();
@@ -54,6 +65,9 @@ public class RecipeRegistration {
 		makeDrywall();
 		makeDrywallJointCompound();
 		fillPigments();
+		makePhosphoricAcid();
+		//activateCarbon();
+		makeSodaAsh();
 		makeHood();
 	}
 
@@ -71,9 +85,9 @@ public class RecipeRegistration {
 		genericRecipes.registerMixingRecipe(
 				new IngredientList(Aggregates.HARDENED_CLAY),
 				water,
-				new ItemStack(Items.clay_ball),
 				null,
-				Constants.STANDARD_TEMPERATURE);
+				new ItemStack(Items.clay_ball),
+				null, null, Condition.STP, null);
 	}
 
 	private static void grindIntermediates() {
@@ -108,7 +122,6 @@ public class RecipeRegistration {
 		calcineMaterial(Intermediates.METAKAOLIN, Intermediates.SPINEL, 1200);
 		calcineMaterial(Intermediates.SPINEL, Intermediates.MULLITE, 1600);
 		calcineMaterial(Ores.GYPSUM, Intermediates.GYPSUM_PLASTER, 600);
-		// TODO: Na2CO3 also produced by Solvay process
 		calcineMaterial(IndustrialMinerals.TRONA, Compounds.Na2CO3, 600);
 	}
 
@@ -140,7 +153,7 @@ public class RecipeRegistration {
 					new MaterialStack(null, Aggregates.SAND),
 					new MaterialStack(Generics.CEMENT));
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-			genericRecipes.registerMixingRecipe(inputs, water, concrete, null, Constants.STANDARD_TEMPERATURE);
+			genericRecipes.registerMixingRecipe(inputs, water, null, concrete, null, null, Condition.STP, null);
 		}
 	}
 
@@ -163,7 +176,7 @@ public class RecipeRegistration {
 		);
 		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
 		genericRecipes.registerMixingRecipe(jointCompoundSolids, water, 
-				new ItemStack(FabricaItems.JOINT_COMPOUND, 4), null, Constants.STANDARD_TEMPERATURE);
+				null, new ItemStack(FabricaItems.JOINT_COMPOUND, 4), null, null, Condition.STP, null);
 	}
 	
 	private static void useFeldsparAsFlux() {
@@ -197,7 +210,32 @@ public class RecipeRegistration {
 					doubleDye);	
 		}
 	}
-	
+
+	private static void makeSodaAsh() {
+		// TODO: Chemica needs to decompose NaHCO3 to Na2CO3
+		// TODO: It also needs a reaction to convert NH4Cl back to NH3 (see notes) 
+		float brineConcentration = (float)Solutions.PURIFIED_BRINE.getComponents().get(1).weight;
+		Reaction reaction = Reaction.inSolutionOf(Compounds.NaCl, brineConcentration).
+				         			 with(Compounds.CO2).
+				         			 with(Compounds.NH3).
+				         			 with(Compounds.H2O).
+				         			 yields(Compounds.NaHCO3).
+				         			 and(Compounds.NH4Cl);
+		reactionRecipes.registerReaction(reaction);
+	}
+
+	private static void makePhosphoricAcid() {
+		IngredientList solidInputs = new IngredientList(new MaterialStack(Forms.DUST, IndustrialMinerals.APATITE));
+		FluidStack sulfuricAcid = IndustrialFluids.getCanonicalFluidStack(Compounds.H2SO4, State.AQUEOUS);
+		FluidStack phosphoricAcid = IndustrialFluids.getCanonicalFluidStack(Compounds.H3PO4, State.AQUEOUS);
+		ItemStack gypsum = GeologicaItems.ORE_MINERAL_DUST.getItemStack(Ores.GYPSUM);
+		genericRecipes.registerMixingRecipe(solidInputs, sulfuricAcid, null, gypsum, phosphoricAcid, null, Condition.STP, null);
+	}
+
+	private static void activateCarbon() {
+		// TODO: Carbon activation:
+	}
+
 	private static void makeHood() {
 		GameRegistry.addShapedRecipe(new ItemStack(FabricaBlocks.HOOD), 
 				"sss",
