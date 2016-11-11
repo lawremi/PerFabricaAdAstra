@@ -775,7 +775,13 @@
     Need to remove MgSO4, MgCl2 and CaSO4.
     * Ca(OH)2 or NaOH removes Mg2+ as Mg(OH)2.
     * Na2CO3 or CO2 removes Ca2+ as CaCO3.
-    
+
+    Alternative is to dry brine, with NaCl precipitating first.
+    * Could implement by surrounding single brine block with solid
+      blocks, air on top, in hot+dry biome. After a while, the
+      block is replaced by a brine without NaCl, spawning NaCl dusts.
+    * Also support machines like Mariculture vat
+      
 ** Sea water
    There are many minerals in sea water. But how to model those? We
    cannot replace the blocks, because that would break other mods. One
@@ -1032,13 +1038,18 @@
      [[Steam reforming]], but there is also:
      * Brine electrolysis during Cl production
      * H2O electrolysis
-     * Partial oxidation of coal or CH4 (2CH4 + O2 => 2CO + 4H2)
+     * Partial oxidation of coal, oil or CH4 (2CH4 + O2 => 2CO + 4H2)
        * Pt/Al2O3, Pt/ZrO2, (preferably) Pt/Ce-ZrO2 catalysts lower
          required temperature from 1200C to 800C.
+       * Lignite + oxygen
+         * Other coals, oil + oxygen + steam
      * Dissociation of NH3 to yield forming gas
        * Heat NH3 to 920 C in presence of Ni catalyst, then 
 	 2NH3 => N2 + 3H2 (forming gas)
-	 
+     * Passing steam over hot iron (steam-iron method)	 
+     * Coke oven gas contains ~50% hydrogen; separated by condensation
+       of other components, or PSA.
+       
 *** Elements too rare
     * Sc: 2 tons / yr production
     * Tc: almost non-existant in nature
@@ -1282,7 +1293,7 @@
     * Flux for iron blast smelting
       * No mod blast furnances handle flux, issue filed with IE
     * Removing SO2 from flue gas (=> CaSO4)
-    
+      
 ** Tools
 ** Batteries
    In increasing order of cost and energy density:
@@ -2859,6 +2870,25 @@
     oil, although in weird fountains.
     
 *** Unit Operations
+**** Natural gas desouring
+     Removes H2S and CO2 via amine (ethanolamine) treating.
+     
+     Sulfur extracted from sour gas mixture using Claus process:
+     * Burn H2S to SO2, then 2H2S + SO2 => 3S + 2H2O, via Al2O3 or
+       TiO2 catalyst (@ above S dew point)
+
+**** Natural gas separation
+     * Primary: Cryogenic distillation
+       * Need a turboexpander that generates redstone flux and cools
+         the gas, with separate gas (CH4) and liquid (NGL) outputs
+     * Alternate: Absorption in "lean" oil, later boiled off
+       * Light crude oil + gas => 'rich' oil + methane
+       * 'Rich' oil + heat => NGL (as gas) + crude oil (recycled)
+
+**** NGL separation
+     Processing of NGL through cryogenic distillation, yielding
+     ethane, propane, butane.
+     
 **** Atmospheric distillation
 **** Desulfonation
      Sulfur compounds will interfere with catalysts, so they are
@@ -2892,29 +2922,84 @@
      catalyst.  Raney nickel is an Ni/Al alloy, activated by Zn or Cr.
      
 **** Steam cracking
-     This breaks naphtas into smaller hydrocarbons. Naphtas are mixed
-     with steam and heated to 850C, then cooled. Light naphta
-     generates ethylene (and propylene/butadiene), while heavier
-     naphtas generate benzene (and toluene/xylene). Distillation
-     separates the components.
+     This breaks hydrocarbons into smaller, less saturated
+     hydrocarbons. Hydrocarbon streams are mixed with steam and heated
+     to 850C, cracked, then cooled. Distillation separates the
+     components. Technically, the process is not complete, in that
+     some small alkanes (ethane and propane) persist in the output,
+     but we ignore the complexity of recycling. The main goal is the
+     production of ethene (ethylene), the building block of most
+     industrial organic synthesis. 
 
+     The composition of the output depends on the input stream:
+     | Input     | H2 | CH4 | Ethene | Propene | Butadiene | RPG | C4 | RPO | H2O |
+     |-----------+----+-----+--------+---------+-----------+-----+----+-----+-----|
+     | Ethane    | 45 |   5 |     25 |       3 |         2 |     |    |     |  20 |
+     | Propane   | 20 |  10 |     30 |      15 |         5 |     |    |     |  25 |
+     | NGL       | 30 |   5 |     25 |       5 |         2 |     |    |     |  33 |
+     | L Naphtha | 10 |   8 |     18 |       7 |         7 |  10 |  7 |     |  33 |
+     | H Naphtha |  8 |   8 |     15 |       7 |         7 |  15 |  7 |     |  33 |
+     | L Gas Oil |  5 |   5 |     13 |       7 |         5 |  10 |  5 |  10 |  40 |
+     | H Gas Oil |  5 |   5 |     10 |       5 |         5 |  10 |  5 |  15 |  40 |
+     
+     SR is the steam/hydrocarbon ratio in mass. NGL has the same NR
+     value as heavy naphtha.
+
+     The output proceeds through a series of columns that separate:
+     1. Fuel oil (if any) from the rest
+     2. Water (cooled from steam), RPG (if any), and rest
+     3. H2, CH4, and rest
+     4. Ethene, propene and C4 olefins
+        * C4 => butadiene + butene, separated by chemistry
+          * butene itself is a mixture of isomers but often used
+            directly
+        * RPG (raw pyrolysis gasoline) separated into benzene and toluene
+
+     Steps 3 and 4 are cryogenic, i.e., the stream is cooled between
+     steps 2 and 3. Could use the turbo-expander that we already need
+     for making NGL.
+     
 **** Steam reforming
      Produces H2 from hydrocarbons:
      At 700-1100 C, endothermic, via Ni catalyst,
      
-     CH4 + H2O(g) => CO + 3H2 (syngas)
+     CH4 + H2O(g) => CO + 3H2
 
-     The syngas is separated using PSA (pressure swing
-     adsorption). The left-over CO can extract more H2 from steam
-     using a gas-shift reaction (see below).
-     
-**** (Low-temperature) Gas-shift
-     Produces H2 from the CO left over from steam reforming.
-     At 300 C, with CuO+ZnO+Al2O3 (equal parts) catalyst,
+     The CO + H2 mixture produced from natural gas is called
+     syngas. The left-over CO can extract more H2 from steam using a
+     gas-shift reaction (see below).  The result is separated into CO2
+     and H2 by pressure-swing adsorption.
+
+
+     There are other sources of CO, such as partial oxidation of oil,
+     coke oven gas (hood). See Table 6 on residual gases in Ullman's.
+		
+**** High-temperature (400 C) Water Gas shift
+     Using a Fe2O3 + 10% Cr2O3 catalyst, produces CO2 and H2 by mixing
+     CO (in the syngas or separated from it) with steam:
      
      CO + H2O(g) => CO2 + H2
+
+     This reaction is incomplete, so H2 remains mixed with CO. We call
+     the H2 + CO mixture water gas.
+     
+**** Low-temperature (200 C) Water Gas shift
+     After the water gas stream has cooled from the high-temperature
+     shift, this process produces H2 from the CO in the water gas.  At
+     200 C, with CuO+ZnO+Al2O3 (equal parts) catalyst,
+     
+     CO + H2O(g) => CO2 + H2
+
+     The chemical reaction omits the fact that H2 remains in the
+     stream, and that we are squeezing out more H2 from steam in each
+     step, converting CO to CO2 in the process. After the HTS, there
+     is only 3% CO remaining, and only 0.3% remains after the LTS.
      
 *** Streams
+**** Natural gas
+     Natural gas needs to be cleaned to methane by removing sulfur
+     (desouring) and separating the higher hydrocarbons.
+
 **** Light naphta
 **** Heavy naphta
 *** Recovered waste products
@@ -2925,7 +3010,7 @@
 
 ** Food processing
    http://www.nzifst.org.nz/unitoperations/
-   
+
 * Manufacturing
 ** Processes
    Basic processes:
@@ -2994,6 +3079,20 @@
 *** Joining
     
 ** Products
+*** Soda ash
+    By the Solvay process:
+    1. Purify brine (Geologica purified brine)
+    2. Lime roasting and slaking (defined elsewhere)
+    3. NaCl + NH3 + CO2 + H2O => NaHCO3(s) + NH4Cl(aq)
+    4. Decomposition of NaHCO3 to Na2CO3 (2NaHCO3 => Na2CO3 + H2O + CO2)
+       [TODO in chemica].
+    5. Recovery of NH3: 2NH4Cl + Ca(OH)2 => 2NH3(g) + 2H2O + CaCl2(aq)
+
+*** Activated carbon
+   * Wood, sawdust, peat, straw, bituminous coal are chemically
+     activated via treatment with ZnCl or H3PO4.
+   * Charcoal, lignite coke, peat coke are gas activated by CO2 or H2O
+     (steam)
 
 * Research
 ** Chemical Compounds
@@ -4192,6 +4291,65 @@
     will contain a chart for each solvent of interest, starting with
     water. The cations on the rows, anions on the columns. Or, we just
     guess solubility from the free energy of solvation.
+
+    How do we incorporate salt(aq) terms into a reaction?
+    * Add "aqueous" as a physical state. There is some danger that we
+      may end up needing a state for each solvent, but while we might
+      have non-aqueous solutions, it is not likely that we will be
+      running reactions in them.  
+      
+    This means supporting the aqueous state when retrieving properties
+    from a chemical. The thermodynamics and color come from the
+    ions. Hazard comes from the solid? Density would depend on the
+    solution concentration, so is irrelevant to the compound
+    itself. If the aqueous properties object is NULL, then we know the
+    compound is insoluble.
+
+    The problem is that we have no way of
+    getting the properties for a specific state, because we currently
+    predict the state from the conditions. Two possibilities for
+    fixing this:
+
+    1. Add a =getProperties()= method (or adjust the current one) to
+       accept the State (null could indicate inference). Allow
+       Condition does imply the standard states, it is generally
+       impossible to infer the state from the current conditions. But
+       it is largely redundant. This would help resolve a glitch in
+       the current design, where Term knows the state, but Reaction
+       does not use it when computing its properties (all is inferred
+       from the Condition).
+    2. Add a notion of aqueous conditions (or more generally, the
+       solvent) to the Condition object. Probably should no longer
+       record the state in Term. All states are inferred from the
+       condition. Since the aqueous condition would span the entire
+       reaction, we could not model dissolution as a reaction. That is
+       probably OK, since it is just a physical change. While the
+       solvent is an aspect of the reaction conditions in an abstract
+       sense, just like reactant concentrations, catalysts, etc, it is
+       different from variables like temperature and pressure. A
+       reaction can occur at a range of temperatures and pressures,
+       while the solvent is more innate. It is always present, just
+       like the catalyst, which we have as part of the reaction, not
+       the condition. So the reaction could store the solvent.
+    
+    It is not clear whether we should always infer state. There is
+    some value to explicit state declarations. The code is more
+    obvious. It guarantees that we are using the right state when
+    computing reaction properties, such as when finding the
+    equilibrium temperature. A reaction can render itself symbolically
+    without knowing the condition. It also allows us to express state
+    changes as (generalized) reactions, and implicitly represents the
+    solvent (well, water anyway) without extra work and in a way that
+    chemists already use. Finally, the need to pass the state along
+    with the conditions in =getProperties()= is somewhat justified by
+    kinetics: we cannot know the state of something purely from the
+    temperature and pressure.
+
+    None of those arguments supports never inferring state. We often
+    need to do that when auto-generating reactions. Thus, we should
+    probably do both: track the state on Term and add the aqueous
+    notion to the reaction/condition so that we can better guess the
+    state.
     
 ** Processing of crude materials
    
