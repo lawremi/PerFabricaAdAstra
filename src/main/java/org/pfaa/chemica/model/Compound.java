@@ -48,8 +48,8 @@ import static org.pfaa.chemica.model.Ion.Ions.Sr;
 import static org.pfaa.chemica.model.Ion.Ions.Ta2O6;
 import static org.pfaa.chemica.model.Ion.Ions.Ti;
 import static org.pfaa.chemica.model.Ion.Ions.U;
+import static org.pfaa.chemica.model.Ion.Ions.V;
 import static org.pfaa.chemica.model.Ion.Ions.VO4;
-import static org.pfaa.chemica.model.Ion.Ions.V2O5;
 import static org.pfaa.chemica.model.Ion.Ions.WO4;
 import static org.pfaa.chemica.model.Ion.Ions.Zn;
 import static org.pfaa.chemica.model.Ion.Ions.Zr;
@@ -307,7 +307,6 @@ public interface Compound extends Chemical {
 					     new Hazard(1, 0, 0)), 
 			   new Fusion(1638),
 			   new Liquid(new Thermo(161))),
-		FeV2O5(new Formula(Fe_2, V2O5), null, new Solid()),
 		FeWO4(new Formula(Fe_2, WO4), null,
 			  new Solid(Color.black, 6.64, 
 					    new Thermo(-1155, 132, 114))),
@@ -577,6 +576,12 @@ public interface Compound extends Chemical {
 					  new Hazard(1, 0, 0)), 
 		    new Fusion(3140),
 		    new Liquid(new Thermo(100))),
+		V2O5(new Formula(V, O._(5)), null, 
+				new Solid(Color.yellow, 3.36, 
+						  new Thermo(162, 33.3, -12.9, 5.13, -3.58, -1612, 297), 
+						  new Hazard(3, 0, 0)), 
+			    new Fusion(963),
+			    new Liquid(new Thermo(191, -1.69, 8.06, -1.26, -1.74, -1559, 396))),
 		ZnS(new Formula(Zn, S), null, 
 			new Solid(4.09, 
 					  new Thermo(-206, 201, 53.6, 3.97, 0, 0.814), 

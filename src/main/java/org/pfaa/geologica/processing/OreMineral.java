@@ -40,15 +40,14 @@ import java.util.List;
 import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
-
-import com.google.common.base.CaseFormat;
-
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
+
+import com.google.common.base.CaseFormat;
 
 
 /*
@@ -129,7 +128,7 @@ public interface OreMineral extends Mineral {
 		TANTALITE(Compounds.FeTa2O6, new Substitution(Nb, 0.1)),
 		TENNANTITE(Compounds.Cu12As4S13),
 		TETRAHEDRITE(Compounds.Cu12Sb4S13),
-		TITANO_MAGNETITE(Compounds.Fe3O4.mix(Compounds.FeV2O5, 0.05)),
+		TITANO_MAGNETITE(Compounds.Fe3O4.mix(Compounds.TiO2, 0.3).mix(Compounds.V2O5, 0.1)),
 		URANINITE(Compounds.UO2),
 		VANADINITE(Compounds.Pb5V3O12Cl),
 		WOLFRAMITE(Compounds.FeWO4),

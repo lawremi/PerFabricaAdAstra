@@ -39,6 +39,7 @@ public interface Ion extends PartFactory, Chemical {
 		Sr(Element.Sr, +2, new Thermo(-545, -32.6)),
 		Ti(Element.Ti, +4, null),
 		U(Element.U, +4, new Thermo(-591, -410)),
+		V(Element.V, +5, null),
 		UO2(new Formula(Element.U, Element.O._(2)), +2, null),
 		Zn(Element.Zn, +2, new Thermo(-154, -112)),
 		Zr(Element.Zr, +4, null),
