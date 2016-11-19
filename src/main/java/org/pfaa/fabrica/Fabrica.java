@@ -2,7 +2,7 @@ package org.pfaa.fabrica;
 
 import org.apache.logging.log4j.Logger;
 import org.pfaa.fabrica.integration.ModIntegration;
-import org.pfaa.core.registration.Registrant;
+import org.pfaa.fabrica.registration.CommonRegistrant;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,7 +25,7 @@ public class Fabrica {
 	
 	@SidedProxy(clientSide = "org.pfaa.fabrica.client.registration.ClientRegistrant", 
 	            serverSide = "org.pfaa.fabrica.registration.CommonRegistrant")
-	public static Registrant registrant;
+	public static CommonRegistrant registrant;
 	
 	public static Logger log;
 	

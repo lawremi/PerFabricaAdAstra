@@ -24,4 +24,8 @@ public class CommonRegistrant implements Registrant {
 	public void postregister() {
 	}
 
+	public int getFluidReactorRendererId() {
+		return 0;
+	}
+
 }

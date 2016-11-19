@@ -1,21 +1,15 @@
 package org.pfaa.fabrica.entity;
 
-import java.util.List;
-
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.fabrica.recipe.FluidReactorRecipe;
 import org.pfaa.fabrica.recipe.FluidReactorRecipes;
 
-import com.google.common.collect.Lists;
-
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -31,17 +25,17 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 	private static final int ENERGY_MAX_RECEIVE = 200;
 	
 	private FluidTank liquidOutputTank;
-	private FluidTank gasOutputTank;
 	private FluidTank inputTankA;
 	private FluidTank inputTankB;
 	
 	private EnergyStorage energy;
 	
+	private ItemStack catalyst;
+	
 	private int tick;
 	
 	public TileEntityFluidReactor() {
 		this.liquidOutputTank = new FluidTank(TANK_CAPACITY);
-		this.gasOutputTank = new FluidTank(TANK_CAPACITY);
 		this.inputTankA = new FluidTank(TANK_CAPACITY);
 		this.inputTankB = new FluidTank(TANK_CAPACITY);
 		this.energy = new EnergyStorage(ENERGY_CAPACITY, ENERGY_MAX_RECEIVE);
@@ -74,7 +68,14 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 
 	private void produce(FluidReactorRecipe recipe) {
 		this.liquidOutputTank.fill(recipe.liquidOutput, true);
-		this.gasOutputTank.fill(recipe.gasOutput, true);
+		this.fillHood(recipe.gasOutput);
+	}
+
+	private void fillHood(FluidStack gas) {
+		TileEntity te = this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord);
+		if (te instanceof TileEntityHood) {
+			((TileEntityHood) te).fill(ForgeDirection.DOWN, gas, true);
+		}
 	}
 
 	private boolean onStep(int ticksPerUpdate) {
@@ -106,32 +107,35 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 		return FluidReactorRecipes.getRecipeForResources(
 				this.inputTankA.getFluid(),
 				fluidB,
-				this.getCatalysts(),
+				this.getCatalyst(),
 				this.energy.getEnergyStored());
 	}
 	
-	@SuppressWarnings("unchecked")
-	private List<ItemStack> getCatalysts() {
-		AxisAlignedBB bb = this.getBlockType().getCollisionBoundingBoxFromPool(worldObj, xCoord, yCoord, zCoord);
-		List<EntityItemFrame> frames = 
-				(List<EntityItemFrame>)this.getWorldObj().
-				getEntitiesWithinAABB(EntityItemFrame.class, bb.expand(1/16.0, 0, -9/16.0));
-		frames.addAll((List<EntityItemFrame>)this.getWorldObj().
-				getEntitiesWithinAABB(EntityItemFrame.class, bb.expand(-9/16.0, 0, 1/16.0)));
-		List<ItemStack> catalysts = Lists.newArrayList();
-		for (EntityItemFrame frame : frames) {
-			catalysts.add(frame.getDisplayedItem());
-		}
-		return catalysts;
+	public ItemStack getCatalyst() {
+		return this.catalyst;
+	}
+	
+	public void setCatalyst(ItemStack catalyst) {
+		this.catalyst = catalyst;
 	}
 
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+		if (from == ForgeDirection.DOWN) {
+			return 0;
+		}
+		if (resource.getFluid().isGaseous() && !hasHood()) {
+			return resource.amount;
+		}
 		int amount = this.inputTankA.fill(resource, doFill);
 		if (amount == 0) {
 			amount = this.inputTankB.fill(resource, doFill);
 		}
 		return amount;
+	}
+
+	private boolean hasHood() {
+		return this.worldObj.getTileEntity(this.xCoord, this.yCoord + 1, this.zCoord) instanceof TileEntityHood;
 	}
 
 	@Override
@@ -141,11 +145,10 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		if (from == ForgeDirection.DOWN)
-			return this.liquidOutputTank.drain(maxDrain, doDrain);
-		else if (from == ForgeDirection.UP)
-			return this.gasOutputTank.drain(maxDrain, doDrain);
-		else return null;
+		if (from == ForgeDirection.UP) {
+			return null;
+		}
+		return this.liquidOutputTank.drain(maxDrain, doDrain);
 	}
 
 	@Override
@@ -157,18 +160,27 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 
 	@Override
 	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		if (from == ForgeDirection.DOWN)
-			return this.liquidOutputTank.getFluid().equals(fluid);
-		else if (from == ForgeDirection.UP)
-			return this.gasOutputTank.getFluid().equals(fluid);
-		else return false;
+		if (from == ForgeDirection.UP) {
+			return false;
+		}
+		return this.liquidOutputTank.getFluid().equals(fluid);
 	}
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 		return new FluidTankInfo[] { 
-				this.liquidOutputTank.getInfo(), this.gasOutputTank.getInfo(), 
-				this.inputTankA.getInfo(), this.inputTankB.getInfo() };
+			this.liquidOutputTank.getInfo(), 
+			this.inputTankA.getInfo(), this.inputTankB.getInfo() 
+		};
+	}
+	
+	public void flush(boolean flushLiquids) {
+		if (flushLiquids || this.inputTankA.getFluid().getFluid().isGaseous())
+			this.inputTankA.drain(this.inputTankA.getCapacity(), true);
+		if (flushLiquids || this.inputTankB.getFluid().getFluid().isGaseous())
+			this.inputTankB.drain(this.inputTankB.getCapacity(), true);
+		if (flushLiquids || this.liquidOutputTank.getFluid().getFluid().isGaseous())
+			this.liquidOutputTank.drain(this.liquidOutputTank.getCapacity(), true);
 	}
 	
 	@Override
@@ -176,8 +188,8 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 		this.inputTankA.readFromNBT(tag.getCompoundTag("inputTankA"));
 		this.inputTankB.readFromNBT(tag.getCompoundTag("inputTankB"));
 		this.liquidOutputTank.readFromNBT(tag.getCompoundTag("liquidOutputTank"));
-		this.gasOutputTank.readFromNBT(tag.getCompoundTag("gasOutputTank"));
 		this.energy.readFromNBT(tag.getCompoundTag("energy"));
+		this.catalyst.readFromNBT(tag.getCompoundTag("catalyst"));
 	}
 
 	@Override
@@ -185,8 +197,8 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 		tag.setTag("inputTankA", this.inputTankA.writeToNBT(new NBTTagCompound()));
 		tag.setTag("inputTankB", this.inputTankB.writeToNBT(new NBTTagCompound()));
 		tag.setTag("liquidOutputTank", this.liquidOutputTank.writeToNBT(new NBTTagCompound()));
-		tag.setTag("gasOutputTank", this.gasOutputTank.writeToNBT(new NBTTagCompound()));
 		tag.setTag("energy", this.energy.writeToNBT(new NBTTagCompound()));
+		tag.setTag("catalyst", this.catalyst.writeToNBT(new NBTTagCompound()));
 	}
 
 	@Override
