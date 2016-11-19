@@ -11,6 +11,7 @@ import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
+import org.pfaa.chemica.model.Catalysts;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Constants;
@@ -19,7 +20,6 @@ import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
@@ -54,6 +54,7 @@ public class RecipeRegistration {
 	public static void init() {
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
+		registerCatalystRecipes();
 		registerAgglomerationRecipes();
 		registerDecompositionRecipes();
 		registerSynthesisRecipes();
@@ -272,6 +273,18 @@ public class RecipeRegistration {
 	
 	private static void registerAlloyingRecipes() {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
+	}
+	
+	private static void registerCatalystRecipes() {
+		for (Catalysts catalyst : ChemicaItems.CATALYST_DUST.getIndustrialMaterials()) {
+			mixCatalyst(ChemicaItems.CATALYST_DUST, catalyst);
+		}
+		// TODO: V2O5 (roast with Na2CO3 => NaVO3, mix with H2SO4/HCl to yield V2O5 hydrate, roast to dehydrate) 
+	}
+	
+	private static void mixCatalyst(IndustrialMaterialItem<Catalysts> item, Catalysts material) {
+		IngredientList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
+		genericTarget.registerMixingRecipe(inputs, item.getItemStack(material));
 	}
 
 	/* 
