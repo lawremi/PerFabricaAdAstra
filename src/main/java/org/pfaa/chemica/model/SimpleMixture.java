@@ -33,30 +33,14 @@ public class SimpleMixture implements Mixture {
 		this(null, components);
 	}
 	
-	public SimpleMixture(String name, IndustrialMaterial material, double weight) {
-		this(name, new MixtureComponent(material, weight));
-	}
-	
 	public SimpleMixture(IndustrialMaterial material, double weight) {
-		this(null, material, weight);
-	}
-	
-	public SimpleMixture(String name, IndustrialMaterial material) {
-		this(name, new MixtureComponent(material, 1.0));
+		this((String)null, new MixtureComponent(material, weight));
 	}
 	
 	public SimpleMixture(IndustrialMaterial material) {
 		this(new MixtureComponent(material, 1.0));
 	}
 	
-	public double getTotalWeight() {
-		double weight = 0;
-		for (MixtureComponent comp : components) {
-			weight += comp.weight;
-		}
-		return weight;
-	}
-
 	private double getTotalFluidWeight(Condition condition) {
 		double weight = 0;
 		for (MixtureComponent comp : components) {
