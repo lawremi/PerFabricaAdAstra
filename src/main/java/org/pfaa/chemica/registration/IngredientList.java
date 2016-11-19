@@ -3,8 +3,10 @@ package org.pfaa.chemica.registration;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
@@ -51,19 +53,19 @@ public class IngredientList extends AbstractList<IngredientStack> {
 		return delegate.size();
 	}
 	
-	private Function<IngredientStack, Set<ItemStack>> getItemStacks = new Function<IngredientStack, Set<ItemStack>>() {
-		@Override
-		public Set<ItemStack> apply(IngredientStack input) {
-			return input.getItemStacks();
-		}
-	};
-	
 	public Set<List<ItemStack>> getItemStackLists() {
 		if (this.itemStackLists == null) {
-			List<Set<ItemStack>> expandedInputs = Lists.transform(this.delegate, getItemStacks);
+			List<Set<ItemStack>> expandedInputs = this.delegate.stream().map(IngredientStack::getItemStacks).
+					collect(Collectors.toList());
 			this.itemStackLists = Sets.cartesianProduct(expandedInputs);
 		}
 		return this.itemStackLists;
+	}
+	
+	public Set<ItemStack> getItemStacks() {
+		Set<ItemStack> ans = this.delegate.stream().map(IngredientStack::getItemStacks).
+				reduce(new HashSet<ItemStack>(), (a, b) -> { a.addAll(b); return a; });
+		return Collections.unmodifiableSet(ans);
 	}
 	
 	private Function<IngredientStack, String> getOreDictKey = new Function<IngredientStack, String>() {
