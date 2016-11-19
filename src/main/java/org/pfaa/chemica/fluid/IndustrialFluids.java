@@ -43,6 +43,10 @@ public class IndustrialFluids {
 		return fluidToMaterial.get(fluid);
 	}
 	
+	public static IndustrialMaterial getMaterial(FluidStack fluid) {
+		return getMaterial(fluid.getFluid());
+	}
+	
 	public static ConditionProperties getProperties(Fluid fluid) {
 		IndustrialMaterial material = getMaterial(fluid);
 		return (material == null) ? null : material.getProperties(getCondition(fluid));
