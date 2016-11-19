@@ -2,6 +2,7 @@ package org.pfaa.geologica.registration;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
@@ -10,7 +11,9 @@ import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
@@ -18,6 +21,7 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -45,6 +49,7 @@ import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.Solutions;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -479,6 +484,52 @@ public class RecipeRegistration {
 	}
 	
 	private static void processNaturalGas() {
+		Mixture desoured = desourNaturalGas();
+		Mixture noHelium = extractHelium(desoured);
+		extractMethane(noHelium);
+	}
+	
+	private static void extractMethane(Mixture noHelium) {
+		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
+		Extraction ex = noHelium.extract(null, Compounds.METHANE);
+		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(ex);
+		registry.registerDistillationRecipe(gas, outputs, Compounds.ETHANE.getFusion().getCondition());
+	}
+
+	private static Mixture extractHelium(Mixture desoured) {
+		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(desoured);
+		Extraction ex = desoured.extract(null, Element.He);
+		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(ex);
+		registry.registerDistillationRecipe(gas, outputs, new Condition(70));
+		return ex.residuum;
+	}
+
+	private static Mixture desourNaturalGas() {
+		FluidStack mea = IndustrialFluids.getCanonicalFluidStack(Compounds.ETHANOLAMINE, State.AQUEOUS);
+		FluidStack ng = IndustrialFluids.getCanonicalFluidStack(GeoMaterial.NATURAL_GAS);
+		Extraction abs = GeoMaterial.NATURAL_GAS.extract(IndustrialFluids.getMaterial(mea), Compounds.H2S, Compounds.CO2);
+		// TODO: translation => "rich amine"
+		FluidStack ra = IndustrialFluids.getCanonicalFluidStack(abs.extract, State.AQUEOUS);
+		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(abs.residuum); 
+		registry.registerMixingRecipe(Collections.emptyList(), ng, mea,
+				null, ra, gas, Condition.AQUEOUS_STP, null);
+		// TODO: translation => "acid gases"
+		Extraction regen = abs.extract.extract(null, Compounds.H2S, Compounds.CO2);
+		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(regen);
+		registry.registerDistillationRecipe(ra, outputs, new Condition(400));
+		int sulfurAmount = 2 * IndustrialFluids.getAmount(Forms.DUST);
+		FluidStack acidGas = IndustrialFluids.getCanonicalFluidStack(regen.extract, 
+				(int)(sulfurAmount / regen.extract.getComponent(Compounds.H2S).weight));
+		FluidStack o2 = IndustrialFluids.getCanonicalFluidStack(Compounds.O2);
+		FluidStack sulfur = IndustrialFluids.getCanonicalFluidStack(Element.S, State.LIQUID, sulfurAmount);
+		int co2Amount = (int)(acidGas.amount * regen.extract.getComponent(Compounds.CO2).weight);
+		FluidStack co2 = IndustrialFluids.getCanonicalFluidStack(Compounds.CO2, co2Amount);
+		Set<ItemStack> catalysts = Sets.newHashSet(
+				ChemicaItems.COMPOUND_DUST.getItemStack(Compounds.Al2O3),
+				ChemicaItems.COMPOUND_DUST.getItemStack(Compounds.TiO2));
+		registry.registerMixingRecipe(Collections.emptyList(), acidGas, o2,
+				null, sulfur, co2, new Condition(1000), catalysts);
+		return abs.residuum;
 	}
 	
 	private static void steamCrack() {

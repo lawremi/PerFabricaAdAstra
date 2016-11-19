@@ -328,15 +328,23 @@ public class RecipeRegistration {
 		 * SO2 + 2 HNO3 => H2SO4 + NO 
 		 */
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.ETHENE).with(Compounds.O2).
-				yields(2, Compounds.ETHENE_OXIDE)).via(Element.Ag);
+				yields(2, Compounds.OXIRANE).via(Element.Ag));
 		
 	}
 	
 	private static void registerRedoxRecipes() {
 		makeHydrogen();
+		makeSulfur();
 		makeOxidationRecipes();
 	}
 	
+	private static void makeSulfur() {
+		// Claus reaction
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.H2S).with(Compounds.SO2).
+				yields(3, Element.S).and(2, Compounds.H2O).
+				via(Compounds.Al2O3, Compounds.TiO2).at(Element.S.getFusion().getTemperature()));
+	}
+
 	private static void makeOxidationRecipes() {
 		makeCombustionRecipes();
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.SO2).with(Compounds.O2).
