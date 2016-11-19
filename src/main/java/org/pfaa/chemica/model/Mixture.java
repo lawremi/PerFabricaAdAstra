@@ -26,7 +26,7 @@ public interface Mixture extends IndustrialMaterial {
 	}
 	
 	default Extraction extract(IndustrialMaterial extractant, IndustrialMaterial... materials) {
-		Mixture extract = new SimpleMixture(extractant);
+		Mixture extract = new SimpleMixture();
 		Mixture residuum = new SimpleMixture();
 		for (IndustrialMaterial material : materials) {
 			MixtureComponent comp = this.getComponent(material);

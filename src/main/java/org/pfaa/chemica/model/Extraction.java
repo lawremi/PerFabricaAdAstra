@@ -9,7 +9,9 @@ public class Extraction {
 	public final Mixture residuum;
 	
 	public Extraction(IndustrialMaterial extractant, Mixture extract, Mixture residuum) {
-		super();
+		if (extractant != null) {
+			extract = extract.mix(extractant, 1.0);
+		}
 		this.extract = extract;
 		this.residuum = residuum;
 		this.extractant = extractant;
