@@ -212,7 +212,7 @@ public enum GeoMaterial implements Mixture {
 	
 	DIATOMITE(IndustrialMinerals.DIATOMITE.mix(Ores.QUARTZ, 0.05), Strength.WEAK, Aggregates.SAND),
 	SULFUR(Ores.SULFUR.mix(Ores.GYPSUM, 0.1).mix(Ores.BARITE, 0.05).
-		   mix(Ores.REALGAR, 0.02).mix(Ores.CELESTINE, 0.01),
+		   mix(Ores.REALGAR, 0.02).mix(Ores.CELESTINE, 0.01).mix(Ores.SAL_AMMONIAC, 0.01),
 		   Strength.WEAK, Aggregates.SAND),
 	ATTAPULGITE(IndustrialMinerals.CALCIUM_MONTMORILLONITE.mix(IndustrialMinerals.PALYGORSKITE, 0.2), 
 			Strength.WEAK, Material.clay),
