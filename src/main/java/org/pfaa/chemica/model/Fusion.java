@@ -10,4 +10,8 @@ public class Fusion {
 	public int getTemperature() {
 		return temperature;
 	}
+	
+	public Condition getCondition() {
+		return new Condition(this.temperature);
+	}
 }
