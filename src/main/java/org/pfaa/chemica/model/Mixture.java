@@ -1,8 +1,11 @@
 package org.pfaa.chemica.model;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.common.collect.Lists;
 
 public interface Mixture extends IndustrialMaterial {
 	List<MixtureComponent> getComponents();
@@ -14,6 +17,18 @@ public interface Mixture extends IndustrialMaterial {
 			}
 		}
 		return null;
+	}
+	
+	default Mixture removeComponent(IndustrialMaterial material) {
+		List<MixtureComponent> comps = Lists.newArrayList(this.getComponents());
+		Iterator<MixtureComponent> it = comps.iterator();
+		while(it.hasNext()) {
+			if (it.next().material.equals(material)) {
+				it.remove();
+				break;
+			}
+		}
+		return new SimpleMixture(comps);
 	}
 	
 	default Mixture concentrate(Mixture mixture, int factor) {
