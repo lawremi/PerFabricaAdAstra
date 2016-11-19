@@ -484,15 +484,14 @@ public class RecipeRegistration {
 	}
 	
 	private static void processNaturalGas() {
-		Mixture desoured = desourNaturalGas();
-		Mixture noHelium = extractHelium(desoured);
-		extractMethane(noHelium);
+		extractMethane(extractHelium(desourNaturalGas()));
 	}
 	
 	private static void extractMethane(Mixture noHelium) {
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
 		Extraction ex = noHelium.extract(null, Compounds.METHANE);
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(ex);
+		// TODO: translate residuum to NGL
 		registry.registerDistillationRecipe(gas, outputs, Compounds.ETHANE.getFusion().getCondition());
 	}
 
@@ -508,27 +507,17 @@ public class RecipeRegistration {
 		FluidStack mea = IndustrialFluids.getCanonicalFluidStack(Compounds.ETHANOLAMINE, State.AQUEOUS);
 		FluidStack ng = IndustrialFluids.getCanonicalFluidStack(GeoMaterial.NATURAL_GAS);
 		Extraction abs = GeoMaterial.NATURAL_GAS.extract(IndustrialFluids.getMaterial(mea), Compounds.H2S, Compounds.CO2);
-		// TODO: translation => "rich amine"
+		// TODO: translation => "rich amine solution"
 		FluidStack ra = IndustrialFluids.getCanonicalFluidStack(abs.extract, State.AQUEOUS);
+		// TODO: translation => "sweetened natural gas"
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(abs.residuum); 
 		registry.registerMixingRecipe(Collections.emptyList(), ng, mea,
 				null, ra, gas, Condition.AQUEOUS_STP, null);
-		// TODO: translation => "acid gases"
-		Extraction regen = abs.extract.extract(null, Compounds.H2S, Compounds.CO2);
+		// Dropping CO2 just to keep things simple
+		Extraction regen = abs.extract.removeComponent(Compounds.CO2).extract(null, Compounds.H2S);
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(regen);
 		registry.registerDistillationRecipe(ra, outputs, new Condition(400));
-		int sulfurAmount = 2 * IndustrialFluids.getAmount(Forms.DUST);
-		FluidStack acidGas = IndustrialFluids.getCanonicalFluidStack(regen.extract, 
-				(int)(sulfurAmount / regen.extract.getComponent(Compounds.H2S).weight));
-		FluidStack o2 = IndustrialFluids.getCanonicalFluidStack(Compounds.O2);
-		FluidStack sulfur = IndustrialFluids.getCanonicalFluidStack(Element.S, State.LIQUID, sulfurAmount);
-		int co2Amount = (int)(acidGas.amount * regen.extract.getComponent(Compounds.CO2).weight);
-		FluidStack co2 = IndustrialFluids.getCanonicalFluidStack(Compounds.CO2, co2Amount);
-		Set<ItemStack> catalysts = Sets.newHashSet(
-				ChemicaItems.COMPOUND_DUST.getItemStack(Compounds.Al2O3),
-				ChemicaItems.COMPOUND_DUST.getItemStack(Compounds.TiO2));
-		registry.registerMixingRecipe(Collections.emptyList(), acidGas, o2,
-				null, sulfur, co2, new Condition(1000), catalysts);
+		// TODO: need to freeze sulfur
 		return abs.residuum;
 	}
 	
