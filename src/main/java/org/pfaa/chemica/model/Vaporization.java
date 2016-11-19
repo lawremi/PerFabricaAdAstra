@@ -29,6 +29,10 @@ public class Vaporization {
 		return temperature;
 	}
 
+	public Condition getCondition() {
+		return new Condition(this.getTemperature());
+	}
+	
 	public AntoineCoefficients getAntoineCoefficients() {
 		return antoineCoefficients;
 	}
