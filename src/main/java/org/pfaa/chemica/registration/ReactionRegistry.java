@@ -8,6 +8,7 @@ import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
@@ -112,7 +113,7 @@ public class ReactionRegistry {
 		if (products.size() == 1) {
 			return IndustrialFluids.getCanonicalFluidStack(products.get(0), form);
 		}
-		SimpleMixture mixture = new SimpleMixture();
+		Mixture mixture = new SimpleMixture();
 		for (Term product : products) {
 			mixture.mix(product.chemical, product.stoichiometry);
 		}
