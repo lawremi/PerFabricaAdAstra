@@ -11,6 +11,7 @@ import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
@@ -76,11 +77,11 @@ public enum GeoMaterial implements Mixture {
 				    
 	OIL_SAND(EXTRA_HEAVY_OIL.getComposition(), Strength.WEAK, Material.sand),
 	
-	NATURAL_GAS(Compounds.METHANE.mix(Compounds.ETHANE, 0.05).mix(Element.He, 0.03).mix(Compounds.N2, 0.02).
-			    mix(Compounds.CO2, 0.01).mix(Compounds.H2S, 0.002).
-			    mix(Compounds.PROPANE, 0.002).mix(Compounds.N_BUTANE, 0.0003).mix(Compounds.ISO_BUTANE, 0.0003), 
-			    Strength.WEAK, Material.air),
-			    
+	NATURAL_GAS(new SimpleMixture(Compounds.METHANE, 0.85).mix(Compounds.ETHANE, 0.05).mix(Compounds.PROPANE, 0.02).
+			mix(Compounds.N_BUTANE, 0.006).mix(Compounds.ISO_BUTANE, 0.004).
+			mix(Compounds.N2, 0.03).mix(Compounds.H2S, 0.02).mix(Compounds.CO2, 0.01).mix(Element.He, 0.01), 
+			Strength.WEAK, Material.air),
+	
 	OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2), Strength.WEAK, MUDSTONE),
 	BITUMINOUS_COAL(new SimpleCrude(Crudes.FIXED_CARBON, 0.7).mix(Aggregates.STONE, 0.15).
                     mix(Crudes.COAL_TAR, 0.1).mix(Crudes.VOLATILES, 0.05).mix(Compounds.H2O, 0.1), 
