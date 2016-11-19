@@ -13,6 +13,7 @@ import static org.pfaa.chemica.model.Ion.Ions.Cd;
 import static org.pfaa.chemica.model.Ion.Ions.Ce;
 import static org.pfaa.chemica.model.Ion.Ions.Cl;
 import static org.pfaa.chemica.model.Ion.Ions.Co;
+import static org.pfaa.chemica.model.Ion.Ions.Cr;
 import static org.pfaa.chemica.model.Ion.Ions.CrO4;
 import static org.pfaa.chemica.model.Ion.Ions.Cs;
 import static org.pfaa.chemica.model.Ion.Ions.Cu;
@@ -21,6 +22,7 @@ import static org.pfaa.chemica.model.Ion.Ions.F;
 import static org.pfaa.chemica.model.Ion.Ions.Fe_2;
 import static org.pfaa.chemica.model.Ion.Ions.Fe_3;
 import static org.pfaa.chemica.model.Ion.Ions.H;
+import static org.pfaa.chemica.model.Ion.Ions.HCO3;
 import static org.pfaa.chemica.model.Ion.Ions.Hg;
 import static org.pfaa.chemica.model.Ion.Ions.IO3;
 import static org.pfaa.chemica.model.Ion.Ions.K;
@@ -112,6 +114,12 @@ public interface Compound extends Chemical {
 					   new Thermo(-32.6, 144, 55.4, 77.9).addSegment(450, 91.2, 0, 5.86)),
 			 new Fusion(1098),
 			 new Liquid(new Thermo(157))),
+		Al2O3(new Formula(Al._(2), O._(3)), "alumina", // assumes alpha phase (corundum)
+			  new Solid(4.0, 
+					    new Thermo(102, 38.7, -15.9, 2.63, -3.01, -1718, 147)),
+			  new Fusion(2345),
+			  new Liquid(new Thermo(192, 0, 0, 0, 0, -1758, 177)),
+			  new Vaporization(3250)),
 		AlOH3(new Formula(Al, OH._(3)), null, 
 			  new Solid(2.42, new Thermo(-1277, 71, 25.7, 155, -98.6, 0.690))),
 		As2S3(new Formula(As._(2), S._(3)), null, 
@@ -228,7 +236,15 @@ public interface Compound extends Chemical {
 					  new Thermo(43.7, 22.4, -16.9, 6.56, 0.532, -250, 103)
 			          .addSegment(1600, 36.0, 14.1, 1.16, -0.116, 5.16, -238, 106),
 					  new Hazard(2, 0, 0)),
-					  new Fusion(2103)),
+			new Fusion(2103)),
+	    Cr2O3(new Formula(Cr._(2), O._(3)), null, 
+			  new Solid(Color.green, 5.22,
+				    	new Thermo(-147396, 711495, -1.11E6, 407561, 2077, 27167, -332949)
+				    	.addSegment(305, 125, -0.337, 5.71, -1.05, -2.03, -1178, 221),
+				    	new Hazard(0, 0, 0)),
+			  new Fusion(2708),
+			  new Liquid(new Thermo(157, 0, 0, 0, 0, -1112, 253)),
+			  new Vaporization(4270)),
 		Cu2CO3OH2(new Formula(Cu._(2), CO3, OH._(2)), null,
 				  new Solid(Color.green, 3.8, new Thermo(-1067, 166, 154))),
 		Cu3CO32OH2(new Formula(Cu._(3), CO3._(2), OH._(2)), null,
@@ -325,6 +341,32 @@ public interface Compound extends Chemical {
  			       .addSegment(1000, 18.6, 12.3, -2.86, 0.268, 1.98, -1.15, 156)
  			       .addSegment(2500, 43.4, -4.29, 1.27, -0.0969, -20.5, -38.5, 162), 
  				   new Hazard(0, 4, 0), new Sutherland(8.76, 294, 72))),
+		HCl(new Formula(H, Cl), "hydrochloricAcid",
+			new Solid(),
+			new Fusion(159),
+			new Liquid(new Thermo(101)),
+			new Vaporization(4.58, 868, 1.75),
+			new Gas(new Thermo(32.1, -13.5, 19.9, -6.85, -0.0497, -102, 229)
+					.addSegment(1200, 31.9, 3.20, -0.542, 0.0359, -3.44, -108, 218),
+					new Hazard(3, 0, 1), 
+					null)),
+		HNO3(new Formula(H, NO3), "nitricAcid",
+			 new Solid(new Thermo()),
+			 new Fusion(231),
+			 new Liquid(1.51,
+					    new Thermo(-174, 156, 110),
+					    new Hazard(3, 0, 0, SpecialCode.OXIDIZER),
+					    new Yaws(-3.52, 729, 0.00396, -2.24E-6)),
+			 new Vaporization(356),
+			 new Gas(new Thermo(19.6, 154, -116, 32.9, -0.249, -147, 248).
+					 addSegment(1200, 97.5, 5.43, -1.03, 0.0680, -12.3, -192, 344))),
+		H3PO4(new Formula(H._(3), PO4), "phosphoricAcid",
+			  new Solid(2.03, new Thermo(-1284, 151)),
+			  new Fusion(315),
+			  new Liquid(1.89,
+					     new Thermo(55.2, 301, -0.0952, 0.0423, 0.000512, -1302, 128),
+					     new Hazard(3, 0, 0),
+					     null)),
 		H2S(new Formula(H._(2), S), null,
 			new Solid(1.12, new Thermo()),
 			new Fusion(191),
@@ -333,6 +375,16 @@ public interface Compound extends Chemical {
 			new Gas(new Thermo(26.9, 18.7, 3.43, -3.38, 0.136, -28.9, 233).
 					addSegment(1400, 51.2, 4.15, -0.644, 0.0416, -10.5, -55.9, 244), 
 					new Hazard(4, 4, 0), new Sutherland(11.3, 273, 313))),
+		H2SO4(new Formula(H._(2), SO4), "sulfuricAcid",
+		 	  new Solid(new Thermo(119)),
+		 	  new Fusion(283),
+		 	  new Liquid(1.84,
+		 			     new Thermo(139, 157, 81.5, 192),
+		 			     new Hazard(3, 0, 2, SpecialCode.WATER_REACTIVE), 
+		 			     new Yaws(-18.7, 3496, 0.0331, 8.04E-5))),
+		H2S2O7(new Formula(H._(2), S._(2), O._(7)), "oleum",
+			   new Solid(1.94, new Thermo(), new Hazard(3, 0, 2, SpecialCode.WATER_REACTIVE)),
+			   new Fusion(309)),
 		HgS(new Formula(Hg, S), null, 
 			new Solid(new Color(139, 0, 0), 8.1, 
 					  new Thermo(-58, 78, 43.9, 15.3), 
@@ -485,6 +537,9 @@ public interface Compound extends Chemical {
 		Na2CO3(new Formula(Na._(2), CO3), "sodaAsh",
 			   new Solid(2.54, new Thermo(190, 0, 0, 0, 0, -1183, 343),
 					     new Hazard(2, 0, 0))),
+		NaHCO3(new Formula(Na, HCO3), "bakingSoda",
+			   new Solid(2.20, new Thermo(-951, 102, 87.6),
+					     new Hazard(0, 0, 1))),
 		NaOH(new Formula(Na, OH), "lye",
 			 new Solid(2.13, 
 					   new Thermo(419, -1718, 2954, -1597, -6.05, -518, 933).
@@ -555,7 +610,7 @@ public interface Compound extends Chemical {
 			 new Solid(Color.WHITE, 7.0, new Thermo(-581, 52, 60), new Hazard(2, 0, 0)),
 			 new Fusion(1903),
 			 new Liquid()),
-		SO2(new Formula(S, O._(2)), null,
+		SO2(new Formula(Element.S, Element.O._(2)), null,
 			new Solid(1.93, new Thermo(107)),
 			new Fusion(201),
 			new Liquid(1.46, new Thermo(-323, 150, 32)),
@@ -564,6 +619,15 @@ public interface Compound extends Chemical {
 					addSegment(1200, 57.5, 1.01, -0.0763, 0.00517, -4.05, -324, 303),
 					new Hazard(3, 0, 0),
 					new Sutherland(12.5, 294, 416))),
+		SO3(new Formula(Element.S, Element.O._(3)), null,
+			new Solid(new Thermo(107)),
+			new Fusion(290),
+			new Liquid(1.92, new Thermo(129)),
+			new Vaporization(4.21, 892, -104),
+			new Gas(new Thermo(24, 119, -94.4, 27, -0.118, -408, 254)
+					.addSegment(1200, 82, 0.622, -0.122, 0.00829, -6.70, -438, 331),
+					new Hazard(3, 0, 3, SpecialCode.OXIDIZER),
+					new Sutherland(2.2, 293, 445))),
 	    SrSO4(new Formula(Sr, SO4), null,
 	    	  new Solid(Color.WHITE, 3.96, new Thermo(-1453, 117, 91.7, 55.4), new Hazard(1, 0, 0)),
 	    	  new Fusion(1879),
@@ -637,7 +701,32 @@ public interface Compound extends Chemical {
 				   new Vaporization(4.33, 1132,	0.918),
 				   new Gas(new Thermo(-126, 310, 13.3, 316, -0.991, -0.0157),
 						   new Hazard(1, 4, 0), new Sutherland(7.5, 296, 385))
-					)
+					),
+		ETHENE(new Formula(Element.C._(2), Element.H._(4)).setSmiles("c=c"), null, 
+			   new Solid(),
+			   new Fusion(104),
+			   new Liquid(new Thermo(-19, 117, 67.4)),
+			   new Vaporization(3.87, 584, -18.3),
+			   new Gas(new Thermo(-6.39, 184, -113, 28.5, 0.316, 48.2, 163)
+					   .addSegment(1200, 107, 13.7, -2.63, 0.175, -26.1, -35.4, 275),
+					   new Hazard(2, 4, 2), new Sutherland(9.85, 273, 250))
+			   ),
+		OXIRANE(new Formula(Element.C._(2), Element.H._(4), Element.O).setSmiles("c1co1"), null, 
+				new Solid(),
+				new Fusion(104),
+				new Liquid(new Thermo(95.7, 149, 86.9)),
+				new Vaporization(5.85, 2023, 62.7),
+				new Gas(new Thermo(-23.3, 276, -189, 51, 0.387, -55.1, 143)
+						.addSegment(1200, 131, 13.8, -2.65, 0.176, -30.0, -158, 313),
+						new Hazard(3, 4, 3), new Sutherland(9.0, 273, 237))
+				),
+		ETHANOLAMINE(new Formula(Element.C._(2), Element.H._(7), Element.N, Element.O).setSmiles("c(co)n"), null, 
+				new Solid(),
+				new Fusion(283),
+				new Liquid(1.01, new Thermo(), new Hazard(3, 2, 0), null),
+				new Vaporization(4.29, 1409, -116),
+				new Gas(new Thermo())
+				)
 		;
 		
 		private Chemical delegate;
