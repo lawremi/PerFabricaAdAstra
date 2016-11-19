@@ -126,8 +126,20 @@ public class IndustrialFluids {
 		return (density <= Constants.AIR_DENSITY ? (density - Constants.AIR_DENSITY) : density) * 1000;
 	}
 	
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state) {
+		return getCanonicalFluidStack(material, state, getAmount(state, Forms.DUST));
+	}
+	
 	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, int amount) {
 		Fluid fluid = getCanonicalFluid(material, state);
+		if (material instanceof Mixture) {
+			/*
+			 * Since we have a fixed ratio between mol and volume (1 mol per 144 mB),
+			 * we should treat mixture weights as molar fractions. To preserve that
+			 * when the total weight != 1, we need to scale the amount.
+			 */
+			amount *= ((Mixture) material).getTotalWeight();
+		}
 		return fluid == null ? null : new FluidStack(fluid, amount);
 	}
 	
@@ -147,7 +159,7 @@ public class IndustrialFluids {
 		IndustrialMaterial solute = term.chemical;
 		State state = term.state;
 		if (state == State.AQUEOUS && term.concentration != 1.0F) {
-			solute = new SimpleMixture(Compounds.H2O).mix(solute, term.concentration);
+			solute = new SimpleMixture(Compounds.H2O, 1 - term.concentration).mix(solute, term.concentration);
 			state = State.LIQUID;
 		}
 		int amount = (int)(term.stoichiometry / term.concentration * getAmount(state, form));
