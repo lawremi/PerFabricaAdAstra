@@ -7,6 +7,7 @@ import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy.Alloys;
+import org.pfaa.chemica.model.Catalysts;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Element.Category;
@@ -70,6 +71,9 @@ public class ChemicaItems implements ItemCatalog {
 			new IndustrialMaterialItem<Alloys>(Forms.DUST, Alloys.class);
 	public static final IndustrialMaterialItem<Alloys> ALLOY_TINY_DUST = 
 			new IndustrialMaterialItem<Alloys>(Forms.DUST_TINY, Alloys.class);
+	
+	public static final IndustrialMaterialItem<Catalysts> CATALYST_DUST = 
+			new IndustrialMaterialItem<Catalysts>(Forms.DUST, Catalysts.class);
 	
 	@SuppressWarnings("rawtypes")
 	public static List<IndustrialMaterialItem> getIndustrialMaterialItems() {
