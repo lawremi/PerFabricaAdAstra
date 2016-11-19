@@ -367,18 +367,19 @@ public class RecipeRegistration {
 	}
 
 	private static void makeCombustionRecipes() {
-		// TODO: Should a sulfur ore block ignite like netherack?
 		reactionTarget.registerReaction(Reaction.of(1, Element.S, State.LIQUID).with(Compounds.O2).yields(Compounds.SO2).at(480));
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.H2S).with(3, Compounds.O2).
 				yields(2, Compounds.SO2).and(2, Compounds.H2O).at(505));
 	}
 
 	private static void makeHydrogen() {
+		// TODO: CO + H2 mixture translation => syngas
 		reactionTarget.registerReaction(Reaction.of(Compounds.METHANE).with(Compounds.H2O, State.GAS).
 				yields(Compounds.CO).and(3, Compounds.H2).via(Element.Ni));
-		Mixture htsCatalyst = Compounds.Fe2O3.mix(Compounds.Cr2O3, 0.1);
+		// TODO: CO2 + H2 mixture translation => water gas
 		reactionTarget.registerReaction(Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
-				yields(Compounds.CO2).and(Compounds.H2).via(htsCatalyst));
+				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS));
+		// TODO: PSA separation of H2 from syngas and water gas
 	}
 
 	private static void registerDoubleDisplacementRecipes() {
