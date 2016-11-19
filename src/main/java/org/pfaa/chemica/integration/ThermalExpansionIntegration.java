@@ -1,6 +1,7 @@
 package org.pfaa.chemica.integration;
 
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
@@ -98,7 +99,7 @@ public class ThermalExpansionIntegration {
 		@Override
 		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, FluidStack fluidInput2, 
 				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
-				Condition condition, ItemStack catalyst) {
+				Condition condition, Set<ItemStack> catalyst) {
 			if (inputs.size() > 1) {
 				return;
 			}

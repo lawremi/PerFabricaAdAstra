@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.List;
 
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
@@ -59,7 +60,7 @@ public class MagneticraftIntegration {
 		}
 
 		@Override
-		public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {
+		public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition) {
 			/* Two steps: 
 			 * 1) Heat in distillery to "Boiling <fluid>"
 			 * 2) Separate in refinery to three outputs

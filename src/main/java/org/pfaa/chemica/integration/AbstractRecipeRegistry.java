@@ -2,6 +2,7 @@ package org.pfaa.chemica.integration;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
@@ -56,7 +57,8 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	
 	@Override
 	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput,
-			FluidStack fluidInput2, ItemStack solidOutput, FluidStack fluidOutput, FluidStack fluidOutput2, Condition condition, ItemStack catalyst) { }
+			FluidStack fluidInput2, ItemStack solidOutput, FluidStack fluidOutput, FluidStack fluidOutput2, 
+			Condition condition, Set<ItemStack> catalyst) { }
 	
 	@Override
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) { }
@@ -68,7 +70,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	}
 	
 	@Override
-	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {}
+	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition) {}
 
 	@Override
 	public GenericRecipeRegistry getGenericRecipeRegistry() {

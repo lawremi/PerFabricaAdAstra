@@ -44,10 +44,10 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 
 	@Override
 	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, ItemStack catalyst) {
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
-					solidOutput, liquidOutput, gasOutput, condition, catalyst);
+					solidOutput, liquidOutput, gasOutput, condition, catalysts);
 		}
 	}
 

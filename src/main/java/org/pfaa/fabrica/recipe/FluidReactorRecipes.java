@@ -1,8 +1,8 @@
 package org.pfaa.fabrica.recipe;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.pfaa.fabrica.util.UnorderedPair;
 
@@ -14,7 +14,7 @@ public class FluidReactorRecipes {
 	private static final Map<UnorderedPair<Fluid>, FluidReactorRecipe> recipes = 
 			new HashMap<UnorderedPair<Fluid>, FluidReactorRecipe>();
 	
-	public static void addRecipe(FluidStack inputA, FluidStack inputB, int energy, ItemStack catalyst, 
+	public static void addRecipe(FluidStack inputA, FluidStack inputB, int energy, Set<ItemStack> catalyst, 
 			FluidStack liquidOutput, FluidStack gasOutput) {
 		FluidReactorRecipe recipe = new FluidReactorRecipe(inputA, inputB, energy, catalyst, liquidOutput, gasOutput);
 		UnorderedPair<Fluid> key = UnorderedPair.of(inputA.getFluid(), inputB.getFluid());
@@ -29,7 +29,7 @@ public class FluidReactorRecipes {
 		return getRecipe(UnorderedPair.of(inputA, inputB));
 	}
 	
-	public static FluidReactorRecipe getRecipeForResources(FluidStack inputA, FluidStack inputB, List<ItemStack> catalysts, int energy) {
+	public static FluidReactorRecipe getRecipeForResources(FluidStack inputA, FluidStack inputB, ItemStack catalyst, int energy) {
 		FluidReactorRecipe recipe = getRecipe(inputA.getFluid(), inputB.getFluid());
 		if (recipe == null) {
 			return null;
@@ -37,12 +37,11 @@ public class FluidReactorRecipes {
 		if (energy < recipe.energy) {
 			return null;
 		}
-		if (recipe.catalyst != null) {
+		if (recipe.catalysts != null) {
 			boolean catalyzed = false;
-			for (ItemStack catalyst : catalysts) {
-				if (recipe.catalyst.isItemEqual(catalyst)) {
+			for (ItemStack c : recipe.catalysts) {
+				if (c.isItemEqual(catalyst)) {
 					catalyzed = true;
-					break;
 				}
 			}
 			if (!catalyzed) {

@@ -1,6 +1,7 @@
 package org.pfaa.chemica.integration;
 
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
@@ -56,7 +57,7 @@ public class VanillaIntegration {
 		}
 		
 		protected void registerMixingRecipe(Object[] inputs, FluidStack fluidInput, FluidStack fluidInput2,
-				ItemStack output, FluidStack liquidOutput, Condition condition, ItemStack catalyst) {
+				ItemStack output, FluidStack liquidOutput, Condition condition, Set<ItemStack> catalyst) {
 			if (condition.temperature != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
@@ -87,7 +88,7 @@ public class VanillaIntegration {
 		@Override
 		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack additive, FluidStack fluidInput2, 
 				ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-				Condition condition, ItemStack catalyst) {
+				Condition condition, Set<ItemStack> catalyst) {
 			this.registerMixingRecipe(inputs.toArray(), additive, fluidInput2, output, liquidOutput, condition, catalyst);
 		}
 
@@ -114,9 +115,10 @@ public class VanillaIntegration {
 			@Override
 			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
 					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-					Condition condition, ItemStack catalyst) {
+					Condition condition, IngredientList catalysts) {
 				VanillaRecipeRegistry.this.registerMixingRecipe(
-						inputs.getCraftingIngredients().toArray(), additive, fluidInput2, output, liquidOutput, condition, catalyst);
+						inputs.getCraftingIngredients().toArray(), additive, fluidInput2, output, liquidOutput, condition, 
+						catalysts == null ? null : catalysts.getItemStacks());
 			}
 
 			@Override

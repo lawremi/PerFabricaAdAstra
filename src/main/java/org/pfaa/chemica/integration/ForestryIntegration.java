@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
@@ -32,7 +33,7 @@ public class ForestryIntegration {
 		@Override
 		public void registerMixingRecipe(List<ItemStack> inputs, FluidStack fluidInput, FluidStack fluidInput2, 
 				ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-				Condition condition, ItemStack catalyst) {
+				Condition condition, Set<ItemStack> catalyst) {
 			if (liquidOutput != null || gasOutput != null) {
 				return;
 			}
@@ -40,7 +41,7 @@ public class ForestryIntegration {
 		}
 
 		protected void registerMixingRecipe(Object[] inputs, FluidStack additive, FluidStack additive2, 
-				ItemStack output, Condition condition, ItemStack catalyst) 
+				ItemStack output, Condition condition, Set<ItemStack> catalyst) 
 		{
 			if (inputs.length > 9) {
 				return;
@@ -96,12 +97,13 @@ public class ForestryIntegration {
 			@Override
 			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
 					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-					Condition condition, ItemStack catalyst) {
+					Condition condition, IngredientList catalysts) {
 				if (liquidOutput != null)
 					return;
 				ForestryRecipeRegistry.this.registerMixingRecipe(
 						inputs.getCraftingIngredients().toArray(), 
-						additive, fluidInput2, output, condition, catalyst);
+						additive, fluidInput2, output, condition, 
+						catalysts == null ? null : catalysts.getItemStacks());
 			}
 
 		}

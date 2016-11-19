@@ -145,17 +145,14 @@ public class ReactionRegistry {
 		ItemStack solidProduct = this.getProductItemStack(form, reaction);
 		FluidStack liquidProduct = this.mixFluidProducts(reaction, State.LIQUID, form);
 		FluidStack gasProduct = this.mixFluidProducts(reaction, State.GAS, form);
-		ItemStack catalyst = this.getCatalystStack(reaction);
+		IngredientList catalyst = this.getCatalysts(reaction);
 		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
 				reaction.getCanonicalCondition(), catalyst);
 	}
 	
-	private ItemStack getCatalystStack(Reaction reaction) {
-		if (reaction.getCatalyst() == null) {
-			return null;
-		}
-		return new MaterialStack(reaction.getCatalyst()).getBestItemStack();
+	private IngredientList getCatalysts(Reaction reaction) {
+		return new IngredientList(reaction.getCatalysts().toArray(new IndustrialMaterial[0]));
 	}
 
 	private FluidStack mixFluidReactants(Form form, Reaction reaction) {

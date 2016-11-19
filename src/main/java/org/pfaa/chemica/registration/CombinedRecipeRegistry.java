@@ -106,7 +106,7 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	@Override
 	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
 			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
-			Condition condition, ItemStack catalyst) {
+			Condition condition, Set<ItemStack> catalyst) {
 		for (RecipeRegistry registry : registries.values()) {
 			registry.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
 					solidOutput, liquidOutput, gasOutput, condition, catalyst);
@@ -128,9 +128,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs) {
+	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerDistillationRecipe(input, outputs);
+			registry.registerDistillationRecipe(input, outputs, condition);
 		}
 	}
 	

@@ -3,6 +3,7 @@ package org.pfaa.chemica.integration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
@@ -114,7 +115,7 @@ public class EnderIOIntegration {
 		@Override
 		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
 				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput,
-				Condition condition, ItemStack catalyst) {
+				Condition condition, Set<ItemStack> catalyst) {
 			if (solidInputs.size() > 2) {
 				return;
 			}
@@ -124,7 +125,7 @@ public class EnderIOIntegration {
 			if (liquidOutput == null) {
 				return;
 			}
-			if (catalyst != null) {
+			if (catalyst != null && !catalyst.isEmpty()) {
 				return;
 			}
 			List<RecipeInput> recipeInputs = new ArrayList<RecipeInput>(solidInputs.size() + 1);

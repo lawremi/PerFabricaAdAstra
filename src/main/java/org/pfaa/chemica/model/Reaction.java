@@ -67,8 +67,8 @@ public class Reaction {
 		return this.equation.getProducts();
 	}
 	
-	public IndustrialMaterial getCatalyst() {
-		return this.equation.getCatalyst();
+	public List<IndustrialMaterial> getCatalysts() {
+		return this.equation.getCatalysts();
 	}
 	
 	public List<Term> getReactants() {
@@ -117,8 +117,8 @@ public class Reaction {
 		return this.with(1, reactant);
 	}
 	
-	public Reaction via(IndustrialMaterial catalyst) {
-		this.equation.setCatalyst(catalyst);
+	public Reaction via(IndustrialMaterial... catalysts) {
+		this.equation.addCatalysts(catalysts);
 		return this;
 	}
 	

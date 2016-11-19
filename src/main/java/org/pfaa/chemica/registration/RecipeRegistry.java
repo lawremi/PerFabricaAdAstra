@@ -1,6 +1,7 @@
 package org.pfaa.chemica.registration;
 
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
@@ -22,13 +23,13 @@ public interface RecipeRegistry {
 	public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries, Strength strength);
 	public void registerCrushingRecipe(ItemStack input, ItemStack output, ChanceStack dust, Strength strength);
 	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs);
-	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs);
+	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition);
 	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp);
 	public void registerAlloyingRecipe(FluidStack output, List<FluidStack> inputs);
 	public void registerRoastingRecipe(List<ItemStack> inputs, ItemStack output, FluidStack gas, int temp);
 	public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
 			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
-			Condition condition, ItemStack catalyst);
+			Condition condition, Set<ItemStack> catalyst);
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output);
 	
 	public GenericRecipeRegistry getGenericRecipeRegistry();

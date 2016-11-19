@@ -1,6 +1,7 @@
 package org.pfaa.chemica.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,14 +11,14 @@ import com.google.common.collect.Lists;
 public class Equation {
 	private List<Term> reactants;
 	private List<Term> products;
-	private IndustrialMaterial catalyst;
+	private List<IndustrialMaterial> catalysts = new ArrayList<IndustrialMaterial>();
 
 	public Equation(List<Term> reactants, List<Term> products,
-			IndustrialMaterial catalyst) {
+			List<IndustrialMaterial> catalysts) {
 		super();
 		this.setReactants(reactants);
 		this.setProducts(products);
-		this.setCatalyst(catalyst);
+		this.setCatalysts(catalysts);
 	}
 
 	public List<Term> getReactants() {
@@ -44,12 +45,16 @@ public class Equation {
 		this.products.add(product);
 	}
 	
-	public IndustrialMaterial getCatalyst() {
-		return catalyst;
+	public List<IndustrialMaterial> getCatalysts() {
+		return Collections.unmodifiableList(this.catalysts);
 	}
 
-	public void setCatalyst(IndustrialMaterial catalyst) {
-		this.catalyst = catalyst;
+	public void addCatalysts(IndustrialMaterial... catalysts) {
+		this.catalysts.addAll(Arrays.asList(catalysts));
+	}
+	
+	public void setCatalysts(List<IndustrialMaterial> catalysts) {
+		this.catalysts = new ArrayList<IndustrialMaterial>(catalysts);
 	}
 	
 	public String toString() {
@@ -82,7 +87,7 @@ public class Equation {
 		return new Equation(
 				Lists.transform(this.reactants, scaleTerm),
 				Lists.transform(this.products, scaleTerm),
-				this.catalyst);
+				this.catalysts);
 	}
 
 	public static class Term {

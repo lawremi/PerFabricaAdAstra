@@ -42,10 +42,11 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 
 	@Override
 	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, ItemStack catalyst) {
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts) {
 		for (List<ItemStack> itemStacks : solidInputs.getItemStackLists()) {
 			delegate.registerMixingRecipe(itemStacks, fluidInput, fluidInput2, 
-					solidOutput, liquidOutput, gasOutput, condition, catalyst);
+					solidOutput, liquidOutput, gasOutput, condition, 
+					catalysts == null ? null : catalysts.getItemStacks());
 		}
 	}
 

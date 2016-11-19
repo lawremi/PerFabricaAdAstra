@@ -15,6 +15,6 @@ public interface GenericRecipeRegistry {
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
 	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp);
 	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, ItemStack catalyst);
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts);
 	public void registerMixingRecipe(IngredientList inputs, ItemStack output);
 }

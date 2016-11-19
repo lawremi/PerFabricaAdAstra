@@ -1,6 +1,7 @@
 package org.pfaa.chemica.integration;
 
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
@@ -90,7 +91,7 @@ public class MaricultureIntegration {
 		@Override
 		public void registerMixingRecipe(List<ItemStack> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
 				ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, 
-				Condition condition, ItemStack catalyst) {
+				Condition condition, Set<ItemStack> catalyst) {
 			if (solidInputs.size() > 1) {
 				return;
 			}
