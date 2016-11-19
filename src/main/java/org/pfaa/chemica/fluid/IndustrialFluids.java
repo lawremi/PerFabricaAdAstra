@@ -138,7 +138,9 @@ public class IndustrialFluids {
 			 * we should treat mixture weights as molar fractions. To preserve that
 			 * when the total weight != 1, we need to scale the amount.
 			 */
-			amount *= ((Mixture) material).getTotalWeight();
+			Mixture mixture = (Mixture)material;
+			amount *= mixture.getTotalWeight();
+			material = mixture.simplify();
 		}
 		return fluid == null ? null : new FluidStack(fluid, amount);
 	}

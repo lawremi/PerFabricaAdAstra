@@ -66,4 +66,9 @@ public interface Mixture extends IndustrialMaterial {
 		return weight;
 	}
 
+	default IndustrialMaterial simplify() {
+		if (this.getComponents().size() == 1)
+			return this.getComponents().get(0).material;
+		return this;
+	}
 }
