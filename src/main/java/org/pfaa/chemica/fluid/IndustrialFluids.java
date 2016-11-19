@@ -90,7 +90,7 @@ public class IndustrialFluids {
 					name = gtName;
 				else name = name + "." + stateName;
 			} else if (state == State.AQUEOUS) {
-				name = "aqueous." + name;
+				name += ".aqueous";
 			}
 		}
 		Fluid fluid = FluidRegistry.getFluid(name);
