@@ -1,6 +1,9 @@
 package org.pfaa.chemica.fluid;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.block.IndustrialFluidBlock;
 import org.pfaa.chemica.model.Compound.Compounds;
@@ -8,8 +11,10 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
@@ -211,5 +216,11 @@ public class IndustrialFluids {
 	
 	public static Object getTextureHook() {
 		return new TextureHook();
+	}
+
+	public static List<FluidStack> getFluidStacks(Extraction regen) {
+		return Collections.unmodifiableList(regen.getProducts().stream().
+				map(IndustrialFluids::getCanonicalFluidStack).
+				collect(Collectors.toList()));
 	}
 }
