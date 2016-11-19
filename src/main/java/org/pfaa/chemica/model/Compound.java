@@ -31,6 +31,7 @@ import static org.pfaa.chemica.model.Ion.Ions.Mo;
 import static org.pfaa.chemica.model.Ion.Ions.NO3;
 import static org.pfaa.chemica.model.Ion.Ions.Na;
 import static org.pfaa.chemica.model.Ion.Ions.NbO3;
+import static org.pfaa.chemica.model.Ion.Ions.NH4;
 import static org.pfaa.chemica.model.Ion.Ions.Ni;
 import static org.pfaa.chemica.model.Ion.Ions.O;
 import static org.pfaa.chemica.model.Ion.Ions.OH;
@@ -435,6 +436,11 @@ public interface Compound extends Chemical {
 			new Gas(new Thermo(20, 49.8, -15.4, 1.92, 0.189, -53.3, 204)
 					.addSegment(1400, 52.0, 18.5, -3.77, 0.249, -12.5, -85.5, 224), 
 					new Hazard(3, 1, 0), null)),
+		NH4Cl(new Formula(NH4, Cl), null,
+			  new Solid(1.53,
+					    new Thermo(2101, -11194, 23342, -16997, -26.8, -706, 4937)
+					    .addSegment(458, -64.4, 327, -149, 24.4, 6.43, -281, -24.4),
+					    new Hazard(2, 0, 0))),
 		NO(new Formula(Element.N, Element.O), null, 
 		   new Solid(new Color(180, 225, 255), Double.NaN, new Thermo(45.9)), 
 		   new Fusion(109),

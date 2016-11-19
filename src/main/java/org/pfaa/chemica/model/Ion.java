@@ -32,6 +32,7 @@ public interface Ion extends PartFactory, Chemical {
 		Mn(Element.Mn, +2, new Color(255, 170, 180), new Thermo(-221, -73.6)),
 		Mo(Element.Mo, +4, null),
 		Na(Element.Na, +1, new Thermo(-240, 59)),
+		NH4(new Formula(Element.N, Element.H._(4)), +1, new Thermo(-133, 113)),
 		Ni(Element.Ni, +2, new Color(185, 255, 175), new Thermo(-54, -129)),
 		Pb(Element.Pb, +2, new Thermo(-1.7, 10.5)),
 		Sb(Element.Sb, +3, null),

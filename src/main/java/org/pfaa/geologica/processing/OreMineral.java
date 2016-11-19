@@ -138,7 +138,9 @@ public interface OreMineral extends Mineral {
 		ELECTRUM(Alloys.ELECTRUM),
 		PLATINUM(Pt.mix(Pd, 1.0).mix(Ru, 0.25).mix(Rh, 0.2)
 				.mix(Ir, 0.01).mix(Alloys.IRIDOSMINE, 0.01)),
-		SULFUR(S)
+		SULFUR(S),
+		
+		SAL_AMMONIAC(Compounds.NH4Cl)
 		;
 
 		private OreMineral delegate;
