@@ -54,6 +54,7 @@ public class RecipeRegistration {
 	public static void init() {
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
+		registerFreezingRecipes();
 		registerCatalystRecipes();
 		registerAgglomerationRecipes();
 		registerDecompositionRecipes();
@@ -275,6 +276,21 @@ public class RecipeRegistration {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
 	}
 	
+	private static void registerFreezingRecipes() {
+		registerFreezingRecipes(ChemicaItems.ELEMENT_TINY_DUST);
+		registerFreezingRecipes(ChemicaItems.COMPOUND_TINY_DUST);
+	}
+	
+	private static <T extends Enum<?> & Chemical> void registerFreezingRecipes(IndustrialMaterialItem<T> item) {
+		for (T chemical : item.getIndustrialMaterials()) {
+			if (chemical instanceof Metal && ((Metal) chemical).getStrength() != null) {
+				continue;
+			}
+			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
+			target.registerFreezingRecipe(molten, item.getItemStack(chemical), chemical.getFusion().getTemperature());
+		}
+	}
+
 	private static void registerCatalystRecipes() {
 		for (Catalysts catalyst : ChemicaItems.CATALYST_DUST.getIndustrialMaterials()) {
 			mixCatalyst(ChemicaItems.CATALYST_DUST, catalyst);

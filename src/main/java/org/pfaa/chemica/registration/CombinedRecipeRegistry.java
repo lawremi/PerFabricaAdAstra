@@ -76,6 +76,13 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp) {
+		for (RecipeRegistry registry : registries.values()) {
+			registry.registerFreezingRecipe(input, output, temp);
+		}
+	}
+
+	@Override
 	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {
 		for (RecipeRegistry registry : registries.values()) {
 			registry.registerSmeltingRecipe(input, output, flux, temp);
@@ -138,4 +145,5 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	public GenericRecipeRegistry getGenericRecipeRegistry() {
 		return this.materialRegistry;
 	}
+
 }

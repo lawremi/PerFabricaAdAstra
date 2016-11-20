@@ -27,6 +27,9 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {}
 
 	@Override
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp) {}
+
+	@Override
 	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {}
 
 	@Override

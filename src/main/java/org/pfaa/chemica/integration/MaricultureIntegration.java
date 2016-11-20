@@ -108,9 +108,21 @@ public class MaricultureIntegration {
 			RecipeVat recipe = new RecipeVat(solidInputs.get(0), fluidInput, fluidInput2, liquidOutput, solidOutput, 1);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
+
+		private static final int MAX_FREEZING_TIME = 10;
+		
+		@Override
+		public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp) {
+			if (temp < Constants.STANDARD_TEMPERATURE) {
+				return;
+			}
+			int time = (int)(MAX_FREEZING_TIME * (Constants.STANDARD_TEMPERATURE / (float)temp));
+			RecipeVat recipe = new RecipeVat(input, output, time);
+			MaricultureHandlers.vat.addRecipe(recipe);
+		}
 		
 		// Stuff we can do with the vat: 
-		//       * Drying (fluid=>solid)
+		//       * Drying/freezing (fluid=>solid)
 		//       * Mixing (fluid+solid=>fluid, fluid+fluid=>fluid, fluid+fluid+solid=>fluid)
 		//       * Absorbing (solid+fluid=>solid)
 		//       * Reactions (fluid+fluid=>solid, fluid+fluid=>solid+fluid, fluid+fluid+solid=>solid+fluid)

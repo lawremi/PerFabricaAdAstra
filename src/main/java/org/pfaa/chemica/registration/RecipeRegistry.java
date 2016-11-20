@@ -17,6 +17,7 @@ public interface RecipeRegistry {
 	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp);
 	public void registerCastingRecipe(FluidStack input, ItemStack output);
 	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp);
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp);
 	// FIXME: both smelting functions should take a FluidStack gas parameter for e.g. SO2 capture when smelting sulfides
 	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp);
 	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp);

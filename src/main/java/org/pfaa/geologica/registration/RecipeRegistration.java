@@ -2,7 +2,6 @@ package org.pfaa.geologica.registration;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
@@ -21,7 +20,6 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -49,7 +47,6 @@ import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.Solutions;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
