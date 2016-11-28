@@ -381,8 +381,13 @@ public class RecipeRegistration {
 		makeCombustionRecipes();
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.SO2).with(Compounds.O2).
 				yields(2, Compounds.SO3).via(Compounds.V2O5).at(650));
+		reactionTarget.registerRoastingReaction(Reaction.of(4, Compounds.FeCr2O4).
+				with(Compounds.Na2CO3).with(7, Compounds.O2).
+				yields(8, Compounds.Na2CrO4).and(2, Compounds.Fe2O3).and(8, Compounds.CO2).at(1300));
+		reactionTarget.registerRoastingReaction(Reaction.of(2, Compounds.Na2Cr2O7_2H2O).with(2, Element.S).with(3, Compounds.O2).
+				yields(4, Compounds.Cr2O3).and(2, Compounds.Na2SO4_10H2O).and(4, Compounds.H2O).at(850));
 	}
-
+	
 	private static void makeCombustionRecipes() {
 		reactionTarget.registerReaction(Reaction.of(1, Element.S, State.LIQUID).with(Compounds.O2).yields(Compounds.SO2).at(480));
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.H2S).with(3, Compounds.O2).
@@ -390,27 +395,41 @@ public class RecipeRegistration {
 	}
 
 	private static void makeHydrogen() {
-		// TODO: CO + H2 mixture translation => syngas
-		reactionTarget.registerReaction(Reaction.of(Compounds.METHANE).with(Compounds.H2O, State.GAS).
-				yields(Compounds.CO).and(3, Compounds.H2).via(Element.Ni));
-		// TODO: CO2 + H2 mixture translation => water gas
-		reactionTarget.registerReaction(Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
-				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS));
+		Reaction makeSyngas = Reaction.of(Compounds.METHANE).with(Compounds.H2O, State.GAS).
+				yields(Compounds.CO).and(3, Compounds.H2).via(Element.Ni);
+		reactionTarget.registerReaction(makeSyngas);
+		Reaction makeWaterGas = Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
+				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS);
+		reactionTarget.registerReaction(makeWaterGas);
+		RecipeUtils.separateByAmineAbsorption(target, makeWaterGas.getProduct(), Compounds.CO2);
 		// TODO: PSA separation of H2 from syngas and water gas
 	}
 
 	private static void registerDoubleDisplacementRecipes() {
 		registerHydrolysisRecipes();
+		registerPrecipitationRecipes();
 	}
 
 	private static void registerHydrolysisRecipes() {
-		/*
-		 * To make HNO3:
-		 * 3 NO2 + H2O → 2 HNO3 + NO
-		 * 
-		 * This means supporting two fluid outputs (in different states) when mixing. 
-		*/
 		reactionTarget.registerReaction(Reaction.of(3, Compounds.NO2).with(Compounds.H2O).yields(2, Compounds.HNO3).and(Compounds.NO));
 	}
+
+	private static void registerPrecipitationRecipes() {
+		reactionTarget.registerReaction(Reaction.inWaterOf(Compounds.H2SO4).
+				with(2, Compounds.Na2CrO4).with(10, Compounds.H2O).
+				yields(Compounds.Na2Cr2O7_2H2O).and(1, Compounds.Na2SO4_10H2O, State.SOLID).and(Compounds.H2O));
+		reactionTarget.registerReaction(Reaction.inWaterOf(2, Compounds.Na2CrO4).
+				with(2, Compounds.CO2).with(Compounds.H2O).
+				yields(Compounds.Na2Cr2O7_2H2O).and(2, Compounds.NaHCO3, State.SOLID));
+	}
 	
+	private static void registerCrystallizationRecipes() {
+		registerCrystallizationRecipe(Compounds.Na2Cr2O7_2H2O);
+	}
+
+	private static void registerCrystallizationRecipe(Compounds compound) {
+		FluidStack input = IndustrialFluids.getCanonicalFluidStack(compound, State.AQUEOUS);
+		ItemStack output = ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound);
+		target.registerCrystallizationRecipe(input, output, (int)compound.getSolubility());
+	}
 }
