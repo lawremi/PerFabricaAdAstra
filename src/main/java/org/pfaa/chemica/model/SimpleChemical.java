@@ -66,7 +66,7 @@ public class SimpleChemical implements Chemical {
 	}
 
 	private State getStateForCondition(Condition condition) {
-		if (condition.aqueous && this.isWaterSoluble(condition)) {
+		if (condition.aqueous && this.isSoluble(condition)) {
 			return State.AQUEOUS;
 		} else if (this.vaporization != null && condition.temperature >= this.vaporization.getTemperature(condition.pressure)) {
 			return State.GAS;
@@ -111,28 +111,6 @@ public class SimpleChemical implements Chemical {
 	@Override
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return new SimpleMixture(this).mix(material, weight);
-	}
-	
-	private boolean isWaterSoluble(Condition condition) {
-		Reaction dissolution = this.getDissolution();
-		return dissolution != null && dissolution.isSpontaneous(condition);
-	}
-	
-	public Reaction getDissolution() {
-		return this.aqueous == null ? null :  
-				Reaction.inWaterOf(1, this, State.SOLID).yields(1, this, State.AQUEOUS);
-	}
-	
-	private Reaction getDissociation() {
-		Formula.Part cation = this.getFormula().getFirstPart();
-		Formula.Part anion = this.getFormula().getLastPart();
-		boolean simpleSalt = cation.ion != null && anion.ion != null && this.getFormula().getParts().size() == 2;
-		if (!simpleSalt) {
-			return null;
-		}
-		return Reaction.inWaterOf(1, this, State.SOLID).
-				yields(cation.stoichiometry, cation.ion).
-				and(anion.stoichiometry, anion.ion);
 	}
 	
 	private boolean isWaterSolubleSalt() {

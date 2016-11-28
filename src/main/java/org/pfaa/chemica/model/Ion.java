@@ -134,10 +134,5 @@ public interface Ion extends PartFactory, Chemical {
 		public Fusion getFusion() {
 			return this.delegate.getFusion();
 		}
-
-		@Override
-		public Reaction getDissolution() {
-			return this.delegate.getDissolution();
-		}
 	}
 }

@@ -811,11 +811,6 @@ public interface Compound extends Chemical {
 			return delegate.getProperties(condition, state);
 		}
 
-		@Override
-		public Reaction getDissolution() {
-			return delegate.getDissolution();
-		}
-
 		public static Compounds forFormula(Formula formula) {
 			Compounds compound = valueOf(formula.toString());
 			if (compound == null) {

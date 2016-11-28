@@ -56,6 +56,10 @@ public class Reaction {
 		return (int)(t);
 	}
 	
+	public double getEquilibriumConstant(Condition condition) {
+		return Math.exp(-this.getFreeEnergyChange(condition) / (Constants.R * condition.temperature));
+	}
+	
 	public int getSpontaneousTemperature() {
 		if (this.getFreeEnergyChange(Condition.STP) < 0) {
 			return Condition.STP.temperature;
