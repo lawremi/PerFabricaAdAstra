@@ -99,6 +99,7 @@ public interface OreMineral extends Mineral {
 				  new Substitution(Ce, 0.03), new Substitution(La, 0.015), 
 		          new Substitution(Nd, 0.01), new Substitution(Y, 0.01), 
 		          new Substitution(Th, 0.01), new Substitution(U, 0.005)),
+		MIRABILITE(Compounds.Na2SO4_10H2O),
 		MOLYBDENITE(Compounds.MoS2, new Substitution(Re, 0.01)),
 		MONAZITE(Compounds.CePO4, new Substitution(La, 0.5), new Substitution(Nd, 0.3),
 				 new Substitution(Pr, 0.15), new Substitution(Th, 0.5), new Substitution(Sm, 0.05)),

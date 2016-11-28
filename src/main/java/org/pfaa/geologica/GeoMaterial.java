@@ -177,7 +177,7 @@ public enum GeoMaterial implements Mixture {
 	GRAPHITE(IndustrialMinerals.GRAPHITE.mix(BITUMINOUS_COAL, 0.3), Strength.WEAK),
 	GYPSUM(Ores.GYPSUM.mix(Ores.HALITE, 0.05).mix(Ores.SULFUR, 0.05).
 		   mix(Ores.BARITE, 0.05).mix(Ores.EPSOMITE, 0.01), Strength.WEAK),
-	MIRABILITE(IndustrialMinerals.MIRABILITE
+	MIRABILITE(Ores.MIRABILITE
 	           .mix(Ores.GYPSUM, 0.3).mix(Ores.HALITE, 0.05), Strength.WEAK),
 	MICA(IndustrialMinerals.MICA, Strength.WEAK, PEGMATITE),
 	SOAPSTONE(IndustrialMinerals.TALC, Strength.WEAK, SERPENTINITE),

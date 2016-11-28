@@ -31,7 +31,6 @@ public interface IndustrialMineral extends Mineral {
 		KYANITE(new Color(110, 110, 250), 3.60),
 		LAZURITE(new Color(0, 85, 175), 2.4),
 		MICA(Color.white, 2.82),
-		MIRABILITE(new Color(240, 250, 210), 1.49),
 		OLIVINE(new Color(155, 230, 40), 3.30),
 		PALYGORSKITE(new Color(205, 215, 110), 2),
 		PERLITE(new Color(255, 255, 245), 1.1),
