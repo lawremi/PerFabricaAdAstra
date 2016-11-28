@@ -108,16 +108,20 @@ public class MaricultureIntegration {
 			RecipeVat recipe = new RecipeVat(solidInputs.get(0), fluidInput, fluidInput2, liquidOutput, solidOutput, 1);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
-
-		private static final int MAX_FREEZING_TIME = 10;
 		
 		@Override
-		public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp) {
-			if (temp < Constants.STANDARD_TEMPERATURE) {
+		public void registerCoolingRecipe(FluidStack input, ItemStack output, int heat) {
+			if (input.getFluid().getTemperature() < Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			int time = (int)(MAX_FREEZING_TIME * (Constants.STANDARD_TEMPERATURE / (float)temp));
+			int time = heat / 1000;
 			RecipeVat recipe = new RecipeVat(input, output, time);
+			MaricultureHandlers.vat.addRecipe(recipe);
+		}
+
+		@Override
+		public void registerCrystallizationRecipe(FluidStack input, ItemStack output, int cost) {
+			RecipeVat recipe = new RecipeVat(input, output, cost * 10);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
 		
