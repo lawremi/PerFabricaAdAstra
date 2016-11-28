@@ -177,9 +177,13 @@ public class Reaction {
 		return false;
 	}
 	
-	public Reaction at(int temperature, double pressure) {
-		this.canonicalCondition = new Condition(temperature, pressure, this.isAqueous());
+	public Reaction at(Condition condition) {
+		this.canonicalCondition = condition;
 		return this;
+	}
+	
+	public Reaction at(int temperature, double pressure) {
+		return this.at(new Condition(temperature, pressure, this.isAqueous()));
 	}
 	
 	public Reaction at(int temperature) {
