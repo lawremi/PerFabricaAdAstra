@@ -208,9 +208,8 @@ public class RecipeRegistration {
 
 	private static void makeSodaAsh() {
 		// TODO: Chemica needs to decompose NaHCO3 to Na2CO3
-		// TODO: It also needs a reaction to convert NH4Cl back to NH3 (see notes) 
 		float brineConcentration = (float)Solutions.PURIFIED_BRINE.getComponents().get(1).weight;
-		Reaction reaction = Reaction.inSolutionOf(Compounds.NaCl, brineConcentration).
+		Reaction reaction = Reaction.inWaterOf(Compounds.NaCl, brineConcentration).
 				         			 with(Compounds.CO2).
 				         			 with(Compounds.NH3).
 				         			 with(Compounds.H2O).

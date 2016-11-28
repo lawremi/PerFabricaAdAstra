@@ -229,12 +229,4 @@ public class Reaction {
 		reaction.baseCondition.aqueous = true;
 		return reaction;
 	}
-	
-	public static Reaction inSolutionOf(Chemical reactant, float concentration) {
-		return inSolutionOf(1, reactant, concentration);
-	}
-	
-	public static Reaction inSolutionOf(int stoichiometry, Chemical reactant, float concentration) {
-		return inWaterOf(stoichiometry, reactant, reactant.getProperties(Condition.AQUEOUS_STP).state, concentration);
-	}
 }
