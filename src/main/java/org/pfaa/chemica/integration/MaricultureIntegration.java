@@ -98,8 +98,8 @@ public class MaricultureIntegration {
 			if (condition.temperature != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			if (fluidInput != null && fluidInput.getFluid().isGaseous() || 
-				fluidInput2 != null && fluidInput2.getFluid().isGaseous()) {
+			if ((fluidInput == null || fluidInput.getFluid().isGaseous()) && 
+				(fluidInput2 == null || fluidInput2.getFluid().isGaseous())) {
 				return;
 			}
 			if (catalyst != null) {
