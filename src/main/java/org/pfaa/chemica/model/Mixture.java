@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.google.common.collect.Lists;
 
 public interface Mixture extends IndustrialMaterial {
@@ -19,11 +21,11 @@ public interface Mixture extends IndustrialMaterial {
 		return null;
 	}
 	
-	default Mixture removeComponent(IndustrialMaterial material) {
+	default Mixture removeComponents(IndustrialMaterial... materials) {
 		List<MixtureComponent> comps = Lists.newArrayList(this.getComponents());
 		Iterator<MixtureComponent> it = comps.iterator();
 		while(it.hasNext()) {
-			if (it.next().material.equals(material)) {
+			if (ArrayUtils.contains(materials, it.next().material)) {
 				it.remove();
 				break;
 			}
