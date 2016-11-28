@@ -204,12 +204,16 @@ public class Reaction {
 		return inWaterOf(1, reactant);
 	}
 	
+	public static Reaction inWaterOf(Chemical reactant, float concentration) {
+		return inWaterOf(1, reactant, State.AQUEOUS, concentration);
+	}
+	
 	public static Reaction inWaterOf(int stoichiometry, Chemical reactant) {
 		return inWaterOf(stoichiometry, reactant, reactant.getProperties(Condition.AQUEOUS_STP).state);
 	}
 	
 	public static Reaction inWaterOf(int stoichiometry, Chemical reactant, State state) {
-		return inWaterOf(stoichiometry, reactant, state, 1.0F);
+		return inWaterOf(stoichiometry, reactant, state, Constants.STANDARD_SOLUTE_WEIGHT);
 	}
 	
 	private static Reaction inWaterOf(int stoichiometry, Chemical reactant, State state, float concentration) {
