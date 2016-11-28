@@ -1,9 +1,11 @@
 package org.pfaa.chemica.registration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
@@ -14,12 +16,15 @@ import org.pfaa.chemica.model.Alloy;
 import org.pfaa.chemica.model.Catalysts;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
+import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
@@ -56,18 +61,20 @@ public class RecipeRegistration {
 		registerAlloyingRecipes();
 		registerFreezingRecipes();
 		registerCatalystRecipes();
+		registerDissolutionRecipes();
 		registerAgglomerationRecipes();
 		registerDecompositionRecipes();
 		registerSynthesisRecipes();
 		registerRedoxRecipes();
 		registerDoubleDisplacementRecipes();
+		registerCrystallizationRecipes();
 		
 		// TODO: add metal tool recipes
 		// - Valid metals/alloys: all types of steel, magnesium
 		// - When GT loaded, tools are automatic, based on material system
 		// - Should probably try to make tools balanced with Metallurgy/Railcraft tools
 	}
-	
+
 	private static void registerAgglomerationRecipes() {
 		registerBlockAndQuarterRecipes(ChemicaItems.AGGREGATE_PILE);
 		registerPartitionRecipes(ChemicaItems.AGGREGATE_DUST, ChemicaItems.AGGREGATE_TINY_DUST);
@@ -303,6 +310,22 @@ public class RecipeRegistration {
 		genericTarget.registerMixingRecipe(inputs, item.getItemStack(material));
 	}
 
+	private static void registerDissolutionRecipes() {
+		registerDissolutionRecipes(ChemicaItems.COMPOUND_DUST);
+		registerDissolutionRecipes(ChemicaItems.COMPOUND_TINY_DUST);
+	}
+
+	private static <T extends Enum<?> & Chemical> void registerDissolutionRecipes(IndustrialMaterialItem<T> item) {
+		int amount = IndustrialFluids.getAmount(State.AQUEOUS, item.getForm());
+		FluidStack water = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.LIQUID, amount);
+		for (T chemical : item.getIndustrialMaterials()) {
+			FluidStack solution = IndustrialFluids.getCanonicalFluidStack(chemical, State.AQUEOUS, amount);
+			ItemStack solute = item.getItemStack(chemical);
+			Condition condition = chemical.getDissociation().getCanonicalCondition();
+			target.registerMixingRecipe(Arrays.asList(solute), water, null, null, solution, null, condition, null);
+		}
+	}
+	
 	/* 
 	 * Decomposition of salts:
 	 *    * Hydroxide => oxide + water vapor
