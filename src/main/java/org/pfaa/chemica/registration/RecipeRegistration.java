@@ -384,7 +384,8 @@ public class RecipeRegistration {
 		 */
 		reactionTarget.registerReaction(Reaction.of(2, Compounds.ETHENE).with(Compounds.O2).
 				yields(2, Compounds.OXIRANE).via(Element.Ag));
-		
+		reactionTarget.registerReaction(Reaction.of(Compounds.OXIRANE).with(Compounds.NH3).
+				yields(Compounds.ETHANOLAMINE).at(323));
 	}
 	
 	private static void registerRedoxRecipes() {
