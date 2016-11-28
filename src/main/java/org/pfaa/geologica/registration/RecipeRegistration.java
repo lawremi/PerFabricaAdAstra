@@ -78,6 +78,7 @@ public class RecipeRegistration {
 		registerPartitionRecipes();
 		registerSiftingRecipes();
 		registerBrineProcessingRecipes();
+		registerNaturalGasProcessingRecipes();
 		registerCraftingRecipes();
 		registerStoneToolRecipes();
 		registerCompatibilityRecipes();
@@ -480,7 +481,7 @@ public class RecipeRegistration {
 		return product;
 	}
 	
-	private static void processNaturalGas() {
+	private static void registerNaturalGasProcessingRecipes() {
 		extractMethane(extractHelium(desourNaturalGas()));
 	}
 	
@@ -501,21 +502,8 @@ public class RecipeRegistration {
 	}
 
 	private static Mixture desourNaturalGas() {
-		FluidStack mea = IndustrialFluids.getCanonicalFluidStack(Compounds.ETHANOLAMINE, State.AQUEOUS);
-		FluidStack ng = IndustrialFluids.getCanonicalFluidStack(GeoMaterial.NATURAL_GAS);
-		Extraction abs = GeoMaterial.NATURAL_GAS.extract(IndustrialFluids.getMaterial(mea), Compounds.H2S, Compounds.CO2);
-		// TODO: translation => "rich amine solution"
-		FluidStack ra = IndustrialFluids.getCanonicalFluidStack(abs.extract, State.AQUEOUS);
-		// TODO: translation => "sweetened natural gas"
-		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(abs.residuum); 
-		registry.registerMixingRecipe(Collections.emptyList(), ng, mea,
-				null, ra, gas, Condition.AQUEOUS_STP, null);
 		// Dropping CO2 just to keep things simple
-		Extraction regen = abs.extract.removeComponent(Compounds.CO2).extract(null, Compounds.H2S);
-		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(regen);
-		registry.registerDistillationRecipe(ra, outputs, new Condition(400));
-		// TODO: need to freeze sulfur
-		return abs.residuum;
+		return RecipeUtils.separateByAmineAbsorption(registry, GeoMaterial.NATURAL_GAS, Compounds.H2S, Compounds.CO2);
 	}
 	
 	private static void steamCrack() {

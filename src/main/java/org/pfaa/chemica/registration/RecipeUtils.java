@@ -7,14 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.pfaa.chemica.Chemica;
+import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
+import org.pfaa.chemica.model.Chemical;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.util.ChanceStack;
@@ -32,6 +39,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -65,7 +73,7 @@ public class RecipeUtils {
 	private static final float BLOCK_WEIGHT = 2.0F;
 	
 	private static WeightScale getScaleForForm(Form form) {
-		if (form == Forms.DUST_TINY) {
+		if (form == Forms.DUST_TINY) { // FIXME: also include DUST_IMPURE_TINY? 
 			return new WeightScale(TINY_DUST_WEIGHT);
 		} else if (form == Forms.BLOCK) {
 			return new WeightScale(BLOCK_WEIGHT);
@@ -120,6 +128,21 @@ public class RecipeUtils {
 			itemStack.stackSize = (int)weight;
 		}
 		return new ChanceStack(itemStack, Math.min(weight, 1));
+	}
+	
+	public static Mixture separateByAmineAbsorption(RecipeRegistry target, Mixture mixture, 
+			Chemical purity, Chemical... impurities) {
+		FluidStack mea = IndustrialFluids.getCanonicalFluidStack(Compounds.ETHANOLAMINE, State.AQUEOUS);
+		FluidStack mix = IndustrialFluids.getCanonicalFluidStack(mixture);
+		Extraction abs = mixture.extract(Compounds.ETHANOLAMINE, ArrayUtils.add(impurities, purity));
+		FluidStack ra = IndustrialFluids.getCanonicalFluidStack(abs.extract, State.AQUEOUS);
+		FluidStack residuum = IndustrialFluids.getCanonicalFluidStack(abs.residuum); 
+		target.registerMixingRecipe(Collections.emptyList(), mix, mea,
+				null, ra, residuum, Condition.AQUEOUS_STP, null);
+		Extraction regen = abs.extract.removeComponents(impurities).extract(null, purity);
+		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(regen);
+		target.registerDistillationRecipe(ra, outputs, new Condition(400));
+		return abs.residuum;
 	}
 	
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {
