@@ -64,17 +64,19 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		public abstract void register(ItemStack input);
 	}
 	
-	private void mapRecipe(ItemStack input, Registrant registrant) {
+	private void mapRecipe(ItemStack input, Registrant registrant, boolean includeImpure) {
 		if (input.getItem() instanceof IndustrialMaterialItem) {
 			IndustrialMaterialItem<?> item = (IndustrialMaterialItem<?>)input.getItem();
 			IndustrialMaterial compound = item.getIndustrialMaterial(input);
 			if (compound instanceof Compound) {
 				OreMineral oreMineral = this.oreCompoundToMineral.get(compound);
-				if (oreMineral != null) {
+				if (oreMineral != null && (includeImpure || oreMineral.getComponents().size() == 1)) {
 					ItemStack oreMineralStack = OreDictUtils.lookupBest(item.getForm(), oreMineral);
 					if (oreMineralStack != null) {
 						registrant.register(oreMineralStack);
-						List<GeoMaterial> geoMaterials = this.oreMineralToGeoMaterials.get(oreMineral);
+						List<GeoMaterial> geoMaterials = null;
+						if (includeImpure)
+							geoMaterials = this.oreMineralToGeoMaterials.get(oreMineral);
 						if (geoMaterials != null) {
 							for (GeoMaterial geoMaterial : geoMaterials) {
 								if (item.getForm() == Forms.DUST) {
@@ -112,7 +114,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 			public void register(ItemStack input) {
 				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
 			}
-		});
+		}, true);
 	}
 	
 	private static ItemStack restrictOutput(ItemStack output) {
@@ -133,7 +135,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 			public void register(ItemStack input) {
 				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
 			}
-		});
+		}, true);
 	}
 
 	@Override
@@ -146,8 +148,21 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 					localInputs.set(localInputs.indexOf(oldInput), input);
 					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
 				}
-			});
+			}, true);
 		}
 	}
 
+	@Override
+	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) {
+		for (final ItemStack oldInput : inputs) {
+			mapRecipe(oldInput, new Registrant() {
+				@Override
+				public void register(ItemStack input) {
+					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
+					localInputs.set(localInputs.indexOf(oldInput), input);
+					RecipeRegistration.getTarget().registerMixingRecipe(localInputs, output);
+				}
+			}, false);
+		}
+	}
 }
