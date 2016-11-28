@@ -29,46 +29,43 @@ public class ReactionRegistry {
 		this.delegate = delegate;
 	}
 	
-	public void registerThermalDecomposition(Reaction reaction) {
-		this.registerThermalDecomposition(Forms.DUST, reaction);
-		this.registerThermalDecomposition(Forms.DUST_TINY, reaction);
+	public void registerRoastingReaction(Reaction reaction) {
+		this.registerRoastingReaction(Forms.DUST, reaction);
+		this.registerRoastingReaction(Forms.DUST_TINY, reaction);
 	}
 	
-	public void registerThermalDecomposition(Form form, Reaction reaction) {
+	private void registerRoastingReaction(Form form, Reaction reaction) {
 		float scale = 1F / reaction.getReactants().get(0).stoichiometry;
 		reaction = reaction.scale(scale);
 		ItemStack output = this.getProductItemStack(form, reaction);
 		if (output == null) {
 			return;
 		}
-		FluidStack gas = this.getProductFluidStack(form, reaction);
+		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList inputs = this.getSolidReactants(form, reaction);
 		int temp = reaction.getCanonicalCondition().temperature;
 		delegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
 	private IngredientList getSolidReactants(Form form, Reaction reaction) {
-		List<Term> reactants = reaction.getReactants();
+		List<Term> reactants = reaction.getReactants(State.SOLID);
 		List<IngredientStack> stacks = Lists.newArrayListWithCapacity(reactants.size());
 		for (Term reactant : reactants) {
-			if (reactant.state == State.SOLID)
-				stacks.add(new MaterialStack(form, reactant.chemical, (int)reactant.stoichiometry));
+			stacks.add(new MaterialStack(form, reactant.chemical, (int)reactant.stoichiometry));
 		}
 		return new IngredientList(stacks);
 	}
 	
 	private ItemStack getProductItemStack(Form form, Reaction reaction) {
-		for (Term product : reaction.getProducts()) {
-			if (product.state == State.SOLID) {
-				float amount = product.stoichiometry;
-				if (amount < 1) {
-					if (form == Forms.DUST) {
-						form = Forms.DUST_TINY;
-						amount *= Forms.DUST_TINY.getNumberPerBlock() / Forms.DUST.getNumberPerBlock();
-					} else continue;
-				}
-				return new MaterialStack(form, product.chemical, (int)amount).getBestItemStack();
+		for (Term product : reaction.getProducts(State.SOLID)) {
+			float amount = product.stoichiometry;
+			if (amount < 1) {
+				if (form == Forms.DUST) {
+					form = Forms.DUST_TINY;
+					amount *= Forms.DUST_TINY.getNumberPerBlock() / Forms.DUST.getNumberPerBlock();
+				} else continue;
 			}
+			return new MaterialStack(form, product.chemical, (int)amount).getBestItemStack();
 		}
 		return null;
 	}
@@ -83,21 +80,6 @@ public class ReactionRegistry {
 		return fluidStacks;
 	}
 	
-	private List<FluidStack> getProductFluidStacks(Form form, Reaction reaction) {
-		List<FluidStack> fluidStacks = Lists.newArrayList();
-		for (Term product : reaction.getProducts()) {
-			if (product.state.isFluid()) {
-				fluidStacks.add(IndustrialFluids.getCanonicalFluidStack(product, form));
-			}
-		}
-		return fluidStacks;
-	}
-	
-	private FluidStack getProductFluidStack(Form form, Reaction reaction) {
-		List<FluidStack> fluidStacks = this.getProductFluidStacks(form, reaction);
-		return fluidStacks.size() > 0 ? fluidStacks.get(0) : null;
-	}
-	
 	public void registerReaction(Reaction reaction) {
 		registerReaction(Forms.DUST, reaction);
 		if (reaction.hasSolidReactants()) {
@@ -105,31 +87,10 @@ public class ReactionRegistry {
 		}
 	}
 
-	private FluidStack mixFluidProducts(Reaction reaction, State state, Form form) {
-		List<Term> products = getProductTerms(reaction, state);
-		if (products.size() == 0) {
-			return null;
-		}
-		if (products.size() == 1) {
-			return IndustrialFluids.getCanonicalFluidStack(products.get(0), form);
-		}
-		Mixture mixture = new SimpleMixture();
-		for (Term product : products) {
-			mixture.mix(product.chemical, product.stoichiometry);
-		}
-		return IndustrialFluids.getCanonicalFluidStack(mixture, 
-				(int)(IndustrialFluids.getAmount(form) * mixture.getTotalWeight()));
+	private FluidStack getProductFluidStack(Form form, Reaction reaction, State state) {
+		return IndustrialFluids.getCanonicalFluidStack(reaction.getProduct(state), state, form);
 	}
 	
-	private List<Term> getProductTerms(Reaction reaction, State state) {
-		List<Term> terms = Lists.newArrayList();
-		for (Term product : reaction.getProducts()) {
-			if (product.state == state)
-				terms.add(product);
-		}
-		return terms;
-	}
-
 	private void registerReaction(Form form, Reaction reaction) {
 		IngredientList solidReactants = this.getSolidReactants(form, reaction);
 		FluidStack fluidReactantA, fluidReactantB = null;
@@ -144,8 +105,8 @@ public class ReactionRegistry {
 				return;
 		}
 		ItemStack solidProduct = this.getProductItemStack(form, reaction);
-		FluidStack liquidProduct = this.mixFluidProducts(reaction, State.LIQUID, form);
-		FluidStack gasProduct = this.mixFluidProducts(reaction, State.GAS, form);
+		FluidStack liquidProduct = this.getProductFluidStack(form, reaction, State.LIQUID);
+		FluidStack gasProduct = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList catalyst = this.getCatalysts(reaction);
 		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 

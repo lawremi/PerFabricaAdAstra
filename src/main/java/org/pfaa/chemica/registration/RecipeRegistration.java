@@ -330,11 +330,12 @@ public class RecipeRegistration {
 	
 	private static void registerDecompositionRecipes() {
 		registerStandardSaltDecompositionRecipes();
-		reactionTarget.registerThermalDecomposition(
+		reactionTarget.registerRoastingReaction(
 				Reaction.of(4, Compounds.KNO2).yields(2, Compounds.K2O).and(2, Compounds.N2).and(3, Compounds.O2));
-		reactionTarget.registerThermalDecomposition(
+		reactionTarget.registerRoastingReaction(
 				Reaction.of(2, Compounds.NaNO2).yields(Compounds.Na2O).and(Compounds.NO).and(Compounds.NO2));
-		reactionTarget.registerThermalDecomposition(
+		// TODO: separate the NO and NO2 via distillation
+		reactionTarget.registerRoastingReaction(
 				Reaction.of(Compounds.NH4Cl).yields(Compounds.NH3).and(Compounds.HCl));
 	}
 
@@ -344,7 +345,7 @@ public class RecipeRegistration {
 			if (reaction == null) {
 				continue;
 			}
-			reactionTarget.registerThermalDecomposition(reaction);
+			reactionTarget.registerRoastingReaction(reaction);
 		}
 	}
 

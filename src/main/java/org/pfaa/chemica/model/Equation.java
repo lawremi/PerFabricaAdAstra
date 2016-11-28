@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -25,12 +26,24 @@ public class Equation {
 		return Collections.unmodifiableList(this.reactants);
 	}
 
+	public List<Term> getReactants(State state) {
+		return Collections.unmodifiableList(this.getReactants().stream().
+					filter((p) -> p.state == state).
+					collect(Collectors.toList()));
+	}
+
 	public void setReactants(List<Term> reactants) {
 		this.reactants = new ArrayList<Term>(reactants);
 	}
 
 	public List<Term> getProducts() {
 		return Collections.unmodifiableList(this.products);
+	}
+	
+	public List<Term> getProducts(State state) {
+		return Collections.unmodifiableList(this.getProducts().stream().
+					filter((p) -> p.state == state).
+					collect(Collectors.toList()));
 	}
 
 	public void setProducts(List<Term> products) {

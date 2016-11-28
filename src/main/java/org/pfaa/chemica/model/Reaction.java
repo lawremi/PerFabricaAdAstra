@@ -67,12 +67,36 @@ public class Reaction {
 		return this.equation.getProducts();
 	}
 	
+	public List<Term> getProducts(State state) {
+		return this.equation.getProducts(state);
+	}
+	
+	private Mixture mixTerms(List<Term> terms) {
+		Mixture mixture = new SimpleMixture();
+		for (Term term : terms) {
+			mixture.mix(term.chemical, term.stoichiometry);
+		}
+		return mixture;
+	}
+	
+	public Mixture getProduct(State state) {
+		return mixTerms(this.getProducts(state));
+	}
+	
+	public Mixture getProduct() {
+		return mixTerms(this.getProducts());
+	}
+	
 	public List<IndustrialMaterial> getCatalysts() {
 		return this.equation.getCatalysts();
 	}
 	
 	public List<Term> getReactants() {
 		return this.equation.getReactants();
+	}
+	
+	public List<Term> getReactants(State state) {
+		return this.equation.getReactants(state);
 	}
 	
 	public Reaction and(int stoichiometry, Chemical product, State state) {
