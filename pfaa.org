@@ -2970,7 +2970,6 @@
      gas-shift reaction (see below).  The result is separated into CO2
      and H2 by pressure-swing adsorption.
 
-
      There are other sources of CO, such as partial oxidation of oil,
      coke oven gas (hood). See Table 6 on residual gases in Ullman's.
 		
@@ -2981,7 +2980,7 @@
      CO + H2O(g) => CO2 + H2
 
      This reaction is incomplete, so H2 remains mixed with CO. We call
-     the H2 + CO mixture water gas.
+     the H2 + CO2 + (3%) CO mixture water gas.
      
 **** Low-temperature (200 C) Water Gas shift
      After the water gas stream has cooled from the high-temperature
@@ -2994,6 +2993,8 @@
      stream, and that we are squeezing out more H2 from steam in each
      step, converting CO to CO2 in the process. After the HTS, there
      is only 3% CO remaining, and only 0.3% remains after the LTS.
+
+     For simplicity, we will ignore this second gas shift for now.
      
 *** Streams
 **** Natural gas
@@ -3090,10 +3091,14 @@
 
 *** Activated carbon
    * Wood, sawdust, peat, straw, bituminous coal are chemically
-     activated via treatment with ZnCl or H3PO4.
-   * Charcoal, lignite coke, peat coke are gas activated by CO2 or H2O
-     (steam)
-
+     activated via treatment with ZnCl2 or H3PO4.
+     * ZnCl2 process: Mix aqueous ZnCl into carbon material (solid
+       product), roast @ 1000 K to yield activated carbon.
+       * ZnCl2 is made from Zn(l) + HCl(g) @ 1000 K
+     * H3PO4 process: Same as ZnCl except @ 800 K.
+   * Charcoal, lignite coke, peat coke are gas activated by CO2 or
+     steam
+     
 * Research
 ** Chemical Compounds
    The player could research the properties of chemical compounds in a
@@ -4442,7 +4447,7 @@
    1. Map the materials to item(stack)s.
    2. Generate a fully parameterized reaction model.
       
-   We might not need to actually have a Reation
+   We might not need to actually have a Reaction
    object. Instead, there is a method call with a signature that
    depends on the mode of reaction recipe construction. For crude
    materials, the materials and model parameters should be
@@ -4600,16 +4605,30 @@
    We are currently representing processes as recipes, and it has
    become apparent that some abtraction might be useful, even if not
    at the level of the process graph. For example, a GeoMaterial has
-   some composition, and and grinding will always output its primary
-   componen as a dust. Both the dust and the original ore block can
+   some composition, and grinding will always output its primary
+   component as a dust. Both the dust and the original ore block can
    perhaps be smelted to a metal ingot. The point is that there is
    some equivalency through composition. This equivalency is very
    much related to the purpose of the ore dictionary. The ore
    dictionary is a fairly rudimentary abstraction, but it works, and
    is something we need anyway. But a major limitation is that an
-   ItemStack should be registered under a single dictionary term, so
-   we will need additional means of abstraction.
-  
+   ItemStack should be registered under a single dictionary
+   term. Another problem is that the equivalency only holds for
+   specific processes (such as a reaction with a specific partner).
+   Thus, we will need additional means of abstraction.
+
+   For crude processing operations like smelting, we have a recipe
+   registry proxy that maps operations on chemicals to operations on
+   ores and minerals. For general mixing and reactions, however, it is
+   not clear that there is always an equivalence between, e.g., an
+   intermediate mixture containing a chemical and the chemical
+   itself. Other chemicals in the mixture might also react, bringing
+   about a conflict. We could simply ignore the conflict case. It
+   might also lead to an unecessary explosion in recipes. We really
+   only need the reactions that are important for processing the raw
+   mixture. We could specify reactions with "pass through" reactants
+   representing other mixture components.
+   
 ** Multiblocks
    Multiblock structures are essentially crafting but with blocks in
    the world (and thus in 3D). The basic design pattern is that a
