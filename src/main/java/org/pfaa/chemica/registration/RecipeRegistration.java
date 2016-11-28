@@ -287,7 +287,7 @@ public class RecipeRegistration {
 				continue;
 			}
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
-			target.registerFreezingRecipe(molten, item.getItemStack(chemical), chemical.getFusion().getTemperature());
+			target.registerCoolingRecipe(molten, item.getItemStack(chemical), (int)chemical.getEnthalpyOfFusion());
 		}
 	}
 
