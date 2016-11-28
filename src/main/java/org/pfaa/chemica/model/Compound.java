@@ -15,6 +15,7 @@ import static org.pfaa.chemica.model.Ion.Ions.Cl;
 import static org.pfaa.chemica.model.Ion.Ions.Co;
 import static org.pfaa.chemica.model.Ion.Ions.Cr;
 import static org.pfaa.chemica.model.Ion.Ions.CrO4;
+import static org.pfaa.chemica.model.Ion.Ions.Cr2O7;
 import static org.pfaa.chemica.model.Ion.Ions.Cs;
 import static org.pfaa.chemica.model.Ion.Ions.Cu;
 import static org.pfaa.chemica.model.Ion.Ions.CO3;
@@ -534,6 +535,14 @@ public interface Compound extends Chemical {
 		     new Liquid(1.56, new Thermo(-42.4, 114, -43.6, 5.90, 39.1, -306, 91.1)),
 		     new Vaporization(5.07, 8388, -82.6),
 		     new Gas(new Thermo(37.3, 0.792, -0.0270, 0.00231, -0.157, -193, 274))),
+		Na2CrO4(new Formula(Na._(2), CrO4), null,
+				new Solid(Color.yellow, 2.7, new Thermo(-1342, 177, 142),
+						  new Hazard(3, 0, 0, SpecialCode.OXIDIZER)),
+				new Fusion(1065)),
+		Na2Cr2O7_2H2O(new Formula(Na._(2), Cr2O7).hydrate(2), null,
+				// FIXME: not clear whether properties are correct for the dihydrate
+				 new Solid(Color.red, 2.35, new Thermo(-1979, Double.NaN),
+				    	   new Hazard(3, 0, 0, SpecialCode.OXIDIZER))),
 		Na2CO3(new Formula(Na._(2), CO3), "sodaAsh",
 			   new Solid(2.54, new Thermo(190, 0, 0, 0, 0, -1183, 343),
 					     new Hazard(2, 0, 0))),
