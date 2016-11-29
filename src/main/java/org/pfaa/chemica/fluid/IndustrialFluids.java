@@ -160,12 +160,13 @@ public class IndustrialFluids {
 	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
 		IndustrialMaterial solute = term.chemical;
 		State state = term.state;
+		float amount = term.stoichiometry * getAmount(state, form);
 		if (state == State.AQUEOUS && term.concentration != Constants.STANDARD_SOLUTE_WEIGHT) {
 			solute = new SimpleMixture(Compounds.H2O, 1 - term.concentration).mix(solute, term.concentration);
 			state = State.LIQUID;
+			amount *= Constants.STANDARD_SOLUTE_WEIGHT / term.concentration;
 		}
-		int amount = (int)(term.stoichiometry / term.concentration * getAmount(state, form));
-		return getCanonicalFluidStack(solute, state, amount);
+		return getCanonicalFluidStack(solute, state, (int)amount);
 	}
 	
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
@@ -193,11 +194,12 @@ public class IndustrialFluids {
 	}
 	
 	public static int getAmount(State state, Form form) {
-		int nPerBlock = form.getNumberPerBlock(); 
+		int nPerBlock = form.getNumberPerBlock();
+		int amount = MB_PER_BLOCK / nPerBlock * (state == State.GAS ? 100 : 1);
 		if (state == State.AQUEOUS) {
-			nPerBlock /= Forms.DUST.getNumberPerBlock();
+			amount *= (1 - Constants.STANDARD_SOLUTE_WEIGHT) / Constants.STANDARD_SOLUTE_WEIGHT;
 		}
-		return MB_PER_BLOCK / nPerBlock * (state == State.GAS ? 100 : 1);
+		return amount;
 	}
 	
 	public static State getState(Fluid fluid) {
