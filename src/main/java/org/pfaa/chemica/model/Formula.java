@@ -78,6 +78,14 @@ public final class Formula {
 		return copy;
 	}
 	
+	public Formula withAnion(Ion anion) {
+		return this.withLastPart(new Part(anion));
+	}
+	
+	public Formula withCation(Ion cation) {
+		return this.withFirstPart(new Part(cation));
+	}
+	
 	public int getCharge() {
 		return this.getCharge();
 	}
@@ -226,6 +234,10 @@ public final class Formula {
 		
 		public boolean hasComposition(Part part) {
 			return this.equals(part._(this.stoichiometry));
+		}
+		
+		public boolean hasComposition(Ion ion) {
+			return this.hasComposition(new Part(ion));
 		}
 	}
 	
