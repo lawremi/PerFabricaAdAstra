@@ -211,7 +211,9 @@ public class IndustrialFluids {
 	}
 	
 	public static State getState(Fluid fluid) {
-		return fluid.isGaseous() ? State.GAS : State.LIQUID;
+		return fluid.isGaseous() ? State.GAS : 
+			FluidRegistry.getFluidName(fluid).endsWith(".aqueous") ? State.AQUEOUS : 
+				State.LIQUID;
 	}
 	
 	public static State getState(FluidStack fluidStack) {
