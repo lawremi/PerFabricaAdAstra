@@ -8,16 +8,18 @@ public class Condition {
 	public int temperature;
 	public double pressure;
 	public boolean aqueous;
+	public boolean atmospheric;
 	
 	public Condition(int temperature, double pressure) {
-		this(temperature, pressure, false);
+		this(temperature, pressure, false, false);
 	}
 	
-	public Condition(int temperature, double pressure, boolean aqueous) {
+	public Condition(int temperature, double pressure, boolean aqueous, boolean atmospheric) {
 		super();
 		this.temperature = temperature;
 		this.pressure = pressure;
 		this.aqueous = aqueous;
+		this.atmospheric = atmospheric;
 	}
 	
 	public Condition(int temperature) {
@@ -57,7 +59,7 @@ public class Condition {
 	}
 
 	public static Condition STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE);
-	public static Condition AQUEOUS_STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE, true);
+	public static Condition AQUEOUS_STP = new Condition(Constants.STANDARD_TEMPERATURE, Constants.STANDARD_PRESSURE, true, false);
 	
 	@Override
 	public boolean equals(Object obj) {
