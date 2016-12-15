@@ -39,4 +39,9 @@ public enum Catalysts implements Mixture {
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return delegate.mix(material, weight);
 	}
+
+	@Override
+	public Mixture removeAll() {
+		return delegate.removeAll();
+	}
 }

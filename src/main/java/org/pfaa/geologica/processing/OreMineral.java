@@ -189,6 +189,11 @@ public interface OreMineral extends Mineral {
 		public Ore mix(IndustrialMaterial material, double weight) {
 			return new SimpleOre(this).mix(material, weight);
 		}
+
+		@Override
+		public Mixture removeAll() {
+			return delegate.removeAll();
+		}
 	}
 	
 	public static class Substitution extends MixtureComponent {

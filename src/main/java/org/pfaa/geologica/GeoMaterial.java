@@ -354,4 +354,9 @@ public enum GeoMaterial implements Mixture {
         }
         return material;
     }
+
+	@Override
+	public Mixture removeAll() {
+		return composition.removeAll();
+	}
 }

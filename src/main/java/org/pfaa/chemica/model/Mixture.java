@@ -1,16 +1,16 @@
 package org.pfaa.chemica.model;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public interface Mixture extends IndustrialMaterial {
 	List<MixtureComponent> getComponents();
+	Mixture removeAll();
 	
 	default MixtureComponent getComponent(IndustrialMaterial material) {
 		for (MixtureComponent comp : this.getComponents()) {
@@ -21,43 +21,58 @@ public interface Mixture extends IndustrialMaterial {
 		return null;
 	}
 	
-	default Mixture removeComponents(IndustrialMaterial... materials) {
-		List<MixtureComponent> comps = Lists.newArrayList(this.getComponents());
-		Iterator<MixtureComponent> it = comps.iterator();
-		while(it.hasNext()) {
-			if (ArrayUtils.contains(materials, it.next().material)) {
-				it.remove();
-				break;
-			}
-		}
-		return new SimpleMixture(comps);
+	default Mixture without(IndustrialMaterial... materials) {
+		Set<IndustrialMaterial> toRemove = Sets.newHashSet(materials);
+		List<MixtureComponent> comps = this.getComponents().stream().
+				filter((x) -> !toRemove.contains(x)).
+				collect(Collectors.toList());
+		return this.removeAll().mixAll(comps);
 	}
 	
-	default Mixture concentrate(Mixture mixture, int factor) {
-		List<MixtureComponent> comps = mixture.getComponents();
-		return new SimpleMixture(comps.stream().map((comp) -> {
+	default Mixture concentrate(double factor) {
+		List<MixtureComponent> comps = this.getComponents();
+		return this.removeAll().mixAll(comps.stream().map((comp) -> {
 			if (comp.weight < 1.0)
 				return comp.concentrate(factor);
 			return comp;
 		}).collect(Collectors.toList()));
 	}
 	
-	default Extraction extract(IndustrialMaterial extractant, IndustrialMaterial... materials) {
-		Mixture extract = new SimpleMixture();
-		Mixture residuum = new SimpleMixture();
-		for (IndustrialMaterial material : materials) {
-			MixtureComponent comp = this.getComponent(material);
-			if (comp != null) {
-				extract.mix(comp);
-			}
+	default Mixture extract(IndustrialMaterial... materials) {
+		List<MixtureComponent> comps = Arrays.stream(materials).
+				map(this::getComponent).
+				filter(Objects::nonNull).
+				collect(Collectors.toList());
+		return this.removeAll().mixAll(comps);
+	}
+	
+	default List<Mixture> separate() {
+		return this.getComponents().stream().map(SimpleMixture::new).collect(Collectors.toList());
+	}
+	
+	class Phases {
+		public final Mixture solid, liquid, gas;
+
+		public Phases(Mixture solid, Mixture liquid, Mixture gas) {
+			this.solid = solid;
+			this.liquid = liquid;
+			this.gas = gas;
 		}
-		List<IndustrialMaterial> materialList = Arrays.asList(materials);
+	}
+	
+	default Phases separateByState(Condition condition) {
+		Mixture gas = this.removeAll(), liquid = this.removeAll(), solid = this.removeAll();
 		for (MixtureComponent comp : this.getComponents()) {
-			if (!materialList.contains(comp.material)) {
-				residuum.mix(comp);
+			State state = comp.material.getProperties(condition).state;
+			if (state == State.GAS) {
+				gas = gas.mix(comp);
+			} else if (state == State.AQUEOUS || state == State.LIQUID) {
+				liquid = liquid.mix(comp);
+			} else {
+				solid = solid.mix(comp);
 			}
 		}
-		return new Extraction(extractant, extract, residuum);
+		return new Phases(solid, liquid, gas);
 	}
 	
 	default double getTotalWeight() {
@@ -68,9 +83,31 @@ public interface Mixture extends IndustrialMaterial {
 		return weight;
 	}
 
+	default Mixture normalize() {
+		return this.concentrate(1/this.getTotalWeight());
+	}
+	
 	default IndustrialMaterial simplify() {
 		if (this.getComponents().size() == 1)
 			return this.getComponents().get(0).material;
 		return this;
+	}
+	
+	default Mixture mixAll(Mixture other) {
+		return this.mixAll(other.getComponents());
+	}
+
+	default Mixture mixAll(List<MixtureComponent> comps) {
+		Mixture mixture = this;
+		for (MixtureComponent comp : comps) {
+			mixture = mixture.mix(comp);
+		}
+		return mixture;
+	}
+	
+	default Mixture getFraction(Condition cond, State state) {
+		return this.removeAll().mixAll(this.getComponents().stream().
+			filter((comp) -> comp.getMaterial().getProperties(cond).state == state).
+			collect(Collectors.toList()));
 	}
 }

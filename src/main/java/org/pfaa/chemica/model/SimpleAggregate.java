@@ -13,5 +13,10 @@ public class SimpleAggregate extends SimpleMixture implements Aggregate {
 	public Aggregate mix(IndustrialMaterial material, double weight) {
 		return new SimpleAggregate(super.mix(material, weight));
 	}
+
+	@Override
+	public Aggregate removeAll() {
+		return this;
+	}
 	
 }

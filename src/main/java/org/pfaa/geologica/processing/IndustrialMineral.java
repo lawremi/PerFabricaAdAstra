@@ -8,6 +8,7 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 
@@ -76,6 +77,11 @@ public interface IndustrialMineral extends Mineral {
 		@Override
 		public Ore mix(IndustrialMaterial material, double weight) {
 			return new SimpleOre(this).mix(material, weight);
+		}
+
+		@Override
+		public Mixture removeAll() {
+			return this;
 		}
 	}
 

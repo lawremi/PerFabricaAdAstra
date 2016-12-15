@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 
 public class SimpleMixture implements Mixture {
@@ -21,8 +22,8 @@ public class SimpleMixture implements Mixture {
 		this.name = name;
 	}
 	
-	protected SimpleMixture(List<MixtureComponent> components) {
-		this(null, components);
+	public SimpleMixture(List<MixtureComponent> components) {
+		this(null, Lists.newArrayList(components));
 	}
 
 	public SimpleMixture(String name, MixtureComponent... components) {
@@ -159,7 +160,19 @@ public class SimpleMixture implements Mixture {
 		return new SimpleMixture(components);
 	}
 	
+	@Override
+	public Mixture mixAll(Mixture other) {
+		List<MixtureComponent> components = new ArrayList<MixtureComponent>(this.components);
+		components.addAll(other.getComponents());
+		return new SimpleMixture(components);
+	}
+	
 	public String toString() {
 		return this.name();
+	}
+
+	@Override
+	public Mixture removeAll() {
+		return new SimpleMixture();
 	}
 }

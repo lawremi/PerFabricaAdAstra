@@ -153,5 +153,10 @@ public interface Alloy extends Mixture, Metal {
 		public Alloy fuse(int temperature) {
 			return delegate.fuse(temperature);
 		}
+
+		@Override
+		public Mixture removeAll() {
+			return delegate.removeAll();
+		}
 	}
 }

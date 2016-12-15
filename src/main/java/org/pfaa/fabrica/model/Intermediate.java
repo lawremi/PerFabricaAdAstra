@@ -73,5 +73,10 @@ public interface Intermediate extends Mixture {
 		private void setComposition(Mixture mixture) {
 			this.mixture = mixture;
 		}
+
+		@Override
+		public Mixture removeAll() {
+			return this.mixture.removeAll();
+		}
 	}
 }

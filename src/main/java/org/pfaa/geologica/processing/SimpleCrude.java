@@ -1,6 +1,7 @@
 package org.pfaa.geologica.processing;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
@@ -9,7 +10,10 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
+
+import com.google.common.collect.Lists;
 
 public class SimpleCrude extends SimpleMixture implements Crude {
 	private ConditionProperties properties;
@@ -40,6 +44,14 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 		this.heat = heat;
 	}
 
+	public SimpleCrude(List<MixtureComponent> components) {
+		this(components, null);
+	}
+	
+	public SimpleCrude(MixtureComponent... components) {
+		this(Lists.newArrayList(components));
+	}
+	
 	@Override
 	public ConditionProperties getProperties(Condition condition) {
 		if (this.properties == null) {
@@ -52,7 +64,18 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	@Override
 	public Crude mix(IndustrialMaterial material, double weight) {
 		Mixture mixture = super.mix(material, weight);
-		return new SimpleCrude(mixture.getComponents(), null);
+		return new SimpleCrude(mixture.getComponents());
+	}
+
+	@Override
+	public Crude extract(IndustrialMaterial... materials) {
+		Mixture mixture = super.extract(materials);
+		return new SimpleCrude(mixture.getComponents());
+	}
+
+	@Override
+	public Crude removeAll() {
+		return new SimpleCrude();
 	}
 
 	@Override
@@ -117,5 +140,10 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	@Override
 	public Crude oreDictify(String oreDictKey) {
 		return new SimpleCrude(this.getComponents(), oreDictKey);
+	}
+
+	@Override
+	public List<Vaporizable> fractions() {
+		return this.getComponents().stream().map(SimpleCrude::new).collect(Collectors.toList());
 	}
 }

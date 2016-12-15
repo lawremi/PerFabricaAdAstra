@@ -9,6 +9,7 @@ import com.google.common.base.CaseFormat;
 public interface Aggregate extends Mixture {
 	
 	public Aggregate mix(IndustrialMaterial material, double weight);
+	public Aggregate removeAll();
 	
 	public enum Aggregates implements Aggregate {
 		SAND(new Color(230, 220, 175), 1.6), 
@@ -44,6 +45,11 @@ public interface Aggregate extends Mixture {
 		public Aggregate mix(IndustrialMaterial material, double weight) {
 			return new SimpleAggregate(new MixtureComponent(this, 1.0), 
 					                   new MixtureComponent(material, weight));
+		}
+
+		@Override
+		public Aggregate removeAll() {
+			return this;
 		}
 	}
 }
