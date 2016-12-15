@@ -29,8 +29,15 @@ public class IndustrialMaterialUtils {
 		case LIQUID:
 			if (material instanceof Fusible) {
 				Fusion fusion = ((Fusible)material).getFusion();
+				int lowerBound = Constants.STANDARD_TEMPERATURE;
+				if (material instanceof Vaporizable) {
+					Vaporization vaporization = ((Vaporizable) material).getVaporization();
+					if (vaporization != null) {
+						lowerBound = Math.min(lowerBound, vaporization.getTemperature() - 1);
+					}
+				}
 				if (fusion != null) {
-					return Math.max(fusion.getTemperature(), Constants.STANDARD_TEMPERATURE);
+					return Math.max(fusion.getTemperature(), lowerBound);
 				} else {
 					return null;
 				}
