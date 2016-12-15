@@ -120,7 +120,7 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerCrystallizationRecipe(FluidStack input, ItemStack output, int cost) {
+		public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {
 			RecipeVat recipe = new RecipeVat(input, output, cost * 10);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}

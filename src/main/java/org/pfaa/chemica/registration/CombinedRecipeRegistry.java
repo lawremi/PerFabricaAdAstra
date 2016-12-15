@@ -83,7 +83,14 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerCrystallizationRecipe(FluidStack input, ItemStack output, int cost) {
+	public void registerCoolingRecipe(FluidStack input, FluidStack output, int heat) {
+		for (RecipeRegistry registry : registries.values()) {
+			registry.registerCoolingRecipe(input, output, heat);
+		}
+	}
+
+	@Override
+	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {
 		for (RecipeRegistry registry : registries.values()) {
 			registry.registerCoolingRecipe(input, output, cost);
 		}
