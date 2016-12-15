@@ -5,7 +5,8 @@ import java.util.stream.Stream;
 
 import org.pfaa.chemica.model.Equation.Term;
 
-public interface Soluble {
+// TODO: merge into Chemical
+public interface Soluble extends IndustrialMaterial {
 	float MIN_SOLUBILITY = 0.001F;
 	
 	public Reaction getDissociation();
@@ -13,7 +14,7 @@ public interface Soluble {
 		Reaction dissociation = this.getDissociation();
 		double ksp = dissociation.getEquilibriumConstant(condition);
 		List<Term> products = dissociation.getProducts();
-		Stream<Float> stoich = products.stream().map((t) -> t.stoichiometry);
+		Stream<Float> stoich = products.stream().map((t) -> t.stoich);
 		return Math.pow(ksp / stoich.reduce((a,b) -> a*b).get(), 1 / stoich.reduce((a,b)->a+b).get());
 	}
 	default double getSolubility() {
