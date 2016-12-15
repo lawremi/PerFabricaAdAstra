@@ -14,7 +14,7 @@ public class MixtureComponent {
 		return this.material;
 	}
 	
-	public MixtureComponent concentrate(int factor) {
+	public MixtureComponent concentrate(double factor) {
 		return new MixtureComponent(this.material, this.weight * factor);
 	}
 	
