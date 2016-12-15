@@ -162,6 +162,10 @@ public class Reaction {
 		return this.baseCondition.aqueous;
 	}
 	
+	public boolean isAtmospheric() {
+		return this.baseCondition.atmospheric;
+	}
+	
 	public Condition getCanonicalCondition() {
 		if (this.canonicalCondition == null) {
 			this.at(this.getSpontaneousTemperature());
@@ -183,7 +187,7 @@ public class Reaction {
 	}
 	
 	public Reaction at(int temperature, double pressure) {
-		return this.at(new Condition(temperature, pressure, this.isAqueous()));
+		return this.at(new Condition(temperature, pressure, this.isAqueous(), this.isAtmospheric()));
 	}
 	
 	public Reaction at(int temperature) {
@@ -192,6 +196,10 @@ public class Reaction {
 	
 	public static Reaction of(Chemical reactant) {
 		return of(1, reactant);
+	}
+	
+	public static Reaction of(Chemical reactant, State state) {
+		return of(1, reactant, state);
 	}
 	
 	public static Reaction of(int stoichiometry, Chemical reactant) {
@@ -228,5 +236,31 @@ public class Reaction {
 		Reaction reaction = of(stoichiometry, reactant, state, concentration);
 		reaction.baseCondition.aqueous = true;
 		return reaction;
+	}
+	
+	public static Reaction inAirOf(Chemical reactant) {
+		return inAirOf(1, reactant);
+	}
+	
+	public static Reaction inAirOf(int stoichiometry, Chemical reactant) {
+		return inAirOf(1, reactant, reactant.getProperties(Condition.STP).state);
+	}
+	
+	public static Reaction inAirOf(int stoichiometry, Chemical reactant, State state) {
+		Reaction reaction = of(stoichiometry, reactant, state);
+		reaction.baseCondition.atmospheric = true;
+		return reaction;
+	}
+	
+	/* It may be useful in the future to label reactions with these types */
+	public enum Type {
+		SYNTHESIS,
+		DECOMPOSITION,
+		SINGLE_DISPLACEMENT,
+		DOUBLE_DISPLACEMENT,
+		NEUTRALIZATION,
+		COMBUSTION,
+		ORGANIC,
+		REDOX
 	}
 }
