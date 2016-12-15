@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
@@ -20,11 +19,9 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
-import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
-import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
@@ -66,6 +63,7 @@ public class RecipeRegistration {
 		registerDecompositionRecipes();
 		registerSynthesisRecipes();
 		registerRedoxRecipes();
+		registerSingleDisplacementRecipes();
 		registerDoubleDisplacementRecipes();
 		registerCrystallizationRecipes();
 		
@@ -294,6 +292,7 @@ public class RecipeRegistration {
 				continue;
 			}
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
+			// FIXME: should be total enthalpy to freeze from canonical liquid condition
 			target.registerCoolingRecipe(molten, item.getItemStack(chemical), (int)chemical.getEnthalpyOfFusion());
 		}
 	}
@@ -334,7 +333,6 @@ public class RecipeRegistration {
 	 *              => nitrite for alkali metals (except Li) 
 	 *    * Nitrite => complex, special case
 	 *  TODO:
-	 *    * Bicarbonate => carbonate + H2O + CO2
 	 *    * Chlorate => chloride + oxygen
 	 *    * Bromate => bromide + oxygen
 	 *    * Iodate => iodide + oxygen
@@ -357,7 +355,6 @@ public class RecipeRegistration {
 				Reaction.of(4, Compounds.KNO2).yields(2, Compounds.K2O).and(2, Compounds.N2).and(3, Compounds.O2));
 		reactionTarget.registerRoastingReaction(
 				Reaction.of(2, Compounds.NaNO2).yields(Compounds.Na2O).and(Compounds.NO).and(Compounds.NO2));
-		// TODO: separate the NO and NO2 via distillation
 		reactionTarget.registerRoastingReaction(
 				Reaction.of(Compounds.NH4Cl).yields(Compounds.NH3).and(Compounds.HCl));
 	}
@@ -378,20 +375,24 @@ public class RecipeRegistration {
 				at(725, 101*Constants.STANDARD_PRESSURE).via(Element.Fe));
 		reactionTarget.registerReaction(Reaction.of(Compounds.SO3).with(Compounds.H2SO4).yields(2, Compounds.H2S2O7));
 		reactionTarget.registerReaction(Reaction.of(Compounds.H2S2O7).with(Compounds.H2O).yields(2, Compounds.H2SO4));
-		/* An alternative to reacting SO3 with water:
-		 * Absorb SO2 into H2O2 (tricky to make) or HNO3 (nitric acid).
-		 * SO2 + 2 HNO3 => H2SO4 + NO 
-		 */
-		reactionTarget.registerReaction(Reaction.of(2, Compounds.ETHENE).with(Compounds.O2).
-				yields(2, Compounds.OXIRANE).via(Element.Ag));
+		reactionTarget.registerReaction(Reaction.inAirOf(2, Compounds.ETHENE).with(Compounds.O2).
+				yields(2, Compounds.OXIRANE).via(Element.Ag).at(500));
 		reactionTarget.registerReaction(Reaction.of(Compounds.OXIRANE).with(Compounds.NH3).
 				yields(Compounds.ETHANOLAMINE).at(323));
+		reactionTarget.registerReaction(
+				Reaction.inAirOf(2, Compounds.H2O).with(4, Compounds.NO).with(2, Compounds.SO2).with(Compounds.O2).
+				yields(2, Compounds.H2SO4, State.AQUEOUS).and(4, Compounds.NO));
+		reactionTarget.registerReaction(
+				Reaction.of(2, Compounds.H2O).with(2, Compounds.NO).with(2, Compounds.NO2).with(2, Compounds.SO2).
+				yields(2, Compounds.H2SO4, State.AQUEOUS).and(4, Compounds.NO));
 	}
 	
 	private static void registerRedoxRecipes() {
 		makeHydrogen();
 		makeSulfur();
 		makeOxidationRecipes();
+		reactionTarget.registerRoastingReaction(Reaction.of(Compounds.NaNO3).with(Element.Pb).
+				yields(Compounds.NaNO2).and(Compounds.PbO).at(600));
 	}
 	
 	private static void makeSulfur() {
@@ -410,6 +411,8 @@ public class RecipeRegistration {
 				yields(8, Compounds.Na2CrO4).and(2, Compounds.Fe2O3).and(8, Compounds.CO2).at(1300));
 		reactionTarget.registerRoastingReaction(Reaction.of(2, Compounds.Na2Cr2O7_2H2O).with(2, Element.S).with(3, Compounds.O2).
 				yields(4, Compounds.Cr2O3).and(2, Compounds.Na2SO4_10H2O).and(4, Compounds.H2O).at(850));
+		reactionTarget.registerReaction(Reaction.of(4, Compounds.NH3).with(5, Compounds.O2).
+				yields(4, Compounds.NO).and(6, Compounds.H2O).via(Element.Pt).at(1100));
 	}
 	
 	private static void makeCombustionRecipes() {
@@ -425,10 +428,19 @@ public class RecipeRegistration {
 		Reaction makeWaterGas = Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
 				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS);
 		reactionTarget.registerReaction(makeWaterGas);
-		RecipeUtils.separateByAmineAbsorption(target, makeWaterGas.getProduct(), Compounds.CO2);
-		// TODO: PSA separation of H2 from syngas and water gas
+		RecipeUtils.separateByAmineAbsorption(opRegistry, makeWaterGas.getProduct(), Compounds.CO2, null);
+		makeWaterGas = Reaction.of(Compounds.H2O, State.GAS).with(Compounds.CO).with(3, Compounds.H2).
+				yields(Compounds.CO2).and(4, Compounds.H2).via(Catalysts.HTS);
+		RecipeUtils.separateByAmineAbsorption(opRegistry, makeWaterGas.getProduct(), Compounds.CO2, null);
 	}
-
+	
+	private static void registerSingleDisplacementRecipes() {
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.NaOH).with(Compounds.NO).with(Compounds.NO2).
+				yields(2, Compounds.NaNO2).and(Compounds.H2O));
+		reactionTarget.registerReaction(Reaction.of(2, Compounds.Na2CO3).with(Compounds.NO).with(Compounds.NO2).
+				yields(2, Compounds.NaNO2).and(Compounds.CO2));
+	}
+	
 	private static void registerDoubleDisplacementRecipes() {
 		registerHydrolysisRecipes();
 		registerPrecipitationRecipes();
@@ -454,6 +466,6 @@ public class RecipeRegistration {
 	private static void registerCrystallizationRecipe(Compounds compound) {
 		FluidStack input = IndustrialFluids.getCanonicalFluidStack(compound, State.AQUEOUS);
 		ItemStack output = ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound);
-		target.registerCrystallizationRecipe(input, output, (int)compound.getSolubility());
+		target.registerPrecipitationRecipe(input, output, (int)compound.getSolubility());
 	}
 }
