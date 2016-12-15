@@ -8,6 +8,6 @@ import org.pfaa.chemica.model.SimpleMixture;
 public class Solutions {
 	public static final Mixture PURIFIED_BRINE = 
 			new SimpleMixture("brine.purified", 
-					new MixtureComponent(Compounds.H2O, 1.0), 
+					new MixtureComponent(Compounds.H2O, 0.7), 
 					new MixtureComponent(Compounds.NaCl, 0.3));
 }
