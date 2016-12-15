@@ -1,25 +1,26 @@
 package org.pfaa.chemica.fluid;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.pfaa.chemica.block.IndustrialFluidBlock;
-import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
-import org.pfaa.chemica.model.Equation.Term;
-import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
+import org.pfaa.chemica.model.Phases;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialSpec;
+import org.pfaa.chemica.processing.UnitOperation;
 
 import com.google.common.base.CaseFormat;
 
@@ -161,15 +162,18 @@ public class IndustrialFluids {
 		return getCanonicalFluidStack(material, state, getAmount(state, form));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(Term term, Form form) {
-		IndustrialMaterial solute = term.chemical;
-		State state = term.state;
-		float amount = term.stoichiometry * getAmount(state, form);
-		if (state == State.AQUEOUS && term.concentration != Constants.STANDARD_SOLUTE_WEIGHT) {
-			solute = new SimpleMixture(Compounds.H2O, 1 - term.concentration).mix(solute, term.concentration);
-			state = State.LIQUID;
-			amount *= Constants.STANDARD_SOLUTE_WEIGHT / term.concentration;
-		}
+	public static FluidStack getCanonicalFluidStack(MixtureComponent comp, State state, Form form) {
+		return getCanonicalFluidStack(comp.material, state, (int)(getAmount(form) * comp.weight));
+	}
+	
+	public static FluidStack getCanonicalFluidStack(MaterialSpec<?> spec) {
+		return getCanonicalFluidStack(spec, Forms.DUST);
+	}
+	
+	public static FluidStack getCanonicalFluidStack(MaterialSpec<?> spec, Form form) {
+		IndustrialMaterial solute = spec.material;
+		State state = spec.state;
+		float amount = spec.stoich * getAmount(state, form);
 		return getCanonicalFluidStack(solute, state, (int)amount);
 	}
 	
