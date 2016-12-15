@@ -140,11 +140,15 @@ public class IndustrialFluids {
 			 */
 			Mixture mixture = (Mixture)material;
 			amount *= mixture.getTotalWeight();
-			material = mixture.simplify();
+			material = mixture.normalize().simplify();
 		}
 		return fluid == null ? null : new FluidStack(fluid, amount);
 	}
 	
+	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, Form form) {
+		return getCanonicalFluidStack(material, getAmount(form));
+	}
+
 	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, int amount) {
 		return getCanonicalFluidStack(material, null, amount);
 	}
