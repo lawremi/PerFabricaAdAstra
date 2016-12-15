@@ -247,9 +247,15 @@ public class IndustrialFluids {
 		return new TextureHook();
 	}
 
-	public static List<FluidStack> getFluidStacks(Extraction regen) {
-		return Collections.unmodifiableList(regen.getProducts().stream().
+	public static List<FluidStack> getFluidStacks(UnitOperation ex) {
+		return ex.getOutputs().stream().
 				map(IndustrialFluids::getCanonicalFluidStack).
-				collect(Collectors.toList()));
+				collect(Collectors.toList());
+	}
+	
+	public static List<FluidStack> getFluidStacks(Phases sep) {
+		return Arrays.asList(
+				IndustrialFluids.getCanonicalFluidStack(sep.liquid, State.LIQUID),
+				IndustrialFluids.getCanonicalFluidStack(sep.gas, State.GAS));
 	}
 }
