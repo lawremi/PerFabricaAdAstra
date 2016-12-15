@@ -16,7 +16,6 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
-import org.pfaa.chemica.model.Phases;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.MaterialSpec;
@@ -253,7 +252,7 @@ public class IndustrialFluids {
 				collect(Collectors.toList());
 	}
 	
-	public static List<FluidStack> getFluidStacks(Phases sep) {
+	public static List<FluidStack> getFluidStacks(Mixture.Phases sep) {
 		return Arrays.asList(
 				IndustrialFluids.getCanonicalFluidStack(sep.liquid, State.LIQUID),
 				IndustrialFluids.getCanonicalFluidStack(sep.gas, State.GAS));

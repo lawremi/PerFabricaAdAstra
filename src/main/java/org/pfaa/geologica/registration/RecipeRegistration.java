@@ -20,13 +20,12 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.model.Phases;
 import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialSpec;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.Separation.SeparationTypes;
-import org.pfaa.chemica.processing.MaterialSpec;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.IngredientList;
@@ -501,7 +500,7 @@ public class RecipeRegistration {
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
 		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(noHelium, State.LIQUID);
 		registry.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(cond));
-		Phases sep = noHelium.separateByState(cond);
+		Mixture.Phases sep = noHelium.separateByState(cond);
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(sep);
 		registry.registerDistillationRecipe(gas, outputs, Condition.STP);
 		return sep.liquid;
@@ -591,7 +590,7 @@ public class RecipeRegistration {
 		FluidStack steam = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.GAS, (int)(steamRatio*inputFluid.amount));
 		FluidStack outputFluid = IndustrialFluids.getCanonicalFluidStack(output, Forms.DUST_TINY);
 		registry.registerMixingRecipe(Collections.emptyList(), inputFluid, steam, null, null, outputFluid, new Condition(1100), null);
-		Phases sep = output.separateByState(new Condition(700));
+		Mixture.Phases sep = output.separateByState(new Condition(700));
 		registry.registerDistillationRecipe(outputFluid, IndustrialFluids.getFluidStacks(sep), Condition.STP);
 	}
 }
