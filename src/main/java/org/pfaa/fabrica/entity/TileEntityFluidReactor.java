@@ -1,7 +1,5 @@
 package org.pfaa.fabrica.entity;
 
-import org.pfaa.chemica.fluid.IndustrialFluids;
-import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.fabrica.recipe.FluidReactorRecipe;
 import org.pfaa.fabrica.recipe.FluidReactorRecipes;
 
@@ -88,17 +86,6 @@ public class TileEntityFluidReactor extends TileEntity implements IFluidHandler,
 			recipe = this.getRecipe(this.inputTankB.getFluid());
 		} else {
 			recipe = this.getRecipe(null);
-			if (recipe == null) { // TODO: check that we are in appropriate atmosphere
-				recipe = this.getRecipeInAir();
-			}
-		}
-		return recipe;
-	}
-
-	private FluidReactorRecipe getRecipeInAir() {
-		FluidReactorRecipe recipe = this.getRecipe(IndustrialFluids.getCanonicalFluidStack(Compounds.N2));
-		if (recipe == null) {
-			recipe = this.getRecipe(IndustrialFluids.getCanonicalFluidStack(Compounds.O2));
 		}
 		return recipe;
 	}
