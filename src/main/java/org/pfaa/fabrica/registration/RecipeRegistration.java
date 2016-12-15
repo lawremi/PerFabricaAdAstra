@@ -61,7 +61,6 @@ public class RecipeRegistration {
 		makeDrywallJointCompound();
 		fillPigments();
 		makePhosphoricAcid();
-		//activateCarbon();
 		makeSodaAsh();
 		makeHood();
 	}
@@ -207,8 +206,9 @@ public class RecipeRegistration {
 	}
 
 	private static void makeSodaAsh() {
-		// TODO: Chemica needs to decompose NaHCO3 to Na2CO3
 		float brineConcentration = (float)Solutions.PURIFIED_BRINE.getComponents().get(1).weight;
+		// FIXME: drop Term.concentration, instead define this reaction normally and create a generic
+		//        operation that overrides the NaCl with brine.
 		Reaction reaction = Reaction.inWaterOf(Compounds.NaCl, brineConcentration).
 				         			 with(Compounds.CO2).
 				         			 with(Compounds.NH3).
@@ -224,10 +224,6 @@ public class RecipeRegistration {
 		FluidStack phosphoricAcid = IndustrialFluids.getCanonicalFluidStack(Compounds.H3PO4, State.AQUEOUS);
 		ItemStack gypsum = GeologicaItems.ORE_MINERAL_DUST.getItemStack(Ores.GYPSUM);
 		genericRecipes.registerMixingRecipe(solidInputs, sulfuricAcid, null, gypsum, phosphoricAcid, null, Condition.STP, null);
-	}
-
-	private static void activateCarbon() {
-		// TODO: Carbon activation:
 	}
 
 	private static void makeHood() {
