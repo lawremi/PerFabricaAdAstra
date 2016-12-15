@@ -20,10 +20,10 @@ public class Reaction {
 	public double getEnthalpyChange(Condition condition) {
 		double enthalpy = 0;
 		for (Term product : this.getProducts()) {
-			enthalpy += product.stoichiometry * product.chemical.getProperties(condition, product.state).enthalpy;
+			enthalpy += product.stoich * product.material.getProperties(condition, product.state).enthalpy;
 		}
 		for (Term reactant : this.getReactants()) {
-			enthalpy -= reactant.stoichiometry * reactant.chemical.getProperties(condition, reactant.state).enthalpy;
+			enthalpy -= reactant.stoich * reactant.material.getProperties(condition, reactant.state).enthalpy;
 		}
 		return enthalpy;
 	}
@@ -31,10 +31,10 @@ public class Reaction {
 	public double getEntropyChange(Condition condition) {
 		double entropy = 0;
 		for (Term product : this.getProducts()) {
-			entropy += product.stoichiometry * product.chemical.getProperties(condition, product.state).entropy;
+			entropy += product.stoich * product.material.getProperties(condition, product.state).entropy;
 		}
 		for (Term reactant : this.getReactants()) {
-			entropy -= reactant.stoichiometry * reactant.chemical.getProperties(condition, reactant.state).entropy;
+			entropy -= reactant.stoich * reactant.material.getProperties(condition, reactant.state).entropy;
 		}
 		return entropy;
 	}
@@ -78,7 +78,7 @@ public class Reaction {
 	private Mixture mixTerms(List<Term> terms) {
 		Mixture mixture = new SimpleMixture();
 		for (Term term : terms) {
-			mixture.mix(term.chemical, term.stoichiometry);
+			mixture.mix(term.material, term.stoich);
 		}
 		return mixture;
 	}

@@ -35,7 +35,7 @@ public class ReactionRegistry {
 	}
 	
 	private void registerRoastingReaction(Form form, Reaction reaction) {
-		float scale = 1F / reaction.getReactants().get(0).stoichiometry;
+		float scale = 1F / reaction.getReactants().get(0).stoich;
 		reaction = reaction.scale(scale);
 		ItemStack output = this.getProductItemStack(form, reaction);
 		if (output == null) {
@@ -51,39 +51,29 @@ public class ReactionRegistry {
 		List<Term> reactants = reaction.getReactants(State.SOLID);
 		List<IngredientStack> stacks = Lists.newArrayListWithCapacity(reactants.size());
 		for (Term reactant : reactants) {
-			stacks.add(new MaterialStack(form, reactant.chemical, (int)reactant.stoichiometry));
+			stacks.add(new MaterialStack(form, reactant.material, (int)reactant.stoich));
 		}
 		return new IngredientList(stacks);
 	}
 	
 	private ItemStack getProductItemStack(Form form, Reaction reaction) {
 		for (Term product : reaction.getProducts(State.SOLID)) {
-			float amount = product.stoichiometry;
+			float amount = product.stoich;
 			if (amount < 1) {
 				if (form == Forms.DUST) {
 					form = Forms.DUST_TINY;
 					amount *= Forms.DUST_TINY.getNumberPerBlock() / Forms.DUST.getNumberPerBlock();
 				} else continue;
 			}
-			return new MaterialStack(form, product.chemical, (int)amount).getBestItemStack();
+			return new MaterialStack(form, product.material, (int)amount).getBestItemStack();
 		}
 		return null;
 	}
 
-	private List<FluidStack> getReactantFluidStacks(Form form, Reaction reaction) {
-		List<FluidStack> fluidStacks = Lists.newArrayList();
-		for (Term reactant : reaction.getReactants()) {
-			if (reactant.state.isFluid()) {
-				fluidStacks.add(IndustrialFluids.getCanonicalFluidStack(reactant, form));
-			}
-		}
-		return fluidStacks;
-	}
-	
 	public void registerReaction(Reaction reaction) {
-		registerReaction(Forms.DUST, reaction);
+		registerReaction(Forms.DUST_TINY, reaction);
 		if (reaction.hasSolidReactants()) {
-			registerReaction(Forms.DUST_TINY, reaction);
+			registerReaction(Forms.DUST, reaction);
 		}
 	}
 

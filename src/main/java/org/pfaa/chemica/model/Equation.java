@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import org.pfaa.chemica.processing.MaterialSpec;
 
 public class Equation {
 	private List<Term> reactants;
@@ -81,61 +82,46 @@ public class Equation {
 		}
 		return str;
 	}
-
-	private static class ScaleTerm implements Function<Term,Term> {
-		private float scale;
-		
-		public ScaleTerm(float scale) {
-			this.scale = scale;
-		}
-		
-		@Override
-		public Term apply(Term input) {
-			return input.scale(this.scale);
-		}
-	}
 	
 	public Equation scale(float scale) {
-		Function<Term,Term> scaleTerm = new ScaleTerm(scale);
+		Function<Term, Term> scaleTerm = (t) -> t.scale(scale);
 		return new Equation(
-				Lists.transform(this.reactants, scaleTerm),
-				Lists.transform(this.products, scaleTerm),
+				this.reactants.stream().map(scaleTerm).collect(Collectors.toList()),
+				this.products.stream().map(scaleTerm).collect(Collectors.toList()),
 				this.catalysts);
 	}
 
-	public static class Term {
-		public final Chemical chemical;
-		public final float stoichiometry;
-		public final State state;
+	public static class Term extends MaterialSpec<Chemical> {
+		public static final Collector<Term, ?, Mixture> TO_MIXTURE = 
+				Collector.of(SimpleMixture::new, (m, t) -> m.mix(t.material, t.stoich), Mixture::mixAll);
+		
 		public final float concentration;
 		
 		public Term(Chemical chemical) {
 			this(1, chemical);
 		}
 		
-		public Term(float stoichiometry, Chemical chemical) {
-			this(stoichiometry, chemical, chemical.getProperties(Condition.STP).state);
+		public Term(float stoich, Chemical chemical) {
+			this(stoich, chemical, chemical.getProperties(Condition.STP).state);
 		}
 		
-		public Term(float stoichiometry, Chemical chemical, State state) {
-			this(stoichiometry, chemical, state, 1.0F);
+		public Term(float stoich, Chemical chemical, State state) {
+			this(stoich, chemical, state, 1.0F);
 		}
 		
-		public Term(float stoichiometry, Chemical chemical, State state, float concentration) {
-			this.stoichiometry = stoichiometry;
-			this.chemical = chemical;
-			this.state = state;
+		public Term(float stoich, Chemical chemical, State state, float concentration) {
+			super(chemical, state, stoich);
 			this.concentration = concentration;
 		}
 		
 		public Term scale(float scale) {
-			return new Term(this.stoichiometry * scale, this.chemical, this.state, this.concentration);
+			return new Term(this.stoich * scale, this.material, this.state, this.concentration);
 		}
 
 		public String toString() {
-			String str = this.chemical.toString() + "(" + this.state.name().substring(0, 1).toLowerCase() + ")";
-			if (this.stoichiometry > 1) {
-				str = (int)(this.stoichiometry) + str;
+			String str = this.material.toString() + "(" + this.state.name().substring(0, 1).toLowerCase() + ")";
+			if (this.stoich > 1) {
+				str = (int)(this.stoich) + str;
 			}
 			return str;
 		}
