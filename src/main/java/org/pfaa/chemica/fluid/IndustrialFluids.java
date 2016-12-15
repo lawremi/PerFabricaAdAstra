@@ -33,7 +33,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class IndustrialFluids {
-	private static HashMap<Fluid,IndustrialMaterial> fluidToMaterial = new HashMap<Fluid, IndustrialMaterial>();
+	private static Map<Fluid,IndustrialMaterial> fluidToMaterial = new HashMap<Fluid, IndustrialMaterial>();
 	
 	public static void registerFluidMaterial(Fluid fluid, IndustrialMaterial material) {
 		fluidToMaterial.put(fluid, material);
