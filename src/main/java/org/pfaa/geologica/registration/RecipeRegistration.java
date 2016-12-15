@@ -1,7 +1,9 @@
 package org.pfaa.geologica.registration;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
@@ -10,9 +12,7 @@ import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
-import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Equation.Term;
-import org.pfaa.chemica.model.Extraction;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
@@ -20,8 +20,13 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.model.Phases;
+import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.Separation;
+import org.pfaa.chemica.processing.Separation.SeparationTypes;
+import org.pfaa.chemica.processing.MaterialSpec;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.IngredientList;
@@ -43,6 +48,7 @@ import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
+import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.Solutions;
 
@@ -79,6 +85,7 @@ public class RecipeRegistration {
 		registerSiftingRecipes();
 		registerBrineProcessingRecipes();
 		registerNaturalGasProcessingRecipes();
+		registerOilProcessingRecipes();
 		registerCraftingRecipes();
 		registerStoneToolRecipes();
 		registerCompatibilityRecipes();
@@ -439,14 +446,14 @@ public class RecipeRegistration {
 			Term productB = r.getProducts().get(1);
 			Chemical aqueous = null;
 			if (productA.state == State.SOLID) {
-				if (solid != null) solid = productA.chemical;
+				if (solid != null) solid = productA.material;
 			} else {
-				aqueous = productA.chemical;
+				aqueous = productA.material;
 			}
 			if (productB.state == State.SOLID) {
-				if (solid != null) solid = productB.chemical;
+				if (solid != null) solid = productB.material;
 			} else {
-				aqueous = productB.chemical;
+				aqueous = productB.material;
 			}
 			if (aqueous != null)
 				resultComps.add(new MixtureComponent(aqueous, comp.weight));
@@ -482,31 +489,109 @@ public class RecipeRegistration {
 	}
 	
 	private static void registerNaturalGasProcessingRecipes() {
-		extractMethane(extractHelium(desourNaturalGas()));
+		Mixture ngl = extractMethane(extractHelium(desourNaturalGas()));
+		steamCrack(ngl,
+				   new SimpleMixture(Compounds.H2, 0.3).mix(Compounds.METHANE, 0.05).
+				   		mix(Compounds.ETHENE, 0.25).mix(Compounds.PROPENE, 0.05).mix(Compounds.BUTADIENE, 0.02).
+				   		mix(Compounds.H2O, 0.33), 2);
 	}
 	
-	private static void extractMethane(Mixture noHelium) {
+	private static Mixture extractMethane(Mixture noHelium) {
+		Condition cond = Compounds.ETHANE.getVaporization().getLiquidCondition();
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
-		Extraction ex = noHelium.extract(null, Compounds.METHANE);
-		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(ex);
-		// TODO: translate residuum to NGL
-		registry.registerDistillationRecipe(gas, outputs, Compounds.ETHANE.getFusion().getCondition());
+		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(noHelium, State.LIQUID);
+		registry.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(cond));
+		Phases sep = noHelium.separateByState(cond);
+		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(sep);
+		registry.registerDistillationRecipe(gas, outputs, Condition.STP);
+		return sep.liquid;
 	}
 
-	private static Mixture extractHelium(Mixture desoured) {
-		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(desoured);
-		Extraction ex = desoured.extract(null, Element.He);
-		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(ex);
-		registry.registerDistillationRecipe(gas, outputs, new Condition(70));
-		return ex.residuum;
+	private static Mixture extractHelium(MaterialSpec<Mixture> desoured) {
+		Separation sep = SeparationTypes.CONDENSATION.of(desoured).at(70);
+		opRegistry.registerOperation(sep);
+		return sep.getResiduum().material;
 	}
 
-	private static Mixture desourNaturalGas() {
+	private static MaterialSpec<Mixture> desourNaturalGas() {
 		// Dropping CO2 just to keep things simple
-		return RecipeUtils.separateByAmineAbsorption(registry, GeoMaterial.NATURAL_GAS, Compounds.H2S, Compounds.CO2);
+		return RecipeUtils.separateByAmineAbsorption(opRegistry, GeoMaterial.NATURAL_GAS, Compounds.H2S, Compounds.CO2);
+	}
+
+	private static void registerOilProcessingRecipes() {
+		distillOil(GeoMaterial.LIGHT_OIL);
+		distillOil(GeoMaterial.MEDIUM_OIL);
+		distillOil(GeoMaterial.HEAVY_OIL);
+		distillOil(GeoMaterial.EXTRA_HEAVY_OIL);
+	}
+
+	private static void distillOil(GeoMaterial oil) {
+		Crude crude = (Crude)oil.getComposition();
+		Crude topCut = crude.extract(Crudes.VOLATILES, Crudes.LIGHT_NAPHTHA, Crudes.HEAVY_NAPHTHA);
+		Crude middleCut = crude.extract(Crudes.KEROSENE, Crudes.LIGHT_GAS_OIL, Crudes.HEAVY_GAS_OIL);
+		distill(oil, Arrays.asList(topCut, middleCut, Crudes.BITUMEN));
+		distill(topCut);
+		distill(middleCut);
+	}
+	
+	private static void distill(Crude crude) {
+		distill(crude, crude.fractions());
+	}
+	
+	private static void distill(Mixture mixture, List<Vaporizable> fractions) {
+		List<Vaporizable> sortedFractions = fractions.stream().sorted((a, b) -> {
+			return Integer.compare(a.getVaporization().getTemperature(), b.getVaporization().getTemperature());
+		}).collect(Collectors.toList());
+		List<FluidStack> outputs = sortedFractions.stream().map((m) -> {
+			return IndustrialFluids.getCanonicalFluidStack(m, State.LIQUID, Forms.DUST_TINY);
+		}).collect(Collectors.toList());
+		Condition condition = sortedFractions.get(sortedFractions.size() - 2).getVaporization().getGasCondition();
+		FluidStack input = IndustrialFluids.getCanonicalFluidStack(mixture, State.LIQUID, Forms.DUST_TINY);
+		registry.registerDistillationRecipe(input, outputs, condition);
 	}
 	
 	private static void steamCrack() {
-		// see notes in pfaa.org
+		steamCrack(Compounds.ETHANE,
+				   new SimpleMixture(Compounds.H2, 0.45).mix(Compounds.METHANE, 0.05).
+				   		mix(Compounds.ETHENE, 0.25).mix(Compounds.PROPENE, 0.03).mix(Compounds.BUTADIENE, 0.02).
+				   		mix(Compounds.H2O, 0.2), 1);
+		steamCrack(Compounds.PROPANE,
+				   new SimpleMixture(Compounds.H2, 0.2).mix(Compounds.METHANE, 0.1).
+				   		mix(Compounds.ETHENE, 0.3).mix(Compounds.PROPENE, 0.15).mix(Compounds.BUTADIENE, 0.05).
+				   		mix(Compounds.H2O, 0.2), 1.5F);
+		
+		Mixture rpg = new SimpleMixture(Compounds.BENZENE, 0.5).mix(Compounds.TOLUENE, 0.5);
+		Mixture butenes = new SimpleMixture(Compounds.ISO_BUTENE, 0.5).mix(Compounds.N_BUTENE, 0.5);
+		
+		steamCrack(Crudes.LIGHT_NAPHTHA,
+				   new SimpleMixture(Compounds.H2, 0.1).mix(Compounds.METHANE, 0.08).
+				   		mix(Compounds.ETHENE, 0.18).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.07).
+				   		mix(rpg, 0.1).mix(butenes, 0.07).
+				   		mix(Compounds.H2O, 0.33), 3);
+		steamCrack(Crudes.HEAVY_NAPHTHA,
+				   new SimpleMixture(Compounds.H2, 0.08).mix(Compounds.METHANE, 0.08).
+				   		mix(Compounds.ETHENE, 0.15).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.07).
+				   		mix(rpg, 0.15).mix(butenes, 0.07).
+				   		mix(Compounds.H2O, 0.33), 6);
+		
+		steamCrack(Crudes.LIGHT_GAS_OIL,
+				   new SimpleMixture(Compounds.H2, 0.05).mix(Compounds.METHANE, 0.05).
+				   		mix(Compounds.ETHENE, 0.13).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.05).
+				   		mix(rpg, 0.1).mix(butenes, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.1).
+				   		mix(Compounds.H2O, 0.40), 12);
+		steamCrack(Crudes.HEAVY_GAS_OIL,
+				   new SimpleMixture(Compounds.H2, 0.05).mix(Compounds.METHANE, 0.05).
+				   		mix(Compounds.ETHENE, 0.10).mix(Compounds.PROPENE, 0.05).mix(Compounds.BUTADIENE, 0.05).
+				   		mix(rpg, 0.1).mix(butenes, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.15).
+				   		mix(Compounds.H2O, 0.40), 16);
+	}
+	
+	private static void steamCrack(IndustrialMaterial input, Mixture output, float steamRatio) {
+		FluidStack inputFluid = IndustrialFluids.getCanonicalFluidStack(input, Forms.DUST_TINY);
+		FluidStack steam = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.GAS, (int)(steamRatio*inputFluid.amount));
+		FluidStack outputFluid = IndustrialFluids.getCanonicalFluidStack(output, Forms.DUST_TINY);
+		registry.registerMixingRecipe(Collections.emptyList(), inputFluid, steam, null, null, outputFluid, new Condition(1100), null);
+		Phases sep = output.separateByState(new Condition(700));
+		registry.registerDistillationRecipe(outputFluid, IndustrialFluids.getFluidStacks(sep), Condition.STP);
 	}
 }

@@ -62,7 +62,7 @@ public class MagneticraftIntegration {
 		@Override
 		public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition) {
 			/* Two steps: 
-			 * 1) Heat in distillery to "Boiling <fluid>"
+			 * 1) Boil in distillery.
 			 * 2) Separate in refinery to three outputs
 			 *    - Top fraction (LPG + light/heavy naphtha)
 			 *    - Middle fraction (kerosene + light/heavy gas oil)
