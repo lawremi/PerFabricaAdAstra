@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.pfaa.chemica.processing.MaterialSpec;
+import org.pfaa.chemica.processing.MaterialStoich;
 
 public class Equation {
 	private List<Term> reactants;
@@ -29,7 +29,7 @@ public class Equation {
 
 	public List<Term> getReactants(State state) {
 		return Collections.unmodifiableList(this.getReactants().stream().
-					filter((p) -> p.state == state).
+					filter((p) -> p.state() == state).
 					collect(Collectors.toList()));
 	}
 
@@ -43,7 +43,7 @@ public class Equation {
 	
 	public List<Term> getProducts(State state) {
 		return Collections.unmodifiableList(this.getProducts().stream().
-					filter((p) -> p.state == state).
+					filter((p) -> p.state() == state).
 					collect(Collectors.toList()));
 	}
 
@@ -91,9 +91,9 @@ public class Equation {
 				this.catalysts);
 	}
 
-	public static class Term extends MaterialSpec<Chemical> {
+	public static class Term extends MaterialStoich<Chemical> {
 		public static final Collector<Term, ?, Mixture> TO_MIXTURE = 
-				Collector.of(SimpleMixture::new, (m, t) -> m.mix(t.material, t.stoich), Mixture::mixAll);
+				Collector.of(SimpleMixture::new, (m, t) -> m.mix(t.material(), t.stoich), Mixture::mixAll);
 		
 		public final float concentration;
 		
@@ -110,16 +110,20 @@ public class Equation {
 		}
 		
 		public Term(float stoich, Chemical chemical, State state, float concentration) {
-			super(chemical, state, stoich);
+			super(state.of(chemical), stoich);
 			this.concentration = concentration;
 		}
 		
+		public Term(MaterialStoich<Chemical> stoich) {
+			this(stoich.stoich, stoich.material(), stoich.state());
+		}
+		
 		public Term scale(float scale) {
-			return new Term(this.stoich * scale, this.material, this.state, this.concentration);
+			return new Term(this.stoich * scale, this.material(), this.state(), this.concentration);
 		}
 
 		public String toString() {
-			String str = this.material.toString() + "(" + this.state.name().substring(0, 1).toLowerCase() + ")";
+			String str = this.material().toString() + "(" + this.state().name().substring(0, 1).toLowerCase() + ")";
 			if (this.stoich > 1) {
 				str = (int)(this.stoich) + str;
 			}

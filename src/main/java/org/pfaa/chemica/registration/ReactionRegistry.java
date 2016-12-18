@@ -48,7 +48,7 @@ public class ReactionRegistry {
 		}
 		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList inputs = this.getSolidReactants(form, reaction);
-		int temp = reaction.getCanonicalCondition().temperature;
+		int temp = reaction.getCondition().temperature;
 		delegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
@@ -56,7 +56,7 @@ public class ReactionRegistry {
 		List<Term> reactants = reaction.getReactants(State.SOLID);
 		List<IngredientStack> stacks = Lists.newArrayListWithCapacity(reactants.size());
 		for (Term reactant : reactants) {
-			stacks.add(new MaterialStack(form, reactant.material, (int)reactant.stoich));
+			stacks.add(new MaterialStack(form, reactant.material(), (int)reactant.stoich));
 		}
 		return new IngredientList(stacks);
 	}
@@ -70,7 +70,7 @@ public class ReactionRegistry {
 					amount *= Forms.DUST_TINY.getNumberPerBlock() / Forms.DUST.getNumberPerBlock();
 				} else continue;
 			}
-			return new MaterialStack(form, product.material, (int)amount).getBestItemStack();
+			return new MaterialStack(form, product.material(), (int)amount).getBestItemStack();
 		}
 		return null;
 	}
@@ -103,7 +103,7 @@ public class ReactionRegistry {
 		IngredientList catalyst = this.getCatalysts(reaction);
 		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
-				reaction.getCanonicalCondition(), catalyst);
+				reaction.getCondition(), catalyst);
 	}
 	
 	private IngredientList getCatalysts(Reaction reaction) {
@@ -115,10 +115,10 @@ public class ReactionRegistry {
 			return Collections.emptyList();
 		Stream<Term> reactants = reaction.getReactants().stream().
 				filter((reactant) -> {
-					return reactant.state != State.SOLID && 
-							!(reaction.isAqueous() && reactant.material == Compounds.H2O) &&
+					return reactant.state() != State.SOLID && 
+							!(reaction.isAqueous() && reactant.material() == Compounds.H2O) &&
 							!(reaction.isAtmospheric() && 
-									(reactant.material == Compounds.O2 || reactant.material == Compounds.N2));
+									(reactant.material() == Compounds.O2 || reactant.material() == Compounds.N2));
 				});
 		reactants = addWaterAsSolvent(reaction, reactants);
 		Stream<FluidStack> fluidStream = reactants.limit(maxCount - 1).
@@ -127,8 +127,8 @@ public class ReactionRegistry {
 		Stream<Term> toMerge = reactants.skip(fluidStream.count());
 		if (toMerge.count() > 0) {
 			Mixture mixture = toMerge.collect(Term.TO_MIXTURE);
-			State state = toMerge.findAny().get().state;
-			if (toMerge.map((t) -> t.state).distinct().count() > 1) {
+			State state = toMerge.findAny().get().state();
+			if (toMerge.map((t) -> t.state()).distinct().count() > 1) {
 				throw new IllegalArgumentException("cannot mix reactants in different states");
 			}
 			fluidStacks.add(IndustrialFluids.getCanonicalFluidStack(mixture, state, form));
@@ -157,9 +157,9 @@ public class ReactionRegistry {
 					map((t) -> t.stoich).reduce((a,b)->a+b);
 			if (stoich.isPresent()) {
 				reactants = reactants.map((reactant) -> {
-					if (reactant.material == Compounds.H2O) {
+					if (reactant.material() == Compounds.H2O) {
 						float solventStoich = Forms.DUST.getNumberPerBlock() * stoich.get();
-						reactant = new Term(solventStoich + reactant.stoich, reactant.material);
+						reactant = new Term(solventStoich + reactant.stoich, reactant.material());
 					}
 					return reactant;
 				});

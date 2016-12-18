@@ -21,7 +21,7 @@ public class ReactionFactory {
 		
 		if (productA != null && productB != null) {
 			Reaction reaction = Reaction.inWaterOf(saltA).with(saltB).yields(productA).and(productB);
-			if (reaction.getProducts().get(0).state != State.AQUEOUS || reaction.getProducts().get(1).state != State.AQUEOUS) {
+			if (reaction.getProducts().get(0).state() != State.AQUEOUS || reaction.getProducts().get(1).state() != State.AQUEOUS) {
 				return reaction;
 			}
 		}

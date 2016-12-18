@@ -40,7 +40,7 @@ public class MaterialStack implements IngredientStack {
 	}
 	
 	public MaterialStack(Form form, Term term) {
-		this(form, term.material, (int)term.stoich);
+		this(form, term.material(), (int)term.stoich);
 	}
 	
 	public Form getForm() {

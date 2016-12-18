@@ -320,7 +320,7 @@ public class RecipeRegistration {
 		for (T chemical : item.getIndustrialMaterials()) {
 			FluidStack solution = IndustrialFluids.getCanonicalFluidStack(chemical, State.AQUEOUS, amount);
 			ItemStack solute = item.getItemStack(chemical);
-			Condition condition = chemical.getDissociation().getCanonicalCondition();
+			Condition condition = chemical.getDissociation().getCondition();
 			target.registerMixingRecipe(Arrays.asList(solute), water, null, null, solution, null, condition, null);
 		}
 	}
@@ -372,7 +372,7 @@ public class RecipeRegistration {
 	private static void registerSynthesisRecipes() {
 		reactionTarget.registerReaction(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
 		reactionTarget.registerReaction(Reaction.of(Compounds.N2).with(3, Compounds.H2).yields(2, Compounds.NH3, State.GAS).
-				at(725, 101*Constants.STANDARD_PRESSURE).via(Element.Fe));
+				at(new Condition(725, 101*Constants.STANDARD_PRESSURE)).via(Element.Fe));
 		reactionTarget.registerReaction(Reaction.of(Compounds.SO3).with(Compounds.H2SO4).yields(2, Compounds.H2S2O7));
 		reactionTarget.registerReaction(Reaction.of(Compounds.H2S2O7).with(Compounds.H2O).yields(2, Compounds.H2SO4));
 		reactionTarget.registerReaction(Reaction.inAirOf(2, Compounds.ETHENE).with(Compounds.O2).

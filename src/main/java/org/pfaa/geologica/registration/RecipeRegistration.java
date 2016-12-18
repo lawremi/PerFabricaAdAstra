@@ -444,15 +444,15 @@ public class RecipeRegistration {
 			Term productA = r.getProducts().get(0);
 			Term productB = r.getProducts().get(1);
 			Chemical aqueous = null;
-			if (productA.state == State.SOLID) {
-				if (solid != null) solid = productA.material;
+			if (productA.state() == State.SOLID) {
+				if (solid != null) solid = productA.material();
 			} else {
-				aqueous = productA.material;
+				aqueous = productA.material();
 			}
-			if (productB.state == State.SOLID) {
-				if (solid != null) solid = productB.material;
+			if (productB.state() == State.SOLID) {
+				if (solid != null) solid = productB.material();
 			} else {
-				aqueous = productB.material;
+				aqueous = productB.material();
 			}
 			if (aqueous != null)
 				resultComps.add(new MixtureComponent(aqueous, comp.weight));
