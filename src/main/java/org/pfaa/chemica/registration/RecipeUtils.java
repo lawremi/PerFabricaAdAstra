@@ -12,18 +12,11 @@ import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
-import org.pfaa.chemica.model.Chemical;
-import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.EnthalpyChange;
-import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.Separation.SeparationTypes;
-import org.pfaa.chemica.processing.MaterialSpec;
 import org.pfaa.chemica.util.ChanceStack;
 
 import com.google.common.base.Function;
@@ -127,23 +120,6 @@ public class RecipeUtils {
 			itemStack.stackSize = (int)weight;
 		}
 		return new ChanceStack(itemStack, Math.min(weight, 1));
-	}
-	
-	// TODO: make factory method on Separation
-	public static MaterialSpec<?> separateByAmineAbsorption(OperationRegistry target, Mixture mixture, 
-			Chemical purity, Chemical impurity) {
-		MaterialSpec<Chemical> ethanolamine = MaterialSpec.of(State.AQUEOUS, Compounds.ETHANOLAMINE); 
-		Separation abs = SeparationTypes.ABSORPTION.
-				of(mixture).
-				with(ethanolamine).
-				extracts(impurity, purity);
-		target.registerOperation(abs);
-		MaterialSpec<?> richAmine = abs.getSeparated().without(impurity);
-		EnthalpyChange regen = EnthalpyChange.Types.LIQUID_HEATING.
-				of(richAmine).
-				yields(MaterialSpec.of(purity), ethanolamine);
-		target.registerOperation(regen);
-		return abs.getResiduum();
 	}
 	
 	public static void oreDictifyRecipes(Map<ItemStack, String> replacements, ItemStack[] exclusions) {

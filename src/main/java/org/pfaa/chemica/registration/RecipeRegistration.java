@@ -22,11 +22,15 @@ import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
+import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStoich;
+import org.pfaa.chemica.processing.Separation;
+import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -40,6 +44,7 @@ public class RecipeRegistration {
 	private static final CombinedRecipeRegistry target = new CombinedRecipeRegistry();
 	private static final GenericRecipeRegistry genericTarget = target.getGenericRecipeRegistry();
 	private static final ReactionRegistry reactionTarget = new ReactionRegistry(genericTarget);
+	private static final OperationRegistry opRegistry = new DefaultOperationRegistry();
 	
 	public static void addRegistry(String key, RecipeRegistry registry) {
 		target.addRegistry(key, registry);
@@ -428,10 +433,26 @@ public class RecipeRegistration {
 		Reaction makeWaterGas = Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
 				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS);
 		reactionTarget.registerReaction(makeWaterGas);
-		RecipeUtils.separateByAmineAbsorption(opRegistry, makeWaterGas.getProduct(), Compounds.CO2, null);
+		absorbCO2(makeWaterGas.getProduct());
 		makeWaterGas = Reaction.of(Compounds.H2O, State.GAS).with(Compounds.CO).with(3, Compounds.H2).
 				yields(Compounds.CO2).and(4, Compounds.H2).via(Catalysts.HTS);
-		RecipeUtils.separateByAmineAbsorption(opRegistry, makeWaterGas.getProduct(), Compounds.CO2, null);
+		absorbCO2(makeWaterGas.getProduct());
+	}
+	
+	public static MaterialStoich<?> absorbCO2(Mixture mixture) 
+	{
+		MaterialStoich<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(1, Compounds.ETHANOLAMINE); 
+		Separation abs = SeparationTypes.ABSORPTION.
+				of(mixture).
+				with(ethanolamine).
+				extracts(Compounds.CO2);
+		opRegistry.registerOperation(abs);
+		MaterialStoich<Mixture> richAmine = abs.getSeparated();
+		Separation regen = SeparationTypes.DEGASIFICATION.
+				of(richAmine).
+				extracts(Compounds.CO2).at(400);
+		opRegistry.registerOperation(regen);
+		return abs.getResiduum();
 	}
 	
 	private static void registerSingleDisplacementRecipes() {

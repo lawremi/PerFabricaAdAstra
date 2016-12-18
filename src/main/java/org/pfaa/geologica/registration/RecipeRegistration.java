@@ -506,15 +506,26 @@ public class RecipeRegistration {
 		return sep.liquid;
 	}
 
-	private static Mixture extractHelium(MaterialSpec<Mixture> desoured) {
+	private static Mixture extractHelium(MaterialStoich<Mixture> desoured) {
 		Separation sep = SeparationTypes.CONDENSATION.of(desoured).at(70);
 		opRegistry.registerOperation(sep);
-		return sep.getResiduum().material;
+		return sep.getResiduum().material();
 	}
 
-	private static MaterialSpec<Mixture> desourNaturalGas() {
+	private static MaterialStoich<Mixture> desourNaturalGas() {
 		// Dropping CO2 just to keep things simple
-		return RecipeUtils.separateByAmineAbsorption(opRegistry, GeoMaterial.NATURAL_GAS, Compounds.H2S, Compounds.CO2);
+		MaterialStoich<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(1, Compounds.ETHANOLAMINE); 
+		Separation abs = SeparationTypes.ABSORPTION.
+				of(GeoMaterial.NATURAL_GAS).
+				with(ethanolamine).
+				extracts(Compounds.CO2, Compounds.H2S);
+		opRegistry.registerOperation(abs);
+		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material().without(Compounds.CO2));
+		Separation regen = SeparationTypes.DEGASIFICATION.
+				of(richAmine).
+				extracts(Compounds.H2S).at(400);
+		opRegistry.registerOperation(regen);
+		return abs.getResiduum();
 	}
 
 	private static void registerOilProcessingRecipes() {
