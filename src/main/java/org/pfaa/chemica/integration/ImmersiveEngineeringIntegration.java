@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ImmersiveEngineeringIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.IMMERSIVE_ENGINEERING)) {
-			RecipeRegistration.addRegistry(ModIds.IMMERSIVE_ENGINEERING,
+			RecipeRegistration.putRegistry(ModIds.IMMERSIVE_ENGINEERING,
 					new ImmersiveEngineeringRecipeRegistry());
 		}
 	}

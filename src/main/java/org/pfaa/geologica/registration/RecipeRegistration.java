@@ -14,6 +14,7 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
@@ -23,12 +24,14 @@ import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.MaterialSpec;
+import org.pfaa.chemica.processing.MaterialStoich;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.Separation.SeparationTypes;
+import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.DefaultConversionRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.IngredientList;
+import org.pfaa.chemica.registration.ConversionRegistry;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.registration.ReactionFactory;
 import org.pfaa.chemica.registration.RecipeRegistry;
@@ -71,9 +74,9 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeRegistration {
-	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getTarget();
-	private static final GenericRecipeRegistry genericRegistry = 
-			org.pfaa.chemica.registration.RecipeRegistration.getGenericTarget();
+	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getCombinedRegistry();
+	private static final GenericRecipeRegistry genericRegistry = registry.getGenericRecipeRegistry();
+	private static final ConversionRegistry opRegistry = new DefaultConversionRegistry();
 	
 	public static void init() {
 		registerRockCastingRecipes();
@@ -373,16 +376,16 @@ public class RecipeRegistration {
 	}
 	
 	private static void registerPartitionRecipes() {
-		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
 				GeologicaItems.INDUSTRIAL_MINERAL_DUST, 
 				GeologicaItems.INDUSTRIAL_MINERAL_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
 				GeologicaItems.CRUDE_DUST, 
 				GeologicaItems.CRUDE_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
 				GeologicaItems.ORE_MINERAL_DUST, 
 				GeologicaItems.ORE_MINERAL_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.registerPartitionRecipes(
+		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
 				GeologicaItems.ORE_DUST, 
 				GeologicaItems.ORE_DUST_TINY);
 	}
@@ -508,7 +511,7 @@ public class RecipeRegistration {
 
 	private static Mixture extractHelium(MaterialStoich<Mixture> desoured) {
 		Separation sep = SeparationTypes.CONDENSATION.of(desoured).at(70);
-		opRegistry.registerOperation(sep);
+		opRegistry.register(sep);
 		return sep.getResiduum().material();
 	}
 
@@ -519,12 +522,12 @@ public class RecipeRegistration {
 				of(GeoMaterial.NATURAL_GAS).
 				with(ethanolamine).
 				extracts(Compounds.CO2, Compounds.H2S);
-		opRegistry.registerOperation(abs);
+		opRegistry.register(abs);
 		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material().without(Compounds.CO2));
 		Separation regen = SeparationTypes.DEGASIFICATION.
 				of(richAmine).
 				extracts(Compounds.H2S).at(400);
-		opRegistry.registerOperation(regen);
+		opRegistry.register(regen);
 		return abs.getResiduum();
 	}
 

@@ -7,6 +7,6 @@ import cpw.mods.fml.common.Loader;
 public class ChemicaIntegration {
 	public static void init() {
 		String id = Loader.instance().activeModContainer().getModId();
-		RecipeRegistration.addRegistry(id, new GeologicaRecipeProxy());
+		RecipeRegistration.putRegistry(id, new GeologicaRecipeProxy());
 	}
 }

@@ -16,7 +16,7 @@ public class RailcraftIntegration {
 	
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.RAILCRAFT)) {
-			RecipeRegistration.addRegistry(ModIds.RAILCRAFT, new RailcraftRecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.RAILCRAFT, new RailcraftRecipeRegistry());
 		}
 	}
 	

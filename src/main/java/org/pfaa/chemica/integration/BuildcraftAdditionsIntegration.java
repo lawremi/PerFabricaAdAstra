@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 public class BuildcraftAdditionsIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.BUILDCRAFT_ADDITIONS)) {
-			RecipeRegistration.addRegistry(ModIds.BUILDCRAFT_ADDITIONS,
+			RecipeRegistration.putRegistry(ModIds.BUILDCRAFT_ADDITIONS,
 					new BuildcraftAdditionsRecipeRegistry());
 		}
 	}

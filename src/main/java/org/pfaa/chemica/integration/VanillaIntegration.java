@@ -22,7 +22,7 @@ import scala.actors.threadpool.Arrays;
 
 public class VanillaIntegration {
 	public static void init() {
-		RecipeRegistration.addRegistry(ModIds.VANILLA, new VanillaRecipeRegistry());
+		RecipeRegistration.putRegistry(ModIds.VANILLA, new VanillaRecipeRegistry());
 	}
 	
 	public static class VanillaRecipeRegistry extends AbstractRecipeRegistry {

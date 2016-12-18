@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class MagneticraftIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.MAGNETICRAFT)) {
-			RecipeRegistration.addRegistry(ModIds.MAGNETICRAFT, new MagneticraftRecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.MAGNETICRAFT, new MagneticraftRecipeRegistry());
 		}
 	}
 	

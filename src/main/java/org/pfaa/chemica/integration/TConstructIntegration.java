@@ -25,7 +25,7 @@ import tconstruct.library.crafting.Smeltery;
 public class TConstructIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.TCONSTRUCT)) {
-			RecipeRegistration.addRegistry(ModIds.TCONSTRUCT, new TConstructRecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.TCONSTRUCT, new TConstructRecipeRegistry());
 		}
 	}
 	

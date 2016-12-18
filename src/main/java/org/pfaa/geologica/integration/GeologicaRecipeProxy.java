@@ -112,7 +112,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
+				RecipeRegistration.getCombinedRegistry().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
 			}
 		}, true);
 	}
@@ -133,7 +133,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getTarget().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
+				RecipeRegistration.getCombinedRegistry().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
 			}
 		}, true);
 	}
@@ -146,7 +146,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getTarget().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
+					RecipeRegistration.getCombinedRegistry().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
 				}
 			}, true);
 		}
@@ -160,7 +160,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getTarget().registerMixingRecipe(localInputs, output);
+					RecipeRegistration.getCombinedRegistry().registerMixingRecipe(localInputs, output);
 				}
 			}, false);
 		}

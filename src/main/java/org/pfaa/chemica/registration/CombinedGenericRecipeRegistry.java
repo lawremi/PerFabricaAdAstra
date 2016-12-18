@@ -16,7 +16,7 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 
 	private Map<String,GenericRecipeRegistry> registries = new HashMap<String,GenericRecipeRegistry>();
 	
-	public void addRegistry(String key, GenericRecipeRegistry registry) {
+	public void putRegistry(String key, GenericRecipeRegistry registry) {
 		this.registries.put(key, registry);
 	}
 	

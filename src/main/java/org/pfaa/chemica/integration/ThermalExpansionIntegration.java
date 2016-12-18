@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ThermalExpansionIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.THERMAL_EXPANSION)) {
-			RecipeRegistration.addRegistry(ModIds.THERMAL_EXPANSION, new ThermalExpansionRecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.THERMAL_EXPANSION, new ThermalExpansionRecipeRegistry());
 		}
 	}
 	

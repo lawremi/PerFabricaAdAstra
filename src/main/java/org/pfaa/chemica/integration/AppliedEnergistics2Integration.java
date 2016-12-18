@@ -17,7 +17,7 @@ public class AppliedEnergistics2Integration {
 	
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.APPLIED_ENERGISTICS_2)) {
-			RecipeRegistration.addRegistry(ModIds.APPLIED_ENERGISTICS_2, 
+			RecipeRegistration.putRegistry(ModIds.APPLIED_ENERGISTICS_2, 
 					new AppliedEnergistics2RecipeRegistry());
 		}
 	}

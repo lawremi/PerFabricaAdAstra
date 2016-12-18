@@ -9,16 +9,20 @@ import java.util.stream.Stream;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
-import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.processing.Combination;
+import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Separation;
+import org.pfaa.chemica.processing.Sizing;
 import org.pfaa.chemica.processing.Form.Forms;
 
 import com.google.common.collect.Lists;
@@ -27,11 +31,49 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ReactionRegistry {
-	private GenericRecipeRegistry delegate;
+public class DefaultConversionRegistry implements ConversionRegistry {
+
+	@Override
+	public void register(Separation separation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void register(Combination combination) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void register(Sizing sizing) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void register(EnthalpyChange enthalpyChange) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void register(Reaction reaction) {
+		if (reaction.hasOnlySolidReactants())
+			this.registerRoastingReaction(reaction);
+		else this.registerReaction(reaction);
+	}
+
+	private GenericRecipeRegistry genericDelegate;
+	private RecipeRegistry delegate;
 	
-	public ReactionRegistry(GenericRecipeRegistry delegate) {
+	public DefaultConversionRegistry() {
+		this(new CombinedRecipeRegistry());
+	}
+	
+	public DefaultConversionRegistry(RecipeRegistry delegate) {
 		this.delegate = delegate;
+		this.genericDelegate = delegate.getGenericRecipeRegistry();
 	}
 	
 	public void registerRoastingReaction(Reaction reaction) {
@@ -49,7 +91,7 @@ public class ReactionRegistry {
 		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList inputs = this.getSolidReactants(form, reaction);
 		int temp = reaction.getCondition().temperature;
-		delegate.registerRoastingRecipe(inputs, output, gas, temp);
+		genericDelegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
 	private IngredientList getSolidReactants(Form form, Reaction reaction) {
@@ -101,7 +143,7 @@ public class ReactionRegistry {
 		FluidStack liquidProduct = this.getProductFluidStack(form, reaction, State.LIQUID);
 		FluidStack gasProduct = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList catalyst = this.getCatalysts(reaction);
-		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
+		genericDelegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
 				reaction.getCondition(), catalyst);
 	}
@@ -142,7 +184,7 @@ public class ReactionRegistry {
 					FluidStack inputA = IndustrialFluids.getCanonicalFluidStack(compA, state, Forms.DUST_TINY);
 					FluidStack inputB = IndustrialFluids.getCanonicalFluidStack(compB, state, Forms.DUST_TINY);
 					FluidStack output = IndustrialFluids.getCanonicalFluidStack(outputMixture, state, Forms.DUST_TINY);
-					delegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
+					genericDelegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
 							null, Condition.STP, null);
 				}
 				return new MixtureComponent(outputMixture, 1.0F);
@@ -166,5 +208,10 @@ public class ReactionRegistry {
 			}
 		}
 		return reactants;
+	}
+
+	@Override
+	public RecipeRegistry getRecipeRegistry() {
+		return this.delegate;
 	}
 }

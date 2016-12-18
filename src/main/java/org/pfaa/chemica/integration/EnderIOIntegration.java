@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class EnderIOIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.ENDER_IO)) {
-			RecipeRegistration.addRegistry(ModIds.ENDER_IO, new EnderIORecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.ENDER_IO, new EnderIORecipeRegistry());
 		}
 	}
 	

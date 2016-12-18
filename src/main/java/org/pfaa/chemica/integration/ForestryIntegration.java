@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ForestryIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.FORESTRY)) {
-			RecipeRegistration.addRegistry(ModIds.FORESTRY, new ForestryRecipeRegistry());
+			RecipeRegistration.putRegistry(ModIds.FORESTRY, new ForestryRecipeRegistry());
 		}
 	}
 

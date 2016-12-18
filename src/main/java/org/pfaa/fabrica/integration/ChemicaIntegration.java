@@ -8,7 +8,7 @@ public class ChemicaIntegration {
 
 	public static void init() {
 		String id = Loader.instance().activeModContainer().getModId();
-		RecipeRegistration.addRegistry(id, new FabricaRecipeRegistry());
+		RecipeRegistration.putRegistry(id, new FabricaRecipeRegistry());
 	}
 
 }
