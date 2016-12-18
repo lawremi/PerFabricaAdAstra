@@ -1,11 +1,8 @@
 package org.pfaa.chemica.processing;
 
-public class MassTransfer extends UnitOperation {
+public abstract class MassTransfer<T extends MassTransferType<?,?>> extends UnitOperation<T> {
 
-	protected MassTransfer(Type type, MaterialSpec input) {
-		super(type, input);
+	protected MassTransfer(T type) {
+		super(type);
 	}
-
-	/* Moving one material with respect to another; either mixing or separation */
-	public static interface MassTransferType extends Type { }
 }

@@ -18,8 +18,7 @@ import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.MaterialSpec;
-import org.pfaa.chemica.processing.UnitOperation;
+import org.pfaa.chemica.processing.MaterialStoich;
 
 import com.google.common.base.CaseFormat;
 
@@ -165,13 +164,13 @@ public class IndustrialFluids {
 		return getCanonicalFluidStack(comp.material, state, (int)(getAmount(form) * comp.weight));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(MaterialSpec<?> spec) {
+	public static FluidStack getCanonicalFluidStack(MaterialStoich<?> spec) {
 		return getCanonicalFluidStack(spec, Forms.DUST);
 	}
 	
-	public static FluidStack getCanonicalFluidStack(MaterialSpec<?> spec, Form form) {
-		IndustrialMaterial solute = spec.material;
-		State state = spec.state;
+	public static FluidStack getCanonicalFluidStack(MaterialStoich<?> spec, Form form) {
+		IndustrialMaterial solute = spec.material();
+		State state = spec.state();
 		float amount = spec.stoich * getAmount(state, form);
 		return getCanonicalFluidStack(solute, state, (int)amount);
 	}
@@ -246,8 +245,8 @@ public class IndustrialFluids {
 		return new TextureHook();
 	}
 
-	public static List<FluidStack> getFluidStacks(UnitOperation ex) {
-		return ex.getOutputs().stream().
+	public static List<FluidStack> getFluidStacks(List<MaterialStoich<?>> stoichs) {
+		return stoichs.stream().
 				map(IndustrialFluids::getCanonicalFluidStack).
 				collect(Collectors.toList());
 	}

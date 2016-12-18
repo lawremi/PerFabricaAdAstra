@@ -1,81 +1,59 @@
 package org.pfaa.chemica.processing;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.State;
 
-public class Combination extends MassTransfer {
-	protected Combination(Type type, MaterialSpec<?> input) {
-		super(type, input);
+import com.google.common.collect.Lists;
+
+public class Combination extends MassTransfer<CombinationType> {
+	private List<MaterialStoich<?>> inputs = Lists.newArrayList();
+	private MaterialStoich<?> output;
+	
+	protected Combination(CombinationType type, MaterialStoich<?>... materialStoichs) {
+		super(type);
+		this.with(materialStoichs);
 	}
-
-	public Combination with(MaterialSpec<?>... inputs) {
-		super.with(inputs);
+	
+	public Combination with(MaterialStoich<?>... inputs) {
+		this.inputs.addAll(Arrays.asList(inputs));
 		return this;
 	}
 
 	public Combination with(IndustrialMaterial... inputs) {
-		super.with(inputs);
+		this.inputs.addAll(MaterialStoich.of(inputs));
 		return this;
 	}
 
-	public Combination yields(MaterialSpec<?>... outputs) {
-		super.yields(outputs);
+	public Combination yields(MaterialStoich<?> output) {
+		this.output = output;
 		return this;
 	}
 
-	public Combination yields(IndustrialMaterial... outputs) {
-		super.yields(outputs);
-		return this;
-	}
-	
-	public Combination at(int temp) {
-		super.at(temp);
-		return this;
-	}
-	
-	public Combination given(int energy) {
-		super.given(energy);
-		return this;
+	public Combination yields(IndustrialMaterial output) {
+		return this.yields(MaterialStoich.of(output));
 	}
 
-	public static interface CombinationType extends MassTransferType { 
-		public State getContinuousState();
-		public State getDispersedState();
+	@Override
+	public List<MaterialStoich<?>> getInputs() {
+		return Collections.unmodifiableList(this.inputs);
 	}
 
-	// TODO: If continuous phase is water, and material is soluble, yield aqueous state.
-	public static enum CombinationTypes implements CombinationType {
-		GAS(State.GAS, State.GAS),
-		LIQUID(State.LIQUID, State.LIQUID),
-		SOLID(State.SOLID, State.SOLID),
-		GAS_ABSORPTION(State.LIQUID, State.GAS),
-		LIQUID_ABSORPTION(State.SOLID, State.LIQUID),
-		SOLID_INTO_LIQUID(State.LIQUID, State.SOLID),
-		FLUIDIZATION(State.GAS, State.SOLID)
-		;
-
-		private State continuousState, dispersedState;
-		
-		private CombinationTypes(State continuousState, State dispersedState) {
-			this.continuousState = continuousState;
-			this.dispersedState = dispersedState;
-		}
-
-		@Override
-		public State getContinuousState() {
-			return this.continuousState;
-		}
-
-		@Override
-		public State getDispersedState() {
-			return this.dispersedState;
-		}
-
-		@Override
-		public Combination of(MaterialSpec<?> stream) {
-			return new Combination(this, stream);
-		}
-		
+	@Override
+	public List<MaterialStoich<?>> getOutputs() {
+		return Collections.singletonList(this.output);
 	}
 
+	@Override
+	public double getEnergy() {
+		return 0;
+	}
+
+	@Override
+	public Condition getCondition() {
+		return Condition.STP;
+	}
 }
