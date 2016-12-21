@@ -25,58 +25,21 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.processing.Combination;
-import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.MaterialStoich;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
-import org.pfaa.chemica.processing.Sizing;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.util.ChanceStack;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-public class RecipeRegistration {
+public class RecipeRegistration extends BaseRecipeRegistration {
 
-	private static final CombinedRecipeRegistry REGISTRY = new CombinedRecipeRegistry();
-	private static final RecipeRegistration DEFAULT = new RecipeRegistration();
-	
-	public static void putRegistry(String key, RecipeRegistry registry) {
-		REGISTRY.putRegistry(key, registry);
-	}
-	
-	public static RecipeRegistry getCombinedRegistry() {
-		return REGISTRY;
-	}
-	
 	public static void init() {
-		DEFAULT.register();
-	}
-	
-	public static RecipeRegistration getDefault() {
-		return DEFAULT;
-	}
-	
-	private RecipeRegistry recipeRegistry;
-	private GenericRecipeRegistry genericRegistry;
-	private ConversionRegistry conversionRegistry;
-	
-	public RecipeRegistration() {
-		this(new DefaultConversionRegistry(REGISTRY));
-	}
-	
-	public RecipeRegistration(ConversionRegistry registry) {
-		this.conversionRegistry = registry;
-		this.recipeRegistry = this.conversionRegistry.getRecipeRegistry();
-		this.genericRegistry = this.recipeRegistry.getGenericRecipeRegistry();
-	}
-
-	public void register() {
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
 		registerFreezingRecipes();
@@ -95,28 +58,8 @@ public class RecipeRegistration {
 		// - When GT loaded, tools are automatic, based on material system
 		// - Should probably try to make tools balanced with Metallurgy/Railcraft tools
 	}
-	
-	private void register(Separation separation) {
-		this.conversionRegistry.register(separation);
-	}
-
-	private void register(Combination combination) {
-		this.conversionRegistry.register(combination);
-	}
-
-	private void register(Sizing sizing) {
-		this.conversionRegistry.register(sizing);
-	}
-
-	private void register(EnthalpyChange enthalpyChange) {
-		this.conversionRegistry.register(enthalpyChange);
-	}
-
-	private void register(Reaction reaction) {
-		this.conversionRegistry.register(reaction);
-	}
-	
-	private void registerAgglomerationRecipes() {
+		
+	private static void registerAgglomerationRecipes() {
 		registerBlockAndQuarterRecipes(ChemicaItems.AGGREGATE_PILE);
 		registerPartitionRecipes(ChemicaItems.AGGREGATE_DUST, ChemicaItems.AGGREGATE_TINY_DUST);
 		registerPartitionRecipes(ChemicaItems.COMPOUND_DUST, ChemicaItems.COMPOUND_TINY_DUST);
@@ -128,26 +71,7 @@ public class RecipeRegistration {
 		registerCastingAndGrindingRecipes();
 	}
 
-	public <T extends Enum<?> & IndustrialMaterial> void registerPartitionRecipes(IndustrialMaterialItem<T> item, 
-			IndustrialMaterialItem<T> partition) {
-		int numPartitions = partition.getForm().getNumberPerBlock() / item.getForm().getNumberPerBlock();
-		for(T material : partition.getIndustrialMaterials()) {
-			ItemStack itemStack = item.getItemStack(material);
-			ItemStack partitionStack = partition.getItemStack(material);
-			registerPartitionRecipes(itemStack, partitionStack, numPartitions);
-			registerFluidCastingRecipes(itemStack, material, item.getForm());
-			registerFluidCastingRecipes(partitionStack, material, partition.getForm());
-		}
-	}
-
-	private void registerPartitionRecipes(ItemStack itemStack, ItemStack partitionStack, int numPartitions) {
-		partitionStack = partitionStack.copy();
-		partitionStack.stackSize = numPartitions;
-		recipeRegistry.registerMixingRecipe(Collections.singletonList(partitionStack), itemStack);
-		GameRegistry.addShapelessRecipe(partitionStack, itemStack);
-	}
-
-	private void registerBlockAndQuarterRecipes(IndustrialMaterialItem<Aggregates> input) {
+	private static void registerBlockAndQuarterRecipes(IndustrialMaterialItem<Aggregates> input) {
 		for(Aggregates material : input.getIndustrialMaterials()) {
 			ItemStack blockStack = new ItemStack(ChemicaBlocks.getBlock(material));
 			ItemStack quarterStack = input.getItemStack(material);
@@ -155,14 +79,14 @@ public class RecipeRegistration {
 		}
 	}
 
-	private void registerBlockAndIngotRecipes() {
+	private static void registerBlockAndIngotRecipes() {
 		for(ConstructionMaterialBlock block : ChemicaBlocks.getConstructionMaterialBlocks()) {
 			for (ConstructionMaterial material : block.getConstructionMaterials()) {
 				ItemStack blockStack = block.getItemStack(material);
 				ItemStack ingotStack = OreDictUtils.lookupBest(Forms.INGOT, material);	
 				if (material instanceof Metal) {
 					registerPartitionRecipes(blockStack, ingotStack, Forms.INGOT.getNumberPerBlock());
-					registerFluidCastingRecipes(blockStack, material, Forms.BLOCK);
+					registerCastingRecipes(blockStack, (Metal)material, Forms.BLOCK);
 				} else {
 					registerPartitionRecipes(blockStack, ingotStack, 4);
 				}
@@ -170,24 +94,24 @@ public class RecipeRegistration {
 		}
 	}
 	
-	private void registerFluidCastingRecipes(ItemStack itemStack, IndustrialMaterial material, Form form) {
-		if (material instanceof Metal && ((Metal) material).getFusion() != null) {
-			FluidStack fluid = IndustrialFluids.getCanonicalFluidStack(material, State.LIQUID, form);
-			recipeRegistry.registerMeltingRecipe(itemStack, fluid, fluid.getFluid().getTemperature());
+	private static void registerCastingRecipes(ItemStack itemStack, Metal metal, Form form) {
+		if (metal.getFusion() != null) {
+			FluidStack fluid = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, form);
+			RECIPES.registerMeltingRecipe(itemStack, fluid, fluid.getFluid().getTemperature());
 			if (form == Forms.INGOT || form == Forms.BLOCK) {
-				recipeRegistry.registerCastingRecipe(fluid, itemStack);
+				RECIPES.registerCastingRecipe(fluid, itemStack);
 			}
 		}
 	}
 	
-	private void registerCastingAndGrindingRecipes() {
+	private static void registerCastingAndGrindingRecipes() {
 		registerCastingAndGrindingRecipes(ChemicaItems.ELEMENT_DUST, ChemicaItems.ELEMENT_INGOT);
 		registerCastingAndGrindingRecipes(ChemicaItems.ELEMENT_TINY_DUST, ChemicaItems.ELEMENT_NUGGET);
 		registerCastingAndGrindingRecipes(ChemicaItems.ALLOY_DUST, ChemicaItems.ALLOY_INGOT);
 		registerCastingAndGrindingRecipes(ChemicaItems.ALLOY_TINY_DUST, ChemicaItems.ALLOY_NUGGET);
 	}
 	
-	private <T extends Enum<?> & Metal> void registerCastingAndGrindingRecipes(
+	private static <T extends Enum<?> & Metal> void registerCastingAndGrindingRecipes(
 			IndustrialMaterialItem<T> input, IndustrialMaterialItem<T> output)
 	{
 		for (T castable : output.getIndustrialMaterials()) {
@@ -197,12 +121,13 @@ public class RecipeRegistration {
 			int castingTemp = castable.getFusion().getTemperature();
 			ItemStack dust = input.getItemStack(castable);
 			ItemStack intact = output.getItemStack(castable);
-			recipeRegistry.registerCastingRecipe(dust, intact, null, castingTemp);
-			recipeRegistry.registerGrindingRecipe(intact, dust, Collections.<ChanceStack> emptyList(), castable.getStrength());
+			RECIPES.registerCastingRecipe(dust, intact, null, castingTemp);
+			RECIPES.registerGrindingRecipe(intact, dust, Collections.<ChanceStack> emptyList(), castable.getStrength());
+			registerCastingRecipes(intact, castable, output.getForm());
 		}
 	}
 
-	private void registerSmeltingRecipes() {
+	private static void registerSmeltingRecipes() {
 		registerSmeltingRecipes(TemperatureLevel.LOW, 
 				Compounds.Ag2S, Compounds.Bi2S3, Compounds.SnO2, Compounds.PbS);
 		registerSmeltingRecipes(TemperatureLevel.MEDIUM,
@@ -216,11 +141,11 @@ public class RecipeRegistration {
 		registerFluxedSmeltingRecipes(TemperatureLevel.HIGH, Compounds.SiO2, Compounds.CuFeS2);
 	}
 	
-	private void registerSmeltingRecipes(TemperatureLevel temp, Compounds... compounds) {
+	private static void registerSmeltingRecipes(TemperatureLevel temp, Compounds... compounds) {
 		registerFluxedSmeltingRecipes(temp, (ItemStack)null, compounds);
 	}
 	
-	private void registerFluxedSmeltingRecipes(TemperatureLevel temp, Compounds flux, Compounds... compounds) {
+	private static void registerFluxedSmeltingRecipes(TemperatureLevel temp, Compounds flux, Compounds... compounds) {
 		ItemStack fluxStack = ChemicaItems.COMPOUND_DUST.getItemStack(flux); // TODO: maybe change to tiny dust?
 		registerFluxedSmeltingRecipes(temp, fluxStack, compounds);
 		if (flux == Compounds.SiO2) {
@@ -228,22 +153,22 @@ public class RecipeRegistration {
 		}
 	}
 	
-	private void registerFluxedSmeltingRecipes(TemperatureLevel temp, ItemStack flux, Compounds... compounds) {
+	private static void registerFluxedSmeltingRecipes(TemperatureLevel temp, ItemStack flux, Compounds... compounds) {
 		for (Compounds compound : compounds) {
 			Element metal = compound.getFormula().getFirstPart().element;
 			int amount = compound.getFormula().getFirstPart().stoichiometry;
-			recipeRegistry.registerSmeltingRecipe(
+			RECIPES.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_DUST.getItemStack(compound), 
 					ChemicaItems.ELEMENT_INGOT.getItemStack(metal, amount), flux, temp);
-			recipeRegistry.registerSmeltingRecipe(
+			RECIPES.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), 
 					ChemicaItems.ELEMENT_NUGGET.getItemStack(metal, amount), flux, temp);
 			int fluidAmount = IndustrialFluids.getAmount(Forms.INGOT) * amount;
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, fluidAmount);
-			recipeRegistry.registerSmeltingRecipe(ChemicaItems.COMPOUND_DUST.getItemStack(compound), molten, flux, temp);
+			RECIPES.registerSmeltingRecipe(ChemicaItems.COMPOUND_DUST.getItemStack(compound), molten, flux, temp);
 			molten = molten.copy();
 			molten.amount = IndustrialFluids.getAmount(Forms.NUGGET) * amount;
-			recipeRegistry.registerSmeltingRecipe(ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), molten, flux, temp);
+			RECIPES.registerSmeltingRecipe(ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), molten, flux, temp);
 		}
 	}
 	
@@ -258,7 +183,7 @@ public class RecipeRegistration {
 	 * Nugget-based: Primary component is taken as 1 ingot, others are (10*freq) nugget. Output is one ingot.
 	 */
 
-	private <T extends Enum<?> & Alloy> void registerAlloyingRecipes(IndustrialMaterialItem<T> item) {
+	private static <T extends Enum<?> & Alloy> void registerAlloyingRecipes(IndustrialMaterialItem<T> item) {
 		for (T alloy : item.getIndustrialMaterials()) {
 			int numIngots = registerAlloyingRecipes(item, alloy, 0.1F);
 			if (numIngots > 1) {
@@ -267,7 +192,7 @@ public class RecipeRegistration {
 		}
 	}
 	
-	private <T extends Enum<?> & Alloy> int registerAlloyingRecipes(IndustrialMaterialItem<T> item, T alloy, float minIngotWeight) {
+	private static <T extends Enum<?> & Alloy> int registerAlloyingRecipes(IndustrialMaterialItem<T> item, T alloy, float minIngotWeight) {
 		int totalMeltingTemp = 0;
 		double totalWeight = 0, minSigFreq = Double.MAX_VALUE;
 		List<MixtureComponent> comps = alloy.getComponents();
@@ -311,197 +236,197 @@ public class RecipeRegistration {
 		ItemStack output = item.getItemStack(alloy, totalIngots);
 		List<ItemStack> solutes = inputs.subList(1, inputs.size());
 		ItemStack base = inputs.get(0);
-		recipeRegistry.registerAlloyingRecipe(output, base, solutes, avgMeltingTemp);
+		RECIPES.registerAlloyingRecipe(output, base, solutes, avgMeltingTemp);
 		base = ChemicaItems.ELEMENT_INGOT.getItemStack((Element)comps.get(0).material, inputs.get(0).stackSize);
-		recipeRegistry.registerAlloyingRecipe(output, base, solutes, avgMeltingTemp);
+		RECIPES.registerAlloyingRecipe(output, base, solutes, avgMeltingTemp);
 		if (canMixFluids) {
-			recipeRegistry.registerAlloyingRecipe(fluidOutput, fluidInputs);
+			RECIPES.registerAlloyingRecipe(fluidOutput, fluidInputs);
 		}
 		return totalIngots;
 	}
 	
-	private void registerAlloyingRecipes() {
+	private static void registerAlloyingRecipes() {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
 	}
 	
-	private void registerFreezingRecipes() {
+	private static void registerFreezingRecipes() {
 		registerFreezingRecipes(ChemicaItems.ELEMENT_TINY_DUST);
 		registerFreezingRecipes(ChemicaItems.COMPOUND_TINY_DUST);
 	}
 	
-	private <T extends Enum<?> & Chemical> void registerFreezingRecipes(IndustrialMaterialItem<T> item) {
+	private static <T extends Enum<?> & Chemical> void registerFreezingRecipes(IndustrialMaterialItem<T> item) {
 		for (T chemical : item.getIndustrialMaterials()) {
 			if (chemical instanceof Metal && ((Metal) chemical).getStrength() != null) {
 				continue;
 			}
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
 			// FIXME: should be total enthalpy to freeze from canonical liquid condition
-			recipeRegistry.registerCoolingRecipe(molten, item.getItemStack(chemical), (int)chemical.getEnthalpyOfFusion());
+			RECIPES.registerCoolingRecipe(molten, item.getItemStack(chemical), (int)chemical.getEnthalpyOfFusion());
 		}
 	}
 
-	private void registerCatalystRecipes() {
+	private static void registerCatalystRecipes() {
 		for (Catalysts catalyst : ChemicaItems.CATALYST_DUST.getIndustrialMaterials()) {
 			mixCatalyst(ChemicaItems.CATALYST_DUST, catalyst);
 		}
 		// TODO: V2O5 (roast with Na2CO3 => NaVO3, mix with H2SO4/HCl to yield V2O5 hydrate, roast to dehydrate) 
 	}
 	
-	private void mixCatalyst(IndustrialMaterialItem<Catalysts> item, Catalysts material) {
+	private static void mixCatalyst(IndustrialMaterialItem<Catalysts> item, Catalysts material) {
 		IngredientList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
-		genericRegistry.registerMixingRecipe(inputs, item.getItemStack(material));
+		GENERICS.registerMixingRecipe(inputs, item.getItemStack(material));
 	}
 
-	private void registerDissolutionRecipes() {
+	private static void registerDissolutionRecipes() {
 		registerDissolutionRecipes(ChemicaItems.COMPOUND_DUST);
 		registerDissolutionRecipes(ChemicaItems.COMPOUND_TINY_DUST);
 	}
 
-	private <T extends Enum<?> & Chemical> void registerDissolutionRecipes(IndustrialMaterialItem<T> item) {
+	private static <T extends Enum<?> & Chemical> void registerDissolutionRecipes(IndustrialMaterialItem<T> item) {
 		int amount = IndustrialFluids.getAmount(State.AQUEOUS, item.getForm());
 		FluidStack water = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.LIQUID, amount);
 		for (T chemical : item.getIndustrialMaterials()) {
 			FluidStack solution = IndustrialFluids.getCanonicalFluidStack(chemical, State.AQUEOUS, amount);
 			ItemStack solute = item.getItemStack(chemical);
 			Condition condition = chemical.getDissociation().getCondition();
-			recipeRegistry.registerMixingRecipe(Arrays.asList(solute), water, null, null, solution, null, condition, null);
+			RECIPES.registerMixingRecipe(Arrays.asList(solute), water, null, null, solution, null, condition, null);
 		}
 	}
 	
-	private void registerDecompositionRecipes() {
+	private static void registerDecompositionRecipes() {
 		registerStandardSaltDecompositionRecipes();
-		register(
+		CONVERSIONS.register(
 				Reaction.of(4, Compounds.KNO2).yields(2, Compounds.K2O).and(2, Compounds.N2).and(3, Compounds.O2));
-		register(
+		CONVERSIONS.register(
 				Reaction.of(2, Compounds.NaNO2).yields(Compounds.Na2O).and(Compounds.NO).and(Compounds.NO2));
-		register(
+		CONVERSIONS.register(
 				Reaction.of(Compounds.NH4Cl).yields(Compounds.NH3).and(Compounds.HCl));
 	}
 
-	private void registerStandardSaltDecompositionRecipes() {
+	private static void registerStandardSaltDecompositionRecipes() {
 		for (Compounds compound : Compounds.values()) {
 			Reaction reaction = ReactionFactory.makeStandardSaltDecompositionReaction(compound);
 			if (reaction == null) {
 				continue;
 			}
-			register(reaction);
+			CONVERSIONS.register(reaction);
 		}
 	}
 
-	private void registerSynthesisRecipes() {
-		register(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
-		register(Reaction.of(Compounds.N2).with(3, Compounds.H2).yields(2, Compounds.NH3, State.GAS).
+	private static void registerSynthesisRecipes() {
+		CONVERSIONS.register(Reaction.of(Compounds.CaO).with(Compounds.H2O).yields(Compounds.CaOH2));
+		CONVERSIONS.register(Reaction.of(Compounds.N2).with(3, Compounds.H2).yields(2, Compounds.NH3, State.GAS).
 				at(new Condition(725, 101*Constants.STANDARD_PRESSURE)).via(Element.Fe));
-		register(Reaction.of(Compounds.SO3).with(Compounds.H2SO4).yields(2, Compounds.H2S2O7));
-		register(Reaction.of(Compounds.H2S2O7).with(Compounds.H2O).yields(2, Compounds.H2SO4));
-		register(Reaction.inAirOf(2, Compounds.ETHENE).with(Compounds.O2).
+		CONVERSIONS.register(Reaction.of(Compounds.SO3).with(Compounds.H2SO4).yields(2, Compounds.H2S2O7));
+		CONVERSIONS.register(Reaction.of(Compounds.H2S2O7).with(Compounds.H2O).yields(2, Compounds.H2SO4));
+		CONVERSIONS.register(Reaction.inAirOf(2, Compounds.ETHENE).with(Compounds.O2).
 				yields(2, Compounds.OXIRANE).via(Element.Ag).at(500));
-		register(Reaction.of(Compounds.OXIRANE).with(Compounds.NH3).
+		CONVERSIONS.register(Reaction.of(Compounds.OXIRANE).with(Compounds.NH3).
 				yields(Compounds.ETHANOLAMINE).at(323));
-		register(
+		CONVERSIONS.register(
 				Reaction.inAirOf(2, Compounds.H2O).with(4, Compounds.NO).with(2, Compounds.SO2).with(Compounds.O2).
 				yields(2, Compounds.H2SO4, State.AQUEOUS).and(4, Compounds.NO));
-		register(
+		CONVERSIONS.register(
 				Reaction.of(2, Compounds.H2O).with(2, Compounds.NO).with(2, Compounds.NO2).with(2, Compounds.SO2).
 				yields(2, Compounds.H2SO4, State.AQUEOUS).and(4, Compounds.NO));
 	}
 	
-	private void registerRedoxRecipes() {
+	private static void registerRedoxRecipes() {
 		makeHydrogen();
 		makeSulfur();
 		makeOxidationRecipes();
-		register(Reaction.of(Compounds.NaNO3).with(Element.Pb).
+		CONVERSIONS.register(Reaction.of(Compounds.NaNO3).with(Element.Pb).
 				yields(Compounds.NaNO2).and(Compounds.PbO).at(600));
 	}
 	
-	private void makeSulfur() {
+	private static void makeSulfur() {
 		// Claus reaction
-		register(Reaction.of(2, Compounds.H2S).with(Compounds.SO2).
+		CONVERSIONS.register(Reaction.of(2, Compounds.H2S).with(Compounds.SO2).
 				yields(3, Element.S).and(2, Compounds.H2O).
 				via(Compounds.Al2O3, Compounds.TiO2).at(Element.S.getFusion().getTemperature()));
 	}
 
-	private void makeCombustionRecipes() {
-		register(Reaction.of(1, Element.S, State.LIQUID).with(Compounds.O2).yields(Compounds.SO2).at(480));
-		register(Reaction.of(2, Compounds.H2S).with(3, Compounds.O2).
+	private static void makeCombustionRecipes() {
+		CONVERSIONS.register(Reaction.of(1, Element.S, State.LIQUID).with(Compounds.O2).yields(Compounds.SO2).at(480));
+		CONVERSIONS.register(Reaction.of(2, Compounds.H2S).with(3, Compounds.O2).
 				yields(2, Compounds.SO2).and(2, Compounds.H2O).at(505));
 	}
 
-	private void makeOxidationRecipes() {
+	private static void makeOxidationRecipes() {
 		makeCombustionRecipes();
-		register(Reaction.of(2, Compounds.SO2).with(Compounds.O2).
+		CONVERSIONS.register(Reaction.of(2, Compounds.SO2).with(Compounds.O2).
 				yields(2, Compounds.SO3).via(Compounds.V2O5).at(650));
-		register(Reaction.of(4, Compounds.FeCr2O4).
+		CONVERSIONS.register(Reaction.of(4, Compounds.FeCr2O4).
 				with(Compounds.Na2CO3).with(7, Compounds.O2).
 				yields(8, Compounds.Na2CrO4).and(2, Compounds.Fe2O3).and(8, Compounds.CO2).at(1300));
-		register(Reaction.of(2, Compounds.Na2Cr2O7_2H2O).with(2, Element.S).with(3, Compounds.O2).
+		CONVERSIONS.register(Reaction.of(2, Compounds.Na2Cr2O7_2H2O).with(2, Element.S).with(3, Compounds.O2).
 				yields(4, Compounds.Cr2O3).and(2, Compounds.Na2SO4_10H2O).and(4, Compounds.H2O).at(850));
-		register(Reaction.of(4, Compounds.NH3).with(5, Compounds.O2).
+		CONVERSIONS.register(Reaction.of(4, Compounds.NH3).with(5, Compounds.O2).
 				yields(4, Compounds.NO).and(6, Compounds.H2O).via(Element.Pt).at(1100));
 	}
 	
-	private void makeHydrogen() {
+	private static void makeHydrogen() {
 		Reaction makeSyngas = Reaction.of(Compounds.METHANE).with(Compounds.H2O, State.GAS).
 				yields(Compounds.CO).and(3, Compounds.H2).via(Element.Ni);
-		register(makeSyngas);
+		CONVERSIONS.register(makeSyngas);
 		Reaction makeWaterGas = Reaction.of(Compounds.CO).with(Compounds.H2O, State.GAS).
 				yields(Compounds.CO2).and(Compounds.H2).via(Catalysts.HTS);
-		register(makeWaterGas);
+		CONVERSIONS.register(makeWaterGas);
 		absorbCO2(makeWaterGas.getProduct());
 		makeWaterGas = Reaction.of(Compounds.H2O, State.GAS).with(Compounds.CO).with(3, Compounds.H2).
 				yields(Compounds.CO2).and(4, Compounds.H2).via(Catalysts.HTS);
 		absorbCO2(makeWaterGas.getProduct());
 	}
 	
-	public MaterialStoich<?> absorbCO2(Mixture mixture) 
+	public static MaterialStoich<?> absorbCO2(Mixture mixture) 
 	{
 		MaterialStoich<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(1, Compounds.ETHANOLAMINE); 
 		Separation abs = SeparationTypes.ABSORPTION.
 				of(mixture).
 				with(ethanolamine).
 				extracts(Compounds.CO2);
-		conversionRegistry.register(abs);
+		CONVERSIONS.register(abs);
 		MaterialStoich<Mixture> richAmine = abs.getSeparated();
 		Separation regen = SeparationTypes.DEGASIFICATION.
 				of(richAmine).
 				extracts(Compounds.CO2).at(400);
-		conversionRegistry.register(regen);
+		CONVERSIONS.register(regen);
 		return abs.getResiduum();
 	}
 	
-	private void registerSingleDisplacementRecipes() {
-		register(Reaction.of(2, Compounds.NaOH).with(Compounds.NO).with(Compounds.NO2).
+	private static void registerSingleDisplacementRecipes() {
+		CONVERSIONS.register(Reaction.of(2, Compounds.NaOH).with(Compounds.NO).with(Compounds.NO2).
 				yields(2, Compounds.NaNO2).and(Compounds.H2O));
-		register(Reaction.of(2, Compounds.Na2CO3).with(Compounds.NO).with(Compounds.NO2).
+		CONVERSIONS.register(Reaction.of(2, Compounds.Na2CO3).with(Compounds.NO).with(Compounds.NO2).
 				yields(2, Compounds.NaNO2).and(Compounds.CO2));
 	}
 	
-	private void registerDoubleDisplacementRecipes() {
+	private static void registerDoubleDisplacementRecipes() {
 		registerHydrolysisRecipes();
 		registerPrecipitationRecipes();
 	}
 
-	private void registerHydrolysisRecipes() {
-		register(Reaction.of(3, Compounds.NO2).with(Compounds.H2O).yields(2, Compounds.HNO3).and(Compounds.NO));
+	private static void registerHydrolysisRecipes() {
+		CONVERSIONS.register(Reaction.of(3, Compounds.NO2).with(Compounds.H2O).yields(2, Compounds.HNO3).and(Compounds.NO));
 	}
 
-	private void registerPrecipitationRecipes() {
-		register(Reaction.inWaterOf(Compounds.H2SO4).
+	private static void registerPrecipitationRecipes() {
+		CONVERSIONS.register(Reaction.inWaterOf(Compounds.H2SO4).
 				with(2, Compounds.Na2CrO4).with(10, Compounds.H2O).
 				yields(Compounds.Na2Cr2O7_2H2O).and(1, Compounds.Na2SO4_10H2O, State.SOLID).and(Compounds.H2O));
-		register(Reaction.inWaterOf(2, Compounds.Na2CrO4).
+		CONVERSIONS.register(Reaction.inWaterOf(2, Compounds.Na2CrO4).
 				with(2, Compounds.CO2).with(Compounds.H2O).
 				yields(Compounds.Na2Cr2O7_2H2O).and(2, Compounds.NaHCO3, State.SOLID));
 	}
 	
-	private void registerCrystallizationRecipes() {
+	private static void registerCrystallizationRecipes() {
 		registerCrystallizationRecipe(Compounds.Na2Cr2O7_2H2O);
 	}
 
-	private void registerCrystallizationRecipe(Compounds compound) {
+	private static void registerCrystallizationRecipe(Compounds compound) {
 		FluidStack input = IndustrialFluids.getCanonicalFluidStack(compound, State.AQUEOUS);
 		ItemStack output = ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound);
-		recipeRegistry.registerPrecipitationRecipe(input, output, (int)compound.getSolubility());
+		RECIPES.registerPrecipitationRecipe(input, output, (int)compound.getSolubility());
 	}
 
 }

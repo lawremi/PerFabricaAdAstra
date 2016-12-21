@@ -3,7 +3,7 @@ package org.pfaa.chemica.integration;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import buildcraftAdditions.api.recipe.BCARecipeManager;
@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 public class BuildcraftAdditionsIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.BUILDCRAFT_ADDITIONS)) {
-			RecipeRegistration.putRegistry(ModIds.BUILDCRAFT_ADDITIONS,
+			BaseRecipeRegistration.putRegistry(ModIds.BUILDCRAFT_ADDITIONS,
 					new BuildcraftAdditionsRecipeRegistry());
 		}
 	}

@@ -28,13 +28,10 @@ import org.pfaa.chemica.processing.MaterialStoich;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.DefaultConversionRegistry;
-import org.pfaa.chemica.registration.GenericRecipeRegistry;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.registration.ConversionRegistry;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.registration.ReactionFactory;
-import org.pfaa.chemica.registration.RecipeRegistry;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
 import org.pfaa.core.block.CompositeBlock;
@@ -73,10 +70,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class RecipeRegistration {
-	private static final RecipeRegistry registry = org.pfaa.chemica.registration.RecipeRegistration.getCombinedRegistry();
-	private static final GenericRecipeRegistry genericRegistry = registry.getGenericRecipeRegistry();
-	private static final ConversionRegistry opRegistry = new DefaultConversionRegistry();
+public class RecipeRegistration extends BaseRecipeRegistration {
 	
 	public static void init() {
 		registerRockCastingRecipes();
@@ -247,7 +241,7 @@ public class RecipeRegistration {
 			return;
 		}
 		int damage = input.getModelBlockMeta();
-		registry.registerCrushingRecipe(new ItemStack(input), 
+		RECIPES.registerCrushingRecipe(new ItemStack(input), 
 										new ItemStack(output, 1, damage), 
 										null, model.getStrength());
 	}
@@ -255,7 +249,7 @@ public class RecipeRegistration {
 	private static void registerCrushingRecipes(Block input, GeoBlock output) {
 		for(GeoMaterial material : output.getGeoMaterials()) {
 			int damage = output.getMeta(material);
-			registry.registerCrushingRecipe(new ItemStack(input, 1, damage),
+			RECIPES.registerCrushingRecipe(new ItemStack(input, 1, damage),
 					new ItemStack(output, 1, damage), 
 					null, material.getStrength());
 		}
@@ -267,7 +261,7 @@ public class RecipeRegistration {
 	private static void registerOreGrindingRecipes(ItemStack input, GeoMaterial material) {
 		ItemStack primary = GeologicaItems.ORE_DUST.getItemStack(material);
 		List<ChanceStack> secondaries = RecipeUtils.getSeparationOutputs(Forms.DUST_IMPURE_TINY, material.getComposition(), false);
-		registry.registerGrindingRecipe(input, primary, secondaries, material.getStrength());
+		RECIPES.registerGrindingRecipe(input, primary, secondaries, material.getStrength());
 	}
 	
 	private static void registerOreSeparationRecipes(IndustrialMaterialItem<GeoMaterial> item, GeoMaterial material) {
@@ -290,14 +284,14 @@ public class RecipeRegistration {
 					outputs.add(downWeighted);
 			}
 		}
-		registry.registerPhysicalSeparationRecipe(input, outputs);
+		RECIPES.registerPhysicalSeparationRecipe(input, outputs);
 	}
 
 	private static void registerOreCommunitionRecipes(GeoBlock input) {
 		for(GeoMaterial material : input.getGeoMaterials()) {
 			ItemStack crushed = GeologicaItems.ORE_CRUSHED.getItemStack(material, 2);
 			ChanceStack dust = new ChanceStack(GeologicaItems.ORE_DUST_TINY.getItemStack(material), CRUSHING_DUST_CHANCE);
-			registry.registerCrushingRecipe(input.getItemStack(material),
+			RECIPES.registerCrushingRecipe(input.getItemStack(material),
 					crushed, dust, input.getStrength());
 			registerOreGrindingRecipes(crushed.copy().splitStack(1), material);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, material);
@@ -314,16 +308,16 @@ public class RecipeRegistration {
 	private static void registerGrindingRecipes(ItemStack input, GeoMaterial material) {
 		List<ChanceStack> outputs = RecipeUtils.getSeparationOutputs(Forms.DUST, material.getComposition(), false);
 		List<ChanceStack> secondaries = outputs.subList(1, outputs.size());
-		registry.registerGrindingRecipe(input, outputs.get(0).itemStack, secondaries, material.getStrength());
+		RECIPES.registerGrindingRecipe(input, outputs.get(0).itemStack, secondaries, material.getStrength());
 	}
 	
 	private static void registerCrudeCommunitionRecipes(GeoBlock input) {
 		for(GeoMaterial material : input.getGeoMaterials()) {
 			ItemStack lump = GeologicaItems.CRUDE_LUMP.getItemStack(material, 2);
 			ChanceStack tinyDust = new ChanceStack(GeologicaItems.CRUDE_DUST_TINY.getItemStack(material), CRUSHING_DUST_CHANCE);
-			registry.registerCrushingRecipe(input.getItemStack(material), lump, tinyDust, input.getStrength());
+			RECIPES.registerCrushingRecipe(input.getItemStack(material), lump, tinyDust, input.getStrength());
 			ItemStack dust = GeologicaItems.CRUDE_DUST.getItemStack(material);
-			registry.registerGrindingRecipe(lump.copy().splitStack(1), dust, 
+			RECIPES.registerGrindingRecipe(lump.copy().splitStack(1), dust, 
 					Collections.<ChanceStack> emptyList(), input.getStrength());
 		}
 	}
@@ -369,23 +363,23 @@ public class RecipeRegistration {
 		for(int meta = 0; meta < input.getMetaCount(); meta++) {
 			ItemStack outputStack = new ItemStack(output, 1, meta);
 			ItemStack inputStack = new ItemStack(input, 1, meta);
-			registry.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature());
+			RECIPES.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature());
 			FluidStack fluid = new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME);
-			registry.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature());
+			RECIPES.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature());
 		}
 	}
 	
 	private static void registerPartitionRecipes() {
-		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
+		registerPartitionRecipes(
 				GeologicaItems.INDUSTRIAL_MINERAL_DUST, 
 				GeologicaItems.INDUSTRIAL_MINERAL_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
+		registerPartitionRecipes(
 				GeologicaItems.CRUDE_DUST, 
 				GeologicaItems.CRUDE_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
+		registerPartitionRecipes(
 				GeologicaItems.ORE_MINERAL_DUST, 
 				GeologicaItems.ORE_MINERAL_DUST_TINY);
-		org.pfaa.chemica.registration.RecipeRegistration.getDefault().registerPartitionRecipes(
+		registerPartitionRecipes(
 				GeologicaItems.ORE_DUST, 
 				GeologicaItems.ORE_DUST_TINY);
 	}
@@ -395,12 +389,12 @@ public class RecipeRegistration {
 			ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(geoMaterial);
 			ItemStack lump =  GeologicaItems.CLAY_LUMP.getItemStack(geoMaterial);
 			ItemStack dust =  GeologicaItems.ORE_DUST.getItemStack(geoMaterial);
-			registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
-			registry.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
+			RECIPES.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
+			RECIPES.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
 			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
-			registry.registerMixingRecipe(Collections.singletonList(dust), water, null, clump, null, null, Condition.STP, null);
+			RECIPES.registerMixingRecipe(Collections.singletonList(dust), water, null, clump, null, null, Condition.STP, null);
 		}
 	}
 	
@@ -413,13 +407,13 @@ public class RecipeRegistration {
 		IngredientList inputs = new IngredientList(
 				new MaterialStack(Forms.CLUMP, GeoMaterial.CALCIUM_BENTONITE),
 				new MaterialStack(Compounds.Na2CO3));
-		genericRegistry.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
+		GENERICS.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
 	}
 	
 	private static void registerPeatDryingRecipe() {
 		ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.PEAT);
 		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(GeoMaterial.PEAT);
-		registry.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
+		RECIPES.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
 	}
 	
 	private static void registerBrineProcessingRecipes() {
@@ -484,7 +478,7 @@ public class RecipeRegistration {
 			product = new SimpleMixture("brine.treated." + salt.name(), resultComps.toArray(new MixtureComponent[0]));
 		}
 		FluidStack fluidOutput = IndustrialFluids.getCanonicalFluidStack(product, State.LIQUID, brineAmount);
-		genericRegistry.registerMixingRecipe(new IngredientList(solidInput), fluidInput, 
+		GENERICS.registerMixingRecipe(new IngredientList(solidInput), fluidInput, 
 				null, solidOutput, fluidOutput, null, Condition.AQUEOUS_STP, null);
 		
 		return product;
@@ -502,16 +496,16 @@ public class RecipeRegistration {
 		Condition cond = Compounds.ETHANE.getVaporization().getLiquidCondition();
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
 		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(noHelium, State.LIQUID);
-		registry.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(cond));
+		RECIPES.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(cond));
 		Mixture.Phases sep = noHelium.separateByState(cond);
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(sep);
-		registry.registerDistillationRecipe(gas, outputs, Condition.STP);
+		RECIPES.registerDistillationRecipe(gas, outputs, Condition.STP);
 		return sep.liquid;
 	}
 
 	private static Mixture extractHelium(MaterialStoich<Mixture> desoured) {
 		Separation sep = SeparationTypes.CONDENSATION.of(desoured).at(70);
-		opRegistry.register(sep);
+		CONVERSIONS.register(sep);
 		return sep.getResiduum().material();
 	}
 
@@ -522,12 +516,12 @@ public class RecipeRegistration {
 				of(GeoMaterial.NATURAL_GAS).
 				with(ethanolamine).
 				extracts(Compounds.CO2, Compounds.H2S);
-		opRegistry.register(abs);
+		CONVERSIONS.register(abs);
 		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material().without(Compounds.CO2));
 		Separation regen = SeparationTypes.DEGASIFICATION.
 				of(richAmine).
 				extracts(Compounds.H2S).at(400);
-		opRegistry.register(regen);
+		CONVERSIONS.register(regen);
 		return abs.getResiduum();
 	}
 
@@ -560,7 +554,7 @@ public class RecipeRegistration {
 		}).collect(Collectors.toList());
 		Condition condition = sortedFractions.get(sortedFractions.size() - 2).getVaporization().getGasCondition();
 		FluidStack input = IndustrialFluids.getCanonicalFluidStack(mixture, State.LIQUID, Forms.DUST_TINY);
-		registry.registerDistillationRecipe(input, outputs, condition);
+		RECIPES.registerDistillationRecipe(input, outputs, condition);
 	}
 	
 	private static void steamCrack() {
@@ -603,8 +597,8 @@ public class RecipeRegistration {
 		FluidStack inputFluid = IndustrialFluids.getCanonicalFluidStack(input, Forms.DUST_TINY);
 		FluidStack steam = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.GAS, (int)(steamRatio*inputFluid.amount));
 		FluidStack outputFluid = IndustrialFluids.getCanonicalFluidStack(output, Forms.DUST_TINY);
-		registry.registerMixingRecipe(Collections.emptyList(), inputFluid, steam, null, null, outputFluid, new Condition(1100), null);
+		RECIPES.registerMixingRecipe(Collections.emptyList(), inputFluid, steam, null, null, outputFluid, new Condition(1100), null);
 		Mixture.Phases sep = output.separateByState(new Condition(700));
-		registry.registerDistillationRecipe(outputFluid, IndustrialFluids.getFluidStacks(sep), Condition.STP);
+		RECIPES.registerDistillationRecipe(outputFluid, IndustrialFluids.getFluidStacks(sep), Condition.STP);
 	}
 }

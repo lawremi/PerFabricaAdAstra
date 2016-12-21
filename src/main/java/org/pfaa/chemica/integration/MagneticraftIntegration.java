@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import com.cout970.magneticraft.api.access.MgRecipeRegister;
@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class MagneticraftIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.MAGNETICRAFT)) {
-			RecipeRegistration.putRegistry(ModIds.MAGNETICRAFT, new MagneticraftRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.MAGNETICRAFT, new MagneticraftRecipeRegistry());
 		}
 	}
 	

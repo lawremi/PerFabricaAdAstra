@@ -12,7 +12,4 @@ public interface ConversionRegistry {
 	void register(Sizing sizing);
 	void register(EnthalpyChange enthalpyChange);
 	void register(Reaction reaction);
-
-	// FIXME: will not need this once everything happens as Conversions
-	RecipeRegistry getRecipeRegistry();
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
@@ -16,7 +16,7 @@ public class RailcraftIntegration {
 	
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.RAILCRAFT)) {
-			RecipeRegistration.putRegistry(ModIds.RAILCRAFT, new RailcraftRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.RAILCRAFT, new RailcraftRecipeRegistry());
 		}
 	}
 	

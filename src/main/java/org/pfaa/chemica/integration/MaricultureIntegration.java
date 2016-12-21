@@ -6,8 +6,8 @@ import java.util.Set;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
-import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
@@ -27,7 +27,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class MaricultureIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.MARICULTURE)) {
-			RecipeRegistration.putRegistry(ModIds.MARICULTURE, new MaricultureRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.MARICULTURE, new MaricultureRecipeRegistry());
 		}
 	}
 

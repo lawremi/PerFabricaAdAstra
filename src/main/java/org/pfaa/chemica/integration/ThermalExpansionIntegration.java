@@ -6,7 +6,7 @@ import java.util.Set;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ThermalExpansionIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.THERMAL_EXPANSION)) {
-			RecipeRegistration.putRegistry(ModIds.THERMAL_EXPANSION, new ThermalExpansionRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.THERMAL_EXPANSION, new ThermalExpansionRecipeRegistry());
 		}
 	}
 	

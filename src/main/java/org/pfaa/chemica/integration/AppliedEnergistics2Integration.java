@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import appeng.api.features.IGrinderRegistry;
@@ -17,7 +17,7 @@ public class AppliedEnergistics2Integration {
 	
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.APPLIED_ENERGISTICS_2)) {
-			RecipeRegistration.putRegistry(ModIds.APPLIED_ENERGISTICS_2, 
+			BaseRecipeRegistration.putRegistry(ModIds.APPLIED_ENERGISTICS_2, 
 					new AppliedEnergistics2RecipeRegistry());
 		}
 	}

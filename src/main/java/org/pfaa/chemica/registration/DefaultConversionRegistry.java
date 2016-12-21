@@ -64,16 +64,10 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		else this.registerReaction(reaction);
 	}
 
-	private GenericRecipeRegistry genericDelegate;
-	private RecipeRegistry delegate;
+	private GenericRecipeRegistry delegate;
 	
-	public DefaultConversionRegistry() {
-		this(new CombinedRecipeRegistry());
-	}
-	
-	public DefaultConversionRegistry(RecipeRegistry delegate) {
+	public DefaultConversionRegistry(GenericRecipeRegistry delegate) {
 		this.delegate = delegate;
-		this.genericDelegate = delegate.getGenericRecipeRegistry();
 	}
 	
 	public void registerRoastingReaction(Reaction reaction) {
@@ -91,7 +85,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList inputs = this.getSolidReactants(form, reaction);
 		int temp = reaction.getCondition().temperature;
-		genericDelegate.registerRoastingRecipe(inputs, output, gas, temp);
+		delegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
 	private IngredientList getSolidReactants(Form form, Reaction reaction) {
@@ -143,7 +137,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		FluidStack liquidProduct = this.getProductFluidStack(form, reaction, State.LIQUID);
 		FluidStack gasProduct = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList catalyst = this.getCatalysts(reaction);
-		genericDelegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
+		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
 				reaction.getCondition(), catalyst);
 	}
@@ -184,7 +178,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 					FluidStack inputA = IndustrialFluids.getCanonicalFluidStack(compA, state, Forms.DUST_TINY);
 					FluidStack inputB = IndustrialFluids.getCanonicalFluidStack(compB, state, Forms.DUST_TINY);
 					FluidStack output = IndustrialFluids.getCanonicalFluidStack(outputMixture, state, Forms.DUST_TINY);
-					genericDelegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
+					delegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
 							null, Condition.STP, null);
 				}
 				return new MixtureComponent(outputMixture, 1.0F);
@@ -208,10 +202,5 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 			}
 		}
 		return reactants;
-	}
-
-	@Override
-	public RecipeRegistry getRecipeRegistry() {
-		return this.delegate;
 	}
 }

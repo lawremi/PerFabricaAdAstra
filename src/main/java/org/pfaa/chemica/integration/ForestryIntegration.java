@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import com.google.common.base.Strings;
@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ForestryIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.FORESTRY)) {
-			RecipeRegistration.putRegistry(ModIds.FORESTRY, new ForestryRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.FORESTRY, new ForestryRecipeRegistry());
 		}
 	}
 

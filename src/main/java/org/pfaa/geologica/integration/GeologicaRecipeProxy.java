@@ -14,8 +14,8 @@ import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
-import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.processing.Mineral;
 import org.pfaa.geologica.processing.OreMineral;
@@ -112,7 +112,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getCombinedRegistry().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
+				BaseRecipeRegistration.getRecipeRegistry().registerSmeltingRecipe(input, restrictOutput(output), flux, temp);
 			}
 		}, true);
 	}
@@ -133,7 +133,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
-				RecipeRegistration.getCombinedRegistry().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
+				BaseRecipeRegistration.getRecipeRegistry().registerSmeltingRecipe(input, restrictOutput(output, input), flux, temp);
 			}
 		}, true);
 	}
@@ -146,7 +146,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getCombinedRegistry().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
+					BaseRecipeRegistration.getRecipeRegistry().registerRoastingRecipe(localInputs, restrictOutput(output), gas, temp);
 				}
 			}, true);
 		}
@@ -160,7 +160,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 				public void register(ItemStack input) {
 					List<ItemStack> localInputs = new ArrayList<ItemStack>(inputs);
 					localInputs.set(localInputs.indexOf(oldInput), input);
-					RecipeRegistration.getCombinedRegistry().registerMixingRecipe(localInputs, output);
+					BaseRecipeRegistration.getRecipeRegistry().registerMixingRecipe(localInputs, output);
 				}
 			}, false);
 		}

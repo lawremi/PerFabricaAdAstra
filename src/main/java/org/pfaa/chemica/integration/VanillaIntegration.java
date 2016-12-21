@@ -7,10 +7,10 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.chemica.registration.RecipeUtils;
 
 import net.minecraft.init.Items;
@@ -22,7 +22,7 @@ import scala.actors.threadpool.Arrays;
 
 public class VanillaIntegration {
 	public static void init() {
-		RecipeRegistration.putRegistry(ModIds.VANILLA, new VanillaRecipeRegistry());
+		BaseRecipeRegistration.putRegistry(ModIds.VANILLA, new VanillaRecipeRegistry());
 	}
 	
 	public static class VanillaRecipeRegistry extends AbstractRecipeRegistry {

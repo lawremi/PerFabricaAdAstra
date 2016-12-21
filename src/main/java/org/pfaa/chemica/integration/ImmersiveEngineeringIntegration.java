@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import blusunrize.immersiveengineering.api.crafting.ArcFurnaceRecipe;
@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class ImmersiveEngineeringIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.IMMERSIVE_ENGINEERING)) {
-			RecipeRegistration.putRegistry(ModIds.IMMERSIVE_ENGINEERING,
+			BaseRecipeRegistration.putRegistry(ModIds.IMMERSIVE_ENGINEERING,
 					new ImmersiveEngineeringRecipeRegistry());
 		}
 	}

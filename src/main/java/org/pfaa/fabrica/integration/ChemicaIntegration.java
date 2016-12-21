@@ -1,6 +1,6 @@
 package org.pfaa.fabrica.integration;
 
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 
 import cpw.mods.fml.common.Loader;
 
@@ -8,7 +8,7 @@ public class ChemicaIntegration {
 
 	public static void init() {
 		String id = Loader.instance().activeModContainer().getModId();
-		RecipeRegistration.putRegistry(id, new FabricaRecipeRegistry());
+		BaseRecipeRegistration.putRegistry(id, new FabricaRecipeRegistry());
 	}
 
 }

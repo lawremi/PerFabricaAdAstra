@@ -5,8 +5,8 @@ import java.util.List;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.TemperatureLevel;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
-import org.pfaa.chemica.registration.RecipeRegistration;
 import org.pfaa.core.block.BlockWithMeta;
 
 import cpw.mods.fml.common.Loader;
@@ -25,7 +25,7 @@ import tconstruct.library.crafting.Smeltery;
 public class TConstructIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.TCONSTRUCT)) {
-			RecipeRegistration.putRegistry(ModIds.TCONSTRUCT, new TConstructRecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.TCONSTRUCT, new TConstructRecipeRegistry());
 		}
 	}
 	

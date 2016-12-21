@@ -9,7 +9,7 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.registration.RecipeRegistration;
+import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class EnderIOIntegration {
 	public static void init() {
 		if (Loader.isModLoaded(ModIds.ENDER_IO)) {
-			RecipeRegistration.putRegistry(ModIds.ENDER_IO, new EnderIORecipeRegistry());
+			BaseRecipeRegistration.putRegistry(ModIds.ENDER_IO, new EnderIORecipeRegistry());
 		}
 	}
 	
