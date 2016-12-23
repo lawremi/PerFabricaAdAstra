@@ -268,8 +268,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				continue;
 			}
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
-			// FIXME: should be total enthalpy to freeze from canonical liquid condition
-			RECIPES.registerCoolingRecipe(molten, item.getItemStack(chemical), (int)chemical.getEnthalpyOfFusion());
+			RECIPES.registerFreezingRecipe(molten, item.getItemStack(chemical), chemical.getFusion().getTemperature(), 
+					(int)chemical.getEnthalpyOfFusion(new Condition(molten.getFluid().getTemperature())));
 		}
 	}
 

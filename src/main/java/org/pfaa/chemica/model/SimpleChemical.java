@@ -85,6 +85,8 @@ public class SimpleChemical implements Chemical {
 	
 	@Override
 	public ChemicalConditionProperties getProperties(Condition condition, State state) {
+		// TODO: if we are at a critical temperature, and only know the entropy,
+		//       compute the enthalpy of the adjacent state, and compute+add the latent heat.
 		return new ChemicalConditionProperties(this.getStateProperties(state), condition);
 	}
 

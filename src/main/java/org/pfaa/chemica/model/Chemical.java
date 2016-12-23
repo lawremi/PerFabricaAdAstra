@@ -8,13 +8,20 @@ public interface Chemical extends IndustrialMaterial, Vaporizable, Fusible, Solu
 	public Formula getFormula();
 	
 	default double getEnthalpyOfFusion() {
-		Condition cond = this.getFusion().getLiquidCondition();
+		Condition cond = this.getFusion().getCondition();
 		ChemicalConditionProperties liquid = this.getProperties(cond, State.LIQUID);
 		ChemicalConditionProperties solid = this.getProperties(cond, State.SOLID);
 		if (solid == null || liquid == null) {
 			return Double.NaN;
 		}
 		return (liquid.entropy - solid.entropy) * cond.temperature;
+	}
+	
+	default double getEnthalpyOfFusion(Condition condition) {
+		ChemicalConditionProperties origin = this.getProperties(condition);
+		return Math.abs(origin.enthalpy - 
+				this.getProperties(this.getFusion().getCondition(), origin.state).enthalpy) + 
+				this.getEnthalpyOfFusion();
 	}
 	
 	default double getEnthalpyOfVaporization() {
@@ -44,7 +51,6 @@ public interface Chemical extends IndustrialMaterial, Vaporizable, Fusible, Solu
 	}
 	
 	default double getEnthalpyChange(Condition from, Condition to) {
-		// TODO: if the enthalpy is NaN, look at adjacent state and add heat of transition, which we know if we know the entropy
 		ChemicalConditionProperties fromProps = this.getProperties(from);
 		ChemicalConditionProperties toProps = this.getProperties(to);
 		return toProps.enthalpy - fromProps.enthalpy;

@@ -11,7 +11,7 @@ public class Fusion {
 		return temperature;
 	}
 	
-	public Condition getLiquidCondition() {
+	public Condition getCondition() {
 		return new Condition(this.temperature);
 	}
 	
