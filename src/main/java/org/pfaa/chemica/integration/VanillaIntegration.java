@@ -28,8 +28,8 @@ public class VanillaIntegration {
 	public static class VanillaRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			if (flux == null && temp != TemperatureLevel.VERY_HIGH) {
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+			if (flux == null && temp < TemperatureLevel.VERY_HIGH.getReferenceTemperature()) {
 				FurnaceRecipes.smelting().func_151394_a(input, output, 0);
 			}
 		}

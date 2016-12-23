@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.util.ChanceStack;
 
 import net.minecraft.item.ItemStack;
@@ -48,7 +47,7 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
 		for (RecipeRegistry registry : registries.values()) {
 			registry.registerSmeltingRecipe(input, output, flux, temp);
 		}
@@ -76,9 +75,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerCoolingRecipe(FluidStack input, ItemStack output, int heat) {
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerCoolingRecipe(input, output, heat);
+			registry.registerFreezingRecipe(input, output, temp, heat);
 		}
 	}
 
@@ -92,12 +91,12 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	@Override
 	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerCoolingRecipe(input, output, cost);
+			registry.registerPrecipitationRecipe(input, output, cost);
 		}
 	}
 
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {
+	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, int temp) {
 		for (RecipeRegistry registry : registries.values()) {
 			registry.registerSmeltingRecipe(input, output, flux, temp);
 		}

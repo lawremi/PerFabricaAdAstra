@@ -1,6 +1,8 @@
 package org.pfaa.chemica.registration;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.model.Condition;
@@ -20,8 +22,26 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 
 	@Override
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp) {
-		for (ItemStack itemStack : flux.getItemStacks()) {
+		Set<ItemStack> itemStacks = flux == null ? Collections.singleton(null) : flux.getItemStacks();
+		for (ItemStack itemStack : itemStacks) {
 			delegate.registerCastingRecipe(input, output, itemStack, temp);
+		}
+	}
+
+	@Override
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp) {
+		Set<ItemStack> itemStacks = flux == null ? Collections.singleton(null) : flux.getItemStacks();
+		for (ItemStack itemStack : itemStacks) {
+			delegate.registerSmeltingRecipe(input, output, itemStack, temp);
+		}
+	}
+
+	@Override
+	public void registerSmeltingRecipe(ItemStack input, FluidStack output, IngredientStack flux,
+			int temp) {
+		Set<ItemStack> itemStacks = flux == null ? Collections.singleton(null) : flux.getItemStacks();
+		for (ItemStack itemStack : itemStacks) {
+			delegate.registerSmeltingRecipe(input, output, itemStack, temp);
 		}
 	}
 

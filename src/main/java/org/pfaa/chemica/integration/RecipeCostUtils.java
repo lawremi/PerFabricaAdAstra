@@ -3,7 +3,6 @@ package org.pfaa.chemica.integration;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 
 public class RecipeCostUtils {
 
@@ -22,27 +21,16 @@ public class RecipeCostUtils {
 		}
 	}
 
-	public static int blastTicksForTemperatureLevel(TemperatureLevel temp) {
-		switch(temp) {
-		case LOW:
-			return 40;
-		case MEDIUM:
-			return 80;
-		case HIGH:
-			return 120;
-		case VERY_HIGH:
-			return 160;
-		default:
-			throw new IllegalArgumentException("unhandled temperature level: " + temp);
-		}
+	public static int blastTicksForTemperature(int temp) {
+		return (temp - 600) / 10;
 	}
 	
 	public static int arcTicksForTemperature(int temp) {
 		return temp / 16;
 	}
 	
-	public static int rfFromTemperatureLevel(TemperatureLevel temp) {
-		return temp.getReferenceTemperature();
+	public static int rfFromSmeltingTemperature(int temp) {
+		return temp;
 	}
 
 	public static int rfFromTemperature(int temp) {

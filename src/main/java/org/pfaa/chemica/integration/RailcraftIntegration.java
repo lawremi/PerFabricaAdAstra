@@ -3,7 +3,6 @@ package org.pfaa.chemica.integration;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -33,8 +32,8 @@ public class RailcraftIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			int ticks = RecipeCostUtils.blastTicksForTemperatureLevel(temp);
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+			int ticks = RecipeCostUtils.blastTicksForTemperature(temp);
 			RailcraftCraftingManager.blastFurnace.addRecipe(input, true, false, ticks, output);
 		}
 

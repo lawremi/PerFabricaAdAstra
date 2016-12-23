@@ -10,6 +10,8 @@ import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.item.IngredientStack;
+import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
 import org.pfaa.chemica.model.Catalysts;
@@ -20,6 +22,7 @@ import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
@@ -27,25 +30,21 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.MaterialStoich;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.util.ChanceStack;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class RecipeRegistration extends BaseRecipeRegistration {
 
 	public static void init() {
-		registerSmeltingRecipes();
-		registerAlloyingRecipes();
+		registerAgglomerationRecipes();
+		registerMetallurgicalRecipes();
 		registerFreezingRecipes();
 		registerCatalystRecipes();
 		registerDissolutionRecipes();
-		registerAgglomerationRecipes();
 		registerDecompositionRecipes();
 		registerSynthesisRecipes();
 		registerRedoxRecipes();
@@ -68,7 +67,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerPartitionRecipes(ChemicaItems.ELEMENT_INGOT, ChemicaItems.ELEMENT_NUGGET);
 		registerPartitionRecipes(ChemicaItems.ALLOY_INGOT, ChemicaItems.ALLOY_NUGGET);
 		registerBlockAndIngotRecipes();
-		registerCastingAndGrindingRecipes();
 	}
 
 	private static void registerBlockAndQuarterRecipes(IndustrialMaterialItem<Aggregates> input) {
@@ -92,6 +90,12 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				}
 			}
 		}
+	}
+	
+	private static void registerMetallurgicalRecipes() {
+		registerCastingAndGrindingRecipes();
+		registerSmeltingRecipes();
+		registerAlloyingRecipes();
 	}
 	
 	private static void registerCastingRecipes(ItemStack itemStack, Metal metal, Form form) {
@@ -142,33 +146,36 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void registerSmeltingRecipes(TemperatureLevel temp, Compounds... compounds) {
-		registerFluxedSmeltingRecipes(temp, (ItemStack)null, compounds);
+		registerFluxedSmeltingRecipes(temp, null, null, compounds);
 	}
 	
 	private static void registerFluxedSmeltingRecipes(TemperatureLevel temp, Compounds flux, Compounds... compounds) {
-		ItemStack fluxStack = ChemicaItems.COMPOUND_DUST.getItemStack(flux); // TODO: maybe change to tiny dust?
-		registerFluxedSmeltingRecipes(temp, fluxStack, compounds);
+		registerFluxedSmeltingRecipes(temp, MaterialStack.of(flux, Forms.DUST), 
+				MaterialStack.of(flux, Forms.DUST_TINY), compounds);
 		if (flux == Compounds.SiO2) {
-			registerFluxedSmeltingRecipes(temp, new ItemStack(Blocks.sand), compounds);
+			registerFluxedSmeltingRecipes(temp, MaterialStack.of(Aggregates.SAND, null), 
+					MaterialStack.of(Aggregates.SAND, Forms.PILE), compounds);
 		}
 	}
 	
-	private static void registerFluxedSmeltingRecipes(TemperatureLevel temp, ItemStack flux, Compounds... compounds) {
+	private static void registerFluxedSmeltingRecipes(TemperatureLevel level, 
+			IngredientStack fluxStack, IngredientStack tinyFluxStack, Compounds... compounds) {
+		int temp = level.getReferenceTemperature();
 		for (Compounds compound : compounds) {
 			Element metal = compound.getFormula().getFirstPart().element;
 			int amount = compound.getFormula().getFirstPart().stoichiometry;
-			RECIPES.registerSmeltingRecipe(
+			GENERICS.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_DUST.getItemStack(compound), 
-					ChemicaItems.ELEMENT_INGOT.getItemStack(metal, amount), flux, temp);
-			RECIPES.registerSmeltingRecipe(
+					ChemicaItems.ELEMENT_INGOT.getItemStack(metal, amount), fluxStack, temp);
+			GENERICS.registerSmeltingRecipe(
 					ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), 
-					ChemicaItems.ELEMENT_NUGGET.getItemStack(metal, amount), flux, temp);
+					ChemicaItems.ELEMENT_NUGGET.getItemStack(metal, amount), tinyFluxStack, temp);
 			int fluidAmount = IndustrialFluids.getAmount(Forms.INGOT) * amount;
 			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, fluidAmount);
-			RECIPES.registerSmeltingRecipe(ChemicaItems.COMPOUND_DUST.getItemStack(compound), molten, flux, temp);
+			GENERICS.registerSmeltingRecipe(ChemicaItems.COMPOUND_DUST.getItemStack(compound), molten, fluxStack, temp);
 			molten = molten.copy();
 			molten.amount = IndustrialFluids.getAmount(Forms.NUGGET) * amount;
-			RECIPES.registerSmeltingRecipe(ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), molten, flux, temp);
+			GENERICS.registerSmeltingRecipe(ChemicaItems.COMPOUND_TINY_DUST.getItemStack(compound), molten, tinyFluxStack, temp);
 		}
 	}
 	

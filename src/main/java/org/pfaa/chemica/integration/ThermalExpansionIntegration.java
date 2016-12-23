@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -44,8 +43,8 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
-			int energy = RecipeCostUtils.rfFromTemperatureLevel(temp);
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+			int energy = RecipeCostUtils.rfFromSmeltingTemperature(temp);
 			if (flux != null) {
 				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, findSlag());
 			} else {

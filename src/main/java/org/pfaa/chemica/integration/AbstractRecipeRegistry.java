@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.RecipeRegistry;
@@ -27,7 +26,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {}
 
 	@Override
-	public void registerCoolingRecipe(FluidStack input, ItemStack output, int heat) {}
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat) {}
 
 	@Override
 	public void registerCoolingRecipe(FluidStack input, FluidStack output, int heat) {}
@@ -36,10 +35,10 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {}
 
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {}
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {}
 
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {}
+	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, int temp) {}
 
 	@Override
 	public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries,

@@ -8,7 +8,6 @@ import java.util.Set;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -78,11 +77,11 @@ public class EnderIOIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
 			if (flux != null) {
 				return;
 			}
-			int energy = RecipeCostUtils.rfFromTemperatureLevel(temp);
+			int energy = RecipeCostUtils.rfFromSmeltingTemperature(temp);
 			registerAlloyFurnaceRecipe(input, output, energy);
 		}
 

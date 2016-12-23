@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -52,11 +51,11 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {
+		public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, int temp) {
 			if (flux != null) {
 				return;
 			}
-			RecipeSmelter recipe = new RecipeSmelter(input, temp.getReferenceTemperature() - 300, output, null, 0);
+			RecipeSmelter recipe = new RecipeSmelter(input, temp - 300, output, null, 0);
 			MaricultureHandlers.crucible.addRecipe(recipe);
 		}
 
@@ -110,8 +109,8 @@ public class MaricultureIntegration {
 		}
 		
 		@Override
-		public void registerCoolingRecipe(FluidStack input, ItemStack output, int heat) {
-			if (input.getFluid().getTemperature() < Constants.STANDARD_TEMPERATURE) {
+		public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat) {
+			if (temp < Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
 			int time = heat / 1000;

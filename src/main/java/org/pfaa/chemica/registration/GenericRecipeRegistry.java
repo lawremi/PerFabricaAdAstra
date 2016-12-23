@@ -13,6 +13,8 @@ import net.minecraftforge.fluids.FluidStack;
 public interface GenericRecipeRegistry {
 	public void registerGrindingRecipe(IngredientStack input, ItemStack output, List<ChanceStack> secondaries, Strength strength);
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
+	public void registerSmeltingRecipe(ItemStack input, FluidStack output, IngredientStack flux, int temp);
 	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp);
 	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
 			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts);

@@ -3,7 +3,6 @@ package org.pfaa.chemica.integration;
 import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.util.ChanceStack;
 
@@ -38,9 +37,9 @@ public class ImmersiveEngineeringIntegration {
 		}
 
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, TemperatureLevel temp) {
+		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
 			ItemStack slag = new ItemStack(IEContent.itemMaterial, 1, 13);
-			BlastFurnaceRecipe.addRecipe(output, input, RecipeCostUtils.blastTicksForTemperatureLevel(temp), slag);
+			BlastFurnaceRecipe.addRecipe(output, input, RecipeCostUtils.blastTicksForTemperature(temp), slag);
 		}
 
 		@Override

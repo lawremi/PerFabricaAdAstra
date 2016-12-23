@@ -13,7 +13,6 @@ import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.geologica.GeoMaterial;
@@ -108,7 +107,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 	}
 	
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, final ItemStack output, final ItemStack flux, final TemperatureLevel temp) {
+	public void registerSmeltingRecipe(ItemStack input, final ItemStack output, final ItemStack flux, final int temp) {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {
@@ -129,7 +128,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 	}
 	
 	@Override
-	public void registerSmeltingRecipe(ItemStack input, final FluidStack output, final ItemStack flux, final TemperatureLevel temp) {
+	public void registerSmeltingRecipe(ItemStack input, final FluidStack output, final ItemStack flux, final int temp) {
 		mapRecipe(input, new Registrant() {
 			@Override
 			public void register(ItemStack input) {

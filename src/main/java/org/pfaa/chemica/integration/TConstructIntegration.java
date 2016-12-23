@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.core.block.BlockWithMeta;
@@ -85,7 +84,7 @@ public class TConstructIntegration {
 		}
 		
 		@Override
-		public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, TemperatureLevel temp) {
+		public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, int temp) {
 			if (flux != null) {
 				return;
 			}
@@ -93,7 +92,7 @@ public class TConstructIntegration {
 				output = output.copy();
 				output.amount *= 2;
 			}
-			this.addMelting(input, output, temp.getReferenceTemperature());
+			this.addMelting(input, output, temp);
 		}
 		
 		@Override

@@ -41,6 +41,7 @@ public class ChemicaItems implements ItemCatalog {
 		}
 	};
 	
+	// FIXME: nPerBlock != 9 for aggregate dusts (4 for hardened clay, 1 for stone/obsidian) 
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_DUST = 
 			new IndustrialMaterialItem<Aggregates>(Forms.DUST, Aggregates.class, IntactAggregate);
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_TINY_DUST = 

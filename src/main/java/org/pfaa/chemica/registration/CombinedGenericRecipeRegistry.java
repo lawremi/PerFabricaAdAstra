@@ -28,6 +28,21 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
+	public void registerSmeltingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp) {
+		for (GenericRecipeRegistry registry : this.registries.values()) {
+			registry.registerSmeltingRecipe(input, output, flux, temp);
+		}
+	}
+
+	@Override
+	public void registerSmeltingRecipe(ItemStack input, FluidStack output, IngredientStack flux,
+			int temp) {
+		for (GenericRecipeRegistry registry : this.registries.values()) {
+			registry.registerSmeltingRecipe(input, output, flux, temp);
+		}
+	}
+
+	@Override
 	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerRoastingRecipe(inputs, output, gas, temp);
