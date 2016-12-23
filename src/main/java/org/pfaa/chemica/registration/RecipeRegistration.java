@@ -258,7 +258,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	
 	private static void registerFreezingRecipes() {
 		registerFreezingRecipes(ChemicaItems.ELEMENT_TINY_DUST);
-		registerFreezingRecipes(ChemicaItems.COMPOUND_TINY_DUST);
+		// Would add a lot of unneeded recipes...
+		//registerFreezingRecipes(ChemicaItems.COMPOUND_TINY_DUST);
 	}
 	
 	private static <T extends Enum<?> & Chemical> void registerFreezingRecipes(IndustrialMaterialItem<T> item) {
