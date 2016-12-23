@@ -11,4 +11,10 @@ public interface IndustrialMaterial {
 	default Mixture mix(MixtureComponent comp) {
 		return this.mix(comp.material, comp.weight);
 	}
+	default ConditionProperties getStandardProperties() {
+		return this.getProperties(Condition.STP);
+	}
+	default State getStandardState() {
+		return this.getStandardProperties().state;
+	}
 }
