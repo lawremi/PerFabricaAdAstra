@@ -294,9 +294,12 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		int amount = IndustrialFluids.getAmount(State.AQUEOUS, item.getForm());
 		FluidStack water = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.LIQUID, amount);
 		for (T chemical : item.getIndustrialMaterials()) {
+			Reaction dissociation = chemical.getDissociation();
+			if (dissociation == null)
+				continue;
 			FluidStack solution = IndustrialFluids.getCanonicalFluidStack(chemical, State.AQUEOUS, amount);
 			ItemStack solute = item.getItemStack(chemical);
-			Condition condition = chemical.getDissociation().getCondition();
+			Condition condition = dissociation.getCondition();
 			RECIPES.registerMixingRecipe(Arrays.asList(solute), water, null, null, solution, null, condition, null);
 		}
 	}
