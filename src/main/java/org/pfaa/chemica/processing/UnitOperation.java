@@ -1,9 +1,6 @@
 package org.pfaa.chemica.processing;
 
-public abstract class UnitOperation<T extends UnitOperationType<?,?>> extends AbstractConversion<T> {
-	
-	protected UnitOperation(T type) {
-		super(type);
+public interface UnitOperation extends Conversion {
+	interface Type extends Conversion.Type {
 	}
-	
 }

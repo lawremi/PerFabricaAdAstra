@@ -8,14 +8,13 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 
 import com.google.common.collect.Lists;
 
-public class Sizing extends UnitOperation<SizingType> {
+public class Sizing implements UnitOperation {
 
 	private MaterialStoich<IndustrialMaterial> input;
 	private MaterialStoich<IndustrialMaterial> output;
 	private List<MaterialStoich<IndustrialMaterial>> secondaries;
 	
-	protected Sizing(SizingType type, MaterialStoich<IndustrialMaterial> input) {
-		super(type);
+	protected Sizing(MaterialStoich<IndustrialMaterial> input) {
 		this.input = input;
 	}
 
@@ -59,4 +58,20 @@ public class Sizing extends UnitOperation<SizingType> {
 	public Condition getCondition() {
 		return Condition.STP;
 	}
+	
+	@Override
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static interface Type extends UnitOperation.Type { 
+		
+		public static enum SizingTypes implements Type {
+			COMPACTION,
+			COMMUNITION;
+		}
+		
+	}
+
 }

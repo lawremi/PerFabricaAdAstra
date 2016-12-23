@@ -16,6 +16,10 @@ public class MaterialState<T extends IndustrialMaterial> {
 		return MaterialStoich.of(stoich, this);
 	}
 	
+	public static <T extends IndustrialMaterial> MaterialState<T> of(T material) {
+		return of(material.getStandardState(), material);
+	}
+	
 	public static <T extends IndustrialMaterial> MaterialState<T> of(State state, T material) {
 		return new MaterialState<T>(material, state);
 	}

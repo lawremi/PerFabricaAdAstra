@@ -24,9 +24,7 @@ import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.processing.MaterialStoich;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.SeparationType.SeparationTypes;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
@@ -503,24 +501,24 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		return sep.liquid;
 	}
 
-	private static Mixture extractHelium(MaterialStoich<Mixture> desoured) {
-		Separation sep = SeparationTypes.CONDENSATION.of(desoured).at(70);
+	private static Mixture extractHelium(MaterialState<Mixture> desoured) {
+		Separation sep = Separation.of(desoured).at(70);
 		CONVERSIONS.register(sep);
-		return sep.getResiduum().material();
+		return sep.getResiduum().material;
 	}
 
-	private static MaterialStoich<Mixture> desourNaturalGas() {
+	private static MaterialState<Mixture> desourNaturalGas() {
 		// Dropping CO2 just to keep things simple
-		MaterialStoich<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(1, Compounds.ETHANOLAMINE); 
-		Separation abs = SeparationTypes.ABSORPTION.
+		MaterialState<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(Compounds.ETHANOLAMINE); 
+		Separation abs = Separation.
 				of(GeoMaterial.NATURAL_GAS).
 				with(ethanolamine).
 				extracts(Compounds.CO2, Compounds.H2S);
 		CONVERSIONS.register(abs);
-		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material().without(Compounds.CO2));
-		Separation regen = SeparationTypes.DEGASIFICATION.
+		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material.without(Compounds.CO2));
+		Separation regen = Separation.
 				of(richAmine).
-				extracts(Compounds.H2S).at(400);
+				extracts(State.GAS.of(Compounds.H2S)).at(400);
 		CONVERSIONS.register(regen);
 		return abs.getResiduum();
 	}

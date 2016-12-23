@@ -2,22 +2,15 @@ package org.pfaa.chemica.processing;
 
 import org.pfaa.chemica.model.Condition;
 
-public abstract class AbstractConversion<T extends ConversionType<?,?>> implements Conversion<T> {
+public abstract class ConditionedConversion implements Conversion {
 
-	private T type;
 	private Condition condition;
 	
-	public AbstractConversion(T type) {
-		this.type = type;
+	public Conversion at(int temp) {
+		return at(new Condition(temp));
 	}
 
-	@Override
-	public T getType() {
-		return this.type;
-	}
-
-	@Override
-	public Conversion<T> at(Condition condition) {
+	public Conversion at(Condition condition) {
 		this.condition = condition;
 		return this;
 	}

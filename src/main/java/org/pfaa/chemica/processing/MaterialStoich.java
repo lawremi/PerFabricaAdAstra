@@ -7,8 +7,13 @@ import java.util.stream.Collectors;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
+import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 
+/*
+ * FIXME: Do we really need this, outside of Reaction (and its Term)?
+ *        Most conversions are 1-to-1. Mixing already specifies the composition of the product.
+ */
 public class MaterialStoich<T extends IndustrialMaterial> {
 	public final MaterialState<T> materialState;
 	public final float stoich;
@@ -27,9 +32,13 @@ public class MaterialStoich<T extends IndustrialMaterial> {
 	}
 	
 	public static <T extends IndustrialMaterial> MaterialStoich<T> of(T material) {
-		return of(material.getProperties(Condition.STP).state, material);
+		return of(1.0F, material);
 	}
 
+	public static <T extends IndustrialMaterial> MaterialStoich<T> of(float stoich, T material) {
+		return of(stoich, material.getProperties(Condition.STP).state, material);
+	}
+	
 	public static <T extends IndustrialMaterial> MaterialStoich<T> of(float stoich, MaterialState<T> materialState) {
 		return new MaterialStoich<T>(materialState, stoich);
 	}
@@ -42,6 +51,10 @@ public class MaterialStoich<T extends IndustrialMaterial> {
 		return Arrays.asList(materials).stream().map(MaterialStoich::of).collect(Collectors.toList());
 	}
 
+	public static MaterialStoich<IndustrialMaterial> of(MixtureComponent comp) {
+		return of((float)comp.weight, comp.material);
+	}
+	
 	public T material() {
 		return this.materialState.material;
 	}

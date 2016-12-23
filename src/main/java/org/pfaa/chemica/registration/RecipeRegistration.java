@@ -378,18 +378,19 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		absorbCO2(makeWaterGas.getProduct());
 	}
 	
-	public static MaterialStoich<?> absorbCO2(Mixture mixture) 
+	public static MaterialState<?> absorbCO2(Mixture mixture) 
 	{
-		MaterialStoich<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(1, Compounds.ETHANOLAMINE); 
-		Separation abs = SeparationTypes.ABSORPTION.
-				of(mixture).
+		MaterialState<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(Compounds.ETHANOLAMINE); 
+		Separation abs = Separation.of(mixture).
 				with(ethanolamine).
-				extracts(Compounds.CO2);
+				extracts(State.GAS.of(Compounds.CO2)).
+				by(Separation.Axis.SOLUBILITY);
 		CONVERSIONS.register(abs);
-		MaterialStoich<Mixture> richAmine = abs.getSeparated();
-		Separation regen = SeparationTypes.DEGASIFICATION.
-				of(richAmine).
-				extracts(Compounds.CO2).at(400);
+		MaterialState<Mixture> richAmine = abs.getSeparated();
+		Separation regen = Separation.of(richAmine).
+				at(400).
+				extracts(State.GAS.of(Compounds.CO2)).
+				by(Separation.Axis.SOLUBILITY);
 		CONVERSIONS.register(regen);
 		return abs.getResiduum();
 	}

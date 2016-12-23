@@ -2,28 +2,32 @@ package org.pfaa.chemica.model;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.processing.Combination;
+import org.pfaa.chemica.processing.ConditionedConversion;
+import org.pfaa.chemica.processing.Conversion;
+import org.pfaa.chemica.processing.MaterialStoich;
 
 import com.google.common.collect.Lists;
 
-public class Reaction {
+public class Reaction extends ConditionedConversion {
 
 	private Equation equation;
 	private Condition baseCondition = new Condition();
-	private Condition canonicalCondition;
 	
-	public Reaction(Equation equation) {
+	protected Reaction(Equation equation) {
 		this.equation = equation;
 	}
 	
 	public double getEnthalpyChange(Condition condition) {
 		double enthalpy = 0;
 		for (Term product : this.getProducts()) {
-			enthalpy += product.stoich * product.material.getProperties(condition, product.state).enthalpy;
+			enthalpy += product.stoich * product.material().getProperties(condition, product.state()).enthalpy;
 		}
 		for (Term reactant : this.getReactants()) {
-			enthalpy -= reactant.stoich * reactant.material.getProperties(condition, reactant.state).enthalpy;
+			enthalpy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).enthalpy;
 		}
 		return enthalpy;
 	}
@@ -31,10 +35,10 @@ public class Reaction {
 	public double getEntropyChange(Condition condition) {
 		double entropy = 0;
 		for (Term product : this.getProducts()) {
-			entropy += product.stoich * product.material.getProperties(condition, product.state).entropy;
+			entropy += product.stoich * product.material().getProperties(condition, product.state()).entropy;
 		}
 		for (Term reactant : this.getReactants()) {
-			entropy -= reactant.stoich * reactant.material.getProperties(condition, reactant.state).entropy;
+			entropy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).entropy;
 		}
 		return entropy;
 	}
@@ -78,7 +82,7 @@ public class Reaction {
 	private Mixture mixTerms(List<Term> terms) {
 		Mixture mixture = new SimpleMixture();
 		for (Term term : terms) {
-			mixture.mix(term.material, term.stoich);
+			mixture.mix(term.material(), term.stoich);
 		}
 		return mixture;
 	}
@@ -149,7 +153,17 @@ public class Reaction {
 		this.equation.addCatalysts(catalysts);
 		return this;
 	}
-	
+
+	@Override
+	public Reaction at(Condition condition) {
+		return (Reaction)super.at(condition);
+	}
+
+	@Override
+	public Reaction at(int temp) {
+		return (Reaction)super.at(temp);
+	}
+
 	public String toString() {
 		return this.equation.toString();
 	}
@@ -166,32 +180,41 @@ public class Reaction {
 		return this.baseCondition.atmospheric;
 	}
 	
-	public Condition getCanonicalCondition() {
-		if (this.canonicalCondition == null) {
-			this.at(this.getSpontaneousTemperature());
-		}
-		return this.canonicalCondition;
+	@Override
+	protected Condition deriveCondition() {
+		return new Condition(this.getSpontaneousTemperature());
 	}
-	
+
 	public boolean hasSolidReactants() {
 		for (Term reactant : this.getReactants()) {
-			if (reactant.state == State.SOLID)
+			if (reactant.state() == State.SOLID)
 				return true;
 		}
 		return false;
 	}
 	
-	public Reaction at(Condition condition) {
-		this.canonicalCondition = condition;
-		return this;
+	public boolean hasOnlySolidReactants() {
+		for (Term reactant : this.getReactants()) {
+			if (reactant.state() != State.SOLID)
+				return false;
+		}
+		return true;
 	}
 	
-	public Reaction at(int temperature, double pressure) {
-		return this.at(new Condition(temperature, pressure, this.isAqueous(), this.isAtmospheric()));
-	}
-	
-	public Reaction at(int temperature) {
-		return this.at(temperature, Constants.STANDARD_PRESSURE);
+	public Combination asCombinationForSolution(Mixture solution) {
+		Mixture solutes = solution.getFraction(Condition.STP, State.SOLID);
+		if (solutes.getComponents().size() != 1)
+			return null;
+		MixtureComponent solute = solutes.getComponents().get(0);
+		List<MaterialStoich<?>> inputs = this.getReactants().stream().map((t) -> {
+			MaterialStoich<?> stoich = t;
+			if (t.material() == solute.material) {
+				float weight = (float)(t.stoich * (Constants.STANDARD_SOLUTE_WEIGHT / solute.weight));
+				stoich = MaterialStoich.of(weight, t.materialState);
+			}
+			return stoich;
+		}).collect(Collectors.toList());
+		return Combination.of(inputs).yields(Lists.newArrayList(this.getProducts())).at(this.getCondition());
 	}
 	
 	public static Reaction of(Chemical reactant) {
@@ -211,11 +234,15 @@ public class Reaction {
 	}
 	
 	private static Reaction of(int stoichiometry, Chemical reactant, State state, float concentration) {
+		return of(null, stoichiometry, reactant, state, concentration);
+	}
+
+	private static Reaction of(Type type, int stoichiometry, Chemical reactant, State state, float concentration) {
 		Term term = new Term(stoichiometry, reactant, state, concentration);
 		Equation equation = new Equation(Lists.newArrayList(term), Collections.<Term>emptyList(), null);
 		return new Reaction(equation);
 	}
-	
+
 	public static Reaction inWaterOf(Chemical reactant) {
 		return inWaterOf(1, reactant);
 	}
@@ -249,18 +276,43 @@ public class Reaction {
 	public static Reaction inAirOf(int stoichiometry, Chemical reactant, State state) {
 		Reaction reaction = of(stoichiometry, reactant, state);
 		reaction.baseCondition.atmospheric = true;
-		return reaction;
+ 		return reaction;
+	}
+
+	@Override
+	public double getEnergy() {
+		return this.getEnthalpyChange(this.getCondition());
+	}
+
+	@Override
+	public List<MaterialStoich<?>> getInputs() {
+		return Collections.unmodifiableList(this.getReactants());
+	}
+
+	@Override
+	public List<MaterialStoich<?>> getOutputs() {
+		return Collections.unmodifiableList(this.getProducts());
+	}
+
+	@Override
+	public Type getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	/* It may be useful in the future to label reactions with these types */
-	public enum Type {
-		SYNTHESIS,
-		DECOMPOSITION,
-		SINGLE_DISPLACEMENT,
-		DOUBLE_DISPLACEMENT,
-		NEUTRALIZATION,
-		COMBUSTION,
-		ORGANIC,
-		REDOX
+	public static interface Type extends Conversion.Type {
+
+		public enum ReactionTypes implements Type {
+			SYNTHESIS,
+			DECOMPOSITION,
+			SINGLE_DISPLACEMENT,
+			DOUBLE_DISPLACEMENT,
+			NEUTRALIZATION,
+			COMBUSTION,
+			ORGANIC,
+			REDOX;
+		}
+
 	}
+
 }
