@@ -93,4 +93,16 @@ public class MaterialStack implements IngredientStack {
 	public Object getCraftingIngredient() {
 		return this.getOreDictKey();
 	}
+	
+	public static MaterialStack of(IndustrialMaterial material) {
+		return new MaterialStack(material);
+	}
+	
+	public static MaterialStack of(IndustrialMaterial material, Form form) {
+		return new MaterialStack(form, material);
+	}
+	
+	public static MaterialStack of(int size, IndustrialMaterial material, Form form) {
+		return new MaterialStack(form, material, size);
+	}
 }
