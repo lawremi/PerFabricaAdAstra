@@ -21,12 +21,16 @@ public interface Mixture extends IndustrialMaterial {
 		return null;
 	}
 	
-	default Mixture without(IndustrialMaterial... materials) {
+	default Mixture without(List<IndustrialMaterial> materials) {
 		Set<IndustrialMaterial> toRemove = Sets.newHashSet(materials);
 		List<MixtureComponent> comps = this.getComponents().stream().
 				filter((x) -> !toRemove.contains(x)).
 				collect(Collectors.toList());
 		return this.removeAll().mixAll(comps);
+	}
+	
+	default Mixture without(IndustrialMaterial... materials) {
+		return this.without(Arrays.asList(materials));
 	}
 	
 	default Mixture concentrate(double factor) {
@@ -38,12 +42,16 @@ public interface Mixture extends IndustrialMaterial {
 		}).collect(Collectors.toList()));
 	}
 	
-	default Mixture extract(IndustrialMaterial... materials) {
-		List<MixtureComponent> comps = Arrays.stream(materials).
+	default Mixture extract(List<IndustrialMaterial> materials) {
+		List<MixtureComponent> comps = materials.stream().
 				map(this::getComponent).
 				filter(Objects::nonNull).
 				collect(Collectors.toList());
 		return this.removeAll().mixAll(comps);
+	}
+	
+	default Mixture extract(IndustrialMaterial... materials) {
+		return this.extract(Arrays.asList(materials));
 	}
 	
 	default List<Mixture> separate() {
@@ -106,8 +114,9 @@ public interface Mixture extends IndustrialMaterial {
 	}
 	
 	default Mixture getFraction(Condition cond, State state) {
-		return this.removeAll().mixAll(this.getComponents().stream().
-			filter((comp) -> comp.getMaterial().getProperties(cond).state == state).
-			collect(Collectors.toList()));
+		List<MixtureComponent> comps = this.getComponents().stream().
+				filter((comp) -> comp.getMaterial().getProperties(cond).state == state).
+				collect(Collectors.toList());
+		return this.removeAll().mixAll(comps);
 	}
 }
