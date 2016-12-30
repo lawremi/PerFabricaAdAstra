@@ -871,10 +871,13 @@ public interface Compound extends Chemical {
 		}
 
 		@Override
-		public ChemicalConditionProperties getProperties(Condition condition, State state) {
+		public ConditionProperties getProperties(Condition condition, State state) {
 			return delegate.getProperties(condition, state);
 		}
 
+		public static Compounds forFormula(Formula.Part part) {
+			return forFormula(new Formula(part));
+		}
 		public static Compounds forFormula(Formula formula) {
 			Compounds compound = valueOf(formula.toString());
 			if (compound == null) {
