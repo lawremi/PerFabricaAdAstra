@@ -22,14 +22,12 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.chemica.registration.ReactionFactory;
 import org.pfaa.chemica.registration.RecipeUtils;
 import org.pfaa.chemica.util.ChanceStack;
@@ -492,11 +490,10 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static Mixture extractMethane(Mixture noHelium) {
-		Condition cond = Compounds.ETHANE.getVaporization().getLiquidCondition();
 		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
 		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(noHelium, State.LIQUID);
-		RECIPES.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(cond));
-		Mixture.Phases sep = noHelium.separateByState(cond);
+		RECIPES.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(State.LIQUID));
+		Mixture.Phases sep = noHelium.separateByState(Compounds.ETHANE.getCanonicalCondition(State.LIQUID));
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(sep);
 		RECIPES.registerDistillationRecipe(gas, outputs, Condition.STP);
 		return sep.liquid;
@@ -544,14 +541,14 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		distill(crude, crude.fractions());
 	}
 	
-	private static void distill(Mixture mixture, List<Vaporizable> fractions) {
-		List<Vaporizable> sortedFractions = fractions.stream().sorted((a, b) -> {
+	private static void distill(Mixture mixture, List<IndustrialMaterial> fractions) {
+		List<IndustrialMaterial> sortedFractions = fractions.stream().sorted((a, b) -> {
 			return Integer.compare(a.getVaporization().getTemperature(), b.getVaporization().getTemperature());
 		}).collect(Collectors.toList());
 		List<FluidStack> outputs = sortedFractions.stream().map((m) -> {
 			return IndustrialFluids.getCanonicalFluidStack(m, State.LIQUID, Forms.DUST_TINY);
 		}).collect(Collectors.toList());
-		Condition condition = sortedFractions.get(sortedFractions.size() - 2).getVaporization().getGasCondition();
+		Condition condition = sortedFractions.get(sortedFractions.size() - 2).getCanonicalCondition(State.GAS);
 		FluidStack input = IndustrialFluids.getCanonicalFluidStack(mixture, State.LIQUID, Forms.DUST_TINY);
 		RECIPES.registerDistillationRecipe(input, outputs, condition);
 	}
