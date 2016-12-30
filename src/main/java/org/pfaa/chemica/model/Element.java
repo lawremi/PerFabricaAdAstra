@@ -484,7 +484,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 		   new Liquid(17.3, new Thermo(57.8)), // FIXME: better thermodynamics for liquid gold!
 		   new Vaporization(5.47, 17292, -71),
 		   new Gas(new Thermo(366, 180, 20.8))),
-		Hg("mercury", Category.TRANSITION_METAL, Strength.WEAK, 201, +2, 
+		Hg("mercury", Category.TRANSITION_METAL, null, 201, +2, 
 		   new Solid(new Color(155, 155, 155), 14.25,
 				     new Thermo(-2.18, 66.1, 21.5, 29.2)),
 		   new Fusion(234),
