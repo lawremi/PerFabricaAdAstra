@@ -6,54 +6,27 @@ import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.catalog.CatalogUtils;
 import org.pfaa.core.catalog.ItemCatalog;
-import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
-import com.google.common.base.Predicate;
-
-import net.minecraft.block.material.Material;
-
 public class GeologicaItems implements ItemCatalog {
-	private static Predicate<GeoMaterial> EarthyMaterial = new Predicate<GeoMaterial>() {
-		public boolean apply(GeoMaterial obj) {
-			return obj.getBlockMaterial() == Material.clay || obj.getBlockMaterial() == Material.ground;
-		}
-	};
-	private static Predicate<GeoMaterial> OreClay = new Predicate<GeoMaterial>() {
-		public boolean apply(GeoMaterial obj) {
-			return obj.getBlockMaterial() == Material.clay && obj.getComposition() instanceof Ore;
-		}
-	};
-	private static Predicate<GeoMaterial> CrudeSolid = new Predicate<GeoMaterial>() {
-		public boolean apply(GeoMaterial obj) {
-			return obj.getComposition() instanceof Crude && obj.getBlockMaterial() != Material.water;
-		}
-	};
-	private static Predicate<GeoMaterial> OreRock = new Predicate<GeoMaterial>() {
-		public boolean apply(GeoMaterial obj) {
-			return obj.getComposition() instanceof Ore && 
-					(obj.getBlockMaterial() == Material.rock || obj.getBlockMaterial() == Material.clay);
-		}
-	};
 
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, CrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isCrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, CrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, GeoMaterial::isCrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, CrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, GeoMaterial::isCrudeSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, EarthyMaterial);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, GeoMaterial::isEarthyMaterial);
 	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, OreClay);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isOreClay);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, OreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isOreRock);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, OreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, GeoMaterial::isOreRock);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, OreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, GeoMaterial::isOreRock);
 	
 	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST = 
 			new IndustrialMaterialItem<Ores>(Forms.DUST, Ores.class);

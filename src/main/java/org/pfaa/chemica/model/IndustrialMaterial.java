@@ -5,6 +5,9 @@ public interface IndustrialMaterial {
 	String name();
 	String getOreDictKey();
 
+	default boolean isPure() {
+		return true;
+	}
 	default boolean isForBuilding() {
 		return false;
 	}

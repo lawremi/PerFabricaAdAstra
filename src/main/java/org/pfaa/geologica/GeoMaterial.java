@@ -14,6 +14,7 @@ import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.geologica.processing.Crude.Crudes;
+import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.IndustrialMineral;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.Mineral;
@@ -340,6 +341,34 @@ public enum GeoMaterial implements Mixture {
 		return null;
 	}
     
+	@Override
+	public Mixture removeAll() {
+		return composition.removeAll();
+	}
+	
+	public boolean isEarthyMaterial() {
+		return this.getBlockMaterial() == Material.clay || this.getBlockMaterial() == Material.ground;
+	}
+	
+	public boolean isOreClay() {
+		return this.getBlockMaterial() == Material.clay && this.getComposition() instanceof Ore;
+	}
+	
+	public boolean isCrudeSolid() {
+		return this.getComposition() instanceof Crude && 
+				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.ground);
+	}
+
+	public boolean isOreRock() {
+		return this.getComposition() instanceof Ore && 
+				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.clay);
+	}
+	
+	@Override
+	public boolean isPure() {
+		return !(this.getComposition() instanceof Ore);
+	}
+	
 	private static Material blockMaterialFromHost(IndustrialMaterial host)
     {
         Material material = Material.rock;
@@ -354,9 +383,4 @@ public enum GeoMaterial implements Mixture {
         }
         return material;
     }
-
-	@Override
-	public Mixture removeAll() {
-		return composition.removeAll();
-	}
 }

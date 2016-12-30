@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.common.base.CaseFormat;
 
 public interface Aggregate extends Mixture {
-	
 	public Aggregate mix(IndustrialMaterial material, double weight);
 	public Aggregate removeAll();
 	
@@ -50,6 +49,14 @@ public interface Aggregate extends Mixture {
 		@Override
 		public Aggregate removeAll() {
 			return this;
+		}
+
+		public boolean isLoose() {
+			return this == Aggregates.SAND || this == Aggregates.GRAVEL;
+		}
+		
+		public boolean isHard() {
+			return this == Aggregates.STONE || this == Aggregates.HARDENED_CLAY || this == Aggregates.OBSIDIAN;
 		}
 	}
 }
