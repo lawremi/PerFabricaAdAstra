@@ -6,32 +6,72 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
+import org.pfaa.chemica.model.Aggregate;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.Compound.Compounds;
-import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.processing.Combination;
 import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.Sizing;
-import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.Stacking;
 
 import com.google.common.collect.Lists;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class DefaultConversionRegistry implements ConversionRegistry {
+
+	private RecipeRegistry delegate;
+	private GenericRecipeRegistry genericDelegate;
+	
+	public DefaultConversionRegistry(RecipeRegistry delegate) {
+		this.delegate = delegate;
+		this.genericDelegate = delegate.getGenericRecipeRegistry();
+	}
+
+	@Override
+	public void register(Stacking stacking) {
+		stack(stacking.getSolid(), stacking.getStackedForm(), stacking.getUnstackedForm());
+	}
+	
+	private void stack(IndustrialMaterial solid, Form stackedForm, Form unstackedForm) {
+		ItemStack stack;
+		if (stackedForm == Forms.BLOCK && solid instanceof Aggregate) {
+			// FIXME: in >= 1.10, we get this from ore dict
+			stack = new ItemStack(ChemicaBlocks.getBlock((Aggregate)solid));
+		} else {
+			stack = IndustrialItems.getBestItemStack(stackedForm, solid);
+		}
+		if (stack != null) {
+			ItemStack tinyStack = IndustrialItems.getBestItemStack(unstackedForm, solid);
+			registerPartitionRecipes(stack, tinyStack, 
+					unstackedForm.getNumberPerBlock() / stackedForm.getNumberPerBlock());
+		}
+	}
+	
+	private void registerPartitionRecipes(ItemStack itemStack, ItemStack partitionStack, int numPartitions) {
+		partitionStack = partitionStack.copy();
+		partitionStack.stackSize = numPartitions;
+		this.delegate.registerMixingRecipe(Collections.singletonList(partitionStack), itemStack);
+		GameRegistry.addShapelessRecipe(partitionStack, itemStack);
+	}
 
 	@Override
 	public void register(Separation separation) {
@@ -53,23 +93,50 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 
 	@Override
 	public void register(EnthalpyChange enthalpyChange) {
-		// TODO Auto-generated method stub
-		
+		IndustrialMaterial material = enthalpyChange.getMaterial();
+		EnthalpyChange.Type type = enthalpyChange.getType();
+		int temp = enthalpyChange.getCondition().temperature;
+		int energy = (int)enthalpyChange.getEnergy();
+		if (type == EnthalpyChange.Types.MELTING || type == EnthalpyChange.Types.FREEZING) {
+			this.melt(material, temp, energy);
+		} else if (type == EnthalpyChange.Types.VAPORIZATION || type == EnthalpyChange.Types.CONDENSATION) {
+			this.vaporize(material, temp, energy);
+		}
 	}
 
+	private void melt(IndustrialMaterial material, int temp, int energy) {
+		for (Form form : new Form[] { Forms.DUST_TINY, Forms.DUST, Forms.INGOT, Forms.NUGGET, Forms.BLOCK }) {
+			this.melt(material, temp, energy, form);
+		}
+	}
+
+	private void melt(IndustrialMaterial material, int temp, int energy, Form form) {
+		ItemStack solid = IndustrialItems.getBestItemStack(form, material);
+		if (solid != null) {
+			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(material, State.LIQUID, form);
+			delegate.registerMeltingRecipe(solid, molten, temp, energy);
+			if (form == Forms.INGOT || form == Forms.BLOCK) {
+				delegate.registerCastingRecipe(molten, solid);
+			} else if (form == Forms.DUST) {
+				delegate.registerFreezingRecipe(molten, solid, temp, energy);
+			}
+		}
+	}
+	
+	private void vaporize(IndustrialMaterial material, int temp, int energy) {
+		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(material, State.LIQUID, Forms.DUST_TINY);
+		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(material, State.GAS, Forms.DUST_TINY);
+		delegate.registerBoilingRecipe(liquid, gas, temp, energy);
+		delegate.registerCondensingRecipe(gas, liquid, temp, energy);
+	}
+	
 	@Override
 	public void register(Reaction reaction) {
 		if (reaction.hasOnlySolidReactants())
 			this.registerRoastingReaction(reaction);
 		else this.registerReaction(reaction);
 	}
-
-	private GenericRecipeRegistry delegate;
-	
-	public DefaultConversionRegistry(GenericRecipeRegistry delegate) {
-		this.delegate = delegate;
-	}
-	
+		
 	public void registerRoastingReaction(Reaction reaction) {
 		this.registerRoastingReaction(Forms.DUST, reaction);
 		this.registerRoastingReaction(Forms.DUST_TINY, reaction);
@@ -85,7 +152,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList inputs = this.getSolidReactants(form, reaction);
 		int temp = reaction.getCondition().temperature;
-		delegate.registerRoastingRecipe(inputs, output, gas, temp);
+		genericDelegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
 	private IngredientList getSolidReactants(Form form, Reaction reaction) {
@@ -137,7 +204,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		FluidStack liquidProduct = this.getProductFluidStack(form, reaction, State.LIQUID);
 		FluidStack gasProduct = this.getProductFluidStack(form, reaction, State.GAS);
 		IngredientList catalyst = this.getCatalysts(reaction);
-		delegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
+		genericDelegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
 				reaction.getCondition(), catalyst);
 	}
@@ -178,7 +245,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 					FluidStack inputA = IndustrialFluids.getCanonicalFluidStack(compA, state, Forms.DUST_TINY);
 					FluidStack inputB = IndustrialFluids.getCanonicalFluidStack(compB, state, Forms.DUST_TINY);
 					FluidStack output = IndustrialFluids.getCanonicalFluidStack(outputMixture, state, Forms.DUST_TINY);
-					delegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
+					genericDelegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
 							null, Condition.STP, null);
 				}
 				return new MixtureComponent(outputMixture, 1.0F);

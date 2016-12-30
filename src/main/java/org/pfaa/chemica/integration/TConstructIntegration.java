@@ -101,7 +101,7 @@ public class TConstructIntegration {
 		}
 
 		@Override
-		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
+		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp, int energy) {
 			this.addMelting(input, output, output.getFluid().getTemperature());
 		}
 		

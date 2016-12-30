@@ -14,8 +14,10 @@ public interface RecipeRegistry {
 	// FIXME: Standardize all methods to have required condition and energy (where necessary)
 	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp);
 	public void registerCastingRecipe(FluidStack input, ItemStack output);
-	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp);
-	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat);
+	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp, int energy);
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int energy);
+	public void registerBoilingRecipe(FluidStack input, FluidStack output, int temp, int energy);
+	public void registerCondensingRecipe(FluidStack input, FluidStack output, int temp, int energy);
 	public void registerCoolingRecipe(FluidStack input, FluidStack output, int heat);
 	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost);
 	// FIXME: both smelting functions should take a FluidStack gas parameter for e.g. SO2 capture when smelting sulfides

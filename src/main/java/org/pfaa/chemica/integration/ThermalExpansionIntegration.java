@@ -68,12 +68,12 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
-			int energy = RecipeCostUtils.rfFromTemperature(temp);
+		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp, int energy) {
+			int rf = RecipeCostUtils.rfFromTemperature(temp);
 			if (output.getFluid() == FluidRegistry.LAVA) {
-				energy *= 300;
+				rf *= 300;
 			}
-			ThermalExpansionHelper.addCrucibleRecipe(energy, input, output);
+			ThermalExpansionHelper.addCrucibleRecipe(rf, input, output);
 		}
 
 		@Override

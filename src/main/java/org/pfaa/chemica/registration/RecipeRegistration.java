@@ -5,22 +5,21 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.chemica.block.ConstructionMaterialBlock;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy;
+import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Catalysts;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
-import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.Element;
+import org.pfaa.chemica.model.Element.Category;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Metal;
@@ -28,7 +27,7 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -40,9 +39,9 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeRegistration extends BaseRecipeRegistration {
 
 	public static void init() {
-		registerAgglomerationRecipes();
+		registerStackingRecipes();
+		registerStateChangeRecipes();
 		registerMetallurgicalRecipes();
-		registerFreezingRecipes();
 		registerCatalystRecipes();
 		registerDissolutionRecipes();
 		registerDecompositionRecipes();
@@ -51,61 +50,49 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerSingleDisplacementRecipes();
 		registerDoubleDisplacementRecipes();
 		registerCrystallizationRecipes();
-		
-		// TODO: add metal tool recipes
-		// - Valid metals/alloys: all types of steel, magnesium
-		// - When GT loaded, tools are automatic, based on material system
-		// - Should probably try to make tools balanced with Metallurgy/Railcraft tools
 	}
-		
-	private static void registerAgglomerationRecipes() {
-		registerBlockAndQuarterRecipes(ChemicaItems.AGGREGATE_PILE);
-		registerPartitionRecipes(ChemicaItems.AGGREGATE_DUST, ChemicaItems.AGGREGATE_TINY_DUST);
-		registerPartitionRecipes(ChemicaItems.COMPOUND_DUST, ChemicaItems.COMPOUND_TINY_DUST);
-		registerPartitionRecipes(ChemicaItems.ELEMENT_DUST, ChemicaItems.ELEMENT_TINY_DUST);
-		registerPartitionRecipes(ChemicaItems.ALLOY_DUST, ChemicaItems.ALLOY_TINY_DUST);
-		registerPartitionRecipes(ChemicaItems.ELEMENT_INGOT, ChemicaItems.ELEMENT_NUGGET);
-		registerPartitionRecipes(ChemicaItems.ALLOY_INGOT, ChemicaItems.ALLOY_NUGGET);
-		registerBlockAndIngotRecipes();
+	
+	private static void registerStackingRecipes() {
+		registerStackingRecipes(Aggregates.class);
+		registerStackingRecipes(Element.class);
+		registerStackingRecipes(Compounds.class);
+		registerStackingRecipes(Alloys.class);
 	}
 
-	private static void registerBlockAndQuarterRecipes(IndustrialMaterialItem<Aggregates> input) {
-		for(Aggregates material : input.getIndustrialMaterials()) {
-			ItemStack blockStack = new ItemStack(ChemicaBlocks.getBlock(material));
-			ItemStack quarterStack = input.getItemStack(material);
-			registerPartitionRecipes(blockStack, quarterStack, input.getForm().getNumberPerBlock());
-		}
+	private static void registerStateChangeRecipes() {
+		registerElementStateChangeRecipes();
+		registerAlloyStateChangeRecipes();
 	}
 
-	private static void registerBlockAndIngotRecipes() {
-		for(ConstructionMaterialBlock block : ChemicaBlocks.getConstructionMaterialBlocks()) {
-			for (ConstructionMaterial material : block.getConstructionMaterials()) {
-				ItemStack blockStack = block.getItemStack(material);
-				ItemStack ingotStack = OreDictUtils.lookupBest(Forms.INGOT, material);	
-				if (material instanceof Metal) {
-					registerPartitionRecipes(blockStack, ingotStack, Forms.INGOT.getNumberPerBlock());
-					registerCastingRecipes(blockStack, (Metal)material, Forms.BLOCK);
-				} else {
-					registerPartitionRecipes(blockStack, ingotStack, 4);
-				}
+	private static void registerElementStateChangeRecipes() {
+		for (Element element : Element.values()) {
+			Chemical chemical = element;
+			if (element.getCategory() == Category.DIATOMIC_NONMETAL) {
+				chemical = Compounds.forFormula(element._(2));
+			}
+			EnthalpyChange change = EnthalpyChange.of(chemical);
+			CONVERSIONS.register(change.melts());
+			State std = chemical.getStandardState();
+			if (std == State.LIQUID || std == State.GAS) {
+				CONVERSIONS.register(change.vaporizes());
 			}
 		}
 	}
+	
+	private static void registerAlloyStateChangeRecipes() {
+		for (Alloy alloy : Alloys.values()) {
+			EnthalpyChange change = EnthalpyChange.of(alloy);
+			CONVERSIONS.register(change.melts());
+		}
+	}
+
+	// TODO: sintering of dusts to ingots
+	// TODO: grinding of ingot=>dust, nugget=>tinyDust
 	
 	private static void registerMetallurgicalRecipes() {
 		registerCastingAndGrindingRecipes();
 		registerSmeltingRecipes();
 		registerAlloyingRecipes();
-	}
-	
-	private static void registerCastingRecipes(ItemStack itemStack, Metal metal, Form form) {
-		if (metal.getFusion() != null) {
-			FluidStack fluid = IndustrialFluids.getCanonicalFluidStack(metal, State.LIQUID, form);
-			RECIPES.registerMeltingRecipe(itemStack, fluid, fluid.getFluid().getTemperature());
-			if (form == Forms.INGOT || form == Forms.BLOCK) {
-				RECIPES.registerCastingRecipe(fluid, itemStack);
-			}
-		}
 	}
 	
 	private static void registerCastingAndGrindingRecipes() {
@@ -127,7 +114,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			ItemStack intact = output.getItemStack(castable);
 			RECIPES.registerCastingRecipe(dust, intact, null, castingTemp);
 			RECIPES.registerGrindingRecipe(intact, dust, Collections.<ChanceStack> emptyList(), castable.getStrength());
-			registerCastingRecipes(intact, castable, output.getForm());
 		}
 	}
 
@@ -256,23 +242,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerAlloyingRecipes(ChemicaItems.ALLOY_INGOT);
 	}
 	
-	private static void registerFreezingRecipes() {
-		registerFreezingRecipes(ChemicaItems.ELEMENT_TINY_DUST);
-		// Would add a lot of unneeded recipes...
-		//registerFreezingRecipes(ChemicaItems.COMPOUND_TINY_DUST);
-	}
-	
-	private static <T extends Enum<?> & Chemical> void registerFreezingRecipes(IndustrialMaterialItem<T> item) {
-		for (T chemical : item.getIndustrialMaterials()) {
-			if (chemical instanceof Metal && ((Metal) chemical).getStrength() != null) {
-				continue;
-			}
-			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(chemical, State.LIQUID, item.getForm());
-			RECIPES.registerFreezingRecipe(molten, item.getItemStack(chemical), chemical.getFusion().getTemperature(), 
-					(int)chemical.getEnthalpyOfFusion(new Condition(molten.getFluid().getTemperature())));
-		}
-	}
-
 	private static void registerCatalystRecipes() {
 		for (Catalysts catalyst : ChemicaItems.CATALYST_DUST.getIndustrialMaterials()) {
 			mixCatalyst(ChemicaItems.CATALYST_DUST, catalyst);

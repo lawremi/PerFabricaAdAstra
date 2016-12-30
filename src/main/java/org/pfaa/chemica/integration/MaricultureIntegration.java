@@ -73,7 +73,7 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
+		public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp, int energy) {
 			RecipeSmelter recipe = new RecipeSmelter(input, temp - 273, output, null, 0);
 			MaricultureHandlers.crucible.addRecipe(recipe);
 		}
@@ -109,11 +109,11 @@ public class MaricultureIntegration {
 		}
 		
 		@Override
-		public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat) {
+		public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int energy) {
 			if (temp < Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			int time = heat / 1000;
+			int time = energy / 1000;
 			RecipeVat recipe = new RecipeVat(input, output, time);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}

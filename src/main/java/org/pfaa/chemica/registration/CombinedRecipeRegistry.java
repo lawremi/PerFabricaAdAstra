@@ -68,16 +68,30 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp) {
+	public void registerMeltingRecipe(ItemStack input, FluidStack output, int temp, int energy) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerMeltingRecipe(input, output, temp);
+			registry.registerMeltingRecipe(input, output, temp, energy);
 		}
 	}
 
 	@Override
-	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int heat) {
+	public void registerFreezingRecipe(FluidStack input, ItemStack output, int temp, int energy) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerFreezingRecipe(input, output, temp, heat);
+			registry.registerFreezingRecipe(input, output, temp, energy);
+		}
+	}
+
+	@Override
+	public void registerBoilingRecipe(FluidStack input, FluidStack output, int temp, int energy) {
+		for (RecipeRegistry registry : registries.values()) {
+			registry.registerBoilingRecipe(input, output, temp, energy);
+		}
+	}
+
+	@Override
+	public void registerCondensingRecipe(FluidStack input, FluidStack output, int temp, int energy) {
+		for (RecipeRegistry registry : registries.values()) {
+			registry.registerCondensingRecipe(input, output, temp, energy);
 		}
 	}
 

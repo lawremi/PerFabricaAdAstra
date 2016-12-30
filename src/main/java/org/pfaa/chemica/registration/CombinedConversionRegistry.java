@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.pfaa.chemica.model.Reaction;
+import org.pfaa.chemica.processing.Stacking;
 import org.pfaa.chemica.processing.Combination;
 import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Separation;
@@ -25,6 +26,13 @@ public class CombinedConversionRegistry implements ConversionRegistry {
 	
 	public Set<String> getRegistryNames() {
 		return Collections.unmodifiableSet(registries.keySet());
+	}
+
+	@Override
+	public void register(Stacking agglomeration) {
+		for (ConversionRegistry registry : registries.values()) {
+			registry.register(agglomeration);
+		}
 	}
 
 	@Override

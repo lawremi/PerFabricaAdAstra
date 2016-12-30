@@ -45,7 +45,9 @@ import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Crude.Crudes;
+import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.Ore;
+import org.pfaa.geologica.processing.OreMineral.Ores;
 import org.pfaa.geologica.processing.Solutions;
 
 import com.google.common.collect.Lists;
@@ -70,18 +72,20 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class RecipeRegistration extends BaseRecipeRegistration {
 	
 	public static void init() {
+		registerCompatibilityRecipes();
+		registerStoneToolRecipes();
+		
 		registerRockCastingRecipes();
 		registerClayProcessingRecipes();
 		registerPeatDryingRecipe();
 		registerCommunitionRecipes();
-		registerPartitionRecipes();
+		registerStackingRecipes();
 		registerSiftingRecipes();
 		registerBrineProcessingRecipes();
 		registerNaturalGasProcessingRecipes();
 		registerOilProcessingRecipes();
 		registerCraftingRecipes();
-		registerStoneToolRecipes();
-		registerCompatibilityRecipes();
+		
 	}
 	
 	private static void registerCompatibilityRecipes() {
@@ -362,23 +366,14 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			ItemStack inputStack = new ItemStack(input, 1, meta);
 			RECIPES.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature());
 			FluidStack fluid = new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME);
-			RECIPES.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature());
+			RECIPES.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature(), 0);
 		}
 	}
 	
-	private static void registerPartitionRecipes() {
-		registerPartitionRecipes(
-				GeologicaItems.INDUSTRIAL_MINERAL_DUST, 
-				GeologicaItems.INDUSTRIAL_MINERAL_DUST_TINY);
-		registerPartitionRecipes(
-				GeologicaItems.CRUDE_DUST, 
-				GeologicaItems.CRUDE_DUST_TINY);
-		registerPartitionRecipes(
-				GeologicaItems.ORE_MINERAL_DUST, 
-				GeologicaItems.ORE_MINERAL_DUST_TINY);
-		registerPartitionRecipes(
-				GeologicaItems.ORE_DUST, 
-				GeologicaItems.ORE_DUST_TINY);
+	private static void registerStackingRecipes() {
+		registerStackingRecipes(IndustrialMinerals.class);
+		registerStackingRecipes(Ores.class);
+		registerStackingRecipes(GeoMaterial.class);
 	}
 	
 	private static void registerStandardClayProcessingRecipes() {
