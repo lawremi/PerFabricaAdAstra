@@ -3,6 +3,7 @@ package org.pfaa.chemica.integration;
 import java.util.List;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
@@ -37,12 +38,12 @@ public class TConstructIntegration {
 				itemBlock = (ItemBlock)itemStack.getItem();
 				meta = itemStack.getItemDamage();
 			} else {
-				ItemStack blockStack = OreDictUtils.lookupBest(Forms.BLOCK, itemStack);
+				ItemStack blockStack = IndustrialItems.getBestItemStack(Forms.BLOCK, itemStack);
 				if (blockStack == null) {
-					blockStack = OreDictUtils.lookupBest("ore", itemStack);
+					blockStack = IndustrialItems.getBestItemStack("ore", itemStack);
 				}
 				if (blockStack == null) {
-					blockStack = OreDictUtils.lookupBest(Forms.BLOCK, IndustrialFluids.getMaterial(fluid.getFluid()));
+					blockStack = IndustrialItems.getBestItemStack(Forms.BLOCK, IndustrialFluids.getMaterial(fluid.getFluid()));
 				}
 				if (blockStack != null) {
 					itemBlock = (ItemBlock)blockStack.getItem();
