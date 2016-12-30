@@ -58,17 +58,17 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		makeHood();
 	}
 
-	private static void registerCrushingRecipe(Aggregates aggregate) {
+	private static void registerCrushingRecipe(Aggregates aggregate, int nPerBlock) {
 		MaterialStack materialStack = new MaterialStack(Forms.BLOCK, aggregate);
-		ItemStack output = ChemicaItems.AGGREGATE_DUST.getItemStack(aggregate, 4);
+		ItemStack output = ChemicaItems.AGGREGATE_DUST.getItemStack(aggregate, nPerBlock);
 		for (ItemStack input : materialStack.getItemStacks()) {
 			RECIPES.registerCrushingRecipe(input, output, null, Strength.WEAK);
 		}
 	}
 
 	private static void hydrateHardenedClay() {
-		registerCrushingRecipe(Aggregates.HARDENED_CLAY);
-		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+		registerCrushingRecipe(Aggregates.HARDENED_CLAY, 4);
+		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.PILE));
 		GENERICS.registerMixingRecipe(
 				new IngredientList(Aggregates.HARDENED_CLAY),
 				water,
