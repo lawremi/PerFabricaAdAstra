@@ -14,11 +14,18 @@ public class StateProperties {
 	private final Hazard hazard;
 	private final double density; // g/mL, not relevant for gases
 	private final boolean opaque;
+
+	public final Thermo thermo;
 	
 	public StateProperties(State phase, Color color, double density, Hazard hazard, boolean opaque) {
+		this(phase, color, density, new Thermo(), hazard, opaque);
+	}
+	
+	public StateProperties(State phase, Color color, double density, Thermo thermo, Hazard hazard, boolean opaque) {
 		this.phase = phase;
 		this.color = color;
 		this.density = density;
+		this.thermo = thermo;
 		this.hazard = hazard;
 		this.opaque = opaque;
 	}
@@ -76,5 +83,21 @@ public class StateProperties {
 
 	public boolean getOpaque() {
 		return this.opaque;
+	}
+	
+	public ConditionProperties at(Condition condition) {
+		return this.at(condition, null);
+	}
+	
+	public ConditionProperties at(Condition condition, Thermo adjacent) {
+		return new ConditionProperties(
+				this.getPhase(),
+				this.getColor(condition.temperature),
+				this.getDensity(condition),
+				this.thermo.at(condition, adjacent),
+				this.getHazard(),
+				this.getViscosity(condition.temperature),
+				this.getLuminosity(condition.temperature),
+				this.getOpaque());
 	}
 }

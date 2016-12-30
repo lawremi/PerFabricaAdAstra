@@ -656,12 +656,12 @@ public enum Element implements Chemical, PartFactory, Metal {
 		}
 	
 		@Override
-		public ChemicalConditionProperties getProperties(Condition condition) {
+		public ConditionProperties getProperties(Condition condition) {
 			return delegate.getProperties(condition);
 		}
 
 		@Override
-		public ChemicalConditionProperties getProperties(Condition condition, State state) {
+		public ConditionProperties getProperties(Condition condition, State state) {
 			return delegate.getProperties(condition, state);
 		}
 
@@ -704,5 +704,5 @@ public enum Element implements Chemical, PartFactory, Metal {
 		@Override
 		public Strength getStrength() {
 			return this.strength;
-		}
+		}		
 }

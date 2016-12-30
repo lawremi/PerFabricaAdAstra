@@ -5,12 +5,17 @@ import java.awt.Color;
 import org.pfaa.chemica.model.Compound.Compounds;
 
 public class ChemicalStateProperties extends StateProperties {
-	public final Thermo thermo;
-	
 	public ChemicalStateProperties(State state, Color color, double density, Thermo thermo, 
 			Hazard hazard, boolean opaque) {
-		super(state, color, density, hazard, opaque);
-		this.thermo = thermo;
+		super(state, color, density, thermo, hazard, opaque);
+	}
+	
+	public ChemicalConditionProperties at(Condition condition) {
+		return new ChemicalConditionProperties(super.at(condition));
+	}
+	
+	public ChemicalConditionProperties at(Condition condition, Thermo adjacent) {
+		return new ChemicalConditionProperties(super.at(condition, adjacent));
 	}
 	
 	public static class Solid extends ChemicalStateProperties {

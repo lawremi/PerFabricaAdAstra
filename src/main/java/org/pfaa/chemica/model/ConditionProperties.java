@@ -6,31 +6,27 @@ public class ConditionProperties {
 	public final State state;
 	public final Color color;
 	public final double density;
+	public final ConditionThermo thermo;
 	public final Hazard hazard;
 	public final double viscosity;
 	public final int luminosity;
 	public final boolean opaque; // FIXME: can't we just use the color alpha for this?
 	
-	public ConditionProperties(StateProperties properties, Condition condition) {
-		this(properties.getPhase(), 
-			 properties.getColor(condition.temperature), 
-			 properties.getDensity(condition),
-		     properties.getHazard(), 
-		     properties.getViscosity(condition.temperature),
-		     properties.getLuminosity(condition.temperature),
-		     properties.getOpaque());
+	public ConditionProperties(State phase, Color color, double density, ConditionThermo thermo,
+			Hazard hazard, double viscosity, int luminosity, boolean opaque) {
+		this.state = phase;
+		this.color = color;
+		this.density = density;
+		this.thermo = thermo;
+		this.hazard = hazard;
+		this.viscosity = viscosity;
+		this.luminosity = luminosity;
+		this.opaque = opaque;
 	}
 	
 	public ConditionProperties(State phase, Color color, double density,
 			Hazard hazard, double viscosity, int luminosity, boolean opaque) {
-		super();
-		this.state = phase;
-		this.color = color;
-		this.hazard = hazard;
-		this.density = density;
-		this.viscosity = viscosity;
-		this.luminosity = luminosity;
-		this.opaque = opaque;
+		this(phase, color, density, new ConditionThermo(), hazard, viscosity, luminosity, opaque);
 	}
 	
 	public ConditionProperties(State phase, Color color, double density, Hazard hazard) {
@@ -39,6 +35,10 @@ public class ConditionProperties {
 	
 	private ConditionProperties(ConditionProperties props, Color overrideColor) {
 		this(props.state, overrideColor, props.density, props.hazard, props.viscosity, props.luminosity, props.opaque);
+	}
+	
+	protected ConditionProperties(ConditionProperties props) {
+		this(props.state, props.color, props.density, props.hazard, props.viscosity, props.luminosity, props.opaque);
 	}
 	
 	public ConditionProperties recolor(Color overrideColor) {

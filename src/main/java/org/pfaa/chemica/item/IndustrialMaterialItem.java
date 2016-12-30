@@ -8,7 +8,6 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
@@ -101,7 +100,7 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	
 	public ConditionProperties getProperties(int damage) {
 		IndustrialMaterial material = getIndustrialMaterial(damage);
-		Condition canonicalSolid = IndustrialMaterialUtils.getCanonicalCondition(material, State.SOLID);
+		Condition canonicalSolid = material.getCanonicalCondition(State.SOLID);
 		return material.getProperties(canonicalSolid);
 	}
 

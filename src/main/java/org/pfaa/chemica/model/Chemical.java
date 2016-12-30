@@ -1,38 +1,14 @@
 package org.pfaa.chemica.model;
 
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.pfaa.chemica.model.Equation.Term;
 
 /* A pure substance, including elements and compounds with fixed stoichiometry */
-public interface Chemical extends IndustrialMaterial, Vaporizable, Fusible, Soluble {
-	public ChemicalConditionProperties getProperties(Condition condition);
-	public ChemicalConditionProperties getProperties(Condition condition, State state);
+public interface Chemical extends IndustrialMaterial {
+	float MIN_SOLUBILITY = 0.001F;
 	public Formula getFormula();
-	
-	default double getEnthalpyOfFusion() {
-		Condition cond = this.getFusion().getCondition();
-		ChemicalConditionProperties liquid = this.getProperties(cond, State.LIQUID);
-		ChemicalConditionProperties solid = this.getProperties(cond, State.SOLID);
-		if (solid == null || liquid == null) {
-			return Double.NaN;
-		}
-		return (liquid.entropy - solid.entropy) * cond.temperature;
-	}
-	
-	default double getEnthalpyOfFusion(Condition condition) {
-		ChemicalConditionProperties origin = this.getProperties(condition);
-		return Math.abs(origin.enthalpy - 
-				this.getProperties(this.getFusion().getCondition(), origin.state).enthalpy) + 
-				this.getEnthalpyOfFusion();
-	}
-	
-	default double getEnthalpyOfVaporization() {
-		Condition cond = this.getVaporization().getGasCondition();
-		ChemicalConditionProperties liquid = this.getProperties(cond, State.LIQUID);
-		ChemicalConditionProperties gas = this.getProperties(cond, State.GAS);
-		if (gas == null || liquid == null) {
-			return Double.NaN;
-		}
-		return (gas.entropy - liquid.entropy) * cond.temperature;
-	}
 	
 	default Reaction getDissociation() {
 		Formula.Part cation = this.getFormula().getFirstPart();
@@ -45,14 +21,17 @@ public interface Chemical extends IndustrialMaterial, Vaporizable, Fusible, Solu
 				yields(cation.stoichiometry, cation.ion).
 				and(anion.stoichiometry, anion.ion);
 	}
-	
-	default double getEnthalpyChange(Condition to) {
-		return this.getEnthalpyChange(Condition.STP, to);
+	default double getSolubility(Condition condition) {
+		Reaction dissociation = this.getDissociation();
+		double ksp = dissociation.getEquilibriumConstant(condition);
+		List<Term> products = dissociation.getProducts();
+		Stream<Float> stoich = products.stream().map((t) -> t.stoich);
+		return Math.pow(ksp / stoich.reduce((a,b) -> a*b).get(), 1 / stoich.reduce((a,b)->a+b).get());
 	}
-	
-	default double getEnthalpyChange(Condition from, Condition to) {
-		ChemicalConditionProperties fromProps = this.getProperties(from);
-		ChemicalConditionProperties toProps = this.getProperties(to);
-		return toProps.enthalpy - fromProps.enthalpy;
+	default double getSolubility() {
+		return this.getSolubility(Condition.STP);
+	}
+	default boolean isSoluble(Condition condition) {
+		return this.getSolubility(condition) > Chemical.MIN_SOLUBILITY;
 	}
 }

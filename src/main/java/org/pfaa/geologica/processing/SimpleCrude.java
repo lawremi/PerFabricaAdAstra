@@ -10,7 +10,6 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
-import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
 
 import com.google.common.collect.Lists;
@@ -143,7 +142,7 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	}
 
 	@Override
-	public List<Vaporizable> fractions() {
+	public List<IndustrialMaterial> fractions() {
 		return this.getComponents().stream().map(SimpleCrude::new).collect(Collectors.toList());
 	}
 }

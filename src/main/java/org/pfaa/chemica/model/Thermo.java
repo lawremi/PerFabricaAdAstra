@@ -75,6 +75,32 @@ public class Thermo {
 		return findSegment(t).getEntropy(t);
 	}
 	
+	public ConditionThermo at(Condition condition) {
+		return this.at(condition, null);
+	}
+	
+	public ConditionThermo at(Condition condition, Thermo adjacent) {
+		double enthalpy = getEnthalpy(condition.temperature);
+		if (Double.isNaN(enthalpy) && adjacent != null) {
+			enthalpy = estimateEnthalpyFromAdjacent(condition, adjacent);
+		}
+		return new ConditionThermo(
+				getHeatCapacity(condition.temperature),
+				enthalpy,
+				getEntropy(condition.temperature));
+	}
+	
+	private double estimateEnthalpyFromAdjacent(Condition condition, Thermo adjacent) {
+		/* Assume we are at equilibrium with the adjacent state */
+		ConditionThermo condAdjacent = adjacent.at(condition);
+		double transEnthalpy = (this.getEntropy(condition.temperature) - condAdjacent.entropy) * condition.temperature;
+		return condAdjacent.enthalpy + transEnthalpy;
+	}
+
+	public boolean knowsHeatCapacity() {
+		return this.shomates.size() > 0 && !Double.isNaN(this.shomates.get(0).a);
+	}
+
 	public Thermo addSegment(double t0, Segment segment) {
 		Thermo clone = new Thermo(this);
 		clone.shomates.add(segment);
@@ -145,20 +171,21 @@ public class Thermo {
 		}
 		
 		public /* kJ/mol */ double getEnthalpy(double t) {
+			if (Double.isNaN(a) && t == Constants.STANDARD_TEMPERATURE) {
+				return f;
+			}
 			t = t / 1000;
 			return a * t + b * Math.pow(t, 2) / 2 + c * Math.pow(t, 3) / 3 + d * Math.pow(t, 4) / 4 - e / t + f;
 		}
 		
 		public /* J/mol */ double getEntropy(double t) {
-			t = t / 1000;
-			double delta = a * Math.log(t) + b * t + c * Math.pow(t, 2) / 2 + d * Math.pow(t, 3) / 3 - e / (2*Math.pow(t, 2));
-			if (Double.isNaN(delta)) {
-				delta = 0;
+			if (Double.isNaN(a)) {
+				return g;
 			}
-			return delta + g;
+			t = t / 1000;
+			return a * Math.log(t) + b * t + c * Math.pow(t, 2) / 2 + d * Math.pow(t, 3) / 3 - e / (2*Math.pow(t, 2)) + g;
 		}
 		
-
 		public Segment offsetEntropy(double offset) {
 			this.f += offset;
 			return this;

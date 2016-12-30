@@ -1,6 +1,6 @@
 package org.pfaa.chemica.model;
 
-public class Fusion {
+public class Fusion implements Transition {
 	private int temperature;
 	
 	public Fusion(int temperature) {
@@ -9,13 +9,5 @@ public class Fusion {
 
 	public int getTemperature() {
 		return temperature;
-	}
-	
-	public Condition getCondition() {
-		return new Condition(this.temperature);
-	}
-	
-	public Condition getSolidCondition() {
-		return new Condition(this.temperature-1);
 	}
 }

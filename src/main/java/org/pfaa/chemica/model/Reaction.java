@@ -24,10 +24,10 @@ public class Reaction extends ConditionedConversion {
 	public double getEnthalpyChange(Condition condition) {
 		double enthalpy = 0;
 		for (Term product : this.getProducts()) {
-			enthalpy += product.stoich * product.material().getProperties(condition, product.state()).enthalpy;
+			enthalpy += product.stoich * product.material().getProperties(condition, product.state()).thermo.enthalpy;
 		}
 		for (Term reactant : this.getReactants()) {
-			enthalpy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).enthalpy;
+			enthalpy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).thermo.enthalpy;
 		}
 		return enthalpy;
 	}
@@ -35,10 +35,10 @@ public class Reaction extends ConditionedConversion {
 	public double getEntropyChange(Condition condition) {
 		double entropy = 0;
 		for (Term product : this.getProducts()) {
-			entropy += product.stoich * product.material().getProperties(condition, product.state()).entropy;
+			entropy += product.stoich * product.material().getProperties(condition, product.state()).thermo.entropy;
 		}
 		for (Term reactant : this.getReactants()) {
-			entropy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).entropy;
+			entropy -= reactant.stoich * reactant.material().getProperties(condition, reactant.state()).thermo.entropy;
 		}
 		return entropy;
 	}

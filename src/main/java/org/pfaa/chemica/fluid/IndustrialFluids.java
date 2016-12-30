@@ -11,7 +11,6 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.IndustrialMaterialUtils;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
@@ -74,7 +73,7 @@ public class IndustrialFluids {
 		if (state == State.SOLID) {
 			 return null;
 		}
-		Condition condition = IndustrialMaterialUtils.getCanonicalCondition(material, state);
+		Condition condition = material.getCanonicalCondition(state);
 		if (condition == null) {
 			return null;
 		}

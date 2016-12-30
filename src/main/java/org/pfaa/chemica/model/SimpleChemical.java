@@ -64,33 +64,8 @@ public class SimpleChemical implements Chemical {
 	public Formula getFormula() {
 		return formula;
 	}
-
-	private State getStateForCondition(Condition condition) {
-		if (condition.aqueous && this.isSoluble(condition)) {
-			return State.AQUEOUS;
-		} else if (this.vaporization != null && condition.temperature >= this.vaporization.getTemperature(condition.pressure)) {
-			return State.GAS;
-		} else if (this.fusion != null && condition.temperature >= this.fusion.getTemperature()) {
-			return State.LIQUID;
-		} else {
-			return State.SOLID;
-		}
-	}
 	
-	@Override
-	public ChemicalConditionProperties getProperties(Condition condition) {
-		State state = this.getStateForCondition(condition);
-		return this.getProperties(condition, state);
-	}
-	
-	@Override
-	public ChemicalConditionProperties getProperties(Condition condition, State state) {
-		// TODO: if we are at a critical temperature, and only know the entropy,
-		//       compute the enthalpy of the adjacent state, and compute+add the latent heat.
-		return new ChemicalConditionProperties(this.getStateProperties(state), condition);
-	}
-
-	private ChemicalStateProperties getStateProperties(State state) {
+	public ChemicalStateProperties getStateProperties(State state) {
 		switch(state) {
 		case SOLID:
 			return solid;
@@ -130,13 +105,13 @@ public class SimpleChemical implements Chemical {
 		}
 		Ion cation = this.getFormula().getCation();
 		Ion anion = this.getFormula().getAnion();
-		ChemicalConditionProperties cationProps = cation.getProperties(Condition.STP);
-		ChemicalConditionProperties anionProps = anion.getProperties(Condition.STP);
+		ConditionProperties cationProps = cation.getProperties(Condition.STP);
+		ConditionProperties anionProps = anion.getProperties(Condition.STP);
 		Color color = cationProps.color;
 		if (color == null) 
 			color = anionProps.color;
-		double enthalpy = cationProps.enthalpy + anionProps.enthalpy;
-		double entropy = cationProps.entropy + anionProps.entropy;
+		double enthalpy = cationProps.thermo.enthalpy + anionProps.thermo.enthalpy;
+		double entropy = cationProps.thermo.entropy + anionProps.thermo.entropy;
 		Thermo thermo = new Thermo(enthalpy, entropy);
 		Hazard hazard = this.getStateProperties(State.SOLID).getHazard();
 		return new Aqueous(color, thermo, hazard);

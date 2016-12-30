@@ -106,12 +106,12 @@ public interface Ion extends PartFactory, Chemical {
 		}
 
 		@Override
-		public ChemicalConditionProperties getProperties(Condition condition) {
+		public ConditionProperties getProperties(Condition condition) {
 			return this.delegate.getProperties(condition);
 		}
 
 		@Override
-		public ChemicalConditionProperties getProperties(Condition condition, State state) {
+		public ConditionProperties getProperties(Condition condition, State state) {
 			return this.delegate.getProperties(condition, state);
 		}
 

@@ -1,6 +1,6 @@
 package org.pfaa.chemica.model;
 
-public class Vaporization {
+public class Vaporization implements Transition {
 	private int temperature;
 	private AntoineCoefficients antoineCoefficients;
 	
@@ -29,14 +29,6 @@ public class Vaporization {
 		return temperature;
 	}
 
-	public Condition getGasCondition() {
-		return new Condition(this.getTemperature());
-	}
-	
-	public Condition getLiquidCondition() {
-		return new Condition(this.getTemperature()-1);
-	}
-	
 	public AntoineCoefficients getAntoineCoefficients() {
 		return antoineCoefficients;
 	}

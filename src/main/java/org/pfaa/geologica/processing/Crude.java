@@ -11,7 +11,6 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
-import org.pfaa.chemica.model.Vaporizable;
 import org.pfaa.chemica.model.Vaporization;
 
 import com.google.common.base.CaseFormat;
@@ -19,14 +18,14 @@ import com.google.common.base.CaseFormat;
 /* Crude mixtures of organic substances */
 // TODO: varied support for thermodynamics, particularly heat capacity and heat of vaporization, 
 //       see https://en.wikipedia.org/wiki/Petroleum#Empirical_equations_for_thermal_properties.
-public interface Crude extends Mixture, Vaporizable {
+public interface Crude extends Mixture {
 	public Crude mix(IndustrialMaterial material, double weight);
 	public Crude oreDictify(String oreDictKey);
 	public Crude extract(IndustrialMaterial... materials);
 	public Crude removeAll();
 	public double getHeat(); /* kJ/g */
 	public double getSulfurFraction();
-	public List<Vaporizable> fractions();
+	public List<IndustrialMaterial> fractions();
 	
 	public enum Crudes implements Crude {
 		VOLATILES(new SimpleCrude(Compounds.METHANE, 0.5).mix(Compounds.ETHANE, 0.3).mix(Compounds.PROPANE, 0.15).
@@ -85,8 +84,8 @@ public interface Crude extends Mixture, Vaporizable {
 		}
 
 		@Override
-		public ConditionProperties getProperties(Condition condition) {
-			return delegate.getProperties(condition);
+		public ConditionProperties getProperties(Condition condition, State state) {
+			return delegate.getProperties(condition, state);
 		}
 
 		@Override
@@ -120,7 +119,7 @@ public interface Crude extends Mixture, Vaporizable {
 		}
 
 		@Override
-		public List<Vaporizable> fractions() {
+		public List<IndustrialMaterial> fractions() {
 			return delegate.fractions();
 		}
 	}

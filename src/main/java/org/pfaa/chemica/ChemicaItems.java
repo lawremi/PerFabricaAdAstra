@@ -32,7 +32,7 @@ public class ChemicaItems implements ItemCatalog {
 	};
 	private static Predicate<Element> ConstructionMaterial = new Predicate<Element>() {
 		public boolean apply(Element obj) {
-			return obj.getStrength() != null;
+			return obj.isForBuilding();
 		}
 	};
 	private static Predicate<Element> Monatomic = new Predicate<Element>() {
