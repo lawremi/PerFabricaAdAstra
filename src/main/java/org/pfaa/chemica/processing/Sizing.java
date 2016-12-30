@@ -65,13 +65,28 @@ public class Sizing implements UnitOperation {
 		return null;
 	}
 
-	public static interface Type extends UnitOperation.Type { 
-		
-		public static enum SizingTypes implements Type {
-			COMPACTION,
-			COMMUNITION;
+	public static interface Type extends UnitOperation.Type {
+		enum Direction {
+			INCREASE,
+			DECREASE
 		}
-		
+		Direction getDirection();
 	}
+
+	public static enum Types implements Type {
+		COMPACTION(Direction.INCREASE),
+		COMMUNITION(Direction.DECREASE);
+		
+		private Direction direction;
+		
+		private Types(Direction direction) {
+			this.direction = direction;
+		}
+
+		@Override
+		public Direction getDirection() {
+			return this.direction;
+		}
+	}	
 
 }

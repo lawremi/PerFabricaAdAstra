@@ -18,6 +18,6 @@ public interface Conversion {
 	}
 		
 	public interface Type {
-		
+		String name();
 	}
 }
