@@ -704,5 +704,9 @@ public enum Element implements Chemical, PartFactory, Metal {
 		@Override
 		public Strength getStrength() {
 			return this.strength;
-		}		
+		}
+		
+		public boolean isMonatomic() {
+			return this.getCategory() != Category.DIATOMIC_NONMETAL;
+		}
 }
