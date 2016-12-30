@@ -50,7 +50,7 @@ public class ReactionFactory {
 	
 	private static Chemical oxide(Formula formula) {
 		int ratio = Math.abs(Element.O.getDefaultOxidationState()) / formula.getCation().getFormula().getCharge();
-		Formula oxideFormula = new Formula(formula.getFirstPart()._(ratio), Element.O);
+		Formula oxideFormula = new Formula(formula.getFirstPart().__(ratio), Element.O);
 		return Compounds.valueOf(oxideFormula.toString());
 	}
 	

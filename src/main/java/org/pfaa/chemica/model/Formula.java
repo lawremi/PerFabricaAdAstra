@@ -49,7 +49,7 @@ public final class Formula {
 	}
 	
 	public Formula substituteFirstPart(Element substitute) {
-		return this.withFirstPart(substitute._(this.getFirstPart().stoichiometry));
+		return this.withFirstPart(substitute.__(this.getFirstPart().stoichiometry));
 	}
 	
 	public Formula withLastPart(Part newPart) {
@@ -183,7 +183,7 @@ public final class Formula {
 			this.ion = null;
 		}
 		
-		public Part _(int stoichiometry) {
+		public Part __(int stoichiometry) {
 			if (stoichiometry == 1)
 				return this;
 			return new Part(this.element, this.ion, stoichiometry, this.parts); 
@@ -233,7 +233,7 @@ public final class Formula {
 		}
 		
 		public boolean hasComposition(Part part) {
-			return this.equals(part._(this.stoichiometry));
+			return this.equals(part.__(this.stoichiometry));
 		}
 		
 		public boolean hasComposition(Ion ion) {
@@ -243,6 +243,6 @@ public final class Formula {
 	
 	public static interface PartFactory {
 		public Part getPart();
-		public Part _(int stoichiometry);
+		public Part __(int stoichiometry);
 	}
 }

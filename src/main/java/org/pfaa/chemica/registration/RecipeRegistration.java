@@ -68,7 +68,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		for (Element element : Element.values()) {
 			Chemical chemical = element;
 			if (element.getCategory() == Category.DIATOMIC_NONMETAL) {
-				chemical = Compounds.forFormula(element._(2));
+				chemical = Compounds.forFormula(element.__(2));
 			}
 			EnthalpyChange change = EnthalpyChange.of(chemical);
 			CONVERSIONS.register(change.melts());

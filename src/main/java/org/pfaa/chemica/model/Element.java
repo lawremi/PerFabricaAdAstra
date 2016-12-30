@@ -606,7 +606,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 			this.defaultOxidationState = defaultOxidationState;
 			this.category = category;
 			this.strength = strength;
-			this.delegate = new SimpleChemical(new Formula(this._(1)), name, solid, fusion, liquid, 
+			this.delegate = new SimpleChemical(new Formula(this.__(1)), name, solid, fusion, liquid, 
 					                           vaporization, gas);
 		}
 	
@@ -676,13 +676,13 @@ public enum Element implements Chemical, PartFactory, Metal {
 		}
 		
 		@Override
-		public Formula.Part _(int quantity) {
+		public Formula.Part __(int quantity) {
 			return new Formula.Part(this, quantity);
 		}
 
 		@Override
 		public Formula.Part getPart() {
-			return this._(1);
+			return this.__(1);
 		}
 
 		public double getAtomicWeight() {

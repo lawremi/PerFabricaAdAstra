@@ -11,11 +11,11 @@ public class SimpleIon extends SimpleChemical implements Ion {
 
 	@Override
 	public Part getPart() {
-		return this._(1);
+		return this.__(1);
 	}
 
 	@Override
-	public Part _(int stoichiometry) {
+	public Part __(int stoichiometry) {
 		return new Formula.Part(this, stoichiometry);
 	}
 

@@ -33,7 +33,7 @@ public interface Ion extends PartFactory, Chemical {
 		Mn(Element.Mn, +2, new Color(255, 170, 180), new Thermo(-221, -73.6)),
 		Mo(Element.Mo, +4, null),
 		Na(Element.Na, +1, new Thermo(-240, 59)),
-		NH4(new Formula(Element.N, Element.H._(4)), +1, new Thermo(-133, 113)),
+		NH4(new Formula(Element.N, Element.H.__(4)), +1, new Thermo(-133, 113)),
 		Ni(Element.Ni, +2, new Color(185, 255, 175), new Thermo(-54, -129)),
 		Pb(Element.Pb, +2, new Thermo(-1.7, 10.5)),
 		Sb(Element.Sb, +3, null),
@@ -42,36 +42,36 @@ public interface Ion extends PartFactory, Chemical {
 		Ti(Element.Ti, +4, null),
 		U(Element.U, +4, new Thermo(-591, -410)),
 		V(Element.V, +5, null),
-		UO2(new Formula(Element.U, Element.O._(2)), +2, null),
+		UO2(new Formula(Element.U, Element.O.__(2)), +2, null),
 		Zn(Element.Zn, +2, new Thermo(-154, -112)),
 		Zr(Element.Zr, +4, null),
 		
 		/* anions */
 		AsS(new Formula(Element.As, Element.S), -3, null),
-		CO3(new Formula(Element.C, Element.O._(3)), -2, new Thermo(-677, -56.9)),
+		CO3(new Formula(Element.C, Element.O.__(3)), -2, new Thermo(-677, -56.9)),
 		Cl(Element.Cl, -1, new Thermo(-167, 56.5)),
-		CrO4(new Formula(Element.Cr, Element.O._(4)), -2, Color.yellow, new Thermo(-881, 50.2)),
-		Cr2O7(new Formula(Element.Cr._(2), Element.O._(7)), -2, Color.red, new Thermo(-1490, 262)),
+		CrO4(new Formula(Element.Cr, Element.O.__(4)), -2, Color.yellow, new Thermo(-881, 50.2)),
+		Cr2O7(new Formula(Element.Cr.__(2), Element.O.__(7)), -2, Color.red, new Thermo(-1490, 262)),
 		F(Element.F, -1, new Thermo(-256, 145.5)),
-		HCO3(new Formula(Element.H, Element.C, Element.O._(3)), -1, new Thermo(-692, 91.2)),
-		IO3(new Formula(Element.I, Element.O._(3)), -1, new Thermo(-221, 118)),
-		NO2(new Formula(Element.N, Element.O._(2)), -1, new Thermo(-100, Double.NaN)),
-		NO3(new Formula(Element.N, Element.O._(3)), -2, new Thermo(-207, 146)),
-		NbO3(new Formula(Element.Nb._(2), Element.O._(6)), -1, null),
+		HCO3(new Formula(Element.H, Element.C, Element.O.__(3)), -1, new Thermo(-692, 91.2)),
+		IO3(new Formula(Element.I, Element.O.__(3)), -1, new Thermo(-221, 118)),
+		NO2(new Formula(Element.N, Element.O.__(2)), -1, new Thermo(-100, Double.NaN)),
+		NO3(new Formula(Element.N, Element.O.__(3)), -2, new Thermo(-207, 146)),
+		NbO3(new Formula(Element.Nb.__(2), Element.O.__(6)), -1, null),
 		O(Element.O, -2, null),
 		OH(new Formula(Element.O, Element.H), -1, new Thermo(-230, -10.8)),
-		PO4(new Formula(Element.P, Element.O._(4)), -3, new Thermo(-1278, -222)),
+		PO4(new Formula(Element.P, Element.O.__(4)), -3, new Thermo(-1278, -222)),
 		S(Element.S, -2, new Thermo(33.1, -14.7)),
 		S2(Element.S, -2, null),
-		SiO3(new Formula(Element.Si, Element.O._(3)), -2, null),
-		SiO4(new Formula(Element.Si, Element.O._(4)), -4, null),
-		Si2O5(new Formula(Element.Si._(2), Element.O._(5)), -2, null),
-		SO4(new Formula(Element.S, Element.O._(4)), -2, new Thermo(-909, 20.1)),
-		Ta2O6(new Formula(Element.Ta._(2), Element.O._(6)), -2, null),
-		VO4(new Formula(Element.V, Element.O._(4)), -3, null),
-		V2O5(new Formula(Element.V._(2), Element.O._(5)), -2, null),
-		WO4(new Formula(Element.W, Element.O._(4)), -2, null),
-		B4O5OH2(new Formula(Element.B._(4), Element.O._(5), OH._(2)), -2, null);
+		SiO3(new Formula(Element.Si, Element.O.__(3)), -2, null),
+		SiO4(new Formula(Element.Si, Element.O.__(4)), -4, null),
+		Si2O5(new Formula(Element.Si.__(2), Element.O.__(5)), -2, null),
+		SO4(new Formula(Element.S, Element.O.__(4)), -2, new Thermo(-909, 20.1)),
+		Ta2O6(new Formula(Element.Ta.__(2), Element.O.__(6)), -2, null),
+		VO4(new Formula(Element.V, Element.O.__(4)), -3, null),
+		V2O5(new Formula(Element.V.__(2), Element.O.__(5)), -2, null),
+		WO4(new Formula(Element.W, Element.O.__(4)), -2, null),
+		B4O5OH2(new Formula(Element.B.__(4), Element.O.__(5), OH.__(2)), -2, null);
 
 		private Ion delegate;
 		
@@ -96,8 +96,8 @@ public interface Ion extends PartFactory, Chemical {
 			return this.delegate.getFormula();
 		}
 
-		public Formula.Part _(int quantity) {
-			return this.delegate._(quantity);
+		public Formula.Part __(int quantity) {
+			return this.delegate.__(quantity);
 		}
 
 		@Override

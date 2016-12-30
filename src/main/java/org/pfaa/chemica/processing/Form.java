@@ -7,9 +7,25 @@ public interface Form {
 	public String oreDictKey();
 	public int getNumberPerBlock();
 	
+	/*
+	 * Potential Axes:
+	 * - Size: number per block
+	 * - Granularity: intact, crushed, dust
+	 * - Shape: regular, irregular
+	 * - Hydration: dry, moist
+	 * - Purity: pure, impure
+	 */
+	
+	/*
+	 * Potential additions:
+	 * - Gear
+	 * - Plate, round, ring
+	 * - Rod, tube
+	 * - Foil, wire, spring
+	 */
 	public enum Forms implements Form {
 		BLOCK(1), // intact solid placeable as block, constructed from 9 ingots/lumps, 4 clumps, or cast directly
-		CLUMP(4), // a compact lump, typically from a malleable solid like dirt or clay
+		CLUMP(4), // a moist, continuous pile, typically from a malleable solid like dirt or clay
 		CRUSHED(9), // the result of crushing a block, further crushing yields powder
 		DUST(9), // dry solid as fine particles, from pulverizing ingots and lumps, precipitation
 		INGOT(9), // intact solid in regular shape, from sintering powder or casting, or dismantling blocks
