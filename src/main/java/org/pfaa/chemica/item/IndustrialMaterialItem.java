@@ -2,6 +2,8 @@ package org.pfaa.chemica.item;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Condition;
@@ -13,9 +15,6 @@ import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 
 import com.google.common.base.CaseFormat;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,11 +28,8 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	private Class<T> enumClass;
 	private Predicate<? super T> predicate;
 	
-	private static Predicate<IndustrialMaterial> FormsSolid = new Predicate<IndustrialMaterial>() {
-		public boolean apply(IndustrialMaterial obj) {
-			return obj instanceof Chemical || obj.getProperties(Condition.STP).state == State.SOLID;
-		}
-	};
+	private static Predicate<IndustrialMaterial> FormsSolid = 
+			(obj) -> obj instanceof Chemical || obj.getProperties(Condition.STP).state == State.SOLID;
 	
 	public IndustrialMaterialItem(Form form, Class<T> enumClass) {
 		this(form, enumClass, FormsSolid);
@@ -68,6 +64,10 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	
 	public ItemStack getItemStack(T material, int quantity) {
 		return material == null ? null : new ItemStack(this, quantity, getDamage(material));
+	}
+	
+	public ItemStack getBlockSizeItemStack(T material) {
+		return this.getItemStack(material, this.form.getNumberPerBlock());
 	}
 	
 	public MaterialStack getMaterialStack(T material, int quantity) {
@@ -105,8 +105,7 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 	}
 
 	public List<T> getIndustrialMaterials() {
-		List<T> materials = Arrays.asList(this.enumClass.getEnumConstants());
-		return Lists.newArrayList(Collections2.filter(materials, this.predicate));
+		return Arrays.stream(this.enumClass.getEnumConstants()).filter(this.predicate).collect(Collectors.toList());
 	}
 	
 	@SuppressWarnings("unchecked")
