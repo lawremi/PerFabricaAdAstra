@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.pfaa.chemica.Chemica;
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
@@ -58,7 +59,7 @@ public class RecipeUtils {
 		} else if (input.weight < 1.0F) {
 			form = Forms.DUST_TINY;
 		}
-		return OreDictUtils.lookupBest(form, input.material);
+		return IndustrialItems.getBestItemStack(form, input.material);
 	}
 	
 	private static final float TINY_DUST_WEIGHT = 0.1F;

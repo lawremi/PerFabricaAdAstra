@@ -65,7 +65,7 @@ public class MaterialStack implements IngredientStack {
 	}
 	
 	public Set<ItemStack> getItemStacks() {
-		List<ItemStack> itemStacks = OreDictUtils.lookup(this.form, this.material);
+		List<ItemStack> itemStacks = IndustrialItems.getItemStacks(this.form, this.material);
 		itemStacks = Lists.transform(itemStacks, resizeItemStack);
 		return Sets.newHashSet(itemStacks);
 	}

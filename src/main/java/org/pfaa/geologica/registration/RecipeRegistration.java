@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Chemical;
@@ -469,7 +470,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		FluidStack fluidInput = IndustrialFluids.getCanonicalFluidStack(brine, State.LIQUID, brineAmount);
 		ItemStack solidOutput = null;
 		if (solid != null) {
-			solidOutput = OreDictUtils.lookupBest(inputForm, solid).copy();
+			solidOutput = IndustrialItems.getBestItemStack(inputForm, solid).copy();
 			solidOutput.stackSize = inputAmount;
 		}
 		if (product == null){

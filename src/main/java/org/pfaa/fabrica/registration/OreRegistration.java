@@ -1,5 +1,6 @@
 package org.pfaa.fabrica.registration;
 
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.IndustrialMaterial;
@@ -22,7 +23,7 @@ public class OreRegistration {
 		for (Generic generic : Generics.values()) {
 			for (Forms form : Forms.values()) {
 				for (IndustrialMaterial specific : generic.getSpecifics()) {
-					for (ItemStack itemStack : OreDictUtils.lookup(form, specific)) {
+					for (ItemStack itemStack : IndustrialItems.getItemStacks(form, specific)) {
 						OreDictUtils.register(new MaterialStack(form, generic), itemStack);
 					}
 				}

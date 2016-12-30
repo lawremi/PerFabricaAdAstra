@@ -1,5 +1,6 @@
 package org.pfaa.geologica.registration;
 
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
@@ -51,7 +52,7 @@ public class OreRegistration {
 	}
 
 	private static void registerDye(ItemStack dye, IndustrialMaterial concentrate) {
-		ItemStack itemStack = OreDictUtils.lookupBest(Forms.DUST, concentrate);
+		ItemStack itemStack = IndustrialItems.getBestItemStack(Forms.DUST, concentrate);
 		for (int id : OreDictionary.getOreIDs(itemStack)) {
 			String name = OreDictionary.getOreName(id);
 			if (name.startsWith("dye")) {

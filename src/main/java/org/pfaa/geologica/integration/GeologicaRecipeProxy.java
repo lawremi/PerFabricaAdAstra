@@ -8,13 +8,13 @@ import java.util.Map;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.integration.AbstractRecipeRegistry;
 import org.pfaa.chemica.item.IndustrialItemAccessors;
+import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
-import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.processing.Mineral;
 import org.pfaa.geologica.processing.OreMineral;
@@ -70,7 +70,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 			if (compound instanceof Compound) {
 				OreMineral oreMineral = this.oreCompoundToMineral.get(compound);
 				if (oreMineral != null && (includeImpure || oreMineral.getComponents().size() == 1)) {
-					ItemStack oreMineralStack = OreDictUtils.lookupBest(item.getForm(), oreMineral);
+					ItemStack oreMineralStack = IndustrialItems.getBestItemStack(item.getForm(), oreMineral);
 					if (oreMineralStack != null) {
 						registrant.register(oreMineralStack);
 						List<GeoMaterial> geoMaterials = null;
@@ -79,21 +79,21 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 						if (geoMaterials != null) {
 							for (GeoMaterial geoMaterial : geoMaterials) {
 								if (item.getForm() == Forms.DUST) {
-									ItemStack crushedStack = OreDictUtils.lookupBest(Forms.CRUSHED, geoMaterial);
+									ItemStack crushedStack = IndustrialItems.getBestItemStack(Forms.CRUSHED, geoMaterial);
 									if (crushedStack == null) {
-										crushedStack = OreDictUtils.lookupBest(Forms.CLUMP, geoMaterial);
+										crushedStack = IndustrialItems.getBestItemStack(Forms.CLUMP, geoMaterial);
 									}
 									if (crushedStack != null) {
 										registrant.register(crushedStack);
 									}
-									ItemStack dustStack = OreDictUtils.lookupBest(Forms.DUST_IMPURE, geoMaterial);
+									ItemStack dustStack = IndustrialItems.getBestItemStack(Forms.DUST_IMPURE, geoMaterial);
 									if (dustStack != null) {
 										registrant.register(dustStack);
 									}
-									ItemStack blockStack = OreDictUtils.lookupBest("ore", geoMaterial);
+									ItemStack blockStack = IndustrialItems.getBestItemStack("ore", geoMaterial);
 									registrant.register(blockStack);
 								} else if (item.getForm() == Forms.DUST_TINY) {
-									ItemStack dustStack = OreDictUtils.lookupBest(Forms.DUST_IMPURE_TINY, geoMaterial);
+									ItemStack dustStack = IndustrialItems.getBestItemStack(Forms.DUST_IMPURE_TINY, geoMaterial);
 									if (dustStack != null) {
 										registrant.register(dustStack);
 									}
