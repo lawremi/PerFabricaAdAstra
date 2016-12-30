@@ -362,7 +362,7 @@ public interface Compound extends Chemical {
 			 new Gas(new Thermo(19.6, 154, -116, 32.9, -0.249, -147, 248).
 					 addSegment(1200, 97.5, 5.43, -1.03, 0.0680, -12.3, -192, 344))),
 		H3PO4(new Formula(H._(3), PO4), "phosphoricAcid",
-			  new Solid(2.03, new Thermo(-1284, 151)),
+			  new Solid(2.03, new Thermo(15.5, 304, -0.968, 0.387, 0.00765, -1302, 38.8)),
 			  new Fusion(315),
 			  new Liquid(1.89,
 					     new Thermo(55.2, 301, -0.0952, 0.0423, 0.000512, -1302, 128),
