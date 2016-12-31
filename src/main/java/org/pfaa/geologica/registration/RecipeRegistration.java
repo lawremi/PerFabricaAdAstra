@@ -371,9 +371,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void registerStackingRecipes() {
-		registerStackingRecipes(IndustrialMinerals.class);
-		registerStackingRecipes(Ores.class);
-		registerStackingRecipes(GeoMaterial.class);
+		registerStackings(IndustrialMinerals.class);
+		registerStackings(Ores.class);
+		registerStackings(GeoMaterial.class);
 	}
 	
 	private static void registerStandardClayProcessingRecipes() {

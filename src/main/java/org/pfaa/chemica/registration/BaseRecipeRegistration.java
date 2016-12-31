@@ -31,10 +31,12 @@ public class BaseRecipeRegistration {
 		return CONVERSIONS;
 	}
 
-	protected static <T extends Enum<?> & IndustrialMaterial> void registerStackingRecipes(Class<T> materialType) {
+	protected static <T extends Enum<?> & IndustrialMaterial> void registerStackings(Class<T> materialType) {
 		if (materialType.isAssignableFrom(Aggregate.class)) {
 			for (IndustrialMaterial material : materialType.getEnumConstants()) {
-				CONVERSIONS.register(Stacking.of(material).from(Forms.PILE).to(Forms.BLOCK));
+				if (((Aggregate)material).isLoose()) {
+					CONVERSIONS.register(Stacking.of(material).from(Forms.PILE).to(Forms.BLOCK));
+				}
 			}
 		} else {
 			for (IndustrialMaterial material : materialType.getEnumConstants()) {

@@ -39,8 +39,8 @@ import net.minecraftforge.fluids.FluidStack;
 public class RecipeRegistration extends BaseRecipeRegistration {
 
 	public static void init() {
-		registerStackingRecipes();
-		registerStateChangeRecipes();
+		registerStackings();
+		registerStateChanges();
 		registerMetallurgicalRecipes();
 		registerCatalystRecipes();
 		registerDissolutionRecipes();
@@ -52,19 +52,19 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerCrystallizationRecipes();
 	}
 	
-	private static void registerStackingRecipes() {
-		registerStackingRecipes(Aggregates.class);
-		registerStackingRecipes(Element.class);
-		registerStackingRecipes(Compounds.class);
-		registerStackingRecipes(Alloys.class);
+	private static void registerStackings() {
+		registerStackings(Aggregates.class);
+		registerStackings(Element.class);
+		registerStackings(Compounds.class);
+		registerStackings(Alloys.class);
 	}
 
-	private static void registerStateChangeRecipes() {
-		registerElementStateChangeRecipes();
-		registerAlloyStateChangeRecipes();
+	private static void registerStateChanges() {
+		registerElementStateChanges();
+		registerAlloyStateChanges();
 	}
 
-	private static void registerElementStateChangeRecipes() {
+	private static void registerElementStateChanges() {
 		for (Element element : Element.values()) {
 			Chemical chemical = element;
 			if (element.getCategory() == Category.DIATOMIC_NONMETAL) {
@@ -79,7 +79,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		}
 	}
 	
-	private static void registerAlloyStateChangeRecipes() {
+	private static void registerAlloyStateChanges() {
 		for (Alloy alloy : Alloys.values()) {
 			EnthalpyChange change = EnthalpyChange.of(alloy);
 			CONVERSIONS.register(change.melts());

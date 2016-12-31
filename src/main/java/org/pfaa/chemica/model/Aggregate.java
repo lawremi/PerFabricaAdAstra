@@ -4,11 +4,25 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.base.CaseFormat;
-
 public interface Aggregate extends Mixture {
 	public Aggregate mix(IndustrialMaterial material, double weight);
 	public Aggregate removeAll();
+
+	enum Category {
+		LOOSE,
+		HARD,
+		SOFT
+	}
+	Category getCategory();
+	default boolean isLoose() {
+		return this.getCategory() == Category.LOOSE;
+	}
+	default boolean isHard() {
+		return this.getCategory() == Category.HARD;
+	}
+	default boolean isSoft() {
+		return this.getCategory() == Category.SOFT;
+	}
 	
 	public enum Aggregates implements Aggregate {
 		SAND(new Color(230, 220, 175), 1.6), 
@@ -42,7 +56,8 @@ public interface Aggregate extends Mixture {
 
 		@Override
 		public Aggregate mix(IndustrialMaterial material, double weight) {
-			return new SimpleAggregate(new MixtureComponent(this, 1.0), 
+			return new SimpleAggregate(this.getCategory(), 
+					                   new MixtureComponent(this, 1.0), 
 					                   new MixtureComponent(material, weight));
 		}
 
@@ -51,12 +66,13 @@ public interface Aggregate extends Mixture {
 			return this;
 		}
 
-		public boolean isLoose() {
-			return this == Aggregates.SAND || this == Aggregates.GRAVEL;
-		}
-		
-		public boolean isHard() {
-			return this == Aggregates.STONE || this == Aggregates.HARDENED_CLAY || this == Aggregates.OBSIDIAN;
+		@Override
+		public Category getCategory() {
+			if (this == Aggregates.SAND || this == Aggregates.GRAVEL)
+				return Category.LOOSE;
+			if (this == Aggregates.STONE || this == Aggregates.HARDENED_CLAY || this == Aggregates.OBSIDIAN)
+				return Category.HARD;
+			return Category.SOFT;
 		}
 	}
 }
