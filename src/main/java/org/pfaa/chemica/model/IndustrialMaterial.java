@@ -47,18 +47,13 @@ public interface IndustrialMaterial {
 		State state = this.getStateForCondition(condition);
 		return this.getProperties(condition, state);
 	}
-	default Mixture mix(IndustrialMaterial material, double weight) {
-		return this.mix(new MixtureComponent(material, weight));
-	}
-	default Mixture mix(MixtureComponent comp) {
-		return this.mix(comp.material, comp.weight);
-	}
 	default ConditionProperties getStandardProperties() {
 		return this.getProperties(Condition.STP);
 	}
 	default State getStandardState() {
 		return this.getStandardProperties().state;
 	}
+	
 	default public Fusion getFusion() {
 		return null;
 	}
@@ -148,5 +143,12 @@ public interface IndustrialMaterial {
 		default:
 			return null;
 		}
+	}
+	
+	default Mixture mix(IndustrialMaterial material, double weight) {
+		return this.mix(new MixtureComponent(material, weight));
+	}
+	default Mixture mix(MixtureComponent comp) {
+		return this.mix(comp.material, comp.weight);
 	}
 }
