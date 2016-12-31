@@ -291,10 +291,6 @@ public enum GeoMaterial implements Mixture {
 	public String getLowerName() {
 		return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 	}
-
-	public String getOreDictKey() {
-		return this.getLowerName();
-	}
 	
 	public static GeoMaterial getForId(int id) {
 		return values()[id];

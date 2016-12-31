@@ -15,8 +15,6 @@ import org.pfaa.chemica.model.State;
 import org.pfaa.fabrica.model.Generic.Generics;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
-import com.google.common.base.CaseFormat;
-
 public interface Intermediate extends Mixture {
 	public enum Intermediates implements Intermediate {
 		ASH(Color.darkGray, 0.7),
@@ -53,11 +51,6 @@ public interface Intermediate extends Mixture {
 		@Override
 		public List<MixtureComponent> getComponents() {
 			return this.mixture.getComponents();
-		}
-
-		@Override
-		public String getOreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 
 		@Override

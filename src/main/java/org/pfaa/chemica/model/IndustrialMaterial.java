@@ -1,16 +1,21 @@
 package org.pfaa.chemica.model;
 
+import com.google.common.base.CaseFormat;
 
 public interface IndustrialMaterial {
 	String name();
-	String getOreDictKey();
-
+	
+	default String getOreDictKey() {
+		return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
+	}
+	
 	default boolean isPure() {
 		return true;
 	}
 	default boolean isForBuilding() {
 		return false;
 	}
+	
 	default ChemicalStateProperties getStateProperties(State state) {
 		return null;
 	}

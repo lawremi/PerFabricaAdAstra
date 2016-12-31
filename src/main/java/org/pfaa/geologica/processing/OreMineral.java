@@ -166,10 +166,6 @@ public interface OreMineral extends Mineral {
 			this(new SimpleOreMineral(material, color, substitution));
 		}
 		
-		public String getOreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
-		}
-
 		@Override
 		public List<MixtureComponent> getComponents() {
 			return delegate.getComponents();

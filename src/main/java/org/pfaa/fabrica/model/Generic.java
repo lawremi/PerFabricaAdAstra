@@ -14,8 +14,6 @@ import org.pfaa.fabrica.model.Intermediate.Intermediates;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
-import com.google.common.base.CaseFormat;
-
 public interface Generic extends IndustrialMaterial {
 	public List<IndustrialMaterial> getSpecifics();
 	public Generic addSpecific(IndustrialMaterial specific);
@@ -38,11 +36,6 @@ public interface Generic extends IndustrialMaterial {
 			this.specifics = Arrays.asList(specifics);
 		}
 		
-		@Override
-		public String getOreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
-		}
-
 		@Override
 		public ConditionProperties getProperties(Condition condition) {
 			return this.specifics.get(0).getProperties(condition);

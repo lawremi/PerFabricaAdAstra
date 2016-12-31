@@ -40,11 +40,6 @@ public interface Aggregate extends Mixture {
 		}
 		
 		@Override
-		public String getOreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
-		}
-
-		@Override
 		public ConditionProperties getProperties(Condition condition) {
 			return this.properties;
 		}

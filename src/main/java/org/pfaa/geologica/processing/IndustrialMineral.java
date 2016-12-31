@@ -12,8 +12,6 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 
-import com.google.common.base.CaseFormat;
-
 public interface IndustrialMineral extends Mineral {
 	public enum IndustrialMinerals implements IndustrialMineral {
 		ALUNITE(new Color(225, 180, 65), 2.7),
@@ -58,12 +56,6 @@ public interface IndustrialMineral extends Mineral {
 			this(null, color, density, new Hazard());
 		}
 		
-		@Override
-		public String getOreDictKey() {
-			return this.oreDictKey != null ? this.oreDictKey : 
-				CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
-		}
-
 		@Override
 		public ConditionProperties getProperties(Condition condition) {
 			return properties;

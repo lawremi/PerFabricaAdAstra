@@ -13,8 +13,6 @@ import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Vaporization;
 
-import com.google.common.base.CaseFormat;
-
 /* Crude mixtures of organic substances */
 // TODO: varied support for thermodynamics, particularly heat capacity and heat of vaporization, 
 //       see https://en.wikipedia.org/wiki/Petroleum#Empirical_equations_for_thermal_properties.
@@ -74,13 +72,6 @@ public interface Crude extends Mixture {
 		public Crude mix(IndustrialMaterial material, double weight) {
 			Crude self = new SimpleCrude(this, 1.0);
 			return self.mix(material, weight);
-		}
-
-		@Override
-		public String getOreDictKey() {
-			return delegate.getOreDictKey() == null ? 
-					CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name()) : 
-					delegate.getOreDictKey();
 		}
 
 		@Override

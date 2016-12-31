@@ -1,16 +1,5 @@
 package org.pfaa.chemica.model;
 
-import java.util.List;
-
-import org.pfaa.chemica.model.Condition;
-import org.pfaa.chemica.model.ConditionProperties;
-import org.pfaa.chemica.model.Element;
-import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.MixtureComponent;
-
-import com.google.common.base.CaseFormat;
-
 import static org.pfaa.chemica.model.Element.Ag;
 import static org.pfaa.chemica.model.Element.Al;
 import static org.pfaa.chemica.model.Element.Au;
@@ -26,7 +15,6 @@ import static org.pfaa.chemica.model.Element.Cu;
 import static org.pfaa.chemica.model.Element.Fe;
 import static org.pfaa.chemica.model.Element.Ge;
 import static org.pfaa.chemica.model.Element.Ir;
-import static org.pfaa.chemica.model.Element.Pb;
 import static org.pfaa.chemica.model.Element.La;
 import static org.pfaa.chemica.model.Element.Li;
 import static org.pfaa.chemica.model.Element.Mg;
@@ -36,8 +24,9 @@ import static org.pfaa.chemica.model.Element.Nb;
 import static org.pfaa.chemica.model.Element.Nd;
 import static org.pfaa.chemica.model.Element.Ni;
 import static org.pfaa.chemica.model.Element.Os;
-import static org.pfaa.chemica.model.Element.Pt;
+import static org.pfaa.chemica.model.Element.Pb;
 import static org.pfaa.chemica.model.Element.Pr;
+import static org.pfaa.chemica.model.Element.Pt;
 import static org.pfaa.chemica.model.Element.Sb;
 import static org.pfaa.chemica.model.Element.Si;
 import static org.pfaa.chemica.model.Element.Sn;
@@ -47,6 +36,8 @@ import static org.pfaa.chemica.model.Element.V;
 import static org.pfaa.chemica.model.Element.W;
 import static org.pfaa.chemica.model.Element.Zn;
 import static org.pfaa.chemica.model.Element.Zr;
+
+import java.util.List;
 
 // TODO: set strengths where the alloy differs from the base metal
 
@@ -112,11 +103,6 @@ public interface Alloy extends Mixture, Metal {
 		@Override
 		public List<MixtureComponent> getComponents() {
 			return delegate.getComponents();
-		}
-
-		@Override
-		public String getOreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 
 		@Override
