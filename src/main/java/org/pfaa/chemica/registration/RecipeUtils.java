@@ -9,8 +9,6 @@ import java.util.Map.Entry;
 
 import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.item.IndustrialItems;
-import org.pfaa.chemica.item.IngredientStack;
-import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.IndustrialMaterial;
@@ -18,7 +16,8 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
+import org.pfaa.chemica.processing.MaterialStack;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

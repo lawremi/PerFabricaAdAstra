@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 import org.pfaa.geologica.GeoMaterial;
 
 import net.minecraft.item.ItemStack;

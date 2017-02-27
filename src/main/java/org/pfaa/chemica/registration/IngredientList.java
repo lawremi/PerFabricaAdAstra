@@ -1,7 +1,6 @@
 package org.pfaa.chemica.registration;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -9,8 +8,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.pfaa.chemica.item.IngredientStack;
-import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.chemica.model.IndustrialMaterial;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -18,33 +15,26 @@ import com.google.common.collect.Sets;
 
 import net.minecraft.item.ItemStack;
 
-public class IngredientList extends AbstractList<IngredientStack> {
+public class IngredientList<T extends IngredientStack> extends AbstractList<T> {
 
-	private List<IngredientStack> delegate;
+	private List<T> delegate;
 	private Set<List<ItemStack>> itemStackLists;
 	
 	public IngredientList() {
 		this.delegate = Collections.emptyList();
 	}
 	
-	public IngredientList(IngredientStack... materialStacks) {
-		this.delegate = Lists.newArrayList(materialStacks);
+	@SafeVarargs
+	public IngredientList(T... ingredientStacks) {
+		this.delegate = Lists.newArrayList(ingredientStacks);
 	}
 	
-	public IngredientList(List<IngredientStack> materialStacks) {
-		this.delegate = new ArrayList<IngredientStack>(materialStacks);
-	}
-	
-	public IngredientList(IndustrialMaterial... materials) {
-		List<IngredientStack> stacks = new ArrayList<IngredientStack>(materials.length);
-		for (IndustrialMaterial material : materials) {
-			stacks.add(new MaterialStack(material));
-		}
-		this.delegate = stacks;
+	public IngredientList(List<T> ingredientStacks) {
+		this.delegate = Lists.newArrayList(ingredientStacks);
 	}
 	
 	@Override
-	public IngredientStack get(int arg0) {
+	public T get(int arg0) {
 		return delegate.get(arg0);
 	}
 
@@ -53,6 +43,12 @@ public class IngredientList extends AbstractList<IngredientStack> {
 		return delegate.size();
 	}
 	
+	@Override
+	public void add(int index, T element) {
+		this.itemStackLists = null;
+		this.delegate.add(index, element);
+	}
+
 	public Set<List<ItemStack>> getItemStackLists() {
 		if (this.itemStackLists == null) {
 			List<Set<ItemStack>> expandedInputs = this.delegate.stream().map(IngredientStack::getItemStacks).
@@ -88,5 +84,14 @@ public class IngredientList extends AbstractList<IngredientStack> {
 	
 	public List<Object> getCraftingIngredients() {
 		return Lists.transform(this.delegate, getCraftingIngredient);
+	}
+
+	@SafeVarargs
+	public static <T extends IngredientStack> IngredientList<T> of(T... stacks) {
+		return new IngredientList<T>(stacks);
+	}
+	
+	public static <T extends IngredientStack> IngredientList<T> of(List<T> stacks) {
+		return new IngredientList<T>(stacks);
 	}
 }
