@@ -6,7 +6,6 @@ import org.pfaa.chemica.model.ChemicalStateProperties.Aqueous;
 import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
-import org.pfaa.chemica.model.Compound.Compounds;
 
 
 public class SimpleChemical implements Chemical {
@@ -89,22 +88,16 @@ public class SimpleChemical implements Chemical {
 	public Mixture mix(IndustrialMaterial material, double weight) {
 		return new SimpleMixture(this).mix(material, weight);
 	}
-	
-	private boolean isWaterSolubleSalt() {
-		Reaction dissolution = this.getDissociation();
-		if (dissolution == null) {
-			return false;
-		}
-		int et = dissolution.getEquilibriumTemperature();
-		return et > Compounds.H2O.getFusion().getTemperature() && et < Compounds.H2O.getVaporization().getTemperature();
-	}
-	
+
 	private Aqueous inferAqueous() {
-		if (!isWaterSolubleSalt()) {
+		if (!this.isSoluble(Condition.STP)) {
 			return null;
 		}
 		Ion cation = this.getFormula().getCation();
 		Ion anion = this.getFormula().getAnion();
+		if (cation == null || anion == null) {
+			return null;
+		}
 		ConditionProperties cationProps = cation.getProperties(Condition.STP);
 		ConditionProperties anionProps = anion.getProperties(Condition.STP);
 		Color color = cationProps.color;
