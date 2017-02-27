@@ -1,4 +1,4 @@
-package org.pfaa.chemica.util;
+package org.pfaa.core.item;
 
 import net.minecraft.item.ItemStack;
 
