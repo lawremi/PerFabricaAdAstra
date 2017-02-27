@@ -9,6 +9,8 @@ import org.pfaa.chemica.model.ConstructionMaterial;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Metal;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import com.google.common.base.CaseFormat;
 
@@ -108,14 +110,19 @@ public class ConstructionMaterialBlock extends Block implements IndustrialBlockA
         }
     }
 
-	public List<ConstructionMaterial> getConstructionMaterials() {
+	@Override
+	public List<ConstructionMaterial> getIndustrialMaterials() {
 		return Collections.unmodifiableList(this.materials);
 	}
 
 	public ItemStack getItemStack(ConstructionMaterial material) {
-		return new ItemStack(this, 1, this.getMeta(material));
+		return this.getItemStack(this.getMeta(material));
 	}
 
+	public ItemStack getItemStack(int meta) {
+		return new ItemStack(this, 1, meta);
+	}
+	
 	private int getMeta(ConstructionMaterial material) {
 		return this.materials.indexOf(material);
 	}
@@ -147,5 +154,10 @@ public class ConstructionMaterialBlock extends Block implements IndustrialBlockA
 
 	@Override
 	public void disableOverlay() {
-	}	
+	}
+
+	@Override
+	public Form getForm() {
+		return Forms.BLOCK;
+	}
 }

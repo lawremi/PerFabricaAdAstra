@@ -3,6 +3,8 @@ package org.pfaa.geologica;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+import org.pfaa.chemica.block.IndustrialBlock;
+import org.pfaa.chemica.block.IndustrialBlockAccessors;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
@@ -110,6 +112,7 @@ public class GeologicaBlocks implements BlockCatalog {
 	public static final GeoBlock CRUDE_GROUND = createCrudeGroundBlock();
 	public static final GeoBlock WEAK_ORE_GROUND = createOreGroundBlock();
 	
+	// TODO: remove when we go to 1.10 (or 1.11 or ...)
 	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
 	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
 	public static final VanillaOreOverrideBlock EMERALD_ORE = new VanillaOreOverrideBlock(Blocks.emerald_ore);
@@ -167,10 +170,18 @@ public class GeologicaBlocks implements BlockCatalog {
 		return CatalogUtils.getEntries(GeologicaBlocks.class, Block.class);
 	}
 	
+	public static List<IndustrialBlockAccessors> getIndustrialBlocks() {
+		return CatalogUtils.getEntries(GeologicaBlocks.class, IndustrialBlockAccessors.class);
+	}
+	
+	public static List<VanillaOreOverrideBlock> getVanillaOreOverrideBlocks() {
+		return CatalogUtils.getEntries(GeologicaBlocks.class, VanillaOreOverrideBlock.class);
+	}
+	
 	private static Block createWallBlock(CompositeBlock modelBlock) {
 		return createDerivedBlock(WallBlock.class, modelBlock);
 	}
-	private static SlabBlock createSlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
+	private static SlabBlock createSlabBlock(IndustrialBlock modelBlock, SlabBlock singleSlab) {
 		SlabBlock block = new SlabBlock(modelBlock, singleSlab);
 		return block;
 	}

@@ -6,9 +6,12 @@ import java.util.Random;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
+import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
 
 import cpw.mods.fml.relauncher.Side;
@@ -98,5 +101,19 @@ public class IntactGeoBlock extends GeoBlock {
 	@SideOnly(Side.CLIENT)
 	public IIcon getHostIcon(IBlockAccess world, int x, int y, int z) {
 		return OreBlockUtils.getHostIcon(world, x, y, z);
+	}
+	
+	@Override
+	public Form getForm() {
+		if (this.hasComposition(Ore.class)) {
+			return Forms.ORE;
+		} else if (this.hasComposition(Crude.class) && this.getMaterial().isSolid()) {
+			if (this.getMaterial() == Material.ground)
+				return Forms.BLOCK;
+			else return Forms.ORE;
+		} else if (this.getMaterial() == Material.clay) {
+			return Forms.BLOCK;
+		}
+		return Forms.STONE;
 	}
 }

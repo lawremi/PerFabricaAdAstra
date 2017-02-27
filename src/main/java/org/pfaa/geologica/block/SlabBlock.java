@@ -3,8 +3,12 @@ package org.pfaa.geologica.block;
 import java.util.List;
 import java.util.Random;
 
+import org.pfaa.chemica.block.IndustrialBlock;
+import org.pfaa.chemica.block.IndustrialBlockAccessors;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.block.CompositeBlock;
-import org.pfaa.core.block.CompositeBlockAccessors;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,13 +21,13 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, ProxyBlock {
+public class SlabBlock extends BlockSlab implements IndustrialBlockAccessors, ProxyBlock {
 
-	private CompositeBlock modelBlock;
+	private IndustrialBlock modelBlock;
 	private SlabBlock otherSlab;
 	private boolean isDoubleSlab;
 	
-	public SlabBlock(CompositeBlock modelBlock, SlabBlock singleSlab) {
+	public SlabBlock(IndustrialBlock modelBlock, SlabBlock singleSlab) {
 		super(singleSlab != null, modelBlock.getMaterial());
 		this.modelBlock = modelBlock;
 		if (singleSlab != null) {
@@ -70,6 +74,9 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTabs, @SuppressWarnings("rawtypes") List list)
     {
+		if (this.isDoubleSlab) {
+			return;
+		}
 		for (int i = 0; i < getMetaCount(); ++i)
 		{
 			list.add(new ItemStack(item, 1, damageDropped(i)));
@@ -140,6 +147,16 @@ public class SlabBlock extends BlockSlab implements CompositeBlockAccessors, Pro
 	@Override
 	public int colorMultiplier(int meta) {
 		return modelBlock.colorMultiplier(meta);
+	}
+
+	@Override
+	public Form getForm() {
+		return Forms.SLAB;
+	}
+
+	@Override
+	public IndustrialMaterial getIndustrialMaterial(int meta) {
+		return this.modelBlock.getIndustrialMaterial(meta);
 	}
 
 }

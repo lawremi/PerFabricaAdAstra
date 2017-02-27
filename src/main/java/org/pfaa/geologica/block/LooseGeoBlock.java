@@ -2,8 +2,11 @@ package org.pfaa.geologica.block;
 
 import java.util.Random;
 
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -131,4 +134,16 @@ public class LooseGeoBlock extends GeoBlock {
 		return null;
 	}
 
+	@Override
+	public Form getForm() {
+		if (this.hasComposition(Aggregate.class)) {
+			if (this.getMaterial() == Material.sand) {
+				return Forms.SAND;
+			} else {
+				return Forms.RUBBLE;
+			}
+		} else {
+			return Forms.ORE;
+		}
+	}
 }

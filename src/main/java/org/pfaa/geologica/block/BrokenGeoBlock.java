@@ -2,6 +2,8 @@ package org.pfaa.geologica.block;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.geologica.GeologicaBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -57,5 +59,10 @@ public class BrokenGeoBlock extends GeoBlock {
 			break;
 		}
 		return dropped;
+	}
+	
+	@Override
+	public Form getForm() {
+		return Forms.COBBLESTONE;
 	}
 }

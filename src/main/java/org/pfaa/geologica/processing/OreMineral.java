@@ -47,8 +47,6 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 
-import com.google.common.base.CaseFormat;
-
 
 /*
  * Minerals from which valuable compounds and elements are extracted.

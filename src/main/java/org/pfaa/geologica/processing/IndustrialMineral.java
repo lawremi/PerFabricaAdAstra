@@ -44,11 +44,9 @@ public interface IndustrialMineral extends Mineral {
 		ZEOLITE(new Color(240, 230, 230), 2.3)
 		;
 
-		private String oreDictKey;
 		private ConditionProperties properties;
 		
 		private IndustrialMinerals(String oreDictKey, Color color, double density, Hazard hazard) {
-			this.oreDictKey = oreDictKey;
 			this.properties = new ConditionProperties(State.SOLID, color, density, hazard);
 		}
 		

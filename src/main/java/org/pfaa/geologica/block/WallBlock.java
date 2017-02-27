@@ -2,8 +2,11 @@ package org.pfaa.geologica.block;
 
 import java.util.List;
 
-import org.pfaa.core.block.CompositeBlock;
-import org.pfaa.core.block.CompositeBlockAccessors;
+import org.pfaa.chemica.block.IndustrialBlock;
+import org.pfaa.chemica.block.IndustrialBlockAccessors;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,7 +19,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class WallBlock extends BlockWall implements CompositeBlockAccessors, ProxyBlock {
+public class WallBlock extends BlockWall implements IndustrialBlockAccessors, ProxyBlock {
 
 	@Override
 	public boolean canConnectWallTo(IBlockAccess par1iBlockAccess, int par2,
@@ -28,9 +31,9 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 		return super.canConnectWallTo(par1iBlockAccess, par2, par3, par4);
 	}
 
-	private final CompositeBlock modelBlock;
+	private final IndustrialBlock modelBlock;
 	
-	public WallBlock(CompositeBlock modelBlock) {
+	public WallBlock(IndustrialBlock modelBlock) {
 		super(modelBlock);
 		this.modelBlock = modelBlock;
 	}
@@ -100,5 +103,15 @@ public class WallBlock extends BlockWall implements CompositeBlockAccessors, Pro
 	@Override
 	public int colorMultiplier(int meta) {
 		return modelBlock.colorMultiplier(meta);
+	}
+
+	@Override
+	public Form getForm() {
+		return Forms.WALL;
+	}
+
+	@Override
+	public IndustrialMaterial getIndustrialMaterial(int meta) {
+		return this.modelBlock.getIndustrialMaterial(meta);
 	}
 }

@@ -2,6 +2,8 @@ package org.pfaa.geologica.block;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -42,5 +44,10 @@ public class BrickGeoBlock extends GeoBlock {
 	@Override
 	public GeoBlock getBrokenRockBlock() {
 		return IntactGeoBlock.getBrokenRockBlock(this.getStrength());
+	}
+	
+	@Override
+	public Form getForm() {
+		return Forms.STONE_BRICKS;
 	}
 }

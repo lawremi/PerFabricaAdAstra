@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.pfaa.chemica.ChemicaBlocks;
+import org.pfaa.chemica.block.IndustrialBlock;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.block.BlockWithMeta;
-import org.pfaa.core.block.CompositeBlock;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.Geologica;
 
@@ -26,7 +28,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccessors {
+public abstract class GeoBlock extends IndustrialBlock implements GeoBlockAccessors {
 
 	private List<GeoMaterial> materials = new ArrayList<GeoMaterial>();
 	
@@ -121,6 +123,11 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 		return Collections.unmodifiableList(materials);
 	}
 
+	@Override
+	public List<GeoMaterial> getIndustrialMaterials() {
+		return this.getGeoMaterials();
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pfaa.geologica.block.GeoBlockAccessors#getSubstance(int)
 	 */
@@ -148,6 +155,16 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	}
 	
 	@Override
+	public String oreDictKey() {
+		Form form = this.getForm();
+		if (form != Forms.BLOCK && form != Forms.ORE) {
+			return form.oreDictKey();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
 	public int getMeta(GeoMaterial material) {
 		return materials.indexOf(material);
 	}
@@ -161,11 +178,11 @@ public abstract class GeoBlock extends CompositeBlock implements GeoBlockAccesso
 	public String getBlockNameSuffix(int meta) {
 		return getGeoMaterial(meta).getLowerName();
 	}
-
+	
 	public ItemStack getItemStack(GeoMaterial material) {
-		return new ItemStack(this, 1, getMeta(material));
+		return this.getItemStack(getMeta(material));
 	}
-
+	
 	public Strength getStrength() {
 		return strength;
 	}

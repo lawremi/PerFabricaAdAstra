@@ -1,13 +1,16 @@
 package org.pfaa.chemica.registration;
 
-import org.pfaa.chemica.block.ConstructionMaterialBlock;
+import java.util.Iterator;
+import java.util.List;
+
+import org.pfaa.chemica.item.IndustrialItemAccessors;
 import org.pfaa.chemica.item.IndustrialItems;
-import org.pfaa.chemica.item.IndustrialMaterialItem;
-import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.chemica.model.ConstructionMaterial;
+import org.pfaa.chemica.model.Generic;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.processing.CanonicalForms;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStack;
 
 import com.google.common.base.CaseFormat;
 
@@ -31,18 +34,6 @@ public abstract class OreDictUtils {
 			return postfix;
 		}
 		return prefix + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, postfix);
-	}
-	
-	public static <T extends Enum<?> & IndustrialMaterial> void register(IndustrialMaterialItem<T> item) {
-		for (T material : item.getIndustrialMaterials()) {
-			OreDictionary.registerOre(makeKey(item.getForm(), material), item.getItemStack(material));	
-		}
-	}
-	
-	public static void register(ConstructionMaterialBlock block) {
-		for (ConstructionMaterial material : block.getConstructionMaterials()) {
-			OreDictionary.registerOre(makeKey(Forms.BLOCK, material), block.getItemStack(material));	
-		}
 	}
 	
 	public static void registerDye(String color, IndustrialMaterial material) {
@@ -69,6 +60,38 @@ public abstract class OreDictUtils {
 	}
 	
 	public static void register(MaterialStack materialStack, ItemStack itemStack) {
+		CanonicalForms.register(materialStack.getMaterial(), materialStack.getForm());
 		OreDictionary.registerOre(materialStack.getOreDictKey(), itemStack);
+	}
+
+	public static void register(IndustrialItemAccessors item) {
+		Iterator<ItemStack> itemStacks = item.getItemStacks().iterator();
+		item.getMaterialStacks().forEach((stack) -> {
+			register(stack, itemStacks.next());
+		});
+		String key = item.oreDictKey();
+		if (key != null) {
+			OreDictionary.registerOre(key, item.getWilcardStack());
+		}	
+	}
+	
+	public static void register(List<? extends IndustrialItemAccessors> itemations) {
+		itemations.forEach(OreDictUtils::register);
+	}
+	
+	public static <T extends Enum<?> & Generic> void register(Class<T> generics) {
+		for (Generic generic : generics.getEnumConstants()) {
+			register(generic);
+		}
+	}
+
+	public static void register(Generic generic) {
+		for (IndustrialMaterial specific : generic.getSpecifics()) {
+			for (Form form : CanonicalForms.of(specific)) {
+				for (ItemStack itemStack : IndustrialItems.getItemStacks(form, specific)) {
+					OreDictUtils.register(form.of(generic), itemStack);
+				}
+			}
+		}
 	}
 }

@@ -1,63 +1,23 @@
 package org.pfaa.geologica.integration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.integration.AbstractRecipeRegistry;
-import org.pfaa.chemica.item.IndustrialItemAccessors;
 import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
-import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.geologica.GeoMaterial;
-import org.pfaa.geologica.processing.Mineral;
 import org.pfaa.geologica.processing.OreMineral;
-import org.pfaa.geologica.processing.OreMineral.Ores;
+import org.pfaa.geologica.registration.RawMaterials;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
-
-	private Map<Chemical,OreMineral> oreCompoundToMineral;
-	private Map<OreMineral,List<GeoMaterial>> oreMineralToGeoMaterials;
-	
-	public GeologicaRecipeProxy() {
-		this.oreCompoundToMineral = makeOreCompoundToMineral();
-		this.oreMineralToGeoMaterials = makeOreMineralToGeoMaterials();
-	}
-	
-	private static Map<Chemical, OreMineral> makeOreCompoundToMineral() {
-		Map<Chemical, OreMineral> map = new HashMap<Chemical, OreMineral>();
-		for (OreMineral mineral : Ores.values()) {
-			Chemical concentrate = mineral.getConcentrate();
-			map.put(concentrate, mineral);
-		}
-		return map;
-	}
-
-	private static Map<OreMineral,List<GeoMaterial>> makeOreMineralToGeoMaterials() {
-		Map<OreMineral,List<GeoMaterial>> map = new HashMap<OreMineral,List<GeoMaterial>>();
-		for (GeoMaterial material : GeoMaterial.values()) {
-			Mineral concentrate = material.getOreConcentrate();
-			if (concentrate instanceof OreMineral) {
-				OreMineral mineral = (OreMineral) concentrate;
-				List<GeoMaterial> materials = map.get(mineral);
-				if (materials == null) {
-					materials = new ArrayList<GeoMaterial>();
-					map.put(mineral, materials);
-				}
-				materials.add(material);
-			}
-		}
-		return map;
-	}
 
 	private static abstract class Registrant {
 		public abstract void register(ItemStack input);
@@ -68,14 +28,14 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 			IndustrialMaterialItem<?> item = (IndustrialMaterialItem<?>)input.getItem();
 			IndustrialMaterial compound = item.getIndustrialMaterial(input);
 			if (compound instanceof Compound) {
-				OreMineral oreMineral = this.oreCompoundToMineral.get(compound);
+				OreMineral oreMineral = RawMaterials.get((Compound)compound);
 				if (oreMineral != null && (includeImpure || oreMineral.getComponents().size() == 1)) {
 					ItemStack oreMineralStack = IndustrialItems.getBestItemStack(item.getForm(), oreMineral);
 					if (oreMineralStack != null) {
 						registrant.register(oreMineralStack);
 						List<GeoMaterial> geoMaterials = null;
 						if (includeImpure)
-							geoMaterials = this.oreMineralToGeoMaterials.get(oreMineral);
+							geoMaterials = RawMaterials.get(oreMineral);
 						if (geoMaterials != null) {
 							for (GeoMaterial geoMaterial : geoMaterials) {
 								if (item.getForm() == Forms.DUST) {
