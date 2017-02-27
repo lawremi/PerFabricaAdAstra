@@ -2,6 +2,7 @@ package org.pfaa.fabrica.registration;
 
 import org.pfaa.chemica.integration.ModIds;
 import org.pfaa.fabrica.entity.TileEntityColored;
+import org.pfaa.fabrica.entity.TileEntityFluidReactor;
 import org.pfaa.fabrica.entity.TileEntityFurnaceVenting;
 import org.pfaa.fabrica.entity.TileEntityHood;
 
@@ -19,5 +20,6 @@ public class EntityRegistration {
 		}
 		GameRegistry.registerTileEntity(TileEntityHood.class, "fabrica:hood");
 		GameRegistry.registerTileEntity(TileEntityFurnaceVenting.class, "fabrica:furnaceVenting");
+		GameRegistry.registerTileEntity(TileEntityFluidReactor.class, "fabrica:fluidReactor");
 	}
 }
