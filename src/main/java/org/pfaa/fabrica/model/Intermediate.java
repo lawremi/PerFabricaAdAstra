@@ -12,7 +12,6 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
-import org.pfaa.fabrica.model.Generic.Generics;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
 public interface Intermediate extends Mixture {
