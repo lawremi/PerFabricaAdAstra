@@ -83,18 +83,13 @@ public enum GeoMaterial implements Mixture {
 			mix(Compounds.N2, 0.03).mix(Compounds.H2S, 0.02).mix(Compounds.CO2, 0.01).mix(Element.He, 0.01), 
 			Strength.WEAK, Material.air),
 	
-	OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2), Strength.WEAK, MUDSTONE),
-	BITUMINOUS_COAL(new SimpleCrude(Crudes.FIXED_CARBON, 0.7).mix(Aggregates.STONE, 0.15).
-                    mix(Crudes.COAL_TAR, 0.1).mix(Crudes.VOLATILES, 0.05).mix(Compounds.H2O, 0.1), 
-                    Strength.WEAK, Aggregates.STONE),
-	LIGNITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.35).mix(Aggregates.STONE, 0.1).
-		    mix(Crudes.COAL_TAR, 0.15).mix(Crudes.VOLATILES, 0.1).mix(Compounds.H2O, 0.3),
-		    Strength.WEAK, Aggregates.STONE),
-	ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.95).mix(Aggregates.STONE, 0.05), 
-			   Strength.WEAK, Aggregates.STONE),
+	OIL_SHALE(Crudes.OIL_SHALE, Strength.WEAK, MUDSTONE),
+	BITUMINOUS_COAL(Crudes.BITUMINOUS_COAL, Strength.WEAK, Aggregates.STONE),
+	LIGNITE(Crudes.LIGNITE, Strength.WEAK, Aggregates.STONE),
+	ANTHRACITE(Crudes.ANTHRACITE, Strength.WEAK, Aggregates.STONE),
 	COKE(Crudes.COKE, Strength.STRONG, GRANITE),
 	
-	PEAT(Crudes.COMPOST, Strength.WEAK, Material.ground),
+	PEAT(Crudes.PEAT, Strength.WEAK, Material.ground),
 	BOG_IRON(Ores.GOETHITE, Strength.WEAK, PEAT),
 
 	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.ILMENITE, 0.6).mix(IndustrialMinerals.GARNET, 0.4)
@@ -358,11 +353,6 @@ public enum GeoMaterial implements Mixture {
 	public boolean isOreRock() {
 		return this.getComposition() instanceof Ore && 
 				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.clay);
-	}
-	
-	@Override
-	public boolean isPure() {
-		return !(this.getComposition() instanceof Ore);
 	}
 	
 	private static Material blockMaterialFromHost(IndustrialMaterial host)

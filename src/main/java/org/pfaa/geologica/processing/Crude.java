@@ -3,6 +3,7 @@ package org.pfaa.geologica.processing;
 import java.awt.Color;
 import java.util.List;
 
+import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
@@ -25,6 +26,8 @@ public interface Crude extends Mixture {
 	public double getSulfurFraction();
 	public List<IndustrialMaterial> fractions();
 	
+	// FIXME: crudes should have a Strength, so that we can grind their lumps...
+	// FIXME: should probably rename Crude to Organic
 	public enum Crudes implements Crude {
 		VOLATILES(new SimpleCrude(Compounds.METHANE, 0.5).mix(Compounds.ETHANE, 0.3).mix(Compounds.PROPANE, 0.15).
 				      mix(Compounds.N_BUTANE, 0.024).mix(Compounds.ISO_BUTANE, 0.024).mix(Compounds.H2S, 0.002)),
@@ -39,8 +42,15 @@ public interface Crude extends Mixture {
 		COAL_TAR(new SimpleCrude(Crudes.HEAVY_NAPHTHA, 0.05).mix(Crudes.KEROSENE, 0.05).
 				 mix(Crudes.LIGHT_GAS_OIL, 0.10).mix(Crudes.HEAVY_GAS_OIL, 0.2).
 				 mix(Crudes.BITUMEN, 0.6)),
+		OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2)), // the organic portion
+		BITUMINOUS_COAL(new SimpleCrude(FIXED_CARBON, 0.7).mix(Aggregates.STONE, 0.15).
+                        mix(COAL_TAR, 0.1).mix(VOLATILES, 0.05).mix(Compounds.H2O, 0.1)),
+		LIGNITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.35).mix(Aggregates.STONE, 0.1).
+			    mix(Crudes.COAL_TAR, 0.15).mix(Crudes.VOLATILES, 0.1).mix(Compounds.H2O, 0.3)),
+		ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.95).mix(Aggregates.STONE, 0.05)),
 		COKE(FIXED_CARBON),
-		COMPOST(State.SOLID, new Color(60, 40, 0), 0.8, new Hazard(0, 1, 0), 0, 15),
+		HUMUS(State.SOLID, new Color(60, 40, 0), 0.8, new Hazard(0, 1, 0), 0, 15),
+		PEAT(HUMUS),
 		DIESEL(State.LIQUID, new Color(100, 80, 15), 0.85, new Hazard(1, 2, 0), 2.4, 650, 0.002, 45), // fuel oil #2, "bunker A"
 		LIGHT_FUEL_OIL(State.LIQUID, new Color(70, 50, 10), 0.95, new Hazard(1, 2, 0), 35, 800, 0.03, 50), // fuel oil #4/5 "bunker B"
 		HEAVY_FUEL_OIL(State.LIQUID, new Color(25, 10, 0), 1.0, new Hazard(1, 2, 0), 3500, 950, 0.03, 53), // fuel oil #6, "bunker C"
