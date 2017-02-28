@@ -7,7 +7,7 @@ import java.util.Map;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

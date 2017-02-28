@@ -50,7 +50,7 @@ public class GeologicaRecipeProxy extends AbstractRecipeRegistry {
 									if (dustStack != null) {
 										registrant.register(dustStack);
 									}
-									ItemStack blockStack = IndustrialItems.getBestItemStack("ore", geoMaterial);
+									ItemStack blockStack = IndustrialItems.getBestItemStack(Forms.ORE, geoMaterial);
 									registrant.register(blockStack);
 								} else if (item.getForm() == Forms.DUST_TINY) {
 									ItemStack dustStack = IndustrialItems.getBestItemStack(Forms.DUST_IMPURE_TINY, geoMaterial);

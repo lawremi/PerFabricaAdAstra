@@ -24,7 +24,7 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp) {
 		Set<ItemStack> itemStacks = flux == null ? Collections.singleton(null) : flux.getItemStacks();
 		for (ItemStack itemStack : itemStacks) {
-			delegate.registerCastingRecipe(input, output, itemStack, temp);
+			delegate.registerCastingRecipe(input, output, itemStack, temp, 0);
 		}
 	}
 
