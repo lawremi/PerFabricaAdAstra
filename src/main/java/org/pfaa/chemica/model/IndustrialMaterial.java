@@ -49,7 +49,7 @@ public interface IndustrialMaterial {
 		return this.getStandardProperties().state;
 	}
 	
-	default public Fusion getFusion() {
+	default Fusion getFusion() {
 		return null;
 	}
 	default Vaporization getVaporization() {

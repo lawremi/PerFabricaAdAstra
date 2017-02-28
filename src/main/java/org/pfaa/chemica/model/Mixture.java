@@ -3,6 +3,7 @@ package org.pfaa.chemica.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,24 +22,21 @@ public interface Mixture extends IndustrialMaterial {
 		return null;
 	}
 	
-	default Mixture without(List<IndustrialMaterial> materials) {
-		Set<IndustrialMaterial> toRemove = Sets.newHashSet(materials);
+	default Mixture without(Set<IndustrialMaterial> materials) {
 		List<MixtureComponent> comps = this.getComponents().stream().
-				filter((x) -> !toRemove.contains(x)).
+				filter((x) -> !materials.contains(x.material)).
 				collect(Collectors.toList());
 		return this.removeAll().mixAll(comps);
 	}
 	
 	default Mixture without(IndustrialMaterial... materials) {
-		return this.without(Arrays.asList(materials));
+		return this.without(Sets.newHashSet(materials));
 	}
 	
 	default Mixture concentrate(double factor) {
 		List<MixtureComponent> comps = this.getComponents();
 		return this.removeAll().mixAll(comps.stream().map((comp) -> {
-			if (comp.weight < 1.0)
-				return comp.concentrate(factor);
-			return comp;
+			return comp.concentrate(factor);
 		}).collect(Collectors.toList()));
 	}
 	
@@ -84,15 +82,21 @@ public interface Mixture extends IndustrialMaterial {
 	}
 	
 	default double getTotalWeight() {
-		double weight = 0;
-		for (MixtureComponent comp : this.getComponents()) {
-			weight += comp.weight;
-		}
-		return weight;
+		return this.getComponents().stream().mapToDouble((comp) -> comp.weight).sum();
 	}
 
 	default Mixture normalize() {
 		return this.concentrate(1/this.getTotalWeight());
+	}
+	
+	default Mixture quantize() {
+		OptionalDouble minorWeight = this.normalize().getComponents().stream().
+				mapToDouble((comp) -> comp.weight).min();
+		if (minorWeight.isPresent()) {
+			return this.concentrate(1 / Math.max(minorWeight.getAsDouble(), 0.1F));
+		} else {
+			return this;
+		}
 	}
 	
 	default IndustrialMaterial simplify() {
