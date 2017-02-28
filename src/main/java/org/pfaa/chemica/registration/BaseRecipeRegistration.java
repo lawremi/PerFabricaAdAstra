@@ -30,27 +30,4 @@ public class BaseRecipeRegistration {
 	public static ConversionRegistry getConversionRegistry() {
 		return CONVERSIONS;
 	}
-
-	protected static <T extends Enum<?> & IndustrialMaterial> void registerStackings(Class<T> materialType) {
-		if (materialType.isAssignableFrom(Aggregate.class)) {
-			for (IndustrialMaterial material : materialType.getEnumConstants()) {
-				if (((Aggregate)material).isLoose()) {
-					CONVERSIONS.register(Stacking.of(material).from(Forms.PILE).to(Forms.BLOCK));
-				}
-			}
-		} else {
-			for (IndustrialMaterial material : materialType.getEnumConstants()) {
-				Stacking stacking = Stacking.of(material);
-				if (material.isPure()) {
-					CONVERSIONS.register(stacking.from(Forms.DUST_TINY).to(Forms.DUST));
-				} else {
-					CONVERSIONS.register(stacking.from(Forms.DUST_IMPURE_TINY).to(Forms.DUST_IMPURE));
-				}
-				if (material.isForBuilding()) {
-					CONVERSIONS.register(stacking.from(Forms.NUGGET).to(Forms.INGOT));
-					CONVERSIONS.register(stacking.from(Forms.INGOT).to(Forms.BLOCK));
-				}
-			}
-		}
-	}
 }
