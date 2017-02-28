@@ -1,5 +1,10 @@
 package org.pfaa.chemica.model;
 
+/*
+ * Technically, vaporization refers to the conversion of a liquid to a gas.
+ * For convenience, we treat it more generally, as any conversion to a gas,
+ * with sublimation as a special case. 
+ */
 public class Vaporization implements Transition {
 	private int temperature;
 	private AntoineCoefficients antoineCoefficients;
@@ -50,8 +55,13 @@ public class Vaporization implements Transition {
 		}
 		// Langmuir's equation
 		public double getEvaporationRate(double temperature, double pressure, double molecularWeight) {
-			// rate is per unit area, which comes from the pressure units
+			// rate is per unit area, not clear what that is though
 			return (getVaporPressure(temperature) - pressure) * Math.sqrt(molecularWeight / (2*Math.PI*Constants.R*temperature));
 		}
+	}
+
+	@Override
+	public State getEndState() {
+		return State.GAS;
 	}
 }

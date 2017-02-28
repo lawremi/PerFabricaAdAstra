@@ -8,4 +8,6 @@ public interface Transition {
 	default Condition getCondition() {
 		return new Condition(this.getTemperature());
 	}
+	
+	State getEndState();
 }

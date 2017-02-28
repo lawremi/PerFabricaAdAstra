@@ -7,7 +7,13 @@ public class Fusion implements Transition {
 		this.temperature = temperature;
 	}
 
+	@Override
 	public int getTemperature() {
 		return temperature;
+	}
+
+	@Override
+	public State getEndState() {
+		return State.LIQUID;
 	}
 }
