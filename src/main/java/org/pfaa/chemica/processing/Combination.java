@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.State;
 
@@ -15,18 +16,15 @@ import com.google.common.collect.Lists;
 public class Combination extends ConditionedConversion implements MassTransfer {
 	private List<MaterialStoich<?>> inputs = Lists.newArrayList();
 	private List<MaterialStoich<?>> outputs = Lists.newArrayList();
-	
-	protected Combination(MaterialStoich<?>... materialStoichs) {
-		this.with(materialStoichs);
-	}
-	
-	protected Combination(List<MaterialStoich<?>> materialStoichs) {
-		this.with(materialStoichs);
-	}
+	private double energy;
 	
 	public Combination with(List<MaterialStoich<?>> inputs) {
 		this.inputs.addAll(inputs);
 		return this;
+	}
+	
+	public Combination with(float stoich, IndustrialMaterial input) {
+		return this.with(MaterialStoich.of(stoich, input));
 	}
 	
 	public Combination with(MaterialStoich<?>... inputs) {
@@ -52,7 +50,11 @@ public class Combination extends ConditionedConversion implements MassTransfer {
 	public Combination yields(IndustrialMaterial output) {
 		return this.yields(MaterialStoich.of(output));
 	}
-
+	
+	public Combination yields(MaterialState<?> output) {
+		return this.yields(MaterialStoich.of(output));
+	}
+	
 	@Override
 	public List<MaterialStoich<?>> getInputs() {
 		return Collections.unmodifiableList(this.inputs);
@@ -60,77 +62,77 @@ public class Combination extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	public List<MaterialStoich<?>> getOutputs() {
-		return this.outputs;
+		return Collections.unmodifiableList(this.outputs);
 	}
 
-	@Override
-	public double getEnergy() {
-		return 0;
-	}
-
-	@Override
-	public Condition getCondition() {
-		return Condition.STP;
-	}
-	
 	@Override
 	public Combination at(Condition condition) {
 		this.at(condition);
 		return this;
 	}
 	
-	/*
-	 * Allows a more intuitive syntax of e.g.
-	 *   Mixture.of(Compounds.CO2).with(State.gas.of(Compounds.H2O))...
-	 * Instead of having to specify the combination type, which is just state-based and thus redundant.
-	 * We could compute the type dynamically.
-	 * 
-	 * That's generally true of most conversions: we already have the state of the inputs and outputs.
-	 * 
-	 * By beginning the expression with the participants, the code is easier to read, since we
-	 * usually do not care about the actual type of conversion (it's implied). 
-	 * 
-	 *    EnthalpyChange.of(Compounds.H2O).boils()
-	 *    Separation.of(mixture).with(x).yields(a, b).via(Separation.Axis.SOLUBILITY)
-	 *    
-	 * Since every class will override getType(), the overrides can specify the return value,
-	 * and there is probably no need for generic types. All Type classes can be made internal again.
-	 */
+	@Override
+	public Form getOutputForm(Form inputForm) {
+		return inputForm.isGranular() ? inputForm : null;
+	}
 	
+	@Override
+	public double getEnergy() {
+		return this.energy;
+	}
+	
+	public Combination given(double energy) {
+		this.energy = energy;
+		return this;
+	}
+
 	public static Combination of(List<MaterialStoich<?>> inputs) {
-		return new Combination(inputs);
+		return new Combination().with(inputs);
+	}
+	
+	public static Combination of(IndustrialMaterial... inputs) {
+		return new Combination().with(inputs);
+	}
+	
+	public static Combination of(MaterialStoich<?>... inputs) {
+		return new Combination().with(inputs);
 	}
 	
 	public static Combination yielding(Mixture output) {
-		return new Combination( 
-				output.getComponents().stream().map(MaterialStoich::of).collect(Collectors.toList())).
-				yields(output);
+		return yielding(output.getStandardState().of(output));
 	}
-
+	
+	public static Combination yielding(MaterialState<? extends Mixture> output) {
+		List<MaterialStoich<?>> stoichs = output.material.quantize().getComponents().stream().
+				map((comp) -> MaterialStoich.of(comp, output.state)).
+				collect(Collectors.toList());
+		return of(stoichs).yields(output);
+	}
+	
 	@Override
 	public Type getType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public interface Type extends MassTransfer.Type { 
 		public State getContinuousState();
 		public State getDispersedState();
 		
 		// TODO: If continuous phase is water, and material is soluble, yield aqueous state.
-		public static enum CombinationTypes implements Type {
-			GAS(State.GAS, State.GAS),
-			LIQUID(State.LIQUID, State.LIQUID),
-			SOLID(State.SOLID, State.SOLID),
+		public static enum SimpleTypes implements Type {
+			GAS_MIXING(State.GAS, State.GAS),
+			LIQUID_MIXING(State.LIQUID, State.LIQUID),
+			SOLID_MIXING(State.SOLID, State.SOLID),
 			GAS_ABSORPTION(State.LIQUID, State.GAS),
 			LIQUID_ABSORPTION(State.SOLID, State.LIQUID),
-			SOLID_INTO_LIQUID(State.LIQUID, State.SOLID),
-			FLUIDIZATION(State.GAS, State.SOLID)
+			GAS_FLUIDIZATION(State.GAS, State.SOLID),
+			LIQUID_FLUIDIZATION(State.LIQUID, State.SOLID)
 			;
 
 			private State continuousState, dispersedState;
 			
-			private CombinationTypes(State continuousState, State dispersedState) {
+			private SimpleTypes(State continuousState, State dispersedState) {
 				this.continuousState = continuousState;
 				this.dispersedState = dispersedState;
 			}
