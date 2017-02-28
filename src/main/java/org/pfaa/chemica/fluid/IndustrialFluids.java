@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.pfaa.chemica.block.IndustrialFluidBlock;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Constants;
@@ -15,8 +16,10 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.StateProperties;
+import org.pfaa.chemica.processing.CanonicalForms;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.processing.MaterialStoich;
 
 import com.google.common.base.CaseFormat;
@@ -54,15 +57,15 @@ public class IndustrialFluids {
 		return new Condition(fluid.getTemperature(), Constants.STANDARD_PRESSURE);	
 	}
 	
-	public static Fluid getCanonicalFluid(IndustrialMaterial material) {
-		return getCanonicalFluid(material, null);
+	public static Fluid getFluid(IndustrialMaterial material) {
+		return getFluid(material, null);
 	}
 	
-	public static Fluid getCanonicalFluid(IndustrialMaterial material, State state) {
-		return getCanonicalFluid(material, state, null);
+	public static Fluid getFluid(IndustrialMaterial material, State state) {
+		return getFluid(material, state, null);
 	}
 	
-	public static Fluid getCanonicalFluid(IndustrialMaterial material, State state, String name) {
+	public static Fluid getFluid(IndustrialMaterial material, State state, String name) {
 		if (state == null) {
 			ConditionProperties props = material.getProperties(Condition.STP);
 			if (props == null) {
@@ -124,63 +127,74 @@ public class IndustrialFluids {
 		return (density <= Constants.AIR_DENSITY ? (density - Constants.AIR_DENSITY) : density) * 1000;
 	}
 	
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state) {
-		return getCanonicalFluidStack(material, state, getAmount(state, Forms.DUST));
+	public static FluidStack getFluidStack(IndustrialMaterial material, State state) {
+		return getFluidStack(material, state, getAmount(state, Forms.DUST));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, int amount) {
-		Fluid fluid = getCanonicalFluid(material, state);
+	public static FluidStack getFluidStack(IndustrialMaterial material, State state, int amount) {
 		if (material instanceof Mixture) {
-			/*
-			 * Since we have a fixed ratio between mol and volume (1 mol per 144 mB),
-			 * we should treat mixture weights as molar fractions. To preserve that
-			 * when the total weight != 1, we need to scale the amount.
-			 */
 			Mixture mixture = (Mixture)material;
-			amount *= mixture.getTotalWeight();
-			material = mixture.normalize().simplify();
+			if (mixture.getComponents().size() == 0 && state == State.AQUEOUS) {
+				material = Compounds.H2O;
+			} else {
+				/*
+				 * Since we have a fixed ratio between mol and volume (1 mol per 144 mB),
+				 * we should treat mixture weights as molar fractions. To preserve that
+				 * when the total weight != 1, we need to scale the amount, and then normalize.
+				 */
+				amount *= mixture.getTotalWeight();
+				material = mixture.normalize().simplify();
+			}
 		}
+		Fluid fluid = getFluid(material, state);
 		return fluid == null ? null : new FluidStack(fluid, amount);
 	}
 	
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, Form form) {
-		return getCanonicalFluidStack(material, getAmount(form));
+	public static FluidStack getFluidStack(IndustrialMaterial material, Form form) {
+		return getFluidStack(material, getAmount(form));
 	}
 
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, int amount) {
-		return getCanonicalFluidStack(material, null, amount);
+	public static FluidStack getFluidStack(IndustrialMaterial material, int amount) {
+		return getFluidStack(material, null, amount);
 	}
 
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material) {
-		return getCanonicalFluidStack(material, getAmount(Forms.DUST));
+	public static FluidStack getFluidStack(IndustrialMaterial material) {
+		return getFluidStack(material, getAmount(Forms.DUST));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(IndustrialMaterial material, State state, Form form) {
-		return getCanonicalFluidStack(material, state, getAmount(state, form));
+	public static FluidStack getFluidStack(IndustrialMaterial material, State state, Form form) {
+		return getFluidStack(material, state, getAmount(state, form));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(MixtureComponent comp, State state, Form form) {
-		return getCanonicalFluidStack(comp.material, state, (int)(getAmount(form) * comp.weight));
+	public static FluidStack getFluidStack(MixtureComponent comp, State state, Form form) {
+		return getFluidStack(comp.material, state, (int)(getAmount(form) * comp.weight));
 	}
 	
-	public static FluidStack getCanonicalFluidStack(MaterialStoich<?> spec) {
-		return getCanonicalFluidStack(spec, Forms.DUST);
+	public static FluidStack getFluidStack(MaterialStoich<?> spec) {
+		return getFluidStack(spec, Forms.DUST);
 	}
 	
-	public static FluidStack getCanonicalFluidStack(MaterialStoich<?> spec, Form form) {
-		IndustrialMaterial solute = spec.material();
+	public static FluidStack getFluidStack(MaterialStoich<?> spec, Form form) {
+		IndustrialMaterial material = spec.material();
 		State state = spec.state();
 		float amount = spec.stoich * getAmount(state, form);
-		return getCanonicalFluidStack(solute, state, (int)amount);
+		return getFluidStack(material, state, (int)amount);
 	}
-	
+
+	public static FluidStack getFluidStack(MaterialStack stack) {
+		IndustrialMaterial material = stack.getMaterial();
+		State state = stack.getState();
+		float amount = stack.getSize() * getAmount(state, stack.getForm());
+		return getFluidStack(material, state, (int)amount);
+	}
+
 	public static Block getBlock(IndustrialMaterial material, State state, String name) {
-		Fluid fluid = IndustrialFluids.getCanonicalFluid(material, state, name);
+		Fluid fluid = IndustrialFluids.getFluid(material, state, name);
 		return getBlock(fluid);
 	}
 	
 	public static Block getBlock(IndustrialMaterial material) {
-		Fluid fluid = IndustrialFluids.getCanonicalFluid(material);
+		Fluid fluid = IndustrialFluids.getFluid(material);
 		return getBlock(fluid);
 	}
 
@@ -246,13 +260,13 @@ public class IndustrialFluids {
 
 	public static List<FluidStack> getFluidStacks(List<MaterialStoich<?>> stoichs) {
 		return stoichs.stream().
-				map(IndustrialFluids::getCanonicalFluidStack).
+				map(IndustrialFluids::getFluidStack).
 				collect(Collectors.toList());
 	}
 	
 	public static List<FluidStack> getFluidStacks(Mixture.Phases sep) {
 		return Arrays.asList(
-				IndustrialFluids.getCanonicalFluidStack(sep.liquid, State.LIQUID),
-				IndustrialFluids.getCanonicalFluidStack(sep.gas, State.GAS));
+				IndustrialFluids.getFluidStack(sep.liquid, State.LIQUID),
+				IndustrialFluids.getFluidStack(sep.gas, State.GAS));
 	}
 }
