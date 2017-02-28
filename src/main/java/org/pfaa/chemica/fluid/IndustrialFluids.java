@@ -74,7 +74,10 @@ public class IndustrialFluids {
 			state = props.state;
 		}
 		if (state == State.SOLID) {
-			 return null;
+			return null;
+		}
+		if (state == State.LIQUID && CanonicalForms.of(material).contains(Forms.STONE)) {
+			return FluidRegistry.LAVA;
 		}
 		Condition condition = material.getCanonicalCondition(state);
 		if (condition == null) {
