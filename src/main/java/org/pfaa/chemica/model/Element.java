@@ -6,9 +6,9 @@ import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
+import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Formula.PartFactory;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
-import org.pfaa.chemica.model.Vaporization.AntoineCoefficients;
 
 public enum Element implements Chemical, PartFactory, Metal {
 	
@@ -158,7 +158,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 				     new Hazard(3, 3, 2, SpecialCode.WATER_REACTIVE)), 
 		   new Fusion(337), 
 		   new Liquid(0.828, new Thermo(40.3, -30.5, 26.5, -5.73, -0.0635, -8.81, 128)), 
-		   new Vaporization(new AntoineCoefficients(4.46, 4692, 24.2)),
+		   new Vaporization(4.46, 4692, 24.2),
 		   new Gas(new Thermo(20.7, 0.392, -0.417, 0.146, 0.00376, 82.8, 185)
 		           .addSegment(1800, 58.7, -27.4, 6.73, -0.421, -25.9, 32.4, 198))),
 		Ca("calcium", Category.ALKALINE_EARTH_METAL, Strength.WEAK, 40.1, +2, 
@@ -167,7 +167,7 @@ public enum Element implements Chemical, PartFactory, Metal {
 				     new Hazard(3, 1, 2, SpecialCode.WATER_REACTIVE)), 
 		   new Fusion(1115), 
 		   new Liquid(1.38, new Thermo(7.79, 45.5, 35.0)), 
-		   new Vaporization(new AntoineCoefficients(2.78, 3121, -595)),
+		   new Vaporization(2.78, 3121, -595),
 		   new Gas(new Thermo(122, -75, 19.2, -1.40, -64.5, 42.2, 217))),
 		// Skipped Sc
 		Ti("titanium", Category.TRANSITION_METAL, Strength.STRONG, 47.9, +4,
