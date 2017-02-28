@@ -113,7 +113,14 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
+		for (Type type : Types.values()) {
+			if (this.axis == type.getSeparationAxis() && 
+				this.input.state.ofMatter() == type.getInputState() &&
+				(this.agent != null || type.getAddedState() == null) &&
+				(this.agent == null || this.agent.state.ofMatter() == type.getAddedState()) &&
+				(this.separated.state.ofMatter() == type.getSeparatedState()))
+				return type;
+		}
 		return null;
 	}
 	
