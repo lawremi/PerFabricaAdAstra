@@ -35,9 +35,9 @@ public class ChemicaItems implements ItemCatalog {
 			new IndustrialMaterialItem<Compounds>(Forms.DUST_TINY, Compounds.class);
 	
 	public static final IndustrialMaterialItem<Element> ELEMENT_INGOT = 
-			new IndustrialMaterialItem<Element>(Forms.INGOT, Element.class, Element::isForBuilding);
+			new IndustrialMaterialItem<Element>(Forms.INGOT, Element.class, Element::isMetallic);
 	public static final IndustrialMaterialItem<Element> ELEMENT_NUGGET = 
-			new IndustrialMaterialItem<Element>(Forms.NUGGET, Element.class, Element::isForBuilding);
+			new IndustrialMaterialItem<Element>(Forms.NUGGET, Element.class, Element::isMetallic);
 	
 	public static final IndustrialMaterialItem<Alloys> ALLOY_INGOT = 
 			new IndustrialMaterialItem<Alloys>(Forms.INGOT, Alloys.class);
