@@ -8,17 +8,17 @@ import static org.pfaa.chemica.model.Ion.Ions.Ba;
 import static org.pfaa.chemica.model.Ion.Ions.Be;
 import static org.pfaa.chemica.model.Ion.Ions.Bi;
 import static org.pfaa.chemica.model.Ion.Ions.Br;
+import static org.pfaa.chemica.model.Ion.Ions.CO3;
 import static org.pfaa.chemica.model.Ion.Ions.Ca;
 import static org.pfaa.chemica.model.Ion.Ions.Cd;
 import static org.pfaa.chemica.model.Ion.Ions.Ce;
 import static org.pfaa.chemica.model.Ion.Ions.Cl;
 import static org.pfaa.chemica.model.Ion.Ions.Co;
 import static org.pfaa.chemica.model.Ion.Ions.Cr;
-import static org.pfaa.chemica.model.Ion.Ions.CrO4;
 import static org.pfaa.chemica.model.Ion.Ions.Cr2O7;
+import static org.pfaa.chemica.model.Ion.Ions.CrO4;
 import static org.pfaa.chemica.model.Ion.Ions.Cs;
 import static org.pfaa.chemica.model.Ion.Ions.Cu;
-import static org.pfaa.chemica.model.Ion.Ions.CO3;
 import static org.pfaa.chemica.model.Ion.Ions.F;
 import static org.pfaa.chemica.model.Ion.Ions.Fe_2;
 import static org.pfaa.chemica.model.Ion.Ions.Fe_3;
@@ -31,10 +31,10 @@ import static org.pfaa.chemica.model.Ion.Ions.Li;
 import static org.pfaa.chemica.model.Ion.Ions.Mg;
 import static org.pfaa.chemica.model.Ion.Ions.Mn;
 import static org.pfaa.chemica.model.Ion.Ions.Mo;
+import static org.pfaa.chemica.model.Ion.Ions.NH4;
 import static org.pfaa.chemica.model.Ion.Ions.NO3;
 import static org.pfaa.chemica.model.Ion.Ions.Na;
 import static org.pfaa.chemica.model.Ion.Ions.NbO3;
-import static org.pfaa.chemica.model.Ion.Ions.NH4;
 import static org.pfaa.chemica.model.Ion.Ions.Ni;
 import static org.pfaa.chemica.model.Ion.Ions.O;
 import static org.pfaa.chemica.model.Ion.Ions.OH;
@@ -42,11 +42,11 @@ import static org.pfaa.chemica.model.Ion.Ions.PO4;
 import static org.pfaa.chemica.model.Ion.Ions.Pb;
 import static org.pfaa.chemica.model.Ion.Ions.S;
 import static org.pfaa.chemica.model.Ion.Ions.S2;
+import static org.pfaa.chemica.model.Ion.Ions.SO4;
 import static org.pfaa.chemica.model.Ion.Ions.Sb;
+import static org.pfaa.chemica.model.Ion.Ions.Si2O5;
 import static org.pfaa.chemica.model.Ion.Ions.SiO3;
 import static org.pfaa.chemica.model.Ion.Ions.SiO4;
-import static org.pfaa.chemica.model.Ion.Ions.Si2O5;
-import static org.pfaa.chemica.model.Ion.Ions.SO4;
 import static org.pfaa.chemica.model.Ion.Ions.Sn;
 import static org.pfaa.chemica.model.Ion.Ions.Sr;
 import static org.pfaa.chemica.model.Ion.Ions.Ta2O6;
@@ -58,8 +58,6 @@ import static org.pfaa.chemica.model.Ion.Ions.WO4;
 import static org.pfaa.chemica.model.Ion.Ions.Zn;
 import static org.pfaa.chemica.model.Ion.Ions.Zr;
 
-import static org.pfaa.chemica.model.Ion.Ions;
-
 import java.awt.Color;
 
 import org.pfaa.chemica.model.ChemicalStateProperties.Gas;
@@ -68,6 +66,7 @@ import org.pfaa.chemica.model.ChemicalStateProperties.Liquid;
 import org.pfaa.chemica.model.ChemicalStateProperties.Liquid.Yaws;
 import org.pfaa.chemica.model.ChemicalStateProperties.Solid;
 import org.pfaa.chemica.model.Hazard.SpecialCode;
+import org.pfaa.chemica.model.Ion.Ions;
 
 /* A compound is a type of chemical resulting from the combination of different 
  * atoms according to a fixed stoichiometry.
@@ -672,7 +671,7 @@ public interface Compound extends Chemical {
 					  new Hazard(1, 0, 0)), 
 		    new Fusion(3140),
 		    new Liquid(new Thermo(100))),
-		V2O5(new Formula(V, O.__(5)), null, 
+		V2O5(new Formula(V.__(2), O.__(5)), null, 
 				new Solid(Color.yellow, 3.36, 
 						  new Thermo(162, 33.3, -12.9, 5.13, -3.58, -1612, 297), 
 						  new Hazard(3, 0, 0)), 
