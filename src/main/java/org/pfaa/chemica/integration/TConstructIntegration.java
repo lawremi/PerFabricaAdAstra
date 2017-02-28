@@ -40,7 +40,7 @@ public class TConstructIntegration {
 			} else {
 				ItemStack blockStack = IndustrialItems.getBestItemStack(Forms.BLOCK, itemStack);
 				if (blockStack == null) {
-					blockStack = IndustrialItems.getBestItemStack("ore", itemStack);
+					blockStack = IndustrialItems.getBestItemStack(Forms.ORE, itemStack);
 				}
 				if (blockStack == null) {
 					blockStack = IndustrialItems.getBestItemStack(Forms.BLOCK, IndustrialFluids.getMaterial(fluid.getFluid()));
