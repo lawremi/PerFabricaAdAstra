@@ -2,12 +2,15 @@ package org.pfaa.chemica.processing;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Transition;
+import org.pfaa.chemica.processing.Form.Forms;
 
 /* Currently, we only model state changes */
 public class EnthalpyChange implements UnitOperation {
@@ -49,14 +52,28 @@ public class EnthalpyChange implements UnitOperation {
 	@Override
 	public Condition getCondition() {
 		Transition transition;
-		if (this.type.getInputState() == State.SOLID || this.type.getOutputState() == State.SOLID) {
-			transition = this.material.getFusion();
-		} else {
+		if (this.type.getInputState() == State.GAS || this.type.getOutputState() == State.GAS) {
 			transition = this.material.getVaporization();
+		} else {
+			transition = this.material.getFusion();
 		}
 		return transition == null ? null : transition.getCondition();
 	}
-	
+
+	@Override
+	public Stream<Form> getOutputForms(Form inputForm) {
+		Type type = this.getType();
+		if (type.getAxis() != Type.Axis.STATE) {
+			return Stream.empty();
+		} 
+		if (type.getOutputState() == State.SOLID) {
+			Set<Form> forms = CanonicalForms.of(this.getMaterial());
+			Form irregular = forms.contains(Forms.NUGGET) ? Forms.NUGGET : Forms.DUST_TINY; 
+			return Stream.concat(Stream.of(irregular), forms.stream().filter(Form::isRegular));
+		}
+		return Stream.of(inputForm);
+	}
+
 	@Override
 	public Type getType() {
 		return this.type;

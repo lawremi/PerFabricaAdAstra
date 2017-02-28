@@ -10,10 +10,6 @@ import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
 
-/*
- * FIXME: Do we really need this, outside of Reaction (and its Term)?
- *        Most conversions are 1-to-1. Mixing already specifies the composition of the product.
- */
 public class MaterialStoich<T extends IndustrialMaterial> {
 	public final MaterialState<T> materialState;
 	public final float stoich;
@@ -48,11 +44,19 @@ public class MaterialStoich<T extends IndustrialMaterial> {
 	}
 
 	public static <T extends IndustrialMaterial> List<MaterialStoich<T>> of(@SuppressWarnings("unchecked") T... materials) {
-		return Arrays.asList(materials).stream().map(MaterialStoich::of).collect(Collectors.toList());
+		return of(Arrays.asList(materials));
 	}
 
+	public static <T extends IndustrialMaterial> List<MaterialStoich<T>> of(List<T> materials) {
+		return materials.stream().map(MaterialStoich::of).collect(Collectors.toList());
+	}
+	
 	public static MaterialStoich<IndustrialMaterial> of(MixtureComponent comp) {
 		return of((float)comp.weight, comp.material);
+	}
+	
+	public static MaterialStoich<IndustrialMaterial> of(MixtureComponent comp, State state) {
+		return of((float)comp.weight, state.of(comp.material));
 	}
 	
 	public T material() {
@@ -61,5 +65,9 @@ public class MaterialStoich<T extends IndustrialMaterial> {
 
 	public State state() {
 		return this.materialState.state;
+	}
+
+	public MaterialStoich<T> scale(float f) {
+		return new MaterialStoich<T>(this.materialState, this.stoich * f);
 	}
 }

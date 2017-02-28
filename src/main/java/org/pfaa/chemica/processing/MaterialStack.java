@@ -1,77 +1,64 @@
-package org.pfaa.chemica.item;
+package org.pfaa.chemica.processing;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.fluid.IndustrialFluids;
+import org.pfaa.chemica.item.IndustrialItems;
+import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.model.MaterialState;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.OreDictUtils;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 public class MaterialStack implements IngredientStack {
 	private Form form;
-	private IndustrialMaterial material;
+	private MaterialState<?> materialState;
 	private int size;
+	private float chance;
 	
-	public MaterialStack(Form form, IndustrialMaterial material, int size) {
-		super();
+	public MaterialStack(int size, MaterialState<?> materialState, Form form, float chance) {
 		this.form = form;
-		this.material = material;
+		this.materialState = materialState;
 		this.size = size;
-	}
-	
-	public MaterialStack(Form form, IndustrialMaterial material) {
-		this(form, material, 1);
+		this.chance = chance;
 	}
 
-	public MaterialStack(IndustrialMaterial material) {
-		this(material, 1);
-	}
-	
-	public MaterialStack(IndustrialMaterial material, int size) {
-		this(Forms.DUST, material, size);
-	}
-	
-	public MaterialStack(Form form, Term term) {
-		this(form, term.material(), (int)term.stoich);
-	}
-	
 	public Form getForm() {
 		return this.form;
 	}
 	
 	public IndustrialMaterial getMaterial() {
-		return this.material;
+		return this.materialState.material;
 	}
 
-	private Function<ItemStack, ItemStack> resizeItemStack = new Function<ItemStack, ItemStack>() {
-		@Override
-		public ItemStack apply(ItemStack input) {
-			input = input.copy();
-			input.stackSize = MaterialStack.this.size;
-			return input;
-		}
-	};
+	public State getState() {
+		return this.materialState.state;
+	}
 	
 	public String getOreDictKey() {
-		return OreDictUtils.makeKey(this.form, this.material);
+		return OreDictUtils.makeKey(this.form, this.getMaterial());
 	}
 	
 	public Set<ItemStack> getItemStacks() {
-		List<ItemStack> itemStacks = IndustrialItems.getItemStacks(this.form, this.material);
-		itemStacks = Lists.transform(itemStacks, resizeItemStack);
+		List<ItemStack> itemStacks = IndustrialItems.getItemStacks(this);
 		return Sets.newHashSet(itemStacks);
 	}
 	
 	public boolean hasItemStack() {
 		return !this.getItemStacks().isEmpty();
+	}
+
+	public float getChance() {
+		return this.chance;
 	}
 
 	@Override
@@ -80,29 +67,67 @@ public class MaterialStack implements IngredientStack {
 	}
 
 	public ItemStack getBestItemStack() {
-		Set<ItemStack> itemStacks = this.getItemStacks();
-		for (ItemStack itemStack : itemStacks) {
-			if (itemStack.getItem() instanceof IndustrialMaterialItem) {
-				return itemStack;
-			}
-		}
-		return itemStacks.size() > 0 ? itemStacks.iterator().next() : null;
+		return IndustrialItems.getBestItemStack(this);
 	}
 
+	public FluidStack getFluidStack() {
+		return IndustrialFluids.getFluidStack(this);
+	}
+	
 	@Override
 	public Object getCraftingIngredient() {
 		return this.getOreDictKey();
 	}
 	
 	public static MaterialStack of(IndustrialMaterial material) {
-		return new MaterialStack(material);
+		return of(material, null);
 	}
 	
 	public static MaterialStack of(IndustrialMaterial material, Form form) {
-		return new MaterialStack(form, material);
+		return of(1, material, form);
+	}
+	
+	public static MaterialStack of(MaterialState<?> materialState, Form form) {
+		return of(1, materialState, form);
 	}
 	
 	public static MaterialStack of(int size, IndustrialMaterial material, Form form) {
-		return new MaterialStack(form, material, size);
+		return of(size, material.getStandardState().of(material), form);
+	}
+	
+	public static MaterialStack of(int size, MaterialState<?> materialState, Form form) {
+		return of(size, materialState, form, 1F);
+	}
+
+	public static MaterialStack of(int size, MaterialState<?> materialState, Form form, float chance) {
+		return new MaterialStack(size, materialState, form, chance);
+	}
+	
+	public static MaterialStack of(MaterialStoich<?> stoich, Form form) {
+		float weight = stoich.stoich;
+		if (stoich.state().isFluid()) {
+			weight *= form.scaleTo(Forms.MILLIBUCKET);
+			form = Forms.MILLIBUCKET;
+		}
+		while (weight < 1) {
+			Form unstacked = form.unstack();
+			if (unstacked == null) {
+				break;
+			}
+			weight *= unstacked.getNumberPerBlock() / form.getNumberPerBlock();
+			form = unstacked;
+		}
+		Form stacked;
+		double ratio;
+		while((stacked = form.stack()) != null && 
+				Math.rint(weight) >= (ratio = form.getNumberPerBlock()/stacked.getNumberPerBlock())) {
+			weight /= ratio;
+			form = stacked;
+		}
+		return of((int)Math.max(Math.rint(weight), 1), stoich.state().of(stoich.material()), form, Math.min(weight, 1F));
+	}
+
+	public static List<MaterialStack> of(Stream<MaterialStoich<?>> stoichs, Form form) {
+		return stoichs.map((stoich) -> of(stoich, form)).collect(Collectors.toList());
 	}
 }
