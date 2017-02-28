@@ -65,7 +65,7 @@ public class RecipeUtils {
 	private static final float BLOCK_WEIGHT = 2.0F;
 	
 	private static WeightScale getScaleForForm(Form form) {
-		if (form == Forms.DUST_TINY) { // FIXME: also include DUST_IMPURE_TINY? 
+		if (form == Forms.DUST_TINY || form == Forms.DUST_IMPURE_TINY) { 
 			return new WeightScale(TINY_DUST_WEIGHT);
 		} else if (form == Forms.BLOCK) {
 			return new WeightScale(BLOCK_WEIGHT);
