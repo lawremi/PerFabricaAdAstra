@@ -95,9 +95,9 @@ public class ForestryIntegration {
 			}
 
 			@Override
-			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
+			public void registerMixingRecipe(IngredientList<?> inputs, FluidStack additive, FluidStack fluidInput2, 
 					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-					Condition condition, IngredientList catalysts) {
+					Condition condition, IngredientList<?> catalysts) {
 				if (liquidOutput != null)
 					return;
 				ForestryRecipeRegistry.this.registerMixingRecipe(

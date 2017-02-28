@@ -396,9 +396,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void convertBentonite() {
-		IngredientList inputs = new IngredientList(
-				new MaterialStack(Forms.CLUMP, GeoMaterial.CALCIUM_BENTONITE),
-				new MaterialStack(Compounds.Na2CO3));
+		IngredientList<MaterialStack> inputs = IngredientList.of(
+				Forms.CLUMP.of(GeoMaterial.CALCIUM_BENTONITE),
+				Forms.DUST.of(Compounds.Na2CO3));
 		GENERICS.registerMixingRecipe(inputs, GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.SODIUM_BENTONITE));
 	}
 	

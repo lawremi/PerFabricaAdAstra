@@ -5,7 +5,7 @@ import java.util.List;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -15,8 +15,8 @@ public interface GenericRecipeRegistry {
 	public void registerCastingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
 	public void registerSmeltingRecipe(ItemStack input, ItemStack output, IngredientStack flux, int temp);
 	public void registerSmeltingRecipe(ItemStack input, FluidStack output, IngredientStack flux, int temp);
-	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp);
-	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts);
-	public void registerMixingRecipe(IngredientList inputs, ItemStack output);
+	public void registerRoastingRecipe(IngredientList<?> inputs, ItemStack output, FluidStack gas, int temp);
+	public void registerMixingRecipe(IngredientList<?> solidInputs, FluidStack fluidInput, FluidStack fluidInput2, 
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList<?> catalysts);
+	public void registerMixingRecipe(IngredientList<?> inputs, ItemStack output);
 }

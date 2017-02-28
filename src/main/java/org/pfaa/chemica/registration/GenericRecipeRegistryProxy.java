@@ -7,7 +7,7 @@ import java.util.Set;
 import org.pfaa.chemica.item.IngredientStack;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,7 +46,7 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp) {
+	public void registerRoastingRecipe(IngredientList<?> inputs, ItemStack output, FluidStack gas, int temp) {
 		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
 			delegate.registerRoastingRecipe(itemStacks, output, gas, temp);
 		}
@@ -61,8 +61,8 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts) {
+	public void registerMixingRecipe(IngredientList<?> solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList<?> catalysts) {
 		for (List<ItemStack> itemStacks : solidInputs.getItemStackLists()) {
 			delegate.registerMixingRecipe(itemStacks, fluidInput, fluidInput2, 
 					solidOutput, liquidOutput, gasOutput, condition, 
@@ -71,7 +71,7 @@ public class GenericRecipeRegistryProxy implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
+	public void registerMixingRecipe(IngredientList<?> inputs, ItemStack output) {
 		for (List<ItemStack> itemStacks : inputs.getItemStackLists()) {
 			delegate.registerMixingRecipe(itemStacks, output);
 		}

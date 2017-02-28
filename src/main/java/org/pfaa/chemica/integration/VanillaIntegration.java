@@ -113,16 +113,16 @@ public class VanillaIntegration {
 			}
 
 			@Override
-			public void registerMixingRecipe(IngredientList inputs, FluidStack additive, FluidStack fluidInput2, 
+			public void registerMixingRecipe(IngredientList<?> inputs, FluidStack additive, FluidStack fluidInput2, 
 					ItemStack output, FluidStack liquidOutput, FluidStack gasOutput, 
-					Condition condition, IngredientList catalysts) {
+					Condition condition, IngredientList<?> catalysts) {
 				VanillaRecipeRegistry.this.registerMixingRecipe(
 						inputs.getCraftingIngredients().toArray(), additive, fluidInput2, output, liquidOutput, condition, 
 						catalysts == null ? null : catalysts.getItemStacks());
 			}
 
 			@Override
-			public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
+			public void registerMixingRecipe(IngredientList<?> inputs, ItemStack output) {
 				VanillaRecipeRegistry.this.registerMixingRecipe(inputs.getCraftingIngredients().toArray(), output);
 			}
 			

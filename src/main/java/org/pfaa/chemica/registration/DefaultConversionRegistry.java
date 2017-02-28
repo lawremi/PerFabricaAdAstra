@@ -150,18 +150,18 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 			return;
 		}
 		FluidStack gas = this.getProductFluidStack(form, reaction, State.GAS);
-		IngredientList inputs = this.getSolidReactants(form, reaction);
+		IngredientList<MaterialStack> inputs = this.getSolidReactants(form, reaction);
 		int temp = reaction.getCondition().temperature;
 		genericDelegate.registerRoastingRecipe(inputs, output, gas, temp);
 	}
 	
-	private IngredientList getSolidReactants(Form form, Reaction reaction) {
+	private IngredientList<MaterialStack> getSolidReactants(Form form, Reaction reaction) {
 		List<Term> reactants = reaction.getReactants(State.SOLID);
-		List<IngredientStack> stacks = Lists.newArrayListWithCapacity(reactants.size());
+		List<MaterialStack> stacks = Lists.newArrayListWithCapacity(reactants.size());
 		for (Term reactant : reactants) {
-			stacks.add(new MaterialStack(form, reactant.material(), (int)reactant.stoich));
+			stacks.add(form.of(reactant));
 		}
-		return new IngredientList(stacks);
+		return IngredientList.of(stacks);
 	}
 	
 	private ItemStack getProductItemStack(Form form, Reaction reaction) {
@@ -186,11 +186,11 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 	}
 
 	private FluidStack getProductFluidStack(Form form, Reaction reaction, State state) {
-		return IndustrialFluids.getCanonicalFluidStack(reaction.getProduct(state), state, form);
+		return IndustrialFluids.getFluidStack(reaction.getProduct(state), state, form);
 	}
 	
 	private void registerReaction(Form form, Reaction reaction) {
-		IngredientList solidReactants = this.getSolidReactants(form, reaction);
+		IngredientList<MaterialStack> solidReactants = this.getSolidReactants(form, reaction);
 		FluidStack fluidReactantA, fluidReactantB = null;
 		if (solidReactants.size() > 0) 
 			fluidReactantA = this.getReactantFluidStacks(form, reaction, 1).get(0);
@@ -203,14 +203,14 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		ItemStack solidProduct = this.getProductItemStack(form, reaction);
 		FluidStack liquidProduct = this.getProductFluidStack(form, reaction, State.LIQUID);
 		FluidStack gasProduct = this.getProductFluidStack(form, reaction, State.GAS);
-		IngredientList catalyst = this.getCatalysts(reaction);
+		IngredientList<MaterialStack> catalyst = this.getCatalysts(reaction);
 		genericDelegate.registerMixingRecipe(solidReactants, fluidReactantA, fluidReactantB, 
 				solidProduct, liquidProduct, gasProduct, 
 				reaction.getCondition(), catalyst);
 	}
 	
-	private IngredientList getCatalysts(Reaction reaction) {
-		return new IngredientList(reaction.getCatalysts().toArray(new IndustrialMaterial[0]));
+	private IngredientList<MaterialStack> getCatalysts(Reaction reaction) {
+		return IngredientList.of(reaction.getCatalysts().stream().map(Forms.DUST::of).collect(Collectors.toList()));
 	}
 
 	private List<FluidStack> getReactantFluidStacks(Form form, Reaction reaction, int maxCount) {
@@ -242,10 +242,10 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 				Mixture outputMixture = new SimpleMixture(compA).mix(compB);
 				boolean alreadyRegistered = FluidRegistry.isFluidRegistered(outputMixture.getOreDictKey());
 				if (!alreadyRegistered) {
-					FluidStack inputA = IndustrialFluids.getCanonicalFluidStack(compA, state, Forms.DUST_TINY);
-					FluidStack inputB = IndustrialFluids.getCanonicalFluidStack(compB, state, Forms.DUST_TINY);
-					FluidStack output = IndustrialFluids.getCanonicalFluidStack(outputMixture, state, Forms.DUST_TINY);
-					genericDelegate.registerMixingRecipe(new IngredientList(), inputA, inputB, null, output, 
+					FluidStack inputA = IndustrialFluids.getFluidStack(compA, state, Forms.DUST_TINY);
+					FluidStack inputB = IndustrialFluids.getFluidStack(compB, state, Forms.DUST_TINY);
+					FluidStack output = IndustrialFluids.getFluidStack(outputMixture, state, Forms.DUST_TINY);
+					genericDelegate.registerMixingRecipe(new IngredientList<MaterialStack>(), inputA, inputB, null, output, 
 							null, Condition.STP, null);
 				}
 				return new MixtureComponent(outputMixture, 1.0F);

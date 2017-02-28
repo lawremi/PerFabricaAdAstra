@@ -43,7 +43,7 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerRoastingRecipe(IngredientList inputs, ItemStack output, FluidStack gas, int temp) {
+	public void registerRoastingRecipe(IngredientList<?> inputs, ItemStack output, FluidStack gas, int temp) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerRoastingRecipe(inputs, output, gas, temp);
 		}
@@ -58,8 +58,8 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(IngredientList solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
-			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList catalysts) {
+	public void registerMixingRecipe(IngredientList<?> solidInputs, FluidStack fluidInput, FluidStack fluidInput2,
+			ItemStack solidOutput, FluidStack liquidOutput, FluidStack gasOutput, Condition condition, IngredientList<?> catalysts) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
 					solidOutput, liquidOutput, gasOutput, condition, catalysts);
@@ -67,7 +67,7 @@ public class CombinedGenericRecipeRegistry implements GenericRecipeRegistry {
 	}
 
 	@Override
-	public void registerMixingRecipe(IngredientList inputs, ItemStack output) {
+	public void registerMixingRecipe(IngredientList<?> inputs, ItemStack output) {
 		for (GenericRecipeRegistry registry : this.registries.values()) {
 			registry.registerMixingRecipe(inputs, output);
 		}
