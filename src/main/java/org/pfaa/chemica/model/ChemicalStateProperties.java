@@ -139,7 +139,7 @@ public class ChemicalStateProperties extends StateProperties {
 		}
 		
 		private static double getDensity(Condition condition, double molarMass) {
-			return (molarMass * condition.pressure) / (Constants.R * condition.temperature) / 1E6;
+			return (molarMass * condition.pressure) / (Constants.R * condition.temperature) / 1E3;
 		}
 
 		@Override

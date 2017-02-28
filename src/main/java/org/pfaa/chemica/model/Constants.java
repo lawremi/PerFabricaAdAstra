@@ -11,7 +11,7 @@ public interface Constants {
 	 */
 	public final static float STANDARD_SOLUTE_WEIGHT = 0.1F;
 	
-	public final static double R = 0.008314; /* (m^3*kPa) / (K*mol) */
+	public final static double R = 8.314; /* J / (K/mol), or 1000 * (m^3*kPa) / (K*mol) */
 	public final static double AIR_DENSITY = 0.001225;
 	
 	public final static double FLESH_IGNITION_TEMPERATURE = 1000;
