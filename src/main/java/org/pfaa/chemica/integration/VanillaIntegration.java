@@ -35,7 +35,7 @@ public class VanillaIntegration {
 		}
 
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {
 			int ironFusionTemp = Element.Fe.getFusion().getTemperature();
 			if (temp <= ironFusionTemp && flux == null) {
 				FurnaceRecipes.smelting().func_151394_a(input, output, 0);

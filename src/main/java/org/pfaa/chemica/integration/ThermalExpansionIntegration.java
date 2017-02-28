@@ -6,7 +6,7 @@ import java.util.Set;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cpw.mods.fml.common.Loader;
@@ -53,12 +53,12 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
-			int energy = RecipeCostUtils.rfFromTemperature(temp);
+		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {
+			int rf = RecipeCostUtils.rfFromTemperature(temp);
 			if (flux != null) {
-				ThermalExpansionHelper.addSmelterRecipe(energy, input, flux, output, null);
+				ThermalExpansionHelper.addSmelterRecipe(rf, input, flux, output, null);
 			} else {
-				ThermalExpansionHelper.addFurnaceRecipe(energy, input, output);
+				ThermalExpansionHelper.addFurnaceRecipe(rf, input, output);
 			}
 		}
 
@@ -77,12 +77,12 @@ public class ThermalExpansionIntegration {
 		}
 
 		@Override
-		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {
+		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp, int energy) {
 			if (solutes.size() > 1) {
 				return;
 			}
-			int energy = RecipeCostUtils.rfFromTemperature(temp) * output.stackSize;
-			ThermalExpansionHelper.addSmelterRecipe(energy, base, solutes.get(0), output, null);
+			int rf = RecipeCostUtils.rfFromTemperature(temp) * output.stackSize;
+			ThermalExpansionHelper.addSmelterRecipe(rf, base, solutes.get(0), output, null);
 		}
 
 		@Override

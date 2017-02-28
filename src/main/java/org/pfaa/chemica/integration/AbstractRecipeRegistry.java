@@ -9,7 +9,7 @@ import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.RecipeRegistry;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	
 	@Override
-	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {}
+	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {}
 
 	@Override
 	public void registerCastingRecipe(FluidStack input, ItemStack output) {}
@@ -38,7 +38,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerCoolingRecipe(FluidStack input, FluidStack output, int heat) {}
 
 	@Override
-	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {}
+	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int energy) {}
 
 	@Override
 	public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {}
@@ -57,7 +57,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {}
+	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp, int energy) {}
 
 	@Override
 	public void registerAlloyingRecipe(FluidStack output, List<FluidStack> inputs) {}

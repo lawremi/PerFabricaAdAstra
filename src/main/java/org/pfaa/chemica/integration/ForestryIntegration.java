@@ -12,7 +12,7 @@ import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.GenericRecipeRegistry;
 import org.pfaa.chemica.registration.GenericRecipeRegistryProxy;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import com.google.common.base.Strings;
 

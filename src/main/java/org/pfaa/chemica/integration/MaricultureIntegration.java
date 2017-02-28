@@ -7,7 +7,7 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Constants;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.OreDictUtils;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
 import mariculture.api.core.MaricultureHandlers;
@@ -119,8 +119,8 @@ public class MaricultureIntegration {
 		}
 
 		@Override
-		public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {
-			RecipeVat recipe = new RecipeVat(input, output, cost * 10);
+		public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int energy) {
+			RecipeVat recipe = new RecipeVat(input, output, energy / 100);
 			MaricultureHandlers.vat.addRecipe(recipe);
 		}
 		

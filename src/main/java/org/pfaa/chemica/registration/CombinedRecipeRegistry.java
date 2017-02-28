@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -54,9 +54,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+	public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerCastingRecipe(input, output, flux, temp);
+			registry.registerCastingRecipe(input, output, flux, temp, energy);
 		}
 	}
 
@@ -103,9 +103,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int cost) {
+	public void registerPrecipitationRecipe(FluidStack input, ItemStack output, int energy) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerPrecipitationRecipe(input, output, cost);
+			registry.registerPrecipitationRecipe(input, output, energy);
 		}
 	}
 
@@ -117,9 +117,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {
+	public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp, int energy) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerAlloyingRecipe(output, base, solutes, temp);
+			registry.registerAlloyingRecipe(output, base, solutes, temp, energy);
 		}
 	}
 

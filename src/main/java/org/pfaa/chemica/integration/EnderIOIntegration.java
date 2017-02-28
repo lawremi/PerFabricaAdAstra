@@ -9,7 +9,7 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
 import crazypants.enderio.machine.MachineRecipeInput;
@@ -86,18 +86,18 @@ public class EnderIOIntegration {
 		}
 
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
-			int energy = RecipeCostUtils.rfFromTemperature(temp);
+		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {
+			int rf = RecipeCostUtils.rfFromTemperature(temp);
 			if (flux != null) {
 				List<ItemStack> solute = Collections.singletonList(flux);
-				this.registerAlloyingRecipe(output, input, solute, temp);
+				this.registerAlloyingRecipe(output, input, solute, temp, 0);
 			} else {
-				registerAlloyFurnaceRecipe(input, output, energy);
+				registerAlloyFurnaceRecipe(input, output, rf);
 			}
 		}
 
 		@Override
-		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {
+		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp, int energy) {
 			List<ItemStack> inputs = new ArrayList<ItemStack>(solutes.size() + 1);
 			inputs.add(base);
 			inputs.addAll(solutes);

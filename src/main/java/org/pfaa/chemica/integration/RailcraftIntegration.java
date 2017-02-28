@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import cpw.mods.fml.common.Loader;
 import mods.railcraft.api.crafting.IRockCrusherRecipe;

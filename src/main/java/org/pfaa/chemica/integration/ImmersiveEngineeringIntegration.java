@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 
 import blusunrize.immersiveengineering.api.crafting.ArcFurnaceRecipe;
 import blusunrize.immersiveengineering.api.crafting.BlastFurnaceRecipe;
@@ -43,7 +43,7 @@ public class ImmersiveEngineeringIntegration {
 		}
 
 		@Override
-		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+		public void registerCastingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp, int energy) {
 			int time = RecipeCostUtils.arcTicksForTemperature(temp);
 			if (flux != null) {
 				ArcFurnaceRecipe.addRecipe(output, input, null, time, ARC_ENERGY_PER_TICK, flux);
@@ -53,7 +53,7 @@ public class ImmersiveEngineeringIntegration {
 		}
 
 		@Override
-		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp) {
+		public void registerAlloyingRecipe(ItemStack output, ItemStack base, List<ItemStack> solutes, int temp, int energy) {
 			if (solutes.size() > 4) {
 				return;
 			}
