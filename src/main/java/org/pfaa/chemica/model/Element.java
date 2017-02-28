@@ -706,7 +706,18 @@ public enum Element implements Chemical, PartFactory, Metal {
 			return this.strength;
 		}
 		
+		public boolean isMetallic() {
+			return this.category.isMetallic();
+		}
+		
 		public boolean isMonatomic() {
 			return this.getCategory() != Category.DIATOMIC_NONMETAL;
+		}
+		
+		public Chemical getStandardChemical() {
+			if (this.getCategory() == Category.DIATOMIC_NONMETAL) {
+				return Compounds.forFormula(this.__(2));
+			}
+			return this;
 		}
 }
