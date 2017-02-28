@@ -50,7 +50,7 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	}
 	
 	public Separation extracts(IndustrialMaterial... outputs) {
-		return this.extracts(null, outputs);
+		return this.extracts(this.input.state, outputs);
 	}
 	
 	public Separation extracts(State state, IndustrialMaterial... outputs) {
