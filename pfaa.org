@@ -2362,9 +2362,6 @@
      melting (MgO + C + Cl2 => MgCl2 + CO/CO2, worth it?).
      
 *** Limestone/Marble
-**** Calcite (GT)
-     Grind to yield CaCO3, plus a 5% chance of CaMg(CO3)2 (dolomite).
-     
 **** Calcium
      Electrolysis of CaO (roast product of CaCO3) or aluminothermic
      reaction, which involves the reduction of CaO with Al, under
@@ -2935,7 +2932,7 @@
      | Input     | H2 | CH4 | Ethene | Propene | Butadiene | RPG | C4 | RPO | H2O |
      |-----------+----+-----+--------+---------+-----------+-----+----+-----+-----|
      | Ethane    | 45 |   5 |     25 |       3 |         2 |     |    |     |  20 |
-     | Propane   | 20 |  10 |     30 |      15 |         5 |     |    |     |  25 |
+     | Propane   | 20 |  10 |     30 |      15 |         5 |     |    |     |  20 |
      | NGL       | 30 |   5 |     25 |       5 |         2 |     |    |     |  33 |
      | L Naphtha | 10 |   8 |     18 |       7 |         7 |  10 |  7 |     |  33 |
      | H Naphtha |  8 |   8 |     15 |       7 |         7 |  15 |  7 |     |  33 |
@@ -2950,10 +2947,10 @@
      2. Water (cooled from steam), RPG (if any), and rest
      3. H2, CH4, and rest
      4. Ethene, propene and C4 olefins
-        * C4 => butadiene + butene, separated by chemistry
-          * butene itself is a mixture of isomers but often used
-            directly
-        * RPG (raw pyrolysis gasoline) separated into benzene and toluene
+        * C4 => butadiene + butenes, separated by chemistry
+          * from butenes, isobutene and 2-butene separated by distillation
+
+     RPG (raw pyrolysis gasoline) separated into benzene and toluene
 
      Steps 3 and 4 are cryogenic, i.e., the stream is cooled between
      steps 2 and 3. Could use the turbo-expander that we already need
@@ -3098,7 +3095,44 @@
      * H3PO4 process: Same as ZnCl except @ 800 K.
    * Charcoal, lignite coke, peat coke are gas activated by CO2 or
      steam
-     
+
+* Machines
+  Machines are tools that consume energy to perform some action. In
+  Minecraft, a machine is distinct from a tool in that functions as a
+  block, usually automatically.
+
+  Vanilla implements a number of machines. Many of them are abstract,
+  such as the furnace, which simply cooks anything inserted into it.
+  Perhaps the simplest, in the physical sense, is the piston, which
+  just moves a block.
+
+  The simplest machine redirects force from one direction to
+  another. Classically, there were 6 simple machines:
+  * Lever :: Not to be confused with the Vanilla lever. This would be
+       like a seesaw, where 2 or 4 rods would be connected, to a
+       fulcum (wheel) at the center. They could be rotate vertically or
+       horizontally, depending on their orientation. When a block is
+       pushed (e.g., by a piston) against one end, the lever shifts to
+       yield to the block, and the other end pushes a block in the
+       opposite direction. It could rotate on redstone pulses supplied
+       to the wheel. Clockwise or counterclockwise depending on
+       whether the pulse is up or down. 
+  * Wheel and axle :: If an axle (rod) is attached (in Z) to
+       the wheel, it rotates.
+  * Pulley :: Just a wheel, except attach a ropes (blocks) to
+       two sides, instead of rods. When a rope moves, e.g., by
+       piston, pull or push the other rope in its own direction. Could
+       permit two rope blocks in the same space, to allow for reversal.
+  * Ramp :: When a block is pushed into it, it pushes the block in an
+       orthogonal direction.
+  * Wedge :: Just a portable ramp, skip for now.
+  * Screw :: A shaft that moves when it is rotated, depending on the
+       direction of rotation. Probably needs to be distinguished from
+       small fastening screws.
+
+  Important components include: wheel, rod (potentially threaded),
+  rope, ramp/wedge.
+  
 * Research
 ** Chemical Compounds
    The player could research the properties of chemical compounds in a
@@ -3266,7 +3300,42 @@
    nuggets are much rarer than gold nuggets, but in terms of gameplay,
    it would be interesting to force initial copper extraction to
    nuggets.
+ 
+** Ore Genesis
+   A major issue in Minecraft is that mining consumes non-renewable
+   resources. To sustain a steady stream of ores, one comes to rely on
+   semi-automated mining methods, which present a host of problems and
+   can never be fully automated.
 
+   There needs to be a progression from manual mining and exploration
+   to automated infrastructure that progresses in efficiency. To
+   retain balance, infinite sources of resources should be finite in
+   number and difficult or impossible to relocate. Consider Thaumcraft
+   nodes, Buildcraft springs, and Botania Daybloom Primals.
+
+   We propose a semi-realistic mini-game of ore generation, based on
+   fixed sources of geological activty that when properly harnessed
+   generate a steady supply of ore /in situ/.
+
+   Perhaps the simplest approach would be bedrock-level springs of
+   mineral-rich hot water that when cooled precipitates ore
+   minerals. The type of mineral would depend on the proportion of
+   ores originally in that chunk. More complicated would be springs of
+   brines (or some solution) that need to be passed over/along stone
+   to dissolve minerals and are finally cooled to convert adjacent
+   stone to ore blocks. The fluid might act like water, and so could
+   flow a long way after being pumped up, but it would need to be
+   continuously heated (e.g., by adjacent lava) to retain its fluid
+   gathering ability. The generated ore blocks could be repeatedly
+   "broken" like those in Harder Ores, although we might tweak that
+   mechanic so that spawning an ore chunk is stochastic, with the rate
+   depending non-linearly on the ore concentration. 
+
+   Another idea: the spring block generates a flowing block, not a
+   source block. Any stone touched by the liquid is converted over
+   time to an ore block, which is harvested as normal and must be
+   replaced by another stone block for another ore to be generated. 
+   
 ** Extra planets and moons
    Eventually, we want to include all planets (including exoplanets)
    and moons (including psuedo-randomaly generated ones). 
@@ -4115,18 +4184,18 @@
     variable. The ores are also technically aggregates; however, they
     are primarily composed of one material, i.e., sphalerite ore
     consists of zinc sulfide, plus impurities. We can therefore claim
-    that sphalerite corresponds to /crude/ zinc sulfide. So while not
-    all GeoMaterials have a one-to-one relationship with a crude
+    that sphalerite corresponds to /impure/ zinc sulfide. So while not
+    all GeoMaterials have a one-to-one relationship with an impure
     material, the ores do. We would include non-stoichiometric
-    compounds in the crude category, so even pure olivine is a crude
-    material.
+    compounds as "industrial minerals" without any defined chemical
+    composition, so even pure olivine is an opaque mineral.
 
-    A true chemical would be produced through purification of a crude
+    A true chemical would be produced through purification of an impure
     material. For example, zinc sulfide would result from extensive
-    processing of sphalerite. While the crude material is obviously
+    processing of sphalerite. While the impure material is obviously
     not equivalent to the pure substance, they are essentially the
     same at some level of abstraction. Thus, there could be a link
-    from GeoMaterial to crude material, and from crude material to
+    from GeoMaterial to impure material, and from impure material to
     pure chemical.
 
     Pure chemicals have better defined properties, in particular
@@ -4137,8 +4206,9 @@
 
     Obviously chemicals are either elements or compounds. It would
     be easy to determine whether a compound is a sulfide, oxide, etc,
-    which are so common in ores. Once we get to organic chemistry, we
-    will probably have to resort to adhoc approaches.
+    which are so common in ores.
+
+    Chemicals can be combined into mixtures.
 
 *** Phase
     A chemical can exist in any phase: solid, liquid, or gas (we ignore
@@ -4428,35 +4498,63 @@
    well-described chemicals, the reaction parameters should be
    determinable from the substances alone. We declare a "reaction" in
    terms of substances, and that is translated to one or more
-   recipes. If we have crude materials without well-defined
-   properties, we could either make up the properties or specify
-   parameters at the reaction level (easier?). There, we declare an
-   "ore operation" in terms of crude substances and chemicals, and
-   that is translated to some recipes. So there are two layers: the
+   recipes. So there are two layers: the
    abstract, process-level description, and the low-level recipes. One
    abstract process might correspond to multiple recipes (manual,
    machine, etc).
 
-   For the crude processes, we could have a CrudeReaction class, with
-   crudes and chemicals, and reaction-level parameters. A bunch of
-   CrudeReaction instances are registered, and a factory iterates over
-   them, converting them to reaction recipes.
+   How does the reaction => recipe mapping occur? There are two steps:
+   1. Map the materials to item and fluid stacks
+   2. Register recipes that implement the operation
 
-   How does the reaction => recipe mapping occur? Some factory needs
-   to perform two steps:
-   1. Map the materials to item(stack)s.
-   2. Generate a fully parameterized reaction model.
-      
-   We might not need to actually have a Reaction
-   object. Instead, there is a method call with a signature that
-   depends on the mode of reaction recipe construction. For crude
-   materials, the materials and model parameters should be
-   specified. For the pure chemical reactions, those parameters can be
-   derived from the chemicals. This would be a Registrant object that
-   would store recipes in a Registry object. It is given the registry,
-   a ReactionTermToItemStack factory, and a ReactionModelFactory (to
-   be used if the model is not given explicitly).
+   This would be a Registrant object that would store recipes through
+   a RecipeRegistry instance, which interacts with the mods providing
+   the machines (including our own).  It is given the registry and a
+   MaterialStacker factory.
+   
+   When dealing with mixtures, it is not clear that there is always an
+   equivalence between, e.g., a mixture containing a chemical and the
+   chemical itself. Other chemicals in the mixture might also react,
+   bringing about a conflict. We could simply ignore the conflict
+   case. It might also lead to an unecessary explosion in recipes. We
+   really only need the reactions that are important for the canonical
+   process. We could specify reactions with "pass through"
+   reactants representing other mixture components.
 
+   At a higher level, the registration code needs to specify the
+   inputs, outputs, condition and energy requirement. Sometimes, the
+   condition and energy requirements can be automatically
+   determined. For reactions, we will often specify the condition,
+   because we do not model the kinetics. But we do model the
+   thermodynamics, so we know the energy. For sizing, condition does
+   not matter, and we can derive energy from the strength. Enthalpy
+   changes (including relevant separations) are computable from
+   thermodynamics. Combination is straightforward.
+
+   Do we want compiler type safety for accessing those attributes?
+   The availability of properties is already so varied that we have
+   allowed many of the properties to be null. And through some
+   abstraction and approximation, we can estimate some thermodynamic
+   properties for complex mixtures like crude oil. Why not just push
+   the property accessors to the top-level IndustrialMaterial? We want
+   to retain the semantics of e.g. Chemical vs Mixture, and some
+   behaviors only make sense for one or the other, but many of the
+   same properties apply to both, conceptually. We should only need to
+   distinguish types during construction, so the representation does
+   not need to be specific.
+
+   We could take merge ChemicalConditionProperties into
+   ConditionProperties. Vaporizable, Fusible and Soluble get pushed
+   into IndustrialMaterial.
+
+   We should parameterize Conversion.Type by the type of material, so
+   so that the =.of()= factory method requires Chemical for Reaction
+   and Mixture for separation. We could also parameterize Conversion
+   by Converion.Type. Should =.of()= really accept a MaterialSpec when
+   it is conversion-specific due to its stoichiometry? Maybe we want a
+   MaterialState (Material + State) that is useful for passing between
+   conversions? MaterialStoich would reference a MaterialState.
+   
 ** Block Construction
    When creating a GeoBlock from a material, we need to decide who
    implements the construction. Currently, this is a mix between a
@@ -4592,42 +4690,25 @@
 ** Processes
    Once we have a material, we need to do something with it. That
    something is a process. A process turns one material, in a specific
-   state, into one or more other materials, in a specific state. The
-   set of processes can be modeled as a bipartite graph, with a set of
+   state, into one or more other materials, in a specific
+   state. Chemical processes are carried out by a series of steps,
+   including physical (unit operations) and chemical (unit processes).
+   Often, physical and chemical steps happen simultaneously, but at
+   our level of abstraction, if there is any chemistry involved that
+   is relevant to the overall process, we represent it with a
+   reaction, otherwise a unit operation.
+
+   The set of steps can be modeled as a bipartite graph, with a set of
    nodes representing the materials (in some particular state) and a
-   set of nodes representing the processes. Edges, at least from a
+   set of nodes representing the steps. Edges, at least from a
    process to a material, can be weighted. The material nodes are
    very close to being actual blocks and items, because they are in
    some state, like a dust or ore block. The question becomes whether
-   it is worth abstracting the process graph or if low-level
-   representation as recipes is sufficient.
+   it is worth representing the process graph explicitly, or if we
+   immediately compile each step down to one or more recipes. For now,
+   we will immediately compile to recipes, but the system is abstract
+   enough to allow for other types of capture.
 
-   We are currently representing processes as recipes, and it has
-   become apparent that some abtraction might be useful, even if not
-   at the level of the process graph. For example, a GeoMaterial has
-   some composition, and grinding will always output its primary
-   component as a dust. Both the dust and the original ore block can
-   perhaps be smelted to a metal ingot. The point is that there is
-   some equivalency through composition. This equivalency is very
-   much related to the purpose of the ore dictionary. The ore
-   dictionary is a fairly rudimentary abstraction, but it works, and
-   is something we need anyway. But a major limitation is that an
-   ItemStack should be registered under a single dictionary
-   term. Another problem is that the equivalency only holds for
-   specific processes (such as a reaction with a specific partner).
-   Thus, we will need additional means of abstraction.
-
-   For crude processing operations like smelting, we have a recipe
-   registry proxy that maps operations on chemicals to operations on
-   ores and minerals. For general mixing and reactions, however, it is
-   not clear that there is always an equivalence between, e.g., an
-   intermediate mixture containing a chemical and the chemical
-   itself. Other chemicals in the mixture might also react, bringing
-   about a conflict. We could simply ignore the conflict case. It
-   might also lead to an unecessary explosion in recipes. We really
-   only need the reactions that are important for processing the raw
-   mixture. We could specify reactions with "pass through" reactants
-   representing other mixture components.
    
 ** Multiblocks
    Multiblock structures are essentially crafting but with blocks in
