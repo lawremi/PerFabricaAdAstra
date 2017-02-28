@@ -10,9 +10,21 @@ import org.pfaa.chemica.model.Ion.Ions;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 
-public class ReactionFactory {
+public class Reactions {
+
+	public static Reaction dissociate(Chemical compound) {
+		Formula.Part cation = compound.getFormula().getFirstPart();
+		Formula.Part anion = compound.getFormula().getLastPart();
+		boolean simpleSalt = cation.ion != null && anion.ion != null && compound.getFormula().getParts().size() == 2;
+		if (!simpleSalt) {
+			return null;
+		}
+		return Reaction.inWaterOf(1, compound, State.SOLID).
+				yields(cation.stoichiometry, cation.ion).
+				and(anion.stoichiometry, anion.ion);
+	}
 	
-	public static Reaction makeSaltMetathesisReaction(Compound saltA, Compound saltB) {
+	public static Reaction metathesize(Compound saltA, Compound saltB) {
 		Ion cationA = saltA.getFormula().getCation();
 		Ion cationB = saltB.getFormula().getCation();
 		Ion anionA = saltA.getFormula().getAnion();
@@ -54,7 +66,7 @@ public class ReactionFactory {
 		return Compounds.valueOf(oxideFormula.toString());
 	}
 	
-	public static Reaction makeStandardSaltDecompositionReaction(Compound compound) {
+	public static Reaction decompose(Compound compound) {
 		Formula formula = compound.getFormula();
 		boolean secondaryCarbonate = 
 				formula.getParts().size() == 3 && 

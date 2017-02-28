@@ -1,37 +1,28 @@
 package org.pfaa.chemica.model;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.DoubleStream;
 
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.registration.Reactions;
 
 /* A pure substance, including elements and compounds with fixed stoichiometry */
 public interface Chemical extends IndustrialMaterial {
-	float MIN_SOLUBILITY = 0.001F;
 	public Formula getFormula();
 	
-	default Reaction getDissociation() {
-		Formula.Part cation = this.getFormula().getFirstPart();
-		Formula.Part anion = this.getFormula().getLastPart();
-		boolean simpleSalt = cation.ion != null && anion.ion != null && this.getFormula().getParts().size() == 2;
-		if (!simpleSalt) {
-			return null;
-		}
-		return Reaction.inWaterOf(1, this, State.SOLID).
-				yields(cation.stoichiometry, cation.ion).
-				and(anion.stoichiometry, anion.ion);
-	}
+	float MIN_SOLUBILITY = 0.001F; // mol/L, assuming 1 mB water = 1 L water as solvent
+
 	default double getSolubility(Condition condition) {
-		Reaction dissociation = this.getDissociation();
+		Reaction dissociation = Reactions.dissociate(this);
 		double ksp = dissociation.getEquilibriumConstant(condition);
 		List<Term> products = dissociation.getProducts();
-		Stream<Float> stoich = products.stream().map((t) -> t.stoich);
-		return Math.pow(ksp / stoich.reduce((a,b) -> a*b).get(), 1 / stoich.reduce((a,b)->a+b).get());
+		DoubleStream stoich = products.stream().mapToDouble((t) -> t.stoich);
+		return Math.pow(ksp / stoich.reduce((a,b) -> a*b).getAsDouble(), 1 / stoich.sum());
 	}
 	default double getSolubility() {
 		return this.getSolubility(Condition.STP);
 	}
 	default boolean isSoluble(Condition condition) {
-		return this.getSolubility(condition) > Chemical.MIN_SOLUBILITY;
+		return this.getSolubility(condition) > MIN_SOLUBILITY;
 	}
 }
