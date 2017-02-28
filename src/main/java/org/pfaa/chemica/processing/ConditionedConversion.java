@@ -24,6 +24,6 @@ public abstract class ConditionedConversion implements Conversion {
 	}
 
 	protected Condition deriveCondition() {
-		return null;
+		return Condition.STP;
 	}
 }
