@@ -3,35 +3,37 @@ package org.pfaa.chemica.registration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialItems;
-import org.pfaa.chemica.item.IngredientStack;
-import org.pfaa.chemica.item.MaterialStack;
-import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Equation.Term;
-import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.Strength;
+import org.pfaa.chemica.processing.Alloying;
 import org.pfaa.chemica.processing.Combination;
+import org.pfaa.chemica.processing.Communition;
+import org.pfaa.chemica.processing.Compaction;
 import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.core.item.ChanceStack;
+import org.pfaa.chemica.processing.MaterialRecipe;
+import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.Sizing;
+import org.pfaa.chemica.processing.Smelting;
 import org.pfaa.chemica.processing.Stacking;
 
 import com.google.common.collect.Lists;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -46,88 +48,154 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		this.genericDelegate = delegate.getGenericRecipeRegistry();
 	}
 
+	private void stack(MaterialRecipe recipe) {
+		RecipeUtils.addShapelessRecipe(recipe.getOutput().getBestItemStack(), 
+				recipe.getInput().getBestItemStack());
+	}
+	
 	@Override
 	public void register(Stacking stacking) {
-		stack(stacking.getSolid(), stacking.getStackedForm(), stacking.getUnstackedForm());
+		stacking.getRecipes().forEach(this::stack);
 	}
 	
-	private void stack(IndustrialMaterial solid, Form stackedForm, Form unstackedForm) {
-		ItemStack stack;
-		if (stackedForm == Forms.BLOCK && solid instanceof Aggregate) {
-			// FIXME: in >= 1.10, we get this from ore dict
-			stack = new ItemStack(ChemicaBlocks.getBlock((Aggregate)solid));
-		} else {
-			stack = IndustrialItems.getBestItemStack(stackedForm, solid);
-		}
-		if (stack != null) {
-			ItemStack tinyStack = IndustrialItems.getBestItemStack(unstackedForm, solid);
-			registerPartitionRecipes(stack, tinyStack, 
-					unstackedForm.getNumberPerBlock() / stackedForm.getNumberPerBlock());
-		}
-	}
-	
-	private void registerPartitionRecipes(ItemStack itemStack, ItemStack partitionStack, int numPartitions) {
-		partitionStack = partitionStack.copy();
-		partitionStack.stackSize = numPartitions;
-		this.delegate.registerMixingRecipe(Collections.singletonList(partitionStack), itemStack);
-		GameRegistry.addShapelessRecipe(partitionStack, itemStack);
-	}
-
 	@Override
 	public void register(Separation separation) {
-		// TODO Auto-generated method stub
-		
+		Separation.Type type = separation.getType();
+		Consumer<MaterialRecipe> consumer = null;
+		if (type == Separation.Types.PRECIPITATION)
+			consumer = this::precipitate;
+		separation.getRecipes().forEach(consumer);
 	}
 
-	@Override
-	public void register(Combination combination) {
-		// TODO Auto-generated method stub
-		
+	private void precipitate(MaterialRecipe recipe) {
+		delegate.registerPrecipitationRecipe(
+				recipe.getInput().getFluidStack(), 
+				recipe.getOutput().getBestItemStack(), 
+				recipe.getEnergy());
 	}
 
-	@Override
-	public void register(Sizing sizing) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void register(EnthalpyChange enthalpyChange) {
-		IndustrialMaterial material = enthalpyChange.getMaterial();
-		EnthalpyChange.Type type = enthalpyChange.getType();
-		int temp = enthalpyChange.getCondition().temperature;
-		int energy = (int)enthalpyChange.getEnergy();
-		if (type == EnthalpyChange.Types.MELTING || type == EnthalpyChange.Types.FREEZING) {
-			this.melt(material, temp, energy);
-		} else if (type == EnthalpyChange.Types.VAPORIZATION || type == EnthalpyChange.Types.CONDENSATION) {
-			this.vaporize(material, temp, energy);
-		}
-	}
-
-	private void melt(IndustrialMaterial material, int temp, int energy) {
-		for (Form form : new Form[] { Forms.DUST_TINY, Forms.DUST, Forms.INGOT, Forms.NUGGET, Forms.BLOCK }) {
-			this.melt(material, temp, energy, form);
-		}
-	}
-
-	private void melt(IndustrialMaterial material, int temp, int energy, Form form) {
-		ItemStack solid = IndustrialItems.getBestItemStack(form, material);
-		if (solid != null) {
-			FluidStack molten = IndustrialFluids.getCanonicalFluidStack(material, State.LIQUID, form);
-			delegate.registerMeltingRecipe(solid, molten, temp, energy);
-			if (form == Forms.INGOT || form == Forms.BLOCK) {
-				delegate.registerCastingRecipe(molten, solid);
-			} else if (form == Forms.DUST) {
-				delegate.registerFreezingRecipe(molten, solid, temp, energy);
-			}
+	private void smelt(MaterialRecipe recipe) {
+		ItemStack input = recipe.getInput().getBestItemStack();
+		MaterialStack flux = recipe.getInputs().size() > 1 ? recipe.getInputs().get(1) : null;
+		int temp = recipe.getTemperature();
+		if (recipe.getOutput().getState().isFluid()) {
+			FluidStack output = recipe.getOutput().getFluidStack();
+			this.genericDelegate.registerSmeltingRecipe(input, output, flux, temp);
+		} else {
+			ItemStack output = recipe.getOutput().getBestItemStack();
+			this.genericDelegate.registerSmeltingRecipe(input, output, flux, temp);
 		}
 	}
 	
-	private void vaporize(IndustrialMaterial material, int temp, int energy) {
-		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(material, State.LIQUID, Forms.DUST_TINY);
-		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(material, State.GAS, Forms.DUST_TINY);
-		delegate.registerBoilingRecipe(liquid, gas, temp, energy);
-		delegate.registerCondensingRecipe(gas, liquid, temp, energy);
+	@Override
+	public void register(Smelting smelting) {
+		smelting.getRecipes().forEach(this::smelt);
+	}
+
+
+	private void alloy(MaterialRecipe recipe) {
+		if (recipe.getOutput().getState().isFluid()) {
+			List<FluidStack> inputs = recipe.getInputs().stream().
+					map(IndustrialFluids::getFluidStack).collect(Collectors.toList());
+			FluidStack output = IndustrialFluids.getFluidStack(recipe.getOutput());
+			this.delegate.registerAlloyingRecipe(output, inputs);
+		} else {
+			List<ItemStack> inputs = recipe.getInputs().stream().
+					map(IndustrialItems::getBestItemStack).collect(Collectors.toList());
+			ItemStack base = inputs.get(0);
+			List<ItemStack> solutes = inputs.subList(1, inputs.size());
+			ItemStack output = IndustrialItems.getBestItemStack(recipe.getOutput());
+			this.delegate.registerAlloyingRecipe(output, base, solutes, recipe.getTemperature(), recipe.getEnergy());
+		}
+	}
+	
+	@Override
+	public void register(Alloying alloying) {
+		alloying.getRecipes().forEach(this::alloy);
+	}
+
+	private void combine(MaterialRecipe recipe) {
+		IngredientList<MaterialStack> solidInputs = recipe.getSolidInputs();
+		IngredientList<MaterialStack> fluidInputs = recipe.getFluidInputs();
+		FluidStack fluidInput = fluidInputs.size() > 0 ? fluidInputs.get(0).getFluidStack() : null;
+		FluidStack fluidInput2 = fluidInputs.size() > 1 ? fluidInputs.get(1).getFluidStack() : null;
+		ItemStack solidOutput = recipe.getOutput(State.SOLID).map(MaterialStack::getBestItemStack).orElse(null);
+		FluidStack liquidOutput = recipe.getOutput(State.LIQUID).map(MaterialStack::getFluidStack).orElse(null);
+		FluidStack gasOutput = recipe.getOutput(State.GAS).map(MaterialStack::getFluidStack).orElse(null);
+		IngredientList<MaterialStack> catalysts = recipe.getModulators();
+		Condition condition = recipe.getCondition();
+		this.genericDelegate.registerMixingRecipe(solidInputs, fluidInput, fluidInput2, 
+				solidOutput, liquidOutput, gasOutput, 
+				condition, catalysts);
+	}
+	
+	@Override
+	public void register(Combination combination) {
+		combination.getRecipes().forEach(this::combine);
+	}
+
+	private void communite(MaterialRecipe recipe) {
+		ItemStack input = IndustrialItems.getBestItemStack(recipe.getInput());
+		List<MaterialStack> outputs = recipe.getOutputs();
+		ItemStack primaryOutput = IndustrialItems.getBestItemStack(outputs.get(0));
+		Stream<ChanceStack> secondaries = outputs.stream().skip(1).map(IndustrialItems::getChanceStack);
+		Strength strength = recipe.getInput().getMaterial().getStrength();
+		if (recipe.getOutput().getForm().isGranular()) {
+			this.delegate.registerGrindingRecipe(input, primaryOutput, secondaries.collect(Collectors.toList()), strength);
+		} else {
+			this.delegate.registerCrushingRecipe(input, primaryOutput, secondaries.findFirst().orElse(null), strength);
+		}
+	}
+	
+	@Override
+	public void register(Communition communition) {
+		communition.getRecipes().forEach(this::communite);
+	}
+
+	private void compact(MaterialRecipe recipe) {
+		ItemStack input = IndustrialItems.getBestItemStack(recipe.getInput());
+		ItemStack output = IndustrialItems.getBestItemStack(recipe.getOutput());
+		this.delegate.registerCastingRecipe(input, output, null, recipe.getTemperature(), recipe.getEnergy());
+	}
+	
+	@Override
+	public void register(Compaction compaction) {
+		compaction.getRecipes().forEach(this::compact);
+	}
+	
+	private void changeState(MaterialRecipe recipe) {
+		MaterialStack input = recipe.getInput();
+		MaterialStack output = recipe.getOutput();
+		int temp = recipe.getTemperature();
+		int energy = recipe.getEnergy();
+		if (input.getState() == State.SOLID) {
+			ItemStack solid = IndustrialItems.getBestItemStack(input);
+			FluidStack fluid = IndustrialFluids.getFluidStack(output);
+			delegate.registerMeltingRecipe(solid, fluid, temp, energy);
+		} else if (output.getState() == State.SOLID) {
+			FluidStack fluid = IndustrialFluids.getFluidStack(input);
+			ItemStack solid = IndustrialItems.getBestItemStack(output);
+			if (output.getForm().isRegular()) {
+				delegate.registerCastingRecipe(fluid, solid);
+			} else {
+				delegate.registerFreezingRecipe(fluid, solid, temp, energy);
+			}
+		} else if (input.getState() == State.LIQUID) {
+			FluidStack liquid = IndustrialFluids.getFluidStack(input);
+			FluidStack gas = IndustrialFluids.getFluidStack(output);
+			delegate.registerBoilingRecipe(liquid, gas, temp, energy);
+		} else if (output.getState() == State.LIQUID) {
+			FluidStack gas = IndustrialFluids.getFluidStack(input);
+			FluidStack liquid = IndustrialFluids.getFluidStack(output);
+			delegate.registerCondensingRecipe(gas, liquid, temp, energy);
+		}
+	}
+	
+	@Override
+	public void register(EnthalpyChange enthalpyChange) {
+		if (enthalpyChange.getType().getAxis() != EnthalpyChange.Type.Axis.STATE)
+			return;
+		enthalpyChange.getRecipes().forEach(this::changeState);
 	}
 	
 	@Override
@@ -173,7 +241,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 					amount *= Forms.DUST_TINY.getNumberPerBlock() / Forms.DUST.getNumberPerBlock();
 				} else continue;
 			}
-			return new MaterialStack(form, product.material(), (int)amount).getBestItemStack();
+			return MaterialStack.of((int)amount, product.material(), form).getBestItemStack();
 		}
 		return null;
 	}
@@ -225,16 +293,16 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 				});
 		reactants = addWaterAsSolvent(reaction, reactants);
 		Stream<FluidStack> fluidStream = reactants.limit(maxCount - 1).
-				map((reactant) -> IndustrialFluids.getCanonicalFluidStack(reactant, form));
+				map((reactant) -> IndustrialFluids.getFluidStack(reactant, form));
 		List<FluidStack> fluidStacks = fluidStream.collect(Collectors.toList());
-		Stream<Term> toMerge = reactants.skip(fluidStream.count());
-		if (toMerge.count() > 0) {
-			Mixture mixture = toMerge.collect(Term.TO_MIXTURE);
-			State state = toMerge.findAny().get().state();
-			if (toMerge.map((t) -> t.state()).distinct().count() > 1) {
+		List<Term> toMerge = reactants.skip(fluidStacks.size()).collect(Collectors.toList());
+		if (toMerge.size() > 0) {
+			Mixture mixture = toMerge.stream().collect(Term.TO_MIXTURE);
+			if (toMerge.stream().map((t) -> t.state()).distinct().count() > 1) {
 				throw new IllegalArgumentException("cannot mix reactants in different states");
 			}
-			fluidStacks.add(IndustrialFluids.getCanonicalFluidStack(mixture, state, form));
+			State state = toMerge.get(0).state();
+			fluidStacks.add(IndustrialFluids.getFluidStack(mixture, state, form));
 			mixture.getComponents().stream().reduce((compA, compB) -> {
 				double totalWeight = compA.weight + compB.weight;
 				compA = compA.concentrate(1/totalWeight);

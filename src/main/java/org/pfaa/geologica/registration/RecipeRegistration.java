@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
-import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
@@ -24,14 +23,16 @@ import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.processing.Separation;
+import org.pfaa.chemica.processing.Stacking;
 import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
-import org.pfaa.chemica.registration.ReactionFactory;
+import org.pfaa.chemica.registration.Reactions;
 import org.pfaa.chemica.registration.RecipeUtils;
-import org.pfaa.chemica.util.ChanceStack;
 import org.pfaa.core.block.CompositeBlock;
+import org.pfaa.core.item.ChanceStack;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
@@ -364,16 +365,16 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		for(int meta = 0; meta < input.getMetaCount(); meta++) {
 			ItemStack outputStack = new ItemStack(output, 1, meta);
 			ItemStack inputStack = new ItemStack(input, 1, meta);
-			RECIPES.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature());
+			RECIPES.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature(), 0);
 			FluidStack fluid = new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME);
 			RECIPES.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature(), 0);
 		}
 	}
 	
 	private static void registerStackingRecipes() {
-		registerStackings(IndustrialMinerals.class);
-		registerStackings(Ores.class);
-		registerStackings(GeoMaterial.class);
+		Stacking.of(IndustrialMinerals.class).forEach(CONVERSIONS::register);
+		Stacking.of(Ores.class).forEach(CONVERSIONS::register);
+		Stacking.of(GeoMaterial.class).forEach(CONVERSIONS::register);
 	}
 	
 	private static void registerStandardClayProcessingRecipes() {
@@ -385,7 +386,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			RECIPES.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
 			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
-			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+			FluidStack water = Forms.DUST.of(Compounds.H2O).getFluidStack();
 			RECIPES.registerMixingRecipe(Collections.singletonList(dust), water, null, clump, null, null, Condition.STP, null);
 		}
 	}
@@ -426,7 +427,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		Chemical solid = null;
 		float reactedMoles = 0;
 		for (MixtureComponent comp : brine.getComponents().subList(1, brine.getComponents().size())) {
-			Reaction r = ReactionFactory.makeSaltMetathesisReaction(salt, (Compound)comp.material);
+			Reaction r = Reactions.metathesize(salt, (Compound)comp.material);
 			if (r == null) {
 				continue;
 			}
@@ -459,8 +460,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				inputAmount = 1;
 			}
 		}
-		MaterialStack solidInput = new MaterialStack(salt, inputAmount);
-		FluidStack fluidInput = IndustrialFluids.getCanonicalFluidStack(brine, State.LIQUID, brineAmount);
+		MaterialStack solidInput = inputForm.of(inputAmount, salt);
+		FluidStack fluidInput = IndustrialFluids.getFluidStack(brine, State.LIQUID, brineAmount);
 		ItemStack solidOutput = null;
 		if (solid != null) {
 			solidOutput = IndustrialItems.getBestItemStack(inputForm, solid).copy();
@@ -469,8 +470,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		if (product == null){
 			product = new SimpleMixture("brine.treated." + salt.name(), resultComps.toArray(new MixtureComponent[0]));
 		}
-		FluidStack fluidOutput = IndustrialFluids.getCanonicalFluidStack(product, State.LIQUID, brineAmount);
-		GENERICS.registerMixingRecipe(new IngredientList(solidInput), fluidInput, 
+		FluidStack fluidOutput = IndustrialFluids.getFluidStack(product, State.LIQUID, brineAmount);
+		GENERICS.registerMixingRecipe(IngredientList.of(solidInput), fluidInput, 
 				null, solidOutput, fluidOutput, null, Condition.AQUEOUS_STP, null);
 		
 		return product;
@@ -485,8 +486,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static Mixture extractMethane(Mixture noHelium) {
-		FluidStack gas = IndustrialFluids.getCanonicalFluidStack(noHelium);
-		FluidStack liquid = IndustrialFluids.getCanonicalFluidStack(noHelium, State.LIQUID);
+		FluidStack gas = IndustrialFluids.getFluidStack(noHelium);
+		FluidStack liquid = IndustrialFluids.getFluidStack(noHelium, State.LIQUID);
 		RECIPES.registerCoolingRecipe(gas, liquid, (int)Compounds.METHANE.getEnthalpyChange(State.LIQUID));
 		Mixture.Phases sep = noHelium.separateByState(Compounds.ETHANE.getCanonicalCondition(State.LIQUID));
 		List<FluidStack> outputs = IndustrialFluids.getFluidStacks(sep);
@@ -541,10 +542,10 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			return Integer.compare(a.getVaporization().getTemperature(), b.getVaporization().getTemperature());
 		}).collect(Collectors.toList());
 		List<FluidStack> outputs = sortedFractions.stream().map((m) -> {
-			return IndustrialFluids.getCanonicalFluidStack(m, State.LIQUID, Forms.DUST_TINY);
+			return IndustrialFluids.getFluidStack(m, State.LIQUID, Forms.DUST_TINY);
 		}).collect(Collectors.toList());
 		Condition condition = sortedFractions.get(sortedFractions.size() - 2).getCanonicalCondition(State.GAS);
-		FluidStack input = IndustrialFluids.getCanonicalFluidStack(mixture, State.LIQUID, Forms.DUST_TINY);
+		FluidStack input = IndustrialFluids.getFluidStack(mixture, State.LIQUID, Forms.DUST_TINY);
 		RECIPES.registerDistillationRecipe(input, outputs, condition);
 	}
 	
@@ -585,9 +586,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void steamCrack(IndustrialMaterial input, Mixture output, float steamRatio) {
-		FluidStack inputFluid = IndustrialFluids.getCanonicalFluidStack(input, Forms.DUST_TINY);
-		FluidStack steam = IndustrialFluids.getCanonicalFluidStack(Compounds.H2O, State.GAS, (int)(steamRatio*inputFluid.amount));
-		FluidStack outputFluid = IndustrialFluids.getCanonicalFluidStack(output, Forms.DUST_TINY);
+		FluidStack inputFluid = IndustrialFluids.getFluidStack(input, Forms.DUST_TINY);
+		FluidStack steam = IndustrialFluids.getFluidStack(Compounds.H2O, State.GAS, (int)(steamRatio*inputFluid.amount));
+		FluidStack outputFluid = IndustrialFluids.getFluidStack(output, Forms.DUST_TINY);
 		RECIPES.registerMixingRecipe(Collections.emptyList(), inputFluid, steam, null, null, outputFluid, new Condition(1100), null);
 		Mixture.Phases sep = output.separateByState(new Condition(700));
 		RECIPES.registerDistillationRecipe(outputFluid, IndustrialFluids.getFluidStacks(sep), Condition.STP);
