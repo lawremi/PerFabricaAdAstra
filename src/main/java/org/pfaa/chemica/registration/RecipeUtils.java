@@ -256,8 +256,8 @@ public class RecipeUtils {
 		}
 	}
 
-	public static IngredientList getMixtureInputs(Form form, Mixture mixture) {
-		List<IngredientStack> inputs = new ArrayList<IngredientStack>(mixture.getComponents().size());
+	public static IngredientList<MaterialStack> getMixtureInputs(Form form, Mixture mixture) {
+		List<MaterialStack> inputs = new ArrayList<MaterialStack>(mixture.getComponents().size());
 		for (MixtureComponent component : mixture.getComponents()) {
 			int amount = (int)component.weight;
 			if (amount == 0) {
@@ -267,13 +267,13 @@ public class RecipeUtils {
 			if (amount == 0) {
 				throw new IllegalArgumentException("Cannot mix components with weight < 0.05");
 			}
-			IngredientStack materialStack = new MaterialStack(form, component.material, amount);
+			MaterialStack materialStack = form.of(amount, component.material);
 			if (materialStack.getItemStacks().size() == 0) {
 				throw new IllegalArgumentException("Mixing: No item stack for " + materialStack.getOreDictKey());
 			}
 			inputs.add(materialStack);
 		}
-		return new IngredientList(inputs);
+		return IngredientList.of(inputs);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -282,7 +282,7 @@ public class RecipeUtils {
 		List<Object> inputList = new ArrayList<Object>(inputs.length);
 		for (Object input : inputs) {
 			if (input instanceof IndustrialMaterial) {
-				input = new MaterialStack((IndustrialMaterial) input);
+				input = Forms.DUST.of((IndustrialMaterial) input);
 			}
 			if (input instanceof ItemStack) {
 				ItemStack stack = (ItemStack)input;
@@ -312,7 +312,7 @@ public class RecipeUtils {
 		List<Object> inputList = new ArrayList<Object>(inputs.length);
 		for (Object input : inputs) {
 			if (input instanceof IndustrialMaterial) {
-				input = new MaterialStack((IndustrialMaterial) input);
+				input = Forms.DUST.of((IndustrialMaterial) input);
 			}
 			if (input instanceof MaterialStack) {
 				input = ((MaterialStack) input).getOreDictKey();

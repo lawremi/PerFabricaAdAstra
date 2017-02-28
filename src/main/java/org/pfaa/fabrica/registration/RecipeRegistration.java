@@ -7,7 +7,6 @@ import org.pfaa.chemica.ChemicaItems;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.item.ItemIngredientStack;
-import org.pfaa.chemica.item.MaterialStack;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
@@ -16,13 +15,14 @@ import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.RecipeUtils;
-import org.pfaa.chemica.util.ChanceStack;
+import org.pfaa.core.item.ChanceStack;
 import org.pfaa.fabrica.FabricaBlocks;
 import org.pfaa.fabrica.FabricaItems;
-import org.pfaa.fabrica.model.Generic.Generics;
+import org.pfaa.fabrica.model.Generics;
 import org.pfaa.fabrica.model.Intermediate.Intermediates;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
@@ -33,7 +33,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -59,7 +58,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 
 	private static void registerCrushingRecipe(Aggregates aggregate, int nPerBlock) {
-		MaterialStack materialStack = new MaterialStack(Forms.BLOCK, aggregate);
+		MaterialStack materialStack = Forms.BLOCK.of(aggregate);
 		ItemStack output = ChemicaItems.AGGREGATE_DUST.getItemStack(aggregate, nPerBlock);
 		for (ItemStack input : materialStack.getItemStacks()) {
 			RECIPES.registerCrushingRecipe(input, output, null, Strength.WEAK);
@@ -68,9 +67,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 
 	private static void hydrateHardenedClay() {
 		registerCrushingRecipe(Aggregates.HARDENED_CLAY, 4);
-		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.PILE));
+		FluidStack water = Forms.PILE.of(State.LIQUID.of(Compounds.H2O)).getFluidStack();
 		GENERICS.registerMixingRecipe(
-				new IngredientList(Aggregates.HARDENED_CLAY),
+				Forms.DUST.of(Aggregates.HARDENED_CLAY).with(),
 				water,
 				null,
 				new ItemStack(Items.clay_ball),
@@ -93,13 +92,13 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 
 	private static void grindSlag() {
 		ItemStack output = FabricaItems.INTERMEDIATE_DUST.getItemStack(Intermediates.SLAG);
-		GENERICS.registerGrindingRecipe(new MaterialStack(Forms.LUMP, Intermediates.SLAG), output, 
+		GENERICS.registerGrindingRecipe(Forms.LUMP.of(Intermediates.SLAG), output, 
 				Collections.<ChanceStack>emptyList(), Strength.STRONG);
 	}
 	
 	private static void calcineMaterial(IndustrialMaterial mineral, IndustrialMaterial calcined, int temp) {
-		IngredientList inputs = new IngredientList(new MaterialStack(mineral));
-		ItemStack output = new MaterialStack(calcined).getBestItemStack();
+		IngredientList<MaterialStack> inputs = IngredientList.of(Forms.DUST.of(mineral));
+		ItemStack output = Forms.DUST.of(calcined).getBestItemStack();
 		GENERICS.registerRoastingRecipe(inputs, output, null, temp);
 	}
 	
@@ -109,14 +108,15 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		calcineMaterial(Intermediates.METAKAOLIN, Intermediates.SPINEL, 1200);
 		calcineMaterial(Intermediates.SPINEL, Intermediates.MULLITE, 1600);
 		calcineMaterial(Ores.GYPSUM, Intermediates.GYPSUM_PLASTER, 600);
+		// FIXME: move to Geologica
 		calcineMaterial(IndustrialMinerals.TRONA, Compounds.Na2CO3, 600);
 	}
 
 	private static void makePortlandCement() {
 		ItemStack clinker = FabricaItems.INTERMEDIATE_LUMP.getItemStack(Intermediates.PORTLAND_CLINKER, 4);	
-		IngredientList inputs = new IngredientList(
-				new MaterialStack(Ores.CALCITE, 3),
-				new MaterialStack(Forms.CLUMP, Aggregates.CLAY));
+		IngredientList<MaterialStack> inputs = IngredientList.of(
+				Forms.DUST.of(3, Ores.CALCITE),
+				Forms.CLUMP.of(Aggregates.CLAY));
 		GENERICS.registerRoastingRecipe(inputs, clinker, null, 1700);
 		mixIntermediate(FabricaItems.INTERMEDIATE_LUMP, Intermediates.PORTLAND_CEMENT);
 	}
@@ -135,11 +135,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		if (concretes.size() > 0) {
 			ItemStack concrete = concretes.get(0).copy();
 			concrete.stackSize = 8;
-			IngredientList inputs = new IngredientList(
-					new MaterialStack(null, Aggregates.GRAVEL),
-					new MaterialStack(null, Aggregates.SAND),
-					new MaterialStack(Generics.CEMENT));
-			FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+			IngredientList<?> inputs = MaterialStack.of(Aggregates.GRAVEL).
+					with(MaterialStack.of(Aggregates.SAND), Forms.DUST.of(Generics.CEMENT));
+			FluidStack water = Forms.DUST.of(Compounds.H2O).getFluidStack();
 			GENERICS.registerMixingRecipe(inputs, water, null, concrete, null, null, Condition.STP, null);
 		}
 	}
@@ -155,13 +153,13 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void makeDrywallJointCompound() {
-		IngredientList jointCompoundSolids = new IngredientList(
-				new MaterialStack(Forms.DUST, Generics.JOINT_COMPOUND_FILLER),
-				new MaterialStack(Forms.DUST_TINY, Generics.BINDER),
-				new MaterialStack(Forms.DUST_TINY, IndustrialMinerals.PALYGORSKITE),
-				new MaterialStack(Forms.DUST_TINY, Generics.FILLER)
+		IngredientList<MaterialStack> jointCompoundSolids = IngredientList.of(
+				Forms.DUST.of(Generics.JOINT_COMPOUND_FILLER),
+				Forms.DUST_TINY.of(Generics.BINDER),
+				Forms.DUST_TINY.of(IndustrialMinerals.PALYGORSKITE),
+				Forms.DUST_TINY.of(Generics.FILLER)
 		);
-		FluidStack water = new FluidStack(FluidRegistry.WATER, IndustrialFluids.getAmount(Forms.DUST));
+		FluidStack water = Forms.DUST.of(Compounds.H2O).getFluidStack();
 		GENERICS.registerMixingRecipe(jointCompoundSolids, water, 
 				null, new ItemStack(FabricaItems.JOINT_COMPOUND, 4), null, null, Condition.STP, null);
 	}
@@ -169,7 +167,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	private static void useFeldsparAsFlux() {
 		ItemStack output = new ItemStack(Blocks.glass);
 		ItemStack input = new ItemStack(Blocks.sand);
-		MaterialStack feldspar = new MaterialStack(Forms.DUST_TINY, IndustrialMinerals.FELDSPAR);
+		MaterialStack feldspar = Forms.DUST_TINY.of(IndustrialMinerals.FELDSPAR);
 		GENERICS.registerCastingRecipe(input, output, feldspar, 1500);
 		
 		output = new ItemStack(Items.brick);
@@ -178,7 +176,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 
 	private static void mixIntermediate(IndustrialMaterialItem<Intermediates> item, Intermediates material) {
-		IngredientList inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
+		IngredientList<MaterialStack> inputs = RecipeUtils.getMixtureInputs(item.getForm(), material);
 		GENERICS.registerMixingRecipe(inputs, item.getItemStack(material));
 	}
 	
@@ -193,28 +191,28 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			ItemStack doubleDye = dye.copy();
 			doubleDye.stackSize = 2;
 			GENERICS.registerMixingRecipe(
-					new IngredientList(new ItemIngredientStack(dye), new MaterialStack(Generics.FILLER)), 
+					IngredientList.of(new ItemIngredientStack(dye), Forms.DUST.of(Generics.FILLER)), 
 					doubleDye);	
 		}
 	}
 
 	private static void makeSodaAsh() {
 		float brineConcentration = (float)Solutions.PURIFIED_BRINE.getComponents().get(1).weight;
-		// FIXME: drop Term.concentration, instead define this reaction normally and create a generic
-		//        operation that overrides the NaCl with brine.
+		// FIXME: Drop Term.concentration, instead define this reaction normally and create a generic
+		//        operation that overrides the NaCl with brine. Should move to Geologica.
 		Reaction reaction = Reaction.inWaterOf(Compounds.NaCl, brineConcentration).
 				         			 with(Compounds.CO2).
 				         			 with(Compounds.NH3).
 				         			 with(Compounds.H2O).
-				         			 yields(Compounds.NaHCO3).
+				         			 yields(Compounds.NaHCO3). // decomposes to Na2CO3
 				         			 and(Compounds.NH4Cl);
 		CONVERSIONS.register(reaction);
 	}
 
 	private static void makePhosphoricAcid() {
-		IngredientList solidInputs = new IngredientList(new MaterialStack(Forms.DUST, IndustrialMinerals.APATITE));
-		FluidStack sulfuricAcid = IndustrialFluids.getCanonicalFluidStack(Compounds.H2SO4, State.AQUEOUS);
-		FluidStack phosphoricAcid = IndustrialFluids.getCanonicalFluidStack(Compounds.H3PO4, State.AQUEOUS);
+		IngredientList<MaterialStack> solidInputs = IngredientList.of(Forms.DUST.of(IndustrialMinerals.APATITE));
+		FluidStack sulfuricAcid = IndustrialFluids.getFluidStack(Compounds.H2SO4, State.AQUEOUS);
+		FluidStack phosphoricAcid = IndustrialFluids.getFluidStack(Compounds.H3PO4, State.AQUEOUS);
 		ItemStack gypsum = GeologicaItems.ORE_MINERAL_DUST.getItemStack(Ores.GYPSUM);
 		GENERICS.registerMixingRecipe(solidInputs, sulfuricAcid, null, gypsum, phosphoricAcid, null, Condition.STP, null);
 	}
