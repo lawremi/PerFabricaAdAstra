@@ -13,6 +13,7 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
+import org.pfaa.chemica.processing.MaterialStack;
 
 import com.google.common.base.CaseFormat;
 
@@ -21,6 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> extends Item implements IndustrialItemAccessors {
 	
@@ -70,8 +72,18 @@ public class IndustrialMaterialItem<T extends Enum<?> & IndustrialMaterial> exte
 		return this.getItemStack(material, this.form.getNumberPerBlock());
 	}
 	
+	@Override
+	public List<ItemStack> getItemStacks() {
+		return this.getIndustrialMaterials().stream().map(this::getItemStack).collect(Collectors.toList());
+	}
+
+	@Override
+	public ItemStack getWilcardStack() {
+		return new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE);
+	}
+
 	public MaterialStack getMaterialStack(T material, int quantity) {
-		return new MaterialStack(this.getForm(), material, quantity);
+		return this.getForm().of(quantity, material);
 	}
 	
 	public MaterialStack getMaterialStack(T material) {
