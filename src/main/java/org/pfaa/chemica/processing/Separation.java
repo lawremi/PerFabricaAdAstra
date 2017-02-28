@@ -11,11 +11,11 @@ import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.State;
 
 public class Separation extends ConditionedConversion implements MassTransfer {
-	
 	private MaterialState<Mixture> input;
 	private MaterialState<?> agent;
 	private MaterialState<Mixture> separated, residuum;
 	private Axis axis;
+	private double energy;
 	
 	protected Separation(MaterialState<Mixture> input) {
 		this.input = input;
@@ -85,10 +85,14 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		return Arrays.asList(MaterialStoich.of(this.separated), MaterialStoich.of(this.residuum));
 	}
 
+	public Separation given(double energy) {
+		this.energy = energy;
+		return this;
+	}
+	
 	@Override
 	public double getEnergy() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.energy;
 	}
 
 	@Override
@@ -120,7 +124,7 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	public static Separation of(Mixture mixture) {
 		return of(MaterialState.of(mixture));
 	}
-
+	
 	public static enum Axis {
 		DENSITY,
 		MOLECULAR_SIZE,
