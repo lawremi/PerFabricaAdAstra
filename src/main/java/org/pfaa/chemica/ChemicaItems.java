@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.pfaa.chemica.fluid.FilledGlassBottleItem;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Alloy.Alloys;
 import org.pfaa.chemica.model.Catalysts;
@@ -18,11 +19,11 @@ public class ChemicaItems implements ItemCatalog {
 	
 	// FIXME: nPerBlock != 9 for aggregate dusts (4 for hardened clay, 1 for stone/obsidian) 
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_DUST = 
-			new IndustrialMaterialItem<Aggregates>(Forms.DUST, Aggregates.class, Aggregates::isHard);
+			new IndustrialMaterialItem<Aggregates>(Forms.DUST, Aggregates.class, Aggregate::isHard);
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_TINY_DUST = 
-			new IndustrialMaterialItem<Aggregates>(Forms.DUST_TINY, Aggregates.class, Aggregates::isHard);
+			new IndustrialMaterialItem<Aggregates>(Forms.DUST_TINY, Aggregates.class, Aggregate::isHard);
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_PILE = 
-			new IndustrialMaterialItem<Aggregates>(Forms.PILE, Aggregates.class, Aggregates::isLoose);
+			new IndustrialMaterialItem<Aggregates>(Forms.PILE, Aggregates.class, Aggregate::isLoose);
 	
 	public static final IndustrialMaterialItem<Element> ELEMENT_DUST = 
 			new IndustrialMaterialItem<Element>(Forms.DUST, Element.class, Element::isMonatomic);
