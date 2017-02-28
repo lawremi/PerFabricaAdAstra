@@ -209,18 +209,14 @@ public class IndustrialFluids {
 		return block;
 	}
 	
-	private static int MB_PER_BLOCK = 1296;
-	
+	@Deprecated
 	public static int getAmount(Form form) {
 		return getAmount(State.LIQUID, form);
 	}
 	
 	public static int getAmount(State state, Form form) {
-		int nPerBlock = form.getNumberPerBlock();
-		int amount = MB_PER_BLOCK / nPerBlock * (state == State.GAS ? 100 : 1);
-		if (state == State.AQUEOUS) {
-			amount *= (1 - Constants.STANDARD_SOLUTE_WEIGHT) / Constants.STANDARD_SOLUTE_WEIGHT;
-		}
+		int amount = Forms.MILLIBUCKET.getNumberPerBlock() / form.getNumberPerBlock();
+		amount *= state.getVolumeFactor();
 		return amount;
 	}
 	
