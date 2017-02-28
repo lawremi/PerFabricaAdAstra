@@ -61,19 +61,20 @@ public class VanillaIntegration {
 			if (condition.temperature != Constants.STANDARD_TEMPERATURE) {
 				return;
 			}
-			if (fluidInput != null && fluidInput.getFluid().isGaseous() || 
-				fluidInput2 != null && fluidInput2.getFluid().isGaseous()) {
+			if (fluidInput != null && (fluidInput.getFluid().isGaseous() || 
+					fluidInput.amount > FluidContainerRegistry.BUCKET_VOLUME) || 
+				fluidInput2 != null && (fluidInput2.getFluid().isGaseous() ||
+					fluidInput2.amount > FluidContainerRegistry.BUCKET_VOLUME)) {
 				return;
 			}
-			if (fluidInput.amount > FluidContainerRegistry.BUCKET_VOLUME) {
+			if (!catalyst.isEmpty()) {
 				return;
 			}
-			if (catalyst != null) {
-				return;
+			int offset = fluidInput2 != null ? 2 : fluidInput != null ? 1 : 0;
+			inputs = Arrays.copyOf(inputs, inputs.length + offset);
+			if (fluidInput != null) {
+				inputs[inputs.length - offset] = toBucket(fluidInput);
 			}
-			int offset = fluidInput2 != null ? 1 : 0;
-			inputs = Arrays.copyOf(inputs, inputs.length + 1 + offset);
-			inputs[inputs.length - 1 - offset] = toBucket(fluidInput);
 			if (fluidInput2 != null) {
 				inputs[inputs.length - 1] = toBucket(fluidInput2);
 			}
