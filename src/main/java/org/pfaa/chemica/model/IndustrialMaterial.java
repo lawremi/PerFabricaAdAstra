@@ -9,12 +9,7 @@ public interface IndustrialMaterial {
 		return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 	}
 	
-	default boolean isPure() {
-		return true;
-	}
-	default boolean isForBuilding() {
-		return false;
-	}
+	default Strength getStrength() { return null; }
 	
 	default ChemicalStateProperties getStateProperties(State state) {
 		return null;
