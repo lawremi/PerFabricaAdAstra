@@ -20,7 +20,7 @@ public class Compaction extends DegenerateConversion implements Sizing {
 
 	@Override
 	public Condition getCondition() {
-		return new Condition(this.getMaterial().getFusion().getTemperature() - 1);
+		return this.getMaterial().getSinteringCondition();
 	}
 
 	@Override

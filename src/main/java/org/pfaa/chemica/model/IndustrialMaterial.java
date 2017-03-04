@@ -52,13 +52,24 @@ public interface IndustrialMaterial {
 	default Fusion getFusion() {
 		return null;
 	}
+	default boolean isFusible() {
+		return this.getFusion() != null;
+	}
 	default Vaporization getVaporization() {
 		return null;
+	}
+	default boolean isVaporizable() {
+		return this.getVaporization() != null;
 	}
 	default boolean isSoluble(Condition condition) {
 		return false;
 	}
 	
+	default Condition getSinteringCondition() {
+		return this.getFusion() != null ?
+				new Condition((int)(this.getFusion().getCondition().temperature * 0.8)) : null;
+	}
+
 	default Condition getCanonicalCondition(State state) {
 		int temp = Constants.STANDARD_TEMPERATURE;
 		switch(state) {
