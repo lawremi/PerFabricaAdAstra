@@ -103,7 +103,7 @@ public class Combination extends ConditionedConversion implements MassTransfer {
 	}
 	
 	public static Combination yielding(MaterialState<? extends Mixture> output) {
-		List<MaterialStoich<?>> stoichs = output.material.quantize().getComponents().stream().
+		List<MaterialStoich<?>> stoichs = output.material.discretize().getComponents().stream().
 				map((comp) -> MaterialStoich.of(comp, output.state)).
 				collect(Collectors.toList());
 		return of(stoichs).yields(output);

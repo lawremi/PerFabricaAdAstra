@@ -89,7 +89,7 @@ public interface Mixture extends IndustrialMaterial {
 		return this.concentrate(1/this.getTotalWeight());
 	}
 	
-	default Mixture quantize() {
+	default Mixture discretize() {
 		OptionalDouble minorWeight = this.normalize().getComponents().stream().
 				mapToDouble((comp) -> comp.weight).min();
 		if (minorWeight.isPresent()) {
