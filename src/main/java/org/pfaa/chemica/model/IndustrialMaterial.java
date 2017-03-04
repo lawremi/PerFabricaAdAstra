@@ -11,11 +11,11 @@ public interface IndustrialMaterial {
 	
 	default Strength getStrength() { return null; }
 	
-	default ChemicalStateProperties getStateProperties(State state) {
+	default StateProperties getStateProperties(State state) {
 		return null;
 	}
 	default ConditionProperties getProperties(Condition condition, State state) {
-		ChemicalStateProperties stateProps = this.getStateProperties(state);
+		StateProperties stateProps = this.getStateProperties(state);
 		if (stateProps != null) {
 			Thermo adjacent = null;
 			if (!stateProps.thermo.knowsHeatCapacity())
