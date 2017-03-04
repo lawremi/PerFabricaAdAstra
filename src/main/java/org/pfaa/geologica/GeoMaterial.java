@@ -1,20 +1,28 @@
 package org.pfaa.geologica;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.ConditionProperties;
 import org.pfaa.chemica.model.Element;
+import org.pfaa.chemica.model.Fusion;
+import org.pfaa.chemica.model.Hazard;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.StateProperties;
 import org.pfaa.chemica.model.Strength;
-import org.pfaa.geologica.processing.Crude.Crudes;
+import org.pfaa.chemica.model.Thermo;
+import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.geologica.processing.Crude;
+import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.Mineral;
@@ -31,37 +39,38 @@ import net.minecraft.block.material.Material;
 
 public enum GeoMaterial implements Mixture {
 	BRECCIA(Aggregates.GRAVEL.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
-	CLAYSTONE(Aggregates.HARDENED_CLAY.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK),
-	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.3).mix(Ores.PYROCHLORE, 0.02), Strength.WEAK),
+	CLAYSTONE(Aggregates.HARDENED_CLAY.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK, 2.5, 1.1),
+	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.3).mix(Ores.PYROCHLORE, 0.02), Strength.WEAK, 2.4, 1.2, 800),
 	CONGLOMERATE(Aggregates.SAND.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
-	MUDSTONE(Aggregates.SAND.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK),
+	MUDSTONE(Aggregates.SAND.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK, 2.6, 0.9),
 	
-	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.3), Strength.MEDIUM),
-	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.MEDIUM),
+	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.3), Strength.MEDIUM, 2.5, 0.9),
+	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.MEDIUM, 2.7, 1.1),
 	SERPENTINITE(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.05)
-			     .mix(IndustrialMinerals.TALC, 0.05).mix(IndustrialMinerals.OLIVINE, 0.05), Strength.MEDIUM),
-	SLATE(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.05), Strength.MEDIUM),
-	SKARN(Aggregates.STONE.mix(IndustrialMinerals.WOLLASTONITE, 0.05), Strength.MEDIUM),
-	CHALK(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.MEDIUM),
+			     .mix(IndustrialMinerals.TALC, 0.05).mix(IndustrialMinerals.OLIVINE, 0.05), 
+			     Strength.MEDIUM, 3, 1.1),
+	SLATE(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.05), Strength.MEDIUM, 2.7, 0.8),
+	SKARN(Aggregates.STONE.mix(IndustrialMinerals.WOLLASTONITE, 0.05), Strength.MEDIUM, 2.8, 0.9),
+	CHALK(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.MEDIUM, 2.3, 0.9),
 	
-	ANDESITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG),
-	BASALT(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.STRONG),
-	GNEISS(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG),
-	GRANITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG),
-	GREENSCHIST(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.1), Strength.STRONG),
-	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG),
+	ANDESITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG, 2.7, 2.4, 1200),
+	BASALT(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.STRONG, 3.0, 0.8, 1400),
+	GNEISS(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG, 2.6, 1.0),
+	GRANITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG, 2.7, 0.8, 1000),
+	GREENSCHIST(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.1), Strength.STRONG, 2.8, 1.1),
+	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG, 2.5, 0.9),
 	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.3)
 			  .mix(Ores.QUARTZ, 0.1).mix(IndustrialMinerals.MICA, 0.1), 
-			  Strength.STRONG),
-	RHYOLITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG),
-	SANDSTONE(Aggregates.SAND.mix(Aggregates.SAND, 1.0), Strength.STRONG),
-	RED_SANDSTONE(Aggregates.SAND.mix(Ores.HEMATITE, 0.01), Strength.STRONG),
+			  Strength.STRONG, 2.6, 0.8),
+	RHYOLITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG, 2.5, 2.4, 1000),
+	SANDSTONE(Aggregates.SAND.mix(Aggregates.SAND, 1.0), Strength.STRONG, 2.5, 0.9),
+	RED_SANDSTONE(Aggregates.SAND.mix(Ores.HEMATITE, 0.01), Strength.STRONG, 2.5, 0.9),
 	
-	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG),
-	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.VERY_STRONG),
-	HORNFELS(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.VERY_STRONG),
-	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.3), Strength.VERY_STRONG),
-	QUARTZITE(Aggregates.SAND.mix(Ores.QUARTZ, 0.3), Strength.VERY_STRONG),
+	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG, 2.9, 1.0, 1200),
+	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.VERY_STRONG, 3.0, 1.0, 1400),
+	HORNFELS(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.VERY_STRONG, 2.8, 0.8),
+	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.3), Strength.VERY_STRONG, 3.2, 1.3, 1600),
+	QUARTZITE(Aggregates.SAND.mix(Ores.QUARTZ, 0.3), Strength.VERY_STRONG, 2.3, 0.8),
 
 	LIGHT_OIL(new SimpleCrude(Crudes.VOLATILES, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
 			  mix(Crudes.KEROSENE, 0.1).mix(Crudes.LIGHT_GAS_OIL, 0.05).mix(Crudes.HEAVY_GAS_OIL, 0.05).
@@ -226,6 +235,8 @@ public enum GeoMaterial implements Mixture {
 	private Material blockMaterial;
 	private Mixture composition;
     private IndustrialMaterial host;
+    private Fusion fusion;
+    private StateProperties properties;
 	
 	GeoMaterial(Mixture composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
 	    this.composition = composition;
@@ -244,6 +255,19 @@ public enum GeoMaterial implements Mixture {
 	
 	GeoMaterial(Mixture composition, Strength strength) {
         this(composition, strength, Material.rock);
+    }
+	
+	GeoMaterial(Mixture composition, Strength strength, double density, double heatCapacity, int fusionTemp) {
+        this(composition, strength, density, heatCapacity);
+        this.fusion = new Fusion(fusionTemp);
+    }
+	
+	GeoMaterial(Mixture composition, Strength strength, double density, double heatCapacity) {
+        this(composition, strength);
+        // NOTE: Heat capacity in J/(g*K), not J/(mol*K), but relative values are correct.
+        //       Scaling to STONE from MOLAR is a factor of 9, so may work out to something sensible.  
+        this.properties = new StateProperties(State.SOLID, Color.GRAY, density, 
+        		new Thermo(0, 0, heatCapacity), new Hazard(), true);
     }
 	
 	GeoMaterial(OreMineral composition, Strength strength, IndustrialMaterial host, Material blockMaterial) {
@@ -341,20 +365,43 @@ public enum GeoMaterial implements Mixture {
 		return this.getBlockMaterial() == Material.clay || this.getBlockMaterial() == Material.ground;
 	}
 	
-	public boolean isOreClay() {
+	public boolean isClayOre() {
 		return this.getBlockMaterial() == Material.clay && this.getComposition() instanceof Ore;
 	}
 	
-	public boolean isCrudeSolid() {
+	public boolean isSolidCrude() {
 		return this.getComposition() instanceof Crude && 
 				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.ground);
 	}
 
-	public boolean isOreRock() {
+	public boolean isRockOre() {
 		return this.getComposition() instanceof Ore && 
 				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.clay);
 	}
 	
+	public boolean isRock() {
+		return this.getComposition() instanceof Aggregate && this.getBlockMaterial() == Material.rock;
+	}
+	
+	public boolean isIgneousRock() {
+		return this.isRock() && this.getFusion() != null;
+	}
+	
+	@Override
+	public StateProperties getStateProperties(State state) {
+		return state == State.SOLID ? this.properties : null; 
+	}
+
+	@Override
+	public Fusion getFusion() {
+		return this.fusion;
+	}
+	
+	@Override
+	public Condition getSinteringCondition() {
+		return new Condition(TemperatureLevel.values()[this.getStrength().ordinal()].getReferenceTemperature());
+	}
+
 	private static Material blockMaterialFromHost(IndustrialMaterial host)
     {
         Material material = Material.rock;

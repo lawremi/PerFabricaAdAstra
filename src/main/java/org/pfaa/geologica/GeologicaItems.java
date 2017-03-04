@@ -11,22 +11,24 @@ import org.pfaa.geologica.processing.OreMineral.Ores;
 
 public class GeologicaItems implements ItemCatalog {
 
+	// TODO: CRUDE_BLOCK, formed by combining lumps?
+	// TODO: Make crude lump/dust(tiny) items based on Crude, not GeoMaterial, requiring the Crude to have a Strength.
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isCrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isSolidCrude);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, GeoMaterial::isCrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, GeoMaterial::isSolidCrude);
 	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, GeoMaterial::isCrudeSolid);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, GeoMaterial::isSolidCrude);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, GeoMaterial::isEarthyMaterial);
 	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isOreClay);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isClayOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isOreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isRockOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, GeoMaterial::isOreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, GeoMaterial::isRockOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, GeoMaterial::isOreRock);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, GeoMaterial::isRockOre);
 	
 	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST = 
 			new IndustrialMaterialItem<Ores>(Forms.DUST, Ores.class);
