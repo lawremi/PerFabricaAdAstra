@@ -1,12 +1,13 @@
 package org.pfaa.chemica.registration;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import org.pfaa.chemica.model.Alloy;
 import org.pfaa.chemica.model.Chemical;
 import org.pfaa.chemica.model.Compound;
-import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
@@ -19,10 +20,10 @@ import org.pfaa.chemica.processing.Communition;
 import org.pfaa.chemica.processing.Compaction;
 import org.pfaa.chemica.processing.EnthalpyChange;
 import org.pfaa.chemica.processing.Separation;
+import org.pfaa.chemica.processing.Separation.Axis;
 import org.pfaa.chemica.processing.Smelting;
 import org.pfaa.chemica.processing.Stacking;
 import org.pfaa.chemica.processing.TemperatureLevel;
-import org.pfaa.chemica.processing.Separation.Axis;
 
 public class ConversionRegistrant {
 	private ConversionRegistry registry;
@@ -45,6 +46,18 @@ public class ConversionRegistrant {
 		Arrays.stream(material.getEnumConstants()).forEach(this::meltAndFreeze);
 	}
 
+	public void melt(IndustrialMaterial material) {
+		registry.register(EnthalpyChange.of(material).melts());
+	}
+	
+	public <T extends Enum<?> & IndustrialMaterial> void melt(Class<T> material) {
+		Arrays.stream(material.getEnumConstants()).forEach(this::melt);
+	}
+	
+	public <T extends Enum<?> & IndustrialMaterial> void melt(Class<T> material, Predicate<T> predicate) {
+		Arrays.stream(material.getEnumConstants()).filter(predicate).forEach(this::melt);
+	}
+	
 	public void vaporizeAndCondense(IndustrialMaterial material) {
 		EnthalpyChange change = EnthalpyChange.of(material);
 		registry.register(change.vaporizes());
@@ -61,6 +74,10 @@ public class ConversionRegistrant {
 	
 	public <T extends Enum<?> & IndustrialMaterial> void compact(Class<T> material) {
 		Arrays.stream(material.getEnumConstants()).map(Compaction::of).forEach(registry::register);
+	}
+	
+	public <T extends Enum<?> & IndustrialMaterial> void compact(Class<T> material, Predicate<T> predicate) {
+		Arrays.stream(material.getEnumConstants()).filter(predicate).map(Compaction::of).forEach(registry::register);
 	}
 	
 	public void smelt(TemperatureLevel temp, Compounds... compounds) {

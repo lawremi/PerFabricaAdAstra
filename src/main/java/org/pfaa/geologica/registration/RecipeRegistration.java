@@ -26,7 +26,6 @@ import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.Stacking;
-import org.pfaa.chemica.processing.TemperatureLevel;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.Reactions;
@@ -38,7 +37,6 @@ import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.GeoBlock;
-import org.pfaa.geologica.block.IntactGeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.ProxyBlock;
 import org.pfaa.geologica.block.StairsBlock;
@@ -64,7 +62,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -75,8 +72,11 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	public static void init() {
 		registerCompatibilityRecipes();
 		registerStoneToolRecipes();
+		registerCraftingRecipes();
 		
-		registerRockCastingRecipes();
+		meltRocks();
+		processGeoMaterials();
+		
 		registerClayProcessingRecipes();
 		registerPeatDryingRecipe();
 		registerCommunitionRecipes();
@@ -85,7 +85,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerBrineProcessingRecipes();
 		registerNaturalGasProcessingRecipes();
 		registerOilProcessingRecipes();
-		registerCraftingRecipes();
 		
 	}
 	
@@ -150,17 +149,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	private static float getInitialStoneToolDamage(Strength strength) {
 		return Geologica.getConfiguration().getInitialStoneToolDamage(strength);
 	}
-	
-	private static void registerRockCastingRecipes() {
-		for (Block block : GeologicaBlocks.getBlocks()) {
-			if (block instanceof IntactGeoBlock) {
-				GeoBlock broken = ((GeoBlock)block).getBrokenRockBlock();
-				if (broken != null) {
-					registerRockCastingRecipes(broken, block);
-				}
-			}
-		}
-	}
 
 	private static void registerCraftingRecipes() {
 		registerSlabRecipe(GeologicaBlocks.MEDIUM_COBBLE, GeologicaBlocks.MEDIUM_COBBLE_SLAB);
@@ -188,6 +176,15 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__GRANITE);
 		registerStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__MARBLE);
 		registerQuarterToBlockRecipe(GeologicaItems.EARTHY_CLUMP);
+	}
+
+	private static void meltRocks() {
+		REGISTRANT.melt(GeoMaterial.class, GeoMaterial::isIgneousRock);
+	}
+	
+	private static void processGeoMaterials() {
+		// TODO: REGISTRANT.communite(GeoMaterial.class);
+		REGISTRANT.compact(GeoMaterial.class, GeoMaterial::isRock);
 	}
 
 	private static void registerCommunitionRecipes() {
@@ -358,17 +355,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		ItemStack outputStack = new ItemStack(output, 4, output.getModelBlockMeta());
 		ItemStack inputStack = new ItemStack(output.getModelBlock(), 1, output.getModelBlockMeta());
 		GameRegistry.addRecipe(outputStack, "#  ", "## ", "###", '#', inputStack);
-	}
-	
-	private static void registerRockCastingRecipes(GeoBlock input, Block output) {
-		TemperatureLevel temp = TemperatureLevel.values()[input.getStrength().ordinal()];
-		for(int meta = 0; meta < input.getMetaCount(); meta++) {
-			ItemStack outputStack = new ItemStack(output, 1, meta);
-			ItemStack inputStack = new ItemStack(input, 1, meta);
-			RECIPES.registerCastingRecipe(inputStack, outputStack, null, temp.getReferenceTemperature(), 0);
-			FluidStack fluid = new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME);
-			RECIPES.registerMeltingRecipe(inputStack, fluid, temp.getReferenceTemperature(), 0);
-		}
 	}
 	
 	private static void registerStackingRecipes() {
