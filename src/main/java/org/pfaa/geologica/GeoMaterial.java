@@ -388,6 +388,11 @@ public enum GeoMaterial implements Mixture {
 	}
 	
 	@Override
+	public boolean isGranular() {
+		return this.getBlockMaterial() == Material.sand;
+	}
+	
+	@Override
 	public StateProperties getStateProperties(State state) {
 		return state == State.SOLID ? this.properties : null; 
 	}

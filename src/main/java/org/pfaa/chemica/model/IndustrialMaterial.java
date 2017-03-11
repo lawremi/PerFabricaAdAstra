@@ -65,6 +65,10 @@ public interface IndustrialMaterial {
 		return false;
 	}
 	
+	default boolean isGranular() {
+		return false;
+	}
+	
 	default Condition getSinteringCondition() {
 		return this.getFusion() != null ?
 				new Condition((int)(this.getFusion().getCondition().temperature * 0.8)) : null;
