@@ -131,4 +131,12 @@ public class ConversionRegistrant {
 	public <T extends Enum<?> & Compound> void decompose(Class<T> material) {
 		Arrays.stream(material.getEnumConstants()).forEach(this::decompose);
 	}
+	
+	public void separateOre(Mixture mixture) {
+		registry.register(Separation.of(mixture).extractsAll().by(Separation.Axis.DENSITY));
+	}
+	
+	public <T extends Enum<?> & Mixture> void separateOre(Class<T> mixture) {
+		Arrays.stream(mixture.getEnumConstants()).forEach(this::separateOre);
+	}
 }

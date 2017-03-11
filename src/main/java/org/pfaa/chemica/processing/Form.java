@@ -28,7 +28,7 @@ public interface Form {
 	Form compact();
 	Form dry();
 	
-	default double scaleTo(Form target) {
+	default float scaleTo(Form target) {
 		return target.getNumberPerBlock() / this.getNumberPerBlock();
 	}
 	

@@ -183,7 +183,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void processGeoMaterials() {
-		// TODO: REGISTRANT.communite(GeoMaterial.class);
+		//REGISTRANT.communite(GeoMaterial.class);
+		REGISTRANT.separateOre(GeoMaterial.class);
 		REGISTRANT.compact(GeoMaterial.class, GeoMaterial::isRock);
 	}
 
@@ -194,9 +195,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void registerCommunitionRecipes(Block block) {
-		if (block.getMaterial() == Material.sand) {
-			registerSandSeparationRecipes((GeoBlock)block);
-		}
 		if (block.getMaterial() != Material.rock) {
 			return;
 		}
@@ -221,15 +219,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			} else if (Crude.class.isAssignableFrom(geoBlock.getComposition())) {
 				registerCrudeCommunitionRecipes((GeoBlock)block);
 			}
-		}
-	}
-
-	private static void registerSandSeparationRecipes(GeoBlock block) {
-		if (!Ore.class.isAssignableFrom(block.getComposition())) {
-			return;
-		}
-		for (GeoMaterial material : block.getGeoMaterials()) {
-			registerOreSeparationRecipes(block.getItemStack(material), Forms.BLOCK, material);
 		}
 	}
 

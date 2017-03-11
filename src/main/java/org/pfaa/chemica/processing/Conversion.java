@@ -32,18 +32,7 @@ public interface Conversion {
 	default Form getOutputForm(Form inputForm) {
 		if (inputForm == Forms.MILLIBUCKET) {
 			/*
-			 * If all inputs are fluid, then we need to decide on the output form. If the outputs
-			 * are also all fluid, then we could scale so that the min coefficient is 1 mB. But it
-			 * seems simpler if the input is of a standard size, that satifies the following:
-			 * 1) Large enough to give enough precision for mixtures with minor components,
-			 * 2) Small enough to support smaller process scales,
-			 * 3) Likely corresponds to a solid output, if there are any.
-			 * 
-			 * We select two standard forms: dust and tiny dust. 
-			 * For precision, we use dust when there are minor components.
-			 * Otherwise, we use tiny dust, likely the highest resolution for processes involving solids.
-			 * Even when there are no solids, consistency is good. 
-			 * Both of those are likely supported by any solid.
+			 * Even when there are no solid outputs, this affords a convenient, consistent scale.
 			 */
 			boolean hasMinorComponents = this.getOutputs().stream().anyMatch((output) -> output.stoich < 1);
 			return hasMinorComponents ? Forms.DUST : Forms.DUST_TINY;
@@ -94,6 +83,7 @@ public interface Conversion {
 			outputs = outputs.map((output) -> output.scale(1 / formRatio));
 		}
 		outputs = Stream.concat(outputs, this.getBonusOutputs(outputForm));
+		// Might strip low chance (< 0.05?) output MaterialStacks here
 		return MaterialRecipe.converts(inputForm.of(inputs)).to(outputForm.of(outputs)).
 			at(this.getCondition()).given((int)(this.getEnergy() * inputForm.scaleTo(Forms.MOLAR)));
 	}
