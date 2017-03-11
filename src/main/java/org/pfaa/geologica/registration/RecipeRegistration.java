@@ -283,7 +283,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 					outputs.add(downWeighted);
 			}
 		}
-		RECIPES.registerPhysicalSeparationRecipe(input, outputs);
+		RECIPES.registerMechanicalSeparationRecipe(input, outputs);
 	}
 
 	private static void registerOreCommunitionRecipes(GeoBlock input) {

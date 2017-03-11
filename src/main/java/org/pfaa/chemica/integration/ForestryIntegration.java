@@ -74,7 +74,7 @@ public class ForestryIntegration {
 		}
 
 		@Override
-		public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+		public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 			Map<ItemStack,Float> map = new HashMap<ItemStack, Float>();
 			for (ChanceStack output : outputs) {
 				map.put(output.itemStack, output.chance);

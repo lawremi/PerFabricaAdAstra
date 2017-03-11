@@ -26,7 +26,7 @@ public class BuildcraftAdditionsIntegration {
 		}
 
 		@Override
-		public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {}
+		public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {}
 
 		// Other machines: cooling tower (condenser), refinery (essentially a boiler producing one gas output)
 	}

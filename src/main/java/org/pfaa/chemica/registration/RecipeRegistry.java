@@ -25,7 +25,7 @@ public interface RecipeRegistry {
 	public void registerSmeltingRecipe(ItemStack input, FluidStack output, ItemStack flux, int temp);
 	public void registerGrindingRecipe(ItemStack input, ItemStack output, List<ChanceStack> secondaries, Strength strength);
 	public void registerCrushingRecipe(ItemStack input, ItemStack output, ChanceStack dust, Strength strength);
-	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs);
+	public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs);
 	// TODO: add FluidStack vapor parameter to facilitate 2-stage implementations
 	//       - note that the vapor might actually be liquid if cryogenic -- maybe call it "columnInput"?
 	public void registerDistillationRecipe(FluidStack input, List<FluidStack> outputs, Condition condition);

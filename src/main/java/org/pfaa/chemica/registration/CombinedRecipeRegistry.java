@@ -155,9 +155,9 @@ public class CombinedRecipeRegistry implements RecipeRegistry {
 	}
 
 	@Override
-	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+	public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 		for (RecipeRegistry registry : registries.values()) {
-			registry.registerPhysicalSeparationRecipe(input, outputs);
+			registry.registerMechanicalSeparationRecipe(input, outputs);
 		}
 	}
 

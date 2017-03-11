@@ -78,7 +78,7 @@ public abstract class AbstractRecipeRegistry implements RecipeRegistry {
 	public void registerMixingRecipe(List<ItemStack> inputs, ItemStack output) { }
 	
 	@Override
-	public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+	public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 		this.registerGrindingRecipe(input, outputs.get(0).itemStack, outputs.subList(1, outputs.size()), 
 				strengthFromOutputs(outputs));
 	}

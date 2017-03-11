@@ -49,7 +49,7 @@ public class MagneticraftIntegration {
 		}
 
 		@Override
-		public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+		public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 			ItemStack extra = null;
 			float prob = 0F;
 			if (outputs.size() > 1) {

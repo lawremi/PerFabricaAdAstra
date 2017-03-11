@@ -33,7 +33,7 @@ public class MaricultureIntegration {
 	public static class MaricultureRecipeRegistry extends AbstractRecipeRegistry {
 
 		@Override
-		public void registerPhysicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
+		public void registerMechanicalSeparationRecipe(ItemStack input, List<ChanceStack> outputs) {
 			int[] oreIds = OreDictionary.getOreIDs(input);
 			for (int oreId : oreIds) {
 				String oreName = OreDictionary.getOreName(oreId);
