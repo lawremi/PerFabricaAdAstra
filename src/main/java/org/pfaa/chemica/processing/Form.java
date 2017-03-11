@@ -202,11 +202,12 @@ public interface Form {
 		public Form communite() {
 			switch(this) {
 			case BRICK:
-			case CRUSHED:
 			case INGOT:
 			case LUMP:
 			case RUBBLE:
 				return DUST;
+			case CRUSHED:
+				return DUST_IMPURE;
 			case COBBLESTONE:
 				return RUBBLE;
 			case NUGGET:
