@@ -495,7 +495,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				with(ethanolamine).
 				extracts(Compounds.CO2, Compounds.H2S);
 		CONVERSIONS.register(abs);
-		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparated().material.without(Compounds.CO2));
+		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparatedMixture().material.without(Compounds.CO2));
 		Separation regen = Separation.
 				of(richAmine).
 				extracts(State.GAS.of(Compounds.H2S)).at(400);
