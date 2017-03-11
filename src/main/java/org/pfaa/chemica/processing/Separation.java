@@ -1,24 +1,30 @@
 package org.pfaa.chemica.processing;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.processing.Form.Forms;
+
+import com.google.common.collect.Lists;
 
 public class Separation extends ConditionedConversion implements MassTransfer {
 	private MaterialState<Mixture> input;
 	private MaterialState<?> agent;
-	private MaterialState<Mixture> separated, residuum;
+	private MaterialState<Mixture> residuum;
+	private List<MaterialStoich<?>> separated = Lists.newArrayList();
 	private Axis axis;
 	private double energy;
 	
 	protected Separation(MaterialState<Mixture> input) {
 		this.input = input;
+		this.residuum = input;
 	}
 	
 	public MaterialState<Mixture> getInput() {
@@ -32,8 +38,12 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	public MaterialState<Mixture> getResiduum() {
 		return this.residuum;
 	}
-	public MaterialState<Mixture> getSeparated() {
-		return this.separated;
+	
+	@SuppressWarnings("unchecked")
+	public MaterialState<Mixture> getSeparatedMixture() {
+		MaterialState<?> materialState = this.separated.get(0).materialState;
+		return materialState.material instanceof Mixture ? (MaterialState<Mixture>)materialState : 
+			materialState.state.of(new SimpleMixture(materialState.material));  
 	}
 	
 	public Separation with(MaterialState<?> agent) {
@@ -54,15 +64,21 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	}
 	
 	public Separation extracts(State state, IndustrialMaterial... outputs) {
-		Mixture separated = this.input.material.extract(outputs);
-		Mixture residuum = this.input.material.without(outputs);
+		Mixture separated = this.residuum.material.extract(outputs);
+		Mixture residuum = this.residuum.material.without(outputs);
 		MaterialState<?> agent = this.getAgent();
 		if (agent != null) {
 			separated = separated.mix(agent.material, 1.0);
 			state = agent.state;
 		}
-		this.separated = state.of(separated);
-		this.residuum = this.input.state.of(residuum);
+		this.separated.add(MaterialStoich.of(state.of(separated)));
+		this.residuum = this.residuum.state.of(residuum);
+		return this;
+	}
+
+	public Separation extractsAll() {
+		this.residuum.material.getComponents().stream().map(MaterialStoich::of).forEach(this.separated::add);
+		this.residuum = this.residuum.state.of(this.residuum.material.removeAll());
 		return this;
 	}
 	
@@ -82,7 +98,9 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	public List<MaterialStoich<?>> getOutputs() {
-		return Arrays.asList(MaterialStoich.of(this.separated), MaterialStoich.of(this.residuum));
+		List<MaterialStoich<?>> outputs = Lists.newArrayList(this.separated);
+		outputs.add(MaterialStoich.of(this.residuum));
+		return outputs;
 	}
 
 	public Separation given(double energy) {
@@ -97,7 +115,6 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	protected Condition deriveCondition() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -113,17 +130,35 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	public Type getType() {
+		List<State> separatedStates = this.separated.stream().
+				map((s) -> s.state().ofMatter()).
+				distinct().
+				collect(Collectors.toList());
+		if (separatedStates.size() != 1)
+			return null;
+		State separatedState = separatedStates.get(0);
 		for (Type type : Types.values()) {
 			if (this.axis == type.getSeparationAxis() && 
 				this.input.state.ofMatter() == type.getInputState() &&
 				(this.agent != null || type.getAddedState() == null) &&
 				(this.agent == null || this.agent.state.ofMatter() == type.getAddedState()) &&
-				(this.separated.state.ofMatter() == type.getSeparatedState()))
+				(separatedState == type.getSeparatedState()))
 				return type;
 		}
 		return null;
 	}
-	
+
+	@Override
+	public Form getOutputForm(Form inputForm) {
+		if (inputForm == Forms.MILLIBUCKET)
+			return super.getOutputForm(inputForm);
+		if (inputForm.isGranular())
+			return inputForm;
+		if (this.input.material.isGranular())
+			return Forms.DUST;
+		return null;
+	}
+
 	public static Separation of(MaterialState<Mixture> mixture) {
 		return new Separation(mixture);
 	}
