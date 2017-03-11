@@ -202,7 +202,6 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		LIQUID_DECANTATION(Axis.DENSITY, State.LIQUID, State.LIQUID),
 		SEDIMENTARY_DECANTATION(Axis.DENSITY, State.LIQUID, State.SOLID),
 		
-		SOLID_FILTRATION(Axis.PARTICLE_SIZE, State.SOLID, State.SOLID),
 		LIQUID_FILTRATION(Axis.PARTICLE_SIZE, State.LIQUID, State.SOLID),
 		GAS_FILTRATION(Axis.PARTICLE_SIZE, State.GAS, State.SOLID),
 		
