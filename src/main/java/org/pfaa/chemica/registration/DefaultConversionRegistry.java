@@ -64,7 +64,10 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		Consumer<MaterialRecipe> consumer = null;
 		if (type == Separation.Types.PRECIPITATION)
 			consumer = this::precipitate;
-		separation.getRecipes().forEach(consumer);
+		else if (type == Separation.Types.SOLID_GRAVITY)
+			consumer = this::separateSolidsMechanically;
+		if (consumer != null)
+			separation.getRecipes().forEach(consumer);
 	}
 
 	private void precipitate(MaterialRecipe recipe) {
@@ -72,6 +75,13 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 				recipe.getInput().getFluidStack(), 
 				recipe.getOutput().getBestItemStack(), 
 				recipe.getEnergy());
+	}
+	
+	private void separateSolidsMechanically(MaterialRecipe recipe) {
+		ItemStack input = recipe.getInput().getBestItemStack();
+		List<ChanceStack> outputs = recipe.getOutputs().stream().
+				map(MaterialStack::getChanceStack).collect(Collectors.toList());
+		delegate.registerMechanicalSeparationRecipe(input, outputs);
 	}
 
 	private void smelt(MaterialRecipe recipe) {
