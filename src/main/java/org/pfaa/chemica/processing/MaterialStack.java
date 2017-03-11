@@ -103,6 +103,11 @@ public class MaterialStack implements IngredientStack {
 		return new MaterialStack(size, materialState, form, chance);
 	}
 	
+	private static float roundScalar(float scalar) {
+		float precision = (float)Math.pow(10, -Math.floor(Math.log10(scalar)));
+		return Math.round(scalar * precision) / precision;
+	}
+	
 	public static MaterialStack of(MaterialStoich<?> stoich, Form form) {
 		float weight = stoich.stoich;
 		if (stoich.state().isFluid()) {
@@ -114,13 +119,13 @@ public class MaterialStack implements IngredientStack {
 			if (unstacked == null) {
 				break;
 			}
-			weight *= unstacked.getNumberPerBlock() / form.getNumberPerBlock();
+			weight *= roundScalar(form.scaleTo(unstacked));
 			form = unstacked;
 		}
 		Form stacked;
 		double ratio;
 		while((stacked = form.stack()) != null && 
-				Math.rint(weight) >= (ratio = form.getNumberPerBlock()/stacked.getNumberPerBlock())) {
+				Math.rint(weight) >= (ratio = roundScalar(stacked.scaleTo(form)))) {
 			weight /= ratio;
 			form = stacked;
 		}
