@@ -13,6 +13,7 @@ import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.registration.OreDictUtils;
+import org.pfaa.core.item.ChanceStack;
 
 import com.google.common.collect.Sets;
 
@@ -72,6 +73,10 @@ public class MaterialStack implements IngredientStack {
 
 	public FluidStack getFluidStack() {
 		return IndustrialFluids.getFluidStack(this);
+	}
+	
+	public ChanceStack getChanceStack() {
+		return IndustrialItems.getChanceStack(this);
 	}
 	
 	@Override
