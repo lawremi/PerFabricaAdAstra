@@ -10,7 +10,9 @@ import com.google.common.base.CaseFormat;
 
 public interface Form {
 	public String name();
-	public String oreDictKey();
+	default String oreDictKey() {
+		return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
+	}
 	
 	public int getNumberPerBlock();
 	default int getNumberPerStack() {
@@ -100,11 +102,6 @@ public interface Form {
 
 		private void setNumberPerBlock(int numberPerBlock) {
 			this.numberPerBlock = numberPerBlock;
-		}
-
-		@Override
-		public String oreDictKey() {
-			return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name());
 		}
 
 		@Override
