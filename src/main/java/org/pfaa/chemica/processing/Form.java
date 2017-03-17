@@ -215,11 +215,8 @@ public interface Form {
 				return DUST_TINY;
 			case ORE:
 				return CRUSHED;
-			case SLAB:
-			case STAIR:
 			case STONE:
 			case STONE_BRICKS:
-			case WALL:
 				return COBBLESTONE;
 			default:
 				return null;

@@ -195,17 +195,8 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void registerCommunitionRecipes(Block block) {
-		if (block.getMaterial() != Material.rock) {
-			return;
-		}
-		if (block instanceof StairsBlock) {
-			registerCrushingRecipes((StairsBlock)block);
-			return;
-		}
 		GeoBlock geoBlock = null;
-		if (block instanceof WallBlock) {
-			geoBlock = (GeoBlock)((ProxyBlock)block).getModelBlock();
-		} else if (block instanceof GeoBlock) {
+		if (block instanceof GeoBlock) {
 			geoBlock = (GeoBlock)block;
 		}
 		if (geoBlock != null) {
@@ -222,18 +213,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		}
 	}
 
-	private static void registerCrushingRecipes(StairsBlock input) {
-		GeoBlock model = (GeoBlock)input.getModelBlock();
-		GeoBlock output = model.getBrokenRockBlock();
-		if (output == null) {
-			return;
-		}
-		int damage = input.getModelBlockMeta();
-		RECIPES.registerCrushingRecipe(new ItemStack(input), 
-										new ItemStack(output, 1, damage), 
-										null, model.getStrength());
-	}
-	
 	private static void registerCrushingRecipes(Block input, GeoBlock output) {
 		for(GeoMaterial material : output.getGeoMaterials()) {
 			int damage = output.getMeta(material);
