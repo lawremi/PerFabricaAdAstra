@@ -1,5 +1,6 @@
 package org.pfaa.chemica.item;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,8 @@ public interface IndustrialItemAccessors extends ItemStackContainer {
 	List<? extends IndustrialMaterial> getIndustrialMaterials();
 	default List<MaterialStack> getMaterialStacks() {
 		Form form = this.getForm();
+		if (form == null)
+			return Collections.emptyList();
 		return this.getIndustrialMaterials().stream().map(form::of).collect(Collectors.toList());
 	}
 }
