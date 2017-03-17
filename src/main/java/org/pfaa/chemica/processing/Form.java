@@ -53,6 +53,10 @@ public interface Form {
 		return MaterialStack.of(stoich, this);
 	}
 	
+	default Form of(Form subForm) {
+		return new CompoundForm(this, subForm);
+	}
+	
 	/*
 	 * Potential machine parts:
 	 * - Gear
