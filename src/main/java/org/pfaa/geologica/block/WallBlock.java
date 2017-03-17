@@ -64,7 +64,7 @@ public class WallBlock extends BlockWall implements IndustrialBlockAccessors, Pr
 	}
 
 	@Override
-	public Block getModelBlock() {
+	public IndustrialBlock getModelBlock() {
 		return modelBlock;
 	}
 
@@ -107,7 +107,7 @@ public class WallBlock extends BlockWall implements IndustrialBlockAccessors, Pr
 
 	@Override
 	public Form getForm() {
-		return Forms.WALL;
+		return Forms.WALL.of(modelBlock.getForm());
 	}
 
 	@Override

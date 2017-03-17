@@ -76,34 +76,7 @@ public class StairsBlock extends BlockStairs implements IndustrialProxyBlock {
 
 	@Override
 	public Form getForm() {
-		/*
-		 * The joining here may be invalid with respect to the ore dictionary,
-		 * because ore dict terms can only have two parts [prefix][Suffix],
-		 * where prefix corresponds to a Form and suffix to a material.
-		 * 
-		 * It so happens that some forms correspond to aggregate materials,
-		 * so we are tempted to simply join forms, but instead we should
-		 * just return "stair" here as the form, and then relate somehow
-		 * that the model block has a generic material. Joining forms 
-		 * would increase the complexity of the ore dictionary.
-		 * 
-		 * The simpler case is that of the model block itself. Currently, we
-		 * check whether the form (prefix) exists and, if it does, we
-		 * add the block under that single-part term, which means essentially
-		 * [prefix]*.
-		 * 
-		 * Proposal:
-		 * 1) Introduce an .oreDictKey() on IndustrialItemAccessors that returns
-		 *    the Form.oreDictKey() by default, while proxy blocks join the key.
-		 * 2) getForm() always returns a top-level form, i.e., the prefix.
-		 * 
-		 * Alternative: .oreDictKey() returns null by default, overridden by proxies.
-		 *              If oreDictKey() is not null, register with it.
-		 *              Then *also* register with the form key (if it already exists).
-		 * 
-		 * 
-		 */
-		return Forms.STAIR;
+		return Forms.STAIR.of(modelBlock.getForm());
 	}
 
 	@Override

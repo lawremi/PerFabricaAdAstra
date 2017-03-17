@@ -151,7 +151,7 @@ public class SlabBlock extends BlockSlab implements IndustrialBlockAccessors, Pr
 
 	@Override
 	public Form getForm() {
-		return Forms.SLAB;
+		return this.isDoubleSlab() ? null : Forms.SLAB.of(modelBlock.getForm());
 	}
 
 	@Override
