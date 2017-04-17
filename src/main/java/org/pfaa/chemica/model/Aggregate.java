@@ -36,6 +36,7 @@ public interface Aggregate extends Mixture {
 		CLAY(Color.lightGray, 1.1),
 		HARDENED_CLAY(new Color(220, 185, 160), 1.0),
 		DIRT(new Color(150, 75, 0), 1.1),
+		COARSE_DIRT(new Color(150, 75, 0), 1.0),
 		OBSIDIAN(new Color(16, 16, 25), 2.5);
 
 		private ConditionProperties properties;
@@ -68,7 +69,7 @@ public interface Aggregate extends Mixture {
 
 		@Override
 		public Category getCategory() {
-			if (this == Aggregates.SAND || this == Aggregates.GRAVEL)
+			if (this == Aggregates.SAND || this == Aggregates.GRAVEL || this == Aggregates.COARSE_DIRT)
 				return Category.LOOSE;
 			if (this == Aggregates.STONE || this == Aggregates.HARDENED_CLAY || this == Aggregates.OBSIDIAN)
 				return Category.HARD;

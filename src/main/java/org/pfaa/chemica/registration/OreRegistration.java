@@ -56,6 +56,7 @@ public class OreRegistration {
 		OreDictUtils.register(Forms.DUST_TINY.of(Generics.FLUX_SILICA), 
 				IndustrialItems.getBestItemStack(Forms.PILE.of(Aggregates.SAND)));
 		OreDictUtils.register(Forms.BLOCK.of(Aggregates.GRAVEL), new ItemStack(Blocks.gravel));
+		OreDictUtils.register(Forms.BLOCK.of(Aggregates.COARSE_DIRT), new ItemStack(Blocks.dirt, 1, 1));
 	}
 
 	private static void oreDictifyStoneBrick() {
