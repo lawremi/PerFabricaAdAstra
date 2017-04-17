@@ -44,10 +44,6 @@ public interface Conversion {
 		return Stream.of(this.getOutputForm(inputForm)).filter(Objects::nonNull);
 	}
 	
-	default Stream<MaterialStoich<?>> getBonusOutputs(Form form) {
-		return Stream.empty();
-	}
-	
 	/* This assumes that there is one common form/scale across all inputs and across all outputs.
 	 * That does not necessarily mean that all MaterialStacks will end up as the same form,
 	 * but it does constrain this somewhat.
@@ -76,13 +72,12 @@ public interface Conversion {
 	default MaterialRecipe getRecipe(Form inputForm, Form outputForm) {
 		Stream<MaterialStoich<?>> inputs = this.getInputs().stream();
 		Stream<MaterialStoich<?>> outputs = this.getOutputs().stream();
-		float formRatio = ((float)inputForm.getNumberPerBlock()) / outputForm.getNumberPerBlock();
+		float formRatio = outputForm.scaleTo(inputForm);
 		if (formRatio > 1) {
 			inputs = inputs.map((input) -> input.scale(formRatio));
 		} else if (formRatio < 1) {
 			outputs = outputs.map((output) -> output.scale(1 / formRatio));
 		}
-		outputs = Stream.concat(outputs, this.getBonusOutputs(outputForm));
 		// Might strip low chance (< 0.05?) output MaterialStacks here
 		return MaterialRecipe.converts(inputForm.of(inputs)).to(outputForm.of(outputs)).
 			at(this.getCondition()).given((int)(this.getEnergy() * inputForm.scaleTo(Forms.MOLAR)));

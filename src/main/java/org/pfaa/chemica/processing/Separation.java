@@ -154,6 +154,11 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 			return super.getOutputForm(inputForm);
 		if (inputForm.isGranular())
 			return inputForm;
+		/*
+		 * Handles 'ore' case when the material itself is granular, like a sand.
+		 * It might make sense to use a compound form like oreSand,
+		 * but at the very least that would break compatibility. 
+		 */
 		if (this.input.material.isGranular())
 			return Forms.DUST;
 		return null;
