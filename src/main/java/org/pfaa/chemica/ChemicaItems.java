@@ -22,8 +22,6 @@ public class ChemicaItems implements ItemCatalog {
 			new IndustrialMaterialItem<Aggregates>(Forms.DUST, Aggregates.class, Aggregate::isHard);
 	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_TINY_DUST = 
 			new IndustrialMaterialItem<Aggregates>(Forms.DUST_TINY, Aggregates.class, Aggregate::isHard);
-	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_PILE = 
-			new IndustrialMaterialItem<Aggregates>(Forms.PILE, Aggregates.class, Aggregate::isLoose);
 	
 	public static final IndustrialMaterialItem<Element> ELEMENT_DUST = 
 			new IndustrialMaterialItem<Element>(Forms.DUST, Element.class, Element::isMonatomic);
