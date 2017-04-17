@@ -202,7 +202,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		if (geoBlock != null) {
 			GeoBlock broken = geoBlock.getBrokenRockBlock();
 			if (broken != null) {
-				registerCrushingRecipes(block, broken);
 			} else if (block instanceof LooseGeoBlock) {
 				registerGrindingRecipes((GeoBlock)block);
 			} else if (Ore.class.isAssignableFrom(geoBlock.getComposition())) {
@@ -212,16 +211,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			}
 		}
 	}
-
-	private static void registerCrushingRecipes(Block input, GeoBlock output) {
-		for(GeoMaterial material : output.getGeoMaterials()) {
-			int damage = output.getMeta(material);
-			RECIPES.registerCrushingRecipe(new ItemStack(input, 1, damage),
-					new ItemStack(output, 1, damage), 
-					null, material.getStrength());
-		}
-	}
-
 
 	private static final float CRUSHING_DUST_CHANCE = 0.1F;
 
