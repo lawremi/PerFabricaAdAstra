@@ -24,6 +24,11 @@ public interface Aggregate extends Mixture {
 		return this.getCategory() == Category.SOFT;
 	}
 	
+	@Override
+	default boolean isGranular() {
+		return this.isLoose();
+	}
+	
 	public enum Aggregates implements Aggregate {
 		SAND(new Color(230, 220, 175), 1.6), 
 		GRAVEL(Color.lightGray, 1.2), 
