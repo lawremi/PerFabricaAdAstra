@@ -117,6 +117,8 @@ public enum GeoMaterial implements Mixture {
 	LATERITE(Aggregates.CLAY.mix(Ores.GOETHITE, 0.3).mix(Ores.LEPIDOCROCITE, 0.2).mix(Ores.HEMATITE, 0.2).
 			 mix(Ores.GIBBSITE, 0.15).mix(Ores.ANATASE, 0.05), Strength.WEAK, Material.clay),
 	
+	// TODO: what about ball and fire clay?
+	// https://www3.epa.gov/ttnchie1/ap42/ch11/final/c11s25.pdf
 	BAUXITE(Ores.GIBBSITE, Strength.WEAK, LATERITE),
 	SODIUM_BENTONITE(IndustrialMinerals.SODIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
 	CALCIUM_BENTONITE(IndustrialMinerals.CALCIUM_MONTMORILLONITE, Strength.WEAK, Material.clay),
