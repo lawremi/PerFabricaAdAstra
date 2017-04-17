@@ -39,7 +39,7 @@ public class ChemicaBlocks implements BlockCatalog {
 			return Blocks.hardened_clay;
 		} else if (aggregate == Aggregates.GRAVEL) {
 			return Blocks.gravel;
-		} else if (aggregate == Aggregates.DIRT) {
+		} else if (aggregate == Aggregates.DIRT || aggregate == Aggregates.COARSE_DIRT) {
 			return Blocks.dirt;
 		} else if (aggregate == Aggregates.OBSIDIAN) {
 			return Blocks.obsidian;
