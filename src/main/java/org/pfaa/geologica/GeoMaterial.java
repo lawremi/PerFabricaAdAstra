@@ -38,11 +38,11 @@ import com.google.common.base.CaseFormat;
 import net.minecraft.block.material.Material;
 
 public enum GeoMaterial implements Mixture {
-	BRECCIA(Aggregates.GRAVEL.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
-	CLAYSTONE(Aggregates.HARDENED_CLAY.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK, 2.5, 1.1),
+	BRECCIA(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.2), Strength.WEAK),
+	CLAYSTONE(Aggregates.HARDENED_CLAY, Strength.WEAK, 2.5, 1.1),
 	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.3).mix(Ores.PYROCHLORE, 0.02), Strength.WEAK, 2.4, 1.2, 800),
-	CONGLOMERATE(Aggregates.SAND.mix(Aggregates.GRAVEL, 1.0), Strength.WEAK),
-	MUDSTONE(Aggregates.SAND.mix(Aggregates.HARDENED_CLAY, 1.0), Strength.WEAK, 2.6, 0.9),
+	CONGLOMERATE(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.2), Strength.WEAK),
+	MUDSTONE(Aggregates.COARSE_DIRT.mix(Aggregates.HARDENED_CLAY, 0.1), Strength.WEAK, 2.6, 0.9),
 	
 	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.3), Strength.MEDIUM, 2.5, 0.9),
 	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.MEDIUM, 2.7, 1.1),
@@ -63,7 +63,7 @@ public enum GeoMaterial implements Mixture {
 			  .mix(Ores.QUARTZ, 0.1).mix(IndustrialMinerals.MICA, 0.1), 
 			  Strength.STRONG, 2.6, 0.8),
 	RHYOLITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG, 2.5, 2.4, 1000),
-	SANDSTONE(Aggregates.SAND.mix(Aggregates.SAND, 1.0), Strength.STRONG, 2.5, 0.9),
+	SANDSTONE(Aggregates.SAND, Strength.STRONG, 2.5, 0.9),
 	RED_SANDSTONE(Aggregates.SAND.mix(Ores.HEMATITE, 0.01), Strength.STRONG, 2.5, 0.9),
 	
 	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG, 2.9, 1.0, 1200),
