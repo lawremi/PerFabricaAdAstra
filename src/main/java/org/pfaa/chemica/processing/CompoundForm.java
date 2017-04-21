@@ -44,6 +44,11 @@ public class CompoundForm implements Form {
 	}
 
 	@Override
+	public Form reduce() {
+		return this.second.reduce();
+	}
+
+	@Override
 	public Form compact() {
 		Form compacted = this.second.compact();
 		if (compacted != null)
@@ -58,5 +63,4 @@ public class CompoundForm implements Form {
 			dried = this.first.of(dried);
 		return dried;
 	}
-
 }

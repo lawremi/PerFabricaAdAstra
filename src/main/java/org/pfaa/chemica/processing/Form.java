@@ -27,6 +27,7 @@ public interface Form {
 	Form stack();
 	Form unstack();
 	Form communite();
+	Form reduce();
 	Form compact();
 	Form dry();
 	
@@ -219,6 +220,16 @@ public interface Form {
 			case STONE:
 			case STONE_BRICKS:
 				return COBBLESTONE;
+			default:
+				return null;
+			}
+		}
+
+		@Override
+		public Form reduce() {
+			switch(this) {
+			case RUBBLE:
+				return BLOCK;
 			default:
 				return null;
 			}

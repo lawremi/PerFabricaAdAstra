@@ -19,6 +19,7 @@ import org.pfaa.chemica.processing.Combination;
 import org.pfaa.chemica.processing.Communition;
 import org.pfaa.chemica.processing.Compaction;
 import org.pfaa.chemica.processing.EnthalpyChange;
+import org.pfaa.chemica.processing.Reduction;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.Separation.Axis;
 import org.pfaa.chemica.processing.Smelting;
@@ -71,7 +72,11 @@ public class ConversionRegistrant {
 	public <T extends Enum<?> & IndustrialMaterial> void communite(Class<T> material) {
 		Arrays.stream(material.getEnumConstants()).map(Communition::of).forEach(registry::register);
 	}
-	
+
+	public <T extends Enum<?> & Mixture> void reduce(Class<T> material, Predicate<T> predicate) {
+		Arrays.stream(material.getEnumConstants()).filter(predicate).map(Reduction::of).forEach(registry::register);
+	}
+
 	public <T extends Enum<?> & IndustrialMaterial> void compact(Class<T> material) {
 		Arrays.stream(material.getEnumConstants()).map(Compaction::of).forEach(registry::register);
 	}
