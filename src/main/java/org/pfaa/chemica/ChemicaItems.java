@@ -17,11 +17,8 @@ import org.pfaa.core.catalog.ItemCatalog;
 public class ChemicaItems implements ItemCatalog {
 	public static final FilledGlassBottleItem FILLED_GLASS_BOTTLE = new FilledGlassBottleItem();
 	
-	// FIXME: nPerBlock != 9 for aggregate dusts (4 for hardened clay, 1 for stone/obsidian) 
-	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_DUST = 
-			new IndustrialMaterialItem<Aggregates>(Forms.DUST, Aggregates.class, Aggregate::isHard);
-	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_TINY_DUST = 
-			new IndustrialMaterialItem<Aggregates>(Forms.DUST_TINY, Aggregates.class, Aggregate::isHard);
+	public static final IndustrialMaterialItem<Aggregates> AGGREGATE_LARGE_DUST = 
+			new IndustrialMaterialItem<Aggregates>(Forms.DUST_LARGE, Aggregates.class, Aggregate::isHard);
 	
 	public static final IndustrialMaterialItem<Element> ELEMENT_DUST = 
 			new IndustrialMaterialItem<Element>(Forms.DUST, Element.class, Element::isMonatomic);

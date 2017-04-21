@@ -59,15 +59,16 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 
 	private static void registerCrushingRecipe(Aggregates aggregate, int nPerBlock) {
 		MaterialStack materialStack = Forms.BLOCK.of(aggregate);
-		ItemStack output = ChemicaItems.AGGREGATE_DUST.getItemStack(aggregate, nPerBlock);
+		ItemStack output = ChemicaItems.AGGREGATE_LARGE_DUST.getItemStack(aggregate, nPerBlock);
 		for (ItemStack input : materialStack.getItemStacks()) {
 			RECIPES.registerCrushingRecipe(input, output, null, Strength.WEAK);
 		}
 	}
 
 	private static void hydrateHardenedClay() {
+		// FIXME: Aggregate crushing should be in Chemica, i.e., blockHardenedClay => dustLargeHardenedClay
 		registerCrushingRecipe(Aggregates.HARDENED_CLAY, 4);
-		FluidStack water = Forms.PILE.of(State.LIQUID.of(Compounds.H2O)).getFluidStack();
+		FluidStack water = Forms.CLUMP.of(State.LIQUID.of(Compounds.H2O)).getFluidStack();
 		GENERICS.registerMixingRecipe(
 				Forms.DUST.of(Aggregates.HARDENED_CLAY).with(),
 				water,
