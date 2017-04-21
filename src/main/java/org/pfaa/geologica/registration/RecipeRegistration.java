@@ -38,9 +38,7 @@ import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.GeoBlock;
 import org.pfaa.geologica.block.LooseGeoBlock;
-import org.pfaa.geologica.block.ProxyBlock;
 import org.pfaa.geologica.block.StairsBlock;
-import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Crude.Crudes;
@@ -49,12 +47,12 @@ import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 import org.pfaa.geologica.processing.Solutions;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -183,8 +181,9 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 	
 	private static void processGeoMaterials() {
-		//REGISTRANT.communite(GeoMaterial.class);
-		REGISTRANT.separateOre(GeoMaterial.class);
+		REGISTRANT.communite(GeoMaterial.class);
+		REGISTRANT.reduce(GeoMaterial.class, GeoMaterial::isRock);
+		REGISTRANT.separatePhysically(GeoMaterial.class);
 		REGISTRANT.compact(GeoMaterial.class, GeoMaterial::isRock);
 	}
 

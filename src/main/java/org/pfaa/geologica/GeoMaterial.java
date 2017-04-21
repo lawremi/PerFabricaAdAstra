@@ -38,39 +38,39 @@ import com.google.common.base.CaseFormat;
 import net.minecraft.block.material.Material;
 
 public enum GeoMaterial implements Mixture {
-	BRECCIA(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.2), Strength.WEAK),
+	BRECCIA(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.25), Strength.WEAK),
 	CLAYSTONE(Aggregates.HARDENED_CLAY, Strength.WEAK, 2.5, 1.1),
 	CARBONATITE(Aggregates.STONE.mix(Ores.CALCITE, 0.3).mix(Ores.PYROCHLORE, 0.02), Strength.WEAK, 2.4, 1.2, 800),
-	CONGLOMERATE(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.2), Strength.WEAK),
-	MUDSTONE(Aggregates.COARSE_DIRT.mix(Aggregates.HARDENED_CLAY, 0.1), Strength.WEAK, 2.6, 0.9),
+	CONGLOMERATE(Aggregates.GRAVEL.mix(Aggregates.HARDENED_CLAY, 0.25), Strength.WEAK),
+	MUDSTONE(Aggregates.COARSE_DIRT.mix(Aggregates.HARDENED_CLAY, 0.25), Strength.WEAK, 2.6, 0.9),
 	
-	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.3), Strength.MEDIUM, 2.5, 0.9),
-	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.MEDIUM, 2.7, 1.1),
-	SERPENTINITE(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.05)
-			     .mix(IndustrialMinerals.TALC, 0.05).mix(IndustrialMinerals.OLIVINE, 0.05), 
+	LIMESTONE(Aggregates.STONE.mix(Ores.CALCITE, 0.03), Strength.MEDIUM, 2.5, 0.9),
+	SCHIST(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.01), Strength.MEDIUM, 2.7, 1.1),
+	SERPENTINITE(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.005)
+			     .mix(IndustrialMinerals.TALC, 0.005).mix(IndustrialMinerals.OLIVINE, 0.005), 
 			     Strength.MEDIUM, 3, 1.1),
-	SLATE(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.05), Strength.MEDIUM, 2.7, 0.8),
-	SKARN(Aggregates.STONE.mix(IndustrialMinerals.WOLLASTONITE, 0.05), Strength.MEDIUM, 2.8, 0.9),
-	CHALK(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.MEDIUM, 2.3, 0.9),
+	SLATE(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.005), Strength.MEDIUM, 2.7, 0.8),
+	SKARN(Aggregates.STONE.mix(IndustrialMinerals.WOLLASTONITE, 0.005), Strength.MEDIUM, 2.8, 0.9),
+	CHALK(Aggregates.STONE.mix(Ores.CALCITE, 0.1), Strength.MEDIUM, 2.3, 0.9),
 	
-	ANDESITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG, 2.7, 2.4, 1200),
-	BASALT(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.STRONG, 3.0, 0.8, 1400),
-	GNEISS(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.STRONG, 2.6, 1.0),
-	GRANITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG, 2.7, 0.8, 1000),
-	GREENSCHIST(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.1), Strength.STRONG, 2.8, 1.1),
-	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 1.0), Strength.STRONG, 2.5, 0.9),
-	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.3)
-			  .mix(Ores.QUARTZ, 0.1).mix(IndustrialMinerals.MICA, 0.1), 
+	ANDESITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.005), Strength.STRONG, 2.7, 2.4, 1200),
+	BASALT(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.01), Strength.STRONG, 3.0, 0.8, 1400),
+	GNEISS(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.005), Strength.STRONG, 2.6, 1.0),
+	GRANITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.005), Strength.STRONG, 2.7, 0.8, 1000),
+	GREENSCHIST(Aggregates.STONE.mix(IndustrialMinerals.CHRYSOTILE, 0.01), Strength.STRONG, 2.8, 1.1),
+	MARBLE(Aggregates.STONE.mix(Ores.CALCITE, 0.1), Strength.STRONG, 2.5, 0.9),
+	PEGMATITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.03)
+			  .mix(Ores.QUARTZ, 0.01).mix(IndustrialMinerals.MICA, 0.01), 
 			  Strength.STRONG, 2.6, 0.8),
-	RHYOLITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.05), Strength.STRONG, 2.5, 2.4, 1000),
+	RHYOLITE(Aggregates.STONE.mix(Ores.QUARTZ, 0.005), Strength.STRONG, 2.5, 2.4, 1000),
 	SANDSTONE(Aggregates.SAND, Strength.STRONG, 2.5, 0.9),
-	RED_SANDSTONE(Aggregates.SAND.mix(Ores.HEMATITE, 0.01), Strength.STRONG, 2.5, 0.9),
+	RED_SANDSTONE(Aggregates.SAND.mix(Ores.HEMATITE, 0.001), Strength.STRONG, 2.5, 0.9),
 	
-	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.05), Strength.VERY_STRONG, 2.9, 1.0, 1200),
-	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.1), Strength.VERY_STRONG, 3.0, 1.0, 1400),
-	HORNFELS(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.1), Strength.VERY_STRONG, 2.8, 0.8),
-	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.3), Strength.VERY_STRONG, 3.2, 1.3, 1600),
-	QUARTZITE(Aggregates.SAND.mix(Ores.QUARTZ, 0.3), Strength.VERY_STRONG, 2.3, 0.8),
+	DIORITE(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.005), Strength.VERY_STRONG, 2.9, 1.0, 1200),
+	GABBRO(Aggregates.STONE.mix(IndustrialMinerals.FELDSPAR, 0.01), Strength.VERY_STRONG, 3.0, 1.0, 1400),
+	HORNFELS(Aggregates.STONE.mix(IndustrialMinerals.MICA, 0.01), Strength.VERY_STRONG, 2.8, 0.8),
+	PERIDOTITE(Aggregates.STONE.mix(IndustrialMinerals.OLIVINE, 0.03), Strength.VERY_STRONG, 3.2, 1.3, 1600),
+	QUARTZITE(Aggregates.SAND.mix(Ores.QUARTZ, 0.03), Strength.VERY_STRONG, 2.3, 0.8),
 
 	LIGHT_OIL(new SimpleCrude(Crudes.VOLATILES, 0.1).mix(Crudes.LIGHT_NAPHTHA, 0.35).mix(Crudes.HEAVY_NAPHTHA, 0.25).
 			  mix(Crudes.KEROSENE, 0.1).mix(Crudes.LIGHT_GAS_OIL, 0.05).mix(Crudes.HEAVY_GAS_OIL, 0.05).
