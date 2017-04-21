@@ -10,14 +10,13 @@ import java.util.Map.Entry;
 import org.pfaa.chemica.Chemica;
 import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.model.Aggregate;
-import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
-import org.pfaa.core.item.ChanceStack;
 import org.pfaa.chemica.processing.MaterialStack;
+import org.pfaa.core.item.ChanceStack;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -53,9 +52,7 @@ public class RecipeUtils {
 
 	public static ItemStack getSeparationOutputItemStack(MixtureComponent input) {
 		Form form = Forms.DUST;
-		if (input.material == Aggregates.SAND || input.material == Aggregates.GRAVEL) {
-			form = Forms.PILE;
-		} else if (input.weight < 1.0F) {
+		if (input.weight < 1.0F) {
 			form = Forms.DUST_TINY;
 		}
 		return IndustrialItems.getBestItemStack(form, input.material);

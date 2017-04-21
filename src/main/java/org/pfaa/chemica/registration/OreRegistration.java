@@ -2,10 +2,9 @@ package org.pfaa.chemica.registration;
 
 import org.pfaa.chemica.ChemicaBlocks;
 import org.pfaa.chemica.ChemicaItems;
-import org.pfaa.chemica.item.IndustrialItems;
-import org.pfaa.chemica.model.Generics;
 import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
+import org.pfaa.chemica.model.Generics;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.MaterialStack;
 
@@ -53,8 +52,7 @@ public class OreRegistration {
 	private static void oreDictifyLooseAggregates() {
 		OreDictUtils.register(Forms.BLOCK.of(Aggregates.SAND), new ItemStack(Blocks.sand));
 		OreDictUtils.register(Forms.DUST.of(Generics.FLUX_SILICA), new ItemStack(Blocks.sand));
-		OreDictUtils.register(Forms.DUST_TINY.of(Generics.FLUX_SILICA), 
-				IndustrialItems.getBestItemStack(Forms.PILE.of(Aggregates.SAND)));
+		OreDictUtils.register(Forms.DUST_TINY.of(Generics.FLUX_SILICA), new ItemStack(Blocks.sand));
 		OreDictUtils.register(Forms.BLOCK.of(Aggregates.GRAVEL), new ItemStack(Blocks.gravel));
 		OreDictUtils.register(Forms.BLOCK.of(Aggregates.COARSE_DIRT), new ItemStack(Blocks.dirt, 1, 1));
 	}

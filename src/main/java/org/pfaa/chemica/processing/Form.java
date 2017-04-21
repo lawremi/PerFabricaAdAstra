@@ -77,13 +77,13 @@ public interface Form {
 		DUST_TINY(9*9), // dust from pulverizing nugget
 		DUST_IMPURE(9), // for avoiding name collisions between ores and purified minerals
 		DUST_IMPURE_TINY(9*9),
+		DUST_LARGE(4), // like a clump, except loose
 		INGOT(9), // intact solid in regular shape, from sintering powder or casting, stored in blocks
 		LUMP(9), // intact solid in irregular shape, found naturally
 		MILLIBUCKET(1296),
 		MOLAR(9), // abstract equivalent of one mol
 		NUGGET(9*9), // metal in irregular, natural form; can be combined into (or broken down from) ingot
 		ORE(4), // manifested as a block, but only 1/4 of the block is concentrate
-		PILE(4), // like a clump, except loose
 		RUBBLE(1),
 		SAND(1),
 		SLAB(2),
@@ -158,7 +158,7 @@ public interface Form {
 			case DUST_TINY:
 			case DUST_IMPURE:
 			case DUST_IMPURE_TINY:
-			case PILE:
+			case DUST_LARGE:
 			case SAND:
 				return true;
 			default:
@@ -202,10 +202,11 @@ public interface Form {
 		@Override
 		public Form communite() {
 			switch(this) {
+			case BLOCK:
+				return DUST_LARGE;
 			case BRICK:
 			case INGOT:
 			case LUMP:
-			case RUBBLE:
 				return DUST;
 			case CRUSHED:
 				return DUST_IMPURE;
