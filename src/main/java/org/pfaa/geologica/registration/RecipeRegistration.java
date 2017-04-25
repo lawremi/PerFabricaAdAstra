@@ -177,10 +177,19 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	}
 
 	private static void meltRocks() {
-		REGISTRANT.melt(GeoMaterial.class, GeoMaterial::isIgneousRock);
+	 	REGISTRANT.melt(GeoMaterial.class, GeoMaterial::isIgneousRock);
 	}
 	
 	private static void processGeoMaterials() {
+		// TODO: Crude ore processing. Direct harvesting yields lumps of the Crude, not GeoMaterial.
+		//       Processing the ore block involves crushing to "crushed", grinding
+		//       to "dust". But maybe we want a way to get lumps? Originally, crushing the ore
+		//       yielded lumps. Now that would require a special block form (because ore=>crushed).
+		//       We could avoid registering a crushed and dust of crude ores, blocking normal physical separation. 
+		//       Instead, select reduction could take ore=>lump.
+		//       This would mean wrapping the Crude passed to GeoMaterial constructor in SimpleOre,
+		//       since the GeoMaterial is really an ore. Remove isSolidCrude(), 
+		//       change isOreRock() to exclude ores composed of crude.
 		REGISTRANT.communite(GeoMaterial.class);
 		REGISTRANT.reduce(GeoMaterial.class, GeoMaterial::isRock);
 		REGISTRANT.separatePhysically(GeoMaterial.class);
@@ -199,78 +208,16 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			geoBlock = (GeoBlock)block;
 		}
 		if (geoBlock != null) {
-			GeoBlock broken = geoBlock.getBrokenRockBlock();
-			if (broken != null) {
-			} else if (block instanceof LooseGeoBlock) {
-				registerGrindingRecipes((GeoBlock)block);
-			} else if (Ore.class.isAssignableFrom(geoBlock.getComposition())) {
-				registerOreCommunitionRecipes((GeoBlock)block);
-			} else if (Crude.class.isAssignableFrom(geoBlock.getComposition())) {
+			if (Crude.class.isAssignableFrom(geoBlock.getComposition())) {
 				registerCrudeCommunitionRecipes((GeoBlock)block);
 			}
 		}
-	}
-
-	private static final float CRUSHING_DUST_CHANCE = 0.1F;
-
-	private static void registerOreGrindingRecipes(ItemStack input, GeoMaterial material) {
-		ItemStack primary = GeologicaItems.ORE_DUST.getItemStack(material);
-		List<ChanceStack> secondaries = RecipeUtils.getSeparationOutputs(Forms.DUST_IMPURE_TINY, material.getComposition(), false);
-		RECIPES.registerGrindingRecipe(input, primary, secondaries, material.getStrength());
-	}
-	
-	private static void registerOreSeparationRecipes(IndustrialMaterialItem<GeoMaterial> item, GeoMaterial material) {
-		ItemStack input = item.getItemStack(material);
-		registerOreSeparationRecipes(input, item.getForm(), material);
-	}
-	
-	private static void registerOreSeparationRecipes(ItemStack input, Form form, GeoMaterial material) {	
-		List<ChanceStack> outputs = RecipeUtils.getSeparationOutputs(form, material.getComposition(), false);
-		if (outputs.size() == 0) {
-			return;
-		}
-		IndustrialMaterial host = material.getHost();
-		if (host instanceof GeoMaterial) {
-			List<ChanceStack> hostSecondaries = 
-					RecipeUtils.getSeparationOutputs(form, ((GeoMaterial)host).getComposition(), true);
-			for (ChanceStack hostSecondary : hostSecondaries) {
-				ChanceStack downWeighted = hostSecondary.weightChance(0.2F);
-				if (downWeighted.chance >= RecipeUtils.MIN_SIGNIFICANT_COMPONENT_WEIGHT)
-					outputs.add(downWeighted);
-			}
-		}
-		RECIPES.registerMechanicalSeparationRecipe(input, outputs);
-	}
-
-	private static void registerOreCommunitionRecipes(GeoBlock input) {
-		for(GeoMaterial material : input.getGeoMaterials()) {
-			ItemStack crushed = GeologicaItems.ORE_CRUSHED.getItemStack(material, 2);
-			ChanceStack dust = new ChanceStack(GeologicaItems.ORE_DUST_TINY.getItemStack(material), CRUSHING_DUST_CHANCE);
-			RECIPES.registerCrushingRecipe(input.getItemStack(material),
-					crushed, dust, input.getStrength());
-			registerOreGrindingRecipes(crushed.copy().splitStack(1), material);
-			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, material);
-			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, material);
-		}
-	}
-
-	private static void registerGrindingRecipes(GeoBlock input) {
-		for(GeoMaterial material : input.getGeoMaterials()) {
-			registerGrindingRecipes(input.getItemStack(material), material);
-		}
-	}
-
-	private static void registerGrindingRecipes(ItemStack input, GeoMaterial material) {
-		List<ChanceStack> outputs = RecipeUtils.getSeparationOutputs(Forms.DUST, material.getComposition(), false);
-		List<ChanceStack> secondaries = outputs.subList(1, outputs.size());
-		RECIPES.registerGrindingRecipe(input, outputs.get(0).itemStack, secondaries, material.getStrength());
 	}
 	
 	private static void registerCrudeCommunitionRecipes(GeoBlock input) {
 		for(GeoMaterial material : input.getGeoMaterials()) {
 			ItemStack lump = GeologicaItems.CRUDE_LUMP.getItemStack(material, 2);
-			ChanceStack tinyDust = new ChanceStack(GeologicaItems.CRUDE_DUST_TINY.getItemStack(material), CRUSHING_DUST_CHANCE);
-			RECIPES.registerCrushingRecipe(input.getItemStack(material), lump, tinyDust, input.getStrength());
+			RECIPES.registerCrushingRecipe(input.getItemStack(material), lump, null, input.getStrength());
 			ItemStack dust = GeologicaItems.CRUDE_DUST.getItemStack(material);
 			RECIPES.registerGrindingRecipe(lump.copy().splitStack(1), dust, 
 					Collections.<ChanceStack> emptyList(), input.getStrength());
@@ -326,8 +273,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 			ItemStack dust =  GeologicaItems.ORE_DUST.getItemStack(geoMaterial);
 			RECIPES.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
 			RECIPES.registerGrindingRecipe(lump, dust, Collections.<ChanceStack>emptyList(), Strength.WEAK);
-			registerOreSeparationRecipes(GeologicaItems.ORE_DUST, geoMaterial);
-			registerOreSeparationRecipes(GeologicaItems.ORE_DUST_TINY, geoMaterial);
 			FluidStack water = Forms.DUST.of(Compounds.H2O).getFluidStack();
 			RECIPES.registerMixingRecipe(Collections.singletonList(dust), water, null, clump, null, null, Condition.STP, null);
 		}
