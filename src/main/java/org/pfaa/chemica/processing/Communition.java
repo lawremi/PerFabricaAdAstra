@@ -29,7 +29,6 @@ public class Communition extends DegenerateConversion implements Sizing {
 			Mixture mixture = (Mixture)this.getMaterial();
 			outputs = Lists.newArrayList(outputs);
 			mixture.getComponents().stream().
-					skip(1).
 					map(MaterialStoich::of).
 					map((s) -> s.scale(1/9)).
 					forEach(outputs::add);
