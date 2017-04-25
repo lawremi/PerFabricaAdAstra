@@ -342,7 +342,15 @@ public enum GeoMaterial implements Mixture {
 
 	@Override
 	public List<MixtureComponent> getComponents() {
-		return composition.getComponents();
+		List<MixtureComponent> comps = composition.getComponents();
+		if (this.getHost() instanceof GeoMaterial) {
+			GeoMaterial host = (GeoMaterial)this.getHost();
+			host.getComponents().stream().
+				filter((comp) -> !(comp.material instanceof Aggregate)).
+				map((comp) -> comp.concentrate(0.5F)).
+				forEach(comps::add);
+		}
+		return comps;
 	}
 
 	@Override
