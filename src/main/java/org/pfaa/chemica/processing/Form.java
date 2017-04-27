@@ -230,6 +230,8 @@ public interface Form {
 			switch(this) {
 			case RUBBLE:
 				return BLOCK;
+			case ORE:
+				return LUMP;
 			default:
 				return null;
 			}
