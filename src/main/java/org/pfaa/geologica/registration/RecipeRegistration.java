@@ -25,7 +25,6 @@ import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.Stacking;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.IngredientList;
 import org.pfaa.chemica.registration.Reactions;
@@ -37,17 +36,14 @@ import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.GeoBlock;
-import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.StairsBlock;
 import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 import org.pfaa.geologica.processing.Solutions;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.Loader;
@@ -72,13 +68,12 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerStoneToolRecipes();
 		registerCraftingRecipes();
 		
+		registerStackings();
 		meltRocks();
 		processGeoMaterials();
 		
 		registerClayProcessingRecipes();
 		registerPeatDryingRecipe();
-		registerCommunitionRecipes();
-		registerStackingRecipes();
 		registerSiftingRecipes();
 		registerBrineProcessingRecipes();
 		registerNaturalGasProcessingRecipes();
@@ -89,7 +84,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	private static void registerCompatibilityRecipes() {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.cobblestone), "cobblestone"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Blocks.stone), "stone"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.coal), GeologicaItems.CRUDE_LUMP.of(GeoMaterial.BITUMINOUS_COAL));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.coal), GeologicaItems.CRUDE_LUMP.of(Crudes.BITUMINOUS_COAL));
 	}
 
 	private static void registerStoneToolRecipes() {
@@ -173,57 +168,26 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		registerStairsRecipe(GeologicaBlocks.MEDIUM_STONE_BRICK_STAIRS__LIMESTONE);
 		registerStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__GRANITE);
 		registerStairsRecipe(GeologicaBlocks.STRONG_STONE_BRICK_STAIRS__MARBLE);
-		registerQuarterToBlockRecipe(GeologicaItems.EARTHY_CLUMP);
 	}
 
+	private static void registerStackings() {
+		REGISTRANT.stack(IndustrialMinerals.class);
+		REGISTRANT.stack(Ores.class);
+		REGISTRANT.stack(GeoMaterial.class);
+	}
+	
 	private static void meltRocks() {
 	 	REGISTRANT.melt(GeoMaterial.class, GeoMaterial::isIgneousRock);
 	}
 	
 	private static void processGeoMaterials() {
-		// TODO: Crude ore processing. Direct harvesting yields lumps of the Crude, not GeoMaterial.
-		//       Processing the ore block involves crushing to "crushed", grinding
-		//       to "dust". But maybe we want a way to get lumps? Originally, crushing the ore
-		//       yielded lumps. Now that would require a special block form (because ore=>crushed).
-		//       We could avoid registering a crushed and dust of crude ores, blocking normal physical separation. 
-		//       Instead, select reduction could take ore=>lump.
-		//       This would mean wrapping the Crude passed to GeoMaterial constructor in SimpleOre,
-		//       since the GeoMaterial is really an ore. Remove isSolidCrude(), 
-		//       change isOreRock() to exclude ores composed of crude.
 		REGISTRANT.communite(GeoMaterial.class);
+		REGISTRANT.communite(Crudes.class);
 		REGISTRANT.reduce(GeoMaterial.class, GeoMaterial::isRock);
 		REGISTRANT.separatePhysically(GeoMaterial.class);
 		REGISTRANT.compact(GeoMaterial.class, GeoMaterial::isRock);
 	}
-
-	private static void registerCommunitionRecipes() {
-		for (Block block : GeologicaBlocks.getBlocks()) {
-			registerCommunitionRecipes(block);
-		}
-	}
 	
-	private static void registerCommunitionRecipes(Block block) {
-		GeoBlock geoBlock = null;
-		if (block instanceof GeoBlock) {
-			geoBlock = (GeoBlock)block;
-		}
-		if (geoBlock != null) {
-			if (Crude.class.isAssignableFrom(geoBlock.getComposition())) {
-				registerCrudeCommunitionRecipes((GeoBlock)block);
-			}
-		}
-	}
-	
-	private static void registerCrudeCommunitionRecipes(GeoBlock input) {
-		for(GeoMaterial material : input.getGeoMaterials()) {
-			ItemStack lump = GeologicaItems.CRUDE_LUMP.getItemStack(material, 2);
-			RECIPES.registerCrushingRecipe(input.getItemStack(material), lump, null, input.getStrength());
-			ItemStack dust = GeologicaItems.CRUDE_DUST.getItemStack(material);
-			RECIPES.registerGrindingRecipe(lump.copy().splitStack(1), dust, 
-					Collections.<ChanceStack> emptyList(), input.getStrength());
-		}
-	}
-
 	private static void registerSiftingRecipes() {
 		// TODO: Interact with ChanceDropRegistry to add separation recipes for LooseGeoBlocks
 	}
@@ -246,24 +210,10 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		}
 	}
 	
-	private static void registerQuarterToBlockRecipe(IndustrialMaterialItem<GeoMaterial> input) {
-		for(GeoMaterial material : input.getIndustrialMaterials()) {
-			ItemStack outputStack = GeoBlock.getNative(material).getItemStack(1);
-			ItemStack inputStack = input.getItemStack(material);
-			GameRegistry.addRecipe(outputStack, "##", "##", '#', inputStack);
-		}
-	}
-	
 	private static void registerStairsRecipe(StairsBlock output) {
 		ItemStack outputStack = new ItemStack(output, 4, output.getModelBlockMeta());
 		ItemStack inputStack = new ItemStack(output.getModelBlock(), 1, output.getModelBlockMeta());
 		GameRegistry.addRecipe(outputStack, "#  ", "## ", "###", '#', inputStack);
-	}
-	
-	private static void registerStackingRecipes() {
-		Stacking.of(IndustrialMinerals.class).forEach(CONVERSIONS::register);
-		Stacking.of(Ores.class).forEach(CONVERSIONS::register);
-		Stacking.of(GeoMaterial.class).forEach(CONVERSIONS::register);
 	}
 	
 	private static void registerStandardClayProcessingRecipes() {
@@ -292,7 +242,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	
 	private static void registerPeatDryingRecipe() {
 		ItemStack clump = GeologicaItems.EARTHY_CLUMP.getItemStack(GeoMaterial.PEAT);
-		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(GeoMaterial.PEAT);
+		ItemStack lump =  GeologicaItems.CRUDE_LUMP.getItemStack(Crudes.DRY_PEAT);
 		RECIPES.registerRoastingRecipe(Lists.newArrayList(clump), lump, null, 400);
 	}
 	
