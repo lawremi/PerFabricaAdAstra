@@ -12,6 +12,7 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.model.Vaporization;
 
 /* Crude mixtures of organic substances */
@@ -26,7 +27,6 @@ public interface Crude extends Mixture {
 	public double getSulfurFraction();
 	public List<IndustrialMaterial> fractions();
 	
-	// FIXME: crudes should have a Strength, so that we can grind their lumps...
 	// FIXME: should probably rename Crude to Organic
 	public enum Crudes implements Crude {
 		VOLATILES(new SimpleCrude(Compounds.METHANE, 0.5).mix(Compounds.ETHANE, 0.3).mix(Compounds.PROPANE, 0.15).
@@ -42,21 +42,24 @@ public interface Crude extends Mixture {
 		COAL_TAR(new SimpleCrude(Crudes.HEAVY_NAPHTHA, 0.05).mix(Crudes.KEROSENE, 0.05).
 				 mix(Crudes.LIGHT_GAS_OIL, 0.10).mix(Crudes.HEAVY_GAS_OIL, 0.2).
 				 mix(Crudes.BITUMEN, 0.6)),
-		OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2)), // the organic portion
+		OIL_SHALE(Crudes.KEROGEN.mix(Crudes.BITUMEN, 0.2), Strength.WEAK), // the organic portion
 		BITUMINOUS_COAL(new SimpleCrude(FIXED_CARBON, 0.7).mix(Aggregates.STONE, 0.15).
-                        mix(COAL_TAR, 0.1).mix(VOLATILES, 0.05).mix(Compounds.H2O, 0.1)),
+                        mix(COAL_TAR, 0.1).mix(VOLATILES, 0.05).mix(Compounds.H2O, 0.1),
+                        Strength.WEAK),
 		LIGNITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.35).mix(Aggregates.STONE, 0.1).
-			    mix(Crudes.COAL_TAR, 0.15).mix(Crudes.VOLATILES, 0.1).mix(Compounds.H2O, 0.3)),
-		ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.95).mix(Aggregates.STONE, 0.05)),
-		COKE(FIXED_CARBON),
+			    mix(Crudes.COAL_TAR, 0.15).mix(Crudes.VOLATILES, 0.1).mix(Compounds.H2O, 0.3),
+			    Strength.WEAK),
+		ANTHRACITE(new SimpleCrude(Crudes.FIXED_CARBON, 0.95).mix(Aggregates.STONE, 0.05), Strength.MEDIUM),
+		COKE(FIXED_CARBON, Strength.STRONG),
 		HUMUS(State.SOLID, new Color(60, 40, 0), 0.8, new Hazard(0, 1, 0), 0, 15),
-		PEAT(HUMUS),
+		DRY_PEAT(HUMUS, Strength.WEAK),
 		DIESEL(State.LIQUID, new Color(100, 80, 15), 0.85, new Hazard(1, 2, 0), 2.4, 650, 0.002, 45), // fuel oil #2, "bunker A"
 		LIGHT_FUEL_OIL(State.LIQUID, new Color(70, 50, 10), 0.95, new Hazard(1, 2, 0), 35, 800, 0.03, 50), // fuel oil #4/5 "bunker B"
 		HEAVY_FUEL_OIL(State.LIQUID, new Color(25, 10, 0), 1.0, new Hazard(1, 2, 0), 3500, 950, 0.03, 53), // fuel oil #6, "bunker C"
 		;
 
 		private Crude delegate;
+		private Strength strength;
 		
 		private Crudes(State state, Color color, double density, Hazard hazard, double sulfurFraction, double heat) {
 			this(state, color, density, hazard, Double.NaN, Integer.MIN_VALUE, sulfurFraction, heat);
@@ -69,10 +72,20 @@ public interface Crude extends Mixture {
 				 sulfurFraction, heat));
 		}
 		
+		private Crudes(Crude delegate, Strength strength) {
+			this.delegate = delegate;
+			this.strength = strength;
+		}
+		
 		private Crudes(Crude delegate) {
 			this.delegate = delegate;
 		}
 		
+		@Override
+		public Strength getStrength() {
+			return this.strength;
+		}
+
 		@Override
 		public List<MixtureComponent> getComponents() {
 			return delegate.getComponents();
@@ -122,6 +135,10 @@ public interface Crude extends Mixture {
 		@Override
 		public List<IndustrialMaterial> fractions() {
 			return delegate.fractions();
+		}
+		
+		public boolean isNaturalSolid() {
+			return this.getStrength() != null;
 		}
 	}
 }

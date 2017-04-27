@@ -32,7 +32,11 @@ public class SimpleCrude extends SimpleMixture implements Crude {
 	public SimpleCrude(IndustrialMaterial material, double weight) {
 		super(material, weight);
 	}
-	
+
+	public SimpleCrude(IndustrialMaterial material) {
+		super(material, 1.0);
+	}
+
 	public SimpleCrude(List<MixtureComponent> components, String oreDictKey) {
 		super(components);
 		this.oreDictKey = oreDictKey;

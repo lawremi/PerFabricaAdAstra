@@ -92,13 +92,13 @@ public enum GeoMaterial implements Mixture {
 			mix(Compounds.N2, 0.03).mix(Compounds.H2S, 0.02).mix(Compounds.CO2, 0.01).mix(Element.He, 0.01), 
 			Strength.WEAK, Material.air),
 	
-	OIL_SHALE(Crudes.OIL_SHALE, Strength.WEAK, MUDSTONE),
-	BITUMINOUS_COAL(Crudes.BITUMINOUS_COAL, Strength.WEAK, Aggregates.STONE),
-	LIGNITE(Crudes.LIGNITE, Strength.WEAK, Aggregates.STONE),
-	ANTHRACITE(Crudes.ANTHRACITE, Strength.WEAK, Aggregates.STONE),
-	COKE(Crudes.COKE, Strength.STRONG, GRANITE),
+	OIL_SHALE(new SimpleCrude(Crudes.OIL_SHALE), Strength.WEAK, MUDSTONE),
+	BITUMINOUS_COAL(new SimpleCrude(Crudes.BITUMINOUS_COAL), Strength.WEAK, Aggregates.STONE),
+	LIGNITE(new SimpleCrude(Crudes.LIGNITE), Strength.WEAK, Aggregates.STONE),
+	ANTHRACITE(new SimpleCrude(Crudes.ANTHRACITE), Strength.WEAK, Aggregates.STONE),
+	COKE(new SimpleCrude(Crudes.COKE), Strength.STRONG, GRANITE),
 	
-	PEAT(Crudes.PEAT, Strength.WEAK, Material.ground),
+	PEAT(Crudes.DRY_PEAT, Strength.WEAK, Material.ground),
 	BOG_IRON(Ores.GOETHITE, Strength.WEAK, PEAT),
 
 	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.ILMENITE, 0.6).mix(IndustrialMinerals.GARNET, 0.4)
@@ -390,7 +390,8 @@ public enum GeoMaterial implements Mixture {
 	}
 	
 	public boolean isRock() {
-		return this.getComposition() instanceof Aggregate && this.getBlockMaterial() == Material.rock;
+		return (this.getComposition() instanceof Crude || this.getComposition() instanceof Aggregate) && 
+				this.getBlockMaterial() == Material.rock;
 	}
 	
 	public boolean isIgneousRock() {
