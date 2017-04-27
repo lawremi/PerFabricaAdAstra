@@ -3,6 +3,7 @@ package org.pfaa.geologica.registration;
 import java.util.List;
 
 import org.pfaa.chemica.item.IndustrialMaterialItem;
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaItems;
@@ -31,14 +32,15 @@ public class DropRegistration {
 		}
 	}
 	
-	private static void registerDropsOfItem(ChanceDropRegistry drops, IndustrialMaterialItem<GeoMaterial> item) {
-		for (GeoMaterial material : item.getIndustrialMaterials()) {
+	private static <T extends Enum<?> & IndustrialMaterial> void registerDropsOfItem(ChanceDropRegistry drops, 
+			IndustrialMaterialItem<T> item) {
+		for (T material : item.getIndustrialMaterials()) {
 			registerOreDrop(drops, material, item.getItemStack(material), 0, 1.0F, true);
 		}
 	}
 
 	private static void registerOreDrop(ChanceDropRegistry drops,
-			GeoMaterial material, String key, int quantity, int bonus, float chance, 
+			IndustrialMaterial material, String key, int quantity, int bonus, float chance, 
 			boolean fortuneMultiplies) 
 	{
 		List<ItemStack> ores = OreDictionary.getOres(key);
@@ -50,14 +52,14 @@ public class DropRegistration {
 	}
 
 	private static void registerOreDrop(ChanceDropRegistry drops,
-			GeoMaterial material, Item item, int quantity, int bonus, float chance, 
+			IndustrialMaterial material, Item item, int quantity, int bonus, float chance, 
 			boolean fortuneMultiplies)
 	{
 		registerOreDrop(drops, material, new ItemStack(item, quantity), bonus, chance, fortuneMultiplies);
 	}
 
 	private static void registerOreDrop(ChanceDropRegistry drops,
-			GeoMaterial material, ItemStack item, int bonus, float chance, 
+			IndustrialMaterial material, ItemStack item, int bonus, float chance, 
 			boolean fortuneMultiplies)
 	{
 		drops.addChanceDrop(material, item, bonus, chance, fortuneMultiplies);

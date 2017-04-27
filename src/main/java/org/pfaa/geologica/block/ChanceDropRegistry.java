@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.core.item.ChanceStack;
 import org.pfaa.geologica.GeoMaterial;
 
@@ -14,7 +15,7 @@ import net.minecraft.item.ItemStack;
 
 public class ChanceDropRegistry {
 	
-	private Map<GeoMaterial, ChanceDropSet> dropsByMaterial = new HashMap<GeoMaterial, ChanceDropSet>();
+	private Map<IndustrialMaterial, ChanceDropSet> dropsByMaterial = new HashMap<IndustrialMaterial, ChanceDropSet>();
 	
 	private static final ChanceDropRegistry INSTANCE = new ChanceDropRegistry();
 	
@@ -26,7 +27,7 @@ public class ChanceDropRegistry {
 		return INSTANCE;
 	}
 	
-	public void addChanceDrop(GeoMaterial material, ItemStack item, int bonus, float chance, boolean fortuneMultiplies) {
+	public void addChanceDrop(IndustrialMaterial material, ItemStack item, int bonus, float chance, boolean fortuneMultiplies) {
 		ChanceDropSet drops = this.dropsByMaterial.get(material);
 		if (drops == null) {
 			drops = new ChanceDropSet();

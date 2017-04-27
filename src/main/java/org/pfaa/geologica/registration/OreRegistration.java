@@ -17,6 +17,7 @@ import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.block.VanillaOreOverrideBlock;
+import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
@@ -79,8 +80,8 @@ public class OreRegistration {
 	}
 
 	private static void oreDictifyFuels() {
-		IndustrialMaterialItem<GeoMaterial> fuel = GeologicaItems.CRUDE_LUMP;
-		for (GeoMaterial material : fuel.getIndustrialMaterials()) {
+		IndustrialMaterialItem<Crudes> fuel = GeologicaItems.CRUDE_LUMP;
+		for (Crudes material : fuel.getIndustrialMaterials()) {
 			String key = OreDictUtils.makeKey("fuel", material.getOreDictKey());
 			OreDictionary.registerOre(key, fuel.getItemStack(material));
 		}

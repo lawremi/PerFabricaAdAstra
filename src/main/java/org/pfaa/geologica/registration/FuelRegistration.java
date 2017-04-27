@@ -2,6 +2,7 @@ package org.pfaa.geologica.registration;
 
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeologicaItems;
+import org.pfaa.geologica.processing.Crude.Crudes;
 
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -29,7 +30,7 @@ public class FuelRegistration {
 			if (fuel.getItem() != GeologicaItems.CRUDE_LUMP && fuel.getItem() != GeologicaItems.CRUDE_DUST)
 				return 0;
 			
-			GeoMaterial material = GeologicaItems.CRUDE_LUMP.getIndustrialMaterial(fuel);
+			Crudes material = GeologicaItems.CRUDE_LUMP.getIndustrialMaterial(fuel);
 			switch(material) {
 			case OIL_SHALE:
 				return 400;
@@ -41,7 +42,7 @@ public class FuelRegistration {
 				return 2400;
 			case COKE:
 				return 3200;
-			case PEAT:
+			case DRY_PEAT:
 				return 800;
 			default:
 				return 0;

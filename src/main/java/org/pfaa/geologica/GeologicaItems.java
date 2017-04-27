@@ -6,19 +6,19 @@ import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.catalog.CatalogUtils;
 import org.pfaa.core.catalog.ItemCatalog;
+import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
 public class GeologicaItems implements ItemCatalog {
 
 	// TODO: CRUDE_BLOCK, formed by combining lumps?
-	// TODO: Make crude lump/dust(tiny) items based on Crude, not GeoMaterial, requiring the Crude to have a Strength.
-	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isSolidCrude);
-	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST, GeoMaterial.class, GeoMaterial::isSolidCrude);
-	public static final IndustrialMaterialItem<GeoMaterial> CRUDE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_TINY, GeoMaterial.class, GeoMaterial::isSolidCrude);
+	public static final IndustrialMaterialItem<Crudes> CRUDE_LUMP = 
+			new IndustrialMaterialItem<Crudes>(Forms.LUMP, Crudes.class, Crudes::isNaturalSolid);
+	public static final IndustrialMaterialItem<Crudes> CRUDE_DUST = 
+			new IndustrialMaterialItem<Crudes>(Forms.DUST, Crudes.class, Crudes::isNaturalSolid);
+	public static final IndustrialMaterialItem<Crudes> CRUDE_DUST_TINY = 
+			new IndustrialMaterialItem<Crudes>(Forms.DUST_TINY, Crudes.class, Crudes::isNaturalSolid);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, GeoMaterial::isEarthyMaterial);
 	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
