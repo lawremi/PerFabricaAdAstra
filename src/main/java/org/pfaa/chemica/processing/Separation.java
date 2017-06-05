@@ -40,8 +40,8 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public MaterialState<Mixture> getSeparatedMixture() {
-		MaterialState<?> materialState = this.separated.get(0).materialState;
+	public MaterialState<Mixture> getSeparatedMixture(int i) {
+		MaterialState<?> materialState = this.separated.get(i).materialState;
 		return materialState.material instanceof Mixture ? (MaterialState<Mixture>)materialState : 
 			materialState.state.of(new SimpleMixture(materialState.material));  
 	}

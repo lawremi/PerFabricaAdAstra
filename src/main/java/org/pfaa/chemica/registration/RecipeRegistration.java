@@ -188,7 +188,7 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				extracts(State.GAS.of(Compounds.CO2)).
 				by(Separation.Axis.SOLUBILITY);
 		CONVERSIONS.register(abs);
-		MaterialState<Mixture> richAmine = abs.getSeparatedMixture();
+		MaterialState<Mixture> richAmine = abs.getSeparatedMixture(0);
 		Separation regen = Separation.of(richAmine).
 				at(400).
 				extracts(State.GAS.of(Compounds.CO2)).
