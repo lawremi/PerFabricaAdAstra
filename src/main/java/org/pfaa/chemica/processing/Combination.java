@@ -55,6 +55,10 @@ public class Combination extends ConditionedConversion implements MassTransfer {
 		return this.yields(MaterialStoich.of(output));
 	}
 	
+	public Combination yields(float stoich, IndustrialMaterial output) {
+		return this.yields(MaterialStoich.of(stoich, output));
+	}
+	
 	@Override
 	public List<MaterialStoich<?>> getInputs() {
 		return Collections.unmodifiableList(this.inputs);
@@ -96,6 +100,10 @@ public class Combination extends ConditionedConversion implements MassTransfer {
 	
 	public static Combination of(MaterialStoich<?>... inputs) {
 		return new Combination().with(inputs);
+	}
+	
+	public static Combination of(float stoich, IndustrialMaterial input) {
+		return new Combination().with(MaterialStoich.of(stoich, input));
 	}
 	
 	public static Combination yielding(Mixture output) {
