@@ -98,9 +98,9 @@ public enum GeoMaterial implements Mixture {
 	ANTHRACITE(new SimpleCrude(Crudes.ANTHRACITE), Strength.WEAK, Aggregates.STONE),
 	COKE(new SimpleCrude(Crudes.COKE), Strength.STRONG, GRANITE),
 	
-	PEAT(Crudes.DRY_PEAT, Strength.WEAK, Material.ground),
+	PEAT(new SimpleCrude(Crudes.DRY_PEAT).mix(Compounds.H2O, 0.5), Strength.WEAK, Material.ground),
 	BOG_IRON(Ores.GOETHITE, Strength.WEAK, PEAT),
-
+	
 	BASALTIC_MINERAL_SAND(Ores.MAGNETITE.mix(Ores.ILMENITE, 0.6).mix(IndustrialMinerals.GARNET, 0.4)
 					      .mix(Ores.CHROMITE, 0.2).mix(Ores.RUTILE, 0.2).mix(Ores.ZIRCON, 0.2),
 	                      Strength.WEAK, Aggregates.SAND),
