@@ -197,11 +197,13 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		// These state transitions can obviously occur by either temperature or pressure changes
 		CONDENSATION(Axis.VAPORIZATION_POINT, State.GAS, State.LIQUID),
 		VAPORIZATION(Axis.VAPORIZATION_POINT, State.LIQUID, State.GAS),
+		/* Would be indistinguishable from drying, and probably useless.
 		DESUBLIMATION(Axis.VAPORIZATION_POINT, State.GAS, State.SOLID),
 		SUBLIMATION(Axis.VAPORIZATION_POINT, State.SOLID, State.GAS),
+		*/
 		// Distillation combines vaporization and condensation steps, but we model it as one
-		// Cryogenic distillation requires first condensing the gas (modeled separately)
 		DISTILLATION(Axis.VAPORIZATION_POINT, State.LIQUID, State.LIQUID),
+		CRYOGENIC_DISTILLATION(Axis.VAPORIZATION_POINT, State.GAS, State.GAS),
 		DRYING(Axis.VAPORIZATION_POINT, State.SOLID, State.GAS),
 		FREEZING(Axis.MELTING_POINT, State.LIQUID, State.SOLID),
 		MELTING(Axis.MELTING_POINT, State.SOLID, State.LIQUID),
