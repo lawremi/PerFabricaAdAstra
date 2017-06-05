@@ -80,8 +80,7 @@ public interface IndustrialMaterial {
 		case SOLID:
 			if (this.getFusion() != null) {
 				temp = Math.min(this.getFusion().getTemperature() - 1, Constants.STANDARD_TEMPERATURE);
-			}
-			if (this.getVaporization() != null) {
+			} else if (this.getVaporization() != null) {
 				temp = Math.min(this.getVaporization().getTemperature() - 1, Constants.STANDARD_TEMPERATURE);
 			}
 			break;
