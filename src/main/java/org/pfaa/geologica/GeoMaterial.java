@@ -25,7 +25,6 @@ import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
-import org.pfaa.geologica.processing.Mineral;
 import org.pfaa.geologica.processing.Ore;
 import org.pfaa.geologica.processing.OreMineral;
 import org.pfaa.geologica.processing.OreMineral.Ores;
@@ -358,10 +357,12 @@ public enum GeoMaterial implements Mixture {
 		return composition.mix(material, weight);
 	}
 	
-	public Mineral getOreConcentrate() {
+	public IndustrialMaterial getConcentrate() {
 		Mixture composition = this.getComposition();
 		if (composition instanceof Ore) {
 			return ((Ore)composition).getConcentrate();
+		} else if (composition instanceof Crude) {
+			return composition;
 		}
 		return null;
 	}
