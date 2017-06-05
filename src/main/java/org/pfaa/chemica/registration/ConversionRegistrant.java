@@ -144,4 +144,9 @@ public class ConversionRegistrant {
 	public <T extends Enum<?> & Mixture> void separatePhysically(Class<T> mixture) {
 		Arrays.stream(mixture.getEnumConstants()).forEach(this::separatePhysically);
 	}
+	
+	public void dry(Mixture mixture) {
+		registry.register(Separation.of(mixture).extracts(Compounds.H2O).
+				at(Compounds.H2O.getFusion().getTemperature()));
+	}
 }
