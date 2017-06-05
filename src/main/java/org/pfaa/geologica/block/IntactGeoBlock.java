@@ -8,9 +8,9 @@ import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form;
 import org.pfaa.chemica.processing.Form.Forms;
+import org.pfaa.chemica.processing.MaterialStack;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeologicaBlocks;
-import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
 
@@ -32,13 +32,15 @@ public class IntactGeoBlock extends GeoBlock {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		GeoMaterial material = this.getGeoMaterial(metadata);
-		if (material.getBlockMaterial() == Material.clay || material.getBlockMaterial() == Material.ground) {
-			return this.getEarthyDrops(material, fortune);
+		if (material.getBlockMaterial() == Material.clay) {
+			return this.getDrops(material, Forms.LUMP, fortune);
+		} else if (material.getBlockMaterial() == Material.ground) {
+			return this.getDrops(material, Forms.CLUMP, fortune);
 		}
 		return super.getDrops(world, x, y, z, metadata, fortune);
 	}
 	
-	private ArrayList<ItemStack> getEarthyDrops(GeoMaterial material, int fortune) {
+	private ArrayList<ItemStack> getDrops(GeoMaterial material, Form form, int fortune) {
 		GeoMaterial host = (GeoMaterial)material.getHost();
 		int numOreDrops = material.getComposition() instanceof Ore && host != null ? fortune + 1 : 4;
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
@@ -46,7 +48,7 @@ public class IntactGeoBlock extends GeoBlock {
 			if (i > numOreDrops) {
 				material = host;
 			}
-			drops.add(GeologicaItems.EARTHY_CLUMP.getItemStack(material)); 
+			drops.add(MaterialStack.of(material, form).getBestItemStack()); 
 		}
 		return drops;
 	}

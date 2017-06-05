@@ -137,7 +137,7 @@ public interface Crude extends Mixture {
 			return delegate.fractions();
 		}
 		
-		public boolean isNaturalSolid() {
+		public boolean hasStrength() {
 			return this.getStrength() != null;
 		}
 	}

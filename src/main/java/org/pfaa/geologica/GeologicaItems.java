@@ -12,17 +12,16 @@ import org.pfaa.geologica.processing.OreMineral.Ores;
 
 public class GeologicaItems implements ItemCatalog {
 
-	// TODO: CRUDE_BLOCK, formed by combining lumps?
 	public static final IndustrialMaterialItem<Crudes> CRUDE_LUMP = 
-			new IndustrialMaterialItem<Crudes>(Forms.LUMP, Crudes.class, Crudes::isNaturalSolid);
+			new IndustrialMaterialItem<Crudes>(Forms.LUMP, Crudes.class, Crudes::hasStrength);
 	public static final IndustrialMaterialItem<Crudes> CRUDE_DUST = 
-			new IndustrialMaterialItem<Crudes>(Forms.DUST, Crudes.class, Crudes::isNaturalSolid);
+			new IndustrialMaterialItem<Crudes>(Forms.DUST, Crudes.class, Crudes::hasStrength);
 	public static final IndustrialMaterialItem<Crudes> CRUDE_DUST_TINY = 
-			new IndustrialMaterialItem<Crudes>(Forms.DUST_TINY, Crudes.class, Crudes::isNaturalSolid);
+			new IndustrialMaterialItem<Crudes>(Forms.DUST_TINY, Crudes.class, Crudes::hasStrength);
 	public static final IndustrialMaterialItem<GeoMaterial> EARTHY_CLUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, GeoMaterial::isEarthyMaterial);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.CLUMP, GeoMaterial.class, GeoMaterial::isSoil);
 	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isClayOre);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isClay);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isRockOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 

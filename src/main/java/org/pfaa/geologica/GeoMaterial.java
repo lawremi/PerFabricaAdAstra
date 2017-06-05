@@ -372,12 +372,12 @@ public enum GeoMaterial implements Mixture {
 		return composition.removeAll();
 	}
 	
-	public boolean isEarthyMaterial() {
-		return this.getBlockMaterial() == Material.clay || this.getBlockMaterial() == Material.ground;
+	public boolean isSoil() {
+		return this.getBlockMaterial() == Material.ground;
 	}
 	
-	public boolean isClayOre() {
-		return this.getBlockMaterial() == Material.clay && this.getComposition() instanceof Ore;
+	public boolean isClay() {
+		return this.getBlockMaterial() == Material.clay;
 	}
 	
 	public boolean isSolidCrude() {
