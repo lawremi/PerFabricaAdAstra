@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalDouble;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.google.common.collect.Sets;
 
@@ -122,5 +124,25 @@ public interface Mixture extends IndustrialMaterial {
 				filter((comp) -> comp.getMaterial().getProperties(cond).state == state).
 				collect(Collectors.toList());
 		return this.removeAll().mixAll(comps);
+	}
+	
+	@Override
+	default Condition getCanonicalCondition(State state) {
+		IntStream temps = this.getComponents().stream().
+				mapToInt((comp) -> comp.material.getCanonicalCondition(state).temperature);
+		OptionalInt extreme = OptionalInt.empty();
+		switch(state) {
+		case SOLID:
+			extreme = temps.min();
+			break;
+		case LIQUID:
+			extreme = this.getStandardState() == State.SOLID ? temps.max() : temps.min();  
+			break;
+		case GAS:
+			extreme = temps.max();
+			break;
+		default:
+		}
+		return extreme.isPresent() ? new Condition(extreme.getAsInt()) : null; 
 	}
 }
