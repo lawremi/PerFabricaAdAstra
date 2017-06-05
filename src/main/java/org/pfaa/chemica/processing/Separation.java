@@ -115,7 +115,12 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	protected Condition deriveCondition() {
-		return null;
+		Condition condition = null;
+		if (this.axis == Axis.VAPORIZATION_POINT) {
+			condition = this.separated.get(this.separated.size()-1).material().
+				getCanonicalCondition(this.input.state == State.GAS ? State.LIQUID : State.GAS);
+		}
+		return condition;
 	}
 
 	@Override
