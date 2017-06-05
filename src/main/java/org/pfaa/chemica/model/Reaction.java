@@ -201,6 +201,7 @@ public class Reaction extends ConditionedConversion {
 		return true;
 	}
 	
+	// TODO: use this for production of soda ash from brine
 	public Combination asCombinationForSolution(Mixture solution) {
 		Mixture solutes = solution.getFraction(Condition.STP, State.SOLID);
 		if (solutes.getComponents().size() != 1)
