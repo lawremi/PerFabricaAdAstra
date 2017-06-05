@@ -22,14 +22,12 @@ public interface Form {
 	default boolean isIntact() { return !this.isGranular(); }
 	default boolean isPure() { return true; }
 	default boolean isRegular() { return true; }
-	default boolean isDry() { return true; }
 	
 	Form stack();
 	Form unstack();
 	Form communite();
 	Form reduce();
 	Form compact();
-	Form dry();
 	
 	default float scaleTo(Form target) {
 		return target.getNumberPerBlock() / this.getNumberPerBlock();
@@ -69,9 +67,9 @@ public interface Form {
 	 */
 
 	public enum Forms implements Form {
-		BLOCK(1), // storage block
+		BLOCK(1), // naturally occurring or construction block 
 		BRICK(4),
-		CLUMP(4), // a moist, intact pile, typically from a malleable solid like dirt or clay
+		CLUMP(4), // an intact form of large dust, typically from a malleable solid like dirt or clay
 		COBBLESTONE(1),
 		CRUSHED(9), // the result of crushing a block, further crushing yields powder
 		DUST(9), // dry solid as fine particles, from pulverizing ingots and lumps, precipitation
@@ -250,16 +248,6 @@ public interface Form {
 				return INGOT;
 			default:
 				return null;
-			}
-		}
-		
-		@Override
-		public Form dry() {
-			switch(this) {
-			case CLUMP:
-				return LUMP;
-			default:
-				return this;
 			}
 		}
 	}

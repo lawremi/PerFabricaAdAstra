@@ -55,12 +55,4 @@ public class CompoundForm implements Form {
 			compacted = this.first.of(compacted);
 		return compacted;
 	}
-
-	@Override
-	public Form dry() {
-		Form dried = this.second.dry();
-		if (dried != null)
-			dried = this.first.of(dried);
-		return dried;
-	}
 }
