@@ -1,28 +1,25 @@
 package org.pfaa.chemica.integration;
 
-import cpw.mods.fml.common.Loader;
-
 public abstract class ModIntegration {
 
 	public static void init() {
-		if (Loader.isModLoaded(ModIds.GREGTECH)) {
-			return; // we let Greg run the show
-		}
 		VanillaIntegration.init();
 		RailcraftIntegration.init();
 		AppliedEnergistics2Integration.init();
 		ThermalExpansionIntegration.init();
 		EnderIOIntegration.init();
 		ImmersiveEngineeringIntegration.init();
-		// FIXME: No properly distributed API: RotaryCraftIntegration.init(); // can restore from git
+		// TODO: IndustrialCraft (macerator, ore washer, thermal centrifuge)
 		BuildcraftAdditionsIntegration.init();
 		TConstructIntegration.init();
-		// TODO: TinkersSteelworksIntegration.init();
 		MagneticraftIntegration.init();
 		ForestryIntegration.init();
-		MaricultureIntegration.init();
-		// TODO: Engineer's Toolbox (grinder, centrifuge, mixer [solid=>fluid], multi-smelter [alloys])   
-		
+		// 1.7.10: MaricultureIntegration.init();
+		// TODO: Pneumaticraft: Reborn (refinery with 4 outputs)
+		// TODO: 1.10+, Immersive Petroleum has a distillation tower
+		// TODO: Nuclearcraft
+		// TODO: Advanced Rocketry
+		// TODO: Gregtech and addons like Gregicality, Shadows of Greg
 	}
 	
 }

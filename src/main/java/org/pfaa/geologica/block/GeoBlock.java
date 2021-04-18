@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.pfaa.chemica.ChemicaBlocks;
+import org.pfaa.chemica.block.ChanceDropRegistry;
 import org.pfaa.chemica.block.IndustrialBlock;
 import org.pfaa.chemica.model.Aggregate;
 import org.pfaa.chemica.model.IndustrialMaterial;

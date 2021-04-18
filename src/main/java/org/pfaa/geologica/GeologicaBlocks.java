@@ -20,7 +20,6 @@ import org.pfaa.geologica.block.LooseGeoBlock;
 import org.pfaa.geologica.block.SlabBlock;
 import org.pfaa.geologica.block.SpringBlock;
 import org.pfaa.geologica.block.StairsBlock;
-import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.block.WallBlock;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Ore;
@@ -29,7 +28,6 @@ import org.pfaa.geologica.processing.VanillaOre;
 import cpw.mods.fml.common.LoaderException;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 
 public class GeologicaBlocks implements BlockCatalog {
 	public static final IntactGeoBlock WEAK_STONE = createStoneBlock(Strength.WEAK);
@@ -112,13 +110,6 @@ public class GeologicaBlocks implements BlockCatalog {
 	public static final GeoBlock CRUDE_GROUND = createCrudeGroundBlock();
 	public static final GeoBlock WEAK_ORE_GROUND = createOreGroundBlock();
 	
-	// TODO: remove when we go to 1.10 (or 1.11 or ...)
-	public static final VanillaOreOverrideBlock COAL_ORE = new VanillaOreOverrideBlock(Blocks.coal_ore);
-	public static final VanillaOreOverrideBlock DIAMOND_ORE = new VanillaOreOverrideBlock(Blocks.diamond_ore);
-	public static final VanillaOreOverrideBlock EMERALD_ORE = new VanillaOreOverrideBlock(Blocks.emerald_ore);
-	public static final VanillaOreOverrideBlock LAPIS_ORE = new VanillaOreOverrideBlock(Blocks.lapis_ore);
-	public static final VanillaOreOverrideBlock REDSTONE_ORE = new VanillaOreOverrideBlock(Blocks.redstone_ore);
-	
 	public static final GeoBlock VANILLA_ORE_ROCK = createVanillaOreRockBlock();
 	
 	public static final SpringBlock SPRING = new SpringBlock();
@@ -172,10 +163,6 @@ public class GeologicaBlocks implements BlockCatalog {
 	
 	public static List<IndustrialBlockAccessors> getIndustrialBlocks() {
 		return CatalogUtils.getEntries(GeologicaBlocks.class, IndustrialBlockAccessors.class);
-	}
-	
-	public static List<VanillaOreOverrideBlock> getVanillaOreOverrideBlocks() {
-		return CatalogUtils.getEntries(GeologicaBlocks.class, VanillaOreOverrideBlock.class);
 	}
 	
 	private static Block createWallBlock(CompositeBlock modelBlock) {

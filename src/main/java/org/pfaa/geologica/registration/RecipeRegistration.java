@@ -9,14 +9,13 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Element;
 import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Combination;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.registration.BaseRecipeRegistration;
 import org.pfaa.chemica.registration.Reactions;
@@ -32,8 +31,8 @@ import org.pfaa.geologica.integration.TCIntegration;
 import org.pfaa.geologica.processing.Crude;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
+import org.pfaa.geologica.processing.Mixtures;
 import org.pfaa.geologica.processing.OreMineral.Ores;
-import org.pfaa.geologica.processing.Solutions;
 
 import com.google.common.collect.Lists;
 
@@ -214,10 +213,11 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 	private static void processBrine() {
 		purifyBrine(treatBrine(GeoMaterial.BRINE.getComposition(), Compounds.NaOH));
 		purifyBrine(treatBrine(GeoMaterial.BRINE.getComposition(), Compounds.CaOH2));
+		makeSodaAsh();
 	}
 
 	private static void purifyBrine(Mixture brine) {
-		treatBrine(brine, Compounds.Na2CO3, Solutions.PURIFIED_BRINE);
+		treatBrine(brine, Compounds.Na2CO3, Mixtures.PURIFIED_BRINE);
 	}
 	
 	private static Mixture treatBrine(Mixture brine, Compound salt) {
@@ -264,44 +264,54 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		return product;
 	}
 	
+	private static void makeSodaAsh() {
+		Reaction reaction = Reaction.inWaterOf(Compounds.NaCl).
+				         			 with(Compounds.CO2).
+				         			 with(Compounds.NH3).
+				         			 with(Compounds.H2O).
+				         			 yields(Compounds.NaHCO3). // decomposes to Na2CO3
+				         			 and(Compounds.NH4Cl);
+		CONVERSIONS.register(reaction.asCombinationForSolution(Mixtures.PURIFIED_BRINE));
+	}
+	
 	private static void processNaturalGas() {
-		Mixture ngl = extractMethane(extractHelium(desourNaturalGas()));
+		Mixture ngl = separateMethane(separateHelium(desourNaturalGas()));
 		steamCrack(ngl,
 				   new SimpleMixture(Compounds.H2, 0.3).mix(Compounds.METHANE, 0.05).
 				   		mix(Compounds.ETHENE, 0.25).mix(Compounds.PROPENE, 0.05).mix(Compounds.BUTADIENE, 0.02).
 				   		mix(Compounds.H2O, 0.33), 2);
 	}
 	
-	private static Mixture extractMethane(Mixture noHelium) {
-		Separation sep = Separation.of(noHelium).extracts(State.GAS.of(Compounds.METHANE)).
+	private static Mixture separateMethane(Mixture noHelium) {
+		Separation sep = Separation.of(noHelium).extractsAllExcept(Compounds.METHANE).
 				at(Compounds.ETHANE.getCanonicalCondition(State.LIQUID)).
-				by(Separation.Axis.VAPORIZATION_POINT);
+				by(Separation.Types.CONDENSATION);
 		CONVERSIONS.register(sep);
 		return sep.getResiduum().material;
 	}
 
-	private static Mixture extractHelium(MaterialState<Mixture> desoured) {
-		Separation sep = Separation.of(desoured).extracts(Element.He).at(70);
+	private static Mixture separateHelium(Mixture desoured) {
+		Separation sep = Separation.of(desoured).extractsAllExcept(Element.He).by(Separation.Types.CONDENSATION).at(70);
 		CONVERSIONS.register(sep);
 		return sep.getResiduum().material;
 	}
 
-	private static MaterialState<Mixture> desourNaturalGas() {
-		// Dropping CO2 just to keep things simple
-		MaterialState<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(Compounds.ETHANOLAMINE); 
+	private static Mixture desourNaturalGas() {
 		Separation abs = Separation.
 				of(GeoMaterial.NATURAL_GAS).
-				with(ethanolamine).
+				with(State.AQUEOUS.of(Compounds.ETHANOLAMINE)).
 				extracts(Compounds.CO2, Compounds.H2S).
-				by(Separation.Axis.SOLUBILITY);
+				by(Separation.Types.ABSORPTION);
 		CONVERSIONS.register(abs);
-		MaterialState<Mixture> richAmine = State.AQUEOUS.of(abs.getSeparatedMixture(0).material.without(Compounds.CO2));
+		Mixture richAmine = abs.getSeparatedMixture(0);
+		// Dropping CO2 just to keep things simple
+		Mixture richAmineNoCO2 = new SimpleMixture(richAmine.name(), richAmine.without(Compounds.CO2).getComponents()); 
 		Separation regen = Separation.
-				of(richAmine).
-				extracts(State.GAS.of(Compounds.H2S)).at(400).
-				by(Separation.Axis.SOLUBILITY);;
+				of(State.AQUEOUS.of(richAmineNoCO2)).
+				extracts(Compounds.H2S).at(400).
+				by(Separation.Types.DEGASIFICATION);
 		CONVERSIONS.register(regen);
-		return abs.getResiduum();
+		return abs.getResiduum().material;
 	}
 
 	private static void processOil() {
@@ -316,12 +326,12 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		Separation firstCut = Separation.of(crude).
 				extracts(Crudes.VOLATILES, Crudes.LIGHT_NAPHTHA, Crudes.HEAVY_NAPHTHA).
 				extracts(Crudes.KEROSENE, Crudes.LIGHT_GAS_OIL, Crudes.HEAVY_GAS_OIL).
-				by(Separation.Axis.VAPORIZATION_POINT);
+				by(Separation.Types.DISTILLATION);
 		CONVERSIONS.register(firstCut);
-		CONVERSIONS.register(Separation.of(firstCut.getSeparatedMixture(0).material).extractsAll().
-				by(Separation.Axis.VAPORIZATION_POINT));
-		CONVERSIONS.register(Separation.of(firstCut.getSeparatedMixture(1).material).extractsAll().
-				by(Separation.Axis.VAPORIZATION_POINT));
+		CONVERSIONS.register(Separation.of(firstCut.getSeparatedMixture(0)).extractsAll().
+				by(Separation.Types.DISTILLATION));
+		CONVERSIONS.register(Separation.of(firstCut.getSeparatedMixture(1)).extractsAll().
+				by(Separation.Types.DISTILLATION));
 	}
 	
 	private static void steamCrack() {
@@ -334,38 +344,43 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 				   		mix(Compounds.ETHENE, 0.3).mix(Compounds.PROPENE, 0.15).mix(Compounds.BUTADIENE, 0.05).
 				   		mix(Compounds.H2O, 0.2), 1.5F);
 		
-		Mixture rpg = new SimpleMixture(Compounds.BENZENE, 0.5).mix(Compounds.TOLUENE, 0.5);
-		Mixture butenes = new SimpleMixture(Compounds.ISO_BUTENE, 0.5).mix(Compounds.N_BUTENE, 0.5);
-		
 		steamCrack(Crudes.LIGHT_NAPHTHA,
 				   new SimpleMixture(Compounds.H2, 0.1).mix(Compounds.METHANE, 0.08).
 				   		mix(Compounds.ETHENE, 0.18).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.07).
-				   		mix(rpg, 0.1).mix(butenes, 0.07).
+				   		mix(Mixtures.RPG, 0.1).mix(Mixtures.BUTENES, 0.07).
 				   		mix(Compounds.H2O, 0.33), 3);
 		steamCrack(Crudes.HEAVY_NAPHTHA,
 				   new SimpleMixture(Compounds.H2, 0.08).mix(Compounds.METHANE, 0.08).
 				   		mix(Compounds.ETHENE, 0.15).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.07).
-				   		mix(rpg, 0.15).mix(butenes, 0.07).
+				   		mix(Mixtures.RPG, 0.15).mix(Mixtures.BUTENES, 0.07).
 				   		mix(Compounds.H2O, 0.33), 6);
 		
 		steamCrack(Crudes.LIGHT_GAS_OIL,
 				   new SimpleMixture(Compounds.H2, 0.05).mix(Compounds.METHANE, 0.05).
 				   		mix(Compounds.ETHENE, 0.13).mix(Compounds.PROPENE, 0.07).mix(Compounds.BUTADIENE, 0.05).
-				   		mix(rpg, 0.1).mix(butenes, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.1).
+				   		mix(Mixtures.RPG, 0.1).mix(Mixtures.BUTENES, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.1).
 				   		mix(Compounds.H2O, 0.40), 12);
 		steamCrack(Crudes.HEAVY_GAS_OIL,
 				   new SimpleMixture(Compounds.H2, 0.05).mix(Compounds.METHANE, 0.05).
 				   		mix(Compounds.ETHENE, 0.10).mix(Compounds.PROPENE, 0.05).mix(Compounds.BUTADIENE, 0.05).
-				   		mix(rpg, 0.1).mix(butenes, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.15).
+				   		mix(Mixtures.RPG, 0.1).mix(Mixtures.BUTENES, 0.05).mix(Crudes.LIGHT_FUEL_OIL, 0.15).
 				   		mix(Compounds.H2O, 0.40), 16);
 	}
 	
 	private static void steamCrack(IndustrialMaterial input, Mixture output, float steamRatio) {
 		CONVERSIONS.register(Combination.of(input).with(steamRatio, Compounds.H2O).at(new Condition(1100)).yields(output));
-		// TODO: condense out fuel oil @ 700
-		// TODO: condense out H2O (steam) and RPG (further separate into benzene and toluene)
-		// TODO: cryogenically separate H2, CH4, rest (ethene, propene and C4 olefins)
-		// TODO: cryogenically separate ethene, propene and C4 fraction
+		Separation fuelOilSep = Separation.of(output).extracts(Crudes.LIGHT_FUEL_OIL).
+				by(Separation.Types.CONDENSATION);
+		CONVERSIONS.register(fuelOilSep);
+		Separation h2oRpgSep = Separation.of(fuelOilSep.getResiduum()).extracts(Compounds.H2O, Mixtures.RPG).
+				by(Separation.Types.CONDENSATION);
+		CONVERSIONS.register(h2oRpgSep);
+		Separation h2Ch4Sep = Separation.of(h2oRpgSep.getResiduum()).extracts(Compounds.H2, Compounds.METHANE).
+				by(Separation.Types.CONDENSATION);
+		CONVERSIONS.register(h2Ch4Sep);
+		Separation ethPropSep = Separation.of(h2Ch4Sep.getResiduum()).extracts(Compounds.ETHENE, Compounds.PROPENE).
+				by(Separation.Types.CONDENSATION);
+		CONVERSIONS.register(ethPropSep);
 		// TODO: chemically separate C4 into butadiene and butenes (distilled into iso-butene and 2-butene)
 	}
 }

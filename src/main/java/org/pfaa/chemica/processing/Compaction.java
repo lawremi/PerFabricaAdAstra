@@ -3,7 +3,7 @@ package org.pfaa.chemica.processing;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 
-public class Compaction extends DegenerateConversion implements Sizing {
+public class Compaction extends FormConversion implements Sizing {
 
 	protected Compaction(IndustrialMaterial material) {
 		super(material);

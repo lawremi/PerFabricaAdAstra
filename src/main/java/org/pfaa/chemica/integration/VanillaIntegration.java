@@ -29,6 +29,8 @@ public class VanillaIntegration {
 
 		@Override
 		public void registerSmeltingRecipe(ItemStack input, ItemStack output, ItemStack flux, int temp) {
+		    // TODO: Allow smelting of _nuggets_ of "very high" metals.
+		    //       Caller should attempt to register nugget recipes.
 			if (flux == null && temp < TemperatureLevel.VERY_HIGH.getReferenceTemperature()) {
 				FurnaceRecipes.smelting().func_151394_a(input, output, 0);
 			}

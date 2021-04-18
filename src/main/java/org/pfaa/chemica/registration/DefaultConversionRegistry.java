@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.pfaa.chemica.block.ChanceDropRegistry;
 import org.pfaa.chemica.fluid.IndustrialFluids;
 import org.pfaa.chemica.item.IndustrialItems;
 import org.pfaa.chemica.model.Compound.Compounds;
@@ -14,7 +15,6 @@ import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.Equation.Term;
 import org.pfaa.chemica.model.Mixture;
 import org.pfaa.chemica.model.MixtureComponent;
-import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
@@ -28,6 +28,7 @@ import org.pfaa.chemica.processing.Form.Forms;
 import org.pfaa.core.item.ChanceStack;
 import org.pfaa.chemica.processing.MaterialRecipe;
 import org.pfaa.chemica.processing.MaterialStack;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.Smelting;
 import org.pfaa.chemica.processing.Stacking;
@@ -66,7 +67,7 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 			consumer = this::precipitate;
 		else if (type == Separation.Types.SOLID_GRAVITY)
 			consumer = this::separateSolidsMechanically;
-		else if (type == Separation.Types.DRYING)
+		else if (type == Separation.Types.EVAPORATION)
 			consumer = this::dry;
 		if (consumer != null)
 			separation.getRecipes().forEach(consumer);
@@ -155,10 +156,20 @@ public class DefaultConversionRegistry implements ConversionRegistry {
 		combination.getRecipes().forEach(this::combine);
 	}
 
+	private void scaleForChanceDrops(ItemStack output, MaterialStack input) {
+		if (!input.getForm().isPure()) {
+			List<ItemStack> drops = ChanceDropRegistry.instance().getAverageDrops(input.getMaterial());
+			Optional<ItemStack> drop = drops.stream().filter((d) -> d.isItemEqual(output)).findFirst();
+			if (drop.isPresent())
+				output.stackSize *= drop.get().stackSize;
+		}
+	}
+	
 	private void communite(MaterialRecipe recipe) {
 		ItemStack input = IndustrialItems.getBestItemStack(recipe.getInput());
 		List<MaterialStack> outputs = recipe.getOutputs();
 		ItemStack primaryOutput = IndustrialItems.getBestItemStack(outputs.get(0));
+		this.scaleForChanceDrops(primaryOutput, recipe.getInput());
 		Stream<ChanceStack> secondaries = outputs.stream().skip(1).map(IndustrialItems::getChanceStack);
 		Strength strength = recipe.getInput().getMaterial().getStrength();
 		if (recipe.getOutput().getForm().isGranular()) {

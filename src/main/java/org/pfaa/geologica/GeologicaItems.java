@@ -23,11 +23,11 @@ public class GeologicaItems implements ItemCatalog {
 	public static final IndustrialMaterialItem<GeoMaterial> CLAY_LUMP = 
 			new IndustrialMaterialItem<GeoMaterial>(Forms.LUMP, GeoMaterial.class, GeoMaterial::isClay);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_CRUSHED = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isRockOre);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.CRUSHED, GeoMaterial.class, GeoMaterial::isHardOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, GeoMaterial::isRockOre);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE, GeoMaterial.class, GeoMaterial::isHardOre);
 	public static final IndustrialMaterialItem<GeoMaterial> ORE_DUST_TINY = 
-			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, GeoMaterial::isRockOre);
+			new IndustrialMaterialItem<GeoMaterial>(Forms.DUST_IMPURE_TINY, GeoMaterial.class, GeoMaterial::isHardOre);
 	
 	public static final IndustrialMaterialItem<Ores> ORE_MINERAL_DUST = 
 			new IndustrialMaterialItem<Ores>(Forms.DUST, Ores.class);

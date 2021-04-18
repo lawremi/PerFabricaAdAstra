@@ -1,14 +1,19 @@
-package org.pfaa.chemica.model;
+package org.pfaa.chemica.processing;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.pfaa.chemica.model.Chemical;
+import org.pfaa.chemica.model.Condition;
+import org.pfaa.chemica.model.Constants;
+import org.pfaa.chemica.model.Equation;
+import org.pfaa.chemica.model.IndustrialMaterial;
+import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.MixtureComponent;
+import org.pfaa.chemica.model.SimpleMixture;
+import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Equation.Term;
-import org.pfaa.chemica.processing.Combination;
-import org.pfaa.chemica.processing.ConditionedConversion;
-import org.pfaa.chemica.processing.Conversion;
-import org.pfaa.chemica.processing.MaterialStoich;
 
 import com.google.common.collect.Lists;
 
@@ -231,15 +236,11 @@ public class Reaction extends ConditionedConversion {
 	}
 	
 	public static Reaction of(int stoichiometry, Chemical reactant, State state) {
-		return of(stoichiometry, reactant, state, 1.0F);
-	}
-	
-	private static Reaction of(int stoichiometry, Chemical reactant, State state, float concentration) {
-		return of(null, stoichiometry, reactant, state, concentration);
+		return of(null, stoichiometry, reactant, state);
 	}
 
-	private static Reaction of(Type type, int stoichiometry, Chemical reactant, State state, float concentration) {
-		Term term = new Term(stoichiometry, reactant, state, concentration);
+	private static Reaction of(Type type, int stoichiometry, Chemical reactant, State state) {
+		Term term = new Term(stoichiometry, reactant, state);
 		Equation equation = new Equation(Lists.newArrayList(term), Collections.<Term>emptyList(), null);
 		return new Reaction(equation);
 	}
@@ -248,20 +249,13 @@ public class Reaction extends ConditionedConversion {
 		return inWaterOf(1, reactant);
 	}
 	
-	public static Reaction inWaterOf(Chemical reactant, float concentration) {
-		return inWaterOf(1, reactant, State.AQUEOUS, concentration);
-	}
-	
 	public static Reaction inWaterOf(int stoichiometry, Chemical reactant) {
 		return inWaterOf(stoichiometry, reactant, reactant.getProperties(Condition.AQUEOUS_STP).state);
 	}
 	
-	public static Reaction inWaterOf(int stoichiometry, Chemical reactant, State state) {
-		return inWaterOf(stoichiometry, reactant, state, Constants.STANDARD_SOLUTE_WEIGHT);
-	}
 	
-	private static Reaction inWaterOf(int stoichiometry, Chemical reactant, State state, float concentration) {
-		Reaction reaction = of(stoichiometry, reactant, state, concentration);
+	public static Reaction inWaterOf(int stoichiometry, Chemical reactant, State state) {
+		Reaction reaction = of(stoichiometry, reactant, state);
 		reaction.baseCondition.aqueous = true;
 		return reaction;
 	}

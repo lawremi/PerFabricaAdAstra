@@ -14,6 +14,7 @@ import org.pfaa.chemica.processing.MaterialStack;
 
 import com.google.common.base.CaseFormat;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -64,6 +65,14 @@ public abstract class OreDictUtils {
 		OreDictionary.registerOre(materialStack.getOreDictKey(), itemStack);
 	}
 
+	public static void register(MaterialStack materialStack, Item item) {
+		register(materialStack, new ItemStack(item));
+	}
+
+	public static void register(MaterialStack materialStack, String name) {
+		register(materialStack, OreDictionary.getOres(name).get(0));
+	}
+	
 	public static void register(IndustrialItemAccessors item) {
 		Iterator<ItemStack> itemStacks = item.getItemStacks().iterator();
 		item.getMaterialStacks().forEach((stack) -> {

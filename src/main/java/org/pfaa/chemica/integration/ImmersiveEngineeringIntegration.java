@@ -70,7 +70,7 @@ public class ImmersiveEngineeringIntegration {
 			ArcFurnaceRecipe.addRecipe(output, inputs.get(0), null, time, ARC_ENERGY_PER_TICK, additives);
 		}
 
-		// Other machines: coke oven
+		// Other machines: coke oven, refinery (2 fluids => fluid, thematically only for Crudes or alkanes) 
 	}
 
 }

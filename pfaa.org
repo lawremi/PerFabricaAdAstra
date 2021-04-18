@@ -2270,6 +2270,9 @@
  
 **** Cobalt
      The same as with chalcopyrite.
+
+**** Minor: Silver, Gold, Platinum, Selenium, Tellurium
+     See chalcopyrite.
      
 *** Sphalerite
 **** Zinc
@@ -2479,7 +2482,7 @@
      with limestone, and the precipitated Ni hydroxide is roasted
      to NiO and smelted.
      
-*** TODO Cassiterite
+*** Cassiterite
 **** Tin
      From smelting.
      
@@ -2517,11 +2520,20 @@
     Al(OH)3 is precipitated by bubbling CO2 through the solution
     (neutralizing the NaOH with carbonic acid). That is calcined to
     become Al2O3. Cryolite is added as a flux and the mixture is
-    melted at 1000 C. Then electrolysis yields Al (s). The GT
-    electrolyzer requires a lot of energy to process bauxite dust. We
-    could have Al2O3 increase yield significantly. But that would not
-    incorporate the notion of the cryolite.
+    melted at 1000 C. Then electrolysis yields Al (s).
 
+    Simplified, the formation of aluminum hydroxide is just:
+
+    Al2O3 + NaOH + 3 H2O → 2 Al(OH)3 + NaOH
+
+    so the NaOH is more like a catalyst and is unconsumed. Water is
+    very much in excess but could be required for consistency reasons.
+    
+    With GT, that might be:
+    * Bauxite + NaOH (unconsumed) + 3 H2O =reactor=> Al(OH)3
+    * 2 Al(OH)3 =furnace=> Al2O3 (two small dusts?)
+    * 2 Al2O3 + cryolite (molten, unconsumed) =electrolysis=> 4 Al + 3 O2
+      
     Cryolite is Na3AlF6, which can be synthesized as:
     6 NaOH + Al2O3 + 12 HF → 2 Na3AlF6 + 9 H2O
 
@@ -2529,6 +2541,12 @@
 
     This will require some special machine, a smelter/electrolyzer,
     that requires less energy than using straight electrolysis.
+
+    See http://www.3rd1000.com/chem201/chem204l.htm for how Al was
+    produced before the above process was invented. The reactions are:
+    
+    2Al2O3 + 6Cl2(g) + 3C => 4AlCl3 + 3CO2
+    AlCl3 + Na => 3NaCl(s) + Al
     
 **** Gallium
      Gallium can replace Al in gibbsite, Al(OH)3. Ga(OH)3 ends up in
@@ -2955,6 +2973,25 @@
      Steps 3 and 4 are cryogenic, i.e., the stream is cooled between
      steps 2 and 3. Could use the turbo-expander that we already need
      for making NGL.
+
+     Butadiene is more soluble in an aprotic solvent than the
+     butenes. The solvent decreases the volatility of butadiene, so
+     the two chemicals can be separated by extractive
+     distillation. The typical solvent is n-methyl-pyrrolidone. It is
+     synthesized via:
+
+     acetylene + 2 formaldehyde => 1,4-butynediol
+     1,4-butynediol + 2H2 => 1,4-butanediol
+     1,4-butanediol + sulfuric acid => gamma-butyrolactone (GBL)
+     GBL + methylamine => NMP
+
+     Formaldehyde:
+     2 CH3OH + O2 → 2 CH2O + 2 H2O (via Ag @ 900, Fe2O3 + Mb or V @ 600)
+
+     Methanol:
+     CO (syngas) + 2 H2 → CH3OH via Cu/Zn oxide @ 500
+
+     Acetylene: partial combustion of methane @ 1500K
      
 **** Steam reforming
      Produces H2 from hydrocarbons:
@@ -3300,42 +3337,7 @@
    nuggets are much rarer than gold nuggets, but in terms of gameplay,
    it would be interesting to force initial copper extraction to
    nuggets.
- 
-** Ore Genesis
-   A major issue in Minecraft is that mining consumes non-renewable
-   resources. To sustain a steady stream of ores, one comes to rely on
-   semi-automated mining methods, which present a host of problems and
-   can never be fully automated.
-
-   There needs to be a progression from manual mining and exploration
-   to automated infrastructure that progresses in efficiency. To
-   retain balance, infinite sources of resources should be finite in
-   number and difficult or impossible to relocate. Consider Thaumcraft
-   nodes, Buildcraft springs, and Botania Daybloom Primals.
-
-   We propose a semi-realistic mini-game of ore generation, based on
-   fixed sources of geological activty that when properly harnessed
-   generate a steady supply of ore /in situ/.
-
-   Perhaps the simplest approach would be bedrock-level springs of
-   mineral-rich hot water that when cooled precipitates ore
-   minerals. The type of mineral would depend on the proportion of
-   ores originally in that chunk. More complicated would be springs of
-   brines (or some solution) that need to be passed over/along stone
-   to dissolve minerals and are finally cooled to convert adjacent
-   stone to ore blocks. The fluid might act like water, and so could
-   flow a long way after being pumped up, but it would need to be
-   continuously heated (e.g., by adjacent lava) to retain its fluid
-   gathering ability. The generated ore blocks could be repeatedly
-   "broken" like those in Harder Ores, although we might tweak that
-   mechanic so that spawning an ore chunk is stochastic, with the rate
-   depending non-linearly on the ore concentration. 
-
-   Another idea: the spring block generates a flowing block, not a
-   source block. Any stone touched by the liquid is converted over
-   time to an ore block, which is harvested as normal and must be
-   replaced by another stone block for another ore to be generated. 
-   
+    
 ** Extra planets and moons
    Eventually, we want to include all planets (including exoplanets)
    and moons (including psuedo-randomaly generated ones). 
@@ -3997,12 +3999,11 @@
    centrifuged ores.
   
 ** Gregtech
-   We will let GT manage the processing when it is present.  We will
-   work with the maintainer to add new types of materials. Once a
-   material is added, we can modify traits, such as the composition
-   (including existing materials). These are then automatically mapped
-   to machine recipes. For example, pulverizer support includes the
-   IC2 macerator, TE pulverizer, and Railcraft rock crusher.
+   GT already includes many of our materials, particularly the
+   ores. Since we want to be independent of GT, we will specify all
+   recipes, even when redundant. This will make NEI really messy, so
+   we may add an option to remove all relevant GT recipes, but perhaps
+   that should be left to the modpack creator.
 
    | Machine                | (Ideal) Purpose                             |
    |------------------------+---------------------------------------------|

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.pfaa.chemica.model.Mixture;
 
-public class Reduction extends Communition implements Sizing {
+public class Reduction extends Communition {
 
 	private Mixture input;
 	

@@ -17,13 +17,13 @@ public class SimpleMixture implements Mixture {
 	private Map<Condition,ConditionProperties> propertiesCache = new HashMap<Condition, ConditionProperties>();
 	private String name;
 	
-	protected SimpleMixture(String name, List<MixtureComponent> components) {
-		this.components = components;
+	public SimpleMixture(String name, List<MixtureComponent> components) {
+		this.components = Lists.newArrayList(components);
 		this.name = name;
 	}
 	
 	public SimpleMixture(List<MixtureComponent> components) {
-		this(null, Lists.newArrayList(components));
+		this(null, components);
 	}
 
 	public SimpleMixture(String name, MixtureComponent... components) {

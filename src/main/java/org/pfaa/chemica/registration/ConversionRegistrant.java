@@ -9,9 +9,7 @@ import org.pfaa.chemica.model.Compound;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Alloying;
@@ -19,9 +17,9 @@ import org.pfaa.chemica.processing.Combination;
 import org.pfaa.chemica.processing.Communition;
 import org.pfaa.chemica.processing.Compaction;
 import org.pfaa.chemica.processing.EnthalpyChange;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.processing.Reduction;
 import org.pfaa.chemica.processing.Separation;
-import org.pfaa.chemica.processing.Separation.Axis;
 import org.pfaa.chemica.processing.Smelting;
 import org.pfaa.chemica.processing.Stacking;
 import org.pfaa.chemica.processing.TemperatureLevel;
@@ -116,8 +114,8 @@ public class ConversionRegistrant {
 				yields(State.AQUEOUS.of(compound)).
 				given(Chemical.MIN_SOLUBILITY / compound.getSolubility() * 10000));
 		registry.register(Separation.of(State.AQUEOUS.of(new SimpleMixture(compound))).
-				extracts(MaterialState.of(compound)).
-				by(Axis.SOLUBILITY).
+				extracts(compound).
+				by(Separation.Axis.SOLUBILITY).
 				given(compound.getSolubility() / Chemical.MIN_SOLUBILITY));
 	}
 	

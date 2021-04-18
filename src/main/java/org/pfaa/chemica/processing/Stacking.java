@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 import org.pfaa.chemica.model.IndustrialMaterial;
 
-public class Stacking extends DegenerateConversion implements MassTransfer {
+public class Stacking extends FormConversion implements MassTransfer {
 	
 	protected Stacking(IndustrialMaterial material) {
 		super(material);

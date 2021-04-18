@@ -11,7 +11,6 @@ import org.pfaa.chemica.model.Aggregate.Aggregates;
 import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
-import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.model.Strength;
 import org.pfaa.chemica.processing.Form.Forms;
@@ -27,7 +26,6 @@ import org.pfaa.fabrica.model.Intermediate.Intermediates;
 import org.pfaa.geologica.GeologicaItems;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
-import org.pfaa.geologica.processing.Solutions;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
@@ -53,7 +51,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		makeDrywallJointCompound();
 		fillPigments();
 		makePhosphoricAcid();
-		makeSodaAsh();
 		makeHood();
 	}
 
@@ -195,19 +192,6 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 					IngredientList.of(new ItemIngredientStack(dye), Forms.DUST.of(Generics.FILLER)), 
 					doubleDye);	
 		}
-	}
-
-	private static void makeSodaAsh() {
-		float brineConcentration = (float)Solutions.PURIFIED_BRINE.getComponents().get(1).weight;
-		// FIXME: Drop Term.concentration, instead define this reaction normally and create a generic
-		//        operation that overrides the NaCl with brine. Should move to Geologica.
-		Reaction reaction = Reaction.inWaterOf(Compounds.NaCl, brineConcentration).
-				         			 with(Compounds.CO2).
-				         			 with(Compounds.NH3).
-				         			 with(Compounds.H2O).
-				         			 yields(Compounds.NaHCO3). // decomposes to Na2CO3
-				         			 and(Compounds.NH4Cl);
-		CONVERSIONS.register(reaction);
 	}
 
 	private static void makePhosphoricAcid() {

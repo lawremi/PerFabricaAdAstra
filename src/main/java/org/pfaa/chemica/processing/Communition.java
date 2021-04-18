@@ -7,7 +7,7 @@ import org.pfaa.chemica.model.Mixture;
 
 import com.google.common.collect.Lists;
 
-public class Communition extends DegenerateConversion implements Sizing {	
+public class Communition extends FormConversion implements Sizing {
 	protected Communition(IndustrialMaterial material) {
 		super(material);
 	}

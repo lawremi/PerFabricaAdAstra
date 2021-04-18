@@ -95,8 +95,6 @@ public class Equation {
 		public static final Collector<Term, ?, Mixture> TO_MIXTURE = 
 				Collector.of(SimpleMixture::new, (m, t) -> m.mix(t.material(), t.stoich), Mixture::mixAll);
 		
-		public final float concentration;
-		
 		public Term(Chemical chemical) {
 			this(1, chemical);
 		}
@@ -106,12 +104,7 @@ public class Equation {
 		}
 		
 		public Term(float stoich, Chemical chemical, State state) {
-			this(stoich, chemical, state, 1.0F);
-		}
-		
-		public Term(float stoich, Chemical chemical, State state, float concentration) {
 			super(state.of(chemical), stoich);
-			this.concentration = concentration;
 		}
 		
 		public Term(MaterialStoich<Chemical> stoich) {
@@ -119,7 +112,7 @@ public class Equation {
 		}
 		
 		public Term scale(float scale) {
-			return new Term(this.stoich * scale, this.material(), this.state(), this.concentration);
+			return new Term(this.stoich * scale, this.material(), this.state());
 		}
 
 		public String toString() {

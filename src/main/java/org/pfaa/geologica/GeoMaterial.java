@@ -385,7 +385,7 @@ public enum GeoMaterial implements Mixture {
 				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.ground);
 	}
 
-	public boolean isRockOre() {
+	public boolean isHardOre() {
 		return this.getComposition() instanceof Ore && 
 				(this.getBlockMaterial() == Material.rock || this.getBlockMaterial() == Material.clay);
 	}

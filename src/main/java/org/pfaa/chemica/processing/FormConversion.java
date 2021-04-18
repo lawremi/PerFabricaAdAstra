@@ -6,10 +6,10 @@ import java.util.List;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.State;
 
-public abstract class DegenerateConversion implements Conversion {
+public abstract class FormConversion implements Conversion {
 	private IndustrialMaterial material;
 	
-	protected DegenerateConversion(IndustrialMaterial material) {
+	protected FormConversion(IndustrialMaterial material) {
 		this.material = material;
 	}
 	

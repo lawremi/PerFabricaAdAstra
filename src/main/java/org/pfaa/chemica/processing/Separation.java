@@ -1,13 +1,16 @@
 package org.pfaa.chemica.processing;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.pfaa.chemica.model.Condition;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
+import org.pfaa.chemica.model.MixtureComponent;
 import org.pfaa.chemica.model.SimpleMixture;
 import org.pfaa.chemica.model.State;
 import org.pfaa.chemica.processing.Form.Forms;
@@ -18,8 +21,8 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	private MaterialState<Mixture> input;
 	private MaterialState<?> agent;
 	private MaterialState<Mixture> residuum;
-	private List<MaterialStoich<?>> separated = Lists.newArrayList();
-	private Axis axis;
+	private List<MixtureComponent> separated = Lists.newArrayList();
+	private Type type;
 	private double energy;
 	
 	protected Separation(MaterialState<Mixture> input) {
@@ -39,68 +42,89 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		return this.residuum;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public MaterialState<Mixture> getSeparatedMixture(int i) {
-		MaterialState<?> materialState = this.separated.get(i).materialState;
-		return materialState.material instanceof Mixture ? (MaterialState<Mixture>)materialState : 
-			materialState.state.of(new SimpleMixture(materialState.material));  
+	public Mixture getSeparatedMixture(int i) {
+		MixtureComponent comp = this.separated.get(i); 
+		return comp.material instanceof Mixture ? (Mixture)comp.material : new SimpleMixture(comp);
 	}
 	
 	public Separation with(MaterialState<?> agent) {
 		this.agent = agent;
 		return this;
 	}
-
+	
 	public Separation with(IndustrialMaterial agent) {
-		return this.with(MaterialState.of(agent));
-	}
-
-	public Separation extracts(MaterialState<?> output) {
-		return this.extracts(output.state, output.material);
+		this.agent = MaterialState.of(null, agent);
+		return this;
 	}
 	
-	public Separation extracts(IndustrialMaterial... outputs) {
-		return this.extracts(this.input.state, outputs);
-	}
-	
-	public Separation extracts(State state, IndustrialMaterial... outputs) {
-		Mixture separated = this.residuum.material.extract(outputs);
-		Mixture residuum = this.residuum.material.without(outputs);
-		MaterialState<?> agent = this.getAgent();
-		if (agent != null) {
-			separated = separated.mix(agent.material, 1.0);
-			state = agent.state;
+	private Separation separate(Mixture separated, Mixture residuum) {
+		IndustrialMaterial agent = this.agent.material;
+		if (agent != null && this.getType().getSeparatedState() == this.getType().getAgentState()) {
+			separated = separated.mix(agent, 1.0);
 		}
-		this.separated.add(MaterialStoich.of(state.of(separated)));
+		this.separated.add(new MixtureComponent(separated, 1.0));
 		this.residuum = this.residuum.state.of(residuum);
 		return this;
 	}
+	
+	public Separation extracts(IndustrialMaterial... outputs) {
+		return this.separate(this.residuum.material.extract(outputs), this.residuum.material.without(outputs));
+	}
 
 	public Separation extractsAll() {
-		this.residuum.material.getComponents().stream().map(MaterialStoich::of).forEach(this.separated::add);
+		this.residuum.material.getComponents().stream().forEach(this.separated::add);
 		this.residuum = this.residuum.state.of(this.residuum.material.removeAll());
 		return this;
 	}
 	
-	public Axis getAxis() {
-		return this.axis;
+	public Separation extractsAllExcept(IndustrialMaterial... outputs) {
+		return this.separate(this.residuum.material.without(outputs), this.residuum.material.extract(outputs));
+	}
+	
+	public Separation by(Type type) {
+		if (this.input.state == null)
+			this.input = type.getInputState().of(this.input.material);
+		if (this.agent.state == null)
+			this.agent = type.getAgentState().of(this.agent.material);
+		this.type = type;
+		return this;
 	}
 	
 	public Separation by(Axis axis) {
-		this.axis = axis;
-		return this;
+		Optional<Types> maybeType = Types.find(
+				axis, 
+				this.input.state, 
+				this.agent != null ? this.agent.state : null, 
+				this.separated.get(0).material.getStandardState());
+		if (maybeType.isPresent()) {
+			return this.by(maybeType.get());
+		} else {
+			throw new IllegalArgumentException("Cannot find type for axis: " + axis);
+		}
 	}
-
+	
 	@Override
 	public List<MaterialStoich<?>> getInputs() {
-		return Collections.singletonList(MaterialStoich.of(this.input));
+		List<MaterialStoich<?>> inputs = Arrays.asList(MaterialStoich.of(this.input));
+		if (this.agent != null) {
+			inputs.add(MaterialStoich.of(this.agent));
+		}
+		return inputs;
 	}
 
 	@Override
 	public List<MaterialStoich<?>> getOutputs() {
-		List<MaterialStoich<?>> outputs = Lists.newArrayList(this.separated);
-		outputs.add(MaterialStoich.of(this.residuum));
-		return outputs;
+		return Stream.concat(this.separated.stream().
+				map((comp) -> MaterialStoich.of((float)comp.weight, this.inferSeparatedState(), comp.material)),
+				Stream.of(MaterialStoich.of(this.residuum))).collect(Collectors.toList());
+	}
+
+	private State inferSeparatedState() {
+		MaterialState<?> source = this.agent == null ? this.input : this.agent;
+		if (source.state.ofMatter() == this.type.getSeparatedState()) {
+			return source.state;
+		}
+		return this.type.getSeparatedState();
 	}
 
 	public Separation given(double energy) {
@@ -116,9 +140,8 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	@Override
 	protected Condition deriveCondition() {
 		Condition condition = null;
-		if (this.axis == Axis.VAPORIZATION_POINT) {
-			condition = this.separated.get(this.separated.size()-1).material().
-				getCanonicalCondition(this.input.state == State.GAS ? State.LIQUID : State.GAS);
+		if (this.type.getSeparationAxis() == Axis.VAPORIZATION_POINT) {
+			condition = this.separated.get(this.separated.size()-1).material.getVaporization().getCondition();
 		}
 		return condition;
 	}
@@ -135,22 +158,7 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 
 	@Override
 	public Type getType() {
-		List<State> separatedStates = this.separated.stream().
-				map((s) -> s.state().ofMatter()).
-				distinct().
-				collect(Collectors.toList());
-		if (separatedStates.size() != 1)
-			return null;
-		State separatedState = separatedStates.get(0);
-		for (Type type : Types.values()) {
-			if (this.axis == type.getSeparationAxis() && 
-				this.input.state.ofMatter() == type.getInputState() &&
-				(this.agent != null || type.getAddedState() == null) &&
-				(this.agent == null || this.agent.state.ofMatter() == type.getAddedState()) &&
-				(separatedState == type.getSeparatedState()))
-				return type;
-		}
-		return null;
+		return this.type;
 	}
 
 	@Override
@@ -174,7 +182,7 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 	}
 	
 	public static Separation of(Mixture mixture) {
-		return of(MaterialState.of(mixture));
+		return new Separation(MaterialState.of(null, mixture));
 	}
 	
 	public static enum Axis {
@@ -194,41 +202,52 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		Axis getSeparationAxis();
 		
 		State getInputState();
-		State getAddedState();
+		State getAgentState();
 		State getSeparatedState();
 	}
 
+	/* The "aqueous" problem:
+	 * the states of the types refer to the states of _matter_,
+	 * so the "aqueous" state is irrelevant. This means that the separation type cannot adequately represent the states
+	 * of the chemicals involved in the separation, because the "aqueous" state is lost.
+	 * 
+	 * Solutions:
+	 * - Track the aqueous state within the Separation.
+	 *   - Simplest would be to store MaterialState's for the input and the agent, and the agent (or input if none) state would imply
+	 *     the output state (as long as their physical state is the same). Water, as an agent, would need to be an empty aqueous mixture.
+	 * - Infer the aqueous state based on the conditions. This is fraught with peril.
+	 */
 	public static enum Types implements Type {
 		// These state transitions can obviously occur by either temperature or pressure changes
 		CONDENSATION(Axis.VAPORIZATION_POINT, State.GAS, State.LIQUID),
 		VAPORIZATION(Axis.VAPORIZATION_POINT, State.LIQUID, State.GAS),
-		/* Would be indistinguishable from drying, and probably useless.
 		DESUBLIMATION(Axis.VAPORIZATION_POINT, State.GAS, State.SOLID),
 		SUBLIMATION(Axis.VAPORIZATION_POINT, State.SOLID, State.GAS),
-		*/
+		
 		// Distillation combines vaporization and condensation steps, but we model it as one
 		DISTILLATION(Axis.VAPORIZATION_POINT, State.LIQUID, State.LIQUID),
 		CRYOGENIC_DISTILLATION(Axis.VAPORIZATION_POINT, State.GAS, State.GAS),
-		DRYING(Axis.VAPORIZATION_POINT, State.SOLID, State.GAS),
+		EVAPORATION(Axis.VAPORIZATION_POINT, State.SOLID, State.GAS),
 		FREEZING(Axis.MELTING_POINT, State.LIQUID, State.SOLID),
 		MELTING(Axis.MELTING_POINT, State.SOLID, State.LIQUID),
 		
 		ABSORPTION(Axis.SOLUBILITY, State.GAS, State.LIQUID, State.LIQUID),
 		STRIPPING(Axis.SOLUBILITY, State.LIQUID, State.GAS, State.GAS),
 		LIQUID_LIQUID_EXTRACTION(Axis.SOLUBILITY, State.LIQUID, State.LIQUID, State.LIQUID),
-		LEACHING(Axis.SOLUBILITY, State.SOLID, State.AQUEOUS, State.AQUEOUS),
+		LEACHING(Axis.SOLUBILITY, State.SOLID, State.LIQUID, State.LIQUID),
 		PRECIPITATION(Axis.SOLUBILITY, State.LIQUID, State.SOLID),
+		LIQUID_PRECIPITATION(Axis.SOLUBILITY, State.LIQUID, State.LIQUID),
 		DEGASIFICATION(Axis.SOLUBILITY, State.LIQUID, State.GAS),
 		/* Froth flotation: 
 		 * Concentrating sulfide ores by froth flotation requires first adsorbing the sulfide mineral
 		 * to a "collector", so that the complex has a non-polar surface and thus is floatable.
 		 */
-		FLOTATION(Axis.SOLUBILITY, State.AQUEOUS, State.GAS, State.SOLID),
+		FLOTATION(Axis.SOLUBILITY, State.LIQUID, State.GAS, State.SOLID),
 		
 		LIQUID_ADSORPTION(Axis.ADSORPTIVITY, State.LIQUID, State.LIQUID, State.LIQUID),
 		GAS_ADSORPTION(Axis.ADSORPTIVITY, State.GAS, State.LIQUID, State.LIQUID),
-		LIQUID_CHROMATOGRAPHY(Axis.ADSORPTIVITY, State.LIQUID, State.LIQUID, State.LIQUID),
-		GAS_CHROMATOGRAPHY(Axis.ADSORPTIVITY, State.GAS, State.GAS, State.GAS),
+		LIQUID_CHROMATOGRAPHY(Axis.ADSORPTIVITY, State.LIQUID, State.LIQUID),
+		GAS_CHROMATOGRAPHY(Axis.ADSORPTIVITY, State.GAS, State.GAS),
 		PRESSURE_SWING_ADSPORPTION(Axis.ADSORPTIVITY, State.GAS, State.GAS),
 		
 		/* Molecular filters via pressure differential across membrane */
@@ -240,14 +259,10 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		LIQUID_GRAVITY(Axis.DENSITY, State.LIQUID, State.LIQUID),
 		/* Jigs, shaking tables */
 		SOLID_GRAVITY(Axis.DENSITY, State.SOLID, State.SOLID),
-		
 		/* Vapor-liquid separation vessels */
 		LIQUID_FROM_GAS(Axis.DENSITY, State.GAS, State.LIQUID),
 		GAS_FROM_LIQUID(Axis.DENSITY, State.LIQUID, State.GAS),
-		
-		/* Sedimentation, followed by physical phase separation */
-		LIQUID_DECANTATION(Axis.DENSITY, State.LIQUID, State.LIQUID),
-		SEDIMENTARY_DECANTATION(Axis.DENSITY, State.LIQUID, State.SOLID),
+		SEDIMENTATION(Axis.DENSITY, State.LIQUID, State.SOLID),
 		
 		LIQUID_FILTRATION(Axis.PARTICLE_SIZE, State.LIQUID, State.SOLID),
 		GAS_FILTRATION(Axis.PARTICLE_SIZE, State.GAS, State.SOLID),
@@ -256,7 +271,7 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		MAGNETIC(Axis.MAGNETIC_SUSCEPTIBILITY, State.SOLID, State.SOLID);
 		
 		private Axis separationAxis;	
-		private State inputState, addedState, separatedState;
+		private State inputState, agentState, separatedState;
 		
 		private Types(Axis separationAxis, State inputState) {
 			this(separationAxis, inputState, inputState);
@@ -267,10 +282,10 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		}
 		
 		private Types(Axis separationAxis,
-				State inputState, State addedState, State separatedState) {
+				State inputState, State agentState, State separatedState) {
 			this.separationAxis = separationAxis;
 			this.inputState = inputState;
-			this.addedState = addedState;
+			this.agentState = agentState;
 			this.separatedState = separatedState;
 		}
 		
@@ -290,8 +305,17 @@ public class Separation extends ConditionedConversion implements MassTransfer {
 		}
 
 		@Override
-		public State getAddedState() {
-			return this.addedState;
+		public State getAgentState() {
+			return this.agentState;
+		}
+		
+		public static Optional<Types> find(Separation.Axis axis, State input, State agent, State separated) {
+			return Arrays.stream(values()).filter((t) -> 
+					t.separationAxis == axis && 
+					t.inputState == input && 
+					t.agentState == agent && 
+					t.separatedState == separated).
+					findFirst();
 		}
 	}
 }

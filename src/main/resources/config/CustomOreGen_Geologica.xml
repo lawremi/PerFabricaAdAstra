@@ -2112,7 +2112,7 @@
           <Setting name='CloudThickness' avg='2' range='1'/>
           <Setting name='CloudHeight'
                    avg=':= 60/64 * dimension.groundLevel'
-                   range='2'/>
+                   range='4'/>
           <Replaces block='minecraft:stone'/>
           <Replaces block='PFAAGeologica:weakStone:0'/>
           <Replaces block='PFAAGeologica:weakStone:2'/>

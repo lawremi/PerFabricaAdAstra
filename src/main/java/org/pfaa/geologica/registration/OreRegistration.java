@@ -16,12 +16,11 @@ import org.pfaa.chemica.registration.OreDictUtils;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.GeologicaBlocks;
 import org.pfaa.geologica.GeologicaItems;
-import org.pfaa.geologica.block.VanillaOreOverrideBlock;
 import org.pfaa.geologica.processing.Crude.Crudes;
 import org.pfaa.geologica.processing.IndustrialMineral.IndustrialMinerals;
 import org.pfaa.geologica.processing.OreMineral.Ores;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -29,6 +28,7 @@ public class OreRegistration {
 	
 	public static void init() {
 		registerRawMaterials();
+		useVanillaItemsForVanillaOres();
 		oreDictifyMaterialItems();
 		oreDictifyBlocks();
 		registerDyes();
@@ -68,17 +68,8 @@ public class OreRegistration {
 
 	private static void oreDictifyBlocks() {
 		OreDictUtils.register(GeologicaBlocks.getIndustrialBlocks());
-		GeologicaBlocks.getVanillaOreOverrideBlocks().forEach(OreRegistration::oreDictify);
 	}
 	
-	private static void oreDictify(VanillaOreOverrideBlock block) {
-		String name = Block.blockRegistry.getNameForObject(block);
-		if (name != null) {
-			String material = name.substring(name.indexOf(':') + 1, name.length() - 3);
-			OreDictionary.registerOre(OreDictUtils.makeKey("ore", material), new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE));
-		}
-	}
-
 	private static void oreDictifyFuels() {
 		IndustrialMaterialItem<Crudes> fuel = GeologicaItems.CRUDE_LUMP;
 		for (Crudes material : fuel.getIndustrialMaterials()) {
@@ -100,4 +91,11 @@ public class OreRegistration {
 		OreDictUtils.register(new SimpleGeneric(generic.name(), rawMaterials));
 	}
 
+	private static void useVanillaItemsForVanillaOres() {
+		// FIXME: should this be based on ore drops? Can we put the quantity on the item stack? 
+		OreDictUtils.register(Forms.CRUSHED.of(GeoMaterial.LAPIS), "gemLapis");
+		OreDictUtils.register(Forms.CRUSHED.of(GeoMaterial.DIAMOND), Items.diamond);
+		OreDictUtils.register(Forms.CRUSHED.of(GeoMaterial.EMERALD), Items.emerald);
+		OreDictUtils.register(Forms.DUST_IMPURE.of(GeoMaterial.REDSTONE), Items.redstone);
+	}
 }

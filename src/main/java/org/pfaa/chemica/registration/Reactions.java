@@ -7,7 +7,7 @@ import org.pfaa.chemica.model.Compound.Compounds;
 import org.pfaa.chemica.model.Formula;
 import org.pfaa.chemica.model.Ion;
 import org.pfaa.chemica.model.Ion.Ions;
-import org.pfaa.chemica.model.Reaction;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.model.State;
 
 public class Reactions {

@@ -20,7 +20,7 @@ public interface Ion extends PartFactory, Chemical {
 		Cd(Element.Cd, +2, new Thermo(-75.9, -73.2)),
 		Ce(Element.Ce, +3, new Thermo(-696, -205)),
 		Co(Element.Co, +2, new Color(255, 170, 180), new Thermo(-58.2, -113)),
-		Cr(Element.Cr, +3, null),
+		Cr(Element.Cr, +3, new Thermo(-269)),
 		Cs(Element.Cs, +1, new Thermo(-258, 133)),
 		Cu(Element.Cu, +2, Color.blue, new Thermo(64.8, -99.6)),
 		Fe_2(Element.Fe, +2, new Color(185, 255, 175), new Thermo(-89.1, -138)),

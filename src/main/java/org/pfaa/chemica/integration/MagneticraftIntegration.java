@@ -72,6 +72,8 @@ public class MagneticraftIntegration {
 			 */
 		}
 		
+		// TODO: polymerizer (liquid + solid => solid polymer)
+		
 	}
 
 }

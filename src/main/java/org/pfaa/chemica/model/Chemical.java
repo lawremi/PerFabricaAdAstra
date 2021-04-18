@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 import org.pfaa.chemica.model.Equation.Term;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.registration.Reactions;
 
 /* A pure substance, including elements and compounds with fixed stoichiometry */

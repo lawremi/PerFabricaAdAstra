@@ -2,12 +2,12 @@ package org.pfaa.geologica.registration;
 
 import java.util.List;
 
+import org.pfaa.chemica.block.ChanceDropRegistry;
 import org.pfaa.chemica.item.IndustrialMaterialItem;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.geologica.GeoMaterial;
 import org.pfaa.geologica.Geologica;
 import org.pfaa.geologica.GeologicaItems;
-import org.pfaa.geologica.block.ChanceDropRegistry;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -16,13 +16,14 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class DropRegistration {
 	
+	// TODO: consider dropping gems (when other mods add them), and tiny dusts
 	public static void init() {
 		ChanceDropRegistry drops = ChanceDropRegistry.instance();
-		registerOreDrop(drops, GeoMaterial.CONGLOMERATE, "nuggetCopper", 1, 3, 0.1F, true);
+		registerOreDrop(drops, GeoMaterial.CONGLOMERATE, "nuggetCopper", 1, 3, 0.05F, true);
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, Items.gold_nugget, 4, 4, 0.1F, true);
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetElectrum", 2, 2, 0.05F, true);
 		registerOreDrop(drops, GeoMaterial.GARNET_SAND, "nuggetSilver", 1, 2, 0.05F, true);
-		registerOreDrop(drops, GeoMaterial.CHALK, Items.flint, 2, 5, 0.1F, true);
+		registerOreDrop(drops, GeoMaterial.CHALK, Items.flint, 2, 5, 0.05F, true);
 		if (Geologica.getConfiguration().isVanillaOreGemDropEnabled()) {
 			registerDropsOfItem(drops, GeologicaItems.CRUDE_LUMP);
 			registerOreDrop(drops, GeoMaterial.DIAMOND, Items.diamond, 1, 0, 1.0F, true);
@@ -41,7 +42,7 @@ public class DropRegistration {
 
 	private static void registerOreDrop(ChanceDropRegistry drops,
 			IndustrialMaterial material, String key, int quantity, int bonus, float chance, 
-			boolean fortuneMultiplies) 
+			boolean fortuneMultiplies)
 	{
 		List<ItemStack> ores = OreDictionary.getOres(key);
 		if (ores.size() > 0) {

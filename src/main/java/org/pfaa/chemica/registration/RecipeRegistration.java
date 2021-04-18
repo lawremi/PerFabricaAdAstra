@@ -14,8 +14,8 @@ import org.pfaa.chemica.model.Generics;
 import org.pfaa.chemica.model.IndustrialMaterial;
 import org.pfaa.chemica.model.MaterialState;
 import org.pfaa.chemica.model.Mixture;
-import org.pfaa.chemica.model.Reaction;
 import org.pfaa.chemica.model.State;
+import org.pfaa.chemica.processing.Reaction;
 import org.pfaa.chemica.processing.Separation;
 import org.pfaa.chemica.processing.TemperatureLevel;
 
@@ -185,14 +185,14 @@ public class RecipeRegistration extends BaseRecipeRegistration {
 		MaterialState<IndustrialMaterial> ethanolamine = State.AQUEOUS.of(Compounds.ETHANOLAMINE); 
 		Separation abs = Separation.of(mixture).
 				with(ethanolamine).
-				extracts(State.GAS.of(Compounds.CO2)).
-				by(Separation.Axis.SOLUBILITY);
+				extracts(Compounds.CO2).
+				by(Separation.Types.ABSORPTION);
 		CONVERSIONS.register(abs);
-		MaterialState<Mixture> richAmine = abs.getSeparatedMixture(0);
+		Mixture richAmine = abs.getSeparatedMixture(0);
 		Separation regen = Separation.of(richAmine).
 				at(400).
-				extracts(State.GAS.of(Compounds.CO2)).
-				by(Separation.Axis.SOLUBILITY);
+				extracts(Compounds.CO2).
+				by(Separation.Types.DEGASIFICATION);
 		CONVERSIONS.register(regen);
 		return abs.getResiduum();
 	}
